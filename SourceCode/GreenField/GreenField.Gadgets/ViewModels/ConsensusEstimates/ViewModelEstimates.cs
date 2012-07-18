@@ -52,11 +52,6 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private DateTime? _effectiveDate;
 
-        /// <summary>
-        /// IsActive is true when parent control is displayed on UI
-        /// </summary>
-        public bool IsActive { get; set; }
-
         #endregion
 
         #region Constructor
@@ -136,7 +131,34 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        #region DashboardActiveStatus
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (_isActive)
+                {
+                    RetrieveConsensusEstimatesMedianData();
+                }
+            }
+        }
+        
+        #endregion
+
         #region Busy Indicator
+        /// <summary>
+        /// Busy Indicator Status
+        /// </summary>
         private bool _busyIndicatorIsBusy;
         public bool BusyIndicatorIsBusy
         {
@@ -148,6 +170,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Busy Indicator Content
+        /// </summary>
         private string _busyIndicatorContent;
         public string BusyIndicatorContent
         {
@@ -187,17 +212,12 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedCurrency; }
             set
             {
-                if (_selectedCurrency != value)
-                {
-                    if (_selectedCurrency != value)
-                    {
-                        _selectedCurrency = value;
-                        RaisePropertyChanged(() => this.SelectedCurrency);
-                        RetrieveConsensusEstimatesMedianData();
-                    }
-                }
+                _selectedCurrency = value;
+                RaisePropertyChanged(() => this.SelectedCurrency);
+                RetrieveConsensusEstimatesMedianData();
             }
         }
+
         #endregion
 
         #region Period Type
@@ -310,6 +330,11 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region ActiveDashboard
+
+
+        #endregion
+
         #endregion
 
         #region HelperMethods
@@ -347,10 +372,17 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private void RetrieveConsensusEstimatesMedianData()
         {
-            _dbInteractivity.RetrieveConsensusEstimatesMedianData(IssuerReferenceInfo.IssuerId,
-                                                                SelectedPeriodType,
-                                                                SelectedCurrency,
-                                                                RetrieveConsensusEstimateDataCallbackMethod);
+            if (IssuerReferenceInfo != null || SelectedCurrency != null)
+            {
+                if (IssuerReferenceInfo.IssuerId != null)
+                {
+                    _dbInteractivity.RetrieveConsensusEstimatesMedianData(IssuerReferenceInfo.IssuerId,
+                                                                                   SelectedPeriodType,
+                                                                                   SelectedCurrency,
+                                                                                   RetrieveConsensusEstimateDataCallbackMethod);
+                    BusyIndicatorNotification(true, "Updating information based on selected Security");
+                }
+            }
         }
 
         #endregion
@@ -390,7 +422,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-        
+
         #endregion
 
         #region Callback Methods

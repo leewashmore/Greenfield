@@ -43,7 +43,7 @@
         <Grid Grid.Row="1">
             <!--doughnutchart-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadChart x:Name="crtSectorBreakdown" ItemsSource="{Binding SectorSpecificInfo}" telerik:StyleManager.Theme="Metro" Visibility="Collapsed" MaxHeight="300">
+                <telerik:RadChart x:Name="crtSectorBreakdown" ItemsSource="{Binding SectorSpecificInfo}" telerik:StyleManager.Theme="Metro" Visibility="Collapsed" >
                     <telerik:RadChart.DefaultView>
                         <telerikCharting:ChartDefaultView>
                             <telerik:ChartDefaultView.ChartLegend>

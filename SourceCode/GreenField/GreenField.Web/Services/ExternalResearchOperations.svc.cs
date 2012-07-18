@@ -389,6 +389,13 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Service Method for ConsensusEstimateGadget- Valuations
+        /// </summary>
+        /// <param name="issuerId">Issuer Id for a Security</param>
+        /// <param name="periodType">Period Type: A/Q</param>
+        /// <param name="currency">Selected Currency</param>
+        /// <returns>Collection of ConsensusEstimatesValuations Data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<ConsensusEstimatesValuations> RetrieveConsensusEstimatesValuationData(string issuerId, FinancialStatementPeriodType periodType, string currency)
@@ -401,13 +408,29 @@ namespace GreenField.Web.Services
 
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
-                // dbResult = entity.ExecuteStoreQuery<ConsensusEstimateValuation>("exec Get_ConsensusEstimatesValuation @ISSUER_ID={0}", issuerId).ToList();
                 dbResult = entity.GetConsensusEstimatesValuation(issuerId, "REUTERS", _periodType, "FISCAL", currency, null, null).ToList();
 
                 ConsensusEstimatesValuations data;
                 foreach (ConsensusEstimateValuation item in dbResult)
                 {
                     data = new ConsensusEstimatesValuations();
+                    data.Amount = item.AMOUNT;
+                    data.AmountType = item.AMOUNT_TYPE;
+                    data.AshmoreEMMAmount = Convert.ToDecimal(item.ASHMOREEMM_AMOUNT);
+                    data.DataSource = item.DATA_SOURCE;
+                    data.DataSourceDate = item.DATA_SOURCE_DATE;
+                    data.EstimateType = item.ESTIMATE_DESC;
+                    data.EstimateId = Convert.ToString(item.ESTIMATE_ID);
+                    data.High = item.HIGH;
+                    data.Low = item.LOW;
+                    data.IssuerId = item.ISSUER_ID;
+                    data.NumberOfEstimates = item.NUMBER_OF_ESTIMATES;
+                    data.Period = item.PERIOD;
+                    data.PeriodType = item.PERIOD_TYPE;
+                    data.PeriodYear = item.PERIOD_YEAR;
+                    data.SourceCurrency = item.SOURCE_CURRENCY;
+                    data.StandardDeviation = item.STANDARD_DEVIATION;
+                    result.Add(data);
                 }
 
                 return result;
@@ -418,11 +441,6 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-
-
-
-
-            return result;
         }
 
 

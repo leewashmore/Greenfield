@@ -71,14 +71,16 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Instance of ViewModelEstimates
+        /// </summary>
         private ViewModelEstimates _dataContextEstimates;
-
         public ViewModelEstimates DataContextEstimates
         {
             get { return _dataContextEstimates; }
             set { _dataContextEstimates = value; }
         }
-        
+
 
         /// <summary>
         /// Left Navigation Button Click
@@ -116,7 +118,7 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             (this.DataContext as ViewModelEstimates).Dispose();
-            this.DataContext = null;      
+            this.DataContext = null;
         }
 
         /// <summary>
@@ -156,8 +158,5 @@ namespace GreenField.Gadgets.Views
             ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
             childExportOptions.Show();
         }
-
-
-
     }
 }

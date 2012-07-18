@@ -59,7 +59,8 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = new ViewBalanceSheet(new ViewModelBalanceSheet(param));
+            this.cctrDashboardContent.Content = null;
+            // new ViewBalanceSheet(new ViewModelBalanceSheet(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

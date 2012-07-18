@@ -444,11 +444,13 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="ConsensusEstimateDetailedData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
     public partial class ConsensusEstimateDetailedData : GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject {
         
+        private decimal ACTUALField;
+        
         private decimal AMOUNTField;
         
         private string AMOUNT_TYPEField;
         
-        private string CURRENCYField;
+        private System.Nullable<decimal> ASHMOREEMM_AMOUNTField;
         
         private string DATA_SOURCEField;
         
@@ -456,9 +458,9 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private string ESTIMATE_DESCField;
         
-        private string ESTIMATE_TYPEField;
+        private int ESTIMATE_IDField;
         
-        private string FISCAL_TYPEField;
+        private string ESTIMATE_TYPEField;
         
         private decimal HIGHField;
         
@@ -468,17 +470,28 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private int NUMBER_OF_ESTIMATESField;
         
-        private System.DateTime PERIOD_END_DATEField;
-        
         private string PERIOD_TYPEField;
         
         private int PERIOD_YEARField;
         
-        private string SECURITY_IDField;
+        private string PeriodField;
         
         private string SOURCE_CURRENCYField;
         
         private decimal STANDARD_DEVIATIONField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal ACTUAL {
+            get {
+                return this.ACTUALField;
+            }
+            set {
+                if ((this.ACTUALField.Equals(value) != true)) {
+                    this.ACTUALField = value;
+                    this.RaisePropertyChanged("ACTUAL");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public decimal AMOUNT {
@@ -507,14 +520,14 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CURRENCY {
+        public System.Nullable<decimal> ASHMOREEMM_AMOUNT {
             get {
-                return this.CURRENCYField;
+                return this.ASHMOREEMM_AMOUNTField;
             }
             set {
-                if ((object.ReferenceEquals(this.CURRENCYField, value) != true)) {
-                    this.CURRENCYField = value;
-                    this.RaisePropertyChanged("CURRENCY");
+                if ((this.ASHMOREEMM_AMOUNTField.Equals(value) != true)) {
+                    this.ASHMOREEMM_AMOUNTField = value;
+                    this.RaisePropertyChanged("ASHMOREEMM_AMOUNT");
                 }
             }
         }
@@ -559,6 +572,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ESTIMATE_ID {
+            get {
+                return this.ESTIMATE_IDField;
+            }
+            set {
+                if ((this.ESTIMATE_IDField.Equals(value) != true)) {
+                    this.ESTIMATE_IDField = value;
+                    this.RaisePropertyChanged("ESTIMATE_ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ESTIMATE_TYPE {
             get {
                 return this.ESTIMATE_TYPEField;
@@ -567,19 +593,6 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 if ((object.ReferenceEquals(this.ESTIMATE_TYPEField, value) != true)) {
                     this.ESTIMATE_TYPEField = value;
                     this.RaisePropertyChanged("ESTIMATE_TYPE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FISCAL_TYPE {
-            get {
-                return this.FISCAL_TYPEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FISCAL_TYPEField, value) != true)) {
-                    this.FISCAL_TYPEField = value;
-                    this.RaisePropertyChanged("FISCAL_TYPE");
                 }
             }
         }
@@ -637,19 +650,6 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime PERIOD_END_DATE {
-            get {
-                return this.PERIOD_END_DATEField;
-            }
-            set {
-                if ((this.PERIOD_END_DATEField.Equals(value) != true)) {
-                    this.PERIOD_END_DATEField = value;
-                    this.RaisePropertyChanged("PERIOD_END_DATE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string PERIOD_TYPE {
             get {
                 return this.PERIOD_TYPEField;
@@ -676,14 +676,14 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SECURITY_ID {
+        public string Period {
             get {
-                return this.SECURITY_IDField;
+                return this.PeriodField;
             }
             set {
-                if ((object.ReferenceEquals(this.SECURITY_IDField, value) != true)) {
-                    this.SECURITY_IDField = value;
-                    this.RaisePropertyChanged("SECURITY_ID");
+                if ((object.ReferenceEquals(this.PeriodField, value) != true)) {
+                    this.PeriodField = value;
+                    this.RaisePropertyChanged("Period");
                 }
             }
         }

@@ -47,7 +47,6 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-
     <telerik:RadBusyIndicator>
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.ColumnDefinitions>

@@ -181,22 +181,22 @@
   <xs:element name="RetrieveRatioComparisonDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveRatioComparisonDataResult" nillable="true" type="q22:ArrayOfRatioComparisonData" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveRatioComparisonDataResult" nillable="true" type="q24:ArrayOfRatioComparisonData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveRatioSecurityReferenceData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="context" type="q23:ScatterGraphContext" />
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="issuerDetails" nillable="true" type="q24:IssuerReferenceData" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="context" type="q25:ScatterGraphContext" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="issuerDetails" nillable="true" type="q26:IssuerReferenceData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveRatioSecurityReferenceDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.Web.DimensionEntitiesService" minOccurs="0" name="RetrieveRatioSecurityReferenceDataResult" nillable="true" type="q25:ArrayOfGF_SECURITY_BASEVIEW" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/GreenField.Web.DimensionEntitiesService" minOccurs="0" name="RetrieveRatioSecurityReferenceDataResult" nillable="true" type="q27:ArrayOfGF_SECURITY_BASEVIEW" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

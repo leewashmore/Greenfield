@@ -2647,7 +2647,7 @@ namespace GreenField.Web.Services
                     && (row1.TO_DATE.Equals(row2.TO_DATE))
                     && (row1.NODE_NAME.ToUpper().Trim().Equals(row2.NODE_NAME.ToUpper().Trim()) && (row1.PORTFOLIO.ToUpper().Trim() == row2.PORTFOLIO.ToUpper().Trim()));
             }
-
+                        
             public override int GetHashCode(GF_PERF_DAILY_ATTRIBUTION data)
             {
                 if (data.AGG_LVL_1_LONG_NAME == null || data.NODE_NAME == null || data.TO_DATE == null || data.PORTFOLIO == null)
