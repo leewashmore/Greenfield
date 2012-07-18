@@ -295,9 +295,11 @@ namespace GreenField.Gadgets.ViewModels
                 if (entitySelectionData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    if (IsActive)
+                    _entitySelectionData = entitySelectionData;
+                   
+                    if (IsActive && _entitySelectionData != null)
                     {
-                        _dbInteractivity.RetrieveSecurityOverviewData(entitySelectionData, RetrieveSecurityReferenceDataCallBackMethod);
+                        _dbInteractivity.RetrieveSecurityOverviewData(_entitySelectionData, RetrieveSecurityReferenceDataCallBackMethod);
                         BusyIndicatorContent = "Retrieving security reference data for '" + entitySelectionData.LongName + " (" + entitySelectionData.ShortName + ")'";
                         BusyIndicatorStatus = true;
                     }
