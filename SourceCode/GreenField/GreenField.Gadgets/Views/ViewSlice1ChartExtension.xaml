@@ -219,7 +219,7 @@
                                         <telerik:BarSeriesDefinition AxisName="Secondary" ShowItemLabels="False" 
                                                                      EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                      LegendDisplayMode="SeriesLabel" 
-                                                                     ItemToolTipFormat="Units Traded: #LegendLabel : #Y / Date: #X{dd-MMM-yyyy}"/>
+                                                                     ItemToolTipFormat="Units Traded: #Y / Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:ItemMapping DataPointMember="YValue" FieldName="AmountTraded" />
                                     <telerik:ItemMapping DataPointMember="XValue" FieldName="ToDate" />
