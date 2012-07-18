@@ -68,7 +68,8 @@
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                  RowLoaded="dgRelativePerformanceUI_RowLoaded"
                                  RowStyle="{StaticResource GridViewRowStyle}"
-                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
+                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                 EnableRowVirtualization="false">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn  Header="Name"  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding EntityName}"  HeaderTextAlignment="Left" 

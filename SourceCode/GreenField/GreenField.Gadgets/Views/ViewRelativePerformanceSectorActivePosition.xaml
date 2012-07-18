@@ -45,7 +45,8 @@
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  RowStyle="{StaticResource GridViewRowStyle}"
                                  RowLoaded="dgRelativePerformance_RowLoaded"
-                                 RowHeight="15">
+                                 RowHeight="15"
+                                 >
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn Header="Sector" DataMemberBinding="{Binding Entity}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                 Width="auto" TextAlignment="Left" HeaderTextAlignment="Left"/>

@@ -50,7 +50,9 @@
                                  SelectionUnit="FullRow"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  RowStyle="{StaticResource GridViewRowStyle}"
-                                 RowLoaded="dgRelativePerformance_RowLoaded" RowHeight="15">
+                                 RowLoaded="dgRelativePerformance_RowLoaded" 
+                                 RowHeight="15"
+                                 >
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn Header="Security Name" DataMemberBinding="{Binding Entity}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="auto" HeaderTextAlignment="Left" TextAlignment="Left"/>

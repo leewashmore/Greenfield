@@ -96,7 +96,7 @@
                                          ScrollMode="RealTime"
                                          AlternationCount="2"
                                          MinColumnWidth="70"
-                                         RowLoaded="dgPortfolioDetails_RowLoaded" >
+                                         RowLoaded="dgPortfolioDetails_RowLoaded" EnableRowVirtualization="false">
                         <telerik:RadGridView.Columns >
                             <telerik:GridViewDataColumn Header="Ticker" UniqueName="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 

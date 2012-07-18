@@ -42,7 +42,7 @@
                                      RowLoaded="dgAttribution_RowLoaded"
                                      AlternateRowBackground="#d8d5d4"
                                      AlternationCount="2"
-                                     ElementExporting = "dgAttribution_ElementExporting">
+                                     ElementExporting = "dgAttribution_ElementExporting" EnableRowVirtualization="False">
             <telerik:RadGridView.Columns>
                 <telerik:GridViewDataColumn Header="ID" 
                                                     DataMemberBinding="{Binding Country}"  

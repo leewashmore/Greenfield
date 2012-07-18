@@ -89,7 +89,8 @@
                                  RowStyle="{StaticResource GridViewRowStyle}"
                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}"                                        
                                  AlternateRowBackground="#d8d5d4"
-                                 AlternationCount="2">
+                                 AlternationCount="2"
+                                 EnableRowVirtualization="false">
                                 <telerik:RadGridView.Columns>
                                     <telerik:GridViewDataColumn Header="Portfolio ID" 
                                                     DataMemberBinding="{Binding PortfolioID}"  

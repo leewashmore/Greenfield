@@ -154,7 +154,8 @@
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                          RowLoaded="dgRelativeRisk_RowLoaded"
                                          ElementExporting="dgRelativeRisk_ElementExporting"
-                                         Visibility="Collapsed">
+                                         Visibility="Collapsed" 
+                                         EnableRowVirtualization="false">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcEntityType" Header="" IsFilterable="False" DataMemberBinding="{Binding EntityType}" TextAlignment="Left"
                                                         Width="*" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
