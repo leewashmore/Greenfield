@@ -79,7 +79,7 @@ namespace GreenField.DashboardModule.Views
             {
                 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_HOLDINGS_SECTOR_PIECHART, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                RestoredHeight = 300,
+                RestoredHeight = 320,
                 Content = new ViewHoldingsPieChart(new ViewModelHoldingsPieChart(param))
             });
 
@@ -87,7 +87,7 @@ namespace GreenField.DashboardModule.Views
             {
                 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
-                RestoredHeight = 300,
+                RestoredHeight = 320,
                 Content = new ViewHoldingsPieChartRegion(new ViewModelHoldingsPieChartRegion(param))
             });
         }
