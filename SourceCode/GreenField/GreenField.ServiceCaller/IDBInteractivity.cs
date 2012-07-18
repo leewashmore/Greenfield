@@ -70,6 +70,8 @@ namespace GreenField.ServiceCaller
 
         void RetrievePortfolioRiskReturnData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback);
 
+        void RetrieveBenchmarkFilterSelectionData(String benchmarkCode, String BenchmarkName, String filterType, Action<List<BenchmarkFilterSelectionData>> callback);        
+        
         void RetrieveMarketSnapshotSelectionData(string userName, Action<List<MarketSnapshotSelectionData>> callback);
 
         void RetrieveMarketSnapshotPreference(int snapshotPreferenceId, Action<List<MarketSnapshotPreference>> callback);
@@ -95,7 +97,7 @@ namespace GreenField.ServiceCaller
         /// <param name="deleteGroupPreferenceInfo">Group preference Ids for entity groups that are to be removed</param>
         /// <param name="createGroupPreferenceInfo">Group names for entity groups that are to be created</param>
         /// <param name="callback">Callback method that takes List of MarketSnapshotPreference as its argument</param>
-        void SaveMarketSnapshotPreference(int snapshotPreferenceId, string updateXML, Action<List<MarketSnapshotPreference>> callback);
+        void SaveMarketSnapshotPreference(string updateXML, Action<List<MarketSnapshotPreference>> callback);
 
         /// <summary>
         /// Save changes to a new snapshot specified by user
@@ -104,7 +106,7 @@ namespace GreenField.ServiceCaller
         /// <param name="snapshotName">Snapshot name</param>
         /// <param name="snapshotPreference">Snapshot preference details</param>
         /// <param name="callback">Callback Method that takes List of MarketSnapshotSelectionData as it's argument</param>
-        void SaveAsMarketSnapshotPreference(string userName, string snapshotName, string updateXML, Action<PopulatedMarketPerformanceSnapshotData> callback);
+        void SaveAsMarketSnapshotPreference(string updateXML, Action<PopulatedMarketPerformanceSnapshotData> callback);
 
         void RemoveMarketSnapshotPreference(string userName, string snapshotName, Action<bool?> callback);
 
@@ -204,7 +206,7 @@ namespace GreenField.ServiceCaller
         #endregion
         
 
-        void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetailedData>> callback);
+        void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetail>> callback);
 
         void RetrieveRatioComparisonData(String contextSecurityXML, Action<List<RatioComparisonData>> callback);
 

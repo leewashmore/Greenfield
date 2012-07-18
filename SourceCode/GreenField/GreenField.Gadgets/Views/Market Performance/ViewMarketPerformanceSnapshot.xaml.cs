@@ -266,6 +266,35 @@ namespace GreenField.Gadgets.Views
                 UpdateParametersForDiffGroupReordering(dataContext, dragBenchmarkDetails, dropBenchmarkDetails, dropIsLastOfOtherGroup);
             }
         }
+
+        /// <summary>
+        /// Export Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
+            {
+                ElementName = this.txtHeader.Text,
+                Element = this.radGridSnapshot,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+            });
+
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);
+            childExportOptions.Show();
+        }
+
+        /// <summary>
+        /// Grid Element Exporting
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void radGridSnapshot_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
+        }
         #endregion
 
         #region Private Methods
@@ -519,25 +548,6 @@ namespace GreenField.Gadgets.Views
             this._dataContextSource = null;
             this.DataContext = null;
         }
-        #endregion
-
-        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
-        {
-            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            RadExportOptionsInfo.Add(new RadExportOptions()
-            {
-                ElementName = this.txtHeader.Text,
-                Element = this.radGridSnapshot,
-                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-            });
-
-            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);
-            childExportOptions.Show();
-        }
-
-        private void radGridSnapshot_ElementExporting(object sender, GridViewElementExportingEventArgs e)
-        {
-            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
-        }
+        #endregion        
     }
 }

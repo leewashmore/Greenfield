@@ -44,7 +44,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-         #region Constructor
+        #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
@@ -66,6 +66,7 @@ namespace GreenField.Gadgets.ViewModels
             } 
         }
         #endregion
+
         #region Properties
 
         /// <summary>
@@ -128,6 +129,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
         #region Callback Methods
         /// <summary>
         /// Callback method that assigns value to the ConsensusSummaryInfo property
@@ -159,6 +161,16 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
+        }
+        #endregion
+
+        #region EventUnSubscribe
+        /// <summary>
+        /// Method that disposes the events
+        /// </summary>
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
         }
         #endregion
 

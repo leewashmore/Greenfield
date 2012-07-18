@@ -1,6 +1,6 @@
 ﻿<controls:ChildWindow x:Class="GreenField.Gadgets.Views.ChildViewInsertEntity"
            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
-           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" IsEnabled="{Binding BenchmarkFilterCallInactive}" 
            xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"  FontSize="7" FontFamily="Arial"
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
            Title="Insert Entity" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="0" d:DesignWidth="400">
@@ -8,6 +8,7 @@
     <Grid x:Name="LayoutRoot" Margin="0" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" />
@@ -30,18 +31,17 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <telerik:RadToggleButton Grid.Column="0" Content="Security" FontSize="7" FontFamily="Arial" IsChecked="{Binding SecurityToggleChecked, Mode=TwoWay}"/>
-            <telerik:RadToggleButton Grid.Column="1" Content="Benchmark" FontSize="7" FontFamily="Arial" IsChecked="{Binding BenchmarkToggleChecked, Mode=TwoWay}"/>
-            <telerik:RadToggleButton Grid.Column="2" Content="Index" FontSize="7" FontFamily="Arial" IsChecked="{Binding IndexToggleChecked, Mode=TwoWay}"/>
-            <telerik:RadToggleButton Grid.Column="3" Content="Commodity" FontSize="7" FontFamily="Arial" IsChecked="{Binding CommodityToggleChecked, Mode=TwoWay}"/>            
+            <telerik:RadRadioButton Grid.Column="0"  Content="Security" FontSize="7" FontFamily="Arial" IsChecked="{Binding SecurityToggleChecked, Mode=TwoWay}"/>
+            <telerik:RadRadioButton Grid.Column="1"  Content="Benchmark" FontSize="7" FontFamily="Arial" IsChecked="{Binding BenchmarkToggleChecked, Mode=TwoWay}"/>
+            <telerik:RadRadioButton Grid.Column="2"  Content="Index" FontSize="7" FontFamily="Arial" IsChecked="{Binding IndexToggleChecked, Mode=TwoWay}"/>
+            <telerik:RadRadioButton Grid.Column="3"  Content="Commodity" FontSize="7" FontFamily="Arial" IsChecked="{Binding CommodityToggleChecked, Mode=TwoWay}"/>            
         </Grid>
+        
         <Grid Grid.Row="2" Margin="0,2,0,0">
             <StackPanel Orientation="Vertical" VerticalAlignment="Center">
-                <!--ItemsSource="{Binding EntitySelectionGroupInfo.View.Groups, Converter={StaticResource FlattenGroupConverter}}"-->
-                <!--ItemContainerStyleSelector="{StaticResource ItemStyleSelector}"-->
                 <telerik:RadComboBox x:Name="cmbEntitySelection" Width="382" FontSize="7" FontFamily="Arial"
                                      ItemsSource="{Binding EntityFilterSelectionInfo}" SelectionChanged="cmbEntitySelection_SelectionChanged"
-                                     Text="{Binding EntitySelectionEnteredText, Mode=TwoWay}"
+                                     Text="{Binding EntitySelectionEnteredText, Mode=TwoWay}" 
                                      SelectedItem="{Binding SelectedEntity, Mode=TwoWay}"
                                      IsEditable="True" telerik:TextSearch.TextPath="LongName" EmptyText="Search Entity..." 
                                      CanAutocompleteSelectItems="True" CanKeyboardNavigationSelectItems="False"
@@ -64,13 +64,43 @@
                     </telerik:RadComboBox.ItemTemplate>
                 </telerik:RadComboBox>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,2,0,0" Visibility="{Binding ReturnTypeSelectionVisibility}">
-                    <telerik:RadRadioButton x:Name="rbtnTotal" FontSize="7" FontFamily="Arial" Content="Total Return" IsChecked="{Binding TotalReturnTypeChecked, Mode=TwoWay}"/>
-                    <telerik:RadRadioButton Margin="2,0,0,0" x:Name="rbtnNet" FontSize="7" FontFamily="Arial" Content="Price Return" IsChecked="{Binding PriceReturnTypeChecked, Mode=TwoWay}"/>                        
-                    </StackPanel>
+                    <telerik:RadRadioButton x:Name="rbtnTotal"  FontSize="7" FontFamily="Arial" Content="Total Return" IsChecked="{Binding TotalReturnTypeChecked, Mode=TwoWay}"/>
+                    <telerik:RadRadioButton Margin="2,0,0,0" x:Name="rbtnNet"  FontSize="7" FontFamily="Arial" Content="Price Return" IsChecked="{Binding PriceReturnTypeChecked, Mode=TwoWay}"/>                        
+                </StackPanel>
             </StackPanel>
         </Grid>
 
-        <telerik:RadButton x:Name="OKButton" FontSize="7" FontFamily="Arial" Content="OK" Click="OKButton_Click" Width="75" HorizontalAlignment="Right" Margin="0,2,79,0" Grid.Row="3" />
-        <telerik:RadButton x:Name="CancelButton" FontSize="7" FontFamily="Arial" Content="Cancel" Click="CancelButton_Click" Width="75" HorizontalAlignment="Right" Margin="0,2,0,0" Grid.Row="3" />        
+        <Grid Grid.Row="3" Margin="0,2,0,0" Visibility="{Binding BenchmarkFilterVisibility}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,2,0,0">
+                    <telerik:RadRadioButton x:Name="rbtnNone"  FontSize="7" FontFamily="Arial" Content="None" IsChecked="{Binding NoneBenchmarkFilterChecked, Mode=TwoWay}"/>
+                    <telerik:RadRadioButton Margin="2,0,0,0" x:Name="rbtnCountry"  FontSize="7" FontFamily="Arial" Content="Country" IsChecked="{Binding CountryBenchmarkFilterChecked, Mode=TwoWay}"/>
+                    <telerik:RadRadioButton Margin="2,0,0,0" x:Name="rbtnSector"  FontSize="7" FontFamily="Arial" Content="Sector" IsChecked="{Binding SectorBenchmarkFilterChecked, Mode=TwoWay}"/>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1" Margin="0,2,0,0" Visibility="{Binding BenchmarkFilterValueVisibility}">
+                <TextBlock Text="{Binding BenchmarkFilterEmptyText}" FontSize="7" FontFamily="Arial"
+                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Row="2" Margin="0,2,0,0" Visibility="{Binding BenchmarkFilterValueVisibility}">
+                <telerik:RadComboBox x:Name="cmbBenchmarkFilterSelection" Width="382" FontSize="7" FontFamily="Arial" 
+                                     ItemsSource="{Binding BenchmarkFilterSelectionInfo}" SelectionChanged="cmbBenchmarkFilterSelection_SelectionChanged"
+                                     SelectedItem="{Binding SelectedBenchmarkFilter, Mode=TwoWay}" DisplayMemberPath="FilterName">
+                    <telerik:RadComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </telerik:RadComboBox.ItemsPanel>                    
+                </telerik:RadComboBox>
+            </Grid>
+        </Grid>
+
+        <telerik:RadButton x:Name="OKButton"  FontSize="7" FontFamily="Arial" Content="OK" Click="OKButton_Click" Width="75" HorizontalAlignment="Right" Margin="0,2,79,0" Grid.Row="4" />
+        <telerik:RadButton x:Name="CancelButton"  FontSize="7" FontFamily="Arial" Content="Cancel" Click="CancelButton_Click" Width="75" HorizontalAlignment="Right" Margin="0,2,0,0" Grid.Row="4" />
     </Grid>
 </controls:ChildWindow>

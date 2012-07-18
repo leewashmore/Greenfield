@@ -115,7 +115,7 @@
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          ColumnWidth="*"
                                          AlternationCount="2"
-                                         RowLoaded="dgChartExtension_RowLoaded">
+                                         RowLoaded="dgChartExtension_RowLoaded" EnableRowVirtualization="false">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" DataFormatString="{}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -219,7 +219,7 @@
                                         <telerik:BarSeriesDefinition AxisName="Secondary" ShowItemLabels="False" 
                                                                      EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                      LegendDisplayMode="SeriesLabel" 
-                                                                     ItemToolTipFormat="Units Traded: #LegendLabel : #Y / Date: #X{dd-MMM-yyyy}"/>
+                                                                     ItemToolTipFormat="Units Traded: #Y / Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:ItemMapping DataPointMember="YValue" FieldName="AmountTraded" />
                                     <telerik:ItemMapping DataPointMember="XValue" FieldName="ToDate" />

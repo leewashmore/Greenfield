@@ -41,6 +41,34 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="FinancialStatementStatementType" nillable="true" type="tns:FinancialStatementStatementType" />
+  <xs:complexType name="ArrayOfConsensusEstimateDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ConsensusEstimateDetail" nillable="true" type="tns:ConsensusEstimateDetail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfConsensusEstimateDetail" nillable="true" type="tns:ArrayOfConsensusEstimateDetail" />
+  <xs:complexType name="ConsensusEstimateDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Actual" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AshmoreEmmAmount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataSourceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EstimateDesc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstimateId" type="xs:int" />
+      <xs:element minOccurs="0" name="High" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Low" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NumberOfEstimates" type="xs:int" />
+      <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
+      <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConsensusEstimateDetail" nillable="true" type="tns:ConsensusEstimateDetail" />
   <xs:complexType name="ArrayOfBasicData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="BasicData" nillable="true" type="tns:BasicData" />
@@ -116,14 +144,32 @@
   <xs:element name="ArrayOfConsensusEstimatesValuations" nillable="true" type="tns:ArrayOfConsensusEstimatesValuations" />
   <xs:complexType name="ConsensusEstimatesValuations">
     <xs:sequence>
-      <xs:element minOccurs="0" name="DividendYield" type="xs:decimal" />
-      <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="PRevenue" type="xs:decimal" />
-      <xs:element minOccurs="0" name="P_BV" type="xs:decimal" />
-      <xs:element minOccurs="0" name="P_CE" type="xs:decimal" />
-      <xs:element minOccurs="0" name="P_E" type="xs:decimal" />
-      <xs:element minOccurs="0" name="P_EGrowth" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AshmoreEMMAmount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataSourceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="EstimateId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstimateType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="High" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Low" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NumberOfEstimates" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
+      <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ConsensusEstimatesValuations" nillable="true" type="tns:ConsensusEstimatesValuations" />
+  <xs:simpleType name="ScatterGraphContext">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Region" />
+      <xs:enumeration value="Country" />
+      <xs:enumeration value="Sector" />
+      <xs:enumeration value="Industry" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ScatterGraphContext" nillable="true" type="tns:ScatterGraphContext" />
 </xs:schema>

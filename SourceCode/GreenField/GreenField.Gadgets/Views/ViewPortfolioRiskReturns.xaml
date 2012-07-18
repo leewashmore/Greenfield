@@ -20,9 +20,13 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Text="Portfolio Risk Return" HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Height="40"/>
-        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
-            <telerik:RadGridView Grid.Row="1" Name="dgPortfolioRiskReturn"  AutoGenerateColumns="False" 
+        <TextBlock Grid.Row="0" Text="Portfolio Risk Return" HorizontalAlignment="Center" VerticalAlignment="Top" Height="15"/>
+        <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Margin="0,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
+            <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        </telerik:RadButton>
+        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Grid.Row="1">
+            <telerik:RadGridView  Name="dgPortfolioRiskReturn"  AutoGenerateColumns="False" 
                                      ItemsSource="{Binding PortfolioRiskReturnPeriodInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                      CanUserDeleteRows="False" IsReadOnly="True"
@@ -32,13 +36,15 @@
                                      FontSize="7"
                                      FontFamily="Arial"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
-                                         RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                 RowLoaded="dgPortfolioRiskReturn_RowLoaded"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                     RowLoaded="dgPortfolioRiskReturn_RowLoaded"
                                      AlternateRowBackground="#d8d5d4"
-                                     AlternationCount="2">
-                <telerik:RadGridView.Columns>
+                                     AlternationCount="2"
+                                     ElementExporting="dgRiskReturnGrid_ElementExporting"
+                                  EnableRowVirtualization="false">
+                <telerik:RadGridView.Columns> 
                     <telerik:GridViewDataColumn x:Name="dgDataPointName" 
                                                 Header=" " 
                                                 DataMemberBinding="{Binding DataPointName}" 

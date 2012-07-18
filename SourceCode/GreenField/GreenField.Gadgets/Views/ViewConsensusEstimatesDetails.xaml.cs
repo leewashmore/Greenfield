@@ -65,7 +65,6 @@ namespace GreenField.Gadgets.Views
             e.Handled = true;
         }
 
-
         public override void Dispose()
         {
             (this.DataContext as ViewModelConsensusEstimatesDetails).Dispose();

@@ -43,6 +43,7 @@ namespace GreenField.Gadgets.ViewModels
 
 
         #endregion
+
         #region Constructor
         /// <summary>
         /// Constructor
@@ -67,13 +68,23 @@ namespace GreenField.Gadgets.ViewModels
 
         }
         #endregion
+
         #region Events
         /// <summary>
         /// Event for the notification of Data Load Completion
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler macroDBKeyAnnualReportCountryDataLoadedEvent;
+        /// <summary>
+        /// Event for the notification of callback
+        /// </summary>
+        public event RetrieveMacroCountrySummaryDataCompleteEventHandler RetrieveMacroDataCompletedEvent;
         #endregion
 
+        #region Properties
+        #region UI
+        /// <summary>
+        /// List containing the full macro country data
+        /// </summary>
         private List<MacroDatabaseKeyAnnualReportData> macroCountryData;
         public List<MacroDatabaseKeyAnnualReportData> MacroCountryData
         {
@@ -94,53 +105,10 @@ namespace GreenField.Gadgets.ViewModels
 
             }
         }
-
-        public void AddDataToFiveYearModels(int CurrentYear)
-        {
-            if (FiveYearMacroCountryData != null)
-                FiveYearMacroCountryData.Clear();
-            if (CurrentYear >= 2024 || CurrentYear <= 1989)
-                return;
-            List<FiveYearDataModels> result = new List<FiveYearDataModels>();
-            for (int i = 0; i < macroCountryData.Count; i++)
-            {
-                int valueOfCurrentYear = DateTime.Now.Year;
-                MacroDatabaseKeyAnnualReportData m = new MacroDatabaseKeyAnnualReportData();
-                FiveYearDataModels entry = new FiveYearDataModels();
-                entry.CategoryName = macroCountryData[i].CATEGORY_NAME;
-                entry.CountryName = macroCountryData[i].COUNTRY_NAME;
-                entry.Description = macroCountryData[i].DESCRIPTION;
-                entry.DisplayType = macroCountryData[i].DISPLAY_TYPE;
-                entry.SortOrder = macroCountryData[i].SORT_ORDER;
-                entry.YearOne = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear -3));
-                entry.YearTwo = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear - 2));
-                entry.YearThree = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear -1));
-                entry.YearFour = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear));
-                entry.YearFive = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 1));
-                entry.YearSix = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 2));               
-
-                Decimal? Value1 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 4));
-                Decimal? Value2 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 3));
-                Decimal? Value3 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 2));
-                Decimal? Value4 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 1));
-                Decimal? Value5 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear));
-                if (Value1 == null)
-                    Value1 = 0;
-                if (Value2 == null)
-                    Value2 = 0;
-                if (Value3 == null)
-                    Value3 = 0;
-                if (Value4 == null)
-                    Value4 = 0;
-                if (Value5 == null)
-                    Value5 = 0;
-                entry.FiveYearAvg = (Value1 + Value2 + Value3 + Value4 + Value5) / 5;
-                result.Add(entry);
-            }
-            FiveYearMacroCountryData = result;
-
-        }
-
+        
+        /// <summary>
+        /// List containing data binded to the grid
+        /// </summary>
         private List<FiveYearDataModels> fiveYearMacroCountryData;
         public List<FiveYearDataModels> FiveYearMacroCountryData
         {
@@ -156,6 +124,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Property that stores the current year value
+        /// </summary>
         private int _currentYear = System.DateTime.Now.Year;
         public int CurrentYear
         {
@@ -173,9 +144,12 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.CurrentYear);
             }
         }
+        #endregion
 
         #region ICommand
-
+        /// <summary>
+        /// On Left Arrow click 
+        /// </summary>
         public ICommand LeftNavigationClick
         {
             get
@@ -184,6 +158,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// On right Arrow click
+        /// </summary>
         public ICommand RightNavigationClick
         {
             get
@@ -192,30 +169,49 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// Move Right
+        /// </summary>
         public ICommand MoveRightCommand
         {
             get { return new DelegateCommand<object>(MoveRightCommandMethod); }
         }
 
-
+        /// <summary>
+        /// Move Left
+        /// </summary>
         public ICommand MoveLeftCommand
         {
             get { return new DelegateCommand<object>(MoveLeftCommandMethod); }
         }
 
         #endregion
+        #endregion
 
+        #region Command Methods
+        /// <summary>
+        /// Move right command method
+        /// </summary>
+        /// <param name="param">param</param>
         public void MoveRightCommandMethod(object param)
         {
             CurrentYear = CurrentYear + 1;
         }
-
+        /// <summary>
+        /// Move Left command method
+        /// </summary>
+        /// <param name="param">param</param>
         public void MoveLeftCommandMethod(object param)
         {
             CurrentYear = CurrentYear - 1;
         }
+        #endregion
 
+        #region Callback Methods
+        /// <summary>
+        /// Callback method after the result list gets populated
+        /// </summary>
+        /// <param name="result">result</param>
         public void RetrieveMacroEconomicDataCallbackMethod(List<MacroDatabaseKeyAnnualReportData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -238,10 +234,13 @@ namespace GreenField.Gadgets.ViewModels
 
 
         }
+        #endregion
 
-        public event RetrieveMacroCountrySummaryDataCompleteEventHandler RetrieveMacroDataCompletedEvent;
-
-
+        #region Event Handlers
+        /// <summary>
+        /// Handler called when a user selects a particular country
+        /// </summary>
+        /// <param name="CountryData">Country selected by the user</param>
         public void HandleCountryReferenceSetEvent(String CountryData)
         {
 
@@ -273,7 +272,16 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+        #endregion
 
+        #region Private Method
+        /// <summary>
+        /// Gets the property value by name
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="m"></param>
+        /// <param name="propertyName">Name of the property</param>
+        /// <returns></returns>
         public static T GetProperty<T>(MacroDatabaseKeyAnnualReportData m, string propertyName)
         {
             var theProperty = m.GetType().GetProperty(propertyName);
@@ -283,6 +291,68 @@ namespace GreenField.Gadgets.ViewModels
                 throw new ArgumentException("object has an Id property, but it is not of type " + typeof(T).FullName, "m");
             return (T)theProperty.GetValue(m, null);
         }
+
+        /// <summary>
+        /// Filling the FiveYearDataModels type list
+        /// </summary>
+        /// <param name="CurrentYear">Value of Current System Year</param>
+        public void AddDataToFiveYearModels(int CurrentYear)
+        {
+            if (FiveYearMacroCountryData != null)
+                FiveYearMacroCountryData.Clear();
+            if (CurrentYear >= 2024 || CurrentYear <= 1989)
+                return;
+            List<FiveYearDataModels> result = new List<FiveYearDataModels>();
+            for (int i = 0; i < macroCountryData.Count; i++)
+            {
+                int valueOfCurrentYear = DateTime.Now.Year;
+                MacroDatabaseKeyAnnualReportData m = new MacroDatabaseKeyAnnualReportData();
+                FiveYearDataModels entry = new FiveYearDataModels();
+                entry.CategoryName = macroCountryData[i].CATEGORY_NAME;
+                entry.CountryName = macroCountryData[i].COUNTRY_NAME;
+                entry.Description = macroCountryData[i].DESCRIPTION;
+                entry.DisplayType = macroCountryData[i].DISPLAY_TYPE;
+                entry.SortOrder = macroCountryData[i].SORT_ORDER;
+                entry.YearOne = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear - 3));
+                entry.YearTwo = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear - 2));
+                entry.YearThree = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear - 1));
+                entry.YearFour = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear));
+                entry.YearFive = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 1));
+                entry.YearSix = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (CurrentYear + 2));
+
+                Decimal? Value1 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 4));
+                Decimal? Value2 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 3));
+                Decimal? Value3 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 2));
+                Decimal? Value4 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear - 1));
+                Decimal? Value5 = GetProperty<Decimal?>(macroCountryData[i], "YEAR_" + (valueOfCurrentYear));
+                if (Value1 == null)
+                    Value1 = 0;
+                if (Value2 == null)
+                    Value2 = 0;
+                if (Value3 == null)
+                    Value3 = 0;
+                if (Value4 == null)
+                    Value4 = 0;
+                if (Value5 == null)
+                    Value5 = 0;
+                entry.FiveYearAvg = (Value1 + Value2 + Value3 + Value4 + Value5) / 5;
+                result.Add(entry);
+            }
+            FiveYearMacroCountryData = result;
+
+        }
+        #endregion
+
+        #region EventUnSubscribe
+        /// <summary>
+        /// Method that disposes the events
+        /// </summary>
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<CountrySelectionSetEvent>().Unsubscribe(HandleCountryReferenceSetEvent);        
+        }
+
+        #endregion
 
     }
 }

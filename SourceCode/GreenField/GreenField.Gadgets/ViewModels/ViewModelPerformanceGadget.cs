@@ -248,7 +248,6 @@ namespace GreenField.Gadgets.ViewModels
         /// Assigns UI Field Properties based on Effective Date
         /// </summary>
         /// <param name="effectiveDate">Effective Date selected by the user</param>
-
         public void HandleEffectiveDateSet(DateTime effectiveDate)
         {
 
@@ -312,7 +311,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
 
         }
-
+        /// <summary>
+        /// Assigns UI Field Properties based on Country
+        /// </summary>
+        /// <param name="country">Country Selected by the user from the heat Map</param>
         public void HandleCountrySelectionDataSet(String country)
         {
 
@@ -469,9 +471,21 @@ namespace GreenField.Gadgets.ViewModels
         {
             ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
             ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
-        }
+        }      
 
-       
+        #endregion
+
+        #region EventUnSubscribe
+        /// <summary>
+        /// Method that disposes the events
+        /// </summary>
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+            _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
+            _eventAggregator.GetEvent<HeatMapClickEvent>().Unsubscribe(HandleCountrySelectionDataSet);
+        }
 
         #endregion
 

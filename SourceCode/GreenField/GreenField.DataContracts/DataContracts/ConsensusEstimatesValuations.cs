@@ -10,24 +10,52 @@ namespace GreenField.DataContracts
     public class ConsensusEstimatesValuations
     {
         [DataMember]
-        public string IssueName { get; set; }
+        public decimal Amount { get; set; }
+
 
         [DataMember]
-        public decimal PRevenue { get; set; }
+        public string AmountType { get; set; }
 
         [DataMember]
-        public decimal P_CE { get; set; }
+        public decimal AshmoreEMMAmount { get; set; }
 
         [DataMember]
-        public decimal P_E { get; set; }
-        
+        public string DataSource { get; set; }
+
         [DataMember]
-        public decimal P_EGrowth { get; set; }
-        
+        public DateTime DataSourceDate { get; set; }
+
         [DataMember]
-        public decimal P_BV { get; set; }
-        
+        public string EstimateType { get; set; }
+
         [DataMember]
-        public decimal DividendYield { get; set; }       
+        public string EstimateId { get; set; }
+
+        [DataMember]
+        public decimal High { get; set; }
+
+        [DataMember]
+        public string IssuerId { get; set; }
+
+        [DataMember]
+        public decimal Low { get; set; }
+
+        [DataMember]
+        public decimal NumberOfEstimates { get; set; }
+
+        [DataMember]
+        public string Period { get; set; }
+
+        [DataMember]
+        public string PeriodType { get; set; }
+
+        [DataMember]
+        public int PeriodYear { get; set; }
+
+        [DataMember]
+        public string SourceCurrency { get; set; }
+
+        [DataMember]
+        public decimal StandardDeviation { get; set; }
     }
 }

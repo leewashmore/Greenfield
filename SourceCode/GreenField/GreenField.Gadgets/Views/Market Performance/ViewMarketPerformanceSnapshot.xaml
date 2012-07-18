@@ -70,7 +70,7 @@
                                      RowLoaded="radGridSnapshot_RowLoaded" ElementExporting="radGridSnapshot_ElementExporting"                                  
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" EnableRowVirtualization="False">
                     <!--context menu on the grid-->
                     <telerik:RadContextMenu.ContextMenu>
                         <telerik:RadContextMenu x:Name="cmSnapshot" telerik:StyleManager.Theme="Metro" Opened="RadContextMenu_Opened" FontSize="7" FontFamily="Arial">
@@ -109,8 +109,17 @@
                     <telerik:RadGridView.Columns>
                         <!--Entity Description Column-->
                         <telerik:GridViewDataColumn Width="Auto" IsReadOnly="true" TextAlignment="Left" HeaderTextAlignment="Left"
-                                                DataMemberBinding="{Binding MarketSnapshotPreferenceInfo.EntityName}" IsSortable="False"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                IsSortable="False"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}">
+                            <telerik:GridViewDataColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding MarketSnapshotPreferenceInfo.EntityNodeValueName, StringFormat='\{0\} '}"/>
+                                        <TextBlock Text="{Binding MarketSnapshotPreferenceInfo.EntityName}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:GridViewDataColumn.CellTemplate>
+                        </telerik:GridViewDataColumn>
                         <!--Entity Return Type Column-->
                         <telerik:GridViewDataColumn Width="Auto" IsReadOnly="true" TextAlignment="Left" HeaderTextAlignment="Left"
                                                 DataMemberBinding="{Binding MarketSnapshotPreferenceInfo.EntityReturnType}" IsSortable="False"

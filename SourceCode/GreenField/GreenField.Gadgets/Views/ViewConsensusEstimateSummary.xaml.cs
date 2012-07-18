@@ -39,13 +39,19 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        #region Properties
+        /// <summary>
+        /// Data Context Property
+        /// </summary>
         private ViewModelConsensusEstimateSummary _dataContextConsensusEstimatesSummary;
         public ViewModelConsensusEstimateSummary DataContextConsensusEstimatesSummary
         {
             get { return _dataContextConsensusEstimatesSummary; }
             set { _dataContextConsensusEstimatesSummary = value; }
         }
+        #endregion
 
+        #region Event Handler
         /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
@@ -61,5 +67,19 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicatorGrid.IsBusy = false;
             }
         }
+        #endregion
+
+        #region RemoveEvents
+        /// <summary>
+        /// Disposing events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextConsensusEstimatesSummary.consensusEstimatesSummaryDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_consensusEstimatesSummaryDataLoadedEvent);
+            this.DataContextConsensusEstimatesSummary.Dispose();
+            this.DataContextConsensusEstimatesSummary = null;
+            this.DataContext = null;
+        }
+        #endregion
     }
 }

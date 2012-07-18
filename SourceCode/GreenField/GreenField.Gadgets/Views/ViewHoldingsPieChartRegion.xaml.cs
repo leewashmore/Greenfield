@@ -48,6 +48,9 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        /// <summary>
+        /// Data Context Property
+        /// </summary>
         private ViewModelHoldingsPieChartRegion _dataContextHoldingsPieChartRegion;
         public ViewModelHoldingsPieChartRegion DataContextHoldingsPieChartRegion
         {

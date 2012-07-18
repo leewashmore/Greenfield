@@ -26,8 +26,8 @@ namespace GreenField.Gadgets.Views
     /// Class for the Heat Map View
     /// </summary>
     public partial class ViewHeatMap : ViewBaseUserControl
-
     {
+       #region Fields
         /// <summary>
         /// Constant String for country performance
         /// </summary>
@@ -46,21 +46,7 @@ namespace GreenField.Gadgets.Views
         private List<MapShape> _shapes = new List<MapShape>();
         public MapShape mapShape;
         private IEventAggregator _eventAggregator;
-
-        /// <summary>
-        /// True is gadget is currently on display
-        /// </summary>
-        private bool _isActive;
-        public override bool IsActive
-        {
-            get { return _isActive; }
-            set 
-            {
-                _isActive = value;
-                if (DataContextHeatMap != null)
-                    DataContextHeatMap.IsActive = _isActive;
-            }
-        }
+        #endregion     
 
        #region Constructor
        /// <summary>
@@ -79,6 +65,8 @@ namespace GreenField.Gadgets.Views
        }
        #endregion
 
+       #region Properties
+
        /// <summary>
        /// Property of the type of View Model for this view
        /// </summary>
@@ -88,7 +76,41 @@ namespace GreenField.Gadgets.Views
            get { return _dataContextHeatMap; }
            set { _dataContextHeatMap = value; }
        }
-        /// <summary>
+
+       /// <summary>
+       /// True is gadget is currently on display
+       /// </summary>
+       private bool _isActive;
+       public override bool IsActive
+       {
+           get { return _isActive; }
+           set
+           {
+               _isActive = value;
+               if (DataContextHeatMap != null)
+                   DataContextHeatMap.IsActive = _isActive;
+           }
+       }
+
+       private DashboardGadgetPayload _selectorPayload;
+       public DashboardGadgetPayload SelectorPayload
+       {
+           get
+           {
+               if (_selectorPayload == null)
+                   _selectorPayload = new DashboardGadgetPayload();
+               return _selectorPayload;
+           }
+           set
+           {
+               _selectorPayload = value;
+           }
+       }
+       #endregion
+
+       #region Private Methods
+
+       /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
         /// <param name="e"></param>
@@ -197,6 +219,9 @@ namespace GreenField.Gadgets.Views
                 }
             }            
         }
+       #endregion
+
+       #region Event Handlers
 
         /// <summary>
         /// Data Retrieval Indicator
@@ -213,22 +238,19 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicatorMap.IsBusy = false;
             }
         }
-
-        private DashboardGadgetPayload _selectorPayload;
-        public DashboardGadgetPayload SelectorPayload
+        void shape_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            get
-            {
-                if (_selectorPayload == null)
-                    _selectorPayload = new DashboardGadgetPayload();
-                return _selectorPayload;
-            }
-            set
-            {
-                _selectorPayload = value;
-            }
+            MapShape shape = sender as MapShape;
+            if (shape == null)
+                return;
+
+            string country = (string)shape.ExtendedData.GetValue("ISO_2DIGIT");
+            SelectorPayload.HeatMapCountryData = country;
+            _eventAggregator.GetEvent<HeatMapClickEvent>().Publish(SelectorPayload.HeatMapCountryData);
         }
-        #region RemoveEvents
+        #endregion
+
+       #region RemoveEvents
         /// <summary>
         /// Disposing events
         /// </summary>
@@ -241,15 +263,6 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        void shape_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            MapShape shape = sender as MapShape;
-            if (shape == null)
-                return;          
-           
-            string country = (string)shape.ExtendedData.GetValue("ISO_2DIGIT");
-            SelectorPayload.HeatMapCountryData = country;
-            _eventAggregator.GetEvent<HeatMapClickEvent>().Publish(SelectorPayload.HeatMapCountryData);
-        }  
+        
     }   
 }

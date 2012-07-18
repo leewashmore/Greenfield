@@ -827,6 +827,48 @@ namespace GreenField.ServiceCaller
         #endregion
 
         #region Market Performance Gadget
+        public void RetrieveBenchmarkFilterSelectionData(String benchmarkCode, String BenchmarkName, String filterType, Action<List<BenchmarkFilterSelectionData>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            PerformanceOperationsClient client = new PerformanceOperationsClient();
+            client.RetrieveBenchmarkFilterSelectionDataAsync(benchmarkCode, BenchmarkName, filterType);
+            client.RetrieveBenchmarkFilterSelectionDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
+
         /// <summary>
         /// service call method for retrieving list of market performance snapshots for a user
         /// </summary>
@@ -1113,13 +1155,13 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="marketSnapshotPreference"></param>
         /// <param name="callback"></param>
-        public void SaveMarketSnapshotPreference(int snapshotPreferenceId, string updateXML, Action<List<MarketSnapshotPreference>> callback)
+        public void SaveMarketSnapshotPreference(string updateXML, Action<List<MarketSnapshotPreference>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.SaveMarketSnapshotPreferenceAsync(snapshotPreferenceId, updateXML);
+            client.SaveMarketSnapshotPreferenceAsync(updateXML);
             client.SaveMarketSnapshotPreferenceCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1159,14 +1201,13 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="marketSnapshotPreference"></param>
         /// <param name="callback"></param>
-        public void SaveAsMarketSnapshotPreference(string userName, string snapshotName
-            , string updateXML, Action<PopulatedMarketPerformanceSnapshotData> callback)
+        public void SaveAsMarketSnapshotPreference(string updateXML, Action<PopulatedMarketPerformanceSnapshotData> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.SaveAsMarketSnapshotPreferenceAsync(userName, snapshotName, updateXML);
+            client.SaveAsMarketSnapshotPreferenceAsync(updateXML);
             client.SaveAsMarketSnapshotPreferenceCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -2627,7 +2668,7 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-        public void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetailedData>> callback)
+        public void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetail>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");

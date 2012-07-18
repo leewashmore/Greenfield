@@ -194,7 +194,6 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-        #endregion
 
         private void BeginWebServiceCall(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate)
         {
@@ -205,6 +204,8 @@ namespace GreenField.Gadgets.ViewModels
                 _dbInteractivity.RetrieveTopBenchmarkSecuritiesData(portfolioSelectionData, effectiveDate, RetrieveTopSecuritiesDataCallbackMethod);
             }
         }
+
+        #endregion       
 
         #region Callback Methods
 
@@ -237,18 +238,17 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }
+        }        
+#endregion
 
-        
-
-        #region EventUnSubscribe
+        #region EventsUnsubscribe     
 
         public void Dispose()
         {
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
         }
-        #endregion
+        
         #endregion       
     }
 }

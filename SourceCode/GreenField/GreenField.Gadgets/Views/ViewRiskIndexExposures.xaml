@@ -23,12 +23,28 @@
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
 
         <Grid x:Name="LayoutRoot" Background="White">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <!--<TextBlock Text="elloz" TextAlignment="Center" Grid.Column="0"/>-->
-            <Grid x:Name="grdRadChart" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <!--button to flip the gadget-->
+                    <telerik:RadButton x:Name="btnFlip" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
+                        <Image Source="../Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </telerik:RadButton>
+                    <!--button to export the grid to excel-->
+                    <Button Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20"
+                    Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click">
+                        <Button.Content>
+                            <Image Source="../Images/ExportExcel.png" />
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </Grid>
+           
+            <Grid x:Name="grdRadChart" Grid.Row="1">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" Name="border1">
                     <telerikChart:RadChart VerticalAlignment="Top" 
@@ -106,6 +122,61 @@
                             </telerikCharting:SeriesMapping>
                         </telerikChart:RadChart.SeriesMappings>
                     </telerikChart:RadChart>
+                </Border>
+
+                <!--grid containing data for the gadget-->
+                <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                    <telerik:RadGridView Name="dgRelativeRisk" 
+                                         Background="White"
+                                         AutoGenerateColumns="False" 
+                                         AlternationCount="2"
+                                         AlternateRowBackground="#d8d5d4"
+                                         ItemsSource="{Binding RiskIndexExposuresInfo}" 
+                                         telerik:StyleManager.Theme="Metro"
+                                         CanUserSelect="False" 
+                                         CanUserReorderColumns="True" 
+                                         CanUserInsertRows="False" 
+                                         CanUserFreezeColumns="False"
+                                         CanUserDeleteRows="False" 
+                                         IsReadOnly="True" 
+                                         CanUserSortColumns="False" 
+                                         ScrollMode="RealTime"
+                                         RowIndicatorVisibility="Collapsed" 
+                                         ShowGroupPanel="False" 
+                                         UseLayoutRounding="True" 
+                                         ShowGroupFooters="false"
+                                         FontSize="7" 
+                                         FontFamily="Arial" 
+                                         ShowColumnFooters="False" 
+                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                         RowLoaded="dgRelativeRisk_RowLoaded"
+                                         ElementExporting="dgRelativeRisk_ElementExporting"
+                                         Visibility="Collapsed" 
+                                         EnableRowVirtualization="false">
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn x:Name="dgcEntityType" Header="" IsFilterable="False" DataMemberBinding="{Binding EntityType}" TextAlignment="Left"
+                                                        Width="*" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcMomentum" Header="Momentum" IsFilterable="False" DataMemberBinding="{Binding Momentum, StringFormat=\{0:n2\}}" TextAlignment="Right"
+                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcVolatility" Header="Volatility" IsFilterable="False" DataMemberBinding="{Binding Volatility, StringFormat=\{0:n2\}}" TextAlignment="Right"
+                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcValue" Header="Value" IsFilterable="False" DataMemberBinding="{Binding Value, StringFormat=\{0:n2\}}" TextAlignment="Right"
+                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcSize" Header="Size" IsFilterable="False" DataMemberBinding="{Binding Size, StringFormat=\{0:n2\}}" TextAlignment="Right"
+                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcSizeNonLinear" Header="SizeNonLinear" IsFilterable="False" DataMemberBinding="{Binding SizeNonLinear, StringFormat=\{0:n2\}}" TextAlignment="Right"
+                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcGrowth" Header="Growth" IsFilterable="False" DataMemberBinding="{Binding Growth, StringFormat=\{0:n2\}}" TextAlignment="Right"
+                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcLiquidity" Header="Liquidity" IsFilterable="False" DataMemberBinding="{Binding Liquidity, StringFormat=\{0:n2\}}" TextAlignment="Right"
+                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                            <telerik:GridViewDataColumn x:Name="dgcLeverage" Header="Leverage" IsFilterable="False" DataMemberBinding="{Binding Leverage, StringFormat=\{0:n2\}}" TextAlignment="Right"
+                                                        Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                        </telerik:RadGridView.Columns>
+                    </telerik:RadGridView>
                 </Border>
             </Grid>           
         </Grid>

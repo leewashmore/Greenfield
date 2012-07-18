@@ -45,7 +45,7 @@ namespace GreenField.DashboardModule.Views
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
-            this.tbHeader.Text = GadgetNames.PERFORMANCE_ATTRIBUTION;
+            //this.tbHeader.Text = GadgetNames.PERFORMANCE_ATTRIBUTION;
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)

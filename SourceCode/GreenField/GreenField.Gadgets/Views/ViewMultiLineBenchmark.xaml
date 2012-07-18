@@ -155,7 +155,7 @@
                                  ColumnWidth="*" IsFilteringAllowed="False" 
                                  RowStyle="{StaticResource GridViewRowStyle}"
                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
-                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
+                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}" EnableRowVirtualization="false">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding Name}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 

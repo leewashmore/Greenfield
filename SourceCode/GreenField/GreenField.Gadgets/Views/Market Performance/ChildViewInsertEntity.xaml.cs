@@ -15,13 +15,17 @@ using GreenField.Common;
 using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.DataContracts;
+using GreenField.ServiceCaller;
+using Microsoft.Practices.Prism.Logging;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ChildViewInsertEntity : ChildWindow
     {
         #region Fields
-        private List<string> _groupNames; 
+        List<string> _groupNames;
+        IDBInteractivity _dBInteractivity;
+        ILoggerFacade _logger;
         #endregion
 
         #region Constructor
@@ -31,9 +35,11 @@ namespace GreenField.Gadgets.Views
         /// <param name="result">List of EntitySelectionData objects</param>
         /// <param name="groupName">GroupName where entity is being inserted</param>
         /// <param name="groupNames">GroupNames already inserted in the snapsot</param>
-        public ChildViewInsertEntity(List<EntitySelectionData> result, string groupName = null, List<string> groupNames = null)
+        public ChildViewInsertEntity(List<EntitySelectionData> result, IDBInteractivity dBInteractivity, ILoggerFacade logger, string groupName = null, List<string> groupNames = null)
         {
             InitializeComponent();
+            _dBInteractivity = dBInteractivity;
+            _logger = logger;
             if (groupName != null)
             {
                 this.txtGroupName.Text = groupName;
@@ -41,7 +47,7 @@ namespace GreenField.Gadgets.Views
             }
 
             this._groupNames = groupNames;
-            this.DataContext = new ChildViewModelInsertEntity(result);
+            this.DataContext = new ChildViewModelInsertEntity(result, _dBInteractivity, _logger);
             this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
         } 
         #endregion
@@ -105,6 +111,11 @@ namespace GreenField.Gadgets.Views
             this.OKButton.IsEnabled = this.txtGroupName.Text.Count() > 0 && this.cmbEntitySelection.SelectedItem != null;
         }        
         #endregion
+
+        private void cmbBenchmarkFilterSelection_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
 

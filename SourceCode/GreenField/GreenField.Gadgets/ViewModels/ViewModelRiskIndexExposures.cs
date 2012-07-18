@@ -56,37 +56,6 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private bool _lookThruEnabled;
 
-        /// <summary>
-        /// IsActive is true when parent control is displayed on UI
-        /// </summary>
-        private bool _isActive;
-        public bool IsActive
-        {
-            get
-            {
-                return _isActive;
-            }
-            set
-            {
-                if (_isActive != value)
-                {
-                    _isActive = value;
-                    if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null && _isActive)
-                    {
-                        _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
-                                                                _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
-                        BusyIndicatorStatus = true;
-                    }
-
-                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null && _isActive)
-                    {
-                        _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
-                                                                "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
-                        BusyIndicatorStatus = true;
-                    }
-                }
-            }
-        }
         #endregion
 
         #region Constructor
@@ -231,6 +200,38 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _axisXStep = value;
 
+            }
+        }
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter != null && _isActive)
+                    {
+                        _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
+                                                                _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, RetrieveRiskIndexExposuresDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
+
+                    else if ((_portfolioSelectionData != null) && (EffectiveDate != null) && _holdingDataFilter == null && _isActive)
+                    {
+                        _dbInteractivity.RetrieveRiskIndexExposuresData(_portfolioSelectionData, Convert.ToDateTime(_effectiveDate), _isExCashSecurity, _lookThruEnabled,
+                                                                "Show Everything", " ", RetrieveRiskIndexExposuresDataCallbackMethod);
+                        BusyIndicatorStatus = true;
+                    }
+                }
             }
         }
         #endregion

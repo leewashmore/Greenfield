@@ -306,7 +306,7 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="exportElement"></param>
         /// <param name="cellValueConverter"></param>
         public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null
-            , bool showGroupFooters = true, List<int> hideColumnIndex = null)
+            , bool showGroupFooters = true, List<int> hideColumnIndex = null, List<int> aggregatedColumnIndex = null)
         {
             ExportElementOptions element = ExportElementOptions.Where(t => t.ExportElementType == exportElement.Element).FirstOrDefault();
             if (element != null)
@@ -361,7 +361,12 @@ namespace GreenField.Gadgets.Helpers
 
                 if (column != null && qcvGroup != null && column.AggregateFunctions.Count > 0)
                 {
+                    //exportElement.Value = aggregatedColumnIndex.Contains(column.DisplayIndex) ? GetAggregates(qcvGroup, column) : String.Empty;
                     exportElement.Value = GetAggregates(qcvGroup, column);
+                }
+                else
+                {
+                    exportElement.Value = "";
                 }
             }
 

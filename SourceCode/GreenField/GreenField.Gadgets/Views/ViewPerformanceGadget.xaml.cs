@@ -47,6 +47,17 @@ namespace GreenField.Gadgets.Views
                     ((ViewModelPerformanceGadget)this.DataContext).IsActive = _isActive;
             }
         }
+        /// <summary>
+        /// Data Context Property
+        /// </summary>
+        private ViewModelPerformanceGadget _dataContextPerformanceGadget;
+        public ViewModelPerformanceGadget DataContextPerformanceGadget
+        {
+            get { return _dataContextPerformanceGadget; }
+            set { _dataContextPerformanceGadget = value; }
+        }
+
+        
         #endregion
 
         #region Constructor
@@ -58,6 +69,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextPerformanceGadget = dataContextSource;
             dataContextSource.performanceGraphDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGraphDataLoadedEvent);
             dataContextSource.ChartArea = this.chPerformanceGadget.DefaultView.ChartArea;
@@ -141,12 +153,6 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicatorGrid.IsBusy = false;
             }
         }
-        #endregion
-
-        public override void Dispose()
-        {
-            throw new NotImplementedException();
-        }
 
         private void dgPerformanceGadget_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
@@ -157,5 +163,18 @@ namespace GreenField.Gadgets.Views
         {
             RadGridView_ElementExport.ElementExporting(e);
         }
+        #endregion
+
+        #region RemoveEvents
+
+        public override void Dispose()
+        {
+            this.DataContextPerformanceGadget.performanceGraphDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGraphDataLoadedEvent);
+            this.DataContextPerformanceGadget.Dispose();
+            this.DataContextPerformanceGadget = null;
+            this.DataContext = null;
+        }
+
+        #endregion
     }
 }

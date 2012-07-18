@@ -90,6 +90,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ChartExtensionData" nillable="true" type="tns:ChartExtensionData" />
+  <xs:complexType name="ArrayOfBenchmarkFilterSelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BenchmarkFilterSelectionData" nillable="true" type="tns:BenchmarkFilterSelectionData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBenchmarkFilterSelectionData" nillable="true" type="tns:ArrayOfBenchmarkFilterSelectionData" />
+  <xs:complexType name="BenchmarkFilterSelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FilterCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FilterName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BenchmarkFilterSelectionData" nillable="true" type="tns:BenchmarkFilterSelectionData" />
   <xs:complexType name="PortfolioSelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" name="BenchmarkId" nillable="true" type="xs:string" />

@@ -40,11 +40,11 @@ namespace GreenField.DashboardModule.Views
             InitializeComponent();
 
             _eventAggregator = eventAggregator;
-            _logger = logger;    
+            _logger = logger;
             _dBInteractivity = dbInteractivity;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-            
+
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -62,20 +62,19 @@ namespace GreenField.DashboardModule.Views
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                
+
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_OVERVIEW,
                 Content = null
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                
+
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_DETAIL, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 300,
-                Content =null
-                // new ViewConsensusEstimatesDetails(new ViewModelConsensusEstimatesDetails(param))
+                Content = null// new ViewConsensusEstimatesDetails(new ViewModelConsensusEstimatesDetails(param))
             });
-            
+
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

@@ -246,12 +246,14 @@ namespace GreenField.App.ViewModel
                 {
                     if (value != String.Empty && EntitySelectionInfo != null)
                         SecuritySelectorInfo = EntitySelectionInfo
-                                    .Where(record => record.LongName.ToLower().Contains(value.ToLower())
+                                    .Where(
+                                    record => record.Type == EntityType.SECURITY &&
+                                    (record.LongName.ToLower().Contains(value.ToLower())
                                         || record.ShortName.ToLower().Contains(value.ToLower())
-                                        || record.InstrumentID.ToLower().Contains(value.ToLower()))
+                                        || record.InstrumentID.ToLower().Contains(value.ToLower())))
                                     .ToList();
                     else
-                        SecuritySelectorInfo = EntitySelectionInfo;
+                        SecuritySelectorInfo = EntitySelectionInfo.Where(record => record.Type == EntityType.SECURITY).ToList();
                 }
             }
         }
@@ -1298,6 +1300,14 @@ namespace GreenField.App.ViewModel
             get
             {
                 return new DelegateCommand<object>(GadgetTopBenchmarkSecuritiesCommandMethod);
+            }
+        }
+
+        public ICommand GadgetRelativeRiskCommand
+        {
+            get
+            {
+                return new DelegateCommand<object>(GadgetRelativeRiskCommandMethod);
             }
         }
 
@@ -2972,7 +2982,7 @@ namespace GreenField.App.ViewModel
 
         /// <summary>
         /// GadgetTopBenchmarkSecuritiesCommand Execution Method - Add Gadget - TOP_BENCHMARK_SECURITIES
-        /// </summary>F
+        /// </summary>
         /// <param name="param">SenderInfo</param>
         private void GadgetTopBenchmarkSecuritiesCommandMethod(object param)
         {
@@ -2985,6 +2995,31 @@ namespace GreenField.App.ViewModel
                         {
                             DashboardTileHeader = GadgetNames.BENCHMARK_TOP_TEN_CONSTITUENTS,
                             DashboardTileObject = new ViewTopBenchmarkSecurities(new ViewModelTopBenchmarkSecurities(GetDashboardGadgetParam()))
+                        });
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// GadgetRelativeRiskCommand Execution Method - Add Gadget - RELATIVE_RISK
+        /// </summary>
+        /// <param name="param">SenderInfo</param>
+        private void GadgetRelativeRiskCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardTileViewItemAdded>().Publish
+                        (new DashboardTileViewItemInfo
+                        {
+                            DashboardTileHeader = GadgetNames.HOLDINGS_RELATIVE_RISK,
+                            DashboardTileObject = new ViewRiskIndexExposures(new ViewModelRiskIndexExposures(GetDashboardGadgetParam()))
                         });
             }
             catch (Exception ex)

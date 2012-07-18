@@ -52,7 +52,11 @@
                                      ItemsSource="{Binding ContributorDetractorInfo}"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
                                      RowLoaded="dgContributorDetractor_RowLoaded"
-                                     RowStyleSelector="{StaticResource GridRowMarkerStyle}" Foreground="White" RowHeight="15">
+                                     GridLinesVisibility="None"
+                                     RowStyleSelector="{StaticResource GridRowMarkerStyle}" 
+                                     Foreground="White" 
+                                     RowHeight="15"
+                                     >
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgCountryId" Header="Country Id" DataMemberBinding="{Binding SecurityCountryId}" Width="Auto" HeaderTextAlignment="Left"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left" />

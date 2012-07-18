@@ -34,6 +34,14 @@ namespace GreenField.Web.Helpers
 
                 if (dimensionSecurityPricingData.Count != 0)
                 {
+                    List<GF_PRICING_BASEVIEW> dimensionPricingData = new List<GF_PRICING_BASEVIEW>(dimensionSecurityPricingData);
+
+                    foreach (GF_PRICING_BASEVIEW item in dimensionPricingData)
+                    {
+                        if (item.DAILY_SPOT_FX == 0)
+                            dimensionSecurityPricingData.Remove(item);
+                    }
+
                     foreach (DimensionEntitiesService.GF_PRICING_BASEVIEW pricingItem in dimensionSecurityPricingData)
                     {
                         if (pricingItem.DAILY_SPOT_FX == 0)
