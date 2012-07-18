@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="ArrayOfMacroDatabaseKeyAnnualReportData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MacroDatabaseKeyAnnualReportData" nillable="true" type="tns:MacroDatabaseKeyAnnualReportData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMacroDatabaseKeyAnnualReportData" nillable="true" type="tns:ArrayOfMacroDatabaseKeyAnnualReportData" />
+  <xs:complexType name="MacroDatabaseKeyAnnualReportData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CATEGORY_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="COUNTRY_NAME" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DESCRIPTION" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DISPLAY_TYPE" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FiveYEAR_Avg" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SORT_ORDER" type="xs:int" />
+      <xs:element minOccurs="0" name="YEAR_1987" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1988" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1989" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1990" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1991" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1992" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1993" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1994" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1995" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1996" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1997" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1998" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_1999" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2000" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2001" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2002" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2003" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2004" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2005" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2006" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2007" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2008" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2009" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2010" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2011" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2012" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2013" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2014" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2015" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2016" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2017" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2018" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2019" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2020" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2021" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2022" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2023" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2024" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YEAR_2025" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MacroDatabaseKeyAnnualReportData" nillable="true" type="tns:MacroDatabaseKeyAnnualReportData" />
+  <xs:complexType name="ArrayOfCountrySelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CountrySelectionData" nillable="true" type="tns:CountrySelectionData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCountrySelectionData" nillable="true" type="tns:ArrayOfCountrySelectionData" />
+  <xs:complexType name="CountrySelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CountrySelectionData" nillable="true" type="tns:CountrySelectionData" />
+  <xs:complexType name="ArrayOfRegionSelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RegionSelectionData" nillable="true" type="tns:RegionSelectionData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRegionSelectionData" nillable="true" type="tns:ArrayOfRegionSelectionData" />
+  <xs:complexType name="RegionSelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RegionSelectionData" nillable="true" type="tns:RegionSelectionData" />
+  <xs:complexType name="ArrayOfFXCommodityData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FXCommodityData" nillable="true" type="tns:FXCommodityData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFXCommodityData" nillable="true" type="tns:ArrayOfFXCommodityData" />
+  <xs:complexType name="FXCommodityData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CommodityId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentYearEnd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DailyClosingPrice" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FromDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="InstrumentId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LongTerm" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NextYearEnd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YTD" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Year1" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Year3" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FXCommodityData" nillable="true" type="tns:FXCommodityData" />
+</xs:schema>

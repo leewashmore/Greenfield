@@ -45,157 +45,6 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FXCommodityData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.Web.DataContract" +
-        "s")]
-    public partial class FXCommodityData : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string CommodityIDField;
-        
-        private System.Nullable<decimal> CurrentYearEndField;
-        
-        private System.Nullable<decimal> DailyClosingPriceField;
-        
-        private System.Nullable<System.DateTime> FromDateField;
-        
-        private System.Nullable<decimal> LongTermField;
-        
-        private System.Nullable<decimal> NextYearEndField;
-        
-        private System.Nullable<decimal> YTDField;
-        
-        private System.Nullable<decimal> Year1Field;
-        
-        private System.Nullable<decimal> Year3Field;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CommodityID {
-            get {
-                return this.CommodityIDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CommodityIDField, value) != true)) {
-                    this.CommodityIDField = value;
-                    this.RaisePropertyChanged("CommodityID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> CurrentYearEnd {
-            get {
-                return this.CurrentYearEndField;
-            }
-            set {
-                if ((this.CurrentYearEndField.Equals(value) != true)) {
-                    this.CurrentYearEndField = value;
-                    this.RaisePropertyChanged("CurrentYearEnd");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> DailyClosingPrice {
-            get {
-                return this.DailyClosingPriceField;
-            }
-            set {
-                if ((this.DailyClosingPriceField.Equals(value) != true)) {
-                    this.DailyClosingPriceField = value;
-                    this.RaisePropertyChanged("DailyClosingPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> LongTerm {
-            get {
-                return this.LongTermField;
-            }
-            set {
-                if ((this.LongTermField.Equals(value) != true)) {
-                    this.LongTermField = value;
-                    this.RaisePropertyChanged("LongTerm");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> NextYearEnd {
-            get {
-                return this.NextYearEndField;
-            }
-            set {
-                if ((this.NextYearEndField.Equals(value) != true)) {
-                    this.NextYearEndField = value;
-                    this.RaisePropertyChanged("NextYearEnd");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> YTD {
-            get {
-                return this.YTDField;
-            }
-            set {
-                if ((this.YTDField.Equals(value) != true)) {
-                    this.YTDField = value;
-                    this.RaisePropertyChanged("YTD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> Year1 {
-            get {
-                return this.Year1Field;
-            }
-            set {
-                if ((this.Year1Field.Equals(value) != true)) {
-                    this.Year1Field = value;
-                    this.RaisePropertyChanged("Year1");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> Year3 {
-            get {
-                return this.Year3Field;
-            }
-            set {
-                if ((this.Year3Field.Equals(value) != true)) {
-                    this.Year3Field = value;
-                    this.RaisePropertyChanged("Year3");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ModelFXDefinitions.ModelFXOperations")]
     public interface ModelFXOperations {
@@ -215,12 +64,19 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         
         System.Collections.Generic.List<GreenField.DataContracts.CountrySelectionData> EndRetrieveCountrySelectionData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ModelFXOperations/RetrieveRegionSelectionData", ReplyAction="http://tempuri.org/ModelFXOperations/RetrieveRegionSelectionDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault), Action="http://tempuri.org/ModelFXOperations/RetrieveRegionSelectionDataServiceFaultFault" +
+            "", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveRegionSelectionData(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> EndRetrieveRegionSelectionData(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ModelFXOperations/RetrieveMacroDatabaseKeyAnnualReportDataEMSu" +
             "mmary", ReplyAction="http://tempuri.org/ModelFXOperations/RetrieveMacroDatabaseKeyAnnualReportDataEMSu" +
             "mmaryResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault), Action="http://tempuri.org/ModelFXOperations/RetrieveMacroDatabaseKeyAnnualReportDataEMSu" +
             "mmaryServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(string countryNameVal, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(string countryNameVal, System.Collections.Generic.List<string> countryValues, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.MacroDatabaseKeyAnnualReportData> EndRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(System.IAsyncResult result);
         
@@ -228,14 +84,14 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault), Action="http://tempuri.org/ModelFXOperations/RetrieveCommodityDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveCommodityData(string selectedCommodityID, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> EndRetrieveCommodityData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> EndRetrieveCommodityData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ModelFXOperations/RetrieveCommoditySelectionData", ReplyAction="http://tempuri.org/ModelFXOperations/RetrieveCommoditySelectionDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ModelFXDefinitions.ServiceFault), Action="http://tempuri.org/ModelFXOperations/RetrieveCommoditySelectionDataServiceFaultFa" +
             "ult", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveCommoditySelectionData(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> EndRetrieveCommoditySelectionData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> EndRetrieveCommoditySelectionData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -282,6 +138,25 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveRegionSelectionDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveRegionSelectionDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -310,10 +185,10 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData>)(this.results[0]));
             }
         }
     }
@@ -329,10 +204,10 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData>)(this.results[0]));
             }
         }
     }
@@ -352,6 +227,12 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         private EndOperationDelegate onEndRetrieveCountrySelectionDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveCountrySelectionDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveRegionSelectionDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveRegionSelectionDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveRegionSelectionDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryDelegate;
         
@@ -427,6 +308,8 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         public event System.EventHandler<RetrieveMacroDatabaseKeyAnnualReportDataCompletedEventArgs> RetrieveMacroDatabaseKeyAnnualReportDataCompleted;
         
         public event System.EventHandler<RetrieveCountrySelectionDataCompletedEventArgs> RetrieveCountrySelectionDataCompleted;
+        
+        public event System.EventHandler<RetrieveRegionSelectionDataCompletedEventArgs> RetrieveRegionSelectionDataCompleted;
         
         public event System.EventHandler<RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompletedEventArgs> RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompleted;
         
@@ -529,8 +412,52 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.BeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(string countryNameVal, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(countryNameVal, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.BeginRetrieveRegionSelectionData(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveRegionSelectionData(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.EndRetrieveRegionSelectionData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveRegionSelectionData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveRegionSelectionData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).BeginRetrieveRegionSelectionData(callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveRegionSelectionData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> retVal = ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).EndRetrieveRegionSelectionData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveRegionSelectionDataCompleted(object state) {
+            if ((this.RetrieveRegionSelectionDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveRegionSelectionDataCompleted(this, new RetrieveRegionSelectionDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveRegionSelectionDataAsync() {
+            this.RetrieveRegionSelectionDataAsync(null);
+        }
+        
+        public void RetrieveRegionSelectionDataAsync(object userState) {
+            if ((this.onBeginRetrieveRegionSelectionDataDelegate == null)) {
+                this.onBeginRetrieveRegionSelectionDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveRegionSelectionData);
+            }
+            if ((this.onEndRetrieveRegionSelectionDataDelegate == null)) {
+                this.onEndRetrieveRegionSelectionDataDelegate = new EndOperationDelegate(this.OnEndRetrieveRegionSelectionData);
+            }
+            if ((this.onRetrieveRegionSelectionDataCompletedDelegate == null)) {
+                this.onRetrieveRegionSelectionDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveRegionSelectionDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveRegionSelectionDataDelegate, null, this.onEndRetrieveRegionSelectionDataDelegate, this.onRetrieveRegionSelectionDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.BeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(string countryNameVal, System.Collections.Generic.List<string> countryValues, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(countryNameVal, countryValues, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -540,7 +467,8 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         
         private System.IAsyncResult OnBeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string countryNameVal = ((string)(inValues[0]));
-            return ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).BeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(countryNameVal, callback, asyncState);
+            System.Collections.Generic.List<string> countryValues = ((System.Collections.Generic.List<string>)(inValues[1]));
+            return ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).BeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(countryNameVal, countryValues, callback, asyncState);
         }
         
         private object[] OnEndRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(System.IAsyncResult result) {
@@ -556,11 +484,11 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
             }
         }
         
-        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(string countryNameVal) {
-            this.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(countryNameVal, null);
+        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(string countryNameVal, System.Collections.Generic.List<string> countryValues) {
+            this.RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(countryNameVal, countryValues, null);
         }
         
-        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(string countryNameVal, object userState) {
+        public void RetrieveMacroDatabaseKeyAnnualReportDataEMSummaryAsync(string countryNameVal, System.Collections.Generic.List<string> countryValues, object userState) {
             if ((this.onBeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryDelegate == null)) {
                 this.onBeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryDelegate = new BeginOperationDelegate(this.OnBeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary);
             }
@@ -571,7 +499,8 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
                 this.onRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryDelegate, new object[] {
-                        countryNameVal}, this.onEndRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryDelegate, this.onRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompletedDelegate, userState);
+                        countryNameVal,
+                        countryValues}, this.onEndRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryDelegate, this.onRetrieveMacroDatabaseKeyAnnualReportDataEMSummaryCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -580,7 +509,7 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.EndRetrieveCommodityData(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.EndRetrieveCommodityData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveCommodityData(result);
         }
         
@@ -590,7 +519,7 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         }
         
         private object[] OnEndRetrieveCommodityData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> retVal = ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).EndRetrieveCommodityData(result);
+            System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> retVal = ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).EndRetrieveCommodityData(result);
             return new object[] {
                     retVal};
         }
@@ -626,7 +555,7 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.EndRetrieveCommoditySelectionData(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations.EndRetrieveCommoditySelectionData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveCommoditySelectionData(result);
         }
         
@@ -635,7 +564,7 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
         }
         
         private object[] OnEndRetrieveCommoditySelectionData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> retVal = ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).EndRetrieveCommoditySelectionData(result);
+            System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> retVal = ((GreenField.ServiceCaller.ModelFXDefinitions.ModelFXOperations)(this)).EndRetrieveCommoditySelectionData(result);
             return new object[] {
                     retVal};
         }
@@ -765,9 +694,22 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(string countryNameVal, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
+            public System.IAsyncResult BeginRetrieveRegionSelectionData(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveRegionSelectionData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> EndRetrieveRegionSelectionData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.RegionSelectionData>)(base.EndInvoke("RetrieveRegionSelectionData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveMacroDatabaseKeyAnnualReportDataEMSummary(string countryNameVal, System.Collections.Generic.List<string> countryValues, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
                 _args[0] = countryNameVal;
+                _args[1] = countryValues;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveMacroDatabaseKeyAnnualReportDataEMSummary", _args, callback, asyncState);
                 return _result;
             }
@@ -785,9 +727,9 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> EndRetrieveCommodityData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> EndRetrieveCommodityData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData>)(base.EndInvoke("RetrieveCommodityData", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData>)(base.EndInvoke("RetrieveCommodityData", _args, result)));
                 return _result;
             }
             
@@ -797,9 +739,9 @@ namespace GreenField.ServiceCaller.ModelFXDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> EndRetrieveCommoditySelectionData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> EndRetrieveCommoditySelectionData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.ModelFXDefinitions.FXCommodityData>)(base.EndInvoke("RetrieveCommoditySelectionData", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.FXCommodityData>)(base.EndInvoke("RetrieveCommoditySelectionData", _args, result)));
                 return _result;
             }
         }

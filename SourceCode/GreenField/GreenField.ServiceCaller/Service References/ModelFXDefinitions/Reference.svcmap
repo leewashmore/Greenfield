@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="2bf1ea15-ac25-4eb5-a554-294d804f7bb8" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:59430/Services/ModelFXOperations.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ModelFXOperations.xsd" MetadataType="Schema" ID="7c467830-5a10-46fb-8e14-815b91e2dafd" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="ModelFXOperations1.xsd" MetadataType="Schema" ID="902f0ec7-f347-442f-985b-033cc42fee48" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="ModelFXOperations2.xsd" MetadataType="Schema" ID="8e2806fc-cf0c-4d73-a744-544ce994f042" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="ModelFXOperations.disco" MetadataType="Disco" ID="b3873a25-eeb0-4263-8679-2c1774bd36e5" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?disco" />
+    <MetadataFile FileName="ModelFXOperations3.xsd" MetadataType="Schema" ID="ec25e50a-4ecb-4f2f-8204-6d976bba88e6" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="ModelFXOperations.wsdl" MetadataType="Wsdl" ID="3c642f0b-340e-4136-b7cd-6127af672f30" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?wsdl" />
+    <MetadataFile FileName="ModelFXOperations4.xsd" MetadataType="Schema" ID="f167c6bc-ff74-4e40-ad8b-9879fd26ae7a" SourceId="1" SourceUrl="http://localhost:59430/Services/ModelFXOperations.svc?xsd=xsd4" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
