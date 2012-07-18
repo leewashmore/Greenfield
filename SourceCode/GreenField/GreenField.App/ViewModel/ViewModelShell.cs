@@ -246,12 +246,14 @@ namespace GreenField.App.ViewModel
                 {
                     if (value != String.Empty && EntitySelectionInfo != null)
                         SecuritySelectorInfo = EntitySelectionInfo
-                                    .Where(record => record.LongName.ToLower().Contains(value.ToLower())
+                                    .Where(
+                                    record => record.Type == EntityType.SECURITY &&
+                                    (record.LongName.ToLower().Contains(value.ToLower())
                                         || record.ShortName.ToLower().Contains(value.ToLower())
-                                        || record.InstrumentID.ToLower().Contains(value.ToLower()))
+                                        || record.InstrumentID.ToLower().Contains(value.ToLower())))
                                     .ToList();
                     else
-                        SecuritySelectorInfo = EntitySelectionInfo;
+                        SecuritySelectorInfo = EntitySelectionInfo.Where(record => record.Type == EntityType.SECURITY).ToList();
                 }
             }
         }
