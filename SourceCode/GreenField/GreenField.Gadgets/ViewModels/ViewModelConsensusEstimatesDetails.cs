@@ -138,7 +138,7 @@ namespace GreenField.Gadgets.ViewModels
                         if (IssuerReferenceInfo.CurrencyCode != "USD")
                             CurrencyInfo.Add("USD");
 
-                        SelectedCurrency = CurrencyInfo[0];
+                        SelectedCurrency = "USD";
                     }
                 }
             }
@@ -253,13 +253,10 @@ namespace GreenField.Gadgets.ViewModels
         {
             get { return _selectedCurrency; }
             set
-            {               
-                if (_selectedCurrency != value)
-                {
+            {            
                     _selectedCurrency = value;
                     RaisePropertyChanged(() => this.SelectedCurrency);
                     RetrieveConsensusEstimatesDetailsData();
-                }
             }
         }
         #endregion

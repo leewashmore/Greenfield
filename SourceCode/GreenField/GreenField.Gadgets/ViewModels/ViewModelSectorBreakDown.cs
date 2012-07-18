@@ -337,13 +337,11 @@ namespace GreenField.Gadgets.ViewModels
                     }
 
                     SectorBreakdownInfo = new ObservableCollection<SectorBreakdownData>(templist);
-
+                   
+                    SectorSpecificInfo = new ObservableCollection<SectorSpecificData>();
                     foreach (SectorBreakdownData item in SectorBreakdownInfo)
                     {
-                        if (SectorSpecificInfo == null)
-                        {
-                            SectorSpecificInfo = new ObservableCollection<SectorSpecificData>();
-                        }
+                       
                         if (SectorSpecificInfo.Where(i => i.Sector == item.Sector).Count().Equals(0))
                         {
                             SectorSpecificInfo.Add(new SectorSpecificData()
