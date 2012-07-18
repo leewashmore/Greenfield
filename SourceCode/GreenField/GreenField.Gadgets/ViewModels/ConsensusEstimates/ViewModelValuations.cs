@@ -224,9 +224,9 @@ namespace GreenField.Gadgets.ViewModels
         private String _selectedCurrency = "USD";
         public String SelectedCurrency
         {
-            get 
+            get
             {
-                return _selectedCurrency; 
+                return _selectedCurrency;
             }
             set
             {
@@ -438,12 +438,15 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                BusyIndicatorNotification();
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorNotification();
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -512,7 +515,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             catch (Exception ex)
             {
-                
+
             }
         }
 

@@ -40,7 +40,7 @@ namespace GreenField.Gadgets.Views
 
             PeriodColumns.PeriodColumnUpdate += (e) =>
             {
-                if (e.PeriodColumnNamespace == typeof(ViewModelConsensusEstimatesDetails).FullName)
+                if (e.PeriodColumnNamespace == typeof(ViewModelEstimates).FullName)
                 {
                     PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimate, e, false);
                     _entitySelectionData = e.EntitySelectionData;

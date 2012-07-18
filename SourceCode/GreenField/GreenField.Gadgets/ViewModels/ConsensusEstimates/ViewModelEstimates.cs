@@ -66,6 +66,22 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
 
+            PeriodColumns.PeriodColumnNavigate += (e) =>
+            {
+                if (e.PeriodColumnNamespace == GetType().FullName)
+                {
+                    BusyIndicatorNotification(true, "Retrieving data for updated time span");
+                    PeriodRecord periodRecord = new PeriodRecord();
+                    ConsensusEstimateDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(ConsensusEstimateDetailInfo, out periodRecord,
+                        PeriodColumns.SetPeriodRecord(e.PeriodColumnNavigationDirection == PeriodColumns.NavigationDirection.LEFT
+                            ? --Iterator : ++Iterator));
+
+                    PeriodRecord = periodRecord;
+                    PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
+                    BusyIndicatorNotification();
+                }
+            };
+
             EntitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
             if (_eventAggregator != null)
             {
@@ -152,7 +168,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-        
+
         #endregion
 
         #region Busy Indicator
@@ -372,15 +388,16 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private void RetrieveConsensusEstimatesMedianData()
         {
-            if (IssuerReferenceInfo != null || SelectedCurrency != null)
+            if (IssuerReferenceInfo != null)
             {
-                if (IssuerReferenceInfo.IssuerId != null)
+                if (SelectedCurrency != null)
                 {
-                    _dbInteractivity.RetrieveConsensusEstimatesMedianData(IssuerReferenceInfo.IssuerId,
-                                                                                   SelectedPeriodType,
-                                                                                   SelectedCurrency,
-                                                                                   RetrieveConsensusEstimateDataCallbackMethod);
-                    BusyIndicatorNotification(true, "Updating information based on selected Security");
+                    if (IssuerReferenceInfo.IssuerId != null)
+                    {
+                        _dbInteractivity.RetrieveConsensusEstimatesMedianData
+                            (IssuerReferenceInfo.IssuerId, SelectedPeriodType, SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
+                        BusyIndicatorNotification(true, "Updating information based on selected Security");
+                    }
                 }
             }
         }
@@ -474,12 +491,15 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                BusyIndicatorNotification();
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorNotification();
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
