@@ -457,6 +457,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+        /// <summary>
+        /// Plotted Series on the Chart
+        /// </summary>
         private RangeObservableCollection<PricingReferenceData> _plottedSeries;
         public RangeObservableCollection<PricingReferenceData> PlottedSeries
         {
@@ -532,6 +535,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Bound to ChartArea in View(Pricing Chart)
+        /// </summary>
         private ChartArea _chartAreaPricing;
         public ChartArea ChartAreaPricing
         {
@@ -545,6 +551,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Bound to ChartArea in View(Volume Chart)
+        /// </summary>
         private ChartArea _chartAreaVolume;
         public ChartArea ChartAreaVolume
         {
@@ -920,6 +929,11 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
+        /// <summary>
+        /// Checking the status of Chart, whether zoom can be executed or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
         {
             ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
@@ -1035,6 +1049,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region EventUnSubscribe
 
+        /// <summary>
+        /// Events Unsubscribe
+        /// </summary>
         public void Dispose()
         {
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
