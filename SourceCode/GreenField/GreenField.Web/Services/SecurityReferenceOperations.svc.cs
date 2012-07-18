@@ -291,7 +291,7 @@ namespace GreenField.Web.Services
 
                             List<DimensionEntitiesService.GF_PRICING_BASEVIEW> dimensionServicePricingData =
                                 entity.GF_PRICING_BASEVIEW.Where(r => (r.INSTRUMENT_ID == entityInstrumentID) && (r.FROMDATE >=
-                                    startDate) && (r.FROMDATE <= endDate)).OrderByDescending(res => res.FROMDATE).ToList();
+                                    startDate) && (r.FROMDATE <= endDate) && (r.DAILY_SPOT_FX != 0)).OrderByDescending(res => res.FROMDATE).ToList();
 
 
                             if (dimensionServicePricingData.Count != 0)
@@ -435,7 +435,7 @@ namespace GreenField.Web.Services
             }
         }
 
-        
+
         /// <summary>
         /// retrieve list of securities for security selector
         /// </summary>
@@ -502,7 +502,7 @@ namespace GreenField.Web.Services
             try
             {
                 List<EntitySelectionData> result = new List<EntitySelectionData>();
-               
+
                 //List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIB_DIST_BM> benchmarkSelectionData = DimensionEntity.GF_PERF_DAILY_ATTRIB_DIST_BM
                 //    .OrderBy(record => record.BM).ToList();
 
