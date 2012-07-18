@@ -535,11 +535,11 @@ namespace GreenField.Gadgets.Helpers
             #endregion
 
             #region Consensus Estimate Detail
-            if (periodColumnInfo is List<ConsensusEstimateDetailedData>)
+            if (periodColumnInfo is List<ConsensusEstimateDetail>)
             {
-                List<ConsensusEstimateDetailedData> consensusEstimateDetailedData = (periodColumnInfo as List<ConsensusEstimateDetailedData>);
+                List<ConsensusEstimateDetail> consensusEstimateDetailedData = (periodColumnInfo as List<ConsensusEstimateDetail>);
 
-                List<String> distinctDataDescriptors = consensusEstimateDetailedData.Select(record => record.ESTIMATE_TYPE).Distinct().ToList();
+                List<String> distinctDataDescriptors = consensusEstimateDetailedData.Select(record => record.EstimateDesc).Distinct().ToList();
 
                 foreach (string dataDesc in distinctDataDescriptors)
                 {
@@ -571,21 +571,21 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                     #region Year Two
-                    ConsensusEstimateDetailedData yearTwoData = consensusEstimateDetailedData
-                                    .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                        record.PERIOD_YEAR == period.YearTwo &&
-                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearTwoIsHistorical ? "ACTUAL" : "ESTIMATE") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                    ConsensusEstimateDetail yearTwoData = consensusEstimateDetailedData
+                                    .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PeriodYear == period.YearTwo &&
+                                        record.AmountType.ToUpper().Trim() == (period.YearTwoIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                        record.PeriodType.ToUpper().Trim() == "A"
                                         )
                                     .FirstOrDefault();
 
                     if (yearTwoData == null)
                     {
                         yearTwoData = consensusEstimateDetailedData
-                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                record.PERIOD_YEAR == period.YearTwo &&
-                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearTwoIsHistorical ? "ESTIMATE" : "ACTUAL") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                            .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PeriodYear == period.YearTwo &&
+                                record.AmountType.ToUpper().Trim() == (period.YearTwoIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                record.PeriodType.ToUpper().Trim() == "A"
                                 )
                             .FirstOrDefault();
                         if (yearTwoData != null)
@@ -596,21 +596,21 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                     #region Year Three
-                    ConsensusEstimateDetailedData yearThreeData = consensusEstimateDetailedData
-                                    .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                        record.PERIOD_YEAR == period.YearThree &&
-                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearThreeIsHistorical ? "ACTUAL" : "ESTIMATE") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                    ConsensusEstimateDetail yearThreeData = consensusEstimateDetailedData
+                                    .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PeriodYear == period.YearThree &&
+                                        record.AmountType.ToUpper().Trim() == (period.YearThreeIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                        record.PeriodType.ToUpper().Trim() == "A"
                                         )
                                     .FirstOrDefault();
 
                     if (yearThreeData == null)
                     {
                         yearThreeData = consensusEstimateDetailedData
-                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                record.PERIOD_YEAR == period.YearThree &&
-                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearThreeIsHistorical ? "ESTIMATE" : "ACTUAL") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                            .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PeriodYear == period.YearThree &&
+                                record.AmountType.ToUpper().Trim() == (period.YearThreeIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                record.PeriodType.ToUpper().Trim() == "A"
                                 )
                             .FirstOrDefault();
                         if (yearThreeData != null)
@@ -621,21 +621,21 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                     #region Year Four
-                    ConsensusEstimateDetailedData yearFourData = consensusEstimateDetailedData
-                                    .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                        record.PERIOD_YEAR == period.YearFour &&
-                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFourIsHistorical ? "ACTUAL" : "ESTIMATE") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                    ConsensusEstimateDetail yearFourData = consensusEstimateDetailedData
+                                    .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PeriodYear == period.YearFour &&
+                                        record.AmountType.ToUpper().Trim() == (period.YearFourIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                        record.PeriodType.ToUpper().Trim() == "A"
                                         )
                                     .FirstOrDefault();
 
                     if (yearFourData == null)
                     {
                         yearFourData = consensusEstimateDetailedData
-                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                record.PERIOD_YEAR == period.YearFour &&
-                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFourIsHistorical ? "ESTIMATE" : "ACTUAL") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                            .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PeriodYear == period.YearFour &&
+                                record.AmountType.ToUpper().Trim() == (period.YearFourIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                record.PeriodType.ToUpper().Trim() == "A"
                                 )
                             .FirstOrDefault();
                         if (yearFourData != null)
@@ -646,21 +646,21 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                     #region Year Five
-                    ConsensusEstimateDetailedData yearFiveData = consensusEstimateDetailedData
-                                    .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                        record.PERIOD_YEAR == period.YearFive &&
-                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFiveIsHistorical ? "ACTUAL" : "ESTIMATE") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                    ConsensusEstimateDetail yearFiveData = consensusEstimateDetailedData
+                                    .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PeriodYear == period.YearFive &&
+                                        record.AmountType.ToUpper().Trim() == (period.YearFiveIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                        record.PeriodType.ToUpper().Trim() == "A"
                                         )
                                     .FirstOrDefault();
 
                     if (yearFiveData == null)
                     {
                         yearFiveData = consensusEstimateDetailedData
-                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                record.PERIOD_YEAR == period.YearFive &&
-                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearFiveIsHistorical ? "ESTIMATE" : "ACTUAL") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                            .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PeriodYear == period.YearFive &&
+                                record.AmountType.ToUpper().Trim() == (period.YearFiveIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                record.PeriodType.ToUpper().Trim() == "A"
                                 )
                             .FirstOrDefault();
                         if (yearFiveData != null)
@@ -671,21 +671,21 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                     #region Year Six
-                    ConsensusEstimateDetailedData yearSixData = consensusEstimateDetailedData
-                                    .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                        record.PERIOD_YEAR == period.YearSix &&
-                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSixIsHistorical ? "ACTUAL" : "ESTIMATE") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                    ConsensusEstimateDetail yearSixData = consensusEstimateDetailedData
+                                    .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PeriodYear == period.YearSix &&
+                                        record.AmountType.ToUpper().Trim() == (period.YearSixIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                        record.PeriodType.ToUpper().Trim() == "A"
                                         )
                                     .FirstOrDefault();
 
                     if (yearSixData == null)
                     {
                         yearSixData = consensusEstimateDetailedData
-                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                record.PERIOD_YEAR == period.YearSix &&
-                                record.AMOUNT_TYPE.ToUpper().Trim() == (period.YearSixIsHistorical ? "ESTIMATE" : "ACTUAL") &&
-                                record.PERIOD_TYPE.ToUpper().Trim() == "A"
+                            .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                record.PeriodYear == period.YearSix &&
+                                record.AmountType.ToUpper().Trim() == (period.YearSixIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                record.PeriodType.ToUpper().Trim() == "A"
                                 )
                             .FirstOrDefault();
                         if (yearSixData != null)
@@ -724,21 +724,21 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                     #region Quarter Two
-                    ConsensusEstimateDetailedData quarterTwoData = consensusEstimateDetailedData
-                                                .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                                    record.PERIOD_YEAR == period.QuarterTwoYear &&
-                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterTwoIsHistorical ? "ACTUAL" : "ESTIMATE") &&
-                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim()
+                    ConsensusEstimateDetail quarterTwoData = consensusEstimateDetailedData
+                                                .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PeriodYear == period.QuarterTwoYear &&
+                                                    record.AmountType.ToUpper().Trim() == (period.QuarterTwoIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                                    record.PeriodType.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim()
                                                     )
                                                 .FirstOrDefault();
 
                     if (quarterTwoData == null)
                     {
                         quarterTwoData = consensusEstimateDetailedData
-                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                        record.PERIOD_YEAR == period.QuarterTwoYear &&
-                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterTwoIsHistorical ? "ESTIMATE" : "ACTUAL") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim()
+                            .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PeriodYear == period.QuarterTwoYear &&
+                                        record.AmountType.ToUpper().Trim() == (period.QuarterTwoIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                        record.PeriodType.ToUpper().Trim() == "Q" + period.QuarterTwoQuarter.ToString().ToUpper().Trim()
                                         )
                                     .FirstOrDefault();
                         if (quarterTwoData != null)
@@ -749,21 +749,21 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                     #region Quarter Three
-                    ConsensusEstimateDetailedData quarterThreeData = consensusEstimateDetailedData
-                                                .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                                    record.PERIOD_YEAR == period.QuarterThreeYear &&
-                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterThreeIsHistorical ? "ACTUAL" : "ESTIMATE") &&
-                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim()
+                    ConsensusEstimateDetail quarterThreeData = consensusEstimateDetailedData
+                                                .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PeriodYear == period.QuarterThreeYear &&
+                                                    record.AmountType.ToUpper().Trim() == (period.QuarterThreeIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                                    record.PeriodType.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim()
                                                     )
                                                 .FirstOrDefault();
 
                     if (quarterThreeData == null)
                     {
                         quarterThreeData = consensusEstimateDetailedData
-                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                        record.PERIOD_YEAR == period.QuarterThreeYear &&
-                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterThreeIsHistorical ? "ESTIMATE" : "ACTUAL") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim()
+                            .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PeriodYear == period.QuarterThreeYear &&
+                                        record.AmountType.ToUpper().Trim() == (period.QuarterThreeIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                        record.PeriodType.ToUpper().Trim() == "Q" + period.QuarterThreeQuarter.ToString().ToUpper().Trim()
                                         )
                                     .FirstOrDefault();
                         if (quarterThreeData != null)
@@ -774,21 +774,21 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                     #region Quarter Four
-                    ConsensusEstimateDetailedData quarterFourData = consensusEstimateDetailedData
-                                                .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                                    record.PERIOD_YEAR == period.QuarterFourYear &&
-                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFourIsHistorical ? "ACTUAL" : "ESTIMATE") &&
-                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim()
+                    ConsensusEstimateDetail quarterFourData = consensusEstimateDetailedData
+                                                .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PeriodYear == period.QuarterFourYear &&
+                                                    record.AmountType.ToUpper().Trim() == (period.QuarterFourIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                                    record.PeriodType.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim()
                                                     )
                                                 .FirstOrDefault();
 
                     if (quarterFourData == null)
                     {
                         quarterFourData = consensusEstimateDetailedData
-                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                        record.PERIOD_YEAR == period.QuarterFourYear &&
-                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFourIsHistorical ? "ESTIMATE" : "ACTUAL") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim()
+                            .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PeriodYear == period.QuarterFourYear &&
+                                        record.AmountType.ToUpper().Trim() == (period.QuarterFourIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                        record.PeriodType.ToUpper().Trim() == "Q" + period.QuarterFourQuarter.ToString().ToUpper().Trim()
                                         )
                                     .FirstOrDefault();
                         if (quarterFourData != null)
@@ -799,21 +799,21 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                     #region Quarter Five
-                    ConsensusEstimateDetailedData quarterFiveData = consensusEstimateDetailedData
-                                                .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                                    record.PERIOD_YEAR == period.QuarterFiveYear &&
-                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFiveIsHistorical ? "ACTUAL" : "ESTIMATE") &&
-                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim()
+                    ConsensusEstimateDetail quarterFiveData = consensusEstimateDetailedData
+                                                .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PeriodYear == period.QuarterFiveYear &&
+                                                    record.AmountType.ToUpper().Trim() == (period.QuarterFiveIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                                    record.PeriodType.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim()
                                                     )
                                                 .FirstOrDefault();
 
                     if (quarterFiveData == null)
                     {
                         quarterFiveData = consensusEstimateDetailedData
-                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                        record.PERIOD_YEAR == period.QuarterFiveYear &&
-                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterFiveIsHistorical ? "ESTIMATE" : "ACTUAL") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim()
+                            .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PeriodYear == period.QuarterFiveYear &&
+                                        record.AmountType.ToUpper().Trim() == (period.QuarterFiveIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                        record.PeriodType.ToUpper().Trim() == "Q" + period.QuarterFiveQuarter.ToString().ToUpper().Trim()
                                         )
                                     .FirstOrDefault();
                         if (quarterFiveData != null)
@@ -824,21 +824,21 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                     #region Quarter Six
-                    ConsensusEstimateDetailedData quarterSixData = consensusEstimateDetailedData
-                                                .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                                    record.PERIOD_YEAR == period.QuarterSixYear &&
-                                                    record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterSixIsHistorical ? "ACTUAL" : "ESTIMATE") &&
-                                                    record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim()
+                    ConsensusEstimateDetail quarterSixData = consensusEstimateDetailedData
+                                                .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                                    record.PeriodYear == period.QuarterSixYear &&
+                                                    record.AmountType.ToUpper().Trim() == (period.QuarterSixIsHistorical ? "ACTUAL" : "ESTIMATE") &&
+                                                    record.PeriodType.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim()
                                                     )
                                                 .FirstOrDefault();
 
                     if (quarterSixData == null)
                     {
                         quarterSixData = consensusEstimateDetailedData
-                            .Where(record => record.ESTIMATE_TYPE.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
-                                        record.PERIOD_YEAR == period.QuarterSixYear &&
-                                        record.AMOUNT_TYPE.ToUpper().Trim() == (period.QuarterSixIsHistorical ? "ESTIMATE" : "ACTUAL") &&
-                                        record.PERIOD_TYPE.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim()
+                            .Where(record => record.EstimateDesc.ToUpper().Trim() == dataDesc.ToUpper().Trim() &&
+                                        record.PeriodYear == period.QuarterSixYear &&
+                                        record.AmountType.ToUpper().Trim() == (period.QuarterSixIsHistorical ? "ESTIMATE" : "ACTUAL") &&
+                                        record.PeriodType.ToUpper().Trim() == "Q" + period.QuarterSixQuarter.ToString().ToUpper().Trim()
                                         )
                                     .FirstOrDefault();
                         if (quarterSixData != null)
@@ -850,6 +850,129 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                     #region Result Addition
+                    #region Consensus Median
+                    PeriodColumnDisplayData consensusMedianPeriodColumnData = new PeriodColumnDisplayData()
+                    {
+                        DATA_DESC = dataDesc,
+                        SUB_DATA_DESC = "Consensus Median",
+                    };
+
+                    if (yearTwoData != null)
+                        consensusMedianPeriodColumnData.YEAR_TWO = yearTwoData.Amount;
+                    if (yearThreeData != null)
+                        consensusMedianPeriodColumnData.YEAR_THREE = yearThreeData.Amount;
+                    if (yearFourData != null)
+                        consensusMedianPeriodColumnData.YEAR_FOUR = yearFourData.Amount;
+                    if (yearFiveData != null)
+                        consensusMedianPeriodColumnData.YEAR_FIVE = yearFiveData.Amount;
+                    if (yearSixData != null)
+                        consensusMedianPeriodColumnData.YEAR_SIX = yearSixData.Amount;
+                    if (quarterTwoData != null)
+                        consensusMedianPeriodColumnData.QUARTER_TWO = quarterTwoData.Amount;
+                    if (quarterThreeData != null)
+                        consensusMedianPeriodColumnData.QUARTER_THREE = quarterThreeData.Amount;
+                    if (quarterFourData != null)
+                        consensusMedianPeriodColumnData.QUARTER_FOUR = quarterFourData.Amount;
+                    if (quarterFiveData != null)
+                        consensusMedianPeriodColumnData.QUARTER_FIVE = quarterFiveData.Amount;
+                    if (quarterSixData != null)
+                        consensusMedianPeriodColumnData.QUARTER_SIX = quarterSixData.Amount;
+
+                    result.Add(consensusMedianPeriodColumnData);
+                    #endregion
+
+                    #region AshmoreEMM
+                    PeriodColumnDisplayData ashmoreEMMAmountPeriodColumnData = new PeriodColumnDisplayData()
+                    {
+                        DATA_DESC = dataDesc,
+                        SUB_DATA_DESC = "AshmoreEMM",
+                    };
+
+                    if (yearTwoData != null)
+                        ashmoreEMMAmountPeriodColumnData.YEAR_TWO = yearTwoData.AshmoreEmmAmount;
+                    if (yearThreeData != null)
+                        ashmoreEMMAmountPeriodColumnData.YEAR_THREE = yearThreeData.AshmoreEmmAmount;
+                    if (yearFourData != null)
+                        ashmoreEMMAmountPeriodColumnData.YEAR_FOUR = yearFourData.AshmoreEmmAmount;
+                    if (yearFiveData != null)
+                        ashmoreEMMAmountPeriodColumnData.YEAR_FIVE = yearFiveData.AshmoreEmmAmount;
+                    if (yearSixData != null)
+                        ashmoreEMMAmountPeriodColumnData.YEAR_SIX = yearSixData.AshmoreEmmAmount;
+                    if (quarterTwoData != null)
+                        ashmoreEMMAmountPeriodColumnData.QUARTER_TWO = quarterTwoData.AshmoreEmmAmount;
+                    if (quarterThreeData != null)
+                        ashmoreEMMAmountPeriodColumnData.QUARTER_THREE = quarterThreeData.AshmoreEmmAmount;
+                    if (quarterFourData != null)
+                        ashmoreEMMAmountPeriodColumnData.QUARTER_FOUR = quarterFourData.AshmoreEmmAmount;
+                    if (quarterFiveData != null)
+                        ashmoreEMMAmountPeriodColumnData.QUARTER_FIVE = quarterFiveData.AshmoreEmmAmount;
+                    if (quarterSixData != null)
+                        ashmoreEMMAmountPeriodColumnData.QUARTER_SIX = quarterSixData.AshmoreEmmAmount;
+
+                    result.Add(ashmoreEMMAmountPeriodColumnData);
+                    #endregion
+
+                    #region Variance%
+                    //PeriodColumnDisplayData variancePeriodColumnData = new PeriodColumnDisplayData()
+                    //{
+                    //    DATA_DESC = dataDesc,
+                    //    SUB_DATA_DESC = "AshmoreEMM",
+                    //};
+
+                    //if (yearTwoData != null)
+                    //    variancePeriodColumnData.YEAR_TWO = yearTwoData.Amount == 0 ;
+                    //if (yearThreeData != null)
+                    //    variancePeriodColumnData.YEAR_THREE = yearThreeData.AshmoreEmmAmount;
+                    //if (yearFourData != null)
+                    //    variancePeriodColumnData.YEAR_FOUR = yearFourData.AshmoreEmmAmount;
+                    //if (yearFiveData != null)
+                    //    variancePeriodColumnData.YEAR_FIVE = yearFiveData.AshmoreEmmAmount;
+                    //if (yearSixData != null)
+                    //    variancePeriodColumnData.YEAR_SIX = yearSixData.AshmoreEmmAmount;
+                    //if (quarterTwoData != null)
+                    //    variancePeriodColumnData.QUARTER_TWO = quarterTwoData.AshmoreEmmAmount;
+                    //if (quarterThreeData != null)
+                    //    variancePeriodColumnData.QUARTER_THREE = quarterThreeData.AshmoreEmmAmount;
+                    //if (quarterFourData != null)
+                    //    variancePeriodColumnData.QUARTER_FOUR = quarterFourData.AshmoreEmmAmount;
+                    //if (quarterFiveData != null)
+                    //    variancePeriodColumnData.QUARTER_FIVE = quarterFiveData.AshmoreEmmAmount;
+                    //if (quarterSixData != null)
+                    //    variancePeriodColumnData.QUARTER_SIX = quarterSixData.AshmoreEmmAmount;
+
+                    //result.Add(variancePeriodColumnData);
+                    #endregion
+
+                    #region Actual
+                    PeriodColumnDisplayData actualPeriodColumnData = new PeriodColumnDisplayData()
+                    {
+                        DATA_DESC = dataDesc,
+                        SUB_DATA_DESC = "Actual",
+                    };
+
+                    if (yearTwoData != null)
+                        actualPeriodColumnData.YEAR_TWO = yearTwoData.Actual;
+                    if (yearThreeData != null)
+                        actualPeriodColumnData.YEAR_THREE = yearThreeData.Actual;
+                    if (yearFourData != null)
+                        actualPeriodColumnData.YEAR_FOUR = yearFourData.Actual;
+                    if (yearFiveData != null)
+                        actualPeriodColumnData.YEAR_FIVE = yearFiveData.Actual;
+                    if (yearSixData != null)
+                        actualPeriodColumnData.YEAR_SIX = yearSixData.Actual;
+                    if (quarterTwoData != null)
+                        actualPeriodColumnData.QUARTER_TWO = quarterTwoData.Actual;
+                    if (quarterThreeData != null)
+                        actualPeriodColumnData.QUARTER_THREE = quarterThreeData.Actual;
+                    if (quarterFourData != null)
+                        actualPeriodColumnData.QUARTER_FOUR = quarterFourData.Actual;
+                    if (quarterFiveData != null)
+                        actualPeriodColumnData.QUARTER_FIVE = quarterFiveData.Actual;
+                    if (quarterSixData != null)
+                        actualPeriodColumnData.QUARTER_SIX = quarterSixData.Actual;
+
+                    result.Add(actualPeriodColumnData);
+                    #endregion
 
                     #region #Estimates
                     PeriodColumnDisplayData estimatePeriodColumnData = new PeriodColumnDisplayData()
@@ -860,25 +983,25 @@ namespace GreenField.Gadgets.Helpers
 
 
                     if (yearTwoData != null)
-                        estimatePeriodColumnData.YEAR_TWO = yearTwoData.NUMBER_OF_ESTIMATES;
+                        estimatePeriodColumnData.YEAR_TWO = yearTwoData.NumberOfEstimates;
                     if (yearThreeData != null)
-                        estimatePeriodColumnData.YEAR_THREE = yearThreeData.NUMBER_OF_ESTIMATES;
+                        estimatePeriodColumnData.YEAR_THREE = yearThreeData.NumberOfEstimates;
                     if (yearFourData != null)
-                        estimatePeriodColumnData.YEAR_FOUR = yearFourData.NUMBER_OF_ESTIMATES;
+                        estimatePeriodColumnData.YEAR_FOUR = yearFourData.NumberOfEstimates;
                     if (yearFiveData != null)
-                        estimatePeriodColumnData.YEAR_FIVE = yearFiveData.NUMBER_OF_ESTIMATES;
+                        estimatePeriodColumnData.YEAR_FIVE = yearFiveData.NumberOfEstimates;
                     if (yearSixData != null)
-                        estimatePeriodColumnData.YEAR_SIX = yearSixData.NUMBER_OF_ESTIMATES;
+                        estimatePeriodColumnData.YEAR_SIX = yearSixData.NumberOfEstimates;
                     if (quarterTwoData != null)
-                        estimatePeriodColumnData.QUARTER_TWO = quarterTwoData.NUMBER_OF_ESTIMATES;
+                        estimatePeriodColumnData.QUARTER_TWO = quarterTwoData.NumberOfEstimates;
                     if (quarterThreeData != null)
-                        estimatePeriodColumnData.QUARTER_THREE = quarterThreeData.NUMBER_OF_ESTIMATES;
+                        estimatePeriodColumnData.QUARTER_THREE = quarterThreeData.NumberOfEstimates;
                     if (quarterFourData != null)
-                        estimatePeriodColumnData.QUARTER_FOUR = quarterFourData.NUMBER_OF_ESTIMATES;
+                        estimatePeriodColumnData.QUARTER_FOUR = quarterFourData.NumberOfEstimates;
                     if (quarterFiveData != null)
-                        estimatePeriodColumnData.QUARTER_FIVE = quarterFiveData.NUMBER_OF_ESTIMATES;
+                        estimatePeriodColumnData.QUARTER_FIVE = quarterFiveData.NumberOfEstimates;
                     if (quarterSixData != null)
-                        estimatePeriodColumnData.QUARTER_SIX = quarterSixData.NUMBER_OF_ESTIMATES;
+                        estimatePeriodColumnData.QUARTER_SIX = quarterSixData.NumberOfEstimates;
 
                     result.Add(estimatePeriodColumnData);
                     #endregion
@@ -891,25 +1014,25 @@ namespace GreenField.Gadgets.Helpers
                     };
 
                     if (yearTwoData != null)
-                        highPeriodColumnData.YEAR_TWO = yearTwoData.HIGH;
+                        highPeriodColumnData.YEAR_TWO = yearTwoData.High;
                     if (yearThreeData != null)
-                        highPeriodColumnData.YEAR_THREE = yearThreeData.HIGH;
+                        highPeriodColumnData.YEAR_THREE = yearThreeData.High;
                     if (yearFourData != null)
-                        highPeriodColumnData.YEAR_FOUR = yearFourData.HIGH;
+                        highPeriodColumnData.YEAR_FOUR = yearFourData.High;
                     if (yearFiveData != null)
-                        highPeriodColumnData.YEAR_FIVE = yearFiveData.HIGH;
+                        highPeriodColumnData.YEAR_FIVE = yearFiveData.High;
                     if (yearSixData != null)
-                        highPeriodColumnData.YEAR_SIX = yearSixData.HIGH;
+                        highPeriodColumnData.YEAR_SIX = yearSixData.High;
                     if (quarterTwoData != null)
-                        highPeriodColumnData.QUARTER_TWO = quarterTwoData.HIGH;
+                        highPeriodColumnData.QUARTER_TWO = quarterTwoData.High;
                     if (quarterThreeData != null)
-                        highPeriodColumnData.QUARTER_THREE = quarterThreeData.HIGH;
+                        highPeriodColumnData.QUARTER_THREE = quarterThreeData.High;
                     if (quarterFourData != null)
-                        highPeriodColumnData.QUARTER_FOUR = quarterFourData.HIGH;
+                        highPeriodColumnData.QUARTER_FOUR = quarterFourData.High;
                     if (quarterFiveData != null)
-                        highPeriodColumnData.QUARTER_FIVE = quarterFiveData.HIGH;
+                        highPeriodColumnData.QUARTER_FIVE = quarterFiveData.High;
                     if (quarterSixData != null)
-                        highPeriodColumnData.QUARTER_SIX = quarterSixData.HIGH;
+                        highPeriodColumnData.QUARTER_SIX = quarterSixData.High;
 
                     result.Add(highPeriodColumnData);
                     #endregion
@@ -922,25 +1045,25 @@ namespace GreenField.Gadgets.Helpers
                     };
 
                     if (yearTwoData != null)
-                        lowPeriodColumnData.YEAR_TWO = yearTwoData.LOW;
+                        lowPeriodColumnData.YEAR_TWO = yearTwoData.Low;
                     if (yearThreeData != null)
-                        lowPeriodColumnData.YEAR_THREE = yearThreeData.LOW;
+                        lowPeriodColumnData.YEAR_THREE = yearThreeData.Low;
                     if (yearFourData != null)
-                        lowPeriodColumnData.YEAR_FOUR = yearFourData.LOW;
+                        lowPeriodColumnData.YEAR_FOUR = yearFourData.Low;
                     if (yearFiveData != null)
-                        lowPeriodColumnData.YEAR_FIVE = yearFiveData.LOW;
+                        lowPeriodColumnData.YEAR_FIVE = yearFiveData.Low;
                     if (yearSixData != null)
-                        lowPeriodColumnData.YEAR_SIX = yearSixData.LOW;
+                        lowPeriodColumnData.YEAR_SIX = yearSixData.Low;
                     if (quarterTwoData != null)
-                        lowPeriodColumnData.QUARTER_TWO = quarterTwoData.LOW;
+                        lowPeriodColumnData.QUARTER_TWO = quarterTwoData.Low;
                     if (quarterThreeData != null)
-                        lowPeriodColumnData.QUARTER_THREE = quarterThreeData.LOW;
+                        lowPeriodColumnData.QUARTER_THREE = quarterThreeData.Low;
                     if (quarterFourData != null)
-                        lowPeriodColumnData.QUARTER_FOUR = quarterFourData.LOW;
+                        lowPeriodColumnData.QUARTER_FOUR = quarterFourData.Low;
                     if (quarterFiveData != null)
-                        lowPeriodColumnData.QUARTER_FIVE = quarterFiveData.LOW;
+                        lowPeriodColumnData.QUARTER_FIVE = quarterFiveData.Low;
                     if (quarterSixData != null)
-                        lowPeriodColumnData.QUARTER_SIX = quarterSixData.LOW;
+                        lowPeriodColumnData.QUARTER_SIX = quarterSixData.Low;
 
                     result.Add(lowPeriodColumnData);
                     #endregion
@@ -953,59 +1076,90 @@ namespace GreenField.Gadgets.Helpers
                     };
 
                     if (yearTwoData != null)
-                        stdDevPeriodColumnData.YEAR_TWO = yearTwoData.STANDARD_DEVIATION;
+                        stdDevPeriodColumnData.YEAR_TWO = yearTwoData.StandardDeviation;
                     if (yearThreeData != null)
-                        stdDevPeriodColumnData.YEAR_THREE = yearThreeData.STANDARD_DEVIATION;
+                        stdDevPeriodColumnData.YEAR_THREE = yearThreeData.StandardDeviation;
                     if (yearFourData != null)
-                        stdDevPeriodColumnData.YEAR_FOUR = yearFourData.STANDARD_DEVIATION;
+                        stdDevPeriodColumnData.YEAR_FOUR = yearFourData.StandardDeviation;
                     if (yearFiveData != null)
-                        stdDevPeriodColumnData.YEAR_FIVE = yearFiveData.STANDARD_DEVIATION;
+                        stdDevPeriodColumnData.YEAR_FIVE = yearFiveData.StandardDeviation;
                     if (yearSixData != null)
-                        stdDevPeriodColumnData.YEAR_SIX = yearSixData.STANDARD_DEVIATION;
+                        stdDevPeriodColumnData.YEAR_SIX = yearSixData.StandardDeviation;
                     if (quarterTwoData != null)
-                        stdDevPeriodColumnData.QUARTER_TWO = quarterTwoData.STANDARD_DEVIATION;
+                        stdDevPeriodColumnData.QUARTER_TWO = quarterTwoData.StandardDeviation;
                     if (quarterThreeData != null)
-                        stdDevPeriodColumnData.QUARTER_THREE = quarterThreeData.STANDARD_DEVIATION;
+                        stdDevPeriodColumnData.QUARTER_THREE = quarterThreeData.StandardDeviation;
                     if (quarterFourData != null)
-                        stdDevPeriodColumnData.QUARTER_FOUR = quarterFourData.STANDARD_DEVIATION;
+                        stdDevPeriodColumnData.QUARTER_FOUR = quarterFourData.StandardDeviation;
                     if (quarterFiveData != null)
-                        stdDevPeriodColumnData.QUARTER_FIVE = quarterFiveData.STANDARD_DEVIATION;
+                        stdDevPeriodColumnData.QUARTER_FIVE = quarterFiveData.StandardDeviation;
                     if (quarterSixData != null)
-                        stdDevPeriodColumnData.QUARTER_SIX = quarterSixData.STANDARD_DEVIATION;
+                        stdDevPeriodColumnData.QUARTER_SIX = quarterSixData.StandardDeviation;
 
                     result.Add(stdDevPeriodColumnData);
-                    #endregion
+                    #endregion                 
 
-                    #region Consensus Median
-                    PeriodColumnDisplayData consensusMedianPeriodColumnData = new PeriodColumnDisplayData()
+                    #region Last Update
+                    PeriodColumnDisplayData lastUpdatePeriodColumnData = new PeriodColumnDisplayData()
                     {
                         DATA_DESC = dataDesc,
-                        SUB_DATA_DESC = "Consensus Median",
+                        SUB_DATA_DESC = "Last Update",
                     };
 
                     if (yearTwoData != null)
-                        consensusMedianPeriodColumnData.YEAR_TWO = yearTwoData.AMOUNT;
+                        lastUpdatePeriodColumnData.YEAR_TWO = yearTwoData.DataSourceDate.ToShortDateString().ToString();
                     if (yearThreeData != null)
-                        consensusMedianPeriodColumnData.YEAR_THREE = yearThreeData.AMOUNT;
+                        lastUpdatePeriodColumnData.YEAR_THREE = yearThreeData.DataSourceDate.ToShortDateString().ToString();
                     if (yearFourData != null)
-                        consensusMedianPeriodColumnData.YEAR_FOUR = yearFourData.AMOUNT;
+                        lastUpdatePeriodColumnData.YEAR_FOUR = yearFourData.DataSourceDate.ToShortDateString().ToString();
                     if (yearFiveData != null)
-                        consensusMedianPeriodColumnData.YEAR_FIVE = yearFiveData.AMOUNT;
+                        lastUpdatePeriodColumnData.YEAR_FIVE = yearFiveData.DataSourceDate.ToShortDateString().ToString();
                     if (yearSixData != null)
-                        consensusMedianPeriodColumnData.YEAR_SIX = yearSixData.AMOUNT;
+                        lastUpdatePeriodColumnData.YEAR_SIX = yearSixData.DataSourceDate.ToShortDateString().ToString();
                     if (quarterTwoData != null)
-                        consensusMedianPeriodColumnData.QUARTER_TWO = quarterTwoData.AMOUNT;
+                        lastUpdatePeriodColumnData.QUARTER_TWO = quarterTwoData.DataSourceDate.ToShortDateString().ToString();
                     if (quarterThreeData != null)
-                        consensusMedianPeriodColumnData.QUARTER_THREE = quarterThreeData.AMOUNT;
+                        lastUpdatePeriodColumnData.QUARTER_THREE = quarterThreeData.DataSourceDate.ToShortDateString().ToString();
                     if (quarterFourData != null)
-                        consensusMedianPeriodColumnData.QUARTER_FOUR = quarterFourData.AMOUNT;
+                        lastUpdatePeriodColumnData.QUARTER_FOUR = quarterFourData.DataSourceDate.ToShortDateString().ToString();
                     if (quarterFiveData != null)
-                        consensusMedianPeriodColumnData.QUARTER_FIVE = quarterFiveData.AMOUNT;
+                        lastUpdatePeriodColumnData.QUARTER_FIVE = quarterFiveData.DataSourceDate.ToShortDateString().ToString();
                     if (quarterSixData != null)
-                        consensusMedianPeriodColumnData.QUARTER_SIX = quarterSixData.AMOUNT;
+                        lastUpdatePeriodColumnData.QUARTER_SIX = quarterSixData.DataSourceDate.ToShortDateString().ToString();
 
-                    result.Add(consensusMedianPeriodColumnData);
-                    #endregion
+                    result.Add(lastUpdatePeriodColumnData);
+                    #endregion                 
+
+                    #region Reported Currency
+                    PeriodColumnDisplayData currencyPeriodColumnData = new PeriodColumnDisplayData()
+                    {
+                        DATA_DESC = dataDesc,
+                        SUB_DATA_DESC = "Reported Currency",
+                    };
+
+                    if (yearTwoData != null)
+                        currencyPeriodColumnData.YEAR_TWO = yearTwoData.SourceCurrency;
+                    if (yearThreeData != null)
+                        currencyPeriodColumnData.YEAR_THREE = yearThreeData.SourceCurrency;
+                    if (yearFourData != null)
+                        currencyPeriodColumnData.YEAR_FOUR = yearFourData.SourceCurrency;
+                    if (yearFiveData != null)
+                        currencyPeriodColumnData.YEAR_FIVE = yearFiveData.SourceCurrency;
+                    if (yearSixData != null)
+                        currencyPeriodColumnData.YEAR_SIX = yearSixData.SourceCurrency;
+                    if (quarterTwoData != null)
+                        currencyPeriodColumnData.QUARTER_TWO = quarterTwoData.SourceCurrency;
+                    if (quarterThreeData != null)
+                        currencyPeriodColumnData.QUARTER_THREE = quarterThreeData.SourceCurrency;
+                    if (quarterFourData != null)
+                        currencyPeriodColumnData.QUARTER_FOUR = quarterFourData.SourceCurrency;
+                    if (quarterFiveData != null)
+                        currencyPeriodColumnData.QUARTER_FIVE = quarterFiveData.SourceCurrency;
+                    if (quarterSixData != null)
+                        currencyPeriodColumnData.QUARTER_SIX = quarterSixData.SourceCurrency;
+
+                    result.Add(currencyPeriodColumnData);
+                    #endregion                 
 
                     #endregion
                 }

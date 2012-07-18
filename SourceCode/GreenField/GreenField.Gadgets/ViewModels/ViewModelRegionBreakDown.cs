@@ -369,12 +369,11 @@ namespace GreenField.Gadgets.ViewModels
 
 
                     RegionBreakdownInfo = new ObservableCollection<RegionBreakdownData>(templist);
+                   
+                    RegionSpecificInfo = new ObservableCollection<RegionSpecificData>();
                     foreach (RegionBreakdownData item in RegionBreakdownInfo)
                     {
-                        if (RegionSpecificInfo == null)
-                        {
-                            RegionSpecificInfo = new ObservableCollection<RegionSpecificData>();
-                        }
+                        
                         if (RegionSpecificInfo.Where(i => i.Region == item.Region).Count().Equals(0))
                         {
                             RegionSpecificInfo.Add(new RegionSpecificData()

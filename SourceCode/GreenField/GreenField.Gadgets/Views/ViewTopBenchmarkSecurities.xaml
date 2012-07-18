@@ -22,8 +22,7 @@
         <Grid Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height= "Auto" />
-                <RowDefinition Height="Auto"/>
-               
+                <RowDefinition Height="Auto"/>               
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Text="Top 10 Benchmark Securities" HorizontalAlignment="Center" VerticalAlignment="Top"  Height="15"/>
             <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"

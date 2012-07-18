@@ -445,7 +445,7 @@ namespace GreenField.Web.Services
                     #endregion
 
                     List<GF_PRICING_BASEVIEW> dimensionSecurityPrice = entity.GF_PRICING_BASEVIEW.
-                        Where(a => (a.ISSUE_NAME == securityLongName) && (a.FROMDATE >= objStartDate.Date)).OrderByDescending(a => a.FROMDATE).ToList();
+                        Where(a => (a.ISSUE_NAME == securityLongName) && (a.FROMDATE >= objStartDate.Date) && (a.DAILY_SPOT_FX != 0)).OrderByDescending(a => a.FROMDATE).ToList();
                     result = ChartExtensionCalculations.CalculateSecurityPricing(dimensionSecurityPrice);
                 }
 
@@ -524,7 +524,7 @@ namespace GreenField.Web.Services
                         FilterName = item.AGG_LVL_1_LONG_NAME
                     });
                 }
-            }           
+            }
 
             return result;
         }
@@ -1049,16 +1049,15 @@ namespace GreenField.Web.Services
                 int? status = entity.UpdateMarketPerformanceSnapshot(updateXML).FirstOrDefault();
 
                 if (status <= -10)
-                    throw new NotImplementedException("Error["+ status.ToString() + "]: Snapshot Creation Failed");
-                
+                    throw new NotImplementedException("Error[" + status.ToString() + "]: Snapshot Creation Failed");
+
                 tblMarketSnapshotPreference snapshotRecord = entity.tblMarketSnapshotPreferences.Where(record => record.SnapshotPreferenceId == status).FirstOrDefault();
 
-                if(snapshotRecord == null)
+                if (snapshotRecord == null)
                     return null;
-                
-                MarketSnapshotSelectionData marketSnapshotSelectionData = new MarketSnapshotSelectionData() 
-                { SnapshotName = snapshotRecord.SnapshotName, SnapshotPreferenceId = snapshotRecord.SnapshotPreferenceId };
-                
+
+                MarketSnapshotSelectionData marketSnapshotSelectionData = new MarketSnapshotSelectionData() { SnapshotName = snapshotRecord.SnapshotName, SnapshotPreferenceId = snapshotRecord.SnapshotPreferenceId };
+
                 List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(Convert.ToInt32(status));
                 List<MarketPerformanceSnapshotData> marketPerformanceSnapshotData = RetrieveMarketPerformanceSnapshotData(marketSnapshotPreference);
 
@@ -1327,7 +1326,7 @@ namespace GreenField.Web.Services
                                                                        t.POR_RC_MARKET_VALUE != 0 &&
                                                                        t.AGG_LVL_1 == countryID &&
                                                                        t.GICS_LVL1 == sectorID).ToList();
-                } 
+                }
                 #endregion
 
                 if (data.Count.Equals(0))
@@ -1419,13 +1418,13 @@ namespace GreenField.Web.Services
                                                                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                        t.NODE_NAME == "GICS Level 1" &&
                                                                        t.POR_RC_MARKET_VALUE != 0 &&
-									                                   t.AGG_LVL_1_LONG_NAME != "-" &&
+                                                                       t.AGG_LVL_1_LONG_NAME != "-" &&
                                                                        t.AGG_LVL_1_LONG_NAME != null).ToList();
                 }
 
                 else if (countryID == null && sectorID != null)
                 {
-                    data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t =>  t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
+                    data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                         t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                         t.NODE_NAME == "GICS Level 1" &&
                                                                         t.POR_RC_MARKET_VALUE != 0 &&
@@ -2495,8 +2494,8 @@ namespace GreenField.Web.Services
                 }
                 else
                 {
-                   attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
-                   attributionData = attributionData.Distinct(customComparer).ToList();
+                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
+                    attributionData = attributionData.Distinct(customComparer).ToList();
                 }
                 if (attributionData.Count == 0 || attributionData == null)
                     continue;
@@ -2647,7 +2646,7 @@ namespace GreenField.Web.Services
                     && (row1.TO_DATE.Equals(row2.TO_DATE))
                     && (row1.NODE_NAME.ToUpper().Trim().Equals(row2.NODE_NAME.ToUpper().Trim()) && (row1.PORTFOLIO.ToUpper().Trim() == row2.PORTFOLIO.ToUpper().Trim()));
             }
-                        
+
             public override int GetHashCode(GF_PERF_DAILY_ATTRIBUTION data)
             {
                 if (data.AGG_LVL_1_LONG_NAME == null || data.NODE_NAME == null || data.TO_DATE == null || data.PORTFOLIO == null)

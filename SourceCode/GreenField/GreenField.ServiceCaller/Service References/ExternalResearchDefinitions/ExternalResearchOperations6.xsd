@@ -29,39 +29,6 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="FinancialStatementData" nillable="true" type="tns:FinancialStatementData" />
-  <xs:complexType name="ArrayOfConsensusEstimateDetailedData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="ConsensusEstimateDetailedData" nillable="true" type="tns:ConsensusEstimateDetailedData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfConsensusEstimateDetailedData" nillable="true" type="tns:ArrayOfConsensusEstimateDetailedData" />
-  <xs:complexType name="ConsensusEstimateDetailedData">
-    <xs:complexContent mixed="false">
-      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:ComplexObject">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="ACTUAL" type="xs:decimal" />
-          <xs:element minOccurs="0" name="AMOUNT" type="xs:decimal" />
-          <xs:element minOccurs="0" name="AMOUNT_TYPE" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ASHMOREEMM_AMOUNT" nillable="true" type="xs:decimal" />
-          <xs:element minOccurs="0" name="DATA_SOURCE" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="DATA_SOURCE_DATE" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="ESTIMATE_DESC" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ESTIMATE_ID" type="xs:int" />
-          <xs:element minOccurs="0" name="ESTIMATE_TYPE" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="HIGH" type="xs:decimal" />
-          <xs:element minOccurs="0" name="ISSUER_ID" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="LOW" type="xs:decimal" />
-          <xs:element minOccurs="0" name="NUMBER_OF_ESTIMATES" type="xs:int" />
-          <xs:element minOccurs="0" name="PERIOD_TYPE" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="PERIOD_YEAR" type="xs:int" />
-          <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="SOURCE_CURRENCY" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="STANDARD_DEVIATION" type="xs:decimal" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="ConsensusEstimateDetailedData" nillable="true" type="tns:ConsensusEstimateDetailedData" />
   <xs:complexType name="ArrayOfRatioComparisonData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="RatioComparisonData" nillable="true" type="tns:RatioComparisonData" />
@@ -70,7 +37,7 @@
   <xs:element name="ArrayOfRatioComparisonData" nillable="true" type="tns:ArrayOfRatioComparisonData" />
   <xs:complexType name="RatioComparisonData">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:ComplexObject">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:ComplexObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="FINANCIAL" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ISSUER_ID" nillable="true" type="xs:string" />

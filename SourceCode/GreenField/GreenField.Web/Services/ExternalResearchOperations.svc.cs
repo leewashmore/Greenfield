@@ -165,7 +165,7 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<ConsensusEstimateDetailedData> RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency)
+        public List<ConsensusEstimateDetail> RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency)
         {
             try
             {
@@ -173,9 +173,35 @@ namespace GreenField.Web.Services
 
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
-                List<ConsensusEstimateDetailedData> result = null;
+                List<ConsensusEstimateDetailData> data = new List<ConsensusEstimateDetailData>();
+                List<ConsensusEstimateDetail> result = new List<ConsensusEstimateDetail>();
 
-                result = entity.GetConsensusDetail(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
+                data = entity.GetConsensusDetail(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
+
+                ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
+                foreach (ConsensusEstimateDetailData item in data)
+                {
+                    temp = new ConsensusEstimateDetail();
+                  temp.IssuerId = item.ISSUER_ID;
+                  temp.EstimateId = item.ESTIMATE_ID;
+                  temp.EstimateDesc = item.ESTIMATE_DESC;
+                  temp.Period = item.Period;
+                  temp.AmountType = item.AMOUNT_TYPE;
+                  temp.PeriodYear = item.PERIOD_YEAR;
+                  temp.PeriodType = item.PERIOD_TYPE;
+                  temp.Amount = item.AMOUNT;
+                  temp.AshmoreEmmAmount = item.ASHMOREEMM_AMOUNT;
+                  temp.NumberOfEstimates = item.NUMBER_OF_ESTIMATES;
+                  temp.High = item.HIGH;
+                  temp.Low = item.LOW;
+                  temp.StandardDeviation = item.STANDARD_DEVIATION;
+                  temp.SourceCurrency = item.SOURCE_CURRENCY;
+                  temp.DataSource = item.DATA_SOURCE;
+                  temp.DataSourceDate = item.DATA_SOURCE_DATE;
+                  item.ACTUAL = temp.Actual;
+                  result.Add(temp);
+                }
+                
                 return result;
             }
             catch (Exception ex)
