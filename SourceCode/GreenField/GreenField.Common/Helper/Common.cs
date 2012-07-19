@@ -44,6 +44,14 @@ namespace GreenField.Common
         SNAPSHOT_PAGE_NAVIGATION
     }
 
+    public enum ScatterChartDefaults
+    {
+        BANK,
+        INDUSTRIAL,
+        INSURANCE,
+        UTILITY
+    }
+
     public static class Application
     {
         public static string APPLICATION_NAME = "GreenField";
@@ -52,7 +60,7 @@ namespace GreenField.Common
     public static class RegionNames
     {
         public static string MAIN_REGION = "MainRegion";
-    }    
+    }
 
     public static class LogLevel
     {
@@ -69,7 +77,7 @@ namespace GreenField.Common
         public static String COUNTRY = "Country";
         public static String SECTOR = "Sector";
     }
-    
+
 
     public delegate void DataRetrievalProgressIndicatorEventHandler(DataRetrievalProgressIndicatorEventArgs e);
     public class DataRetrievalProgressIndicatorEventArgs : EventArgs
@@ -113,38 +121,38 @@ namespace GreenField.Common
     public class RelativePerformanceGridCellData
     {
         public string CountryID { get; set; }
-        public string SectorID { get; set; }        
+        public string SectorID { get; set; }
     }
 
-      public static class EntityReturnType
+    public static class EntityReturnType
     {
         public static string TotalReturnType = "Total";
         public static string NetReturnType = "Net";
         public static string PriceReturnType = "Price";
     }
-
-      public static class EntityType
-      {
-          public const string SECURITY = "SECURITY";
-          public const string BENCHMARK = "BENCHMARK";
-          public const string INDEX = "INDEX";
-          public const string COMMODITY = "COMMODITY";
-          public const string CURRENCY = "CURRENCY";
-      }
     
-      public static class HoldingsPercentageSegmentClassifier
-      {
-          public static int SECTOR = 0;
-          public static int REGIOM = 1;
-      }
+    public static class EntityType
+    {
+        public const string SECURITY = "SECURITY";
+        public const string BENCHMARK = "BENCHMARK";
+        public const string INDEX = "INDEX";
+        public const string COMMODITY = "COMMODITY";
+        public const string CURRENCY = "CURRENCY";
+    }
 
-      public enum MarketPerformanceSnapshotActionTypes
-      {
-          ADDNEW,
-          SAVE,
-          SAVEAS,
-          DELETE   
-      }
+    public static class HoldingsPercentageSegmentClassifier
+    {
+        public static int SECTOR = 0;
+        public static int REGIOM = 1;
+    }
+
+    public enum MarketPerformanceSnapshotActionTypes
+    {
+        ADDNEW,
+        SAVE,
+        SAVEAS,
+        DELETE
+    }
     public delegate void RetrieveCommodityDataCompleteEventHandler(RetrieveCommodityDataCompleteEventArgs e);
     public class RetrieveCommodityDataCompleteEventArgs : EventArgs
     {

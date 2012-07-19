@@ -130,7 +130,7 @@ namespace GreenField.Web.Services
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<FinancialStatementData> RetrieveFinancialStatement(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
-            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, String currency)
+            , FinancialStatementFiscalType fiscalType, FinancialStatementType statementType, String currency)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<ConsensusEstimateDetailedData> RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency)
+        public List<ConsensusEstimateDetail> RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency)
         {
             try
             {
@@ -173,9 +173,35 @@ namespace GreenField.Web.Services
 
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
-                List<ConsensusEstimateDetailedData> result = null;
+                List<ConsensusEstimateDetailData> data = new List<ConsensusEstimateDetailData>();
+                List<ConsensusEstimateDetail> result = new List<ConsensusEstimateDetail>();
 
-                result = entity.GetConsensusDetail(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
+                data = entity.GetConsensusDetail(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
+
+                ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
+                foreach (ConsensusEstimateDetailData item in data)
+                {
+                    temp = new ConsensusEstimateDetail();
+                  temp.IssuerId = item.ISSUER_ID;
+                  temp.EstimateId = item.ESTIMATE_ID;
+                  temp.EstimateDesc = item.ESTIMATE_DESC;
+                  temp.Period = item.Period;
+                  temp.AmountType = item.AMOUNT_TYPE;
+                  temp.PeriodYear = item.PERIOD_YEAR;
+                  temp.PeriodType = item.PERIOD_TYPE;
+                  temp.Amount = item.AMOUNT;
+                  temp.AshmoreEmmAmount = item.ASHMOREEMM_AMOUNT;
+                  temp.NumberOfEstimates = item.NUMBER_OF_ESTIMATES;
+                  temp.High = item.HIGH;
+                  temp.Low = item.LOW;
+                  temp.StandardDeviation = item.STANDARD_DEVIATION;
+                  temp.SourceCurrency = item.SOURCE_CURRENCY;
+                  temp.DataSource = item.DATA_SOURCE;
+                  temp.DataSourceDate = item.DATA_SOURCE_DATE;
+                  item.ACTUAL = temp.Actual;
+                  result.Add(temp);
+                }
+                
                 return result;
             }
             catch (Exception ex)
@@ -389,6 +415,13 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Service Method for ConsensusEstimateGadget- Valuations
+        /// </summary>
+        /// <param name="issuerId">Issuer Id for a Security</param>
+        /// <param name="periodType">Period Type: A/Q</param>
+        /// <param name="currency">Selected Currency</param>
+        /// <returns>Collection of ConsensusEstimatesValuations Data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<ConsensusEstimatesValuations> RetrieveConsensusEstimatesValuationData(string issuerId, FinancialStatementPeriodType periodType, string currency)
@@ -401,13 +434,29 @@ namespace GreenField.Web.Services
 
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
-                // dbResult = entity.ExecuteStoreQuery<ConsensusEstimateValuation>("exec Get_ConsensusEstimatesValuation @ISSUER_ID={0}", issuerId).ToList();
                 dbResult = entity.GetConsensusEstimatesValuation(issuerId, "REUTERS", _periodType, "FISCAL", currency, null, null).ToList();
 
                 ConsensusEstimatesValuations data;
                 foreach (ConsensusEstimateValuation item in dbResult)
                 {
                     data = new ConsensusEstimatesValuations();
+                    data.Amount = item.AMOUNT;
+                    data.AmountType = item.AMOUNT_TYPE;
+                    data.AshmoreEMMAmount = Convert.ToDecimal(item.ASHMOREEMM_AMOUNT);
+                    data.DataSource = item.DATA_SOURCE;
+                    data.DataSourceDate = item.DATA_SOURCE_DATE;
+                    data.EstimateType = item.ESTIMATE_DESC;
+                    data.EstimateId = Convert.ToString(item.ESTIMATE_ID);
+                    data.High = item.HIGH;
+                    data.Low = item.LOW;
+                    data.IssuerId = item.ISSUER_ID;
+                    data.NumberOfEstimates = item.NUMBER_OF_ESTIMATES;
+                    data.Period = item.PERIOD;
+                    data.PeriodType = item.PERIOD_TYPE;
+                    data.PeriodYear = item.PERIOD_YEAR;
+                    data.SourceCurrency = item.SOURCE_CURRENCY;
+                    data.StandardDeviation = item.STANDARD_DEVIATION;
+                    result.Add(data);
                 }
 
                 return result;
@@ -418,16 +467,17 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-
-
-
-
-            return result;
         }
 
 
         #endregion
 
+        /// <summary>
+        /// Retrieve data for consensus Estimates Summary Gadget
+        /// </summary>
+        /// <param name="entityIdentifier">Security identifier selected by the user</param>
+        /// <returns>Returns data in the list of type ConsensusEstimatesSummaryData</returns>
+        /// 
         #region Consensus Estimates Summary Gadget
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
@@ -451,6 +501,12 @@ namespace GreenField.Web.Services
         #endregion
 
         #region Quarterly Comparision Results
+        /// <summary>
+        /// Retrieves Data for Quarterly Comparison
+        /// </summary>
+        /// <param name="fieldValue">field as selected by the user</param>
+        /// <param name="yearValue">year as selected by the user</param>
+        /// <returns>Returns data in list of type QuarterlyResultsData </returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<QuarterlyResultsData> RetrieveQuarterlyResultsData(String fieldValue, int yearValue)

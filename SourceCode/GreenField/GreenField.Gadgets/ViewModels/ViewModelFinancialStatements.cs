@@ -26,7 +26,7 @@ using System.Collections.ObjectModel;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelBalanceSheet : NotificationObject
+    public class ViewModelFinancialStatements : NotificationObject
     {
         #region Fields
         /// <summary>
@@ -34,16 +34,18 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;        
+        private ILoggerFacade _logger;
+        private FinancialStatementType _financialStatementType;
         #endregion
 
         #region Constructor
-        public ViewModelBalanceSheet(DashboardGadgetParam param)
+        public ViewModelFinancialStatements(DashboardGadgetParam param)
         {
             _logger = param.LoggerFacade;
             _dbInteractivity = param.DBInteractivity;
             _eventAggregator = param.EventAggregator;
             EntitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
+            _financialStatementType = (FinancialStatementType)param.AdditionalInfo;
 
             PeriodColumns.PeriodColumnNavigate += (e) =>
             {
@@ -483,7 +485,7 @@ namespace GreenField.Gadgets.ViewModels
             if (IssuerReferenceInfo != null)
             {
                 _dbInteractivity.RetrieveFinancialStatementData(IssuerReferenceInfo.IssuerId, SelectedDataSource, SelectedPeriodType, SelectedFiscalType,
-                            FinancialStatementStatementType.BALANCE_SHEET, SelectedCurrency, RetrieveFinancialStatementDataCallbackMethod);
+                            _financialStatementType, SelectedCurrency, RetrieveFinancialStatementDataCallbackMethod);
             }
         }
 

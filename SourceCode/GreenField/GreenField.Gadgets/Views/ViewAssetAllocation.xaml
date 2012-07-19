@@ -29,6 +29,7 @@
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                      RowStyle="{StaticResource GridViewRowStyle}"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                     EnableRowVirtualization="False"
                                      RowLoaded="dgAssetAllocation_RowLoaded">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left" 

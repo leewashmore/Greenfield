@@ -407,22 +407,22 @@ namespace GreenField.Gadgets.ViewModels
             }
             else
             {
-                List<RelativePerformanceActivePositionData> unGroupedData = new List<RelativePerformanceActivePositionData>();
+                //List<RelativePerformanceActivePositionData> unGroupedData = new List<RelativePerformanceActivePositionData>();
 
-                foreach (RelativePerformanceActivePositionData item in value)
-                {
-                    unGroupedData.Add(new RelativePerformanceActivePositionData()
-                    {
-                        Entity = item.Entity,
-                        EntityGroup = item.EntityGroup,
-                        MarketValue = item.MarketValue,
-                        FundWeight = item.FundWeight,
-                        BenchmarkWeight = item.BenchmarkWeight,
-                        ActivePosition = item.ActivePosition
-                    });
-                }
+                //foreach (RelativePerformanceActivePositionData item in value)
+                //{
+                //    unGroupedData.Add(new RelativePerformanceActivePositionData()
+                //    {
+                //        Entity = item.Entity,
+                //        EntityGroup = item.EntityGroup,
+                //        MarketValue = item.MarketValue,
+                //        FundWeight = item.FundWeight,
+                //        BenchmarkWeight = item.BenchmarkWeight,
+                //        ActivePosition = item.ActivePosition
+                //    });
+                //}
 
-                RelativePerformanceActivePositionInfo = new ObservableCollection<RelativePerformanceActivePositionData>(unGroupedData);
+                RelativePerformanceActivePositionInfo = new ObservableCollection<RelativePerformanceActivePositionData>(value);
             }
         }
 

@@ -45,7 +45,7 @@ namespace GreenField.DataContracts
     }
 
     [DataContract(Name = "FinancialStatementStatementType")]
-    public enum FinancialStatementStatementType
+    public enum FinancialStatementType
     {
         [EnumMember(Value = "BAL")]
         [DescriptionAttribute("BAL")]

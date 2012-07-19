@@ -24,6 +24,7 @@ namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelHeatMap : NotificationObject
     {
+        #region Fields
         /// <summary>
         /// Relative Uri
         /// </summary>
@@ -72,6 +73,8 @@ namespace GreenField.Gadgets.ViewModels
         private DateTime? _effectiveDate;
 
         private String _selectedPeriod;
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -101,9 +104,7 @@ namespace GreenField.Gadgets.ViewModels
             //_dbInteractivity.RetrieveHeatMapData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), RetrieveHeatMapDataCallbackMethod);
         }
 
-        #endregion
-
-      
+        #endregion      
        
         #region Properties
         /// <summary>
@@ -231,7 +232,6 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-
         #region Event
         /// <summary>
         /// Event for the notification of Data Load Completion
@@ -242,7 +242,6 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public event RetrieveHeatMapDataCompleteEventHandler RetrieveHeatMapDataCompletedEvent;      
         #endregion
-
 
         #region Event Handlers
         /// <summary>
@@ -365,6 +364,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
         #region EventUnSubscribe
         /// <summary>
         /// Method that disposes the events

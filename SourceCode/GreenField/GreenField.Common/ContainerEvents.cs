@@ -86,6 +86,7 @@ namespace GreenField.Common
         public ILoggerFacade LoggerFacade { get; set; }
         public DashboardGadgetPayload DashboardGadgetPayload { get; set; }
         public IRegionManager RegionManager { get; set; }
+        public Object AdditionalInfo { get; set; }
     }
 
     /// <summary>

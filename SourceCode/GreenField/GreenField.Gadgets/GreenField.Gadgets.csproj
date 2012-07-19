@@ -172,7 +172,7 @@
     <Compile Include="ViewModels\ViewModelCommodityIndex.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimatesDetails.cs" />
     <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
-    <Compile Include="ViewModels\ViewModelBalanceSheet.cs" />
+    <Compile Include="ViewModels\ViewModelFinancialStatements.cs" />
     <Compile Include="ViewModels\ViewModelHeatMap.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChartRegion.cs" />
@@ -231,8 +231,8 @@
     <Compile Include="Views\ViewCommodityIndex.xaml.cs">
       <DependentUpon>ViewCommodityIndex.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ViewBalanceSheet.xaml.cs">
-      <DependentUpon>ViewBalanceSheet.xaml</DependentUpon>
+    <Compile Include="Views\ViewFinancialStatements.xaml.cs">
+      <DependentUpon>ViewFinancialStatements.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewConsensusEstimatesDetails.xaml.cs">
       <DependentUpon>ViewConsensusEstimatesDetails.xaml</DependentUpon>
@@ -389,7 +389,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ViewBalanceSheet.xaml">
+    <Page Include="Views\ViewFinancialStatements.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

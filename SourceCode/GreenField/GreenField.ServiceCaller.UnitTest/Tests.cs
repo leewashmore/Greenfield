@@ -2732,8 +2732,6 @@ namespace Greenfield.ServiceCaller.UnitTest
        
         #endregion
 
-
-
         #region Commodity
         /// <summary>
         /// RetrieveCommodityData test method - Sample Data
@@ -2799,9 +2797,7 @@ namespace Greenfield.ServiceCaller.UnitTest
                 EnqueueTestComplete();
             });
         }
-        #endregion
-
-        
+        #endregion        
 
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -34,6 +35,8 @@ namespace GreenField.Gadgets.Views
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_attributionDataLoadedEvent);
         }
         #endregion
+
+        #region Properties
         /// <summary>
         /// Property of the type of View Model for this view
         /// </summary>
@@ -59,6 +62,10 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        #endregion
+
+        #region EventHandler
+
         /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
@@ -74,6 +81,7 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicatorGrid.IsBusy = false;                
             }
         }
+        #endregion
 
         #region RemoveEvents
         /// <summary>
@@ -88,9 +96,51 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        #region Private Methods
+        /// <summary>
+        /// When row gets loaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgAttribution_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
             GroupedGridRowLoadedHandler.Implement(e);
         }
+
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+
+                if (this.dgAttribution.Visibility == Visibility.Visible)
+                    {
+                        List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                  
+                      new RadExportOptions() { ElementName = "Performance Attribution", Element = this.dgAttribution, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    
+                };
+                        ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_ATTRIBUTION);
+                        childExportOptions.Show();
+                    }
+                
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+
+        private void dgAttribution_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
+        #endregion
     }
 }

@@ -168,9 +168,9 @@
                                 <telerik:RadRibbonDropDownButton.DropDownContent>
                                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                                         <telerik:RadRibbonButton Text="Summary" LargeImage="Images/sum.png" Size="Large" Background="#9DA6C0"/>
-                                        <telerik:RadRibbonButton Text="Income Statement" LargeImage="Images/earning-statements.png" Size="Large" Background="#9DA6C0" />
+                                        <telerik:RadRibbonButton Text="Income Statement" LargeImage="Images/earning-statements.png" Size="Large" Command="{Binding DashboardCompanyFinancialsIncomeStatementCommand}" Background="#9DA6C0" />
                                         <telerik:RadRibbonButton Text="Balance Sheet"  LargeImage="Images/Pic-Balance.png" Size="Large" Command="{Binding DashboardCompanyFinancialsBalanceSheetCommand}" Background="#9DA6C0" />
-                                        <telerik:RadRibbonButton Text="Cash Flow" LargeImage="Images/Dollars.png" Size="Large" Background="#9DA6C0"/>
+                                        <telerik:RadRibbonButton Text="Cash Flow" LargeImage="Images/Dollars.png" Size="Large" Command="{Binding DashboardCompanyFinancialsCashFlowCommand}" Background="#9DA6C0"/>
                                         <telerik:RadRibbonButton Text="Finstat" LargeImage="Images/report.png" Size="Large" Background="#9DA6C0"/>
                                         <telerik:RadRibbonButton Text="Peer Comparison" LargeImage="Images/com.png" Size="Large" Background="#9DA6C0"/>
                                     </telerik:RadRibbonGroup>

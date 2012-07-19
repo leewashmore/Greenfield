@@ -116,6 +116,22 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<DATA_MASTER> DATA_MASTER
+        {
+            get
+            {
+                if ((_DATA_MASTER == null))
+                {
+                    _DATA_MASTER = base.CreateObjectSet<DATA_MASTER>("DATA_MASTER");
+                }
+                return _DATA_MASTER;
+            }
+        }
+        private ObjectSet<DATA_MASTER> _DATA_MASTER;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<FX_RATES> FX_RATES
         {
             get
@@ -352,22 +368,6 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<tblCompanyInfo> _tblCompanyInfoes;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<DATA_MASTER> DATA_MASTER
-        {
-            get
-            {
-                if ((_DATA_MASTER == null))
-                {
-                    _DATA_MASTER = base.CreateObjectSet<DATA_MASTER>("DATA_MASTER");
-                }
-                return _DATA_MASTER;
-            }
-        }
-        private ObjectSet<DATA_MASTER> _DATA_MASTER;
 
         #endregion
         #region AddTo Methods
@@ -394,6 +394,14 @@ namespace GreenField.DAL
         public void AddToCURRENT_CONSENSUS_ESTIMATES(CURRENT_CONSENSUS_ESTIMATES cURRENT_CONSENSUS_ESTIMATES)
         {
             base.AddObject("CURRENT_CONSENSUS_ESTIMATES", cURRENT_CONSENSUS_ESTIMATES);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the DATA_MASTER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToDATA_MASTER(DATA_MASTER dATA_MASTER)
+        {
+            base.AddObject("DATA_MASTER", dATA_MASTER);
         }
     
         /// <summary>
@@ -514,14 +522,6 @@ namespace GreenField.DAL
         public void AddTotblCompanyInfoes(tblCompanyInfo tblCompanyInfo)
         {
             base.AddObject("tblCompanyInfoes", tblCompanyInfo);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the DATA_MASTER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToDATA_MASTER(DATA_MASTER dATA_MASTER)
-        {
-            base.AddObject("DATA_MASTER", dATA_MASTER);
         }
 
         #endregion
@@ -926,7 +926,7 @@ namespace GreenField.DAL
         /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
         /// <param name="fISCAL_TYPE">No Metadata Documentation available.</param>
         /// <param name="cURRENCY">No Metadata Documentation available.</param>
-        public ObjectResult<ConsensusEstimateDetailedData> GetConsensusDetail(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String cURRENCY)
+        public ObjectResult<ConsensusEstimateDetailData> GetConsensusDetail(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String cURRENCY)
         {
             ObjectParameter iSSUER_IDParameter;
             if (iSSUER_ID != null)
@@ -978,7 +978,7 @@ namespace GreenField.DAL
                 cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<ConsensusEstimateDetailedData>("GetConsensusDetail", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter);
+            return base.ExecuteFunction<ConsensusEstimateDetailData>("GetConsensusDetail", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter);
         }
 
         #endregion
@@ -6385,25 +6385,15 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="ComplexType1")]
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="ConsensusEstimateDetailData")]
     [DataContractAttribute(IsReference=true)]
     [Serializable()]
-    public partial class ComplexType1 : ComplexObject
-    {
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="ConsensusEstimateDetailedData")]
-    [DataContractAttribute(IsReference=true)]
-    [Serializable()]
-    public partial class ConsensusEstimateDetailedData : ComplexObject
+    public partial class ConsensusEstimateDetailData : ComplexObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new ConsensusEstimateDetailedData object.
+        /// Create a new ConsensusEstimateDetailData object.
         /// </summary>
         /// <param name="iSSUER_ID">Initial value of the ISSUER_ID property.</param>
         /// <param name="eSTIMATE_ID">Initial value of the ESTIMATE_ID property.</param>
@@ -6420,27 +6410,27 @@ namespace GreenField.DAL
         /// <param name="sOURCE_CURRENCY">Initial value of the SOURCE_CURRENCY property.</param>
         /// <param name="dATA_SOURCE">Initial value of the DATA_SOURCE property.</param>
         /// <param name="dATA_SOURCE_DATE">Initial value of the DATA_SOURCE_DATE property.</param>
-        /// <param name="aCTUAL">Initial value of the ACTUAL property.</param>
-        public static ConsensusEstimateDetailedData CreateConsensusEstimateDetailedData(global::System.String iSSUER_ID, global::System.Int32 eSTIMATE_ID, global::System.String eSTIMATE_DESC, global::System.String period, global::System.String aMOUNT_TYPE, global::System.Int32 pERIOD_YEAR, global::System.String pERIOD_TYPE, global::System.Decimal aMOUNT, global::System.Int32 nUMBER_OF_ESTIMATES, global::System.Decimal hIGH, global::System.Decimal lOW, global::System.Decimal sTANDARD_DEVIATION, global::System.String sOURCE_CURRENCY, global::System.String dATA_SOURCE, global::System.DateTime dATA_SOURCE_DATE, global::System.Decimal aCTUAL)
+        /// <param name="eSTIMATE_TYPE">Initial value of the ESTIMATE_TYPE property.</param>
+        public static ConsensusEstimateDetailData CreateConsensusEstimateDetailData(global::System.String iSSUER_ID, global::System.Int32 eSTIMATE_ID, global::System.String eSTIMATE_DESC, global::System.String period, global::System.String aMOUNT_TYPE, global::System.Int32 pERIOD_YEAR, global::System.String pERIOD_TYPE, global::System.Decimal aMOUNT, global::System.Int32 nUMBER_OF_ESTIMATES, global::System.Decimal hIGH, global::System.Decimal lOW, global::System.Decimal sTANDARD_DEVIATION, global::System.String sOURCE_CURRENCY, global::System.String dATA_SOURCE, global::System.DateTime dATA_SOURCE_DATE, global::System.String eSTIMATE_TYPE)
         {
-            ConsensusEstimateDetailedData consensusEstimateDetailedData = new ConsensusEstimateDetailedData();
-            consensusEstimateDetailedData.ISSUER_ID = iSSUER_ID;
-            consensusEstimateDetailedData.ESTIMATE_ID = eSTIMATE_ID;
-            consensusEstimateDetailedData.ESTIMATE_DESC = eSTIMATE_DESC;
-            consensusEstimateDetailedData.Period = period;
-            consensusEstimateDetailedData.AMOUNT_TYPE = aMOUNT_TYPE;
-            consensusEstimateDetailedData.PERIOD_YEAR = pERIOD_YEAR;
-            consensusEstimateDetailedData.PERIOD_TYPE = pERIOD_TYPE;
-            consensusEstimateDetailedData.AMOUNT = aMOUNT;
-            consensusEstimateDetailedData.NUMBER_OF_ESTIMATES = nUMBER_OF_ESTIMATES;
-            consensusEstimateDetailedData.HIGH = hIGH;
-            consensusEstimateDetailedData.LOW = lOW;
-            consensusEstimateDetailedData.STANDARD_DEVIATION = sTANDARD_DEVIATION;
-            consensusEstimateDetailedData.SOURCE_CURRENCY = sOURCE_CURRENCY;
-            consensusEstimateDetailedData.DATA_SOURCE = dATA_SOURCE;
-            consensusEstimateDetailedData.DATA_SOURCE_DATE = dATA_SOURCE_DATE;
-            consensusEstimateDetailedData.ACTUAL = aCTUAL;
-            return consensusEstimateDetailedData;
+            ConsensusEstimateDetailData consensusEstimateDetailData = new ConsensusEstimateDetailData();
+            consensusEstimateDetailData.ISSUER_ID = iSSUER_ID;
+            consensusEstimateDetailData.ESTIMATE_ID = eSTIMATE_ID;
+            consensusEstimateDetailData.ESTIMATE_DESC = eSTIMATE_DESC;
+            consensusEstimateDetailData.Period = period;
+            consensusEstimateDetailData.AMOUNT_TYPE = aMOUNT_TYPE;
+            consensusEstimateDetailData.PERIOD_YEAR = pERIOD_YEAR;
+            consensusEstimateDetailData.PERIOD_TYPE = pERIOD_TYPE;
+            consensusEstimateDetailData.AMOUNT = aMOUNT;
+            consensusEstimateDetailData.NUMBER_OF_ESTIMATES = nUMBER_OF_ESTIMATES;
+            consensusEstimateDetailData.HIGH = hIGH;
+            consensusEstimateDetailData.LOW = lOW;
+            consensusEstimateDetailData.STANDARD_DEVIATION = sTANDARD_DEVIATION;
+            consensusEstimateDetailData.SOURCE_CURRENCY = sOURCE_CURRENCY;
+            consensusEstimateDetailData.DATA_SOURCE = dATA_SOURCE;
+            consensusEstimateDetailData.DATA_SOURCE_DATE = dATA_SOURCE_DATE;
+            consensusEstimateDetailData.ESTIMATE_TYPE = eSTIMATE_TYPE;
+            return consensusEstimateDetailData;
         }
 
         #endregion
@@ -6833,9 +6823,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Decimal ACTUAL
+        public Nullable<global::System.Decimal> ACTUAL
         {
             get
             {
@@ -6850,9 +6840,33 @@ namespace GreenField.DAL
                 OnACTUALChanged();
             }
         }
-        private global::System.Decimal _ACTUAL;
-        partial void OnACTUALChanging(global::System.Decimal value);
+        private Nullable<global::System.Decimal> _ACTUAL;
+        partial void OnACTUALChanging(Nullable<global::System.Decimal> value);
         partial void OnACTUALChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ESTIMATE_TYPE
+        {
+            get
+            {
+                return _ESTIMATE_TYPE;
+            }
+            set
+            {
+                OnESTIMATE_TYPEChanging(value);
+                ReportPropertyChanging("ESTIMATE_TYPE");
+                _ESTIMATE_TYPE = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ESTIMATE_TYPE");
+                OnESTIMATE_TYPEChanged();
+            }
+        }
+        private global::System.String _ESTIMATE_TYPE;
+        partial void OnESTIMATE_TYPEChanging(global::System.String value);
+        partial void OnESTIMATE_TYPEChanged();
 
         #endregion
     }
@@ -7528,7 +7542,6 @@ namespace GreenField.DAL
         /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
         /// <param name="pERIOD_TYPE">Initial value of the PERIOD_TYPE property.</param>
         /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
-        /// <param name="aSHMOREEMM_AMOUNT">Initial value of the ASHMOREEMM_AMOUNT property.</param>
         /// <param name="nUMBER_OF_ESTIMATES">Initial value of the NUMBER_OF_ESTIMATES property.</param>
         /// <param name="hIGH">Initial value of the HIGH property.</param>
         /// <param name="lOW">Initial value of the LOW property.</param>
@@ -7536,7 +7549,7 @@ namespace GreenField.DAL
         /// <param name="sOURCE_CURRENCY">Initial value of the SOURCE_CURRENCY property.</param>
         /// <param name="dATA_SOURCE">Initial value of the DATA_SOURCE property.</param>
         /// <param name="dATA_SOURCE_DATE">Initial value of the DATA_SOURCE_DATE property.</param>
-        public static ConsensusEstimateValuation CreateConsensusEstimateValuation(global::System.String iSSUER_ID, global::System.String eSTIMATE_ID, global::System.String eSTIMATE_DESC, global::System.String pERIOD, global::System.String aMOUNT_TYPE, global::System.Int32 pERIOD_YEAR, global::System.String pERIOD_TYPE, global::System.Decimal aMOUNT, global::System.Decimal aSHMOREEMM_AMOUNT, global::System.Int32 nUMBER_OF_ESTIMATES, global::System.Decimal hIGH, global::System.Decimal lOW, global::System.Decimal sTANDARD_DEVIATION, global::System.String sOURCE_CURRENCY, global::System.String dATA_SOURCE, global::System.DateTime dATA_SOURCE_DATE)
+        public static ConsensusEstimateValuation CreateConsensusEstimateValuation(global::System.String iSSUER_ID, global::System.Int32 eSTIMATE_ID, global::System.String eSTIMATE_DESC, global::System.String pERIOD, global::System.String aMOUNT_TYPE, global::System.Int32 pERIOD_YEAR, global::System.String pERIOD_TYPE, global::System.Decimal aMOUNT, global::System.Int32 nUMBER_OF_ESTIMATES, global::System.Decimal hIGH, global::System.Decimal lOW, global::System.Decimal sTANDARD_DEVIATION, global::System.String sOURCE_CURRENCY, global::System.String dATA_SOURCE, global::System.DateTime dATA_SOURCE_DATE)
         {
             ConsensusEstimateValuation consensusEstimateValuation = new ConsensusEstimateValuation();
             consensusEstimateValuation.ISSUER_ID = iSSUER_ID;
@@ -7547,7 +7560,6 @@ namespace GreenField.DAL
             consensusEstimateValuation.PERIOD_YEAR = pERIOD_YEAR;
             consensusEstimateValuation.PERIOD_TYPE = pERIOD_TYPE;
             consensusEstimateValuation.AMOUNT = aMOUNT;
-            consensusEstimateValuation.ASHMOREEMM_AMOUNT = aSHMOREEMM_AMOUNT;
             consensusEstimateValuation.NUMBER_OF_ESTIMATES = nUMBER_OF_ESTIMATES;
             consensusEstimateValuation.HIGH = hIGH;
             consensusEstimateValuation.LOW = lOW;
@@ -7590,7 +7602,7 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String ESTIMATE_ID
+        public global::System.Int32 ESTIMATE_ID
         {
             get
             {
@@ -7600,13 +7612,13 @@ namespace GreenField.DAL
             {
                 OnESTIMATE_IDChanging(value);
                 ReportPropertyChanging("ESTIMATE_ID");
-                _ESTIMATE_ID = StructuralObject.SetValidValue(value, false);
+                _ESTIMATE_ID = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("ESTIMATE_ID");
                 OnESTIMATE_IDChanged();
             }
         }
-        private global::System.String _ESTIMATE_ID;
-        partial void OnESTIMATE_IDChanging(global::System.String value);
+        private global::System.Int32 _ESTIMATE_ID;
+        partial void OnESTIMATE_IDChanging(global::System.Int32 value);
         partial void OnESTIMATE_IDChanged();
     
         /// <summary>
@@ -7756,9 +7768,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Decimal ASHMOREEMM_AMOUNT
+        public Nullable<global::System.Decimal> ASHMOREEMM_AMOUNT
         {
             get
             {
@@ -7773,8 +7785,8 @@ namespace GreenField.DAL
                 OnASHMOREEMM_AMOUNTChanged();
             }
         }
-        private global::System.Decimal _ASHMOREEMM_AMOUNT;
-        partial void OnASHMOREEMM_AMOUNTChanging(global::System.Decimal value);
+        private Nullable<global::System.Decimal> _ASHMOREEMM_AMOUNT;
+        partial void OnASHMOREEMM_AMOUNTChanging(Nullable<global::System.Decimal> value);
         partial void OnASHMOREEMM_AMOUNTChanged();
     
         /// <summary>

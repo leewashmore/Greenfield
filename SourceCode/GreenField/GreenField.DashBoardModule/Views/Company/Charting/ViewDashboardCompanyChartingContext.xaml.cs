@@ -60,6 +60,7 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
+            param.AdditionalInfo = ScatterChartDefaults.BANK;
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 RestoredHeight = 300,
@@ -67,25 +68,28 @@ namespace GreenField.DashboardModule.Views
                 Content = new ViewScatterGraph(new ViewModelScatterGraph(param))
             });
 
+            param.AdditionalInfo = ScatterChartDefaults.INDUSTRIAL;
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 RestoredHeight = 300, 
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_INDUSTRIAL,
-                Content = null
+                Content = new ViewScatterGraph(new ViewModelScatterGraph(param))
             });
 
+            param.AdditionalInfo = ScatterChartDefaults.INSURANCE;
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 RestoredHeight = 300,
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_INSURANCE,
-                Content = null
+                Content = new ViewScatterGraph(new ViewModelScatterGraph(param))
             });
 
+            param.AdditionalInfo = ScatterChartDefaults.UTILITY;
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 RestoredHeight = 300,
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_UTILITY,
-                Content = null
+                Content = new ViewScatterGraph(new ViewModelScatterGraph(param))
             }); 
         }
 

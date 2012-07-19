@@ -11,6 +11,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
+using GreenField.DataContracts;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
@@ -31,7 +33,26 @@ namespace GreenField.Gadgets.Views
             set { _dataContextValuations = value; }
         }
 
+        /// <summary>
+        /// To check whether the Dashboard is Active or not
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextValuations != null)
+                    DataContextValuations.IsActive = _isActive;
+            }
+        }
 
+        /// <summary>
+        /// Instance of EntitySelectionData
+        /// </summary>
+        private EntitySelectionData _entitySelectionData;
+        private bool _periodIsYearly = true;
 
         #endregion
 
@@ -46,6 +67,103 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextValuations = dataContextSource;
+            InitializeComponent();
+            this.DataContext = dataContextSource;
+
+            PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimateValuations, new PeriodColumns.PeriodColumnUpdateEventArg()
+            {
+                PeriodRecord = PeriodColumns.SetPeriodRecord(),
+                PeriodColumnHeader = PeriodColumns.SetColumnHeaders(showHistorical: false),
+                PeriodIsYearly = true
+            }, false);
+
+            PeriodColumns.PeriodColumnUpdate += (e) =>
+            {
+                if (e.PeriodColumnNamespace == typeof(ViewModelValuations).FullName)
+                {
+                    PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimateValuations, e, false);
+                    _entitySelectionData = e.EntitySelectionData;
+                    _periodIsYearly = e.PeriodIsYearly;
+                    this.btnExportExcel.IsEnabled = true;
+                }
+            };
+        }
+
+        /// <summary>
+        /// Left Navigation Button Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LeftNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
+            {
+                PeriodColumnNamespace = typeof(ViewModelValuations).FullName,
+                PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.LEFT
+            });
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Right Navigation Button Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RightNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
+            {
+                PeriodColumnNamespace = typeof(ViewModelValuations).FullName,
+                PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.RIGHT
+            });
+            e.Handled = true;
+        }
+
+        /// <summary>
+        /// Dispose method to unsubscribe Events
+        /// </summary>
+        public override void Dispose()
+        {
+            (this.DataContext as ViewModelEstimates).Dispose();
+            this.DataContext = null;
+        }
+
+        /// <summary>
+        /// Excel exporting EventHandler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgConsensusEstimateValuations_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 12 });
+        }
+
+        private void dgConsensusEstimateValuations_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }
+
+        /// <summary>
+        /// Export to Excel Button Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            String elementName = "Consensus Estimate - " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + ") " +
+                (_periodIsYearly ? this.dgConsensusEstimateValuations.Columns[2].Header : this.dgConsensusEstimateValuations.Columns[6].Header) + " - " +
+                (_periodIsYearly ? this.dgConsensusEstimateValuations.Columns[7].Header : this.dgConsensusEstimateValuations.Columns[11].Header);
+            RadExportOptionsInfo.Add(new RadExportOptions()
+            {
+                ElementName = elementName,
+                Element = this.dgConsensusEstimateValuations
+                ,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+            });
+
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
+            childExportOptions.Show();
         }
 
         #endregion

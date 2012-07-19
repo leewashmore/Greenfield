@@ -30,6 +30,7 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
+        private ScatterChartDefaults _ScatterChartDefault;
         #endregion
 
         #region Constructor
@@ -40,6 +41,8 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _eventAggregator = param.EventAggregator;
             EntitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
+            _ScatterChartDefault = (ScatterChartDefaults)param.AdditionalInfo;
+            SetScatterChartDefaults(_ScatterChartDefault);
 
             if (_eventAggregator != null)
             {
@@ -650,5 +653,30 @@ namespace GreenField.Gadgets.ViewModels
             BusyIndicatorIsBusy = showBusyIndicator;
         }
         #endregion        
+
+        private void SetScatterChartDefaults(ScatterChartDefaults chartDefault)
+        {
+            switch (chartDefault)
+            {
+                case ScatterChartDefaults.BANK:
+                    SelectedFinancialRatio = ScatterGraphFinancialRatio.REVENUE_GROWTH;
+                    SelectedValuationRatio = ScatterGraphValuationRatio.PRICE_TO_REVENUE;
+                    break;
+                case ScatterChartDefaults.INDUSTRIAL:
+                    SelectedFinancialRatio = ScatterGraphFinancialRatio.NET_INCOME_GROWTH;
+                    SelectedValuationRatio = ScatterGraphValuationRatio.PRICE_TO_EQUITY;
+                    break;
+                case ScatterChartDefaults.INSURANCE:
+                    SelectedFinancialRatio = ScatterGraphFinancialRatio.RETURN_ON_EQUITY;
+                    SelectedValuationRatio = ScatterGraphValuationRatio.PRICE_TO_BOOK_VALUE;
+                    break;
+                case ScatterChartDefaults.UTILITY:
+                    SelectedFinancialRatio = ScatterGraphFinancialRatio.FREE_CASH_FLOW_MARGIN;
+                    SelectedValuationRatio = ScatterGraphValuationRatio.FREE_CASH_FLOW_YIELD;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

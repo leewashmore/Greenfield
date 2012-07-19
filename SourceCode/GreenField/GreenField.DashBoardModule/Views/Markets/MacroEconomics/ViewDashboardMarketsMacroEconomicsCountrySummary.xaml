@@ -7,11 +7,9 @@
     d:DesignHeight="300" d:DesignWidth="400">
 
     <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+        <Grid.RowDefinitions>          
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock x:Name="tbHeader" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0"/>
-        <ContentControl x:Name="cctrDashboardContent" Grid.Row="1" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
+        </Grid.RowDefinitions>      
+        <ContentControl x:Name="cctrDashboardContent" Grid.Row="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
     </Grid>    
 </UserControl>

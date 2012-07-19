@@ -415,7 +415,6 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData))]
     public partial class StructuralObject : object, System.ComponentModel.INotifyPropertyChanged {
@@ -433,286 +432,9 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ComplexObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData))]
     public partial class ComplexObject : GreenField.ServiceCaller.ExternalResearchDefinitions.StructuralObject {
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ConsensusEstimateDetailedData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
-    public partial class ConsensusEstimateDetailedData : GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject {
-        
-        private decimal AMOUNTField;
-        
-        private string AMOUNT_TYPEField;
-        
-        private string CURRENCYField;
-        
-        private string DATA_SOURCEField;
-        
-        private System.DateTime DATA_SOURCE_DATEField;
-        
-        private string ESTIMATE_DESCField;
-        
-        private string ESTIMATE_TYPEField;
-        
-        private string FISCAL_TYPEField;
-        
-        private decimal HIGHField;
-        
-        private string ISSUER_IDField;
-        
-        private decimal LOWField;
-        
-        private int NUMBER_OF_ESTIMATESField;
-        
-        private System.DateTime PERIOD_END_DATEField;
-        
-        private string PERIOD_TYPEField;
-        
-        private int PERIOD_YEARField;
-        
-        private string SECURITY_IDField;
-        
-        private string SOURCE_CURRENCYField;
-        
-        private decimal STANDARD_DEVIATIONField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal AMOUNT {
-            get {
-                return this.AMOUNTField;
-            }
-            set {
-                if ((this.AMOUNTField.Equals(value) != true)) {
-                    this.AMOUNTField = value;
-                    this.RaisePropertyChanged("AMOUNT");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AMOUNT_TYPE {
-            get {
-                return this.AMOUNT_TYPEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AMOUNT_TYPEField, value) != true)) {
-                    this.AMOUNT_TYPEField = value;
-                    this.RaisePropertyChanged("AMOUNT_TYPE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CURRENCY {
-            get {
-                return this.CURRENCYField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CURRENCYField, value) != true)) {
-                    this.CURRENCYField = value;
-                    this.RaisePropertyChanged("CURRENCY");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DATA_SOURCE {
-            get {
-                return this.DATA_SOURCEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DATA_SOURCEField, value) != true)) {
-                    this.DATA_SOURCEField = value;
-                    this.RaisePropertyChanged("DATA_SOURCE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime DATA_SOURCE_DATE {
-            get {
-                return this.DATA_SOURCE_DATEField;
-            }
-            set {
-                if ((this.DATA_SOURCE_DATEField.Equals(value) != true)) {
-                    this.DATA_SOURCE_DATEField = value;
-                    this.RaisePropertyChanged("DATA_SOURCE_DATE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ESTIMATE_DESC {
-            get {
-                return this.ESTIMATE_DESCField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ESTIMATE_DESCField, value) != true)) {
-                    this.ESTIMATE_DESCField = value;
-                    this.RaisePropertyChanged("ESTIMATE_DESC");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ESTIMATE_TYPE {
-            get {
-                return this.ESTIMATE_TYPEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ESTIMATE_TYPEField, value) != true)) {
-                    this.ESTIMATE_TYPEField = value;
-                    this.RaisePropertyChanged("ESTIMATE_TYPE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FISCAL_TYPE {
-            get {
-                return this.FISCAL_TYPEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FISCAL_TYPEField, value) != true)) {
-                    this.FISCAL_TYPEField = value;
-                    this.RaisePropertyChanged("FISCAL_TYPE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal HIGH {
-            get {
-                return this.HIGHField;
-            }
-            set {
-                if ((this.HIGHField.Equals(value) != true)) {
-                    this.HIGHField = value;
-                    this.RaisePropertyChanged("HIGH");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ISSUER_ID {
-            get {
-                return this.ISSUER_IDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ISSUER_IDField, value) != true)) {
-                    this.ISSUER_IDField = value;
-                    this.RaisePropertyChanged("ISSUER_ID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal LOW {
-            get {
-                return this.LOWField;
-            }
-            set {
-                if ((this.LOWField.Equals(value) != true)) {
-                    this.LOWField = value;
-                    this.RaisePropertyChanged("LOW");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int NUMBER_OF_ESTIMATES {
-            get {
-                return this.NUMBER_OF_ESTIMATESField;
-            }
-            set {
-                if ((this.NUMBER_OF_ESTIMATESField.Equals(value) != true)) {
-                    this.NUMBER_OF_ESTIMATESField = value;
-                    this.RaisePropertyChanged("NUMBER_OF_ESTIMATES");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime PERIOD_END_DATE {
-            get {
-                return this.PERIOD_END_DATEField;
-            }
-            set {
-                if ((this.PERIOD_END_DATEField.Equals(value) != true)) {
-                    this.PERIOD_END_DATEField = value;
-                    this.RaisePropertyChanged("PERIOD_END_DATE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PERIOD_TYPE {
-            get {
-                return this.PERIOD_TYPEField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PERIOD_TYPEField, value) != true)) {
-                    this.PERIOD_TYPEField = value;
-                    this.RaisePropertyChanged("PERIOD_TYPE");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int PERIOD_YEAR {
-            get {
-                return this.PERIOD_YEARField;
-            }
-            set {
-                if ((this.PERIOD_YEARField.Equals(value) != true)) {
-                    this.PERIOD_YEARField = value;
-                    this.RaisePropertyChanged("PERIOD_YEAR");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SECURITY_ID {
-            get {
-                return this.SECURITY_IDField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SECURITY_IDField, value) != true)) {
-                    this.SECURITY_IDField = value;
-                    this.RaisePropertyChanged("SECURITY_ID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SOURCE_CURRENCY {
-            get {
-                return this.SOURCE_CURRENCYField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SOURCE_CURRENCYField, value) != true)) {
-                    this.SOURCE_CURRENCYField = value;
-                    this.RaisePropertyChanged("SOURCE_CURRENCY");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal STANDARD_DEVIATION {
-            get {
-                return this.STANDARD_DEVIATIONField;
-            }
-            set {
-                if ((this.STANDARD_DEVIATIONField.Equals(value) != true)) {
-                    this.STANDARD_DEVIATIONField = value;
-                    this.RaisePropertyChanged("STANDARD_DEVIATION");
-                }
-            }
-        }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1672,7 +1394,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinancialStatement", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveFinancialStatementResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinancialStatementServiceFa" +
             "ultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, string currency, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementType statementType, string currency, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData> EndRetrieveFinancialStatement(System.IAsyncResult result);
         
@@ -1683,7 +1405,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             "taServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveConsensusEstimateDetailedData(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData> EndRetrieveConsensusEstimateDetailedData(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> EndRetrieveConsensusEstimateDetailedData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveBasicData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveBasicDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveBasicDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
@@ -1829,10 +1551,10 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             this.results = results;
         }
         
-        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData> Result {
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData>)(this.results[0]));
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail>)(this.results[0]));
             }
         }
     }
@@ -2266,7 +1988,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, string currency, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementType statementType, string currency, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveFinancialStatement(issuerID, dataSource, periodType, fiscalType, statementType, currency, callback, asyncState);
         }
         
@@ -2280,7 +2002,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             GreenField.DataContracts.FinancialStatementDataSource dataSource = ((GreenField.DataContracts.FinancialStatementDataSource)(inValues[1]));
             GreenField.DataContracts.FinancialStatementPeriodType periodType = ((GreenField.DataContracts.FinancialStatementPeriodType)(inValues[2]));
             GreenField.DataContracts.FinancialStatementFiscalType fiscalType = ((GreenField.DataContracts.FinancialStatementFiscalType)(inValues[3]));
-            GreenField.DataContracts.FinancialStatementStatementType statementType = ((GreenField.DataContracts.FinancialStatementStatementType)(inValues[4]));
+            GreenField.DataContracts.FinancialStatementType statementType = ((GreenField.DataContracts.FinancialStatementType)(inValues[4]));
             string currency = ((string)(inValues[5]));
             return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveFinancialStatement(issuerID, dataSource, periodType, fiscalType, statementType, currency, callback, asyncState);
         }
@@ -2298,11 +2020,11 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             }
         }
         
-        public void RetrieveFinancialStatementAsync(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, string currency) {
+        public void RetrieveFinancialStatementAsync(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementType statementType, string currency) {
             this.RetrieveFinancialStatementAsync(issuerID, dataSource, periodType, fiscalType, statementType, currency, null);
         }
         
-        public void RetrieveFinancialStatementAsync(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, string currency, object userState) {
+        public void RetrieveFinancialStatementAsync(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementType statementType, string currency, object userState) {
             if ((this.onBeginRetrieveFinancialStatementDelegate == null)) {
                 this.onBeginRetrieveFinancialStatementDelegate = new BeginOperationDelegate(this.OnBeginRetrieveFinancialStatement);
             }
@@ -2327,7 +2049,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveConsensusEstimateDetailedData(System.IAsyncResult result) {
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveConsensusEstimateDetailedData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveConsensusEstimateDetailedData(result);
         }
         
@@ -2339,7 +2061,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         private object[] OnEndRetrieveConsensusEstimateDetailedData(System.IAsyncResult result) {
-            System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveConsensusEstimateDetailedData(result);
+            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveConsensusEstimateDetailedData(result);
             return new object[] {
                     retVal};
         }
@@ -2899,7 +2621,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementStatementType statementType, string currency, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveFinancialStatement(string issuerID, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementPeriodType periodType, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, GreenField.DataContracts.FinancialStatementType statementType, string currency, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[6];
                 _args[0] = issuerID;
                 _args[1] = dataSource;
@@ -2926,9 +2648,9 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 return _result;
             }
             
-            public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData> EndRetrieveConsensusEstimateDetailedData(System.IAsyncResult result) {
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> EndRetrieveConsensusEstimateDetailedData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.ConsensusEstimateDetailedData>)(base.EndInvoke("RetrieveConsensusEstimateDetailedData", _args, result)));
+                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail>)(base.EndInvoke("RetrieveConsensusEstimateDetailedData", _args, result)));
                 return _result;
             }
             

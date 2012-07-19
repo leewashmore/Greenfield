@@ -64,7 +64,7 @@
   <xs:element name="RetrieveConsensusEstimateDetailedDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveConsensusEstimateDetailedDataResult" nillable="true" type="q10:ArrayOfConsensusEstimateDetailedData" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveConsensusEstimateDetailedDataResult" nillable="true" type="q10:ArrayOfConsensusEstimateDetail" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

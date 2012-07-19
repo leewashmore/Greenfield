@@ -133,7 +133,8 @@
                                  AlternateRowBackground="#d8d5d4"
                                  RowStyle="{StaticResource GridViewRowStyle}"
                                  Visibility="Collapsed"
-                                 ItemsSource="{Binding SecurityDetails}">
+                                 ItemsSource="{Binding SecurityDetails}"
+                                        >
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" IsFilterable="False" Width="auto" HeaderTextAlignment="Left" 
                                                     TextAlignment="Left" DataMemberBinding="{Binding SecurityCountryId}" 

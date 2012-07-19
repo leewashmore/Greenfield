@@ -62,6 +62,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\ChartExtensionData.cs">
       <Link>DataContracts\ChartExtensionData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\ConsensusEstimateDetail.cs">
+      <Link>DataContracts\ConsensusEstimateDetail.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\ConsensusEstimateMedian.cs">
       <Link>DataContracts\ConsensusEstimateMedian.cs</Link>
     </Compile>

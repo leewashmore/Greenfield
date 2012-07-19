@@ -1320,6 +1320,7 @@ namespace GreenField.Web.Services
 
                 if (lookThruEnabled)
                 {
+                    #region lookThru Enabled
 
                     List<DimensionEntitiesService.GF_PORTFOLIO_LTHOLDINGS> portfolioData = DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate).ToList();
                     if (portfolioData.Count == 0 || portfolioData == null)
@@ -1536,9 +1537,11 @@ namespace GreenField.Web.Services
                             }
                         }
                     }
+                    #endregion
                 }
                 else
                 {
+                    #region lookThru Disabled
                     List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> portfolioData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate).ToList();
                     if (portfolioData.Count == 0 || portfolioData == null)
                     {
@@ -1754,7 +1757,8 @@ namespace GreenField.Web.Services
                             }
                         }
                     }
-                
+                    #endregion
+
                 }
                 return result;
             }
@@ -1798,6 +1802,7 @@ namespace GreenField.Web.Services
 
                 if (lookThruEnabled)
                 {
+                    #region Look Thru Enabled
                     List<DimensionEntitiesService.GF_PORTFOLIO_LTHOLDINGS> portfolioData = DimensionEntity.GF_PORTFOLIO_LTHOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate).ToList();
 
                     if (portfolioData.Count == 0 || portfolioData == null)
@@ -2013,10 +2018,12 @@ namespace GreenField.Web.Services
                             }
                         }
                     }
+                    #endregion
                 }
 
                 else
                 {
+                    #region Look Thru Disabled
                     List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> portfolioData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioSelectionData.PortfolioId && t.PORTFOLIO_DATE == effectiveDate).ToList();
 
                     if (portfolioData.Count == 0 || portfolioData == null)
@@ -2232,6 +2239,7 @@ namespace GreenField.Web.Services
                             }
                         }
                     }
+                    #endregion
 
                 }
 
@@ -2537,17 +2545,21 @@ namespace GreenField.Web.Services
             if (!isServiceUp)
 
                 throw new Exception();
+            EqualityComparer<GF_PERF_DAILY_ATTRIBUTION> customComparer = new GreenField.Web.Services.PerformanceOperations.GF_PERF_DAILY_ATTRIBUTION_Comparer();
             List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionData = new List<GF_PERF_DAILY_ATTRIBUTION>();
             switch (nodeName)
             {
                 case "Country" :
                      attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Country").ToList();
+                     attributionData = attributionData.Distinct(customComparer).ToList(); 
                     break;
                 case "Sector" :
                      attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "GICS Level 1").ToList();
+                     attributionData = attributionData.Distinct(customComparer).ToList(); 
                     break;
                 case "Security" :
                     attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID").ToList();
+                    attributionData = attributionData.Distinct(customComparer).ToList(); 
                     break;
                 default:
                     attributionData = new List<GF_PERF_DAILY_ATTRIBUTION>();

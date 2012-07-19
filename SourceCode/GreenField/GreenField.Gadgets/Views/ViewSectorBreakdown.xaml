@@ -16,8 +16,9 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
-
-    <Grid x:Name="LayoutRoot" Background="White">
+    
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+        <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
@@ -43,7 +44,7 @@
         <Grid Grid.Row="1">
             <!--doughnutchart-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadChart x:Name="crtSectorBreakdown" ItemsSource="{Binding SectorSpecificInfo}" telerik:StyleManager.Theme="Metro" Visibility="Collapsed" MaxHeight="300">
+                <telerik:RadChart x:Name="crtSectorBreakdown" ItemsSource="{Binding SectorSpecificInfo}" telerik:StyleManager.Theme="Metro" Visibility="Collapsed">
                     <telerik:RadChart.DefaultView>
                         <telerikCharting:ChartDefaultView>
                             <telerik:ChartDefaultView.ChartLegend>
@@ -77,7 +78,6 @@
             </Border>
             <!--grid containing data-->
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <telerik:RadGridView Name="dgSectorBreakdown" 
                                          Background="White"
                                          AutoGenerateColumns="False" 
@@ -104,7 +104,7 @@
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                          RowLoaded="dgSectorBreakdown_Rowloaded"
-                                         ElementExporting="dgSectorBreakdown_ElementExporting">
+                                         ElementExporting="dgSectorBreakdown_ElementExporting" EnableRowVirtualization="False">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" DataMemberBinding="{Binding Security}" 
                                                         Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" MinWidth="150"/>
@@ -135,9 +135,9 @@
                             <telerik:GroupDescriptor Member="Industry" SortDirection="Ascending"/>
                         </telerik:RadGridView.GroupDescriptors>
                     </telerik:RadGridView>                    
-                </telerik:RadBusyIndicator>
             </Border>
         </Grid>
     </Grid>
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>
 

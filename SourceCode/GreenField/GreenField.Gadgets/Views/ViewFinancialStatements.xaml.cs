@@ -19,13 +19,13 @@ using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewBalanceSheet : ViewBaseUserControl
+    public partial class ViewFinancialStatements : ViewBaseUserControl
     {
         private EntitySelectionData _entitySelectionData;
         private bool _periodIsYearly = true;
         
         #region Constructor
-        public ViewBalanceSheet(ViewModelBalanceSheet dataContextSource)
+        public ViewFinancialStatements(ViewModelFinancialStatements dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
@@ -39,7 +39,7 @@ namespace GreenField.Gadgets.Views
             
             PeriodColumns.PeriodColumnUpdate += (e) =>
             {
-                if (e.PeriodColumnNamespace == typeof(ViewModelBalanceSheet).FullName)
+                if (e.PeriodColumnNamespace == typeof(ViewModelFinancialStatements).FullName)
                 {
                     PeriodColumns.UpdateColumnInformation(this.dgFinancialReport, e);
                     _entitySelectionData = e.EntitySelectionData;
@@ -55,7 +55,7 @@ namespace GreenField.Gadgets.Views
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
             {
-                PeriodColumnNamespace = typeof(ViewModelBalanceSheet).FullName,
+                PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
                 PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.LEFT
             });
             e.Handled = true;
@@ -65,7 +65,7 @@ namespace GreenField.Gadgets.Views
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
             {
-                PeriodColumnNamespace = typeof(ViewModelBalanceSheet).FullName,
+                PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
                 PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.RIGHT
             });
             e.Handled = true;
@@ -89,7 +89,7 @@ namespace GreenField.Gadgets.Views
             //this.rbtnQuarterly.Checked -= PeriodColumns.RadRadioButton_Checked;
             //this.rbtnYearly.Checked -= PeriodColumns.RadRadioButton_Checked;
 
-            (this.DataContext as ViewModelBalanceSheet).Dispose();
+            (this.DataContext as ViewModelFinancialStatements).Dispose();
             this.DataContext = null;
         }
         #endregion

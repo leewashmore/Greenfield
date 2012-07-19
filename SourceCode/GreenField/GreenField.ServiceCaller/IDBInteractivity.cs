@@ -187,7 +187,7 @@ namespace GreenField.ServiceCaller
         void RetrieveIssuerReferenceData(EntitySelectionData entitySelectionData, Action<IssuerReferenceData> callback);
 
         void RetrieveFinancialStatementData(string issuerID, FinancialStatementDataSource dataSource, FinancialStatementPeriodType periodType
-            , FinancialStatementFiscalType fiscalType, FinancialStatementStatementType statementType, String currency, Action<List<FinancialStatementData>> callback);
+            , FinancialStatementFiscalType fiscalType, FinancialStatementType statementType, String currency, Action<List<FinancialStatementData>> callback);
 
         void RetrieveQuarterlyResultsData(String fieldValue, int yearValue, Action<List<QuarterlyResultsData>> callback);
         void RetrievePRevenueData(EntitySelectionData entitySelectionData, Action<List<PRevenueData>> callback);
@@ -206,7 +206,7 @@ namespace GreenField.ServiceCaller
         #endregion
         
 
-        void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetailedData>> callback);
+        void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetail>> callback);
 
         void RetrieveRatioComparisonData(String contextSecurityXML, Action<List<RatioComparisonData>> callback);
 

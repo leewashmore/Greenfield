@@ -47,13 +47,13 @@ namespace GreenField.Common
         public static string EXTERNAL_RESEARCH_FUNDAMENTALS_SUMMARY = "Fundamental Summary External Research 4.1.2.1";
         #endregion
         #region Financials Income statement
-        public static string EXTERNAL_RESEARCH_INCOME_STATEMENT = "Income Statement External Research 4.1.2.2 (Income Statement)";
+        public static string EXTERNAL_RESEARCH_INCOME_STATEMENT = "Income Statement";
         #endregion
         #region Financials Balance Sheet
         public static string EXTERNAL_RESEARCH_BALANCE_SHEET = "Balance Sheet";
         #endregion
         #region Financials Cash Flow Statement
-        public static string EXTERNAL_RESEARCH_CASH_FLOW = "Cash Flow External Research 4.1.2.2 (Cash Flow Statement)";
+        public static string EXTERNAL_RESEARCH_CASH_FLOW = "Cash Flow Statement";
         #endregion
         #region Financials Statistics
         public static string INTERNAL_RESEARCH_FINSTAT_REPORT = "Finstat Report Internal Research 4.2";

@@ -418,7 +418,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
 
         }
-
+        /// <summary>
+        /// Assigns UI Field Properties based on Node Name Selected
+        /// </summary>
+        /// <param name="selectedNodeType">Node Name selected by the user</param>
        public void HandleNodeNameReferenceSet(String selectedNodeType)
         {
 

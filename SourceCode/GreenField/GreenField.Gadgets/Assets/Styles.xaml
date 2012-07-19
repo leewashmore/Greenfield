@@ -62,7 +62,7 @@
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Background" Value="#9F1D21"/>
     </Style>
-    
+
     <!--GroupPanelItemStyle-->
     <Style TargetType="telerik:GridViewGroupPanelItem" x:Name="GridViewGroupPanelItemStyle">
         <Setter Property="Foreground" Value="White"/>
@@ -260,7 +260,7 @@
         <Setter Property="Padding" Value="10,0,0,0"/>
     </Style>
 
-    
+
 
     <!--GridViewGroupFooterCellStyle-->
     <Style TargetType="telerik:GridViewGroupFooterCell">
@@ -430,7 +430,7 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        
+
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="HoverStates">
                                 <VisualState x:Name="Normal">
@@ -581,7 +581,7 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                
+
                                 <ContentControl ContentTemplate="{TemplateBinding HeaderTemplate}"
                                         Content="{TemplateBinding Header}"
                                         Foreground="{TemplateBinding Foreground}"
@@ -614,7 +614,7 @@
                                    Text="{Binding}"
                                    Visibility="{Binding Converter={StaticResource textToVisibilityConverter}}"
                                    Width="Auto" />
-                        </Grid>
+                    </Grid>
                 </DataTemplate>
             </Setter.Value>
         </Setter>

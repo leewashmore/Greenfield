@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -29,6 +30,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextPerformanceGrid = dataContextSource;
             dataContextSource.performanceGridDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGridDataLoadedEvent);
         }
@@ -51,6 +53,58 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicatorGrid.IsBusy = false;
             }
         }
+        private void dgPerformance_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }
+
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+
+                if (this.dgPerformance.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                  
+                      new RadExportOptions() { ElementName = "Performance Grid", Element = this.dgPerformance, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                    
+                };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRID);
+                    childExportOptions.Show();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+
+        private void dgPerformanceGrid_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
+    
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Data Context Property
+        /// </summary>
+        private ViewModelPerformanceGrid _dataContextPerformanceGrid;
+        public ViewModelPerformanceGrid DataContextPerformanceGrid
+        {
+            get { return _dataContextPerformanceGrid; }
+            set { _dataContextPerformanceGrid = value; }
+        }
 
         /// <summary>
         /// True is gadget is currently on display
@@ -66,16 +120,18 @@ namespace GreenField.Gadgets.Views
                     ((ViewModelPerformanceGrid)DataContext).IsActive = _isActive;
             }
         }
-        #endregion
+        #endregion        
+
+        #region RemoveEvents
 
         public override void Dispose()
         {
-            throw new NotImplementedException();
+            this.DataContextPerformanceGrid.performanceGridDataLoadedEvent -= new DataRetrievalProgressIndicatorEventHandler(dataContextSource_performanceGridDataLoadedEvent);
+            this.DataContextPerformanceGrid.Dispose();
+            this.DataContextPerformanceGrid = null;
+            this.DataContext = null;
         }
 
-        private void dgPerformance_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            GroupedGridRowLoadedHandler.Implement(e);
-        }
+        #endregion
     }
 }

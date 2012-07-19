@@ -19,6 +19,7 @@ using GreenField.Common;
 using GreenField.Common.Helper;
 using Microsoft.Practices.Prism.Regions;
 using GreenField.Gadgets.Helpers;
+using GreenField.DataContracts;
 
 namespace GreenField.DashboardModule.Views
 {
@@ -57,10 +58,11 @@ namespace GreenField.DashboardModule.Views
                 DashboardGadgetPayload = payload,
                 DBInteractivity = _dBInteractivity,
                 EventAggregator = _eventAggregator,
-                LoggerFacade = _logger
+                LoggerFacade = _logger,
+                AdditionalInfo = FinancialStatementType.CASH_FLOW_STATEMENT
             };
 
-            this.cctrDashboardContent.Content = null;
+            this.cctrDashboardContent.Content = new ViewFinancialStatements(new ViewModelFinancialStatements(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

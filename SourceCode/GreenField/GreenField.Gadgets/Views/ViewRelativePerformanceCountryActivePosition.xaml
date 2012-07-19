@@ -45,7 +45,8 @@
                                  SelectionUnit="FullRow"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  RowStyle="{StaticResource GridViewRowStyle}" 
-                                 GridLinesVisibility="None">
+                                 GridLinesVisibility="None"
+                                 >
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn Header="Country" DataMemberBinding="{Binding Entity}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                 TextAlignment="Left" HeaderTextAlignment="Left"/>

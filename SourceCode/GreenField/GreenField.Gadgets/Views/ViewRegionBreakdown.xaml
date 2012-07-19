@@ -109,7 +109,8 @@
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                          RowLoaded="dgRegionBreakdown_RowLoaded"
-                                          ElementExporting="dgRegionBreakdown_ElementExporting">
+                                         ElementExporting="dgRegionBreakdown_ElementExporting" 
+                                         EnableRowVirtualization="False">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" DataMemberBinding="{Binding Security}" 
                                                         Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" MinWidth="150"/>
