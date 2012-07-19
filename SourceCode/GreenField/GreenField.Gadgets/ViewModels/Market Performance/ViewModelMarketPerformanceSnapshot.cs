@@ -84,7 +84,7 @@ namespace GreenField.Gadgets.ViewModels
                 HandleMarketPerformanceSnapshotNameReferenceSetEvent(SelectedMarketSnapshotSelectionInfo);
             }
 
-            
+
         }
         #endregion
 
@@ -261,7 +261,7 @@ namespace GreenField.Gadgets.ViewModels
                 _busyIndicatorIsBusy = value;
                 RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
             }
-        }        
+        }
 
         /// <summary>
         /// Stores the message displayed over the busy indicator to notify user of the on going process
@@ -302,7 +302,7 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 }
             }
-        } 
+        }
         #endregion
         #endregion
 
@@ -361,7 +361,7 @@ namespace GreenField.Gadgets.ViewModels
                     }
                     return;
                 }
-                    
+
 
                 //Get all group names present in the snapshot
                 List<string> snapshotGroupNames = new List<string>();
@@ -401,13 +401,16 @@ namespace GreenField.Gadgets.ViewModels
                                         Prompt.ShowDialog("Entity already exists in the snapshot");
                                         BusyIndicatorNotification();
                                         return;
-                                    } 
+                                    }
                                 }
 
                                 insertedMarketSnapshotPreference.GroupPreferenceID = GetLastGroupPreferenceId() + 1;
                                 insertedMarketSnapshotPreference.EntityOrder = 1;
 
                                 //Add the inserted entity to MarketSnapshotPreferenceInfo 
+                                _revertSnapshotPreference = insertedMarketSnapshotPreference;
+                                _revertSnapshotChange = RevertAddEntityGroupCommandMethod;
+
                                 if (MarketSnapshotPreferenceInfo == null)
                                 {
                                     MarketSnapshotPreferenceInfo = new List<MarketSnapshotPreference>();
@@ -448,6 +451,18 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void RevertAddEntityGroupCommandMethod(MarketSnapshotPreference preference)
+        {
+            MarketSnapshotPreferenceInfo.Remove(preference);
+
+            MarketSnapshotPreferenceInfo = MarketSnapshotPreferenceInfo
+                .OrderBy(record => record.GroupPreferenceID)
+                .ThenBy(record => record.EntityOrder)
+                .ToList();
+
+            TestEntityOrdering();
         }
 
         /// <summary>
@@ -497,13 +512,13 @@ namespace GreenField.Gadgets.ViewModels
                             }
                         }
                         #endregion
-                        
+
                         BusyIndicatorNotification();
                         TestEntityOrdering();
                     }
                 });
 
-                
+
             }
             catch (Exception ex)
             {
@@ -512,8 +527,16 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
             BusyIndicatorNotification();
-            
+
         }
+
+        private void RevertRemoveEntityGroupCommandMethod(MarketSnapshotPreference preference)
+        {
+
+        }
+
+        MarketSnapshotPreference _revertSnapshotPreference;
+        Action<MarketSnapshotPreference> _revertSnapshotChange;
 
         /// <summary>
         /// AddEntityToGroupCommand Execution method - adds entity to group and places it over the selected entity
@@ -567,7 +590,7 @@ namespace GreenField.Gadgets.ViewModels
                                         Prompt.ShowDialog("Entity already exists in the snapshot");
                                         BusyIndicatorNotification();
                                         return;
-                                    } 
+                                    }
                                 }
 
                                 insertedMarketSnapshotPreference.GroupName = SelectedMarketPerformanceSnapshotInfo.MarketSnapshotPreferenceInfo.GroupName;
@@ -590,6 +613,8 @@ namespace GreenField.Gadgets.ViewModels
                                 }
 
                                 //Add inserted entity to MarketSnapshotPreferenceInfo
+                                _revertSnapshotPreference = insertedMarketSnapshotPreference;
+                                _revertSnapshotChange = RevertAddEntityToGroupCommandMethod;
                                 MarketSnapshotPreferenceInfo.Add(insertedMarketSnapshotPreference);
 
                                 //Reorder MarketSnapshotPreferenceInfo
@@ -626,6 +651,26 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void RevertAddEntityToGroupCommandMethod(MarketSnapshotPreference preference)
+        {
+            MarketSnapshotPreferenceInfo.Remove(preference);
+            foreach (MarketSnapshotPreference entity in MarketSnapshotPreferenceInfo)
+            {
+                if (entity.GroupPreferenceID != preference.GroupPreferenceID)
+                    continue;
+                if (entity.EntityOrder < preference.EntityOrder)
+                    continue;
+                entity.EntityOrder--;
+            }
+
+            MarketSnapshotPreferenceInfo = MarketSnapshotPreferenceInfo
+                .OrderBy(record => record.GroupPreferenceID)
+                .ThenBy(record => record.EntityOrder)
+                .ToList();
+
+            TestEntityOrdering();
         }
 
         /// <summary>
@@ -691,7 +736,7 @@ namespace GreenField.Gadgets.ViewModels
                             BusyIndicatorNotification();
                         }
                     });
-                
+
             }
             catch (Exception ex)
             {
@@ -699,7 +744,12 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-            BusyIndicatorNotification();            
+            BusyIndicatorNotification();
+        }
+
+        private void RevertRemoveEntityFromGroupCommandMethod(MarketSnapshotPreference preference)
+        {
+
         }
         #endregion
 
@@ -957,7 +1007,7 @@ namespace GreenField.Gadgets.ViewModels
                         }
                     }
                 });
-                
+
             }
             catch (Exception ex)
             {
@@ -1261,11 +1311,13 @@ namespace GreenField.Gadgets.ViewModels
                     }
                     else
                     {
+                        _revertSnapshotChange(_revertSnapshotPreference);
                         Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     }
                 }
                 else
                 {
+                    _revertSnapshotChange(_revertSnapshotPreference);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
             }
@@ -1876,7 +1928,7 @@ namespace GreenField.Gadgets.ViewModels
                     //            new XAttribute("EntityNodeValueName", preference.EntityNodeValueName.ToString()));
 
                     XElement createGroupEntity = new XElement("CreateGroupEntity");
-                    if(preference.EntityName != null)
+                    if (preference.EntityName != null)
                         createGroupEntity.Add(new XAttribute("EntityName", preference.EntityName.ToString()));
                     if (preference.EntityReturnType != null)
                         createGroupEntity.Add(new XAttribute("EntityReturnType", preference.EntityReturnType.ToString()));
@@ -1967,7 +2019,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (!_createGroupInfo.Contains(preference.GroupName))
                     {
-                        XElement createEntity = new XElement("CreateEntity");                                
+                        XElement createEntity = new XElement("CreateEntity");
                         if (preference.EntityName != null)
                             createEntity.Add(new XAttribute("EntityName", preference.EntityName.ToString()));
                         if (preference.EntityReturnType != null)
@@ -2055,7 +2107,7 @@ namespace GreenField.Gadgets.ViewModels
             //            ((int)record.EntityOrder).ToString() + "\n";
             //    }
             //}
-            
+
             //A = A + "\n\nOriginal Preference ";
             //foreach (MarketSnapshotPreference record in MarketSnapshotPreferenceOriginalInfo)
             //{

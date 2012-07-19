@@ -73,6 +73,7 @@
     <Reference Include="System.Windows.Controls.Input.Toolkit">
       <HintPath>..\Lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
     </Reference>
+    <Reference Include="System.Windows.Controls.Layout.Toolkit, Version=4.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Windows.Controls.Toolkit">
       <HintPath>..\Lib\System.Windows.Controls.Toolkit.dll</HintPath>
     </Reference>
@@ -208,7 +209,7 @@
     </Compile>
     <Compile Include="Views\ViewCOASpecific.xaml.cs">
       <DependentUpon>ViewCOASpecific.xaml</DependentUpon>
-     </Compile> 
+    </Compile>
     <Compile Include="Views\ConsensusEstimates\ViewValuations.xaml.cs">
       <DependentUpon>ViewValuations.xaml</DependentUpon>
     </Compile>

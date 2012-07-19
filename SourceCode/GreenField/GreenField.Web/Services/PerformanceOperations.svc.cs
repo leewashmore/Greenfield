@@ -689,140 +689,152 @@ namespace GreenField.Web.Services
                 if (marketSnapshotPreference == null)
                     return result;
 
-
                 foreach (MarketSnapshotPreference preference in marketSnapshotPreference)
                 {
-                    if (preference.EntityType == "SECURITY" || preference.EntityType == "COMMODITY" || preference.EntityType == "INDEX")
+                    MarketPerformanceSnapshotData entityPerformanceData = new MarketPerformanceSnapshotData();
+                    if (preference.EntityType == "BENCHMARK")
                     {
-                        GF_SELECTION_BASEVIEW entityRecord = entity.GF_SELECTION_BASEVIEW
-                            .Where(record => record.LONG_NAME == preference.EntityName
-                                && record.TYPE == preference.EntityType)
-                            .FirstOrDefault();
-
-                        if (entityRecord == null)
-                        {
-                            result.Add(new MarketPerformanceSnapshotData());
-                            continue;
-                        }
-
-
-                        string entityInstrumentId = entityRecord.INSTRUMENT_ID;
-
-                        #region Last Date Pricing Data
-                        DateTime lastBusinessDate = DateTime.Today;
-                        Decimal? lastBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
-                            , preference.EntityReturnType, lastBusinessDate, out lastBusinessDate);
-                        #endregion
-
-                        #region Second Last Date Pricing Data
-                        DateTime secondLastBusinessDate = lastBusinessDate;
-                        Decimal? secondLastBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
-                            , preference.EntityReturnType, secondLastBusinessDate, out secondLastBusinessDate);
-                        #endregion
-
-                        #region Last Week Date Pricing Data
-                        DateTime lastWeekBusinessDate = GetWeekBeginDate(DateTime.Today);
-                        Decimal? lastWeekBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
-                            , preference.EntityReturnType, lastWeekBusinessDate, out lastWeekBusinessDate);
-                        #endregion
-
-                        #region Last Month Date Pricing Data
-                        DateTime lastMonthBusinessDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
-                        Decimal? lastMonthBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
-                            , preference.EntityReturnType, lastMonthBusinessDate, out lastMonthBusinessDate);
-                        #endregion
-
-                        #region Last Quarter Date Pricing Data
-                        DateTime lastQuarterBusinessDate = GetQuarterBeginDate(DateTime.Today);
-                        Decimal? lastQuarterBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
-                            , preference.EntityReturnType, lastQuarterBusinessDate, out lastQuarterBusinessDate);
-                        #endregion
-
-                        #region Last Year Date Pricing Data
-                        DateTime lastYearBusinessDate = new DateTime(DateTime.Today.Year, 1, 1);
-                        Decimal? lastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
-                            , preference.EntityReturnType, lastYearBusinessDate, out lastYearBusinessDate);
-                        #endregion
-
-                        #region Second Last Year Date Pricing Data
-                        DateTime secondLastYearBusinessDate = new DateTime(DateTime.Today.Year - 1, 1, 1);
-                        Decimal? secondLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
-                            , preference.EntityReturnType, secondLastYearBusinessDate, out secondLastYearBusinessDate);
-                        #endregion
-
-                        #region Third Last Year Date Pricing Data
-                        DateTime thirdLastYearBusinessDate = new DateTime(DateTime.Today.Year - 2, 1, 1);
-                        Decimal? thirdLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
-                            , preference.EntityReturnType, thirdLastYearBusinessDate, out thirdLastYearBusinessDate);
-                        #endregion
-
-                        #region Fourth Last Year Date Pricing Data
-                        DateTime fourthLastYearBusinessDate = new DateTime(DateTime.Today.Year - 3, 1, 1);
-                        Decimal? fourthLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
-                            , preference.EntityReturnType, fourthLastYearBusinessDate, out fourthLastYearBusinessDate);
-                        #endregion
-
-
-                        Decimal? dateToDateReturn = secondLastBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - secondLastBusinessDatePrice) / (secondLastBusinessDatePrice)) * 100;
-                        Decimal? weekToDateReturn = lastWeekBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastWeekBusinessDatePrice) / (lastWeekBusinessDatePrice)) * 100;
-                        Decimal? monthToDateReturn = lastMonthBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastMonthBusinessDatePrice) / (lastMonthBusinessDatePrice)) * 100;
-                        Decimal? quarterToDateReturn = lastQuarterBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastQuarterBusinessDatePrice) / (lastQuarterBusinessDatePrice)) * 100;
-                        Decimal? yearToDateReturn = lastYearBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastYearBusinessDatePrice) / (lastYearBusinessDatePrice)) * 100;
-                        Decimal? lastYearReturn = secondLastYearBusinessDatePrice == 0 ? 0 : ((lastYearBusinessDatePrice - secondLastYearBusinessDatePrice) / (secondLastYearBusinessDatePrice)) * 100;
-                        Decimal? secondLastYearReturn = thirdLastYearBusinessDatePrice == 0 ? 0 : ((secondLastYearBusinessDatePrice - thirdLastYearBusinessDatePrice) / (thirdLastYearBusinessDatePrice)) * 100;
-                        Decimal? thirdLastYearReturn = fourthLastYearBusinessDatePrice == 0 ? 0 : ((thirdLastYearBusinessDatePrice - fourthLastYearBusinessDatePrice) / (fourthLastYearBusinessDatePrice)) * 100;
-
-                        result.Add(new MarketPerformanceSnapshotData()
-                        {
-                            MarketSnapshotPreferenceInfo = preference,
-                            DateToDateReturn = dateToDateReturn,
-                            WeekToDateReturn = weekToDateReturn,
-                            MonthToDateReturn = monthToDateReturn,
-                            QuarterToDateReturn = quarterToDateReturn,
-                            YearToDateReturn = yearToDateReturn,
-                            LastYearReturn = lastYearReturn,
-                            SecondLastYearReturn = secondLastYearReturn,
-                            ThirdLastYearReturn = thirdLastYearReturn
-                        });
+                        entityPerformanceData = MarketPerformanceSnapshotDataCalculations.GetBenchmarkPerformanceData(entity, preference);
                     }
-                    else if (preference.EntityType == "BENCHMARK")
+                    else
                     {
-                        GF_PERF_DAILY_ATTRIB_DIST_BM benchmarkDetails = entity.GF_PERF_DAILY_ATTRIB_DIST_BM.
-                            Where(record => record.BMNAME == preference.EntityName).FirstOrDefault();
-
-                        if (benchmarkDetails == null)
-                            continue;
-
-
-                        GF_PERF_DAILY_ATTRIBUTION benchmarkPerfRecord = entity.GF_PERF_DAILY_ATTRIBUTION
-                            .Where(g => g.NODE_NAME == "GICS Level 5" && g.AGG_LVL_1 == "Undefined" &&
-                                g.BM == benchmarkDetails.BM && g.BMNAME == benchmarkDetails.BMNAME).FirstOrDefault();
-
-                        if (benchmarkPerfRecord == null)
-                            continue;
-
-                        Decimal? dateToDateReturn = benchmarkPerfRecord.BM1_TOP_QC_TWR_1D * 100;
-                        Decimal? weekToDateReturn = benchmarkPerfRecord.BM1_TOP_QC_TWR_1W * 100;
-                        Decimal? monthToDateReturn = benchmarkPerfRecord.BM1_TOP_QC_TWR_MTD * 100;
-                        Decimal? quarterToDateReturn = benchmarkPerfRecord.BM1_TOP_RC_TWR_QTD * 100;
-                        Decimal? yearToDateReturn = benchmarkPerfRecord.BM1_TOP_RC_TWR_YTD * 100;
-                        Decimal? lastYearReturn = benchmarkPerfRecord.BM1_TOP_RC_TWR_1Y * 100;
-                        Decimal? secondLastYearReturn = null;
-                        Decimal? thirdLastYearReturn = null;
-
-                        result.Add(new MarketPerformanceSnapshotData()
-                        {
-                            MarketSnapshotPreferenceInfo = preference,
-                            DateToDateReturn = dateToDateReturn,
-                            WeekToDateReturn = weekToDateReturn,
-                            MonthToDateReturn = monthToDateReturn,
-                            QuarterToDateReturn = quarterToDateReturn,
-                            YearToDateReturn = yearToDateReturn,
-                            LastYearReturn = lastYearReturn,
-                            SecondLastYearReturn = secondLastYearReturn,
-                            ThirdLastYearReturn = thirdLastYearReturn
-                        });
+                        entityPerformanceData = MarketPerformanceSnapshotDataCalculations.GetSecurityCommodityIndexPerformanceData(entity, preference);
                     }
+
+                    //if (preference.EntityType == "SECURITY" || preference.EntityType == "COMMODITY" || preference.EntityType == "INDEX")
+                    //{
+                    //    GF_SELECTION_BASEVIEW entityRecord = entity.GF_SELECTION_BASEVIEW
+                    //        .Where(record => record.LONG_NAME == preference.EntityName
+                    //            && record.TYPE == preference.EntityType)
+                    //        .FirstOrDefault();
+
+                    //    if (entityRecord == null)
+                    //    {
+                    //        result.Add(new MarketPerformanceSnapshotData());
+                    //        continue;
+                    //    }
+
+
+                    //    string entityInstrumentId = entityRecord.INSTRUMENT_ID;
+
+                    //    #region Last Date Pricing Data
+                    //    DateTime lastBusinessDate = DateTime.Today;
+                    //    Decimal? lastBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    //        , preference.EntityReturnType, lastBusinessDate, out lastBusinessDate);
+                    //    #endregion
+
+                    //    #region Second Last Date Pricing Data
+                    //    DateTime secondLastBusinessDate = lastBusinessDate;
+                    //    Decimal? secondLastBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    //        , preference.EntityReturnType, secondLastBusinessDate, out secondLastBusinessDate);
+                    //    #endregion
+
+                    //    #region Last Week Date Pricing Data
+                    //    DateTime lastWeekBusinessDate = GetWeekBeginDate(DateTime.Today);
+                    //    Decimal? lastWeekBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    //        , preference.EntityReturnType, lastWeekBusinessDate, out lastWeekBusinessDate);
+                    //    #endregion
+
+                    //    #region Last Month Date Pricing Data
+                    //    DateTime lastMonthBusinessDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                    //    Decimal? lastMonthBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    //        , preference.EntityReturnType, lastMonthBusinessDate, out lastMonthBusinessDate);
+                    //    #endregion
+
+                    //    #region Last Quarter Date Pricing Data
+                    //    DateTime lastQuarterBusinessDate = GetQuarterBeginDate(DateTime.Today);
+                    //    Decimal? lastQuarterBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    //        , preference.EntityReturnType, lastQuarterBusinessDate, out lastQuarterBusinessDate);
+                    //    #endregion
+
+                    //    #region Last Year Date Pricing Data
+                    //    DateTime lastYearBusinessDate = new DateTime(DateTime.Today.Year, 1, 1);
+                    //    Decimal? lastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    //        , preference.EntityReturnType, lastYearBusinessDate, out lastYearBusinessDate);
+                    //    #endregion
+
+                    //    #region Second Last Year Date Pricing Data
+                    //    DateTime secondLastYearBusinessDate = new DateTime(DateTime.Today.Year - 1, 1, 1);
+                    //    Decimal? secondLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    //        , preference.EntityReturnType, secondLastYearBusinessDate, out secondLastYearBusinessDate);
+                    //    #endregion
+
+                    //    #region Third Last Year Date Pricing Data
+                    //    DateTime thirdLastYearBusinessDate = new DateTime(DateTime.Today.Year - 2, 1, 1);
+                    //    Decimal? thirdLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    //        , preference.EntityReturnType, thirdLastYearBusinessDate, out thirdLastYearBusinessDate);
+                    //    #endregion
+
+                    //    #region Fourth Last Year Date Pricing Data
+                    //    DateTime fourthLastYearBusinessDate = new DateTime(DateTime.Today.Year - 3, 1, 1);
+                    //    Decimal? fourthLastYearBusinessDatePrice = GetPerformanceDataDataByInstrumentIdReturnTypeAndFromDate(entityInstrumentId
+                    //        , preference.EntityReturnType, fourthLastYearBusinessDate, out fourthLastYearBusinessDate);
+                    //    #endregion
+
+
+                    //    Decimal? dateToDateReturn = secondLastBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - secondLastBusinessDatePrice) / (secondLastBusinessDatePrice)) * 100;
+                    //    Decimal? weekToDateReturn = lastWeekBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastWeekBusinessDatePrice) / (lastWeekBusinessDatePrice)) * 100;
+                    //    Decimal? monthToDateReturn = lastMonthBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastMonthBusinessDatePrice) / (lastMonthBusinessDatePrice)) * 100;
+                    //    Decimal? quarterToDateReturn = lastQuarterBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastQuarterBusinessDatePrice) / (lastQuarterBusinessDatePrice)) * 100;
+                    //    Decimal? yearToDateReturn = lastYearBusinessDatePrice == 0 ? 0 : ((lastBusinessDatePrice - lastYearBusinessDatePrice) / (lastYearBusinessDatePrice)) * 100;
+                    //    Decimal? lastYearReturn = secondLastYearBusinessDatePrice == 0 ? 0 : ((lastYearBusinessDatePrice - secondLastYearBusinessDatePrice) / (secondLastYearBusinessDatePrice)) * 100;
+                    //    Decimal? secondLastYearReturn = thirdLastYearBusinessDatePrice == 0 ? 0 : ((secondLastYearBusinessDatePrice - thirdLastYearBusinessDatePrice) / (thirdLastYearBusinessDatePrice)) * 100;
+                    //    Decimal? thirdLastYearReturn = fourthLastYearBusinessDatePrice == 0 ? 0 : ((thirdLastYearBusinessDatePrice - fourthLastYearBusinessDatePrice) / (fourthLastYearBusinessDatePrice)) * 100;
+
+                        //result.Add(new MarketPerformanceSnapshotData()
+                        //{
+                        //    MarketSnapshotPreferenceInfo = preference,
+                        //    DateToDateReturn = dateToDateReturn,
+                        //    WeekToDateReturn = weekToDateReturn,
+                        //    MonthToDateReturn = monthToDateReturn,
+                        //    QuarterToDateReturn = quarterToDateReturn,
+                        //    YearToDateReturn = yearToDateReturn,
+                        //    LastYearReturn = lastYearReturn,
+                        //    SecondLastYearReturn = secondLastYearReturn,
+                        //    ThirdLastYearReturn = thirdLastYearReturn
+                        //});
+
+                    entityPerformanceData.MarketSnapshotPreferenceInfo = preference;
+                    result.Add(entityPerformanceData);
+                    //}
+                    //else if (preference.EntityType == "BENCHMARK")
+                    //{
+                    //    GF_PERF_DAILY_ATTRIB_DIST_BM benchmarkDetails = entity.GF_PERF_DAILY_ATTRIB_DIST_BM.
+                    //        Where(record => record.BMNAME == preference.EntityName).FirstOrDefault();
+
+                    //    if (benchmarkDetails == null)
+                    //        continue;
+
+
+                    //    GF_PERF_DAILY_ATTRIBUTION benchmarkPerfRecord = entity.GF_PERF_DAILY_ATTRIBUTION
+                    //        .Where(g => g.NODE_NAME == "GICS Level 5" && g.AGG_LVL_1 == "Undefined" &&
+                    //            g.BM == benchmarkDetails.BM && g.BMNAME == benchmarkDetails.BMNAME).FirstOrDefault();
+
+                    //    if (benchmarkPerfRecord == null)
+                    //        continue;
+
+                    //    Decimal? dateToDateReturn = benchmarkPerfRecord.BM1_TOP_QC_TWR_1D * 100;
+                    //    Decimal? weekToDateReturn = benchmarkPerfRecord.BM1_TOP_QC_TWR_1W * 100;
+                    //    Decimal? monthToDateReturn = benchmarkPerfRecord.BM1_TOP_QC_TWR_MTD * 100;
+                    //    Decimal? quarterToDateReturn = benchmarkPerfRecord.BM1_TOP_RC_TWR_QTD * 100;
+                    //    Decimal? yearToDateReturn = benchmarkPerfRecord.BM1_TOP_RC_TWR_YTD * 100;
+                    //    Decimal? lastYearReturn = benchmarkPerfRecord.BM1_TOP_RC_TWR_1Y * 100;
+                    //    Decimal? secondLastYearReturn = null;
+                    //    Decimal? thirdLastYearReturn = null;
+
+                    //    result.Add(new MarketPerformanceSnapshotData()
+                    //    {
+                    //        MarketSnapshotPreferenceInfo = preference,
+                    //        DateToDateReturn = dateToDateReturn,
+                    //        WeekToDateReturn = weekToDateReturn,
+                    //        MonthToDateReturn = monthToDateReturn,
+                    //        QuarterToDateReturn = quarterToDateReturn,
+                    //        YearToDateReturn = yearToDateReturn,
+                    //        LastYearReturn = lastYearReturn,
+                    //        SecondLastYearReturn = secondLastYearReturn,
+                    //        ThirdLastYearReturn = thirdLastYearReturn
+                    //    });
+                    //}
                 }
 
                 return result;

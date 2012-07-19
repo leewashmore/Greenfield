@@ -110,6 +110,7 @@
     <Compile Include="Helpers\GreenfieldConstants.cs" />
     <Compile Include="Helpers\MarketCapitalizationCalculations.cs" />
     <Compile Include="Helpers\ChartExtensionCalculations.cs" />
+    <Compile Include="Helpers\MarketPerformanceSnapshotDataCalculations.cs" />
     <Compile Include="Helpers\MultiLineBenchmarkUICalculations.cs" />
     <Compile Include="Helpers\PortfolioDetailsCalculations.cs" />
     <Compile Include="Helpers\RelativePerformanceUICalculations.cs" />

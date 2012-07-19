@@ -110,7 +110,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private bool? _displayIssuerIsChecked = true;
+        private bool? _displayIssuerIsChecked = false;
         public bool? DisplayIssuerIsChecked
         {
             get { return _displayIssuerIsChecked; }
