@@ -2558,7 +2558,7 @@ namespace GreenField.Web.Services
                      attributionData = attributionData.Distinct(customComparer).ToList(); 
                     break;
                 case "Security" :
-                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID").ToList();
+                    attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Security ID" && t.SEC_INV_THEME == "EQUITY").ToList();
                     attributionData = attributionData.Distinct(customComparer).ToList(); 
                     break;
                 default:
@@ -2580,37 +2580,37 @@ namespace GreenField.Web.Services
                     entry.FPorAshRcCtn1w = attributionData[i].ADJ_RTN_POR_RC_TWR_1W;
                     entry.FBm1AshRcCtn1w = attributionData[i].F_BM1_ASH_RC_CTN_1W;
                     entry.FBm1AshAssetAlloc1w = attributionData[i].BM1_RC_ASSET_ALLOC_1W;
-                    entry.FBm1AshSecSelec1w = attributionData[i].F_BM1_ASH_SEC_SELEC_1W;
+                    entry.FBm1AshSecSelec1w = attributionData[i].BM1_RC_SEC_SELEC_1W;
                     entry.PorRcAvgWgt1d = attributionData[i].POR_RC_AVG_WGT_1D;
                     entry.Bm1RcAvgWgt1d = attributionData[i].BM1_RC_AVG_WGT_1D;
                     entry.FPorAshRcCtn1d = attributionData[i].ADJ_RTN_POR_RC_TWR_1D;
                     entry.FBm1AshRcCtn1d = attributionData[i].F_BM1_ASH_RC_CTN_1D;
                     entry.FBm1AshAssetAlloc1d = attributionData[i].BM1_RC_ASSET_ALLOC_1D;
-                    entry.FBm1AshSecSelec1d = attributionData[i].F_BM1_ASH_SEC_SELEC_1D;
+                    entry.FBm1AshSecSelec1d = attributionData[i].BM1_RC_SEC_SELEC_1D;
                     entry.PorRcAvgWgtMtd = attributionData[i].POR_RC_AVG_WGT_MTD;
                     entry.Bm1RcAvgWgtMtd = attributionData[i].BM1_RC_AVG_WGT_MTD;
                     entry.FPorAshRcCtnMtd = attributionData[i].ADJ_RTN_POR_RC_TWR_MTD;
                     entry.FBm1AshRcCtnMtd = attributionData[i].F_BM1_ASH_RC_CTN_MTD;
                     entry.FBm1AshAssetAllocMtd = attributionData[i].BM1_RC_ASSET_ALLOC_MTD;
-                    entry.FBm1AshSecSelecMtd = attributionData[i].F_BM1_ASH_SEC_SELEC_MTD;
+                    entry.FBm1AshSecSelecMtd = attributionData[i].BM1_RC_SEC_SELEC_MTD;
                     entry.PorRcAvgWgtQtd = attributionData[i].POR_RC_AVG_WGT_QTD;
                     entry.Bm1RcAvgWgtQtd = attributionData[i].BM1_RC_AVG_WGT_QTD;
                     entry.FPorAshRcCtnQtd = attributionData[i].ADJ_RTN_POR_RC_TWR_QTD;
                     entry.FBm1AshRcCtnQtd = attributionData[i].F_BM1_ASH_RC_CTN_QTD;
                     entry.FBm1AshAssetAllocQtd = attributionData[i].BM1_RC_ASSET_ALLOC_QTD;
-                    entry.FBm1AshSecSelecQtd = attributionData[i].F_BM1_ASH_SEC_SELEC_QTD;
+                    entry.FBm1AshSecSelecQtd = attributionData[i].BM1_RC_SEC_SELEC_QTD;
                     entry.PorRcAvgWgtYtd = attributionData[i].POR_RC_AVG_WGT_YTD;
                     entry.Bm1RcAvgWgtYtd = attributionData[i].BM1_RC_AVG_WGT_YTD;
                     entry.FPorAshRcCtnYtd = attributionData[i].ADJ_RTN_POR_RC_TWR_YTD;
                     entry.FBm1AshRcCtnYtd = attributionData[i].F_BM1_ASH_RC_CTN_YTD;
                     entry.FBm1AshAssetAllocYtd = attributionData[i].BM1_RC_ASSET_ALLOC_YTD;
-                    entry.FBm1AshSecSelecYtd = attributionData[i].F_BM1_ASH_SEC_SELEC_YTD;
+                    entry.FBm1AshSecSelecYtd = attributionData[i].BM1_RC_SEC_SELEC_YTD;
                     entry.PorRcAvgWgt1y = attributionData[i].POR_RC_AVG_WGT_1Y;
                     entry.Bm1RcAvgWgt1y = attributionData[i].BM1_RC_AVG_WGT_1Y;
                     entry.FPorAshRcCtn1y = attributionData[i].ADJ_RTN_POR_RC_TWR_1Y;
                     entry.FBm1AshRcCtn1y = attributionData[i].F_BM1_ASH_RC_CTN_1Y;
                     entry.FBm1AshAssetAlloc1y = attributionData[i].BM1_RC_ASSET_ALLOC_1Y;
-                    entry.FBm1AshSecSelec1y = attributionData[i].F_BM1_ASH_SEC_SELEC_1Y;
+                    entry.FBm1AshSecSelec1y = attributionData[i].BM1_RC_SEC_SELEC_1Y;
                     result.Add(entry);
                 }
 
