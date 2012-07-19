@@ -164,7 +164,7 @@
                                                 </telerik:ChartArea.AxisX>
                                             <telerik:ChartArea.AxisY>
                                                     <telerik:AxisY  AutoRange="True" MinorTicksVisibility="Collapsed" 
-                                                               MajorTicksVisibility="Collapsed" >
+                                                               MajorTicksVisibility="Collapsed" IsZeroBased="False" >
                                                         <telerik:AxisY.AxisStyles>
                                                             <telerik:AxisStyles                                                                
                                                                 ItemLabelStyle="{StaticResource ItemLabelStyle}"/>

@@ -137,6 +137,8 @@ namespace GreenField.Gadgets.ViewModels
                                 List<PeriodAttributeData> resultd = new List<PeriodAttributeData>();
                                 for (int i = 0; i < AttributionDataInfo.Count; i++)
                                 {
+                                    if (AttributionDataInfo[i].PorRcAvgWgt1d == 0 && AttributionDataInfo[i].Bm1RcAvgWgt1d == 0)
+                                        continue;
                                     PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
@@ -155,7 +157,10 @@ namespace GreenField.Gadgets.ViewModels
                             case "1W":                                
                                 List<PeriodAttributeData> result = new List<PeriodAttributeData>();                                    
                                 for (int i = 0; i < AttributionDataInfo.Count; i++)
-                                    {   PeriodAttributeData entry = new PeriodAttributeData();
+                                {
+                                    if (AttributionDataInfo[i].PorRcAvgWgt1w == 0 && AttributionDataInfo[i].Bm1RcAvgWgt1w == 0)
+                                        continue;
+                                    PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
                                     entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt1w;
@@ -173,7 +178,10 @@ namespace GreenField.Gadgets.ViewModels
                             case "MTD":
                                  List<PeriodAttributeData> resultMtd = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
-                                    {   PeriodAttributeData entry = new PeriodAttributeData();
+                                 {
+                                     if (AttributionDataInfo[i].PorRcAvgWgtMtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtMtd == 0)
+                                         continue; 
+                                     PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
                                     entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtMtd;
@@ -191,7 +199,10 @@ namespace GreenField.Gadgets.ViewModels
                             case "QTD":
                                 List<PeriodAttributeData> resultQtd = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
-                                    {   PeriodAttributeData entry = new PeriodAttributeData();
+                                 {
+                                     if (AttributionDataInfo[i].PorRcAvgWgtQtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtQtd == 0)
+                                         continue;   
+                                     PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
                                     entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtQtd;
@@ -209,10 +220,13 @@ namespace GreenField.Gadgets.ViewModels
                             case "YTD":
                                  List<PeriodAttributeData> resultYTD = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
-                                    {   PeriodAttributeData entry = new PeriodAttributeData();
-                                    entry.Country = AttributionDataInfo[i].Country;
-                                    entry.CountryName = AttributionDataInfo[i].CountryName;
-                                    entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtYtd;
+                                    {
+                                        if (AttributionDataInfo[i].PorRcAvgWgtYtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtYtd == 0)
+                                            continue; 
+                                     PeriodAttributeData entry = new PeriodAttributeData();
+                                     entry.Country = AttributionDataInfo[i].Country;
+                                     entry.CountryName = AttributionDataInfo[i].CountryName;
+                                     entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgtYtd;
                                       entry.PortfolioWeight = AttributionDataInfo[i].PorRcAvgWgtYtd;
                                       entry.PortfolioReturn = AttributionDataInfo[i].FPorAshRcCtnYtd;
                                       entry.BenchmarkReturn = AttributionDataInfo[i].FBm1AshRcCtnYtd;
@@ -227,7 +241,10 @@ namespace GreenField.Gadgets.ViewModels
                             case "1Y":
                                 List<PeriodAttributeData> result1Y = new List<PeriodAttributeData>();                                    
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
-                                    {   PeriodAttributeData entry = new PeriodAttributeData();
+                                    {
+                                        if (AttributionDataInfo[i].PorRcAvgWgt1y == 0 && AttributionDataInfo[i].Bm1RcAvgWgt1y == 0)
+                                            continue; 
+                                     PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
                                     entry.BenchmarkWeight = AttributionDataInfo[i].Bm1RcAvgWgt1y;
