@@ -177,7 +177,7 @@ namespace GreenField.Web.Services
                 List<ConsensusEstimateDetail> result = new List<ConsensusEstimateDetail>();
 
                 data = entity.GetConsensusDetail(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
-
+                
                 ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
                 foreach (ConsensusEstimateDetailData item in data)
                 {
@@ -198,7 +198,7 @@ namespace GreenField.Web.Services
                   temp.SourceCurrency = item.SOURCE_CURRENCY;
                   temp.DataSource = item.DATA_SOURCE;
                   temp.DataSourceDate = item.DATA_SOURCE_DATE;
-                  item.ACTUAL = temp.Actual;
+                  temp.Actual = item.ACTUAL;
                   result.Add(temp);
                 }
                 

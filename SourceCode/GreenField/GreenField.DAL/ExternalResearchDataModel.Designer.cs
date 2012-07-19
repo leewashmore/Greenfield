@@ -6410,8 +6410,7 @@ namespace GreenField.DAL
         /// <param name="sOURCE_CURRENCY">Initial value of the SOURCE_CURRENCY property.</param>
         /// <param name="dATA_SOURCE">Initial value of the DATA_SOURCE property.</param>
         /// <param name="dATA_SOURCE_DATE">Initial value of the DATA_SOURCE_DATE property.</param>
-        /// <param name="eSTIMATE_TYPE">Initial value of the ESTIMATE_TYPE property.</param>
-        public static ConsensusEstimateDetailData CreateConsensusEstimateDetailData(global::System.String iSSUER_ID, global::System.Int32 eSTIMATE_ID, global::System.String eSTIMATE_DESC, global::System.String period, global::System.String aMOUNT_TYPE, global::System.Int32 pERIOD_YEAR, global::System.String pERIOD_TYPE, global::System.Decimal aMOUNT, global::System.Int32 nUMBER_OF_ESTIMATES, global::System.Decimal hIGH, global::System.Decimal lOW, global::System.Decimal sTANDARD_DEVIATION, global::System.String sOURCE_CURRENCY, global::System.String dATA_SOURCE, global::System.DateTime dATA_SOURCE_DATE, global::System.String eSTIMATE_TYPE)
+        public static ConsensusEstimateDetailData CreateConsensusEstimateDetailData(global::System.String iSSUER_ID, global::System.Int32 eSTIMATE_ID, global::System.String eSTIMATE_DESC, global::System.String period, global::System.String aMOUNT_TYPE, global::System.Int32 pERIOD_YEAR, global::System.String pERIOD_TYPE, global::System.Decimal aMOUNT, global::System.Int32 nUMBER_OF_ESTIMATES, global::System.Decimal hIGH, global::System.Decimal lOW, global::System.Decimal sTANDARD_DEVIATION, global::System.String sOURCE_CURRENCY, global::System.String dATA_SOURCE, global::System.DateTime dATA_SOURCE_DATE)
         {
             ConsensusEstimateDetailData consensusEstimateDetailData = new ConsensusEstimateDetailData();
             consensusEstimateDetailData.ISSUER_ID = iSSUER_ID;
@@ -6429,7 +6428,6 @@ namespace GreenField.DAL
             consensusEstimateDetailData.SOURCE_CURRENCY = sOURCE_CURRENCY;
             consensusEstimateDetailData.DATA_SOURCE = dATA_SOURCE;
             consensusEstimateDetailData.DATA_SOURCE_DATE = dATA_SOURCE_DATE;
-            consensusEstimateDetailData.ESTIMATE_TYPE = eSTIMATE_TYPE;
             return consensusEstimateDetailData;
         }
 
@@ -6843,30 +6841,6 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _ACTUAL;
         partial void OnACTUALChanging(Nullable<global::System.Decimal> value);
         partial void OnACTUALChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String ESTIMATE_TYPE
-        {
-            get
-            {
-                return _ESTIMATE_TYPE;
-            }
-            set
-            {
-                OnESTIMATE_TYPEChanging(value);
-                ReportPropertyChanging("ESTIMATE_TYPE");
-                _ESTIMATE_TYPE = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("ESTIMATE_TYPE");
-                OnESTIMATE_TYPEChanged();
-            }
-        }
-        private global::System.String _ESTIMATE_TYPE;
-        partial void OnESTIMATE_TYPEChanging(global::System.String value);
-        partial void OnESTIMATE_TYPEChanged();
 
         #endregion
     }

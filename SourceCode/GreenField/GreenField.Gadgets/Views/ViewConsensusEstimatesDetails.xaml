@@ -68,10 +68,10 @@
                             <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Gadget Controls" FontWeight="Bold" VerticalAlignment="Center"/>
                             <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
 
-                            <telerik:RadButton Grid.Column="2" Click="btnExportExcel_Click" HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="False"
+                            <telerik:RadButton Grid.Column="2"  HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="False"
                                                Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export">
                                 <Image Source="../Images/ExportExcel.png"/>
-                            </telerik:RadButton>
+                            </telerik:RadButton> <!--Click="btnExportExcel_Click"-->
                         </Grid>
                     </telerik:RadExpander.Header>
                     <telerik:RadExpander.Content>
