@@ -122,7 +122,7 @@ namespace GreenField.Web.Services
                 #endregion
 
                 List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a =>
-                    ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityName.ToUpper().Trim() && a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim() && a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim()) || (a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()))
+                    ((a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == securityName.ToUpper().Trim() && a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim() && a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim()) || (a.PORTFOLIO.ToUpper().Trim() == portfolioName.ToUpper().Trim() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 1" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()))
                     && a.TO_DATE == objEffectiveDate.Date).ToList().Distinct().ToList();
 
                 #region Comparator
@@ -231,7 +231,7 @@ namespace GreenField.Web.Services
                 }
                 else if (sectorName != "")
                 {
-                    dimensionDailyPerfData = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioId.ToUpper().Trim() && a.BMNAME == benchmarkName.First() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.ToUpper().Trim() && a.TO_DATE > startDate.Date)).ToList();
+                    dimensionDailyPerfData = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioId.ToUpper().Trim() && a.BMNAME == benchmarkName.First() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 1" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.ToUpper().Trim() && a.TO_DATE > startDate.Date)).ToList();
                 }
 
                 //Checking contents of Data fetched from Dimension
@@ -353,7 +353,7 @@ namespace GreenField.Web.Services
                 }
                 else if (sectorName != "")
                 {
-                    sectorCountryReturn = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioId.ToUpper().Trim() && a.BMNAME == benchmarkName.First() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.ToUpper().Trim() && a.TO_DATE > startDate.Date)).ToList();
+                    sectorCountryReturn = (entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioId.ToUpper().Trim() && a.BMNAME == benchmarkName.First() && a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 1" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.ToUpper().Trim() && a.TO_DATE > startDate.Date)).ToList();
                 }
 
 
@@ -459,7 +459,7 @@ namespace GreenField.Web.Services
                 }
 
                 //Sector & Country Return Data
-                List<GF_PERF_DAILY_ATTRIBUTION> dimensionSectorCountryReturnData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioId.ToUpper().Trim() && a.TO_DATE > objStartDate.Date && ((a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()))).ToList();
+                List<GF_PERF_DAILY_ATTRIBUTION> dimensionSectorCountryReturnData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(a => a.PORTFOLIO.ToUpper().Trim() == portfolioId.ToUpper().Trim() && a.TO_DATE > objStartDate.Date && ((a.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 1" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == sectorName.First().ToUpper().Trim()) || (a.NODE_NAME.ToUpper().Trim() == "COUNTRY" && a.AGG_LVL_1_LONG_NAME.ToUpper().Trim() == countryName.First().ToUpper().Trim()))).ToList();
 
                 #region Comparator
 
@@ -490,6 +490,7 @@ namespace GreenField.Web.Services
         }
 
         #endregion
+
 
         #region Market Performance Snapshot Operation Contracts
         [OperationContract]
