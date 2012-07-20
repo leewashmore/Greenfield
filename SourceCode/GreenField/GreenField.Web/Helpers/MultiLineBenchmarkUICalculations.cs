@@ -43,12 +43,12 @@ namespace GreenField.Web.Helpers
                             data.Name = (item.BMNAME + " " + Convert.ToString(item.AGG_LVL_1_LONG_NAME));
                             data.Type = (item.NODE_NAME.ToUpper().Trim() == "COUNTRY") ? "COUNTRY INDEX" : "SECTOR";
                             data.FromDate = (DateTime)item.TO_DATE;
-                            data.OneD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1D);
-                            data.WTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1W);
-                            data.MTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_MTD);
-                            data.QTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_QTD);
-                            data.YTD = Convert.ToDecimal(item.BM1_RC_AVG_WGT_YTD);
-                            data.OneY = Convert.ToDecimal(item.BM1_RC_AVG_WGT_1Y);
+                            data.OneD = Convert.ToDecimal(item.BM1_RC_TWR_1D);
+                            data.WTD = Convert.ToDecimal(item.BM1_RC_TWR_1W);
+                            data.MTD = Convert.ToDecimal(item.BM1_RC_TWR_MTD);
+                            data.QTD = Convert.ToDecimal(item.BM1_RC_TWR_QTD);
+                            data.YTD = Convert.ToDecimal(item.BM1_RC_TWR_YTD);
+                            data.OneY = Convert.ToDecimal(item.BM1_RC_TWR_1Y);
                             result.Add(data);
                         }
                     }
@@ -150,7 +150,7 @@ namespace GreenField.Web.Helpers
                 //Adding details for Benchmark
                 data.Name = Convert.ToString(benchmarkReturn.Select(a => a.BMNAME).FirstOrDefault());
                 data.Type = "BENCHMARK";
-                data.MTD = Convert.ToDecimal((benchmarkReturn.Where(a=>a.TO_DATE==lastDayPreviousMonth).Select(a=>a.BM1_TOP_RC_TWR_MTD).FirstOrDefault()));
+                data.MTD = Convert.ToDecimal((benchmarkReturn.Where(a => a.TO_DATE == lastDayPreviousMonth).Select(a => a.BM1_TOP_RC_TWR_MTD).FirstOrDefault()));
                 data.QTD = Convert.ToDecimal((benchmarkReturn.
                     Where(a => a.TO_DATE == lastDayPreviousMonth).Select(a => a.BM1_TOP_RC_TWR_QTD).FirstOrDefault()));
                 data.YTD = Convert.ToDecimal((benchmarkReturn.
