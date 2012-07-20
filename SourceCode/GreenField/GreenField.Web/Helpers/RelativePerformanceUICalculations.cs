@@ -17,7 +17,7 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="dimensionDailyPerfData">Collection of type GF_PERF_DAILY_ATTRIBUTION retrieved from Dimension</param>
         /// <returns>List of RelativePerformanceUIData</returns>
-        public static List<RelativePerformanceUIData> CalculateRelativePerformanceUIData(List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData, 
+        public static List<RelativePerformanceUIData> CalculateRelativePerformanceUIData(List<GF_PERF_DAILY_ATTRIBUTION> dimensionDailyPerfData,
             GF_PERF_DAILY_ATTRIBUTION dimensionBenchmarkReturnData)
         {
             try

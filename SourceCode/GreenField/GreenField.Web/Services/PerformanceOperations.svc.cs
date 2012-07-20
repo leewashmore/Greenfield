@@ -491,6 +491,7 @@ namespace GreenField.Web.Services
 
         #endregion
 
+
         #region Market Performance Snapshot Operation Contracts
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]

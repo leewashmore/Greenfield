@@ -150,7 +150,7 @@ namespace GreenField.Web.Helpers
                 //Adding details for Benchmark
                 data.Name = Convert.ToString(benchmarkReturn.Select(a => a.BMNAME).FirstOrDefault());
                 data.Type = "BENCHMARK";
-                data.MTD = Convert.ToDecimal((benchmarkReturn.Where(a=>a.TO_DATE==lastDayPreviousMonth).Select(a=>a.BM1_TOP_RC_TWR_MTD).FirstOrDefault()));
+                data.MTD = Convert.ToDecimal((benchmarkReturn.Where(a => a.TO_DATE == lastDayPreviousMonth).Select(a => a.BM1_TOP_RC_TWR_MTD).FirstOrDefault()));
                 data.QTD = Convert.ToDecimal((benchmarkReturn.
                     Where(a => a.TO_DATE == lastDayPreviousMonth).Select(a => a.BM1_TOP_RC_TWR_QTD).FirstOrDefault()));
                 data.YTD = Convert.ToDecimal((benchmarkReturn.
