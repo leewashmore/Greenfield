@@ -139,6 +139,10 @@ namespace GreenField.Gadgets.ViewModels
                                 {
                                     if (AttributionDataInfo[i].PorRcAvgWgt1d == 0 && AttributionDataInfo[i].Bm1RcAvgWgt1d == 0)
                                         continue;
+                                    if (AttributionDataInfo[i].PorRcAvgWgt1d == null)
+                                        AttributionDataInfo[i].PorRcAvgWgt1d = 0;
+                                    if (AttributionDataInfo[i].Bm1RcAvgWgt1d == null)
+                                        AttributionDataInfo[i].Bm1RcAvgWgt1d = 0;
                                     PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
@@ -160,6 +164,10 @@ namespace GreenField.Gadgets.ViewModels
                                 {
                                     if (AttributionDataInfo[i].PorRcAvgWgt1w == 0 && AttributionDataInfo[i].Bm1RcAvgWgt1w == 0)
                                         continue;
+                                    if (AttributionDataInfo[i].PorRcAvgWgt1w == null)
+                                        AttributionDataInfo[i].PorRcAvgWgt1w = 0;
+                                    if (AttributionDataInfo[i].Bm1RcAvgWgt1w == null)
+                                        AttributionDataInfo[i].Bm1RcAvgWgt1w = 0;
                                     PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
@@ -180,7 +188,11 @@ namespace GreenField.Gadgets.ViewModels
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                  {
                                      if (AttributionDataInfo[i].PorRcAvgWgtMtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtMtd == 0)
-                                         continue; 
+                                         continue;
+                                     if (AttributionDataInfo[i].PorRcAvgWgtMtd == null)
+                                         AttributionDataInfo[i].PorRcAvgWgtMtd = 0;
+                                     if (AttributionDataInfo[i].Bm1RcAvgWgtMtd == null)
+                                         AttributionDataInfo[i].Bm1RcAvgWgtMtd = 0;
                                      PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
@@ -201,7 +213,11 @@ namespace GreenField.Gadgets.ViewModels
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                  {
                                      if (AttributionDataInfo[i].PorRcAvgWgtQtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtQtd == 0)
-                                         continue;   
+                                         continue;
+                                     if (AttributionDataInfo[i].PorRcAvgWgtQtd == null)
+                                         AttributionDataInfo[i].PorRcAvgWgtQtd = 0;
+                                     if (AttributionDataInfo[i].Bm1RcAvgWgtQtd == null)
+                                         AttributionDataInfo[i].Bm1RcAvgWgtQtd = 0;
                                      PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
@@ -222,7 +238,11 @@ namespace GreenField.Gadgets.ViewModels
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {
                                         if (AttributionDataInfo[i].PorRcAvgWgtYtd == 0 && AttributionDataInfo[i].Bm1RcAvgWgtYtd == 0)
-                                            continue; 
+                                            continue;
+                                        if (AttributionDataInfo[i].PorRcAvgWgtYtd == null)
+                                            AttributionDataInfo[i].PorRcAvgWgtYtd = 0;
+                                        if (AttributionDataInfo[i].Bm1RcAvgWgtYtd == null)
+                                            AttributionDataInfo[i].Bm1RcAvgWgtYtd = 0;
                                      PeriodAttributeData entry = new PeriodAttributeData();
                                      entry.Country = AttributionDataInfo[i].Country;
                                      entry.CountryName = AttributionDataInfo[i].CountryName;
@@ -243,7 +263,11 @@ namespace GreenField.Gadgets.ViewModels
                                  for (int i = 0; i < AttributionDataInfo.Count; i++)
                                     {
                                         if (AttributionDataInfo[i].PorRcAvgWgt1y == 0 && AttributionDataInfo[i].Bm1RcAvgWgt1y == 0)
-                                            continue; 
+                                            continue;
+                                        if (AttributionDataInfo[i].PorRcAvgWgt1y == null)
+                                            AttributionDataInfo[i].PorRcAvgWgt1y = 0;
+                                        if (AttributionDataInfo[i].Bm1RcAvgWgt1y == null)
+                                            AttributionDataInfo[i].Bm1RcAvgWgt1y = 0;
                                      PeriodAttributeData entry = new PeriodAttributeData();
                                     entry.Country = AttributionDataInfo[i].Country;
                                     entry.CountryName = AttributionDataInfo[i].CountryName;
