@@ -40,9 +40,9 @@ namespace GreenField.Web.Helpers
                             {
                                 data.EntityType = item.NODE_NAME;
                                 data.EntityName = item.AGG_LVL_1_LONG_NAME;
-                                data.QTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_QC_TWR_QTD) * 100;
-                                data.MTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_QC_TWR_MTD) * 100;
-                                data.YTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_QC_TWR_YTD) * 100;
+                                data.QTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_RC_TWR_QTD) * 100;
+                                data.MTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_RC_TWR_MTD) * 100;
+                                data.YTDReturn = Convert.ToDecimal(item.ADJ_RTN_POR_RC_TWR_YTD) * 100;
                                 data.OneYearReturn = Convert.ToDecimal(item.ADJ_RTN_POR_RC_TWR_1Y) * 100;
                                 data.SortId = 1;
                             }
