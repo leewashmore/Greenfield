@@ -326,13 +326,16 @@ namespace GreenField.Gadgets.Helpers
             {
                 GridViewDataColumn column = exportElement.Context as GridViewDataColumn;
 
-                if (exportElement.Element == ExportElement.Cell || exportElement.Element == ExportElement.FooterCell ||
-                    exportElement.Element == ExportElement.GroupFooterCell || exportElement.Element == ExportElement.GroupHeaderCell ||
-                    exportElement.Element == ExportElement.GroupIndentCell || exportElement.Element == ExportElement.HeaderCell)
+                if (column != null)
                 {
-                    if (hideColumnIndex.Contains(column.DisplayIndex))
+                    if (exportElement.Element == ExportElement.Cell || exportElement.Element == ExportElement.FooterCell ||
+                                exportElement.Element == ExportElement.GroupFooterCell || exportElement.Element == ExportElement.GroupHeaderCell ||
+                                exportElement.Element == ExportElement.GroupIndentCell || exportElement.Element == ExportElement.HeaderCell)
                     {
-                        exportElement.Cancel = true;
+                        if (hideColumnIndex.Contains(column.DisplayIndex))
+                        {
+                            exportElement.Cancel = true;
+                        }
                     }
                 }
             }

@@ -17,6 +17,7 @@ using Microsoft.Practices.Prism.Logging;
 using GreenField.Gadgets.Helpers;
 using System.Collections.Generic;
 using System.Collections;
+using System.Linq;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -86,19 +87,16 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.SelectedSecurity);
             }
         }
-
-
+                       
         /// <summary>
-        /// Collection of TargetPriceCEData, showing data in DataGrid
+        /// Variable of type TargetPriceCEData
         /// </summary>
-        private RangeObservableCollection<TargetPriceCEData> _targetPriceData;
-        public RangeObservableCollection<TargetPriceCEData> TargetPriceData
+        private TargetPriceCEData _targetPriceData;
+        public TargetPriceCEData TargetPriceData
         {
-            get
+            get 
             {
-                if (_targetPriceData == null)
-                    _targetPriceData = new RangeObservableCollection<TargetPriceCEData>();
-                return _targetPriceData;
+                return _targetPriceData; 
             }
             set
             {
@@ -106,6 +104,7 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.TargetPriceData);
             }
         }
+        
 
         /// <summary>
         /// Busy Indicator Status
@@ -124,7 +123,53 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        #region Busy Indicator
+        /// <summary>
+        /// Busy Indicator Status
+        /// </summary>
+        private bool _busyIndicatorIsBusy;
+        public bool BusyIndicatorIsBusy
+        {
+            get { return _busyIndicatorIsBusy; }
+            set
+            {
+                _busyIndicatorIsBusy = value;
+                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+            }
+        }
 
+        /// <summary>
+        /// Busy Indicator Content
+        /// </summary>
+        private string _busyIndicatorContent;
+        public string BusyIndicatorContent
+        {
+            get { return _busyIndicatorContent; }
+            set
+            {
+                _busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }
+        #endregion
+
+        /// <summary>
+        /// Text Bound to CurrentPriceText
+        /// </summary>
+        private string  _currentPriceText="Current Price";
+        public string  CurrentPriceText
+        {
+            get 
+            {
+                return _currentPriceText; 
+            }
+            set
+            {
+                _currentPriceText = value;
+                this.RaisePropertyChanged(() => this.CurrentPriceText);
+            }
+        }
+        
 
         #endregion
 
@@ -147,7 +192,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (SelectedSecurity != null)
                     {
                         _dbInteractivity.RetrieveTargetPriceData(SelectedSecurity, RetrieveTargetPriceDataCallbackMethod);
-                        BusyIndicatorStatus = true;
+                        BusyIndicatorNotification(true, "Updating information based on selected Security");
                     }
                 }
                 else
@@ -182,8 +227,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    TargetPriceData.Clear();
-                    TargetPriceData.AddRange(result);
+                    TargetPriceData = result.FirstOrDefault();
+                    CurrentPriceText = "Current Price (" + Convert.ToDateTime(TargetPriceData.CurrentPriceDate).ToShortDateString() + " )";
                 }
                 else
                 {
@@ -197,7 +242,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             finally
             {
-                BusyIndicatorStatus = false;
+                BusyIndicatorNotification();
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -215,5 +260,23 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
+        #region Helper Methods
+
+        /// <summary>
+        /// Busy Indicator Notification
+        /// </summary>
+        /// <param name="showBusyIndicator"></param>
+        /// <param name="message"></param>
+        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        {
+            if (message != null)
+                BusyIndicatorContent = message;
+            BusyIndicatorIsBusy = showBusyIndicator;
+        }
+
+
+        #endregion
+
     }
 }

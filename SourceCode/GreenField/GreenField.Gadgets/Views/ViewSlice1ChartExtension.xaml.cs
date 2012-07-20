@@ -175,6 +175,26 @@ namespace GreenField.Gadgets.Views
             this.chChartExtension.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
         }
 
+        /// <summary>
+        /// Return the Color for the Series Added
+        /// </summary>
+        /// <param name="sortId">Sorting Id of Series</param>
+        /// <returns>SolidColorBrush for the Series</returns>
+        private SolidColorBrush ReturnLegendItemColor(int sortId)
+        {
+            switch (sortId)
+            {
+                case 1:
+                    return new SolidColorBrush(Color.FromArgb(255,159,29,33));
+                case 2:
+                    return new SolidColorBrush(Color.FromArgb(255, 167, 54, 44));
+                case 3:
+                    return new SolidColorBrush(Color.FromArgb(255, 190, 113, 92));
+                default:
+                    return new SolidColorBrush(Colors.Black);
+            }
+        }
+
         #endregion
 
         private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
@@ -182,10 +202,22 @@ namespace GreenField.Gadgets.Views
 
         }
 
+        /// <summary>
+        /// Data-Bound Event 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chChartExtension_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
         {
             if (this.DataContext as ViewModelSlice1ChartExtension != null)
             {
+                if (this.chChartExtension.DefaultView.ChartLegend.Items.Count != 0)
+                {
+                    this.chChartExtension.DefaultView.ChartLegend.Items.Clear();
+                }
+
+                int i = 0;
+
                 if ((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData != null)
                 {
                     (this.DataContext as ViewModelSlice1ChartExtension).AxisXMinValue = Convert.ToDateTime(((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.OrderBy(a => a.ToDate)).
@@ -193,11 +225,51 @@ namespace GreenField.Gadgets.Views
                     (this.DataContext as ViewModelSlice1ChartExtension).AxisXMaxValue = Convert.ToDateTime(((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.OrderByDescending(a => a.ToDate)).
                         Select(a => a.ToDate).FirstOrDefault()).ToOADate();
                     int dataCount = (this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.Count;
+                    
                     if (dataCount != 0)
                     {
                         this.chChartExtension.DefaultView.ChartArea.AxisX.Step = dataCount / 10;
                     }
 
+                    if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.AmountTraded != null))
+                    {
+                        ChartLegendItem transactionLegendItem = new ChartLegendItem();
+                        transactionLegendItem.MarkerFill = new SolidColorBrush(Color.FromArgb(255, 33, 54, 113));
+                        transactionLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
+                            Where(a => a.Type.ToUpper() == "SECURITY").Select(a => a.Ticker).FirstOrDefault();
+                        this.chChartExtension.DefaultView.ChartLegend.Items.Add(transactionLegendItem);
+                    }
+
+                    if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.Type.ToUpper() == "SECURITY"))
+                    {
+                        i++;
+                        ChartLegendItem securityLegendItem = new ChartLegendItem();
+                        securityLegendItem.MarkerFill = ReturnLegendItemColor(i);
+                        securityLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
+                            Where(a => a.Type.ToUpper() == "SECURITY").Select(a => a.Ticker).FirstOrDefault();
+                        this.chChartExtension.DefaultView.ChartLegend.Items.Add(securityLegendItem);
+                    }
+
+                    if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.Type == "COUNTRY"))
+                    {
+                        i++;
+                        ChartLegendItem countryLegendItem = new ChartLegendItem();
+                        countryLegendItem.MarkerFill = ReturnLegendItemColor(i);
+                        countryLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
+                            Where(a => a.Type.ToUpper() == "COUNTRY").Select(a => a.Ticker).FirstOrDefault();
+                        this.chChartExtension.DefaultView.ChartLegend.Items.Add(countryLegendItem);
+                    }
+
+                    if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.Type.ToUpper() == "SECTOR"))
+                    {
+                        i++;
+                        ChartLegendItem sectorLegendItem = new ChartLegendItem();
+                        sectorLegendItem.MarkerFill = ReturnLegendItemColor(i);
+                        sectorLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
+                            Where(a => a.Type.ToUpper() == "SECTOR").Select(a => a.Ticker).FirstOrDefault();
+                        this.chChartExtension.DefaultView.ChartLegend.Items.Add(sectorLegendItem);
+                    }
+                    
                 }
             }
 

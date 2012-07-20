@@ -701,6 +701,15 @@
           <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
+        <Function Name="Get_ConsensusEstimatesValuation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+          <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
+          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+        </Function>
         <Function Name="Get_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="int" Mode="In" />
         </Function>
@@ -711,6 +720,8 @@
           <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
           <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
         </Function>
       </Schema></edmx:StorageModels>
 		<!-- CSDL content -->
@@ -749,8 +760,8 @@
 					<EntitySet Name="tblCETargetPrices" EntityType="ExternalResearchModel.tblCETargetPrice" />
 					<EntitySet Name="tblCompanyInfoes" EntityType="ExternalResearchModel.tblCompanyInfo" />
 					<FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
-						<Parameter Name="XRef" Mode="In" Type="String" />
-					</FunctionImport>
+					<Parameter Name="XRef" Mode="In" Type="String" />
+          </FunctionImport>
 					<FunctionImport Name="GetConsensusEstimatesSummaryData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimatesSummaryData)">
 						<Parameter Name="Security" Mode="In" Type="String" />
 					</FunctionImport>
@@ -760,9 +771,9 @@
 					</FunctionImport>
 					<FunctionImport Name="GetConsensusEstimateData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateMedianData)">
 						<Parameter Name="Issuer_Id" Mode="In" Type="String" />
-						<Parameter Name="periodType" Mode="In" Type="String" />
-						<Parameter Name="currency" Mode="In" Type="String" />
-					</FunctionImport>
+            <Parameter Name="periodType" Mode="In" Type="String" />
+            <Parameter Name="currency" Mode="In" Type="String" />
+          </FunctionImport>
 					<FunctionImport Name="Get_ConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
 						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
 						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
@@ -778,13 +789,13 @@
 
 					<FunctionImport Name="GetConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
 						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-						<Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-						<Parameter Name="CURRENCY" Mode="In" Type="String" />
-						<Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
-						<Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
-					</FunctionImport>
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
+            <Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
+            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+          </FunctionImport>
 					<FunctionImport Name="GetConsensusDetail" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateDetailData)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
@@ -1648,6 +1659,25 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetTargetPrice" FunctionName="ExternalResearchModel.Store.GetTargetPrice">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.GetTargetPrice_Result">
+                <ScalarProperty Name="Xref" ColumnName="Xref" />
+                <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+                <ScalarProperty Name="CurrentPriceDate" ColumnName="CurrentPriceDate" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Median" ColumnName="Median" />
+                <ScalarProperty Name="TargetCurrency" ColumnName="TargetCurrency" />
+                <ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
+                <ScalarProperty Name="High" ColumnName="High" />
+                <ScalarProperty Name="Low" ColumnName="Low" />
+                <ScalarProperty Name="StdDev" ColumnName="StdDev" />
+                <ScalarProperty Name="MeanLabel" ColumnName="MeanLabel" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
 					
 				</EntityContainerMapping>
 			</Mapping>

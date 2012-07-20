@@ -13,6 +13,9 @@ namespace GreenField.DataContracts
         public string CurrentPrice { get; set; }
 
         [DataMember]
+        public DateTime CurrentPriceDate { get; set; }
+
+        [DataMember]
         public string MedianTargetPrice { get; set; }
 
         [DataMember]

@@ -292,7 +292,7 @@
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          ColumnWidth="*" FontFamily="Arial"
                                          EnableColumnVirtualization="False"
-                                         EnableRowVirtualization="True"
+                                         EnableRowVirtualization="False"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          AlternationCount="2"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 

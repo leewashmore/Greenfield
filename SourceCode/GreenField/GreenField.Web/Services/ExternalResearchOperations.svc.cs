@@ -182,26 +182,26 @@ namespace GreenField.Web.Services
                 foreach (ConsensusEstimateDetailData item in data)
                 {
                     temp = new ConsensusEstimateDetail();
-                  temp.IssuerId = item.ISSUER_ID;
-                  temp.EstimateId = item.ESTIMATE_ID;
-                  temp.EstimateDesc = item.ESTIMATE_DESC;
-                  temp.Period = item.Period;
-                  temp.AmountType = item.AMOUNT_TYPE;
-                  temp.PeriodYear = item.PERIOD_YEAR;
-                  temp.PeriodType = item.PERIOD_TYPE;
-                  temp.Amount = item.AMOUNT;
-                  temp.AshmoreEmmAmount = item.ASHMOREEMM_AMOUNT;
-                  temp.NumberOfEstimates = item.NUMBER_OF_ESTIMATES;
-                  temp.High = item.HIGH;
-                  temp.Low = item.LOW;
-                  temp.StandardDeviation = item.STANDARD_DEVIATION;
-                  temp.SourceCurrency = item.SOURCE_CURRENCY;
-                  temp.DataSource = item.DATA_SOURCE;
-                  temp.DataSourceDate = item.DATA_SOURCE_DATE;
+                    temp.IssuerId = item.ISSUER_ID;
+                    temp.EstimateId = item.ESTIMATE_ID;
+                    temp.EstimateDesc = item.ESTIMATE_DESC;
+                    temp.Period = item.Period;
+                    temp.AmountType = item.AMOUNT_TYPE;
+                    temp.PeriodYear = item.PERIOD_YEAR;
+                    temp.PeriodType = item.PERIOD_TYPE;
+                    temp.Amount = item.AMOUNT;
+                    temp.AshmoreEmmAmount = item.ASHMOREEMM_AMOUNT;
+                    temp.NumberOfEstimates = item.NUMBER_OF_ESTIMATES;
+                    temp.High = item.HIGH;
+                    temp.Low = item.LOW;
+                    temp.StandardDeviation = item.STANDARD_DEVIATION;
+                    temp.SourceCurrency = item.SOURCE_CURRENCY;
+                    temp.DataSource = item.DATA_SOURCE;
+                    temp.DataSourceDate = item.DATA_SOURCE_DATE;
                   temp.Actual = item.ACTUAL;
-                  result.Add(temp);
+                    result.Add(temp);
                 }
-                
+
                 return result;
             }
             catch (Exception ex)
@@ -344,15 +344,24 @@ namespace GreenField.Web.Services
                 data = new TargetPriceCEData();
                 data.Ticker = (item.Ticker == null) ? "N/A" : item.Ticker;
                 data.ConsensusRecommendation = item.MeanLabel;
-                data.CurrentPrice = ((item.CurrentPrice == null) ? "N/A" : item.CurrentPrice.ToString()).ToString() +
+                data.CurrentPriceDate = Convert.ToDateTime(item.CurrentPriceDate);
+                
+                data.CurrentPrice = ((item.CurrentPrice == null) ? "N/A" : (Math.Round(Convert.ToDecimal(item.CurrentPrice), 4)).ToString()).ToString() +
                     "( " + ((item.Currency == null) ? "N/A" : (item.Currency.ToString())).ToString() + " )";
+
                 data.MedianTargetPrice = ((item.Median == null) ? "N/A" : item.Median.ToString()) +
                     " ( " + ((item.TargetCurrency == null) ? "N/A" : item.TargetCurrency.ToString()) + " )";
+                
                 data.LastUpdate = Convert.ToDateTime(item.StartDate);
+                
                 data.NoOfEstimates = (item.NumOfEsts == null) ? "N/A" : (Convert.ToString(item.NumOfEsts));
+                
                 data.High = (item.High == null) ? "N/A" : (Convert.ToString(item.High));
+                
                 data.Low = (item.Low == null) ? "N/A" : (Convert.ToString(item.Low));
+                
                 data.StandardDeviation = (item.StdDev == null) ? "N/A" : (Convert.ToString(item.StdDev));
+                
                 result.Add(data);
             }
 
