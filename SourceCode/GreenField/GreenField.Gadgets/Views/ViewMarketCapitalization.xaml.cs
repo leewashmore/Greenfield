@@ -28,6 +28,8 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        #region PROPERTIES
+
         private ViewModelMarketCapitalization _dataContextSource = null;
         public ViewModelMarketCapitalization DataContextSource
         {
@@ -53,7 +55,7 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-
+        #endregion
         #region Event
         /// <summary>
         /// event to handle RadBusyIndicator

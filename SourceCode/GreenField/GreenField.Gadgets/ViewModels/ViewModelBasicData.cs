@@ -85,6 +85,28 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (_securitySelectionData != null && IsActive)
+                {
+                    if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
+                    {
+                        if (BasicDataLoadEvent != null)
+                            BasicDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveBasicData(_securitySelectionData, RetrieveBasicDataCallbackMethod);
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region CONSTRUCTOR
@@ -98,6 +120,15 @@ namespace GreenField.Gadgets.ViewModels
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
+            }
+            if (_securitySelectionData != null && IsActive)
+            {
+                if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
+                {
+                    if (BasicDataLoadEvent != null)
+                        BasicDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    _dbInteractivity.RetrieveBasicData(_securitySelectionData, RetrieveBasicDataCallbackMethod);
+                }
             }
             
         }

@@ -108,6 +108,7 @@
     <Compile Include="Helpers\FrequencyCalculator.cs" />
     <Compile Include="Helpers\FXCommodityCalculations.cs" />
     <Compile Include="Helpers\GreenfieldConstants.cs" />
+    <Compile Include="Helpers\HistoricalValuationCalculations.cs" />
     <Compile Include="Helpers\MarketCapitalizationCalculations.cs" />
     <Compile Include="Helpers\ChartExtensionCalculations.cs" />
     <Compile Include="Helpers\MarketPerformanceSnapshotDataCalculations.cs" />

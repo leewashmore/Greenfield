@@ -28,12 +28,43 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region PROPERTIES
+
+        private ViewModelCommodityIndex _dataContextSource = null;
+        public ViewModelCommodityIndex DataContextSource
+        {
+            get
+            {
+                return _dataContextSource;
+            }
+            set
+            {
+                if (value != null)
+                    _dataContextSource = value;
+            }
+        }
+
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextSource != null) //DataContext instance
+                    DataContextSource.IsActive = _isActive;
+            }
+        }
+
+        #endregion
+
         #region CONSTRUCTOR
 
         public ViewCommodityIndex(ViewModelCommodityIndex dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = dataContextSource;            
+            this.DataContext = dataContextSource;
+            this.DataContextSource = dataContextSource;
             dataContextSource.CommodityDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceCommodityLoadEvent);
             dataContextSource.RetrieveCommodityDataCompleteEvent += new RetrieveCommodityDataCompleteEventHandler(RetrieveCommodityDataCompletedEvent);
 

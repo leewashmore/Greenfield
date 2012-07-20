@@ -203,6 +203,15 @@
       [PERIOD_FINANCIALS_DISPLAY].[MULTIPLIER] AS [MULTIPLIER]
       FROM [dbo].[PERIOD_FINANCIALS_DISPLAY] AS [PERIOD_FINANCIALS_DISPLAY]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="PRICES" EntityType="ExternalResearchModel.Store.PRICES" store:Type="Tables" store:Schema="dbo" store:Name="PRICES">
+            <DefiningQuery>SELECT 
+      [PRICES].[SECURITY_ID] AS [SECURITY_ID], 
+      [PRICES].[PRICE_DATE] AS [PRICE_DATE], 
+      [PRICES].[PRICE] AS [PRICE], 
+      [PRICES].[FX_RATE] AS [FX_RATE], 
+      [PRICES].[ADR_CONV] AS [ADR_CONV]
+      FROM [dbo].[PRICES] AS [PRICES]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.Store.REUTERS_XREF" store:Type="Tables" store:Schema="dbo" store:Name="REUTERS_XREF">
             <DefiningQuery>SELECT 
       [REUTERS_XREF].[ReportNumber] AS [ReportNumber], 
@@ -621,6 +630,23 @@
           <Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data1807.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="PRICES">
+          <Key>
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="PRICE_DATE" />
+            <PropertyRef Name="PRICE" />
+            <PropertyRef Name="FX_RATE" />
+            <PropertyRef Name="ADR_CONV" />
+          </Key>
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="PRICE_DATE" Type="datetime" Nullable="false" />
+          <Property Name="PRICE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="FX_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="ADR_CONV" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+        </EntityType>
+        <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data1807.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="REUTERS_XREF">
@@ -704,6 +730,10 @@
         <Function Name="Get_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="int" Mode="In" />
         </Function>
+        <Function Name="Get_PRevenue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="securityId" Type="varchar" Mode="In" />
+          <Parameter Name="issuerId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="Get_Statement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
@@ -760,9 +790,9 @@
 					</FunctionImport>
 					<FunctionImport Name="GetConsensusEstimateData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateMedianData)">
 						<Parameter Name="Issuer_Id" Mode="In" Type="String" />
-						<Parameter Name="periodType" Mode="In" Type="String" />
-						<Parameter Name="currency" Mode="In" Type="String" />
-					</FunctionImport>
+            <Parameter Name="periodType" Mode="In" Type="String" />
+            <Parameter Name="currency" Mode="In" Type="String" />
+          </FunctionImport>
 					<FunctionImport Name="Get_ConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
 						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
 						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
@@ -778,19 +808,24 @@
 
 					<FunctionImport Name="GetConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
 						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-						<Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-						<Parameter Name="CURRENCY" Mode="In" Type="String" />
-						<Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
-						<Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
-					</FunctionImport>
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
+            <Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
+            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+          </FunctionImport>
 					<FunctionImport Name="GetConsensusDetail" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateDetailData)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="PRICES" EntityType="ExternalResearchModel.PRICE" />
+          <FunctionImport Name="Get_PRevenue" ReturnType="Collection(ExternalResearchModel.GetPRevenueData_Result)">
+            <Parameter Name="securityId" Mode="In" Type="String" />
+            <Parameter Name="issuerId" Mode="In" Type="String" />
           </FunctionImport>
 				</EntityContainer>
 				<EntityType Name="CONSENSUS_MASTER">
@@ -1304,6 +1339,29 @@
 					<Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_NAME" MaxLength="20" FixedLength="false" Unicode="false" />
 					<Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="20" FixedLength="false" Unicode="false" />
 				</EntityType>
+        <EntityType Name="PRICE">
+          <Key>
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="PRICE_DATE" />
+            <PropertyRef Name="PRICE1" />
+            <PropertyRef Name="FX_RATE" />
+            <PropertyRef Name="ADR_CONV" />
+          </Key>
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="PRICE_DATE" Nullable="false" />
+          <Property Type="Decimal" Name="PRICE1" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="FX_RATE" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="ADR_CONV" Nullable="false" Precision="32" Scale="6" />
+        </EntityType>
+        <ComplexType Name="GetPRevenueData_Result" >
+          <Property Type="String" Name="PeriodLabel" Nullable="true" />
+          <Property Type="DateTime" Name="Period_End_Date" Nullable="true" />
+          <Property Type="Decimal" Name="Amount" Nullable="true" />
+          <Property Type="String" Name="Period_Type" Nullable="true" />
+          <Property Type="Int32" Name="Period_Year" Nullable="true" />
+          <Property Type="Decimal" Name="USDPrice" Nullable="true" />
+          <Property Type="Decimal" Name="Shares_Outstanding" Nullable="true" />
+        </ComplexType>
 
 			</Schema>
 		</edmx:ConceptualModels>
@@ -1648,6 +1706,30 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
+          <EntitySetMapping Name="PRICES">
+            <EntityTypeMapping TypeName="ExternalResearchModel.PRICE">
+              <MappingFragment StoreEntitySet="PRICES">
+                <ScalarProperty Name="ADR_CONV" ColumnName="ADR_CONV" />
+                <ScalarProperty Name="FX_RATE" ColumnName="FX_RATE" />
+                <ScalarProperty Name="PRICE1" ColumnName="PRICE" />
+                <ScalarProperty Name="PRICE_DATE" ColumnName="PRICE_DATE" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Get_PRevenue" FunctionName="ExternalResearchModel.Store.Get_PRevenue">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.GetPRevenueData_Result">
+                <ScalarProperty Name="PeriodLabel" ColumnName="PeriodLabel" />
+                <ScalarProperty Name="Period_End_Date" ColumnName="Period_End_Date" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Period_Type" ColumnName="PeriodType" />
+                <ScalarProperty Name="Period_Year" ColumnName="PeriodYear" />
+                <ScalarProperty Name="USDPrice" ColumnName="USDPrice" />
+                <ScalarProperty Name="Shares_Outstanding" ColumnName="SharesOutstanding" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
 					
 				</EntityContainerMapping>
 			</Mapping>
@@ -1689,6 +1771,7 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.tblCompanyInfo" Width="1.5" PointX="9.375" PointY="10.75" Height="6.0186165364583317" />
 				<EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="11.375" PointY="9.75" Height="3.7109993489583317" />
 				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="13.375" PointY="0.75" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.PRICE" Width="1.5" PointX="0.75" PointY="13.75" Height="1.9802864583333388" />
 			</Diagram>
 		</Diagrams>
 	</Designer>

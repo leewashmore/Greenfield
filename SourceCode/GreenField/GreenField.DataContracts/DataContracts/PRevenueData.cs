@@ -19,15 +19,15 @@ namespace GreenField.DataContracts.DataContracts
         public string PeriodLabel { get; set;}
 
         [DataMember]
-        public decimal PRevenueVal { get; set; }
+        public decimal? PRevenueVal { get; set; }
 
         [DataMember]
-        public decimal Average { get; set; }
+        public decimal? Average { get; set; }
 
         [DataMember]
-        public decimal StdDevPlus { get; set; }
+        public decimal? StdDevPlus { get; set; }
 
         [DataMember]
-        public decimal StdDevMinus { get; set; }
+        public decimal? StdDevMinus { get; set; }
     }
 }

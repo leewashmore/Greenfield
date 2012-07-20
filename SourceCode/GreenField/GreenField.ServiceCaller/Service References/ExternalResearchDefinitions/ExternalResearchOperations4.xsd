@@ -59,11 +59,17 @@
   <xs:element name="ArrayOfPRevenueData" nillable="true" type="tns:ArrayOfPRevenueData" />
   <xs:complexType name="PRevenueData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Average" type="xs:decimal" />
-      <xs:element minOccurs="0" name="PRevenueVal" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Average" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PRevenueVal" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PeriodEndDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="PeriodLabel" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="StdDevMinus" type="xs:decimal" />
-      <xs:element minOccurs="0" name="StdDevPlus" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodYear" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SharesOutstanding" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="StdDevMinus" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="StdDevPlus" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="USDPrice" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PRevenueData" nillable="true" type="tns:PRevenueData" />

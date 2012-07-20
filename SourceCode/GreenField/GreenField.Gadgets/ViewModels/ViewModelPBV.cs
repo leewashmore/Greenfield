@@ -23,7 +23,7 @@ using Telerik.Windows.Controls.Charting;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelPRevenue : NotificationObject
+    public class ViewModelPBV : NotificationObject
     {
         #region Fields
 
@@ -52,7 +52,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores Chart data
         /// </summary>
-        private RangeObservableCollection<PRevenueData> _PRevenuePlottedData;
+        private RangeObservableCollection<PRevenueData> _PBVPlottedData;
         #endregion
 
         #region Constructor
@@ -60,15 +60,15 @@ namespace GreenField.Gadgets.ViewModels
         /// Constructor
         /// </summary>
         /// <param name="eventAggregator">MEF Eventaggregator instance</param>
-        public ViewModelPRevenue(DashboardGadgetParam param)
+        public ViewModelPBV(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            if (_securitySelectionData != null && IsActive)
+            if (_securitySelectionData != null)
             {
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrievePRevenueDataCallbackMethod);
+                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrievePBVDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
             if (_eventAggregator != null)
@@ -94,18 +94,18 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public RangeObservableCollection<PRevenueData> PRevenuePlottedData
+        public RangeObservableCollection<PRevenueData> PBVPlottedData
         {
             get
             {
-                if (_PRevenuePlottedData == null)
-                    _PRevenuePlottedData = new RangeObservableCollection<PRevenueData>();
-                return _PRevenuePlottedData;
+                if (_PBVPlottedData == null)
+                    _PBVPlottedData = new RangeObservableCollection<PRevenueData>();
+                return _PBVPlottedData;
             }
             set
             {
-                _PRevenuePlottedData = value;
-                RaisePropertyChanged(() => this.PRevenuePlottedData);
+                _PBVPlottedData = value;
+                RaisePropertyChanged(() => this.PBVPlottedData);
             }
 
         }
@@ -233,7 +233,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (PRevenueDataLoadEvent != null)
                             PRevenueDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePRevenueData(entitySelectionData, RetrievePRevenueDataCallbackMethod);
+                        _dbInteractivity.RetrievePRevenueData(entitySelectionData, RetrievePBVDataCallbackMethod);
                     }
                 }
                 else
@@ -255,7 +255,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Callback method that assigns value to the BAsicDataInfo property
         /// </summary>
         /// <param name="result">basic data </param>
-        private void RetrievePRevenueDataCallbackMethod(List<PRevenueData> pRevenueData)
+        private void RetrievePBVDataCallbackMethod(List<PRevenueData> pRevenueData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -264,8 +264,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (pRevenueData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, pRevenueData, 1);
-                    PRevenuePlottedData.Clear();
-                    PRevenuePlottedData.AddRange(pRevenueData.ToList());
+                    PBVPlottedData.Clear();
+                    PBVPlottedData.AddRange(pRevenueData.ToList());
                 }
                 else
                 {
@@ -287,7 +287,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (_securitySelectionData != null && IsActive)
             {
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrievePRevenueDataCallbackMethod);
+                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrievePBVDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
         }

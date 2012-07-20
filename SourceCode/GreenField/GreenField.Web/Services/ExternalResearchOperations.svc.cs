@@ -547,9 +547,9 @@ namespace GreenField.Web.Services
             try
             {
                 List<PRevenueData> result = new List<PRevenueData>();
-                string issuerId = string.Empty;
-
+                List<GetPRevenueData_Result> resultDB = new List<GetPRevenueData_Result>();
                 ExternalResearchEntities extResearch = new ExternalResearchEntities();
+
                 if (entitySelectionData == null)
                     return null;
 
@@ -562,17 +562,131 @@ namespace GreenField.Web.Services
                     throw new Exception("Services are not available");
 
                 //Retrieving data from security view
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW svcData = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == entitySelectionData.ShortName
                         && record.ISSUE_NAME == entitySelectionData.LongName
                         && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
                         && record.SECURITY_TYPE == entitySelectionData.SecurityType)
                     .FirstOrDefault();
 
-                if (data == null)
+                if (svcData == null)
                     return null;
-                issuerId = data.ISSUER_ID;
+                //execute store proc giving securityId as an input parameter
+                int? securityId = svcData.SECURITY_ID;
+
+
+                ////Retrieving data from Period Financials table
+                resultDB = extResearch.ExecuteStoreQuery<GetPRevenueData_Result>("exec Get_PRevenue @SecurityID={0},@issuerId={1}","145119","8233223").ToList();//, Convert.ToString(data.SECURITY_ID)).ToList();
+
+                for (int _index = 0; _index < resultDB.Count; _index++ )
+                {
+                    PRevenueData data = new PRevenueData();
+                    decimal? sumAmount = null;
+                    data.PeriodLabel = resultDB[_index].PeriodLabel;
+
+                    if ((resultDB[_index].USDPrice == null || resultDB[_index].USDPrice == 0) || (resultDB[_index].Shares_Outstanding == null || resultDB[_index].Shares_Outstanding == 0))
+                    {                        
+                        data.PRevenueVal = null;
+                    }
+                    else
+                    {
+                        //Sum of Amount if 4 quarters exist
+                        if(_index + 1 < resultDB.Count && _index + 2 < resultDB.Count && _index + 3 < resultDB.Count)                        
+                            sumAmount = resultDB[_index].Amount + resultDB[_index + 1].Amount + resultDB[_index + 2].Amount + resultDB[_index + 3].Amount ;
+                        
+                        if(sumAmount == null)
+                            data.PRevenueVal = null;
+                        else
+                            data.PRevenueVal = (resultDB[_index].USDPrice * resultDB[_index].Shares_Outstanding) / sumAmount;                      
+
+                    }
+                    result.Add(data);
+                }
+
+                result = HistoricalValuationCalculations.CalculateAvg(result);
+                result = HistoricalValuationCalculations.CalculateStdDev(result);
+
                 return result;
+
+                //PRevenueData dummyData = null;
+                //List<PRevenueData> dummyResult = new List<PRevenueData>();
+                ////TODO: SEEMA -DUMMY DATA
+
+                ////Row 1
+                //dummyData = new PRevenueData();
+                //dummyData.PeriodLabel = "Q1 2011";
+                //dummyData.PRevenueVal = 1.470588M;
+                //dummyData.Average = 2.008022M;
+                //dummyData.StdDevPlus = 2.768067M;
+                //dummyData.StdDevMinus = 1.247976M;
+                //dummyResult.Add(dummyData);
+                ////Row 2
+                //dummyData = new PRevenueData();
+                //dummyData.PeriodLabel = "Q2 2011";
+                //dummyData.PRevenueVal = 0M;
+                //dummyData.Average = 2.008022M;
+                //dummyData.StdDevPlus = 2.768067M;
+                //dummyData.StdDevMinus = 1.247976M;
+                //dummyResult.Add(dummyData);
+                ////Row 3
+                //dummyData = new PRevenueData();
+                //dummyData.PeriodLabel = "Q3 2011";
+                //dummyData.PRevenueVal = 0M;
+                //dummyData.Average = 2.008022M;
+                //dummyData.StdDevPlus = 2.768067M;
+                //dummyData.StdDevMinus = 1.247976M;
+                //dummyResult.Add(dummyData);
+                ////Row 4
+                //dummyData = new PRevenueData();
+                //dummyData.PeriodLabel = "Q4 2011";
+                //dummyData.PRevenueVal = 0M;
+                //dummyData.Average = 2.008022M;
+                //dummyData.StdDevPlus = 2.768067M;
+                //dummyData.StdDevMinus = 1.247976M;
+                //dummyResult.Add(dummyData);
+                ////Row 5
+                //dummyData = new PRevenueData();
+                //dummyData.PeriodLabel = "Q1 2012";
+                //dummyData.PRevenueVal = 0M;
+                //dummyData.Average = 2.008022M;
+                //dummyData.StdDevPlus = 2.768067M;
+                //dummyData.StdDevMinus = 1.247976M;
+                //dummyResult.Add(dummyData);
+                ////Row 6
+                //dummyData = new PRevenueData();
+                //dummyData.PeriodLabel = "Q2 2012";
+                //dummyData.PRevenueVal = 2.545455M;
+                //dummyData.Average = 2.008022M;
+                //dummyData.StdDevPlus = 2.768067M;
+                //dummyData.StdDevMinus = 1.247976M;
+                //dummyResult.Add(dummyData);
+                ////Row 7
+                //dummyData = new PRevenueData();
+                //dummyData.PeriodLabel = "Q3 2012";
+                //dummyData.PRevenueVal = 0M;
+                //dummyData.Average = 2.008022M;
+                //dummyData.StdDevPlus = 2.768067M;
+                //dummyData.StdDevMinus = 1.247976M;
+                //dummyResult.Add(dummyData);
+                ////Row 8
+                //dummyData = new PRevenueData();
+                //dummyData.PeriodLabel = "Q4 2012";
+                //dummyData.PRevenueVal = 0M;
+                //dummyData.Average = 2.008022M;
+                //dummyData.StdDevPlus = 2.768067M;
+                //dummyData.StdDevMinus = 1.247976M;
+                //dummyResult.Add(dummyData);
+                ////Row 9
+                //dummyData = new PRevenueData();
+                //dummyData.PeriodLabel = "Q1 2013";
+                //dummyData.PRevenueVal = 0M;
+                //dummyData.Average = 2.008022M;
+                //dummyData.StdDevPlus = 2.768067M;
+                //dummyData.StdDevMinus = 1.247976M;
+                //dummyResult.Add(dummyData);
+
+                //return dummyResult;
+
             }
             catch (Exception ex)
             {

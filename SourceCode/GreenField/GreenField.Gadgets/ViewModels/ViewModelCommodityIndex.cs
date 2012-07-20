@@ -65,7 +65,7 @@ namespace GreenField.Gadgets.ViewModels
             _commodityID = param.DashboardGadgetPayload.CommoditySelectedVal;
             if (_eventAggregator != null)
                 _eventAggregator.GetEvent<CommoditySelectionSetEvent>().Subscribe(HandleCommodityReferenceSet);
-            if(_commodityID != null)
+            if(_commodityID != null && IsActive)
                 _dbInteractivity.RetrieveCommoditySelectionData(RetrieveCommodityDataCallbackMethod);
         }
         #endregion
@@ -98,6 +98,25 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.CommodityGridVisibility);
             }
         }
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (_commodityID != null && _isActive)
+                {
+                    if (CommodityDataLoadEvent != null)
+                        CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    _dbInteractivity.RetrieveCommodityData(_commodityID, RetrieveCommodityDataCallbackMethod);
+                }
+            }
+        }
         #endregion
 
         #region Event
@@ -123,7 +142,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, commodityID, 1);
                     _commodityID = commodityID;
 
-                    if (_commodityID != null)
+                    if (_commodityID != null && IsActive)
                     {
                         if (CommodityDataLoadEvent != null)
                             CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
