@@ -179,7 +179,7 @@ namespace GreenField.Web.Helpers
                     data.Type = "COUNTRY";
                     data.SortId = 3;
                 }
-                else if (item.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 5")
+                else if (item.NODE_NAME.ToUpper().Trim() == "GICS LEVEL 1")
                 {
                     data.Ticker = item.AGG_LVL_1_LONG_NAME;
                     data.Type = "SECTOR";
