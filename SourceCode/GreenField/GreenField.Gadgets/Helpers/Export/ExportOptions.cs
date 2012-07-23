@@ -305,7 +305,7 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="exportElement"></param>
         /// <param name="cellValueConverter"></param>
-        public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null
+        public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null, Func<object> headerCellValueConverter = null
             , bool showGroupFooters = true, List<int> hideColumnIndex = null, List<int> aggregatedColumnIndex = null)
         {
             ExportElementOptions element = ExportElementOptions.Where(t => t.ExportElementType == exportElement.Element).FirstOrDefault();
@@ -322,18 +322,30 @@ namespace GreenField.Gadgets.Helpers
                 exportElement.TextAlignment = element.ExportElementTextAlignment;
             }
 
+
             if (hideColumnIndex != null)
             {
                 GridViewDataColumn column = exportElement.Context as GridViewDataColumn;
 
-                if (exportElement.Element == ExportElement.Cell || exportElement.Element == ExportElement.FooterCell ||
-                    exportElement.Element == ExportElement.GroupFooterCell || exportElement.Element == ExportElement.GroupHeaderCell ||
-                    exportElement.Element == ExportElement.GroupIndentCell || exportElement.Element == ExportElement.HeaderCell)
+                if (column != null)
                 {
-                    if (hideColumnIndex.Contains(column.DisplayIndex))
+                    if (exportElement.Element == ExportElement.Cell || exportElement.Element == ExportElement.FooterCell ||
+                                exportElement.Element == ExportElement.GroupFooterCell || exportElement.Element == ExportElement.GroupHeaderCell ||
+                                exportElement.Element == ExportElement.GroupIndentCell || exportElement.Element == ExportElement.HeaderCell)
                     {
-                        exportElement.Cancel = true;
-                    }
+                        if (hideColumnIndex.Contains(column.DisplayIndex))
+                        {
+                            exportElement.Cancel = true;
+                        }
+                    } 
+                }
+            }
+
+            if (exportElement.Element == ExportElement.HeaderCell)
+            {
+                if (headerCellValueConverter != null)
+                {
+                    exportElement.Value = headerCellValueConverter();
                 }
             }
 

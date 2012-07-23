@@ -21,104 +21,140 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewFinancialStatements : ViewBaseUserControl
     {
-        private EntitySelectionData _entitySelectionData;
-        private bool _periodIsYearly = true;
-        
         #region Constructor
         public ViewFinancialStatements(ViewModelFinancialStatements dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            
-            PeriodColumns.UpdateColumnInformation(this.dgFinancialReport, new PeriodColumns.PeriodColumnUpdateEventArg()
+            DataContextSource = dataContextSource;
+
+            //Update column headers and visibility
+            PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord();
+            PeriodColumns.UpdateColumnInformation(this.dgFinancialReport, new PeriodColumnUpdateEventArg()
             {
+                PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
                 PeriodRecord = PeriodColumns.SetPeriodRecord(),
-                PeriodColumnHeader = PeriodColumns.SetColumnHeaders(),
+                PeriodColumnHeader = PeriodColumns.SetColumnHeaders(periodRecord),
                 PeriodIsYearly = true
             });
             
-            PeriodColumns.PeriodColumnUpdate += (e) =>
-            {
-                if (e.PeriodColumnNamespace == typeof(ViewModelFinancialStatements).FullName)
-                {
-                    PeriodColumns.UpdateColumnInformation(this.dgFinancialReport, e);
-                    _entitySelectionData = e.EntitySelectionData;
-                    _periodIsYearly = e.PeriodIsYearly;
-                    this.btnExportExcel.IsEnabled = true;
-                }
-            };
+            //Event Subcription - PeriodColumnUpdateEvent
+            PeriodColumns.PeriodColumnUpdate += new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);
         }
+        #endregion        
+
+        #region Properties
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextSource != null) //DataContext instance
+                    DataContextSource.IsActive = _isActive;
+            }
+        }
+
+        /// <summary>
+        /// View model class object
+        /// </summary>
+        public ViewModelFinancialStatements DataContextSource { get; set; }
         #endregion
 
         #region Event Handlers
+        #region Navigation
+        /// <summary>
+        /// Left navigation button click event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LeftNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
+            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
             {
                 PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
-                PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.LEFT
+                PeriodColumnNavigationDirection = NavigationDirection.LEFT
             });
-            e.Handled = true;
         }
 
+        /// <summary>
+        /// Right navigation button click event handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RightNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
+            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
             {
                 PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
-                PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.RIGHT
+                PeriodColumnNavigationDirection = NavigationDirection.RIGHT
             });
-            e.Handled = true;
+        } 
+        #endregion
+
+        /// <summary>
+        /// PeriodColumnUpdateEvent Event Handler - Updates column information and enables export button first time data is received
+        /// </summary>
+        /// <param name="e">PeriodColumnUpdateEventArg</param>
+        void PeriodColumns_PeriodColumnUpdate(PeriodColumnUpdateEventArg e)
+        {
+            if (e.PeriodColumnNamespace == typeof(ViewModelFinancialStatements).FullName && IsActive)
+            {
+                PeriodColumns.UpdateColumnInformation(this.dgFinancialReport, e, isQuarterImplemented: true);
+                PeriodColumns.UpdateColumnInformation(this.dgFinancialReportExt, e, isQuarterImplemented: true);
+                this.btnExportExcel.IsEnabled = true;
+            }
         }
 
+        #region Styling
         private void dgFinancialReport_RowLoaded(object sender, RowLoadedEventArgs e)
         {
             GroupedGridRowLoadedHandler.Implement(e);
-        }
+        } 
         #endregion
 
-        #region Event Unsubscribe
-        public override void Dispose()
-        {
-            //this.rbtnQuarterly.MouseEnter -= PeriodColumns.RadRadioButton_MouseEnter;
-            //this.rbtnYearly.MouseEnter -= PeriodColumns.RadRadioButton_MouseEnter;
-
-            //this.rbtnQuarterly.MouseLeave -= PeriodColumns.RadRadioButton_MouseLeave;
-            //this.rbtnYearly.MouseLeave -= PeriodColumns.RadRadioButton_MouseLeave;
-
-            //this.rbtnQuarterly.Checked -= PeriodColumns.RadRadioButton_Checked;
-            //this.rbtnYearly.Checked -= PeriodColumns.RadRadioButton_Checked;
-
-            (this.DataContext as ViewModelFinancialStatements).Dispose();
-            this.DataContext = null;
-        }
-        #endregion
-
+        #region Export
         private void dgFinancialReport_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 14 });
         }
 
+        private void dgFinancialReportExt_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 14 }, headerCellValueConverter: () =>
+            {
+                if (e.Value == null)
+                    return null;
+                return e.Value.ToString().Replace("A", "E");
+            });
+        }
+
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            String elementName = "Balance Sheet - " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + ") " +
-                (_periodIsYearly ? this.dgFinancialReport.Columns[2].Header : this.dgFinancialReport.Columns[8].Header) + " - " +
-                (_periodIsYearly ? this.dgFinancialReport.Columns[7].Header : this.dgFinancialReport.Columns[13].Header);
-            RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = elementName, Element = this.dgFinancialReport
-                , ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+
+            RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Balance Sheet", Element = this.dgFinancialReport, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+            RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "External Research", Element = this.dgFinancialReportExt, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
 
             ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_BALANCE_SHEET);
             childExportOptions.Show();
         }
+        #endregion
+        #endregion
 
-        
+        #region Event Unsubscribe
+        public override void Dispose()
+        {
+            PeriodColumns.PeriodColumnUpdate -= new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);
 
-        
-
-        
-
-
+            (this.DataContext as ViewModelFinancialStatements).Dispose();
+            this.DataContext = null;
+        }
+        #endregion
     }
 
 

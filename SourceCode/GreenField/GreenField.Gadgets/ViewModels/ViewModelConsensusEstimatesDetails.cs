@@ -54,13 +54,12 @@ namespace GreenField.Gadgets.ViewModels
                 if (e.PeriodColumnNamespace == GetType().FullName)
                 {
                     BusyIndicatorNotification(true, "Retrieving data for updated time span");
-                    PeriodRecord periodRecord = new PeriodRecord();
+                    PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator, defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
+                    Iterator = e.PeriodColumnNavigationDirection == NavigationDirection.LEFT ? Iterator - 1 : Iterator + 1;
                     ConsensusEstimateDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(ConsensusEstimateDetailInfo, out periodRecord,
-                        PeriodColumns.SetPeriodRecord(e.PeriodColumnNavigationDirection == PeriodColumns.NavigationDirection.LEFT
-                            ? --Iterator : ++Iterator));
-
+                        periodRecord, subGroups: DataGrouping);
                     PeriodRecord = periodRecord;
-                    PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
+                    PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, displayPeriodType: false);
                     BusyIndicatorNotification();
                 }
             };
@@ -78,6 +77,22 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
+        private List<PeriodColumnGroupingDetail> _dataGrouping;
+        public List<PeriodColumnGroupingDetail> DataGrouping
+        {
+            get
+            {
+                if (_dataGrouping == null)
+                {
+                    _dataGrouping = new List<PeriodColumnGroupingDetail>();
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "YOY", GroupPropertyName = "YOYGrowth", GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Variance%", GroupPropertyName = "Variance", GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
+                }
+                return _dataGrouping;
+            }
+        }
+
+
         #region Consensus Estimate Detail Information
         /// <summary>
         /// Pivoted Financial Information to be dispayed on grid
@@ -160,7 +175,7 @@ namespace GreenField.Gadgets.ViewModels
             get
             {
                 if (_periodRecord == null)
-                    _periodRecord = PeriodColumns.SetPeriodRecord();
+                    _periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
                 return _periodRecord;
             }
             set { _periodRecord = value; }
@@ -186,10 +201,9 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.PeriodColumnHeader);
                 if (value != null)
                 {
-                    PeriodColumns.RaisePeriodColumnUpdateCompleted(new PeriodColumns.PeriodColumnUpdateEventArg()
+                    PeriodColumns.RaisePeriodColumnUpdateCompleted(new PeriodColumnUpdateEventArg()
                     {
                         PeriodColumnNamespace = GetType().FullName,
-                        EntitySelectionData = EntitySelectionInfo,
                         PeriodColumnHeader = value,
                         PeriodRecord = PeriodRecord,
                         PeriodIsYearly = SelectedPeriodType == FinancialStatementPeriodType.ANNUAL
@@ -349,13 +363,15 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName + " (" + EntitySelectionInfo.ShortName + " : " + EntitySelectionInfo.InstrumentID + ")");
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
                 }
-                BusyIndicatorNotification();
+                
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -404,12 +420,11 @@ namespace GreenField.Gadgets.ViewModels
         {
             BusyIndicatorNotification(true, "Updating information based on selected preference");
 
-            PeriodRecord periodRecord = new PeriodRecord();
+            PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator, defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
             ConsensusEstimateDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(ConsensusEstimateDetailInfo, out periodRecord,
-                PeriodColumns.SetPeriodRecord(Iterator));
+                periodRecord, subGroups: DataGrouping);
             PeriodRecord = periodRecord;
-            PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
-
+            PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, displayPeriodType: false);
             BusyIndicatorNotification();
         }
 

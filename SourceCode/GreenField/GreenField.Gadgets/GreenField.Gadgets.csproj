@@ -145,6 +145,7 @@
     <Compile Include="Helpers\GroupedGridRowLoadedHandler.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
     <Compile Include="Helpers\Converters\PercentageValueConverter.cs" />
+    <Compile Include="Helpers\PeriodColumnNavigationEvent.cs" />
     <Compile Include="Helpers\PeriodColumns.cs" />
     <Compile Include="Helpers\PortfolioDetails\BenchmarkWeight.cs" />
     <Compile Include="Helpers\PortfolioDetails\Statistics.cs" />
