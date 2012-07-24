@@ -129,6 +129,36 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <helpers:FlattenGroupConverter x:Key="FlattenGroupConverter" />
+        <helpers:ItemStyleSelector x:Key="ItemStyleSelector">
+            <helpers:ItemStyleSelector.GroupStyle>
+                <Style TargetType="ContentControl">
+                    <Setter Property="IsEnabled" Value="False" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </helpers:ItemStyleSelector.GroupStyle>
+            <helpers:ItemStyleSelector.ItemStyle>
+                <Style TargetType="ContentControl">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding Path=Text}"
+                                          IsChecked="{Binding Path=IsSelected,Mode=TwoWay}"
+                                          Height="16" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </helpers:ItemStyleSelector.ItemStyle>
+        </helpers:ItemStyleSelector>
     </UserControl.Resources>
 
 
@@ -455,27 +485,12 @@
                 <Grid Margin="5,0,0,0" Visibility="{Binding RegionFXSelectorVisibility}" Grid.Column="12">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="7" FontFamily="Arial" FontWeight="Bold"/>
-                        <telerik:RadComboBox x:Name="cbRegionFXSelector"
-                                         EmptyText="Search Region..." 
-                                         SelectedValue="{Binding SelectedRegionFX,Mode=TwoWay}"                                        
-                                         Width="150" 
-                                         Margin="5,0,0,0"
-                                         FontFamily="Arial"
-                                         FontSize="7"
+                        <telerik:RadComboBox x:Name="cbRegionFXSelector"                                                                                                                       
+                                         Width="150"                                         
                                          IsEditable="True"                                       
-                                         ItemsSource="{Binding RegionFXNames}"                                        
-                                         CanAutocompleteSelectItems="True" 
-                                         TextOptions.TextHintingMode="Fixed"
-                                         CanKeyboardNavigationSelectItems="False" 
-                                         HorizontalAlignment="Left"
-                                         OpenDropDownOnFocus="True"
-                                         StaysOpenOnEdit="True"                                                 
-                                         IsTextSearchEnabled="False">
-                            <telerik:RadComboBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <VirtualizingStackPanel />
-                                </ItemsPanelTemplate>
-                            </telerik:RadComboBox.ItemsPanel>
+                                         ItemsSource="{Binding RegionItems.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
+                                         telerik:TextSearch.TextPath="Text"                                                                   
+                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}">                           
                         </telerik:RadComboBox>
                     </StackPanel>
                 </Grid>
