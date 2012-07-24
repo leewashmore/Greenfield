@@ -8,6 +8,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Models
 {
@@ -94,52 +95,81 @@ namespace GreenField.Gadgets.Models
         public object QUARTER_SIX { get; set; }
     }
 
+    public class PeriodColumnGroupingDetail
+    {
+        public PeriodColumnGroupingType GroupDataType { get; set; }
+        public String GroupPropertyName { get; set; }
+        public String GroupDisplayName { get; set; }
+
+        public PeriodColumnGroupingDetail()
+        {
+        }
+
+        public PeriodColumnGroupingDetail(PeriodColumnGroupingType groupDataType, String groupPropertyName, String groupDisplayName)
+        {
+            GroupDataType = groupDataType;
+            GroupPropertyName = groupPropertyName;
+            GroupDisplayName = groupDisplayName;
+        }
+    }
+
+    public enum PeriodColumnGroupingType
+    {
+        DECIMAL,
+        DECIMAL_PERCENTAGE,
+        SHORT_DATETIME,
+        LONG_DATETIME,
+        STRING
+    }
+
     public class PeriodRecord
     {
-        public int YearOne;
-        public bool YearOneIsHistorical;
+        public int YearOne { get; set; }
+        public bool YearOneIsHistorical { get; set; }
 
-        public int YearTwo;
-        public bool YearTwoIsHistorical;
+        public int YearTwo { get; set; }
+        public bool YearTwoIsHistorical { get; set; }
 
-        public int YearThree;
-        public bool YearThreeIsHistorical;
+        public int YearThree { get; set; }
+        public bool YearThreeIsHistorical { get; set; }
 
-        public int YearFour;
-        public bool YearFourIsHistorical;
+        public int YearFour { get; set; }
+        public bool YearFourIsHistorical { get; set; }
 
-        public int YearFive;
-        public bool YearFiveIsHistorical;
+        public int YearFive { get; set; }
+        public bool YearFiveIsHistorical { get; set; }
 
-        public int YearSix;
-        public bool YearSixIsHistorical;
+        public int YearSix { get; set; }
+        public bool YearSixIsHistorical { get; set; }
 
-        public int YearSeven;
-        public bool YearSevenIsHistorical;
+        public int QuarterOneYear { get; set; }
+        public int QuarterOneQuarter { get; set; }
+        public bool QuarterOneIsHistorical { get; set; }
 
-        public int QuarterOneYear;
-        public int QuarterOneQuarter;
-        public bool QuarterOneIsHistorical;
+        public int QuarterTwoYear { get; set; }
+        public int QuarterTwoQuarter { get; set; }
+        public bool QuarterTwoIsHistorical { get; set; }
 
-        public int QuarterTwoYear;
-        public int QuarterTwoQuarter;
-        public bool QuarterTwoIsHistorical;
+        public int QuarterThreeYear { get; set; }
+        public int QuarterThreeQuarter { get; set; }
+        public bool QuarterThreeIsHistorical { get; set; }
 
-        public int QuarterThreeYear;
-        public int QuarterThreeQuarter;
-        public bool QuarterThreeIsHistorical;
+        public int QuarterFourYear { get; set; }
+        public int QuarterFourQuarter { get; set; }
+        public bool QuarterFourIsHistorical { get; set; }
 
-        public int QuarterFourYear;
-        public int QuarterFourQuarter;
-        public bool QuarterFourIsHistorical;
+        public int QuarterFiveYear { get; set; }
+        public int QuarterFiveQuarter { get; set; }
+        public bool QuarterFiveIsHistorical { get; set; }
 
-        public int QuarterFiveYear;
-        public int QuarterFiveQuarter;
-        public bool QuarterFiveIsHistorical;
+        public int QuarterSixYear { get; set; }
+        public int QuarterSixQuarter { get; set; }
+        public bool QuarterSixIsHistorical { get; set; }
 
-        public int QuarterSixYear;
-        public int QuarterSixQuarter;
-        public bool QuarterSixIsHistorical;
+        public int DefaultHistoricalYearCount { get; set; }
+        public int DefaultHistoricalQuarterCount { get; set; }
+        public int NetColumnCount { get; set; }
+        public bool IsQuarterImplemented { get; set; }
     }
 
     public class PeriodColumnCEDisplayData

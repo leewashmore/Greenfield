@@ -13,6 +13,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using GreenField.DataContracts;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.Views
 {
@@ -31,10 +32,11 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             this.DataContextEstimates = dataContextSource;
 
-            PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimate, new PeriodColumns.PeriodColumnUpdateEventArg()
+            PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord();
+            PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimate, new PeriodColumnUpdateEventArg()
             {
-                PeriodRecord = PeriodColumns.SetPeriodRecord(),
-                PeriodColumnHeader = PeriodColumns.SetColumnHeaders(showHistorical: false),
+                PeriodRecord = periodRecord,
+                PeriodColumnHeader = PeriodColumns.SetColumnHeaders(periodRecord, displayPeriodType: false),
                 PeriodIsYearly = true
             }, false);
 
@@ -43,7 +45,6 @@ namespace GreenField.Gadgets.Views
                 if (e.PeriodColumnNamespace == typeof(ViewModelEstimates).FullName)
                 {
                     PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimate, e, false);
-                    _entitySelectionData = e.EntitySelectionData;
                     _periodIsYearly = e.PeriodIsYearly;
                     this.btnExportExcel.IsEnabled = true;
                 }
@@ -89,10 +90,10 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void LeftNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
+            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
             {
                 PeriodColumnNamespace = typeof(ViewModelEstimates).FullName,
-                PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.LEFT
+                PeriodColumnNavigationDirection = NavigationDirection.LEFT
             });
             e.Handled = true;
         }
@@ -104,10 +105,10 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void RightNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
+            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
             {
                 PeriodColumnNamespace = typeof(ViewModelEstimates).FullName,
-                PeriodColumnNavigationDirection = PeriodColumns.NavigationDirection.RIGHT
+                PeriodColumnNavigationDirection = NavigationDirection.RIGHT
             });
             e.Handled = true;
         }

@@ -55,7 +55,7 @@
       <xs:element minOccurs="0" name="AshmoreEmmAmount" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DataSourceDate" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="EstimateDesc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="EstimateId" type="xs:int" />
       <xs:element minOccurs="0" name="High" type="xs:decimal" />
       <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
@@ -66,6 +66,8 @@
       <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
       <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Variance" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YOYGrowth" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ConsensusEstimateDetail" nillable="true" type="tns:ConsensusEstimateDetail" />

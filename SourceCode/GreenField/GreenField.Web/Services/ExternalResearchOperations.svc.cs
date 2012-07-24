@@ -177,31 +177,76 @@ namespace GreenField.Web.Services
                 List<ConsensusEstimateDetail> result = new List<ConsensusEstimateDetail>();
 
                 data = entity.GetConsensusDetail(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
-                
-                ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
-                foreach (ConsensusEstimateDetailData item in data)
+
+                if (data == null)
+                    return result;
+
+                data = data.OrderBy(record => record.ESTIMATE_DESC).OrderByDescending(record => record.PERIOD_YEAR).ToList();
+
+                for (int i = 0; i < data.Count; i++)
                 {
-                    temp = new ConsensusEstimateDetail();
-                  temp.IssuerId = item.ISSUER_ID;
-                  temp.EstimateId = item.ESTIMATE_ID;
-                  temp.EstimateDesc = item.ESTIMATE_DESC;
-                  temp.Period = item.Period;
-                  temp.AmountType = item.AMOUNT_TYPE;
-                  temp.PeriodYear = item.PERIOD_YEAR;
-                  temp.PeriodType = item.PERIOD_TYPE;
-                  temp.Amount = item.AMOUNT;
-                  temp.AshmoreEmmAmount = item.ASHMOREEMM_AMOUNT;
-                  temp.NumberOfEstimates = item.NUMBER_OF_ESTIMATES;
-                  temp.High = item.HIGH;
-                  temp.Low = item.LOW;
-                  temp.StandardDeviation = item.STANDARD_DEVIATION;
-                  temp.SourceCurrency = item.SOURCE_CURRENCY;
-                  temp.DataSource = item.DATA_SOURCE;
-                  temp.DataSourceDate = item.DATA_SOURCE_DATE;
-                  temp.Actual = item.ACTUAL;
-                  result.Add(temp);
+                    ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
+                    temp.IssuerId = data[i].ISSUER_ID;
+                    temp.EstimateId = data[i].ESTIMATE_ID;
+                    temp.Description = data[i].ESTIMATE_DESC;
+                    temp.Period = data[i].Period;
+                    temp.AmountType = data[i].AMOUNT_TYPE;
+                    temp.PeriodYear = data[i].PERIOD_YEAR;
+                    temp.PeriodType = data[i].PERIOD_TYPE;
+                    temp.Amount = data[i].AMOUNT;
+                    temp.AshmoreEmmAmount = data[i].ASHMOREEMM_AMOUNT;
+                    temp.NumberOfEstimates = data[i].NUMBER_OF_ESTIMATES;
+                    temp.High = data[i].HIGH;
+                    temp.Low = data[i].LOW;
+                    temp.StandardDeviation = data[i].STANDARD_DEVIATION;
+                    temp.SourceCurrency = data[i].SOURCE_CURRENCY;
+                    temp.DataSource = data[i].DATA_SOURCE;
+                    temp.DataSourceDate = data[i].DATA_SOURCE_DATE;
+                    temp.Actual = data[i].ACTUAL;
+
+                    temp.YOYGrowth = data[i].AMOUNT;
+                    temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
+                    if (i != data.Count - 1)
+                    {
+                        if (data[i].ESTIMATE_DESC == data[i + 1].ESTIMATE_DESC &&
+                            data[i].PERIOD_YEAR == data[i + 1].PERIOD_YEAR + 1)
+                        {
+                            temp.YOYGrowth = temp.YOYGrowth - data[i + 1].AMOUNT;
+                        }
+                    }                   
+
+                    result.Add(temp);
+                                        
                 }
+
                 
+
+
+
+                //foreach (ConsensusEstimateDetailData item in data)
+                //{
+                //    temp = new ConsensusEstimateDetail();
+                //    temp.IssuerId = item.ISSUER_ID;
+                //    temp.EstimateId = item.ESTIMATE_ID;
+                //    temp.Description = item.ESTIMATE_DESC;
+                //    temp.Period = item.Period;
+                //    temp.AmountType = item.AMOUNT_TYPE;
+                //    temp.PeriodYear = item.PERIOD_YEAR;
+                //    temp.PeriodType = item.PERIOD_TYPE;
+                //    temp.Amount = item.AMOUNT;
+                //    temp.AshmoreEmmAmount = item.ASHMOREEMM_AMOUNT;
+                //    temp.NumberOfEstimates = item.NUMBER_OF_ESTIMATES;
+                //    temp.High = item.HIGH;
+                //    temp.Low = item.LOW;
+                //    temp.StandardDeviation = item.STANDARD_DEVIATION;
+                //    temp.SourceCurrency = item.SOURCE_CURRENCY;
+                //    temp.DataSource = item.DATA_SOURCE;
+                //    temp.DataSourceDate = item.DATA_SOURCE_DATE;
+                //    temp.Actual = item.ACTUAL;
+
+                //    result.Add(temp);
+                //}
+
                 return result;
             }
             catch (Exception ex)
@@ -576,28 +621,28 @@ namespace GreenField.Web.Services
 
 
                 ////Retrieving data from Period Financials table
-                resultDB = extResearch.ExecuteStoreQuery<GetPRevenueData_Result>("exec Get_PRevenue @SecurityID={0},@issuerId={1}","145119","8233223").ToList();//, Convert.ToString(data.SECURITY_ID)).ToList();
+                resultDB = extResearch.ExecuteStoreQuery<GetPRevenueData_Result>("exec Get_PRevenue @SecurityID={0},@issuerId={1}", "145119", "8233223").ToList();//, Convert.ToString(data.SECURITY_ID)).ToList();
 
-                for (int _index = 0; _index < resultDB.Count; _index++ )
+                for (int _index = 0; _index < resultDB.Count; _index++)
                 {
                     PRevenueData data = new PRevenueData();
                     decimal? sumAmount = null;
                     data.PeriodLabel = resultDB[_index].PeriodLabel;
 
                     if ((resultDB[_index].USDPrice == null || resultDB[_index].USDPrice == 0) || (resultDB[_index].Shares_Outstanding == null || resultDB[_index].Shares_Outstanding == 0))
-                    {                        
+                    {
                         data.PRevenueVal = null;
                     }
                     else
                     {
                         //Sum of Amount if 4 quarters exist
-                        if(_index + 1 < resultDB.Count && _index + 2 < resultDB.Count && _index + 3 < resultDB.Count)                        
-                            sumAmount = resultDB[_index].Amount + resultDB[_index + 1].Amount + resultDB[_index + 2].Amount + resultDB[_index + 3].Amount ;
-                        
-                        if(sumAmount == null)
+                        if (_index + 1 < resultDB.Count && _index + 2 < resultDB.Count && _index + 3 < resultDB.Count)
+                            sumAmount = resultDB[_index].Amount + resultDB[_index + 1].Amount + resultDB[_index + 2].Amount + resultDB[_index + 3].Amount;
+
+                        if (sumAmount == null)
                             data.PRevenueVal = null;
                         else
-                            data.PRevenueVal = (resultDB[_index].USDPrice * resultDB[_index].Shares_Outstanding) / sumAmount;                      
+                            data.PRevenueVal = (resultDB[_index].USDPrice * resultDB[_index].Shares_Outstanding) / sumAmount;
 
                     }
                     result.Add(data);

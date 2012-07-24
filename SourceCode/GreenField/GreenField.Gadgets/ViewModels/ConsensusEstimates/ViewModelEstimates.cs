@@ -73,7 +73,7 @@ namespace GreenField.Gadgets.ViewModels
                     BusyIndicatorNotification(true, "Retrieving data for updated time span");
                     PeriodRecord periodRecord = new PeriodRecord();
                     ConsensusEstimateDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(ConsensusEstimateDetailInfo, out periodRecord,
-                        PeriodColumns.SetPeriodRecord(e.PeriodColumnNavigationDirection == PeriodColumns.NavigationDirection.LEFT
+                        PeriodColumns.SetPeriodRecord(e.PeriodColumnNavigationDirection == NavigationDirection.LEFT
                             ? --Iterator : ++Iterator));
 
                     PeriodRecord = periodRecord;
@@ -283,10 +283,9 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.PeriodColumnHeader);
                 if (value != null)
                 {
-                    PeriodColumns.RaisePeriodColumnUpdateCompleted(new PeriodColumns.PeriodColumnUpdateEventArg()
+                    PeriodColumns.RaisePeriodColumnUpdateCompleted(new PeriodColumnUpdateEventArg()
                     {
                         PeriodColumnNamespace = GetType().FullName,
-                        EntitySelectionData = EntitySelectionInfo,
                         PeriodColumnHeader = value,
                         PeriodRecord = PeriodRecord,
                         PeriodIsYearly = SelectedPeriodType == FinancialStatementPeriodType.ANNUAL
