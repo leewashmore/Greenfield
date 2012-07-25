@@ -15,6 +15,8 @@ using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using System.Linq;
 using GreenField.Common;
 using GreenField.DataContracts;
+using System.Reflection;
+using Telerik.Windows.Controls.GridView;
 
 
 namespace GreenField.Gadgets.Helpers
@@ -255,11 +257,40 @@ namespace GreenField.Gadgets.Helpers
             if (data == null)
                 goto FINISH;
 
+            if(data.Count.Equals(0))
+                goto FINISH;
+
+            PropertyInfo[] propertyInfo = typeof(T).GetProperties();
+
+            if (!propertyInfo.Any(record => record.Name == "Description")
+                || !propertyInfo.Any(record => record.Name == "PeriodYear")
+                || !propertyInfo.Any(record => record.Name == "PeriodType")
+                || !propertyInfo.Any(record => record.Name == "Amount")
+                || !propertyInfo.Any(record => record.Name == "AmountType"))
+                throw new InvalidOperationException("Data type is missing requisite columns");                
+            
             List<String> distinctPeriodDataDescriptors = data
                 .Select(record => (String)record.GetType().GetProperty("Description").GetValue(record, null)).Distinct().ToList();
 
             foreach (String dataDesc in distinctPeriodDataDescriptors)
             {
+                T defaultRecord =  data.Where(record => ((String)record.GetType().GetProperty("Description").GetValue(record, null)) == dataDesc).FirstOrDefault();
+                Int32? dataId = null;
+                if (propertyInfo.Any(record => record.Name == "DataId"))
+                    dataId = (Int32?)defaultRecord.GetType().GetProperty("DataId").GetValue(defaultRecord, null);
+
+                Boolean? dataBold = false;
+                if (propertyInfo.Any(record => record.Name == "BoldFont"))
+                    dataBold = ((String)defaultRecord.GetType().GetProperty("BoldFont").GetValue(defaultRecord, null)).Trim().ToUpper() == "Y";
+
+                Boolean? dataPercentage = false;
+                if (propertyInfo.Any(record => record.Name == "IsPercentage"))
+                    dataPercentage = ((String)defaultRecord.GetType().GetProperty("IsPercentage").GetValue(defaultRecord, null)).Trim().ToUpper() == "Y";
+
+                Int32? dataDecimal = null;
+                if (propertyInfo.Any(record => record.Name == "Decimals"))
+                    dataDecimal = (Int32?)defaultRecord.GetType().GetProperty("Decimals").GetValue(defaultRecord, null);                
+                
                 Int32 columnCount = 0;
                 T yearOneData = default(T);
                 T yearTwoData = default(T);
@@ -459,19 +490,51 @@ namespace GreenField.Gadgets.Helpers
             RECORD_ENTRY:
                 result.Add(new PeriodColumnDisplayData()
                 {
+                    DATA_ID = dataId,
+                    DATA_BOLD = dataBold,
+                    DATA_PERCENTAGE = dataPercentage,
+                    DATA_DECIMALS = dataDecimal,
+                    YEAR_ONE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearOneData, "RootSource"),
+                    YEAR_TWO_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearTwoData, "RootSource"),
+                    YEAR_THREE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearThreeData, "RootSource"),
+                    YEAR_FOUR_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearFourData, "RootSource"),
+                    YEAR_FIVE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearFiveData, "RootSource"),
+                    YEAR_SIX_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearSixData, "RootSource"),
+                    QUARTER_ONE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterOneData, "RootSource"),
+                    QUARTER_TWO_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterTwoData, "RootSource"),
+                    QUARTER_THREE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterThreeData, "RootSource"),
+                    QUARTER_FOUR_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterFourData, "RootSource"),
+                    QUARTER_FIVE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterFiveData, "RootSource"),
+                    QUARTER_SIX_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterSixData, "RootSource"),
+
+                    YEAR_ONE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearOneData, "RootSourceDate"),
+                    YEAR_TWO_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearTwoData, "RootSourceDate"),
+                    YEAR_THREE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearThreeData, "RootSourceDate"),
+                    YEAR_FOUR_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearFourData, "RootSourceDate"),
+                    YEAR_FIVE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearFiveData, "RootSourceDate"),
+                    YEAR_SIX_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearSixData, "RootSourceDate"),
+                    QUARTER_ONE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterOneData, "RootSourceDate"),
+                    QUARTER_TWO_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterTwoData, "RootSourceDate"),
+                    QUARTER_THREE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterThreeData, "RootSourceDate"),
+                    QUARTER_FOUR_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterFourData, "RootSourceDate"),
+                    QUARTER_FIVE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterFiveData, "RootSourceDate"),
+                    QUARTER_SIX_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterSixData, "RootSourceDate"),
+
+                    //DATA_ROOT_SOURCE = dataRootSource,
+                    //DATA_ROOT_SOURCE_DATE = dataRootSourceDate,
                     DATA_DESC = dataDesc,
-                    YEAR_ONE = yearOneData != null ? yearOneData.GetType().GetProperty("Amount").GetValue(yearOneData, null) : null,
-                    YEAR_TWO = yearTwoData != null ? yearTwoData.GetType().GetProperty("Amount").GetValue(yearTwoData, null) : null,
-                    YEAR_THREE = yearThreeData != null ? yearThreeData.GetType().GetProperty("Amount").GetValue(yearThreeData, null) : null,
-                    YEAR_FOUR = yearFourData != null ? yearFourData.GetType().GetProperty("Amount").GetValue(yearFourData, null) : null,
-                    YEAR_FIVE = yearFiveData != null ? yearFiveData.GetType().GetProperty("Amount").GetValue(yearFiveData, null) : null,
-                    YEAR_SIX = yearSixData != null ? yearSixData.GetType().GetProperty("Amount").GetValue(yearSixData, null) : null,
-                    QUARTER_ONE = quarterOneData != null ? quarterOneData.GetType().GetProperty("Amount").GetValue(quarterOneData, null) : null,
-                    QUARTER_TWO = quarterTwoData != null ? quarterTwoData.GetType().GetProperty("Amount").GetValue(quarterTwoData, null) : null,
-                    QUARTER_THREE = quarterThreeData != null ? quarterThreeData.GetType().GetProperty("Amount").GetValue(quarterThreeData, null) : null,
-                    QUARTER_FOUR = quarterFourData != null ? quarterFourData.GetType().GetProperty("Amount").GetValue(quarterFourData, null) : null,
-                    QUARTER_FIVE = quarterFiveData != null ? quarterFiveData.GetType().GetProperty("Amount").GetValue(quarterFiveData, null) : null,
-                    QUARTER_SIX = quarterSixData != null ? quarterSixData.GetType().GetProperty("Amount").GetValue(quarterSixData, null) : null,
+                    YEAR_ONE = yearOneData == null ? null : GetFormattedValue(yearOneData.GetType().GetProperty("Amount").GetValue(yearOneData, null), dataDecimal, dataPercentage),
+                    YEAR_TWO = yearTwoData == null ? null : GetFormattedValue(yearTwoData.GetType().GetProperty("Amount").GetValue(yearTwoData, null), dataDecimal, dataPercentage),
+                    YEAR_THREE = yearThreeData == null ? null : GetFormattedValue(yearThreeData.GetType().GetProperty("Amount").GetValue(yearThreeData, null), dataDecimal, dataPercentage),
+                    YEAR_FOUR = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType().GetProperty("Amount").GetValue(yearFourData, null), dataDecimal, dataPercentage),
+                    YEAR_FIVE = yearFiveData == null ? null : GetFormattedValue(yearFiveData.GetType().GetProperty("Amount").GetValue(yearFiveData, null), dataDecimal, dataPercentage),
+                    YEAR_SIX = yearSixData == null ? null : GetFormattedValue(yearSixData.GetType().GetProperty("Amount").GetValue(yearSixData, null), dataDecimal, dataPercentage),
+                    QUARTER_ONE = quarterOneData == null ? null : GetFormattedValue(quarterOneData.GetType().GetProperty("Amount").GetValue(quarterOneData, null), dataDecimal, dataPercentage),
+                    QUARTER_TWO = quarterTwoData == null ? null : GetFormattedValue(quarterTwoData.GetType().GetProperty("Amount").GetValue(quarterTwoData, null), dataDecimal, dataPercentage),
+                    QUARTER_THREE = quarterThreeData == null ? null : GetFormattedValue(quarterThreeData.GetType().GetProperty("Amount").GetValue(quarterThreeData, null), dataDecimal, dataPercentage),
+                    QUARTER_FOUR = quarterFourData == null ? null : GetFormattedValue(quarterFourData.GetType().GetProperty("Amount").GetValue(quarterFourData, null), dataDecimal, dataPercentage),
+                    QUARTER_FIVE = quarterFiveData == null ? null : GetFormattedValue(quarterFiveData.GetType().GetProperty("Amount").GetValue(quarterFiveData, null), dataDecimal, dataPercentage),
+                    QUARTER_SIX = quarterSixData == null ? null : GetFormattedValue(quarterSixData.GetType().GetProperty("Amount").GetValue(quarterSixData, null), dataDecimal, dataPercentage),
                 });
             }
 
@@ -507,8 +570,58 @@ namespace GreenField.Gadgets.Helpers
                         gridView.Columns[i + 2].IsVisible = columnVisibility;
                 }
             }
-        }       
+        }
 
+        /// <summary>
+        /// Set Bold/Percentage formats on data and place tooltips
+        /// </summary>
+        /// <param name="e">RowLoadedEventArgs</param>
+        public static void RowDataCustomization(RowLoadedEventArgs e)
+        {
+            if (e.Row is GridViewRow)
+            {
+                var row = e.Row as GridViewRow;
+
+                if(row != null)
+                {
+                    PeriodColumnDisplayData rowContext = row.DataContext as PeriodColumnDisplayData;
+                    if (rowContext != null)
+                    {
+                        if(rowContext.DATA_BOLD != null)
+                            row.FontWeight = Convert.ToBoolean(rowContext.DATA_BOLD) ? FontWeights.ExtraBold : FontWeights.Normal;
+                        foreach (GridViewCell cell in row.Cells)
+	                    {
+                            //Null Check
+                            if (cell.Value == null)
+                            continue;
+
+                            //No toolTip service for Description and left navigation
+                            if (cell.Column.DisplayIndex <= 1)
+                            continue;
+
+                            //No toolTip service for right navigation column
+                            if (cell.Column.DisplayIndex == e.GridViewDataControl.Columns.Count - 1)
+                            continue;
+
+                            String toolTipContent = GetToolTipContent(rowContext, cell.DataColumn.DataMemberBinding.Path.Path);
+
+                            if (toolTipContent != null)
+                            {
+                                ToolTip toolTip = new ToolTip()
+                                {
+                                    Content = toolTipContent,
+                                    FontSize = 7,
+                                    FontFamily = new FontFamily("Arial")
+                                };
+
+                                ToolTipService.SetToolTip(cell, toolTip);
+                            }
+                        } 
+                        
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Private Methods
@@ -530,18 +643,6 @@ namespace GreenField.Gadgets.Helpers
                     record.GetType().GetProperty("PeriodYear").GetValue(record, null).ToString().ToUpper().Trim() == periodYear.ToString().ToUpper().Trim() &&
                     record.GetType().GetProperty("PeriodType").GetValue(record, null).ToString().ToUpper().Trim() == periodType.ToString().ToUpper().Trim())
                 .FirstOrDefault();
-
-            //if (yearData == null)
-            //{
-            //    yearData = data
-            //    .Where(record =>
-            //        ((String)record.GetType().GetProperty("Description").GetValue(record, null)).ToUpper().Trim() == Description.ToUpper().Trim() &&
-            //        ((String)record.GetType().GetProperty("PeriodYear").GetValue(record, null)).ToUpper().Trim() == periodYear.ToUpper().Trim() &&
-            //        ((String)record.GetType().GetProperty("PeriodType").GetValue(record, null)).ToUpper().Trim() == periodType.ToUpper().Trim() &&
-            //        ((String)record.GetType().GetProperty("AmountType").GetValue(record, null)).ToUpper().Trim() == (AmountIsHistorical ? "ESTIMATE" : "ACTUAL"))
-            //    .FirstOrDefault();
-            //}
-
             return yearData;
         }
 
@@ -559,21 +660,32 @@ namespace GreenField.Gadgets.Helpers
 
             try
             {
-                switch (groupItem.GroupDataType)
+                PropertyInfo[] propertyInfo = data.GetType().GetProperties();
+                if (propertyInfo.Any(record => record.Name == groupItem.GroupPropertyName))
                 {
-                    case PeriodColumnGroupingType.DECIMAL:
-                        return (Math.Round((Decimal)data.GetType().GetProperty(groupItem.GroupPropertyName).GetValue(data, null), 4)).ToString();
-                    case PeriodColumnGroupingType.DECIMAL_PERCENTAGE:
-                        return (Math.Round((Decimal)data.GetType().GetProperty(groupItem.GroupPropertyName).GetValue(data, null), 4)).ToString() + " %";
-                    case PeriodColumnGroupingType.SHORT_DATETIME:
-                        return ((DateTime)data.GetType().GetProperty(groupItem.GroupPropertyName).GetValue(data, null)).ToShortDateString();
-                    case PeriodColumnGroupingType.LONG_DATETIME:
-                        return ((DateTime)data.GetType().GetProperty(groupItem.GroupPropertyName).GetValue(data, null)).ToShortDateString();
-                    case PeriodColumnGroupingType.STRING:
-                        return (data.GetType().GetProperty(groupItem.GroupPropertyName).GetValue(data, null)).ToString();
-                    default:
-                        return (data.GetType().GetProperty(groupItem.GroupPropertyName).GetValue(data, null)).ToString();
+                    object groupdata = data.GetType().GetProperty(groupItem.GroupPropertyName).GetValue(data, null);
+
+                    if (groupdata == null)
+                        return null;
+                    switch (groupItem.GroupDataType)
+                    {
+                        case PeriodColumnGroupingType.INT:
+                            return ((Int32)groupdata).ToString();
+                        case PeriodColumnGroupingType.DECIMAL:
+                            return (Math.Round((Decimal)groupdata, 2)).ToString();
+                        case PeriodColumnGroupingType.DECIMAL_PERCENTAGE:
+                            return (Math.Round((Decimal)groupdata, 2)).ToString() + " %";
+                        case PeriodColumnGroupingType.SHORT_DATETIME:
+                            return ((DateTime)groupdata).ToShortDateString();
+                        case PeriodColumnGroupingType.LONG_DATETIME:
+                            return ((DateTime)groupdata).ToShortDateString();
+                        case PeriodColumnGroupingType.STRING:
+                            return (groupdata).ToString();
+                        default:
+                            return (groupdata).ToString();
+                    }
                 }
+                return null;
             }
             catch (Exception)
             {
@@ -603,6 +715,85 @@ namespace GreenField.Gadgets.Helpers
             if (month <= 0 || month > 12)
                 throw new InvalidOperationException("Invalid Month (should be between 1-12)");
             return month < 4 ? 1 : (month < 7 ? 2 : (month < 10 ? 3 : 4));
+        }
+
+        /// <summary>
+        /// Formats decimal values with requisite decimal places and optionally posts percentage symbol
+        /// </summary>
+        /// <param name="value">Value to be formatted</param>
+        /// <param name="decimals">Decimal places : [Default] 0</param>
+        /// <param name="percentage">Percentage option : Default] false</param>
+        /// <returns>Formatted string</returns>
+        private static String GetFormattedValue(object value, int? decimals = 0, bool? percentage = false)
+        {
+            if (value == null)
+                return null;
+
+            if (decimals == null)
+                return value.ToString();
+
+            Decimal result;
+            Int32 decimalPlaces = Convert.ToInt32(decimals);
+            String formattedValue = Decimal.TryParse(value.ToString(), out result) ? Math.Round(result, decimalPlaces).ToString() : value.ToString();
+
+            if (percentage == true)
+                formattedValue = formattedValue + " %";
+
+            return formattedValue;
+        }
+
+        /// <summary>
+        /// Gets value for property Name and type casts it into specified type
+        /// </summary>
+        /// <typeparam name="T1">Data type</typeparam>
+        /// <typeparam name="T2">Type to which property value is to be parsed</typeparam>
+        /// <param name="data">Data of type T1</param>
+        /// <param name="propertyName">Property name</param>
+        /// <returns>Property value cast into type T2</returns>
+        private static T2 GetFormatPrecursors<T1, T2>(T1 data, String propertyName)
+        {
+            T2 result = default(T2);
+
+            if (data == null)
+                return result;
+
+            try
+            {
+                PropertyInfo[] propertyInfo = typeof(T1).GetProperties();
+
+                if (propertyInfo.Any(record => record.Name == propertyName))
+                    result = (T2)typeof(T1).GetProperty(propertyName).GetValue(data, null);
+            }
+            catch (Exception)
+            { }
+
+            return result;
+        }
+
+        /// <summary>
+        /// Create tooltip content from property name factor - assumed that data source and data source
+        /// date property names are tightly linked with column binded property name
+        /// </summary>
+        /// <param name="data">PeriodColumnDisplayData</param>
+        /// <param name="columnBindedPropertyName">Name of the property binded to the cell column</param>
+        /// <returns>tool tip content</returns>
+        private static String GetToolTipContent(PeriodColumnDisplayData data, String columnBindedPropertyName)
+        {
+            String result = null;
+
+            if (data == null)
+                return result;
+
+            String rootSource = (String)data.GetType().GetProperty(columnBindedPropertyName + "_DATA_ROOT_SOURCE").GetValue(data, null);
+
+            if (rootSource == null)
+                return result;
+
+            DateTime? rootSourceDate = (DateTime?)data.GetType().GetProperty(columnBindedPropertyName + "_DATA_ROOT_SOURCE_DATE").GetValue(data, null);
+
+            result = rootSource + (rootSourceDate != null ? " (" + Convert.ToDateTime(rootSourceDate).ToShortDateString() + ")" : "");
+
+            return result;
         }
         #endregion
     }

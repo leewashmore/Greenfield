@@ -17,7 +17,43 @@ namespace GreenField.Gadgets.Models
     /// </summary>
     public class PeriodColumnDisplayData
     {
-        public Int32 DATA_ID { get; set; }
+        public Int32? DATA_ID { get; set; }
+
+        public Boolean? DATA_BOLD { get; set; }
+
+        public Boolean? DATA_PERCENTAGE { get; set; }
+
+        public Int32? DATA_DECIMALS { get; set; }
+
+        public String YEAR_ONE_DATA_ROOT_SOURCE { get; set; }
+        public String YEAR_TWO_DATA_ROOT_SOURCE { get; set; }
+        public String YEAR_THREE_DATA_ROOT_SOURCE { get; set; }
+        public String YEAR_FOUR_DATA_ROOT_SOURCE { get; set; }
+        public String YEAR_FIVE_DATA_ROOT_SOURCE { get; set; }
+        public String YEAR_SIX_DATA_ROOT_SOURCE { get; set; }
+        public String QUARTER_ONE_DATA_ROOT_SOURCE { get; set; }
+        public String QUARTER_TWO_DATA_ROOT_SOURCE { get; set; }
+        public String QUARTER_THREE_DATA_ROOT_SOURCE { get; set; }
+        public String QUARTER_FOUR_DATA_ROOT_SOURCE { get; set; }
+        public String QUARTER_FIVE_DATA_ROOT_SOURCE { get; set; }
+        public String QUARTER_SIX_DATA_ROOT_SOURCE { get; set; }
+
+        public DateTime? YEAR_ONE_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? YEAR_TWO_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? YEAR_THREE_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? YEAR_FOUR_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? YEAR_FIVE_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? YEAR_SIX_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? QUARTER_ONE_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? QUARTER_TWO_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? QUARTER_THREE_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? QUARTER_FOUR_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? QUARTER_FIVE_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? QUARTER_SIX_DATA_ROOT_SOURCE_DATE { get; set; }
+
+        
+
+        //public DateTime? DATA_ROOT_SOURCE_DATE { get; set; }
 
         /// <summary>
         /// Data Description
@@ -58,11 +94,6 @@ namespace GreenField.Gadgets.Models
         /// Data - Year six annual
         /// </summary>
         public object YEAR_SIX { get; set; }
-
-        /// <summary>
-        /// Data - Year Seven annual
-        /// </summary>
-        public object YEAR_SEVEN { get; set; }
 
         /// <summary>
         /// Data - Quarter one
@@ -115,6 +146,7 @@ namespace GreenField.Gadgets.Models
 
     public enum PeriodColumnGroupingType
     {
+        INT,
         DECIMAL,
         DECIMAL_PERCENTAGE,
         SHORT_DATETIME,

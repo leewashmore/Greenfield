@@ -38,6 +38,7 @@
       <xs:enumeration value="BAL" />
       <xs:enumeration value="CAS" />
       <xs:enumeration value="INC" />
+      <xs:enumeration value="FUN" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="FinancialStatementStatementType" nillable="true" type="tns:FinancialStatementStatementType" />

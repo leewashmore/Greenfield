@@ -33,7 +33,7 @@ namespace GreenField.Gadgets.Views
             PeriodColumns.UpdateColumnInformation(this.dgFinancialReport, new PeriodColumnUpdateEventArg()
             {
                 PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
-                PeriodRecord = PeriodColumns.SetPeriodRecord(),
+                PeriodRecord = periodRecord,
                 PeriodColumnHeader = PeriodColumns.SetColumnHeaders(periodRecord),
                 PeriodIsYearly = true
             });
@@ -114,6 +114,8 @@ namespace GreenField.Gadgets.Views
         private void dgFinancialReport_RowLoaded(object sender, RowLoadedEventArgs e)
         {
             GroupedGridRowLoadedHandler.Implement(e);
+            PeriodColumns.RowDataCustomization(e);
+
         } 
         #endregion
 

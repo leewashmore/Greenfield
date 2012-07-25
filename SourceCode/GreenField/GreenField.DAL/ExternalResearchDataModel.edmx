@@ -768,14 +768,6 @@
 					<FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
 						<Parameter Name="SecurityID" Mode="In" Type="String" />
 					</FunctionImport>
-					<FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-            <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
 					<EntitySet Name="tblCETargetPrices" EntityType="ExternalResearchModel.tblCETargetPrice" />
 					<EntitySet Name="tblCompanyInfoes" EntityType="ExternalResearchModel.tblCompanyInfo" />
 					<FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
@@ -826,6 +818,14 @@
           <FunctionImport Name="Get_PRevenue" ReturnType="Collection(ExternalResearchModel.GetPRevenueData_Result)">
             <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="issuerId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+            <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
 				</EntityContainer>
 				<EntityType Name="CONSENSUS_MASTER">
@@ -1121,6 +1121,13 @@
 					<Property Type="Decimal" Name="Amount" Nullable="true" Precision="38" Scale="6" />
           <Property Type="Int32" Name="PeriodYear" Nullable="false" />
           <Property Type="String" Name="IsConsensus" Nullable="false" />
+          <Property Type="Int32" Name="DataId" Nullable="true" />
+          <Property Type="String" Name="GroupName" Nullable="true" />
+          <Property Type="String" Name="BoldFont" Nullable="true" />
+          <Property Type="Int32" Name="Decimals" Nullable="true" />
+          <Property Type="String" Name="RootSource" Nullable="true" />
+          <Property Type="DateTime" Name="RootSourceDate" Nullable="true" />
+          <Property Type="String" Name="CalculationDiagram" Nullable="true" />
 				</ComplexType>
 				<EntityType Name="tblCETargetPrice">
 					<Key>
@@ -1572,12 +1579,6 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
-					<FunctionImportMapping FunctionImportName="Get_Statement" FunctionName="ExternalResearchModel.Store.Get_Statement">
-						<ResultMapping>
-							<ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementData">
-							</ComplexTypeMapping>
-						</ResultMapping>
-					</FunctionImportMapping>
 					<EntitySetMapping Name="tblCETargetPrices">
 						<EntityTypeMapping TypeName="ExternalResearchModel.tblCETargetPrice">
 							<MappingFragment StoreEntitySet="tblCETargetPrice">
@@ -1708,6 +1709,26 @@
                 <ScalarProperty Name="Period_Year" ColumnName="PeriodYear" />
                 <ScalarProperty Name="USDPrice" ColumnName="USDPrice" />
                 <ScalarProperty Name="Shares_Outstanding" ColumnName="SharesOutstanding" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Get_Statement" FunctionName="ExternalResearchModel.Store.Get_Statement">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementData">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AmountType" ColumnName="AmountType" />
+                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+                <ScalarProperty Name="IsConsensus" ColumnName="IsConsensus" />
+                <ScalarProperty Name="DataId" ColumnName="DataId" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="BoldFont" ColumnName="BoldFont" />
+                <ScalarProperty Name="Decimals" ColumnName="Decimals" />
+                <ScalarProperty Name="RootSource" ColumnName="RootSource" />
+                <ScalarProperty Name="RootSourceDate" ColumnName="RootSourceDate" />
+                <ScalarProperty Name="CalculationDiagram" ColumnName="CalculationDiagram" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

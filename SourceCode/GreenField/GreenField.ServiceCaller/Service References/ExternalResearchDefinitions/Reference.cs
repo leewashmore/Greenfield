@@ -219,13 +219,27 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private string AmountTypeField;
         
+        private string BoldFontField;
+        
+        private string CalculationDiagramField;
+        
+        private System.Nullable<int> DataIdField;
+        
+        private System.Nullable<int> DecimalsField;
+        
         private string DescriptionField;
+        
+        private string GroupNameField;
         
         private string IsConsensusField;
         
         private string PeriodTypeField;
         
         private int PeriodYearField;
+        
+        private string RootSourceField;
+        
+        private System.Nullable<System.DateTime> RootSourceDateField;
         
         private int SortOrderField;
         
@@ -256,6 +270,58 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BoldFont {
+            get {
+                return this.BoldFontField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BoldFontField, value) != true)) {
+                    this.BoldFontField = value;
+                    this.RaisePropertyChanged("BoldFont");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CalculationDiagram {
+            get {
+                return this.CalculationDiagramField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CalculationDiagramField, value) != true)) {
+                    this.CalculationDiagramField = value;
+                    this.RaisePropertyChanged("CalculationDiagram");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> DataId {
+            get {
+                return this.DataIdField;
+            }
+            set {
+                if ((this.DataIdField.Equals(value) != true)) {
+                    this.DataIdField = value;
+                    this.RaisePropertyChanged("DataId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> Decimals {
+            get {
+                return this.DecimalsField;
+            }
+            set {
+                if ((this.DecimalsField.Equals(value) != true)) {
+                    this.DecimalsField = value;
+                    this.RaisePropertyChanged("Decimals");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Description {
             get {
                 return this.DescriptionField;
@@ -264,6 +330,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
                     this.DescriptionField = value;
                     this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GroupName {
+            get {
+                return this.GroupNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GroupNameField, value) != true)) {
+                    this.GroupNameField = value;
+                    this.RaisePropertyChanged("GroupName");
                 }
             }
         }
@@ -303,6 +382,32 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 if ((this.PeriodYearField.Equals(value) != true)) {
                     this.PeriodYearField = value;
                     this.RaisePropertyChanged("PeriodYear");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RootSource {
+            get {
+                return this.RootSourceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RootSourceField, value) != true)) {
+                    this.RootSourceField = value;
+                    this.RaisePropertyChanged("RootSource");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> RootSourceDate {
+            get {
+                return this.RootSourceDateField;
+            }
+            set {
+                if ((this.RootSourceDateField.Equals(value) != true)) {
+                    this.RootSourceDateField = value;
+                    this.RaisePropertyChanged("RootSourceDate");
                 }
             }
         }

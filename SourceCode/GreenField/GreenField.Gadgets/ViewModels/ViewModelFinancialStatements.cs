@@ -46,6 +46,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _financialStatementType = (FinancialStatementType)param.AdditionalInfo;
             EntitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
+            ExternalResearchVisibility = _financialStatementType == FinancialStatementType.FUNDAMENTAL_SUMMARY ? Visibility.Collapsed : Visibility.Visible;
 
             //Event Subscription - PeriodColumnNavigationEvent
             PeriodColumns.PeriodColumnNavigate += new PeriodColumnNavigationEvent(PeriodColumns_PeriodColumnNavigate);
@@ -89,6 +90,22 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         } 
+        #endregion
+
+        #region UI Fields
+        /// <summary>
+        /// Sets the visibility of External Research Grid
+        /// </summary>
+        private Visibility _externalResearchVisibility;
+        public Visibility ExternalResearchVisibility
+        {
+            get { return _externalResearchVisibility; }
+            set
+            {
+                _externalResearchVisibility = value;
+                RaisePropertyChanged(() => this.ExternalResearchVisibility);
+            }
+        }        
         #endregion
 
         #region Financial Statement Information
@@ -425,8 +442,11 @@ namespace GreenField.Gadgets.ViewModels
                     , defaultHistoricalQuarterCount: 4, netColumnCount: 6, isQuarterImplemented: true);
                 FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
                     (FinancialStatementInfo.Where(record => record.IsConsensus == "N").ToList(), out periodRecord, periodRecord, subGroups: null, updatePeriodRecord: true);
-                FinancialStatementExtDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
-                    (FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList(), out periodRecord, periodRecord, updatePeriodRecord: false);
+                if (_financialStatementType != FinancialStatementType.FUNDAMENTAL_SUMMARY)
+                {
+                    FinancialStatementExtDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
+                        (FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList(), out periodRecord, periodRecord, updatePeriodRecord: false); 
+                }
 
                 PeriodRecord = periodRecord;
                 PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);
@@ -519,6 +539,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 FinancialStatementDisplayInfo = new List<PeriodColumnDisplayData>();
                 FinancialStatementExtDisplayInfo = new List<PeriodColumnDisplayData>();
+                BusyIndicatorNotification();
                 return;
             }
 
@@ -527,9 +548,12 @@ namespace GreenField.Gadgets.ViewModels
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator);
             FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
                 (FinancialStatementInfo.Where(record => record.IsConsensus == "N").ToList(), out periodRecord, periodRecord);
-            
-            FinancialStatementExtDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
-                (FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList(), out periodRecord, periodRecord, updatePeriodRecord: false);
+
+            if (_financialStatementType != FinancialStatementType.FUNDAMENTAL_SUMMARY)
+            {
+                FinancialStatementExtDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
+                        (FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList(), out periodRecord, periodRecord, updatePeriodRecord: false); 
+            }
 
             PeriodRecord = periodRecord;
             PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);

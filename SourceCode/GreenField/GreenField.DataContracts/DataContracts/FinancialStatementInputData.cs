@@ -57,6 +57,10 @@ namespace GreenField.DataContracts
 
         [EnumMember(Value = "INC")]
         [DescriptionAttribute("INC")]
-        INCOME_STATEMENT
+        INCOME_STATEMENT,
+
+        [EnumMember(Value = "FUN")]
+        [DescriptionAttribute("FUN")]
+        FUNDAMENTAL_SUMMARY
     }
 }
