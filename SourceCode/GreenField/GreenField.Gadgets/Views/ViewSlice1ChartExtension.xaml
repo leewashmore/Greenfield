@@ -151,6 +151,11 @@
                         <telerik:RadChart x:Name="chChartExtension" telerik:StyleManager.Theme="Metro" LegendStyle="{StaticResource ChartLegendStyle}"
                                           ItemsSource="{Binding ChartExtensionPlottedData, Mode=TwoWay}" IsHitTestVisible="True"
                                           DataBound="chChartExtension_DataBound" Loaded="chChartExtension_Loaded">
+                           <!--Sampling Settings-->
+                            <telerik:RadChart.SamplingSettings>
+                                <telerik:SamplingSettings SamplingThreshold="0" />
+                            </telerik:RadChart.SamplingSettings>
+                            
                             <telerik:RadChart.PaletteBrushes>
                                 <SolidColorBrush Color="#213671"/>
                                 <SolidColorBrush Color="#9F1D21"/>
@@ -219,7 +224,7 @@
                                         <telerik:BarSeriesDefinition AxisName="Secondary" ShowItemLabels="False" 
                                                                      EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                      LegendDisplayMode="SeriesLabel" 
-                                                                     ItemToolTipFormat="Units Traded: #Y / Date: #X{dd-MMM-yyyy}"/>
+                                                                     ItemToolTipFormat="#DATAITEM.Ticker UnitsTraded: #Y / Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:ItemMapping DataPointMember="YValue" FieldName="AmountTraded" />
                                     <telerik:ItemMapping DataPointMember="XValue" FieldName="ToDate" />
@@ -238,7 +243,7 @@
                                         <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Drop" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="Return : #Y / Date: #X{dd-MMM-yyyy}"/>
+                                                                      ItemToolTipFormat="#DATAITEM.Ticker Return: #Y / Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:ItemMapping FieldName="PriceReturn" DataPointMember="YValue" />
                                     <telerik:ItemMapping FieldName="ToDate" DataPointMember="XValue" />

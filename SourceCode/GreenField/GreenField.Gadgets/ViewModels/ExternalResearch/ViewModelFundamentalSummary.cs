@@ -8,42 +8,56 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Common;
-using GreenField.Gadgets.Models;
 using Microsoft.Practices.Prism.ViewModel;
-using GreenField.ServiceCaller.ExternalResearchDefinitions;
-using GreenField.DataContracts;
-using System.Collections.Generic;
-using Microsoft.Practices.Prism.Events;
+using GreenField.Common;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
-using System.Linq;
+using Microsoft.Practices.Prism.Events;
+using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
-using Microsoft.Practices.Prism.Commands;
-using System.Reflection;
-using System.ComponentModel;
+using GreenField.ServiceCaller.ExternalResearchDefinitions;
+using System.Collections.Generic;
+using GreenField.Gadgets.Models;
+using System.Linq;
 using System.Collections.ObjectModel;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelFinancialStatements : NotificationObject
+    public class ViewModelFundamentalSummary : NotificationObject
     {
-        #region Fields
+
+        #region PrivateVariables
+        //MEF Singletons
+
         /// <summary>
-        /// MEF Singletons
+        /// Instance of DBInteractivity
+        /// </summary>
+        private IDBInteractivity _dbInteractivity;
+
+        /// <summary>
+        /// Instance of LoggerFacade
+        /// </summary>
+        private ILoggerFacade _logger;
+
+        /// <summary>
+        /// Event Aggregator
         /// </summary>
         private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
+
+        /// <summary>
+        /// Instance of EntitySelectionData
+        /// </summary>
+        private EntitySelectionData _entitySelectionData;
+
         private FinancialStatementType _financialStatementType;
+
         #endregion
 
         #region Constructor
         /// <summary>
-        /// Constructor that initializes the class
+        /// Constructor
         /// </summary>
-        /// <param name="param"></param>
-        public ViewModelFinancialStatements(DashboardGadgetParam param)
+        public ViewModelFundamentalSummary(DashboardGadgetParam param)
         {
             _logger = param.LoggerFacade;
             _dbInteractivity = param.DBInteractivity;
@@ -58,8 +72,8 @@ namespace GreenField.Gadgets.ViewModels
                     BusyIndicatorNotification(true, "Retrieving data for updated time span");
                     PeriodRecord periodRecord = new PeriodRecord();
 
-                    FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo, out periodRecord, 
-                        PeriodColumns.SetPeriodRecord(e.PeriodColumnNavigationDirection == PeriodColumns.NavigationDirection.LEFT 
+                    FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo, out periodRecord,
+                        PeriodColumns.SetPeriodRecord(e.PeriodColumnNavigationDirection == PeriodColumns.NavigationDirection.LEFT
                             ? --Iterator : ++Iterator));
 
                     PeriodRecord = periodRecord;
@@ -76,10 +90,29 @@ namespace GreenField.Gadgets.ViewModels
             if (EntitySelectionInfo != null)
             {
                 HandleSecurityReferenceSetEvent(EntitySelectionInfo);
-            }           
-            
-        } 
+            }
+        }
+
         #endregion
+
+        #region PropertyDeclaration
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+            }
+        }
+
 
         #region Properties
         #region Financial Statement Information
@@ -138,7 +171,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-        
+
         #endregion
 
         #region Period Information
@@ -160,7 +193,7 @@ namespace GreenField.Gadgets.ViewModels
                 return _periodRecord;
             }
             set { _periodRecord = value; }
-        }        
+        }
         #endregion
 
         #region Period Column Headers
@@ -215,12 +248,12 @@ namespace GreenField.Gadgets.ViewModels
                         if (IssuerReferenceInfo.CurrencyCode != "USD")
                             CurrencyInfo.Add("USD");
 
-                        SelectedCurrency = CurrencyInfo[0]; 
+                        SelectedCurrency = CurrencyInfo[0];
                     }
                 }
             }
-        }       
-        
+        }
+
         #endregion
 
         #region Data Source
@@ -248,7 +281,7 @@ namespace GreenField.Gadgets.ViewModels
                     RetrieveFinancialStatementData();
                 }
             }
-        } 
+        }
         #endregion
 
         #region Period Type
@@ -276,7 +309,7 @@ namespace GreenField.Gadgets.ViewModels
                     RetrieveFinancialStatementData();
                 }
             }
-        } 
+        }
         #endregion
 
         #region Calendarization Option
@@ -352,10 +385,10 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Security Information
         /// <summary>
-        /// Selected Security
+        /// Selected Security from Toolbar
         /// </summary>
         private EntitySelectionData _entitySelectionInfo;
-        public EntitySelectionData EntitySelectionInfo 
+        public EntitySelectionData EntitySelectionInfo
         {
             get { return _entitySelectionInfo; }
             set
@@ -382,7 +415,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
-        /// Busy Indicator Content
+        /// Busy indicator Content
         /// </summary>
         private string _busyIndicatorContent;
         public string BusyIndicatorContent
@@ -394,14 +427,14 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion 
+        #endregion
+        #endregion
+
+
+
         #endregion
 
         #region Event Handlers
-        /// <summary>
-        /// Security change Event
-        /// </summary>
-        /// <param name="result"></param>
         public void HandleSecurityReferenceSetEvent(EntitySelectionData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -429,7 +462,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
+        }
         #endregion
 
         #region Callback Methods
@@ -474,7 +507,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    FinancialStatementInfo = result;                    
+                    FinancialStatementInfo = result;
                 }
                 else
                 {
@@ -492,17 +525,11 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Helper Methods
-        /// <summary>
-        /// Event Subscribe
-        /// </summary>
         public void Dispose()
         {
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSetEvent);
         }
 
-        /// <summary>
-        /// Service Call
-        /// </summary>
         private void RetrieveFinancialStatementData()
         {
             if (IssuerReferenceInfo != null)
@@ -515,29 +542,22 @@ namespace GreenField.Gadgets.ViewModels
         public void SetFinancialStatementDisplayInfo()
         {
             BusyIndicatorNotification(true, "Updating Financial Statement Information based on selected preference");
-            
+
             PeriodRecord periodRecord = new PeriodRecord();
-            FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo,out periodRecord,
+            FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(FinancialStatementInfo, out periodRecord,
                 PeriodColumns.SetPeriodRecord(Iterator));
             PeriodRecord = periodRecord;
             PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);
-            
-            BusyIndicatorNotification();            
+
+            BusyIndicatorNotification();
         }
 
-        /// <summary>
-        /// Busy Indicator Update Method
-        /// </summary>
-        /// <param name="showBusyIndicator"></param>
-        /// <param name="message"></param>
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
                 BusyIndicatorContent = message;
             BusyIndicatorIsBusy = showBusyIndicator;
-        }        
-        #endregion        
-
-        
+        }
+        #endregion
     }
 }

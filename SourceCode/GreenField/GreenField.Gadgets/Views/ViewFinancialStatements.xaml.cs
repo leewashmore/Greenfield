@@ -23,20 +23,20 @@ namespace GreenField.Gadgets.Views
     {
         private EntitySelectionData _entitySelectionData;
         private bool _periodIsYearly = true;
-        
+
         #region Constructor
         public ViewFinancialStatements(ViewModelFinancialStatements dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            
+
             PeriodColumns.UpdateColumnInformation(this.dgFinancialReport, new PeriodColumns.PeriodColumnUpdateEventArg()
             {
                 PeriodRecord = PeriodColumns.SetPeriodRecord(),
                 PeriodColumnHeader = PeriodColumns.SetColumnHeaders(),
                 PeriodIsYearly = true
             });
-            
+
             PeriodColumns.PeriodColumnUpdate += (e) =>
             {
                 if (e.PeriodColumnNamespace == typeof(ViewModelFinancialStatements).FullName)
@@ -51,6 +51,7 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Event Handlers
+
         private void LeftNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumns.PeriodColumnNavigationEventArg()
@@ -105,19 +106,17 @@ namespace GreenField.Gadgets.Views
             String elementName = "Balance Sheet - " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + ") " +
                 (_periodIsYearly ? this.dgFinancialReport.Columns[2].Header : this.dgFinancialReport.Columns[8].Header) + " - " +
                 (_periodIsYearly ? this.dgFinancialReport.Columns[7].Header : this.dgFinancialReport.Columns[13].Header);
-            RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = elementName, Element = this.dgFinancialReport
-                , ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+            RadExportOptionsInfo.Add(new RadExportOptions()
+            {
+                ElementName = elementName,
+                Element = this.dgFinancialReport
+                ,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+            });
 
             ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_BALANCE_SHEET);
             childExportOptions.Show();
         }
-
-        
-
-        
-
-        
-
 
     }
 

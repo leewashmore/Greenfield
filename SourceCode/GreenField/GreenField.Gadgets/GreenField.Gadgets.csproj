@@ -157,10 +157,11 @@
     <Compile Include="Models\RiskIndexExposuresChartData.cs" />
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\ConsensusEstimates\ViewModelEstimates.cs" />
-    <Compile Include="ViewModels\ConsensusEstimates\ViewModelTargetPrice.cs" />
+    <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
+    <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
+    <Compile Include="ViewModels\ExternalResearch\ViewModelFundamentalSummary.cs" />
     <Compile Include="ViewModels\ViewModelCOASpecific.cs" />
-    <Compile Include="ViewModels\ConsensusEstimates\ViewModelValuations.cs" />
+    <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelValuations.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimateSummary.cs" />
     <Compile Include="ViewModels\Market Performance\ChildViewModelInsertEntity.cs" />
     <Compile Include="ViewModels\Market Performance\ViewModelMarketPerformanceSnapshot.cs" />
@@ -201,16 +202,16 @@
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
-    <Compile Include="Views\ConsensusEstimates\ViewEstimates.xaml.cs">
+    <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml.cs">
       <DependentUpon>ViewEstimates.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConsensusEstimates\ViewTargetPrice.xaml.cs">
+    <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewTargetPrice.xaml.cs">
       <DependentUpon>ViewTargetPrice.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewCOASpecific.xaml.cs">
       <DependentUpon>ViewCOASpecific.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConsensusEstimates\ViewValuations.xaml.cs">
+    <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewValuations.xaml.cs">
       <DependentUpon>ViewValuations.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewConsensusEstimateSummary.xaml.cs">
@@ -236,6 +237,9 @@
     </Compile>
     <Compile Include="Views\ViewConsensusEstimatesDetails.xaml.cs">
       <DependentUpon>ViewConsensusEstimatesDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ExternalResearch\ViewFundamentalSummary.xaml.cs">
+      <DependentUpon>ViewFundamentalSummary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewFXEconomicData.xaml.cs">
       <DependentUpon>ViewFXEconomicData.xaml</DependentUpon>
@@ -349,11 +353,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ConsensusEstimates\ViewEstimates.xaml">
+    <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ConsensusEstimates\ViewTargetPrice.xaml">
+    <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewTargetPrice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -361,7 +365,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ConsensusEstimates\ViewValuations.xaml">
+    <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewValuations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -394,6 +398,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewConsensusEstimatesDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ExternalResearch\ViewFundamentalSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

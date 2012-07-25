@@ -22,7 +22,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        
+
         <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellRightButtonStyle">
             <Setter Property="ContentTemplate">
                 <Setter.Value>
@@ -38,10 +38,9 @@
         </Style>
     </UserControl.Resources>
 
-
     <Grid x:Name="LayoutRoot" Background="White">
 
-        <telerik:RadGridView Name="dgPricing" AutoGenerateColumns="False"
+        <!--<telerik:RadGridView Name="dgPricing" AutoGenerateColumns="False"
                                          ItemsSource="{Binding PlottedSeries}"  CanUserSelect="True" CanUserReorderColumns="False" 
                                          SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                          CanUserDeleteRows="False" IsReadOnly="True" 
@@ -80,7 +79,19 @@
                 <telerik:GridViewDataColumn HeaderCellStyle="{StaticResource GridViewHeaderCellRightButtonStyle}"  x:Name="rightButton" />
             </telerik:RadGridView.Columns>
 
-        </telerik:RadGridView>
+        </telerik:RadGridView>-->
+
+        <telerik:RadPanelBar>
+            <telerik:RadPanelBarItem Name="g" Header="Parent1" >
+                <telerik:RadPanelBarItem Header="child1"/>
+                <telerik:RadPanelBarItem Header="child2"/>
+                <telerik:RadPanelBarItem Header="child1"/>
+                <telerik:RadPanelBarItem Header="child">
+                    <telerik:RadPanelBarItem Header="child3"/>
+                    <telerik:RadPanelBarItem Header="child4"/>
+                </telerik:RadPanelBarItem>
+            </telerik:RadPanelBarItem>
+        </telerik:RadPanelBar>
 
     </Grid>
 </UserControl>

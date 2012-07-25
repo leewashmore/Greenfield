@@ -7,6 +7,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
              xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -72,6 +73,7 @@
                     <SolidColorBrush x:Key="LegendItemMarkerMask2" Color="Transparent" />
 
                     <telerik:MarkerShape x:Key="LegendItemMarkerShape">SquareRounded</telerik:MarkerShape>
+
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -349,8 +351,16 @@
                         VerticalAlignment="Stretch" Name="border1">
                     <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
-                        <telerik:RadChart x:Name="chPricing" telerik:StyleManager.Theme="Metro" 
+
+                        <telerik:RadChart x:Name="chPricing" telerik:StyleManager.Theme="Metro" Grid.Column="0"
                                           ItemsSource="{Binding PlottedSeries, Mode=TwoWay}" IsHitTestVisible="True" >
+
+                            <!--Sampling Settings-->
+                            <telerik:RadChart.SamplingSettings>
+                                <telerik:SamplingSettings SamplingThreshold="0" />
+                            </telerik:RadChart.SamplingSettings>
+
+
                             <telerik:RadChart.PaletteBrushes>
                                 <SolidColorBrush Color="#213671"/>
                                 <SolidColorBrush Color="#9F1D21"/>
@@ -365,7 +375,7 @@
                                     <telerik:ChartDefaultView.ChartArea >
                                         <telerik:ChartArea  SmartLabelsEnabled="True" LegendName="chPricingLegend"
                                                             EnableAnimations="False" NoDataString="No Data Available" 
-                                                            ItemOverlapPercent="0" ItemWidthPercent="100" Margin="1,1,1,1" >
+                                                            ItemOverlapPercent="0" ItemWidthPercent="100" Margin="0,0,0,0" >
                                             <telerik:ChartArea.ZoomScrollSettingsX>
                                                 <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly" 
                                                                             SliderSelectionStart="0.0" SliderSelectionEnd="1.0" />
@@ -401,7 +411,7 @@
                                         <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="Return: #Y /Date: #X{dd-MMM-yyyy}"/>
+                                                                      ItemToolTipFormat="#DATAITEM.Ticker Return: #Y /Date: #X{dd-MMM-yyyy}"/>
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.GroupingSettings>
                                         <telerik:GroupingSettings>
@@ -415,6 +425,8 @@
                                 </telerik:SeriesMapping>
                             </telerik:RadChart.SeriesMappings>
                         </telerik:RadChart>
+
+
                     </telerik:RadBusyIndicator>
                 </Border>
 
@@ -424,7 +436,12 @@
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                         <telerik:RadChart x:Name="chVolume" telerik:StyleManager.Theme="Metro" 
                                       ItemsSource="{Binding PrimaryPlottedSeries}" IsHitTestVisible="True">
-                            
+
+                            <!--Sampling Settings-->
+                            <telerik:RadChart.SamplingSettings>
+                                <telerik:SamplingSettings SamplingThreshold="0" />
+                            </telerik:RadChart.SamplingSettings>
+
                             <telerik:RadChart.PaletteBrushes>
                                 <SolidColorBrush Color="#213671"/>
                             </telerik:RadChart.PaletteBrushes>
@@ -455,7 +472,7 @@
                                 <telerik:SeriesMapping>
                                     <telerik:SeriesMapping.SeriesDefinition>
                                         <telerik:BarSeriesDefinition ShowItemLabels="False" ShowItemToolTips="True" 
-                                                                     ItemToolTipFormat="Volume: #Y /Date: #X{dd-MMM-yyyy}" />
+                                                                     ItemToolTipFormat="#DATAITEM.Ticker Volume: #Y /Date: #X{dd-MMM-yyyy}" />
                                     </telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:SeriesMapping.GroupingSettings>
                                         <telerik:GroupingSettings>
