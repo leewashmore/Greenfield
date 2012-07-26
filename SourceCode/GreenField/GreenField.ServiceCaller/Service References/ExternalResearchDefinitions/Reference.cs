@@ -215,197 +215,212 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="FinancialStatementData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
     public partial class FinancialStatementData : GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject {
         
-        private System.Nullable<decimal> AMOUNTField;
+        private System.Nullable<decimal> AmountField;
         
-        private string AMOUNT_TYPEField;
+        private string AmountTypeField;
         
-        private string BOLD_FONTField;
+        private string BoldFontField;
         
-        private string CALCULATION_DIAGRAMField;
+        private string CalculationDiagramField;
         
-        private string DATA_DESCField;
+        private System.Nullable<int> DataIdField;
         
-        private int DECIMALSField;
+        private System.Nullable<int> DecimalsField;
         
-        private int Data_IDField;
+        private string DescriptionField;
         
-        private string GROUP_NAMEField;
+        private string GroupNameField;
         
-        private string PERIODField;
+        private string IsConsensusField;
         
-        private string PERIOD_TYPEField;
+        private string PeriodTypeField;
         
-        private string ROOT_SOURCEField;
+        private int PeriodYearField;
         
-        private System.DateTime ROOT_SOURCE_DATEField;
+        private string RootSourceField;
         
-        private int SORT_ORDERField;
+        private System.Nullable<System.DateTime> RootSourceDateField;
+        
+        private int SortOrderField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> AMOUNT {
+        public System.Nullable<decimal> Amount {
             get {
-                return this.AMOUNTField;
+                return this.AmountField;
             }
             set {
-                if ((this.AMOUNTField.Equals(value) != true)) {
-                    this.AMOUNTField = value;
-                    this.RaisePropertyChanged("AMOUNT");
+                if ((this.AmountField.Equals(value) != true)) {
+                    this.AmountField = value;
+                    this.RaisePropertyChanged("Amount");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AMOUNT_TYPE {
+        public string AmountType {
             get {
-                return this.AMOUNT_TYPEField;
+                return this.AmountTypeField;
             }
             set {
-                if ((object.ReferenceEquals(this.AMOUNT_TYPEField, value) != true)) {
-                    this.AMOUNT_TYPEField = value;
-                    this.RaisePropertyChanged("AMOUNT_TYPE");
+                if ((object.ReferenceEquals(this.AmountTypeField, value) != true)) {
+                    this.AmountTypeField = value;
+                    this.RaisePropertyChanged("AmountType");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string BOLD_FONT {
+        public string BoldFont {
             get {
-                return this.BOLD_FONTField;
+                return this.BoldFontField;
             }
             set {
-                if ((object.ReferenceEquals(this.BOLD_FONTField, value) != true)) {
-                    this.BOLD_FONTField = value;
-                    this.RaisePropertyChanged("BOLD_FONT");
+                if ((object.ReferenceEquals(this.BoldFontField, value) != true)) {
+                    this.BoldFontField = value;
+                    this.RaisePropertyChanged("BoldFont");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CALCULATION_DIAGRAM {
+        public string CalculationDiagram {
             get {
-                return this.CALCULATION_DIAGRAMField;
+                return this.CalculationDiagramField;
             }
             set {
-                if ((object.ReferenceEquals(this.CALCULATION_DIAGRAMField, value) != true)) {
-                    this.CALCULATION_DIAGRAMField = value;
-                    this.RaisePropertyChanged("CALCULATION_DIAGRAM");
+                if ((object.ReferenceEquals(this.CalculationDiagramField, value) != true)) {
+                    this.CalculationDiagramField = value;
+                    this.RaisePropertyChanged("CalculationDiagram");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DATA_DESC {
+        public System.Nullable<int> DataId {
             get {
-                return this.DATA_DESCField;
+                return this.DataIdField;
             }
             set {
-                if ((object.ReferenceEquals(this.DATA_DESCField, value) != true)) {
-                    this.DATA_DESCField = value;
-                    this.RaisePropertyChanged("DATA_DESC");
+                if ((this.DataIdField.Equals(value) != true)) {
+                    this.DataIdField = value;
+                    this.RaisePropertyChanged("DataId");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DECIMALS {
+        public System.Nullable<int> Decimals {
             get {
-                return this.DECIMALSField;
+                return this.DecimalsField;
             }
             set {
-                if ((this.DECIMALSField.Equals(value) != true)) {
-                    this.DECIMALSField = value;
-                    this.RaisePropertyChanged("DECIMALS");
+                if ((this.DecimalsField.Equals(value) != true)) {
+                    this.DecimalsField = value;
+                    this.RaisePropertyChanged("Decimals");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Data_ID {
+        public string Description {
             get {
-                return this.Data_IDField;
+                return this.DescriptionField;
             }
             set {
-                if ((this.Data_IDField.Equals(value) != true)) {
-                    this.Data_IDField = value;
-                    this.RaisePropertyChanged("Data_ID");
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string GROUP_NAME {
+        public string GroupName {
             get {
-                return this.GROUP_NAMEField;
+                return this.GroupNameField;
             }
             set {
-                if ((object.ReferenceEquals(this.GROUP_NAMEField, value) != true)) {
-                    this.GROUP_NAMEField = value;
-                    this.RaisePropertyChanged("GROUP_NAME");
+                if ((object.ReferenceEquals(this.GroupNameField, value) != true)) {
+                    this.GroupNameField = value;
+                    this.RaisePropertyChanged("GroupName");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PERIOD {
+        public string IsConsensus {
             get {
-                return this.PERIODField;
+                return this.IsConsensusField;
             }
             set {
-                if ((object.ReferenceEquals(this.PERIODField, value) != true)) {
-                    this.PERIODField = value;
-                    this.RaisePropertyChanged("PERIOD");
+                if ((object.ReferenceEquals(this.IsConsensusField, value) != true)) {
+                    this.IsConsensusField = value;
+                    this.RaisePropertyChanged("IsConsensus");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PERIOD_TYPE {
+        public string PeriodType {
             get {
-                return this.PERIOD_TYPEField;
+                return this.PeriodTypeField;
             }
             set {
-                if ((object.ReferenceEquals(this.PERIOD_TYPEField, value) != true)) {
-                    this.PERIOD_TYPEField = value;
-                    this.RaisePropertyChanged("PERIOD_TYPE");
+                if ((object.ReferenceEquals(this.PeriodTypeField, value) != true)) {
+                    this.PeriodTypeField = value;
+                    this.RaisePropertyChanged("PeriodType");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ROOT_SOURCE {
+        public int PeriodYear {
             get {
-                return this.ROOT_SOURCEField;
+                return this.PeriodYearField;
             }
             set {
-                if ((object.ReferenceEquals(this.ROOT_SOURCEField, value) != true)) {
-                    this.ROOT_SOURCEField = value;
-                    this.RaisePropertyChanged("ROOT_SOURCE");
+                if ((this.PeriodYearField.Equals(value) != true)) {
+                    this.PeriodYearField = value;
+                    this.RaisePropertyChanged("PeriodYear");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ROOT_SOURCE_DATE {
+        public string RootSource {
             get {
-                return this.ROOT_SOURCE_DATEField;
+                return this.RootSourceField;
             }
             set {
-                if ((this.ROOT_SOURCE_DATEField.Equals(value) != true)) {
-                    this.ROOT_SOURCE_DATEField = value;
-                    this.RaisePropertyChanged("ROOT_SOURCE_DATE");
+                if ((object.ReferenceEquals(this.RootSourceField, value) != true)) {
+                    this.RootSourceField = value;
+                    this.RaisePropertyChanged("RootSource");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public int SORT_ORDER {
+        public System.Nullable<System.DateTime> RootSourceDate {
             get {
-                return this.SORT_ORDERField;
+                return this.RootSourceDateField;
             }
             set {
-                if ((this.SORT_ORDERField.Equals(value) != true)) {
-                    this.SORT_ORDERField = value;
-                    this.RaisePropertyChanged("SORT_ORDER");
+                if ((this.RootSourceDateField.Equals(value) != true)) {
+                    this.RootSourceDateField = value;
+                    this.RaisePropertyChanged("RootSourceDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SortOrder {
+            get {
+                return this.SortOrderField;
+            }
+            set {
+                if ((this.SortOrderField.Equals(value) != true)) {
+                    this.SortOrderField = value;
+                    this.RaisePropertyChanged("SortOrder");
                 }
             }
         }

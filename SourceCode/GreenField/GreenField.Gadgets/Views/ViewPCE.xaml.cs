@@ -18,9 +18,9 @@ using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewPRevenue : ViewBaseUserControl
+    public partial class ViewPCE : ViewBaseUserControl
     {
-
+        
         #region Variables
 
         /// <summary>
@@ -28,8 +28,8 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private static class ExportTypes
         {
-            public const string P_Revenue = "P/Revenue";
-            public const string P_Revenue_DATA = "P/Revenue Data";
+            public const string P_CE = "P/CE";
+            public const string P_CE_DATA = "P/CE Data";
         }
 
 
@@ -40,20 +40,20 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
-        private ViewModelPRevenue _dataContextPRevenue;
-        public ViewModelPRevenue DataContextPRevenue
+        private ViewModelPCE _dataContextPCE;
+        public ViewModelPCE DataContextPCE
         {
             get
             {
-                return _dataContextPRevenue;
+                return _dataContextPCE;
             }
             set
             {
-                _dataContextPRevenue = value;
+                _dataContextPCE = value;
             }
         }
 
-        /// <summary>
+         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
         private bool _isActive;
@@ -63,83 +63,83 @@ namespace GreenField.Gadgets.Views
             set
             {
                 _isActive = value;
-                if (DataContextPRevenue != null) //DataContext instance
-                    DataContextPRevenue.IsActive = _isActive;
+                if (DataContextPCE != null) //DataContext instance
+                    DataContextPCE.IsActive = _isActive;
             }
         }
         #endregion
 
-        public ViewPRevenue(ViewModelPRevenue dataContextSource)
+        public ViewPCE(ViewModelPCE dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            this.DataContextPRevenue = dataContextSource;
-            dataContextSource.ChartArea = this.chPRevenue.DefaultView.ChartArea;
+            this.DataContextPCE = dataContextSource;
+            dataContextSource.ChartArea = this.chPCE.DefaultView.ChartArea;           
             this.ApplyChartStyles();
         }
-        private void dgPRevenue_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        private void dgPCE_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
             GroupedGridRowLoadedHandler.Implement(e);
         }
-        private void chPRevenue_Loaded(object sender, RoutedEventArgs e)
+        private void chPCE_Loaded(object sender, RoutedEventArgs e)
         {
-            if (chPRevenue.DefaultView.ChartLegend.Items.Count != 0)
+            if (chPCE.DefaultView.ChartLegend.Items.Count != 0)
             {
-                ChartLegendItem var = this.chPRevenue.DefaultView.ChartLegend.Items[0];
-                this.chPRevenue.DefaultView.ChartLegend.Items.Remove(var);
+                ChartLegendItem var = this.chPCE.DefaultView.ChartLegend.Items[0];
+                this.chPCE.DefaultView.ChartLegend.Items.Remove(var);
             }
         }
 
-        private void chPRevenue_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
+        private void chPCE_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
         {
-            if (this.DataContext as ViewModelPRevenue != null)
+            if (this.DataContext as ViewModelPCE != null)
             {
-                if ((this.DataContext as ViewModelPRevenue).PRevenuePlottedData != null && (this.DataContext as ViewModelPRevenue).PRevenuePlottedData.Count != 0)
+                if ((this.DataContext as ViewModelPCE).PCEPlottedData != null && (this.DataContext as ViewModelPCE).PCEPlottedData.Count != 0)
                 {
-                    //    (this.DataContext as ViewModelPRevenue).AxisXMinValue = Convert.ToDecimal(((this.DataContext as ViewModelPRevenue).PRevenuePlottedData.OrderBy(a => a.PeriodLabel)).
+                    //    (this.DataContext as ViewModelPCE).AxisXMinValue = Convert.ToDecimal(((this.DataContext as ViewModelPCE).PCEPlottedData.OrderBy(a => a.PeriodLabel)).
                     //        Select(a => a.PeriodLabel).FirstOrDefault());
-                    //    (this.DataContext as ViewModelPRevenue).AxisXMaxValue = Convert.ToDecimal(((this.DataContext as ViewModelPRevenue).PRevenuePlottedData.OrderByDescending(a => a.PeriodLabel)).
+                    //    (this.DataContext as ViewModelPCE).AxisXMaxValue = Convert.ToDecimal(((this.DataContext as ViewModelPCE).PCEPlottedData.OrderByDescending(a => a.PeriodLabel)).
                     //        Select(a => a.PeriodLabel).FirstOrDefault());
 
-                    //    this.chPRevenue.DefaultView.ChartArea.AxisY.Step = 10;
+                    //    this.chPCE.DefaultView.ChartArea.AxisY.Step = 10;
                     //}
                     //assigning std dev minus as min val
-                    decimal _axisYMinVal = (this.DataContext as ViewModelPRevenue).PRevenuePlottedData.Select(a => Convert.ToDecimal(a.StdDevMinus)).FirstOrDefault();
-                    decimal _minValPrevenue = Convert.ToInt32((this.DataContext as ViewModelPRevenue).PRevenuePlottedData.OrderBy(a => a.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
+                    decimal _axisYMinVal = (this.DataContext as ViewModelPCE).PCEPlottedData.Select(a => Convert.ToDecimal(a.StdDevMinus)).FirstOrDefault();
+                    decimal _minValPrevenue = Convert.ToInt32((this.DataContext as ViewModelPCE).PCEPlottedData.OrderBy(a => a.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
                     decimal _incrementVal = 5.0M;
                     if (_minValPrevenue < _axisYMinVal && _minValPrevenue % 5 != 0)
                         _axisYMinVal = Convert.ToDecimal(Math.Floor(Convert.ToDouble(_minValPrevenue / 5))) * _incrementVal - _incrementVal;
 
                     //assigning std dev plus as max val
-                    decimal _axisYMaxVal = (this.DataContext as ViewModelPRevenue).PRevenuePlottedData.Select(a => Convert.ToDecimal(a.StdDevPlus)).FirstOrDefault();
-                    decimal _maxValPrevenue = Convert.ToInt32((this.DataContext as ViewModelPRevenue).PRevenuePlottedData.OrderByDescending(a => a.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
+                    decimal _axisYMaxVal = (this.DataContext as ViewModelPCE).PCEPlottedData.Select(a => Convert.ToDecimal(a.StdDevPlus)).FirstOrDefault();
+                    decimal _maxValPrevenue = Convert.ToInt32((this.DataContext as ViewModelPCE).PCEPlottedData.OrderByDescending(a => a.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
                     if (_maxValPrevenue > _axisYMaxVal && _maxValPrevenue % 5 != 0)
                         _axisYMaxVal = Convert.ToDecimal(Math.Floor(Convert.ToDouble(_minValPrevenue / 5))) * _incrementVal + _incrementVal;
 
-                    if (_axisYMinVal > 0)
+                    if (_axisYMinVal > 0) 
                         _axisYMinVal = 0;
-                    (this.DataContext as ViewModelPRevenue).AxisXMinValue = _axisYMinVal;
-                    (this.DataContext as ViewModelPRevenue).AxisXMaxValue = _axisYMaxVal;
+                    (this.DataContext as ViewModelPCE).AxisXMinValue = _axisYMinVal;
+                    (this.DataContext as ViewModelPCE).AxisXMaxValue = _axisYMaxVal;
 
                     //(this.DataContext as ViewModelPRevenue).AxisYMinValue = Convert.ToDecimal((this.DataContext as ViewModelPRevenue).PRevenuePlottedData.OrderBy(a => a.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
                     //(this.DataContext as ViewModelPRevenue).AxisYMaxValue = Convert.ToDecimal((this.DataContext as ViewModelPRevenue).PRevenuePlottedData.OrderByDescending(record => record.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
 
-                    int dataCount = (this.DataContext as ViewModelPRevenue).PRevenuePlottedData.Count;
+                    int dataCount = (this.DataContext as ViewModelPCE).PCEPlottedData.Count;
                     if (dataCount != 0)
                     {
-                        this.chPRevenue.DefaultView.ChartArea.AxisY.Step = 5.0;
+                        this.chPCE.DefaultView.ChartArea.AxisY.Step = 5.0;
                     }
                 }
-
+            
             }
 
         }
 
         private void ApplyChartStyles()
         {
-            this.chPRevenue.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-            this.chPRevenue.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chPRevenue.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chPCE.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+            this.chPCE.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chPCE.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
         }
 
         #region Export
@@ -165,12 +165,12 @@ namespace GreenField.Gadgets.Views
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
-                if (chPRevenue.Visibility == Visibility.Visible)
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_Revenue, Element = this.chPRevenue, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
-                else if (dgPRevenue.Visibility == Visibility.Visible)
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_Revenue_DATA, Element = this.chPRevenue, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                if (chPCE.Visibility == Visibility.Visible)
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_CE, Element = this.chPCE, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                else if (dgPCE.Visibility == Visibility.Visible)
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_CE_DATA, Element = this.chPCE, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
 
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PREVENUE);
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PCE);
                 childExportOptions.Show();
             }
             catch (Exception ex)
@@ -188,8 +188,8 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         public override void Dispose()
         {
-            this.DataContextPRevenue.Dispose();
-            this.DataContextPRevenue = null;
+            this.DataContextPCE.Dispose();
+            this.DataContextPCE = null;
             this.DataContext = null;
         }
 
@@ -205,13 +205,13 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnFlip_Click(object sender, RoutedEventArgs e)
         {
-            if (this.chPRevenue.Visibility == System.Windows.Visibility.Visible)
+            if (this.chPCE.Visibility == System.Windows.Visibility.Visible)
             {
-                Flipper.FlipItem(this.chPRevenue, this.dgPRevenue);
+                Flipper.FlipItem(this.chPCE, this.dgPCE);
             }
             else
             {
-                Flipper.FlipItem(this.dgPRevenue, this.chPRevenue);
+                Flipper.FlipItem(this.dgPCE, this.chPCE);
             }
         }
 

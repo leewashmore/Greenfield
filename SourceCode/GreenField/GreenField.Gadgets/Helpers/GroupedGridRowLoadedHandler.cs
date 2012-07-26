@@ -22,7 +22,7 @@ namespace GreenField.Gadgets.Helpers
                 var row = e.Row as GridViewRow;
                 row.FontSize = 7;
                 row.FontFamily = new FontFamily("Arial");
-                row.FontWeight = FontWeights.Bold;
+                row.FontWeight = FontWeights.Normal;
                 row.Height = 15;
 
                 if (row != null && row.IndentLevel > 1)

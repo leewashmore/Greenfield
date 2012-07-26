@@ -139,6 +139,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Helpers\DataItem.cs" />
     <Compile Include="Helpers\FlattenGroupConverter.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
     <Compile Include="Helpers\ToolBoxSelecter.cs" />

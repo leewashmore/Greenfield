@@ -253,12 +253,12 @@ namespace GreenField.Gadgets.Helpers
         private static void ExportRadGridViewXLS(UIElement element, Stream stream)
         {
             (element as RadGridView).Export(stream, new GridViewExportOptions()
-                            {
-                                Format = ExportFormat.Html,
-                                ShowColumnFooters = true,
-                                ShowColumnHeaders = true,
-                                ShowGroupFooters = true
-                            });
+            {
+                Format = ExportFormat.Html,
+                ShowColumnFooters = true,
+                ShowColumnHeaders = true,
+                ShowGroupFooters = true
+            });
         }
 
         private static void ExportRadGridViewXML(UIElement element, Stream stream)
@@ -305,7 +305,7 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="exportElement"></param>
         /// <param name="cellValueConverter"></param>
-        public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null
+        public static void ElementExporting(GridViewElementExportingEventArgs exportElement, Func<object> cellValueConverter = null, Func<object> headerCellValueConverter = null
             , bool showGroupFooters = true, List<int> hideColumnIndex = null, List<int> aggregatedColumnIndex = null)
         {
             ExportElementOptions element = ExportElementOptions.Where(t => t.ExportElementType == exportElement.Element).FirstOrDefault();
@@ -322,6 +322,7 @@ namespace GreenField.Gadgets.Helpers
                 exportElement.TextAlignment = element.ExportElementTextAlignment;
             }
 
+
             if (hideColumnIndex != null)
             {
                 GridViewDataColumn column = exportElement.Context as GridViewDataColumn;
@@ -337,6 +338,14 @@ namespace GreenField.Gadgets.Helpers
                             exportElement.Cancel = true;
                         }
                     }
+                }
+            }
+
+            if (exportElement.Element == ExportElement.HeaderCell)
+            {
+                if (headerCellValueConverter != null)
+                {
+                    exportElement.Value = headerCellValueConverter();
                 }
             }
 

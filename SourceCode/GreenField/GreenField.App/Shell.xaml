@@ -167,7 +167,7 @@
                             <telerik:RadRibbonDropDownButton Text="Financials" LargeImage="Images/report.png" Size="Large" Background="#9DA6C0">
                                 <telerik:RadRibbonDropDownButton.DropDownContent>
                                     <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                                        <telerik:RadRibbonButton Text="Summary" LargeImage="Images/sum.png" Size="Large" Background="#9DA6C0" Command="{Binding DashboardCompanyFinancialsSummaryCommand}"/>
+                                        <telerik:RadRibbonButton Text="Summary" LargeImage="Images/sum.png" Size="Large" Command="{Binding DashboardCompanyFinancialsSummaryCommand}" Background="#9DA6C0"/>
                                         <telerik:RadRibbonButton Text="Income Statement" LargeImage="Images/earning-statements.png" Size="Large" Command="{Binding DashboardCompanyFinancialsIncomeStatementCommand}" Background="#9DA6C0" />
                                         <telerik:RadRibbonButton Text="Balance Sheet"  LargeImage="Images/Pic-Balance.png" Size="Large" Command="{Binding DashboardCompanyFinancialsBalanceSheetCommand}" Background="#9DA6C0" />
                                         <telerik:RadRibbonButton Text="Cash Flow" LargeImage="Images/Dollars.png" Size="Large" Command="{Binding DashboardCompanyFinancialsCashFlowCommand}" Background="#9DA6C0"/>
@@ -211,7 +211,8 @@
                                                              Command="{Binding DashboardCompanyChartingUnrealizedGainCommand}" Background="#9DA6C0"/>
                                         <telerik:RadRibbonButton Text="Context"  LargeImage="Images/context.png" Size="Large"
                                                                  Command="{Binding DashboardCompanyChartingContextCommand}" Background="#9DA6C0"/>
-                                        <telerik:RadRibbonButton Text="Valuation"  LargeImage="Images/value.png" Size="Large" IsEnabled="False" Background="#9DA6C0"/>
+                                        <telerik:RadRibbonButton Text="Valuation"  LargeImage="Images/value.png" Size="Large" 
+                                                                 Command="{Binding DashboardCompanyChartingValuationCommand}" Background="#9DA6C0"/>
                                     </telerik:RadRibbonGroup>
                                 </telerik:RadRibbonDropDownButton.DropDownContent>
                             </telerik:RadRibbonDropDownButton>

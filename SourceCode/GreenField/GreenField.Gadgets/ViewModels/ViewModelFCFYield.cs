@@ -23,7 +23,7 @@ using Telerik.Windows.Controls.Charting;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelPRevenue : NotificationObject
+    public class ViewModelFCFYield : NotificationObject
     {
         #region Fields
 
@@ -52,7 +52,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores Chart data
         /// </summary>
-        private RangeObservableCollection<PRevenueData> _PRevenuePlottedData;
+        private RangeObservableCollection<PRevenueData> _FCFYieldPlottedData;
         #endregion
 
         #region Constructor
@@ -60,7 +60,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Constructor
         /// </summary>
         /// <param name="eventAggregator">MEF Eventaggregator instance</param>
-        public ViewModelPRevenue(DashboardGadgetParam param)
+        public ViewModelFCFYield(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
@@ -68,7 +68,7 @@ namespace GreenField.Gadgets.ViewModels
             _securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
             if (_securitySelectionData != null && IsActive)
             {
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrievePRevenueDataCallbackMethod);
+                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrieveFCFYieldDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
             if (_eventAggregator != null)
@@ -94,18 +94,18 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public RangeObservableCollection<PRevenueData> PRevenuePlottedData
+        public RangeObservableCollection<PRevenueData> FCFYieldPlottedData
         {
             get
             {
-                if (_PRevenuePlottedData == null)
-                    _PRevenuePlottedData = new RangeObservableCollection<PRevenueData>();
-                return _PRevenuePlottedData;
+                if (_FCFYieldPlottedData == null)
+                    _FCFYieldPlottedData = new RangeObservableCollection<PRevenueData>();
+                return _FCFYieldPlottedData;
             }
             set
             {
-                _PRevenuePlottedData = value;
-                RaisePropertyChanged(() => this.PRevenuePlottedData);
+                _FCFYieldPlottedData = value;
+                RaisePropertyChanged(() => this.FCFYieldPlottedData);
             }
 
         }
@@ -209,7 +209,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// event to handle data retrieval progress indicator
         /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler PRevenueDataLoadEvent;
+        public event DataRetrievalProgressIndicatorEventHandler FCFYieldDataLoadEvent;
 
         #endregion
 
@@ -231,9 +231,9 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
                     {
-                        if (PRevenueDataLoadEvent != null)
-                            PRevenueDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePRevenueData(entitySelectionData, RetrievePRevenueDataCallbackMethod);
+                        if (FCFYieldDataLoadEvent != null)
+                            FCFYieldDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrievePRevenueData(entitySelectionData, RetrieveFCFYieldDataCallbackMethod);
                     }
                 }
                 else
@@ -255,7 +255,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Callback method that assigns value to the BAsicDataInfo property
         /// </summary>
         /// <param name="result">basic data </param>
-        private void RetrievePRevenueDataCallbackMethod(List<PRevenueData> pRevenueData)
+        private void RetrieveFCFYieldDataCallbackMethod(List<PRevenueData> pRevenueData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -264,8 +264,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (pRevenueData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, pRevenueData, 1);
-                    PRevenuePlottedData.Clear();
-                    PRevenuePlottedData.AddRange(pRevenueData.ToList());
+                    FCFYieldPlottedData.Clear();
+                    FCFYieldPlottedData.AddRange(pRevenueData.ToList());
                 }
                 else
                 {
@@ -287,7 +287,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (_securitySelectionData != null && IsActive)
             {
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrievePRevenueDataCallbackMethod);
+                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrieveFCFYieldDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
         }

@@ -484,6 +484,21 @@ namespace GreenField.App.ViewModel
         #endregion
 
         #region Region Selector
+
+        private CollectionViewSource _regionItems;
+        public CollectionViewSource RegionItems 
+        {
+            get
+            {
+                return _regionItems;
+            }
+            set
+            {
+                _regionItems = value;
+                RaisePropertyChanged(() => this.RegionItems);
+            }
+        }
+
         private List<GreenField.DataContracts.RegionSelectionData> _regionTypeInfo;
         public List<GreenField.DataContracts.RegionSelectionData> RegionTypeInfo
         {
@@ -495,27 +510,11 @@ namespace GreenField.App.ViewModel
             }
             set
             {
-                _regionTypeInfo = value;
-                RegionFXNames = value.OrderBy(t => t.Region).Select(t => t.Region).Distinct().ToList();
-                //CountryName = value.OrderBy(t=>t.CountryName).Select(t => t.CountryName).Distinct().ToList();
+                _regionTypeInfo = value;                
+                if (value != null)
+                    AddItemsToRegionSelectorComboBox(value);
+
                 RaisePropertyChanged(() => this.RegionTypeInfo);
-            }
-        }
-
-        private List<String> _regionFXNames;
-        public List<String> RegionFXNames
-        {
-            get
-            {
-                return _regionFXNames;
-
-            }
-            set
-            {
-                _regionFXNames = value;
-                RaisePropertyChanged(() => this.RegionFXNames);
-
-
             }
         }
 
@@ -535,64 +534,6 @@ namespace GreenField.App.ViewModel
 
             }
         }
-        private List<String> regionFXCountryNames = new List<String>();
-        private String _selectedRegionFX;
-        public String SelectedRegionFX
-        {
-            get
-            {
-                return _selectedRegionFX;
-
-            }
-            set
-            {
-                _selectedRegionFX = value;
-                RaisePropertyChanged(() => this.SelectedRegionFX);
-                if (value != null)
-                {
-                    for (int i = 0; i < RegionTypeInfo.Count; i++)
-                    {
-                        if (RegionTypeInfo[i].Region == value)
-                        {
-                            String name = RegionTypeInfo[i].Country;
-                            regionFXCountryNames.Add(name);
-                        }
-                    }
-                    RegionCountryNames = regionFXCountryNames;
-
-                }
-
-            }
-        }
-
-
-
-        /// <summary>
-        /// Stores search text entered by user - Refines PortfolioSelectionInfo based on the text entered
-        /// </summary>
-        //private string _regionSearchText;
-        //public string RegionSearchText
-        //{
-        //    get { return _regionSearchText; }
-        //    set
-        //    {
-        //        if (value != null)
-        //        {
-        //            _regionSearchText = value;
-        //            RaisePropertyChanged(() => this.RegionSearchText);
-        //            if (value != String.Empty && CountryTypeInfo != null)
-        //                CountryName = CountryTypeInfo
-        //                            .OrderBy(t => t.CountryName)
-        //                            .Where(record => record.CountryName.ToLower().Contains(value.ToLower()))
-        //                            .Select(record => record.CountryName).Distinct().ToList();
-        //            else
-        //                CountryName = CountryTypeInfo.OrderBy(t => t.CountryName).Select(t => t.CountryName).Distinct().ToList();
-        //        }
-        //    }
-        //}
-
-
-
 
         /// <summary>
         /// Stores visibility property of the country selector
@@ -3526,7 +3467,6 @@ namespace GreenField.App.ViewModel
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-
                     RegionTypeInfo = result;
                 }
                 else
@@ -3659,6 +3599,41 @@ namespace GreenField.App.ViewModel
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void AddItemsToRegionSelectorComboBox(List<GreenField.DataContracts.RegionSelectionData> items)
+        {
+            if (items != null)
+            {
+                List<DataItem> regionList = new List<DataItem>();
+                foreach (GreenField.DataContracts.RegionSelectionData item in items)
+                {
+                    DataItem region = new DataItem{  Text = item.Country, Category = item.Region, IsSelected = false};
+                    region.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(region_PropertyChanged);
+                    regionList.Add(region);
+                }
+
+                CollectionViewSource regionColl = new CollectionViewSource();
+                regionColl.Source = new List<DataItem>(regionList);
+                regionColl.GroupDescriptions.Add(new PropertyGroupDescription("Category"));
+
+                RegionItems = regionColl;
+            }
+        }
+
+        void region_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            int itemsCount = (this.RegionItems.Source as List<DataItem>).Count;
+            List<String> selectedCountries = new List<String>();
+            for (int i = 0; i < itemsCount; i++)
+            {
+                DataItem item = (this.RegionItems.Source as List<DataItem>)[i];
+                if (item.IsSelected)
+                {
+                    selectedCountries.Add(item.Text);
+                }
+            }
+            RegionCountryNames = selectedCountries;
         }
         #endregion
 

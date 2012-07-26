@@ -145,6 +145,7 @@
     <Compile Include="Helpers\GroupedGridRowLoadedHandler.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
     <Compile Include="Helpers\Converters\PercentageValueConverter.cs" />
+    <Compile Include="Helpers\PeriodColumnNavigationEvent.cs" />
     <Compile Include="Helpers\PeriodColumns.cs" />
     <Compile Include="Helpers\PortfolioDetails\BenchmarkWeight.cs" />
     <Compile Include="Helpers\PortfolioDetails\Statistics.cs" />
@@ -159,7 +160,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
-    <Compile Include="ViewModels\ExternalResearch\ViewModelFundamentalSummary.cs" />
     <Compile Include="ViewModels\ViewModelCOASpecific.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelValuations.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimateSummary.cs" />
@@ -174,6 +174,9 @@
     <Compile Include="ViewModels\ViewModelConsensusEstimatesDetails.cs" />
     <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
     <Compile Include="ViewModels\ViewModelFinancialStatements.cs" />
+    <Compile Include="ViewModels\ViewModelDividendYield.cs" />
+    <Compile Include="ViewModels\ViewModelEVEBITDA.cs" />
+    <Compile Include="ViewModels\ViewModelFCFYield.cs" />
     <Compile Include="ViewModels\ViewModelHeatMap.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChartRegion.cs" />
@@ -182,6 +185,9 @@
     <Compile Include="ViewModels\ViewModelMacroDBKeyAnnualReportEMSummary.cs" />
     <Compile Include="ViewModels\ViewModelMarketCapitalization.cs" />
     <Compile Include="ViewModels\ViewModelMultiLineBenchmark.cs" />
+    <Compile Include="ViewModels\ViewModelPBV.cs" />
+    <Compile Include="ViewModels\ViewModelPCE.cs" />
+    <Compile Include="ViewModels\ViewModelPE.cs" />
     <Compile Include="ViewModels\ViewModelPerformanceGadget.cs" />
     <Compile Include="ViewModels\ViewModelPerformanceGrid.cs" />
     <Compile Include="ViewModels\ViewModelPortfolioDetails.cs" />
@@ -238,8 +244,14 @@
     <Compile Include="Views\ViewConsensusEstimatesDetails.xaml.cs">
       <DependentUpon>ViewConsensusEstimatesDetails.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ExternalResearch\ViewFundamentalSummary.xaml.cs">
-      <DependentUpon>ViewFundamentalSummary.xaml</DependentUpon>
+    <Compile Include="Views\ViewDividendYield.xaml.cs">
+      <DependentUpon>ViewDividendYield.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewEVEBITDA.xaml.cs">
+      <DependentUpon>ViewEVEBITDA.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewFCFYield.xaml.cs">
+      <DependentUpon>ViewFCFYield.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewFXEconomicData.xaml.cs">
       <DependentUpon>ViewFXEconomicData.xaml</DependentUpon>
@@ -258,6 +270,15 @@
     </Compile>
     <Compile Include="Views\ViewMultiLineBenchmark.xaml.cs">
       <DependentUpon>ViewMultiLineBenchmark.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewPBV.xaml.cs">
+      <DependentUpon>ViewPBV.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewPCE.xaml.cs">
+      <DependentUpon>ViewPCE.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewPE.xaml.cs">
+      <DependentUpon>ViewPE.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewPortfolioDetails.xaml.cs">
       <DependentUpon>ViewPortfolioDetails.xaml</DependentUpon>
@@ -401,7 +422,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ExternalResearch\ViewFundamentalSummary.xaml">
+    <Page Include="Views\ViewDividendYield.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewEVEBITDA.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewFCFYield.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -428,6 +457,18 @@
     <Page Include="Views\ViewMultiLineBenchmark.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewPBV.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewPCE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewPE.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewPortfolioDetails.xaml">
       <Generator>MSBuild:Compile</Generator>

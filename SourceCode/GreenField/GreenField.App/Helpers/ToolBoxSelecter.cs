@@ -195,7 +195,7 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.COMPANY_ESTIMATES_CONSENSUS:
-                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible, effectiveDateSelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.COMPANY_ESTIMATES_DETAILED:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);

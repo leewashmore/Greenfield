@@ -11,16 +11,44 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.Views
 {
-    public partial class ViewBasicData : UserControl
+    public partial class ViewBasicData : ViewBaseUserControl
     {
+
+        private ViewModelBasicData _dataContextSource = null;
+        public ViewModelBasicData DataContextSourceModel
+        {
+            get
+            {
+                return _dataContextSource;
+            }
+            set
+            {
+                if (value != null)
+                    _dataContextSource = value;
+            }
+        } 
+
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextSourceModel != null) //DataContext instance
+                    DataContextSourceModel.IsActive = _isActive;
+            }
+        }
         #region CONSTRUCTOR
         public ViewBasicData(ViewModelBasicData DataContextSource)
         {
             InitializeComponent();
             this.DataContext = DataContextSource;
+            this.DataContextSourceModel = DataContextSource;
             DataContextSource.BasicDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceBasicDataLoadEvent);
             
         }

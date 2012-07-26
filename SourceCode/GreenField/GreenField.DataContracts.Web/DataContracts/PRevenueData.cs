@@ -11,15 +11,33 @@ namespace GreenField.DataContracts.DataContracts
         public string PeriodLabel { get; set;}
 
         [DataMember]
-        public decimal PRevenueVal { get; set; }
+        public DateTime PeriodEndDate { get; set; }
 
         [DataMember]
-        public decimal Average { get; set; }
+        public decimal? Amount { get; set; }
 
         [DataMember]
-        public decimal StdDevPlus { get; set; }
+        public string PeriodType { get; set; }
 
         [DataMember]
-        public decimal StdDevMinus { get; set; }
+        public Int32? PeriodYear { get; set; }
+
+        [DataMember]
+        public decimal? USDPrice { get; set; }
+
+        [DataMember]
+        public decimal? SharesOutstanding { get; set; }
+
+        [DataMember]
+        public decimal? PRevenueVal { get; set; }
+
+        [DataMember]
+        public decimal? Average { get; set; }
+
+        [DataMember]
+        public decimal? StdDevPlus { get; set; }
+
+        [DataMember]
+        public decimal? StdDevMinus { get; set; }
     }
 }

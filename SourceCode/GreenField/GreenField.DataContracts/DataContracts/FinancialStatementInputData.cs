@@ -61,7 +61,6 @@ namespace GreenField.DataContracts
 
         [EnumMember(Value = "FUN")]
         [DescriptionAttribute("FUN")]
-        FUNDAMENTAL_SUMMARY,
-
+        FUNDAMENTAL_SUMMARY
     }
 }
