@@ -149,7 +149,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            String elementName = "Consensus Estimate - " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + ") " +
+            String elementName = "Consensus Estimate - " + (this.DataContextValuations.EntitySelectionInfo).LongName + " (" + (this.DataContextValuations.EntitySelectionInfo).ShortName + ") " +
                 (_periodIsYearly ? this.dgConsensusEstimateValuations.Columns[2].Header : this.dgConsensusEstimateValuations.Columns[6].Header) + " - " +
                 (_periodIsYearly ? this.dgConsensusEstimateValuations.Columns[7].Header : this.dgConsensusEstimateValuations.Columns[11].Header);
             RadExportOptionsInfo.Add(new RadExportOptions()
