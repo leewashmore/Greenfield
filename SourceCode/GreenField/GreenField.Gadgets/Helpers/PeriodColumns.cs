@@ -61,7 +61,7 @@ namespace GreenField.Gadgets.Helpers
             {
                 periodColumnNavigationEvent(e);
             }
-        }                
+        }
         #endregion
         #endregion
 
@@ -257,7 +257,7 @@ namespace GreenField.Gadgets.Helpers
             if (data == null)
                 goto FINISH;
 
-            if(data.Count.Equals(0))
+            if (data.Count.Equals(0))
                 goto FINISH;
 
             PropertyInfo[] propertyInfo = typeof(T).GetProperties();
@@ -267,14 +267,14 @@ namespace GreenField.Gadgets.Helpers
                 || !propertyInfo.Any(record => record.Name == "PeriodType")
                 || !propertyInfo.Any(record => record.Name == "Amount")
                 || !propertyInfo.Any(record => record.Name == "AmountType"))
-                throw new InvalidOperationException("Data type is missing requisite columns");                
-            
+                throw new InvalidOperationException("Data type is missing requisite columns");
+
             List<String> distinctPeriodDataDescriptors = data
                 .Select(record => (String)record.GetType().GetProperty("Description").GetValue(record, null)).Distinct().ToList();
 
             foreach (String dataDesc in distinctPeriodDataDescriptors)
             {
-                T defaultRecord =  data.Where(record => ((String)record.GetType().GetProperty("Description").GetValue(record, null)) == dataDesc).FirstOrDefault();
+                T defaultRecord = data.Where(record => ((String)record.GetType().GetProperty("Description").GetValue(record, null)) == dataDesc).FirstOrDefault();
                 Int32? dataId = null;
                 if (propertyInfo.Any(record => record.Name == "DataId"))
                     dataId = (Int32?)defaultRecord.GetType().GetProperty("DataId").GetValue(defaultRecord, null);
@@ -289,8 +289,8 @@ namespace GreenField.Gadgets.Helpers
 
                 Int32? dataDecimal = null;
                 if (propertyInfo.Any(record => record.Name == "Decimals"))
-                    dataDecimal = (Int32?)defaultRecord.GetType().GetProperty("Decimals").GetValue(defaultRecord, null);                
-                
+                    dataDecimal = (Int32?)defaultRecord.GetType().GetProperty("Decimals").GetValue(defaultRecord, null);
+
                 Int32 columnCount = 0;
                 T yearOneData = default(T);
                 T yearTwoData = default(T);
@@ -562,13 +562,13 @@ namespace GreenField.Gadgets.Helpers
                 gridView.Columns[i + 2].Header = e.PeriodColumnHeader[i];
 
                 //update column visibility if quarterly data display is implemented
-                //if (isQuarterImplemented)
-                //{
+                if (isQuarterImplemented)
+                {
                     bool columnVisibility = (i < (e.PeriodColumnHeader.Count / 2)) ? e.PeriodIsYearly : !(e.PeriodIsYearly);
 
                     if (gridView.Columns[i + 2].IsVisible != columnVisibility)
                         gridView.Columns[i + 2].IsVisible = columnVisibility;
-                //}
+                }
             }
         }
 
@@ -582,26 +582,26 @@ namespace GreenField.Gadgets.Helpers
             {
                 var row = e.Row as GridViewRow;
 
-                if(row != null)
+                if (row != null)
                 {
                     PeriodColumnDisplayData rowContext = row.DataContext as PeriodColumnDisplayData;
                     if (rowContext != null)
                     {
-                        if(rowContext.DATA_BOLD != null)
+                        if (rowContext.DATA_BOLD != null)
                             row.FontWeight = Convert.ToBoolean(rowContext.DATA_BOLD) ? FontWeights.ExtraBold : FontWeights.Normal;
                         foreach (GridViewCell cell in row.Cells)
-	                    {
+                        {
                             //Null Check
                             if (cell.Value == null)
-                            continue;
+                                continue;
 
                             //No toolTip service for Description and left navigation
                             if (cell.Column.DisplayIndex <= 1)
-                            continue;
+                                continue;
 
                             //No toolTip service for right navigation column
                             if (cell.Column.DisplayIndex == e.GridViewDataControl.Columns.Count - 1)
-                            continue;
+                                continue;
 
                             String toolTipContent = GetToolTipContent(rowContext, cell.DataColumn.DataMemberBinding.Path.Path);
 
@@ -616,8 +616,8 @@ namespace GreenField.Gadgets.Helpers
 
                                 ToolTipService.SetToolTip(cell, toolTip);
                             }
-                        } 
-                        
+                        }
+
                     }
                 }
             }

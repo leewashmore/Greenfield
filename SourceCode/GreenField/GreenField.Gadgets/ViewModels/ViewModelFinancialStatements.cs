@@ -63,9 +63,9 @@ namespace GreenField.Gadgets.ViewModels
             if (EntitySelectionInfo != null)
             {
                 HandleSecurityReferenceSetEvent(EntitySelectionInfo);
-            }           
-            
-        }         
+            }
+
+        }
         #endregion
 
         #region Properties
@@ -93,7 +93,7 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 }
             }
-        } 
+        }
         #endregion
 
         #region UI Fields
@@ -109,7 +109,7 @@ namespace GreenField.Gadgets.ViewModels
                 _externalResearchVisibility = value;
                 RaisePropertyChanged(() => this.ExternalResearchVisibility);
             }
-        }        
+        }
         #endregion
 
         #region Financial Statement Information
@@ -123,7 +123,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _financialStatementDisplayInfo = value;
-                RaisePropertyChanged(() => this.FinancialStatementDisplayInfo);                
+                RaisePropertyChanged(() => this.FinancialStatementDisplayInfo);
             }
         }
 
@@ -161,8 +161,8 @@ namespace GreenField.Gadgets.ViewModels
                     SetFinancialStatementDisplayInfo();
                 }
             }
-        }        
-        
+        }
+
         #endregion
 
         #region Period Information
@@ -214,7 +214,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-        #endregion        
+        #endregion
 
         #region Issuer Details
         /// <summary>
@@ -235,10 +235,10 @@ namespace GreenField.Gadgets.ViewModels
                         CurrencyInfo.Add("USD");
 
                     SelectedCurrency = CurrencyInfo[0];
-                } 
+                }
             }
-        }       
-        
+        }
+
         #endregion
 
         #region Data Source
@@ -266,7 +266,7 @@ namespace GreenField.Gadgets.ViewModels
                     RetrieveFinancialStatementData();
                 }
             }
-        } 
+        }
         #endregion
 
         #region Period Type
@@ -294,7 +294,7 @@ namespace GreenField.Gadgets.ViewModels
                     RetrieveFinancialStatementData();
                 }
             }
-        } 
+        }
         #endregion
 
         #region Calendarization Option
@@ -367,13 +367,13 @@ namespace GreenField.Gadgets.ViewModels
         /// Selected Security
         /// </summary>
         private EntitySelectionData _entitySelectionInfo;
-        public EntitySelectionData EntitySelectionInfo 
+        public EntitySelectionData EntitySelectionInfo
         {
             get { return _entitySelectionInfo; }
             set
             {
                 _entitySelectionInfo = value;
-                if(IsActive)
+                if (IsActive)
                     RaisePropertyChanged(() => this.EntitySelectionInfo);
             }
         }
@@ -407,7 +407,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion 
+        #endregion
         #endregion
 
         #region Event Handlers
@@ -429,7 +429,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
                         _dbInteractivity.RetrieveIssuerReferenceData(result, RetrieveIssuerReferenceDataCallbackMethod);
-                    } 
+                    }
                 }
                 else
                 {
@@ -462,7 +462,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (_financialStatementType != FinancialStatementType.FUNDAMENTAL_SUMMARY)
                 {
                     FinancialStatementExtDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
-                        (FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList(), out periodRecord, periodRecord, updatePeriodRecord: false); 
+                        (FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList(), out periodRecord, periodRecord, updatePeriodRecord: false);
                 }
 
                 PeriodRecord = periodRecord;
@@ -492,7 +492,7 @@ namespace GreenField.Gadgets.ViewModels
                     Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName + " (" + EntitySelectionInfo.ShortName + " : " + EntitySelectionInfo.InstrumentID + ")");
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     BusyIndicatorNotification();
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -521,7 +521,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     BusyIndicatorNotification();
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -558,16 +558,8 @@ namespace GreenField.Gadgets.ViewModels
 
         public void SetFinancialStatementDisplayInfo()
         {
-            if (FinancialStatementInfo.Count.Equals(0))
-            {
-                FinancialStatementDisplayInfo = new List<PeriodColumnDisplayData>();
-                FinancialStatementExtDisplayInfo = new List<PeriodColumnDisplayData>();
-                BusyIndicatorNotification();
-                return;
-            }
-
             BusyIndicatorNotification(true, "Updating Financial Statement Information based on selected preference");
-            
+
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator);
             FinancialStatementDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
                 (FinancialStatementInfo.Where(record => record.IsConsensus == "N").ToList(), out periodRecord, periodRecord);
@@ -575,13 +567,13 @@ namespace GreenField.Gadgets.ViewModels
             if (_financialStatementType != FinancialStatementType.FUNDAMENTAL_SUMMARY)
             {
                 FinancialStatementExtDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo<FinancialStatementData>
-                        (FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList(), out periodRecord, periodRecord, updatePeriodRecord: false); 
+                        (FinancialStatementInfo.Where(record => record.IsConsensus == "Y").ToList(), out periodRecord, periodRecord, updatePeriodRecord: false);
             }
 
             PeriodRecord = periodRecord;
             PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);
-            
-            BusyIndicatorNotification();            
+
+            BusyIndicatorNotification();
         }
 
         /// <summary>
@@ -594,7 +586,7 @@ namespace GreenField.Gadgets.ViewModels
             if (message != null)
                 BusyIndicatorContent = message;
             BusyIndicatorIsBusy = showBusyIndicator;
-        }        
-        #endregion                
+        }
+        #endregion
     }
 }
