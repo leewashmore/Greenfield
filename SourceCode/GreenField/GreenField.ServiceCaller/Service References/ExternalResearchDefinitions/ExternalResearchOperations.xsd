@@ -12,6 +12,7 @@
       <xs:element minOccurs="0" name="RegionCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SectorCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SectorName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="IssuerReferenceData" nillable="true" type="tns:IssuerReferenceData" />

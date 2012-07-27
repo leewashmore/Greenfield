@@ -38,6 +38,10 @@ namespace GreenField.Web.DataContracts
 
         [DataMember]
         public String IndustryName { get; set; }
+
+        [DataMember]
+        public int? SecurityId { get; set; }
+
     }
 
 

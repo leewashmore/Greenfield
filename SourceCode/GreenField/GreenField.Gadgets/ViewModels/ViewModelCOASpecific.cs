@@ -16,6 +16,8 @@ using GreenField.Common;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.DataContracts;
+using System.Collections.Generic;
+using GreenField.DataContracts.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -54,10 +56,40 @@ namespace GreenField.Gadgets.ViewModels
             {
                 HandleSecurityReferenceSetEvent(EntitySelectionInfo);
             }
+
+           // _dbInteractivity.RetrieveCOASpecificData(EntitySelectionInfo, "REUTERS", "FISCAL", "USD",RetrieveCOASpecificDataCallbackMethod);
         }
         #endregion
 
         #region Properties
+
+        #region IsActive
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive = true;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if ((EntitySelectionInfo != null) && _isActive)
+                    {
+                        RaisePropertyChanged(() => this.EntitySelectionInfo);
+                        BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
+                        _dbInteractivity.RetrieveIssuerReferenceData(EntitySelectionInfo, RetrieveIssuerReferenceDataCallbackMethod);
+                    }
+                }
+            }
+        }
+        #endregion
+
         #region Issuer Details
 
         /// <summary>
@@ -113,11 +145,10 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedCurrency; }
             set
             {
-                if (_selectedCurrency != value)
-                {
                     _selectedCurrency = value;
                     RaisePropertyChanged(() => this.SelectedCurrency);
-                }
+                    RetrieveCOASpecificData();
+               
             }
         }
         #endregion
@@ -135,6 +166,7 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region Busy Indicator
         private bool _busyIndicatorIsBusy;
         public bool BusyIndicatorIsBusy
         {
@@ -144,6 +176,153 @@ namespace GreenField.Gadgets.ViewModels
                 _busyIndicatorIsBusy = value;
                 RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
             }
+        }
+
+        private string _busyIndicatorContent;
+        public string BusyIndicatorContent
+        {
+            get { return _busyIndicatorContent; }
+            set
+            {
+                _busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }
+        #endregion
+
+        #region Data Source
+        /// <summary>
+        /// Stores FinancialStatementDataSource Enum Items
+        /// </summary>
+        public List<FinancialStatementDataSource> DataSourceInfo
+        {
+            get { return EnumUtils.GetEnumDescriptions<FinancialStatementDataSource>(); }
+        }
+
+        /// <summary>
+        /// Stores selected FinancialStatementDataSource
+        /// </summary>
+        private FinancialStatementDataSource _selectedDataSource = FinancialStatementDataSource.REUTERS;
+        public FinancialStatementDataSource SelectedDataSource
+        {
+            get { return _selectedDataSource; }
+            set
+            {
+                if (_selectedDataSource != value)
+                {
+                    _selectedDataSource = value;
+                    RaisePropertyChanged(() => this.SelectedDataSource);
+                    RetrieveCOASpecificData();
+                }
+            }
+        }
+        #endregion
+
+        #region Calendarization Option
+        /// <summary>
+        /// Stores FinancialStatementFiscalType Enum Items
+        /// </summary>
+        public List<FinancialStatementFiscalType> FiscalTypeInfo
+        {
+            get { return EnumUtils.GetEnumDescriptions<FinancialStatementFiscalType>(); }
+        }
+
+        /// <summary>
+        /// Stores selected FinancialStatementFiscalType
+        /// </summary>
+        private FinancialStatementFiscalType _selectedFiscalType = FinancialStatementFiscalType.FISCAL;
+        public FinancialStatementFiscalType SelectedFiscalType
+        {
+            get { return _selectedFiscalType; }
+            set
+            {
+                if (_selectedFiscalType != value)
+                {
+                    if (_selectedFiscalType != value)
+                    {
+                        _selectedFiscalType = value;
+                        RaisePropertyChanged(() => this.SelectedFiscalType);
+                        RetrieveCOASpecificData();
+                    }
+                }
+            }
+        }
+
+        private List<COASpecificData> coaSpecificInfo;
+        public List<COASpecificData> COASpecificInfo
+        {
+            get { return coaSpecificInfo; }
+            set
+            {
+                   if (coaSpecificInfo != value)
+                    {
+                        coaSpecificInfo = value;
+                        RaisePropertyChanged(() => this.COASpecificInfo);
+                       
+                    }                
+            }
+        
+        }
+        #endregion
+
+        #endregion
+
+        #region CallbackMethods
+
+        void RetrieveCOASpecificDataCallbackMethod(List<COASpecificData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    COASpecificInfo = result;
+                    BusyIndicatorNotification();
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// RetrieveIssuerReferenceData Callback Method - assigns IssuerReferenceInfo and calls RetrieveFinancialStatementData
+        /// </summary>
+        /// <param name="result">IssuerReferenceData</param>
+        public void RetrieveIssuerReferenceDataCallbackMethod(IssuerReferenceData result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    IssuerReferenceInfo = result;
+                }
+                else
+                {
+                    Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName + " (" + EntitySelectionInfo.ShortName + " : " + EntitySelectionInfo.InstrumentID + ")");
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
 
@@ -159,9 +338,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     EntitySelectionInfo = result;
-
-                    if (EntitySelectionInfo != null)
+                    if (EntitySelectionInfo != null && IsActive)
                     {
+                        BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
+                        _dbInteractivity.RetrieveIssuerReferenceData(result, RetrieveIssuerReferenceDataCallbackMethod);
                     }
                 }
                 else
@@ -179,9 +359,30 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+        #region Helper Methods
+
         public void Dispose()
         {
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSetEvent);
         }
+
+        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        {
+            if (message != null)
+                BusyIndicatorContent = message;
+            BusyIndicatorIsBusy = showBusyIndicator;
+        }
+
+        private void RetrieveCOASpecificData()
+        {
+            if (IssuerReferenceInfo != null)
+            {
+                BusyIndicatorNotification(true, "Retrieving COA Specific Data for the selected security");
+                COASpecificInfo = new List<COASpecificData>();
+                _dbInteractivity.RetrieveCOASpecificData(IssuerReferenceInfo.IssuerId, IssuerReferenceInfo.SecurityId, SelectedDataSource, SelectedFiscalType, SelectedCurrency, RetrieveCOASpecificDataCallbackMethod);
+            }
+        }
+        
+        #endregion
     }
 }

@@ -218,3 +218,5 @@ namespace GreenField.Gadgets.Views
         #endregion
     }
 }
+    
+

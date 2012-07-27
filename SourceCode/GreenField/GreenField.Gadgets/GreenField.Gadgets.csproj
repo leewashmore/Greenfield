@@ -238,6 +238,12 @@
     <Compile Include="Views\ViewCommodityIndex.xaml.cs">
       <DependentUpon>ViewCommodityIndex.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ViewEVEBITDA.xaml.cs">
+      <DependentUpon>ViewEVEBITDA.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewFCFYield.xaml.cs">
+      <DependentUpon>ViewFCFYield.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ViewFinancialStatements.xaml.cs">
       <DependentUpon>ViewFinancialStatements.xaml</DependentUpon>
     </Compile>
@@ -246,12 +252,6 @@
     </Compile>
     <Compile Include="Views\ViewDividendYield.xaml.cs">
       <DependentUpon>ViewDividendYield.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ViewEVEBITDA.xaml.cs">
-      <DependentUpon>ViewEVEBITDA.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ViewFCFYield.xaml.cs">
-      <DependentUpon>ViewFCFYield.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewFXEconomicData.xaml.cs">
       <DependentUpon>ViewFXEconomicData.xaml</DependentUpon>
@@ -414,6 +414,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\ViewEVEBITDA.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewFCFYield.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ViewFinancialStatements.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -423,14 +431,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewDividendYield.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ViewEVEBITDA.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ViewFCFYield.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

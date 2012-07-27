@@ -130,6 +130,15 @@
   <wsdl:message name="ExternalResearchOperations_RetrieveRatioSecurityReferenceData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q13:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveCOASpecificData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCOASpecificData" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveCOASpecificData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCOASpecificDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveCOASpecificData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="ExternalResearchOperations">
     <wsdl:operation name="RetrieveIssuerId">
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerId" message="tns:ExternalResearchOperations_RetrieveIssuerId_InputMessage" />
@@ -195,6 +204,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveRatioSecurityReferenceData" message="tns:ExternalResearchOperations_RetrieveRatioSecurityReferenceData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveRatioSecurityReferenceDataResponse" message="tns:ExternalResearchOperations_RetrieveRatioSecurityReferenceData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveRatioSecurityReferenceDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveRatioSecurityReferenceData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCOASpecificData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCOASpecificData" message="tns:ExternalResearchOperations_RetrieveCOASpecificData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCOASpecificDataResponse" message="tns:ExternalResearchOperations_RetrieveCOASpecificData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCOASpecificDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveCOASpecificData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ExternalResearchOperations" type="tns:ExternalResearchOperations">
@@ -345,6 +359,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveRatioSecurityReferenceData">
       <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveRatioSecurityReferenceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCOASpecificData">
+      <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveCOASpecificData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

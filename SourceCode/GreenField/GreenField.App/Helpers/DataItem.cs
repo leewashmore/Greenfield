@@ -17,6 +17,7 @@ namespace GreenField.App.Helpers
         private string text;
         private bool isselected;
         private string category;
+        private string displayText;
 
         public string Text
         {
@@ -30,6 +31,22 @@ namespace GreenField.App.Helpers
                 {
                     this.text = value;
                     OnPropertyChanged("Text");
+                }
+            }
+        }
+
+        public string DisplayText
+        {
+            get
+            {
+                return this.displayText;
+            }
+            set
+            {
+                if (this.displayText != value)
+                {
+                    this.displayText = value;
+                    OnPropertyChanged("DisplayText");
                 }
             }
         }

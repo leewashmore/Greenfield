@@ -200,4 +200,22 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveCOASpecificData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="issuerId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="securityId" nillable="true" type="xs:int" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="cSource" type="q28:FinancialStatementDataSource" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="cFiscalType" type="q29:FinancialStatementFiscalType" />
+        <xs:element minOccurs="0" name="cCurrency" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveCOASpecificDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveCOASpecificDataResult" nillable="true" type="q30:ArrayOfCOASpecificData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -31,6 +31,7 @@ namespace GreenField.Common
         public static string INTERNAL_RESEARCH_VALUATIONS_DETAILED = "Valuations Detailed Internal Research 5.1.1.2";
         public static string EXTERNAL_RESEARCH_PROFITABILITY = "Profitability Information External Research 4.1.3.7 / 4.4.3";
         public static string INTERNAL_RESEARCH_CONSESUS_ESTIMATE_SUMMARY = "Internal Research Consensus Estimates Summary";
+        public static string GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC = "External Research Gadget with Period Columns COA Specific";
         #endregion
 
         #region Snapshot company Profile

@@ -3608,7 +3608,7 @@ namespace GreenField.App.ViewModel
                 List<DataItem> regionList = new List<DataItem>();
                 foreach (GreenField.DataContracts.RegionSelectionData item in items)
                 {
-                    DataItem region = new DataItem{  Text = item.Country, Category = item.Region, IsSelected = false};
+                    DataItem region = new DataItem{  Text = item.Country,DisplayText=item.CountryNames,Category = item.Region,IsSelected = false};
                     region.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(region_PropertyChanged);
                     regionList.Add(region);
                 }

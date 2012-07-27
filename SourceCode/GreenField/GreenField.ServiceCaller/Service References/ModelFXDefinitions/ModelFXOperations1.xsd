@@ -78,6 +78,7 @@
   <xs:complexType name="RegionSelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CountryNames" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Region" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>

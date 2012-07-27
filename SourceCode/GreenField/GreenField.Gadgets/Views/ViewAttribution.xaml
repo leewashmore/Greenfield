@@ -30,7 +30,7 @@
                                      ItemsSource="{Binding PeriodAttributionInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 
                                      CanUserDeleteRows="False" IsReadOnly="True"
-                                     CanUserSortColumns="False" ScrollMode="Deferred" RowIndicatorVisibility="Collapsed" 
+                                     CanUserSortColumns="False" ScrollMode="Deferred"  RowIndicatorVisibility="Collapsed" 
                                      ShowGroupPanel="False" telerik:StyleManager.Theme="Metro"
                                      UseLayoutRounding="True"
                                      FontSize="7"

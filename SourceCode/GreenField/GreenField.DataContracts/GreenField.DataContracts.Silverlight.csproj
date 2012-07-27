@@ -62,6 +62,7 @@
     <Compile Include="DataContracts\BenchmarkReturnData.cs" />
     <Compile Include="DataContracts\BenchmarkSelectionData.cs" />
     <Compile Include="DataContracts\ChartExtensionData.cs" />
+    <Compile Include="DataContracts\COASpecificData.cs" />
     <Compile Include="DataContracts\ConsensusEstimateDetail.cs" />
     <Compile Include="DataContracts\ConsensusEstimateMedian.cs" />
     <Compile Include="DataContracts\ConsensusEstimatesSummaryData.cs" />

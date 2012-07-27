@@ -89,6 +89,7 @@ namespace GreenField.Web.Services
                 String sectorName = securityDetails.GICS_SECTOR_NAME;
                 String industryCode = securityDetails.GICS_INDUSTRY;
                 String industryName = securityDetails.GICS_SUB_INDUSTRY_NAME;
+                int? securityID = securityDetails.SECURITY_ID;
                 String currencyCode = null;
                 String currencyName = null;
 
@@ -114,7 +115,8 @@ namespace GreenField.Web.Services
                     SectorCode = sectorCode,
                     SectorName = sectorName,
                     IndustryCode = industryCode,
-                    IndustryName = industryName
+                    IndustryName = industryName,
+                    SecurityId = securityID
                 };
 
                 return result;
@@ -218,9 +220,6 @@ namespace GreenField.Web.Services
                     result.Add(temp);
 
                 }
-
-
-
 
 
                 //foreach (ConsensusEstimateDetailData item in data)
@@ -835,6 +834,51 @@ namespace GreenField.Web.Services
                     default:
                         return null;
                 }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+        #endregion
+
+        #region Gadget With Period Columns
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<GreenField.DataContracts.DataContracts.COASpecificData> RetrieveCOASpecificData(String issuerId, int? securityId, FinancialStatementDataSource cSource, FinancialStatementFiscalType cFiscalType, String cCurrency)
+        {
+            try
+            {
+                string _dataSource = EnumUtils.ToString(cSource);
+                string _fiscalType = EnumUtils.ToString(cFiscalType);                
+                List<GreenField.DAL.COASpecificData> result = new List<GreenField.DAL.COASpecificData>();
+                 List<GreenField.DataContracts.DataContracts.COASpecificData> mainResult = new List<GreenField.DataContracts.DataContracts.COASpecificData>();
+                
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                ExternalResearchEntities research = new ExternalResearchEntities();
+                result = research.GetDataForPeriodGadgets(_dataSource, _fiscalType, cCurrency, issuerId, securityId.ToString()).ToList();
+                foreach (GreenField.DAL.COASpecificData item in result)
+                {
+                    GreenField.DataContracts.DataContracts.COASpecificData  entry = new GreenField.DataContracts.DataContracts.COASpecificData();
+                    entry.Amount = item.Amount;
+                    entry.AmountType = item.AmountType;
+                    entry.DataSource = item.DataSource;
+                    entry.Decimals = item.Decimals;
+                    entry.Description = item.Description;
+                    entry.GridDesc = item.GridDesc;
+                    entry.GridId = item.GridId;
+                    entry.IsPercentage = item.IsPercentage;
+                    entry.PeriodType = item.Period_Type;
+                    entry.PeriodYear = item.PeriodYear;
+                    entry.RootSource = item.RootSource;
+                    entry.ShowGrid = item.ShowGrid;
+                    entry.SortOrder = item.SortOrder;
+                    mainResult.Add(entry);
+                }
+                return mainResult;
+
             }
             catch (Exception ex)
             {

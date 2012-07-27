@@ -116,6 +116,7 @@ namespace GreenField.Web.Services
                 RegionSelectionData entry = new RegionSelectionData();
                 entry.Region = countryData[i].ASHEMM_PROPRIETARY_REGION_NAME;
                 entry.Country = countryData[i].COUNTRY_CODE;
+                entry.CountryNames = countryData[i].COUNTRY_NAME;
                 result.Add(entry);
             }
             return result;

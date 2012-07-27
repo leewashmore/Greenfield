@@ -150,7 +150,7 @@
                     <Setter Property="ContentTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <CheckBox Content="{Binding Path=Text}"
+                                <CheckBox Content="{Binding Path=DisplayText}"
                                           IsChecked="{Binding Path=IsSelected,Mode=TwoWay}"
                                           Height="16" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" />
                             </DataTemplate>
@@ -489,7 +489,8 @@
                                          Width="150"                                         
                                          IsEditable="True"                                       
                                          ItemsSource="{Binding RegionItems.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
-                                         telerik:TextSearch.TextPath="Text"                                                                   
+                                         EmptyText="Select Country"
+                                         telerik:TextSearch.TextPath="DisplayPath"                                                                   
                                          ItemContainerStyleSelector="{StaticResource ItemStyleSelector}">                           
                         </telerik:RadComboBox>
                     </StackPanel>

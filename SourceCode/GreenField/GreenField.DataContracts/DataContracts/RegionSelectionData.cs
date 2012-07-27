@@ -15,5 +15,8 @@ namespace GreenField.DataContracts
         [DataMember]
         public String Country { get; set; }
 
+        [DataMember]
+        public String CountryNames { get; set; }
+
     }
 }

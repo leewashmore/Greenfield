@@ -73,4 +73,28 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PRevenueData" nillable="true" type="tns:PRevenueData" />
+  <xs:complexType name="ArrayOfCOASpecificData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="COASpecificData" nillable="true" type="tns:COASpecificData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCOASpecificData" nillable="true" type="tns:ArrayOfCOASpecificData" />
+  <xs:complexType name="COASpecificData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Amount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Decimals" type="xs:int" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GridDesc" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="GridId" type="xs:int" />
+      <xs:element minOccurs="0" name="IsPercentage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
+      <xs:element minOccurs="0" name="RootSource" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShowGrid" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="COASpecificData" nillable="true" type="tns:COASpecificData" />
 </xs:schema>
