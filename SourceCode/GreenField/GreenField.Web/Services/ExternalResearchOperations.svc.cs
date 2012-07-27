@@ -429,10 +429,6 @@ namespace GreenField.Web.Services
 
                 for (int i = 0; i < data.Count; i++)
                 {
-                    if (data[i].ESTIMATE_DESC == "Revenue")
-                    {
-
-                    }
 
                     if (dataDesc.Contains(data[i].ESTIMATE_ID))
                     {
@@ -514,10 +510,7 @@ namespace GreenField.Web.Services
                 {
                     if (dataDesc.Contains(data[i].ESTIMATE_ID))
                     {
-                        if (data[i].ESTIMATE_DESC == "Dividend Yield")
-                        { 
-                            
-                        }
+                        
                         ConsensusEstimatesValuations temp = new ConsensusEstimatesValuations();
                         temp.IssuerId = data[i].ISSUER_ID;
                         temp.EstimateId = data[i].ESTIMATE_ID;

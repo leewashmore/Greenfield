@@ -186,7 +186,11 @@ namespace GreenField.Gadgets.ViewModels
                 _isActive = value;
                 if (_isActive)
                 {
-                    RetrieveConsensusEstimatesMedianData();
+                    if (EntitySelectionInfo != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
+                        _dbInteractivity.RetrieveIssuerReferenceData(EntitySelectionInfo, RetrieveIssuerReferenceDataCallbackMethod);
+                    }
                 }
             }
         }

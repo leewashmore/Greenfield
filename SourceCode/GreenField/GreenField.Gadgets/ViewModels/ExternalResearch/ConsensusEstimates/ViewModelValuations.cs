@@ -185,7 +185,11 @@ namespace GreenField.Gadgets.ViewModels
                 _isActive = value;
                 if (_isActive)
                 {
-                    RetrieveConsensusEstimatesValuationData();
+                    if (EntitySelectionInfo != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
+                        _dbInteractivity.RetrieveIssuerReferenceData(EntitySelectionInfo, RetrieveIssuerReferenceDataCallbackMethod);
+                    }
                 }
             }
         }
@@ -389,7 +393,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     EntitySelectionInfo = result;
 
-                    if (EntitySelectionInfo != null && IsActive) 
+                    if (EntitySelectionInfo != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
                         _dbInteractivity.RetrieveIssuerReferenceData(result, RetrieveIssuerReferenceDataCallbackMethod);
