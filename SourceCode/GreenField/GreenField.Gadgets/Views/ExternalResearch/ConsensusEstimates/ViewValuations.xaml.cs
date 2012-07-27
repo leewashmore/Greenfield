@@ -83,7 +83,7 @@ namespace GreenField.Gadgets.Views
             {
                 if (e.PeriodColumnNamespace == typeof(ViewModelValuations).FullName)
                 {
-                    PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimateValuations, e, false);
+                    PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimateValuations, e, !e.PeriodIsYearly);
                     this.btnExportExcel.IsEnabled = true;
                 }
             };

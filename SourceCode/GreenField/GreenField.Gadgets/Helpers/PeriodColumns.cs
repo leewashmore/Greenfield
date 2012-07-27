@@ -366,7 +366,7 @@ namespace GreenField.Gadgets.Helpers
                     goto GROUPING;
                 quarterOneData = GetPeriodData<T>(data, dataDesc, period.QuarterOneYear.ToString(), "Q" + period.QuarterOneQuarter.ToString());
                 if (quarterOneData != null && updatePeriodRecord)
-                    period.QuarterOneIsHistorical = ConvertAmountTypeToBoolean(quarterOneData.GetType().GetProperty("AmountType").GetValue(yearSixData, null).ToString());
+                    period.QuarterOneIsHistorical = ConvertAmountTypeToBoolean(quarterOneData.GetType().GetProperty("AmountType").GetValue(quarterOneData, null).ToString());
                 #endregion
 
                 #region Quarter Two
@@ -374,7 +374,7 @@ namespace GreenField.Gadgets.Helpers
                     goto GROUPING;
                 quarterTwoData = GetPeriodData<T>(data, dataDesc, period.QuarterTwoYear.ToString(), "Q" + period.QuarterTwoQuarter.ToString());
                 if (quarterTwoData != null && updatePeriodRecord)
-                    period.QuarterTwoIsHistorical = ConvertAmountTypeToBoolean(quarterTwoData.GetType().GetProperty("AmountType").GetValue(yearSixData, null).ToString());
+                    period.QuarterTwoIsHistorical = ConvertAmountTypeToBoolean(quarterTwoData.GetType().GetProperty("AmountType").GetValue(quarterTwoData, null).ToString());
                 #endregion
 
                 #region Quarter Three
@@ -382,7 +382,7 @@ namespace GreenField.Gadgets.Helpers
                     goto GROUPING;
                 quarterThreeData = GetPeriodData<T>(data, dataDesc, period.QuarterThreeYear.ToString(), "Q" + period.QuarterThreeQuarter.ToString());
                 if (quarterThreeData != null && updatePeriodRecord)
-                    period.QuarterThreeIsHistorical = ConvertAmountTypeToBoolean(quarterThreeData.GetType().GetProperty("AmountType").GetValue(yearSixData, null).ToString());
+                    period.QuarterThreeIsHistorical = ConvertAmountTypeToBoolean(quarterThreeData.GetType().GetProperty("AmountType").GetValue(quarterThreeData, null).ToString());
                 #endregion
 
                 #region Quarter Four
@@ -390,7 +390,7 @@ namespace GreenField.Gadgets.Helpers
                     goto GROUPING;
                 quarterFourData = GetPeriodData<T>(data, dataDesc, period.QuarterFourYear.ToString(), "Q" + period.QuarterFourQuarter.ToString());
                 if (quarterFourData != null && updatePeriodRecord)
-                    period.QuarterFourIsHistorical = ConvertAmountTypeToBoolean(quarterFourData.GetType().GetProperty("AmountType").GetValue(yearSixData, null).ToString());
+                    period.QuarterFourIsHistorical = ConvertAmountTypeToBoolean(quarterFourData.GetType().GetProperty("AmountType").GetValue(quarterFourData, null).ToString());
                 #endregion
 
                 #region Quarter Five
@@ -398,7 +398,7 @@ namespace GreenField.Gadgets.Helpers
                     goto GROUPING;
                 quarterFiveData = GetPeriodData<T>(data, dataDesc, period.QuarterFiveYear.ToString(), "Q" + period.QuarterFiveQuarter.ToString());
                 if (quarterFiveData != null && updatePeriodRecord)
-                    period.QuarterFiveIsHistorical = ConvertAmountTypeToBoolean(quarterFiveData.GetType().GetProperty("AmountType").GetValue(yearSixData, null).ToString());
+                    period.QuarterFiveIsHistorical = ConvertAmountTypeToBoolean(quarterFiveData.GetType().GetProperty("AmountType").GetValue(quarterFiveData, null).ToString());
                 #endregion
 
                 #region Quarter Six
@@ -406,7 +406,7 @@ namespace GreenField.Gadgets.Helpers
                     goto GROUPING;
                 quarterSixData = GetPeriodData<T>(data, dataDesc, period.QuarterSixYear.ToString(), "Q" + period.QuarterSixQuarter.ToString());
                 if (quarterSixData != null && updatePeriodRecord)
-                    period.QuarterSixIsHistorical = ConvertAmountTypeToBoolean(quarterSixData.GetType().GetProperty("AmountType").GetValue(yearSixData, null).ToString());
+                    period.QuarterSixIsHistorical = ConvertAmountTypeToBoolean(quarterSixData.GetType().GetProperty("AmountType").GetValue(quarterSixData, null).ToString());
                 #endregion
                 #endregion
 
@@ -562,13 +562,13 @@ namespace GreenField.Gadgets.Helpers
                 gridView.Columns[i + 2].Header = e.PeriodColumnHeader[i];
 
                 //update column visibility if quarterly data display is implemented
-                if (isQuarterImplemented)
-                {
+                //if (isQuarterImplemented)
+                //{
                     bool columnVisibility = (i < (e.PeriodColumnHeader.Count / 2)) ? e.PeriodIsYearly : !(e.PeriodIsYearly);
 
                     if (gridView.Columns[i + 2].IsVisible != columnVisibility)
                         gridView.Columns[i + 2].IsVisible = columnVisibility;
-                }
+                //}
             }
         }
 

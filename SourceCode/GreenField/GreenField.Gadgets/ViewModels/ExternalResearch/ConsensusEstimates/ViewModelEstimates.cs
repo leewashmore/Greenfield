@@ -509,6 +509,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
+                    ConsensusEstimateDetailInfo.Clear();
                     ConsensusEstimateDetailInfo = result;
                 }
                 else

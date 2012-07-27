@@ -78,14 +78,15 @@ namespace GreenField.DashboardModule.Views
             {
 
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_TARGET_PRICE,
-                Content = new ViewTargetPrice(new ViewModelTargetPrice(param)),MaxHeight=300
+                Content = new ViewTargetPrice(new ViewModelTargetPrice(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
 
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES,
-                Content = new ViewEstimates(new ViewModelEstimates(param)),MaxHeight=300
+                Content = new ViewEstimates(new ViewModelEstimates(param)),
+                RestoredHeight = 300
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
@@ -93,7 +94,7 @@ namespace GreenField.DashboardModule.Views
 
                 Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_VALUATIONS,
                 Content = new ViewValuations(new ViewModelValuations(param)),
-                MaxHeight = 300
+                RestoredHeight = 300
             });
         }
 
