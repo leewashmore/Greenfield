@@ -65,8 +65,8 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public List<int>  YearValues
         {
-          //  get { return new List<int> {DateTime.Now.Year,DateTime.Now.Year+1,DateTime.Now.Year+2}; } 
-            get { return new List<int> { 2002,2003,2004}; }
+           get { return new List<int> {DateTime.Now.Year,DateTime.Now.Year+1,DateTime.Now.Year+2}; } 
+          //  get { return new List<int> { 2002,2003,2004}; }
         }
 
       /// <summary>
