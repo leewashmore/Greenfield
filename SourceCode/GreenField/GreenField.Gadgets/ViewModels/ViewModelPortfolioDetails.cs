@@ -447,6 +447,12 @@ namespace GreenField.Gadgets.ViewModels
                         data.ActivePosition = Convert.ToDecimal(data.RePortfolioWeight) - Convert.ToDecimal(data.ReBenchmarkWeight);
 
                     }
+
+                    List<PortfolioDetailsData> collection = new List<PortfolioDetailsData>(SelectedPortfolioDetailsData);
+                    SelectedPortfolioDetailsData.Clear();
+                    SelectedPortfolioDetailsData.AddRange(collection);
+                    collection.Clear();
+
                 }
 
             }
