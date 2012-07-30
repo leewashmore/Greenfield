@@ -35,11 +35,31 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
         private EntitySelectionData _entitySelectionData;
         private IEventAggregator _eventAggregator;
-        
+
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        public bool IsActive { get; set; }
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (_isActive)
+                {
+                    if (SelectedSecurity != null)
+                    {
+                        _dbInteractivity.RetrieveTargetPriceData(SelectedSecurity, RetrieveTargetPriceDataCallbackMethod);
+                        BusyIndicatorNotification(true, "Updating information based on selected Security");
+                    }
+                }
+                this.RaisePropertyChanged(() => this.IsActive);
+            }
+        }
 
         #endregion
 
@@ -87,16 +107,16 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.SelectedSecurity);
             }
         }
-                       
+
         /// <summary>
         /// Variable of type TargetPriceCEData
         /// </summary>
         private TargetPriceCEData _targetPriceData;
         public TargetPriceCEData TargetPriceData
         {
-            get 
+            get
             {
-                return _targetPriceData; 
+                return _targetPriceData;
             }
             set
             {
@@ -104,7 +124,7 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.TargetPriceData);
             }
         }
-        
+
 
         /// <summary>
         /// Busy Indicator Status
@@ -156,12 +176,12 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Text Bound to CurrentPriceText
         /// </summary>
-        private string  _currentPriceText="Current Price";
-        public string  CurrentPriceText
+        private string _currentPriceText = "Current Price";
+        public string CurrentPriceText
         {
-            get 
+            get
             {
-                return _currentPriceText; 
+                return _currentPriceText;
             }
             set
             {
@@ -169,7 +189,7 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.CurrentPriceText);
             }
         }
-        
+
 
         #endregion
 
@@ -189,7 +209,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (entitySelectionData != null)
                 {
                     SelectedSecurity = entitySelectionData;
-                    if (SelectedSecurity != null)
+                    if (SelectedSecurity != null && IsActive)
                     {
                         _dbInteractivity.RetrieveTargetPriceData(SelectedSecurity, RetrieveTargetPriceDataCallbackMethod);
                         BusyIndicatorNotification(true, "Updating information based on selected Security");
@@ -208,7 +228,7 @@ namespace GreenField.Gadgets.ViewModels
             }
 
         }
-                
+
 
         #endregion
 
@@ -226,9 +246,12 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    TargetPriceData = result.FirstOrDefault();
-                    CurrentPriceText = "Current Price (" + Convert.ToDateTime(TargetPriceData.CurrentPriceDate).ToShortDateString() + " )";
+                    if (result.Count != 0)
+                    {
+                        Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                        TargetPriceData = result.FirstOrDefault();
+                        CurrentPriceText = "Current Price (" + Convert.ToDateTime(TargetPriceData.CurrentPriceDate).ToShortDateString() + " )";
+                    }
                 }
                 else
                 {

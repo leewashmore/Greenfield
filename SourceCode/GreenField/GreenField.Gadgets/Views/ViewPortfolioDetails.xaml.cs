@@ -484,9 +484,9 @@ namespace GreenField.Gadgets.Views
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void dgPortfolioDetails_Filtering(object sender, Telerik.Windows.Controls.GridView.GridViewFilteringEventArgs e)
-        {
-            IColumnFilterDescriptor filterDescriptor = e.ColumnFilterDescriptor as IColumnFilterDescriptor;
-            DataContextPortfolioDetails.FilterDescriptor = e.ColumnFilterDescriptor.DistinctFilter.Member;
+        {            
+            MemberColumnFilterDescriptor filteredColumn = e.ColumnFilterDescriptor as MemberColumnFilterDescriptor;
+            DataContextPortfolioDetails.FilterDescriptor = filteredColumn.Member;
             //e.ColumnFilterDescriptor.Column.UniqueName;
         }
 
