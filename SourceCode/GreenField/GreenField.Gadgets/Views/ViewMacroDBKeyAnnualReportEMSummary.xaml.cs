@@ -139,6 +139,21 @@ namespace GreenField.Gadgets.Views
             set { _dataContextMacroDBKeyAnnualReportEMSummary = value; }
         }
 
+        /// <summary>
+        /// True if gadget is currently on display
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (this.DataContext != null)
+                    ((ViewModelMacroDBKeyAnnualReportEMSummary)this.DataContext).IsActive = _isActive;
+            }
+        }
+
         #endregion
 
         #region Class Methods

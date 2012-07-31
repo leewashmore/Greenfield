@@ -139,6 +139,31 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.CurrentYear);
             }
         }
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if (_countryNames != null && IsActive)
+                    {
+                        if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
+                            macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveMacroDatabaseKeyAnnualReportDataEMSummary(_countryCode, _countryNames, RetrieveMacroEconomicDataEMSummaryCallbackMethod);
+                    }
+                }
+            }
+        }
         #endregion
 
         #region ICommand
@@ -238,7 +263,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, countryValues, 1);
                     _countryNames = countryValues;
 
-                    if (_countryNames != null)
+                    if (_countryNames != null && IsActive )
                     {
                         if (null != macroDBKeyAnnualReportEMSummaryDataLoadedEvent)
                             macroDBKeyAnnualReportEMSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
