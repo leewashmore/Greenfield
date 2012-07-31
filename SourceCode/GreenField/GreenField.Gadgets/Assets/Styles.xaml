@@ -17,7 +17,7 @@
     <SolidColorBrush x:Key="ControlOuterBorder" Color="#9F1D21"/>
     <SolidColorBrush x:Key="ControlInnerBorder" Color="#9F1D21"/>
     <SolidColorBrush x:Key="GridView_GroupRowIndicator" Color="White"/>
-    <SolidColorBrush x:Key="GridView_RowIndicatorCellBackground" Color="#9F1D21"/>
+    <SolidColorBrush x:Key="GridView_RowIndicatorCellBackground" Color="#e4e5e5"/>
     <telerik:Office_BlackTheme x:Key="Theme"/>
     <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <converter:GroupAggregationToVisibilityConverter x:Key="GroupAggregationToVisibilityConverter"/>
@@ -38,14 +38,18 @@
     <SolidColorBrush x:Key="GridView_IndentCellBackground" Color="White"/>
 
     <!--GridViewHeaderCellStyle-->
-    <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellStyle">
-        <Setter Property="Background" Value="#9F1D21" />
-        <Setter Property="BorderBrush" Value="#9F1D21" />
-        <Setter Property="Foreground" Value="White"/>
+    <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellStyleOld">
+        <Setter Property="Background" Value="#e4e5e5" />
+        <Setter Property="BorderBrush" Value="#e4e5e5" />
+        <Setter Property="Foreground" Value="Black"/>
         <Setter Property="FontSize" Value="7"/>
+        <Setter Property="MinHeight" Value="15"/>
         <Setter Property="FontFamily" Value="Arial"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Height" Value="15"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
 
     <!--GridViewCellStyle-->
@@ -60,15 +64,16 @@
         <Setter Property="Height" Value="10"/>
         <Setter Property="FontSize" Value="7"/>
         <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="Background" Value="#9F1D21"/>
+        <Setter Property="Background" Value="#e4e5e5"/>
     </Style>
 
     <!--GroupPanelItemStyle-->
     <Style TargetType="telerik:GridViewGroupPanelItem" x:Name="GridViewGroupPanelItemStyle">
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Background" Value="#9F1D21"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Background" Value="#e4e5e5"/>
         <Setter Property="FontFamily" Value="Arial"/>
         <Setter Property="FontSize" Value="7"/>
+        <Setter Property="MinHeight" Value="10"/>
     </Style>
 
     <!--GridViewRowStyle-->
@@ -79,13 +84,13 @@
     <!--GridViewRowStyle-->
     <Style TargetType="telerik:GridViewRow" x:Name="GridViewAlternateRowStyle">
         <Setter Property="Height" Value="15"/>
-        <Setter Property="Background" Value="#d8d5d4"/>
+        <Setter Property="Background" Value="#f3f6fc"/>
     </Style>
 
     <!--GridViewHeaderRowStyle-->
     <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
         <Setter Property="Height" Value="15"/>
-        <Setter Property="Background" Value="#9F1D21"/>
+        <Setter Property="Background" Value="#e4e5e5"/>
         <Setter Property="MaxHeight" Value="15"/>
         <Setter Property="IndentLevel" Value="0"/>
     </Style>
@@ -94,8 +99,8 @@
     <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">
         <Setter Property="Height" Value="10"/>
         <Setter Property="FontSize" Value="7"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="Background" Value="#9F1D21"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Background" Value="#e4e5e5"/>
     </Style>
 
     <!--ToggleButtonStyling-->
@@ -659,6 +664,181 @@
         </Setter>
     </Style>
     <!--LegendItemStyleEnd-->
+
+
+    <!--#####################################################################################################################-->
+    <!--#####################################################################################################################-->
+    <!--#####################################################################################################################-->
+
+    <!--BorderLess GridHeaderCellStyle-->
+
+
+    <SolidColorBrush x:Key="GridView_HeaderInnerBorder" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="GridView_HeaderOuterBorder_Over" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="GridView_HeaderInnerBorder_Over" Color="White"/>
+    <LinearGradientBrush x:Key="GridView_HeaderBackground_Over" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFFFFBA3" Offset="1"/>
+        <GradientStop Color="#FFFFFBDA" Offset="0"/>
+        <GradientStop Color="#FFFFD25A" Offset="0.43"/>
+        <GradientStop Color="#FFFEEBAE" Offset="0.42"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GridView_HeaderOuterBorder_Selected" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FF616161" Offset="0"/>
+        <GradientStop Color="#FF989898" Offset="1"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GridView_HeaderInnerBorder_Selected" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFB69A78"/>
+        <GradientStop Color="#FFFFE17A" Offset="0.126"/>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GridView_HeaderBackground_Selected" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#FFFFD74E" Offset="0.996"/>
+        <GradientStop Color="#FFFFDCAB" Offset="0.17"/>
+        <GradientStop Color="#FFFFB062" Offset="0.57"/>
+        <GradientStop Color="#FFFFD18F" Offset="0.56"/>
+        <GradientStop Color="#FFFFBA74"/>
+    </LinearGradientBrush>
+    <Style x:Key="StretchedContentControl" TargetType="ContentControl">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+    </Style>
+    <SolidColorBrush x:Key="GridView_SortIndicatorColor" Color="Black"/>
+    <telerik:Office_BlackTheme x:Key="ThemeB"/>
+    <Style x:Key="ColumnHeaderGripperStyle" TargetType="Thumb">
+        <Setter Property="Width" Value="8"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Cursor" Value="SizeWE"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Thumb">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush x:Key="GridView_HeaderForeground_Selected" Color="Black"/>
+    <SolidColorBrush x:Key="GridView_HeaderOuterBorder" Color="DarkBlue"/>
+    <ControlTemplate x:Key="GridViewHeaderCellTemplate" TargetType="telerik:GridViewHeaderCell">
+        <Grid x:Name="PART_HeaderCellGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup x:Name="CommonStates">
+                    <VisualStateGroup.Transitions>
+                        <VisualTransition GeneratedDuration="00:00:00.2000000" To="Normal"/>
+                        <VisualTransition GeneratedDuration="00:00:00.2000000" To="MouseOver"/>
+                    </VisualStateGroup.Transitions>
+                    <VisualState x:Name="Normal"/>
+                    <VisualState x:Name="MouseOver">
+                        <Storyboard>
+                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="GridViewHeaderCell_Over">
+                                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource GridView_HeaderForeground_Selected}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Ascending">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource GridView_HeaderForeground_Selected}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PART_SortIndicator">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="GridViewHeaderCell_Selected">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                    <VisualState x:Name="Descending">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource GridView_HeaderForeground_Selected}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PART_SortIndicator">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform" Storyboard.TargetName="PART_SortIndicator">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0">
+                                    <DiscreteObjectKeyFrame.Value>
+                                        <ScaleTransform ScaleY="1" ScaleX="1"/>
+                                    </DiscreteObjectKeyFrame.Value>
+                                </DiscreteObjectKeyFrame>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="GridViewHeaderCell_Selected">
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+            <Border x:Name="GridViewHeaderCell" BorderBrush="{TemplateBinding BorderBrush}" Grid.ColumnSpan="2">
+                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder}" BorderThickness="1" Background="{TemplateBinding Background}"/>
+            </Border>
+            <Border x:Name="GridViewHeaderCell_Over" BorderBrush="{StaticResource GridView_HeaderOuterBorder_Over}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2" Opacity="0">
+                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder_Over}" BorderThickness="1" Background="#FF848484"/>
+            </Border>
+            <Border x:Name="GridViewHeaderCell_Selected" BorderBrush="{StaticResource GridView_HeaderOuterBorder_Selected}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2" Opacity="0">
+                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder_Selected}" BorderThickness="1" Background="{StaticResource GridView_HeaderBackground_Selected}"/>
+            </Border>
+            <ContentControl x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsTabStop="{TemplateBinding IsTabStop}" Margin="{TemplateBinding Padding}" Style="{StaticResource StretchedContentControl}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+            <Path x:Name="PART_SortIndicator" Grid.ColumnSpan="2" Data="M0,0 L1,0 2,0 3,0 4,0 5,0 5,1 4,1 4,2 3,2 3,3 2,3 2,2 1,2 1,1 0,1 0,0 z" Fill="{StaticResource GridView_SortIndicatorColor}" HorizontalAlignment="Center" Height="3" Margin="0,3,0,0" Opacity="0" RenderTransformOrigin=".5,.5" Stretch="Fill" VerticalAlignment="Top" Width="5">
+                <Path.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="-1" ScaleX="1"/>
+                        <SkewTransform AngleY="0" AngleX="0"/>
+                        <RotateTransform Angle="0"/>
+                        <TranslateTransform X="0" Y="0"/>
+                    </TransformGroup>
+                </Path.RenderTransform>
+            </Path>
+            <telerik:FilteringDropDown x:Name="PART_DistinctFilterControl" Grid.Column="1" Margin="0,0,8,0" telerik:StyleManager.Theme="{StaticResource ThemeB}" Visibility="{TemplateBinding FilteringUIVisibility}"/>
+            <Thumb x:Name="PART_LeftHeaderGripper" Grid.ColumnSpan="2" HorizontalAlignment="Left" IsTabStop="{TemplateBinding IsTabStop}" Style="{StaticResource ColumnHeaderGripperStyle}"/>
+            <Thumb x:Name="PART_RightHeaderGripper" Grid.ColumnSpan="2" HorizontalAlignment="Right" IsTabStop="{TemplateBinding IsTabStop}" Style="{StaticResource ColumnHeaderGripperStyle}"/>
+        </Grid>
+    </ControlTemplate>
+    <LinearGradientBrush x:Key="GridView_HeaderBackground" EndPoint="0.5,1" StartPoint="0.5,0">
+        <GradientStop Color="#e4e5e5" Offset="1"/>
+        <GradientStop Color="#e4e5e5"/>
+        <GradientStop Color="#e4e5e5" Offset="0.42"/>
+        <GradientStop Color="#e4e5e5" Offset="0.43"/>
+    </LinearGradientBrush>
+    <SolidColorBrush x:Key="GridView_HeaderForeground" Color="Black"/>
+    <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellStyle">
+        <Setter Property="Template" Value="{StaticResource GridViewHeaderCellTemplate}"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderBackground}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="7"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="Padding" Value="5,0,3,0"/>
+        <Setter Property="Foreground" Value="{StaticResource GridView_HeaderForeground}"/>
+    </Style>
+     
+
+
+    <!--#####################################################################################################################-->
+    <!--#####################################################################################################################-->
+    <!--#####################################################################################################################-->
+
+    <!--BorderLess GridHeaderCellStyleEND-->
+
+
 
 
 </ResourceDictionary>

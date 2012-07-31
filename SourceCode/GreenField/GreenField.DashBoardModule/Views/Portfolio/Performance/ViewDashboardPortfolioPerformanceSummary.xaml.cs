@@ -64,7 +64,7 @@ namespace GreenField.DashboardModule.Views
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_HEAT_MAP, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_HEAT_MAP, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 300,
                 Content = new ViewHeatMap(new ViewModelHeatMap(param))                
             });
@@ -72,7 +72,7 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
 
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_GRAPH, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_GRAPH, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 300,
                 Content = new ViewPerformanceGadget(new ViewModelPerformanceGadget(param))
             });
@@ -80,7 +80,7 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
 
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_GRID, Foreground = new SolidColorBrush(Colors.White), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_GRID, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 100,
                 Content = new ViewPerformanceGrid(new ViewModelPerformanceGrid(param))
             });

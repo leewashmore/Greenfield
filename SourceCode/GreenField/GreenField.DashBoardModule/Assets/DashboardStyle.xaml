@@ -5,9 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <!-- Primary Color Brushes -->
     <SolidColorBrush x:Key="TileView_Background" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="TileView_OuterBorder" Color="#FF848484" />
-    <SolidColorBrush x:Key="TileView_InneBorder" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="TileView_HeaderBorder" Color="#9F1D21" />
+    <SolidColorBrush x:Key="TileView_OuterBorder" Color="#cbd4f1" />
+    <SolidColorBrush x:Key="TileView_InneBorder" Color="#cbd4f1" />
+    <SolidColorBrush x:Key="TileView_HeaderBorder" Color="#cbd4f1" />
     <SolidColorBrush x:Key="TileView_ButtonOuterBorder" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="TileView_HeaderBorder_HorizontalSplitterBackground" Color="#FFBFBFBF" />
     <SolidColorBrush x:Key="DisabledBrush" Color="#99FFFFFF" />
@@ -15,8 +15,8 @@
 
     <!-- Primary Linear Gradient Brush -->
     <LinearGradientBrush x:Key="TileView_HeaderBackground" StartPoint="0.5,0" EndPoint="0.5,1">
-        <GradientStop Color="#9F1D21" Offset="0" />
-        <GradientStop Offset="1" Color="#BE715C" />
+        <GradientStop Color="#cbd4f1" Offset="0" />
+        <GradientStop Offset="1" Color="#cbd4f1" />
     </LinearGradientBrush>
     <LinearGradientBrush x:Key="TileView_ButtonBackground" StartPoint="0.5,0" EndPoint="0.5,1">
         <GradientStop Color="Black" />
@@ -48,7 +48,7 @@
     <CornerRadius x:Key="TileView_InneBorder_CornerRadius">1</CornerRadius>
     <CornerRadius x:Key="TileView_OuterBorder_CornerRadius">2</CornerRadius>
 
-    
+
     <!-- ******STYLES******* -->
     <!-- ******************* -->
     <!--RadToggleButton Style-->
@@ -176,7 +176,7 @@
     <!--  CloseButtonStyle Style-->
     <Style x:Key="CloseButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Foreground" Value="Black" />
         <Setter Property="Padding" Value="3" />
         <Setter Property="BorderThickness" Value="11" />
         <Setter Property="BorderBrush" Value="Transparent" />

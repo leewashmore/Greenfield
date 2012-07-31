@@ -37,13 +37,13 @@
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            
-            <Border x:Name="BlankBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="0">
-                <TextBlock Foreground="White" Text="Target Price/Consensus Recommendation" FontFamily="Arial" FontSize="7"  FontWeight="Bold"  VerticalAlignment="Center" />
+
+            <Border x:Name="BlankBorder" Background="#cbd4f1" Grid.Row="0" Grid.Column="0">
+                <TextBlock Foreground="Black" Text="Target Price/Consensus Recommendation" FontFamily="Arial" FontSize="7"  FontWeight="Bold"  VerticalAlignment="Center" />
             </Border>
-            <Border x:Name="BlankBorder2" Background="#9F1D21" Grid.Row="0" Grid.Column="1">
+            <Border x:Name="BlankBorder2" Background="#cbd4f1" Grid.Row="0" Grid.Column="1">
                 <TextBlock Text="" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                Foreground="White" FontFamily="Arial" FontSize="7" />
+                Foreground="Black" FontFamily="Arial" FontSize="7" />
             </Border>
 
             <!--Ticker-->

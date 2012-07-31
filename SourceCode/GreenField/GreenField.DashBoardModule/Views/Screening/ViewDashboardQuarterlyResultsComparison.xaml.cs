@@ -72,7 +72,7 @@ namespace GreenField.DashBoardModule.Views.Screening
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
-                control.IsActive = false; 
+                control.IsActive = false;
             }
         }
 
@@ -81,7 +81,7 @@ namespace GreenField.DashBoardModule.Views.Screening
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
-                control.IsActive = true; 
+                control.IsActive = true;
             }
         }
     }

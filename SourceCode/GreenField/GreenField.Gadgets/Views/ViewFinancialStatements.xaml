@@ -20,7 +20,11 @@
                     <!--GRID Buttons-->
                     <!--LeftButton-->
                     <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellLeftButtonStyle">
-                        <Setter Property="Background" Value="#9F1D21" />
+                        <Setter Property="Background" Value="#cbd4f1" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
                         <Setter Property="Height" Value="15"/>
                         <Setter Property="ContentTemplate">
                             <Setter.Value>
@@ -33,7 +37,11 @@
 
                     <!--Right Button-->
                     <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellRightButtonStyle">
-                        <Setter Property="Background" Value="#9F1D21" />
+                        <Setter Property="Background" Value="#cbd4f1" />
+                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalContentAlignment" Value="Center"/>
+                        <Setter Property="HorizontalAlignment" Value="Center"/>
                         <Setter Property="Height" Value="15"/>
                         <Setter Property="ContentTemplate">
                             <Setter.Value>

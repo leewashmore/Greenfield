@@ -26,7 +26,7 @@
                                      RowHeight="Auto"
                                      MinimizedItemsPosition="Right" 
                                      IsDockingEnabled="False"
-                                     IsVirtualizing="True"
+                                     IsVirtualizing="False"
                                      IsItemDraggingEnabled="True"
                                      ScrollBarVisibility="Visible" 
                                      MinimizedRowHeight="200"
@@ -39,7 +39,8 @@
                                      telerik:TileViewPanel.IsRowsShrinkEnabled="True" 
                                      telerik:TileViewPanel.IsColumnsShrinkEnabled="True"
                                      VerticalAlignment="Top"                                 
-                                     ColumnWidth="*" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                     ColumnWidth="*"
+                                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
                 </telerik:RadTileView>
             </Border>
         </telerik:RadBusyIndicator>
