@@ -18,6 +18,8 @@ using System.Collections.ObjectModel;
 using GreenField.DataContracts;
 using System.Collections.Generic;
 using GreenField.DataContracts.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -47,6 +49,21 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             EntitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
 
+            //PeriodColumns.PeriodColumnNavigate += (e) =>
+            //{
+            //    if (e.PeriodColumnNamespace == GetType().FullName)
+            //    {
+            //        BusyIndicatorNotification(true, "Retrieving data for updated time span");
+            //        Iterator = e.PeriodColumnNavigationDirection == NavigationDirection.LEFT ? Iterator - 1 : Iterator + 1;
+            //        PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator, defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
+            //        ConsensusEstimateDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(ConsensusEstimateDetailInfo, out periodRecord,
+            //            periodRecord,subGroups:null);
+            //        PeriodRecord = periodRecord;
+            //        PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, displayPeriodType: false);
+            //        BusyIndicatorNotification();
+            //    }
+            //};
+
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
@@ -62,6 +79,28 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
+
+        //#region Period Information
+        ///// <summary>
+        ///// Iteration Count
+        ///// </summary>
+        //public Int32 Iterator { get; set; }
+
+        ///// <summary>
+        ///// Period Record storing period information based on iteration
+        ///// </summary>
+        //private PeriodRecord _periodRecord;
+        //public PeriodRecord PeriodRecord
+        //{
+        //    get
+        //    {
+        //        if (_periodRecord == null)
+        //            _periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
+        //        return _periodRecord;
+        //    }
+        //    set { _periodRecord = value; }
+        //}
+        //#endregion
 
         #region IsActive
         /// <summary>
@@ -264,6 +303,37 @@ namespace GreenField.Gadgets.ViewModels
         
         }
         #endregion
+
+        //#region Period Column Headers
+        ///// <summary>
+        ///// Stores period column headers
+        ///// </summary>
+        //private List<String> _periodColumnHeader;
+        //public List<String> PeriodColumnHeader
+        //{
+        //    get
+        //    {
+        //        if (_periodColumnHeader == null)
+        //            _periodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
+        //        return _periodColumnHeader;
+        //    }
+        //    set
+        //    {
+        //        _periodColumnHeader = value;
+        //        RaisePropertyChanged(() => this.PeriodColumnHeader);
+        //        if (value != null)
+        //        {
+        //            PeriodColumns.RaisePeriodColumnUpdateCompleted(new PeriodColumnUpdateEventArg()
+        //            {
+        //                PeriodColumnNamespace = GetType().FullName,
+        //                PeriodColumnHeader = value,
+        //                PeriodRecord = PeriodRecord,
+        //                PeriodIsYearly = true
+        //            });
+        //        }
+        //    }
+        //}
+        //#endregion
 
         #endregion
 

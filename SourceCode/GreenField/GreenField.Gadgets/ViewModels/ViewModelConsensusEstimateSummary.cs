@@ -55,7 +55,7 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            if (_entitySelectionData !=null)
+            if (_entitySelectionData !=null && IsActive)
             {
                 _dbInteractivity.RetrieveConsensusEstimatesSummaryData(_entitySelectionData, RetrieveConsensusEstimatesSummaryDataDataCallbackMethod);
             }
@@ -86,6 +86,32 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.ConsensusSummaryInfo);
             }
         }
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if (_entitySelectionData != null && _isActive)
+                    {
+                        if (null != consensusEstimatesSummaryDataLoadedEvent)
+                            consensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveConsensusEstimatesSummaryData(_entitySelectionData, RetrieveConsensusEstimatesSummaryDataDataCallbackMethod);
+                        
+                    }
+                }
+            }
+        }
         #endregion
 
         #region Events
@@ -107,7 +133,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (entitySelectionData != null)
+                if (entitySelectionData != null && IsActive)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
                     _entitySelectionData = entitySelectionData;

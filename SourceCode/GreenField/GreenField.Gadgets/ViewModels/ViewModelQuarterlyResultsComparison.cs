@@ -47,7 +47,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-            if(YearValue !=null && FieldValue !=null)
+            if(YearValue !=0 && FieldValue !=null)
             _dbInteractivity.RetrieveQuarterlyResultsData(FieldValue, YearValue, RetrieveQuarterlyResultsDataCallbackMethod);
         }
         #endregion
@@ -65,14 +65,14 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public List<int>  YearValues
         {
-          //  get { return new List<int> {DateTime.Now.Year,DateTime.Now.Year+1,DateTime.Now.Year+2}; } 
-            get { return new List<int> { 2002,2003,2004}; }
+           get { return new List<int> {DateTime.Now.Year,DateTime.Now.Year+1,DateTime.Now.Year+2}; } 
+          //  get { return new List<int> { 2002,2003,2004}; }
         }
 
       /// <summary>
       /// Selected Year Value
       /// </summary>
-        private int yearValue;
+        private int yearValue = DateTime.Now.Year;
         public int YearValue
         {
             get 
@@ -85,7 +85,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (yearValue != value)
                 {
                     yearValue = value;
-                    if (FieldValue != null)
+                    if (FieldValue != null && IsActive)
                         if (null != quarterlyResultsComoarisonDataLoadedEvent)
                             quarterlyResultsComoarisonDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrieveQuarterlyResultsData(FieldValue, yearValue, RetrieveQuarterlyResultsDataCallbackMethod);
@@ -97,7 +97,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Selected Field Value
         /// </summary>
-        private String fieldValue;
+        private String fieldValue = "Net Income";
         public String FieldValue
         {
             get
@@ -110,7 +110,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (fieldValue != value)
                 {
                     fieldValue = value;
-                    if(YearValue != 0)
+                    if(YearValue != 0 && IsActive)
                         if (null != quarterlyResultsComoarisonDataLoadedEvent)
                             quarterlyResultsComoarisonDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     _dbInteractivity.RetrieveQuarterlyResultsData(fieldValue, YearValue, RetrieveQuarterlyResultsDataCallbackMethod);
@@ -135,6 +135,31 @@ namespace GreenField.Gadgets.ViewModels
                  quarterlyResultsInfo = value;
                  RaisePropertyChanged(() => this.QuarterlyResultsInfo);
                 
+            }
+        }
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if (YearValue != 0 && FieldValue != null && IsActive)
+                    {
+                        if (null != quarterlyResultsComoarisonDataLoadedEvent)
+                            quarterlyResultsComoarisonDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveQuarterlyResultsData(FieldValue, YearValue, RetrieveQuarterlyResultsDataCallbackMethod);
+                    }
+                }
             }
         }
         #endregion

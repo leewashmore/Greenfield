@@ -67,6 +67,21 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextQuarterlyResultsComparison; }
             set { _dataContextQuarterlyResultsComparison = value; }
         }
+
+        /// <summary>
+        /// True if gadget is currently on display
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (this.DataContext != null)
+                    ((ViewModelQuarterlyResultsComparison)this.DataContext).IsActive = _isActive;
+            }
+        }
         #endregion
 
         #region Export To Excel Methods
