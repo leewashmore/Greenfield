@@ -1856,7 +1856,7 @@
 		</Options>
 		<!-- Diagram content (shape and connector positions) -->
 		<Diagrams>
-			<Diagram Name="ExternalResearchDataModel" ZoomLevel="86">
+			<Diagram Name="ExternalResearchDataModel" ZoomLevel="62">
 				<EntityTypeShape EntityType="ExternalResearchModel.CONSENSUS_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921874999996" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES" Width="1.5" PointX="4.75" PointY="0.75" Height="4.2879036458333335" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.FX_RATES" Width="1.5" PointX="6.75" PointY="0.75" Height="1.9802864583333317" IsExpanded="true" />

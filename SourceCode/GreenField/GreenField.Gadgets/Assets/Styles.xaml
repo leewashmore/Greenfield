@@ -821,10 +821,10 @@
         <Setter Property="FontFamily" Value="Arial"/>
         <Setter Property="FontSize" Value="7"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="HorizontalAlignment" Value="Center"/>
+        
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="Padding" Value="5,0,3,0"/>
