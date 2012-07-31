@@ -150,28 +150,52 @@ where ISSUER_ID = @issuerID  AND DATA_SOURCE = 'PRIMARY' AND  PERIOD_TYPE = 'A' 
 IF @earnings ='EPS'
 BEGIN
 INSERT INTO @TEMP_CON_CHANGE_TAB(OriginalDate,ExpirationDate,Median,FiscalYear)
-SELECT OriginalDate,ExpirationDate,Median,left(fYearEnd,4) 
-FROM dbo.tblConsensusEstimate
-WHERE XREF = @xref and EstimateType ='NTP' and PeriodType ='A' 
+(select ce.OriginalDate,ce.ExpirationDate,ce.Median,LEFT(ce.fYearEnd,4) 
+From dbo.tblConsensusEstimate ce
+-- use this join to limit the record set to only the most recent rows.
+inner join (select XRef, PeriodEndDate, fYearEnd, EstimateType, MAX(StartDate) as StartDate
+from dbo.tblConsensusEstimate
+group by XRef, PeriodEndDate, fYearEnd, EstimateType) a
+on a.XRef = ce.XRef and a.PeriodEndDate = ce.PeriodEndDate and a.fYearEnd = ce.fYearEnd
+and a.EstimateType = ce.EstimateType and a.StartDate = ce.StartDate
+and ce.XRef = @xref 
+and ce.EstimateType = 'NTP' 
+and ce.PeriodType = 'A')
 END
 
 IF @earnings ='EPSREP'
 BEGIN
 INSERT INTO @TEMP_CON_CHANGE_TAB(OriginalDate,ExpirationDate,Median,FiscalYear)
-SELECT OriginalDate,ExpirationDate,Median,left(fYearEnd,4) 
-FROM dbo.tblConsensusEstimate
-WHERE XREF = @xref and EstimateType ='NTPREP' and PeriodType ='A' 
+(select ce.OriginalDate,ce.ExpirationDate,ce.Median,LEFT(ce.fYearEnd,4) 
+From dbo.tblConsensusEstimate ce
+-- use this join to limit the record set to only the most recent rows.
+inner join (select XRef, PeriodEndDate, fYearEnd, EstimateType, MAX(StartDate) as StartDate
+from dbo.tblConsensusEstimate
+group by XRef, PeriodEndDate, fYearEnd, EstimateType) a
+on a.XRef = ce.XRef and a.PeriodEndDate = ce.PeriodEndDate and a.fYearEnd = ce.fYearEnd
+and a.EstimateType = ce.EstimateType and a.StartDate = ce.StartDate
+and ce.XRef = @xref 
+and ce.EstimateType = 'NTPREP' 
+and ce.PeriodType = 'A') 
 END
 
 IF @earnings ='EBG'
 BEGIN
 INSERT INTO @TEMP_CON_CHANGE_TAB(OriginalDate,ExpirationDate,Median,FiscalYear)
-SELECT OriginalDate,ExpirationDate,Median,left(fYearEnd,4) 
-FROM dbo.tblConsensusEstimate
-WHERE XREF = @xref and EstimateType ='NTPBG' and PeriodType ='A' 
+(select ce.OriginalDate,ce.ExpirationDate,ce.Median,LEFT(ce.fYearEnd,4) 
+From dbo.tblConsensusEstimate ce
+-- use this join to limit the record set to only the most recent rows.
+inner join (select XRef, PeriodEndDate, fYearEnd, EstimateType, MAX(StartDate) as StartDate
+from dbo.tblConsensusEstimate
+group by XRef, PeriodEndDate, fYearEnd, EstimateType) a
+on a.XRef = ce.XRef and a.PeriodEndDate = ce.PeriodEndDate and a.fYearEnd = ce.fYearEnd
+and a.EstimateType = ce.EstimateType and a.StartDate = ce.StartDate
+and ce.XRef = @xref 
+and ce.EstimateType = 'NTPBG' 
+and ce.PeriodType = 'A')
 END
 
-SELECT * FROM @TEMP_CON_CHANGE_TAB
+--SELECT * FROM @TEMP_CON_CHANGE_TAB
 SET @currentYear = (select datepart(yyyy,getdate()))
 SET @oneMonthPriorDate = (select dateadd(mm,-1,getdate()))
 SET @threeMonthsPriorDate = (select dateadd(mm,-3,getdate()))
@@ -210,7 +234,7 @@ WHERE  PERIOD_YEAR >= @currentYear-1 AND PERIOD_YEAR <= @currentYear + 4
 
 END
 
-SELECT * FROM @FINAL_TAB
+--SELECT * FROM @FINAL_TAB
 
 INSERT INTO @ASHMORE_FINAL_TAB(NetIncome,YEAR1,YEAR2,YEAR3,YEAR4,YEAR5)
 SELECT 'AshmoreEMM',(SELECT MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='AshmoreAmount'),
@@ -234,25 +258,25 @@ SELECT 'Difference',((SELECT MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @current
 ((SELECT MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='AshmoreAmount')/(SELECT MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='EstimateAmount') - 1)
 
 INSERT INTO @ASHMORE_FINAL_TAB(NetIncome,YEAR1,YEAR2,YEAR3,YEAR4,YEAR5)
-SELECT 'Consensus Change – 1 Month',((SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='n1Month') - 1),
-((SELECT TOP 1 MEDIAN  FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='n1Month') - 1),
-((SELECT TOP 1 MEDIAN  FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='n1Month') - 1),
-((SELECT TOP 1 MEDIAN  FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='n1Month') - 1),
-((SELECT TOP 1 MEDIAN  FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='n1Month') - 1)
+SELECT 'Consensus Change – 1 Month',((SELECT MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='n1Month') - 1),
+((SELECT  MEDIAN  FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='n1Month') - 1),
+((SELECT  MEDIAN  FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='n1Month') - 1),
+((SELECT  MEDIAN  FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='n1Month') - 1),
+((SELECT  MEDIAN  FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='n1Month') - 1)
 
 INSERT INTO @ASHMORE_FINAL_TAB(NetIncome,YEAR1,YEAR2,YEAR3,YEAR4,YEAR5)
-SELECT 'Consensus Change – 3 Month',((SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='n3Month') - 1),
-((SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='n3Month') - 1),
-((SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='n3Month') - 1),
-((SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='n3Month') - 1),
-((SELECT TOP 1  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='n3Month') - 1)
+SELECT 'Consensus Change – 3 Month',((SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='nCurrent')/(SELECT MEDIAN  FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='n3Month') - 1),
+((SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='n3Month') - 1),
+((SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='n3Month') - 1),
+((SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='n3Month') - 1),
+((SELECT   MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='n3Month') - 1)
 
 INSERT INTO @ASHMORE_FINAL_TAB(NetIncome,YEAR1,YEAR2,YEAR3,YEAR4,YEAR5)
-SELECT 'Consensus Change – 6 Month',((SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='n6Month') - 1),
-((SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='n6Month') - 1),
-((SELECT TOP 1  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='n6Month') - 1),
-((SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='n6Month') - 1),
-((SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='nCurrent')/(SELECT TOP 1 MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='n6Month') - 1)
+SELECT 'Consensus Change – 6 Month',((SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='n6Month') - 1),
+((SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear AND MTYPE ='n6Month') - 1),
+((SELECT MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+1 AND MTYPE ='n6Month') - 1),
+((SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+2 AND MTYPE ='n6Month') - 1),
+((SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='nCurrent')/(SELECT  MEDIAN FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear+3 AND MTYPE ='n6Month') - 1)
 
 INSERT INTO @ASHMORE_FINAL_TAB(NetIncome,YEAR1,YEAR2,YEAR3,YEAR4,YEAR5)
 SELECT 'Last Update (Consensus)',(SELECT CONVERT(VARCHAR(100),DATE_SOURCE_DATE,121) FROM @FINAL_TAB WHERE FISCAL_YEAR = @currentYear-1 AND MTYPE ='SourceDate'),
@@ -263,6 +287,8 @@ SELECT 'Last Update (Consensus)',(SELECT CONVERT(VARCHAR(100),DATE_SOURCE_DATE,1
 
 SELECT * FROM @ASHMORE_FINAL_TAB
 END
+
+
 GO
 --indicate thet current script is executed
 declare @CurrentScriptVersion as nvarchar(100) = '00053'
