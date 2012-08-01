@@ -31,7 +31,7 @@ namespace GreenField.Gadgets.Views
 
         #region Properties
         /// <summary>
-        /// property to set IsActive variable of View Model
+        /// True if gadget is currently on display
         /// </summary>
         private bool _isActive;
         public override bool IsActive
@@ -40,15 +40,18 @@ namespace GreenField.Gadgets.Views
             set
             {
                 _isActive = value;
-                if (DataContextSource != null) //DataContext instance
-                    DataContextSource.IsActive = _isActive;
+                if (this.DataContext != null)
+                    ((ViewModelCOASpecific)this.DataContext).IsActive = _isActive;
             }
         }
+
+
+
 
         /// <summary>
         /// View model class object
         /// </summary>
-        public ViewModelFinancialStatements DataContextSource { get; set; }
+        public ViewModelCOASpecific DataContextSource { get; set; }
         #endregion
 
         #region Event Handlers

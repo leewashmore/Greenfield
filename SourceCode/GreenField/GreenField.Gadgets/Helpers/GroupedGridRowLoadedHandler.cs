@@ -85,12 +85,13 @@ namespace GreenField.Gadgets.Helpers
                 var row = e.Row as GridViewGroupFooterRow;
                 if (row != null)
                 {
-                    row.Foreground = new SolidColorBrush(Colors.White);
+                    row.Foreground = new SolidColorBrush(Colors.Black);
                     row.FontSize = 7;
                     row.FontFamily = new FontFamily("Arial");
                     row.FontWeight = FontWeights.Bold;
                 }
-            }
+            }           
+
         }
     }
 }

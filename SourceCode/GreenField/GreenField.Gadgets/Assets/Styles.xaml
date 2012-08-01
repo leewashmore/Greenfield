@@ -34,7 +34,7 @@
                         <GradientStop Color="#DAAE9E" Offset="0.95"/>
                         <GradientStop Color="#A7362C" Offset="0.025"/>
                     </LinearGradientBrush>-->
-    <SolidColorBrush x:Key="GridView_GroupRowBackground" Color="#A7362C"/>
+    <SolidColorBrush x:Key="GridView_GroupRowBackground" Color="#e4e5e5"/>
     <SolidColorBrush x:Key="GridView_GridLinesItemBorder" Color="White"/>
     <SolidColorBrush x:Key="GridView_IndentCellBackground" Color="White"/>
 
@@ -53,6 +53,14 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
 
+    <!--<Style TargetType="telerik:GridViewGroupRow" x:Name="GridViewGroupRowStyle">
+        <Setter Property="Background" Value="#e4e5e5"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="7"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>-->
+    
     <!--GridViewCellStyle-->
     <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
         <Setter Property="Height" Value="15"/>
@@ -206,10 +214,10 @@
                                   Visibility="{Binding ShowHeaderAggregates, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource TemplatedParent}}">
                             <telerik:AggregateResultsList x:Name="aggregateResultsList"
                                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                              Foreground="White"
+                                                              Foreground="Black"
                                                               ItemsSource="{TemplateBinding AggregateResults}"
                                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                                              Margin="5,0"
+                                                              Margin="5,0" FontFamily="Arial" FontSize="7" FontWeight="Bold"
                                                               Visibility="Collapsed">
                                 <telerik:AggregateResultsList.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -246,7 +254,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <telerik:GridViewGroupFooterRow x:Name="Footer" Foreground="White" FontFamily="Arial" FontSize="7" FontWeight="Bold" telerik:StyleManager.Theme="{StaticResource Theme}" Background="{x:Null}" BorderThickness="0,0,0,1"/>
+                    <telerik:GridViewGroupFooterRow x:Name="Footer" Foreground="Black" FontFamily="Arial" FontSize="7" FontWeight="Bold" telerik:StyleManager.Theme="{StaticResource Theme}" Background="{x:Null}" BorderThickness="0,0,0,1"/>
                     <telerik:GridViewVirtualizingPanel x:Name="PART_GridViewVirtualizingPanel" Background="White" Visibility="Collapsed" VerticalAlignment="Bottom" Grid.Row="1"/>
                 </Grid>
             </Border>
@@ -264,9 +272,11 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="Padding" Value="10,0,0,0"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="7"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontWeight" Value="Bold"/>
     </Style>
-
-
 
     <!--GridViewGroupFooterCellStyle-->
     <Style TargetType="telerik:GridViewGroupFooterCell">

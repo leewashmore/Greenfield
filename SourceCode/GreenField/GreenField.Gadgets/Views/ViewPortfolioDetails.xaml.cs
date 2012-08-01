@@ -83,6 +83,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             this.DataContextPortfolioDetails = dataContextSource;
             this.dgPortfolioDetails.GroupPanelStyle = this.Resources["GridViewGroupPanelStyle"] as Style;
+            
         }
 
         #endregion
@@ -155,7 +156,6 @@ namespace GreenField.Gadgets.Views
             //    }
             //}
             PDFExporter.btnExportPDF_Click(this.dgPortfolioDetails);
-
         }
 
         /// <summary>
