@@ -326,6 +326,11 @@ public static class UnrealizedGainLossCalculations
                 else
                 {
                     i++;
+                    if (i > 30)
+                    {
+                        dateObjectFound = false;
+                        continue;
+                    }
                 }
             }
         }
