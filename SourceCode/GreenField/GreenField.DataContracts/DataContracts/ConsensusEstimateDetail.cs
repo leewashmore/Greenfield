@@ -63,5 +63,8 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public decimal? Variance { get; set; }
+
+        [DataMember]
+        public decimal ConsensusMedian{ get; set; }
     }
 }

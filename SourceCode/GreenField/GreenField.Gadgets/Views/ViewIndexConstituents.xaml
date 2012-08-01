@@ -63,15 +63,15 @@
                                          ScrollMode="RealTime"
                                          FontSize="7"
                                          FontFamily="Arial"
-                                         RowLoaded="dgIndexConstituents_RowLoaded"
-                                         AlternateRowBackground="#d8d5d4"
+                                         
+                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          AlternationCount="2" 
-                                         EnableRowVirtualization="False" EnableColumnVirtualization="False"
+                                         EnableRowVirtualization="False" 
+                                         EnableColumnVirtualization="False"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
-                                         >                        
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" >                        
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcConstituentName" 
                                                         Header="Constituent Name" 

@@ -40,7 +40,7 @@
                                  ShowGroupPanel="False" 
                                  ShowColumnFooters="False" 
                                  AlternationCount="2" 
-                                 AlternateRowBackground="#d8d5d4"
+                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                  SelectionUnit="FullRow"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  RowStyle="{StaticResource GridViewRowStyle}"

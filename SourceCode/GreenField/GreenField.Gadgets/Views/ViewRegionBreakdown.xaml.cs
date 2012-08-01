@@ -153,8 +153,8 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         private void dgRegionBreakdown_RowLoaded(object sender, RowLoadedEventArgs e)
-        {
-            GroupedGridRowLoadedHandler.Implement(e);
+        {   
+          GroupedGridRowLoadedHandler.Implement(e);
         }       
     }
 }

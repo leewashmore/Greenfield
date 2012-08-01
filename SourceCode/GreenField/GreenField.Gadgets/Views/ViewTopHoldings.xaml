@@ -59,7 +59,7 @@
                                      FontFamily="Arial" 
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
                                      RowStyle="{StaticResource GridViewRowStyle}"
-                                     AlternateRowBackground="#d8d5d4"
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                      AlternationCount="2"
                                      RowLoaded="dgTopHoldings_RowLoaded"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 

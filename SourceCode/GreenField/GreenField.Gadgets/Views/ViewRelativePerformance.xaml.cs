@@ -131,16 +131,16 @@ namespace GreenField.Gadgets.Views
                 if (cell.Value == null)
                     continue;
 
-                //No toolTip service for Blank cells
-                if ((cell.Value as RelativePerformanceCountrySpecificData).Alpha == null)
-                    continue;
-
                 //No toolTip service for CountryId Column
                 if (cell.Column.DisplayIndex == 0)
                     continue;
 
                 //No toolTip service for Totals Column
                 if (cell.Column.DisplayIndex == this.dgRelativePerformance.Columns.Count - 1)
+                    continue;
+
+                //No toolTip service for Blank cells
+                if ((cell.Value as RelativePerformanceCountrySpecificData).Alpha == null)
                     continue;
 
                 //decimal? activePosition = (cell.ParentRow.DataContext as RelativePerformanceData).AggregateCountryActivePosition;
@@ -335,8 +335,8 @@ namespace GreenField.Gadgets.Views
                         Text = e.RelativePerformanceSectorInfo[i].SectorName,
                         FontWeight = FontWeights.Bold,
                         IsReadOnly = true,
-                        Background = new SolidColorBrush(Color.FromArgb(255, 159, 29, 33)),
-                        Foreground = new SolidColorBrush(Color.FromArgb(255, 255, 255, 255)),
+                        Background = new SolidColorBrush(Color.FromArgb(255, 203, 212, 241)),
+                        Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0)),
                         FontSize = 7,
                         Margin = new Thickness(2)
                     };
@@ -400,8 +400,8 @@ namespace GreenField.Gadgets.Views
                         Text = countryName,
                         FontWeight = FontWeights.Bold,
                         IsReadOnly = true,
-                        Background = new SolidColorBrush(Color.FromArgb(255,159,29,33)), 
-                        Foreground = new SolidColorBrush(Color.FromArgb(255,255,255,255)),
+                        Background = new SolidColorBrush(Color.FromArgb(255, 203, 212, 241)),
+                        Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0)),
                         FontSize = 7,
                         Margin = new Thickness(2)
                     };
