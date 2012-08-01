@@ -46,7 +46,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -156,6 +155,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.PRevenueData1.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.QuarterlyResultsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.RegionSelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCategoricalData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.EntitySelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FilterSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FXCommodityData.datasource" />

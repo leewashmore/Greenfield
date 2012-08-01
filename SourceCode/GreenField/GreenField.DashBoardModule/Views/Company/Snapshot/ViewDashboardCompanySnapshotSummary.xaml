@@ -12,9 +12,11 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.DashboardModule;component/Assets/DashboardStyle.xaml"/>
+                <ResourceDictionary>
+                    <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>        
     </UserControl.Resources>
     
     <Grid x:Name="LayoutRoot" Background="White">

@@ -32,7 +32,6 @@ namespace GreenField.App
             //ServiceClientFactory.ReadCookies();
             Bootstrapper bootStrapper = new Bootstrapper();
             bootStrapper.Run();
-
         }
 
         private void Application_Exit(object sender, EventArgs e)

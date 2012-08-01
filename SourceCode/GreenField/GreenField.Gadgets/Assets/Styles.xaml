@@ -38,6 +38,7 @@
     <SolidColorBrush x:Key="GridView_GridLinesItemBorder" Color="White"/>
     <SolidColorBrush x:Key="GridView_IndentCellBackground" Color="White"/>
 
+    
     <!--GridViewHeaderCellStyle-->
     <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellStyleOld">
         <Setter Property="Background" Value="#e4e5e5" />
@@ -76,6 +77,8 @@
         <Setter Property="Background" Value="#e4e5e5"/>
     </Style>
 
+
+
     <!--GroupPanelItemStyle-->
     <Style TargetType="telerik:GridViewGroupPanelItem" x:Name="GridViewGroupPanelItemStyle">
         <Setter Property="Foreground" Value="Black"/>
@@ -103,6 +106,7 @@
         <Setter Property="MaxHeight" Value="15"/>
         <Setter Property="IndentLevel" Value="0"/>
     </Style>
+
 
     <!--GridViewGroupPanelStyle-->
     <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">

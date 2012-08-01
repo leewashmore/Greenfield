@@ -1514,6 +1514,13 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         System.IAsyncResult BeginRetrieveCOASpecificData(string issuerId, System.Nullable<int> securityId, GreenField.DataContracts.FinancialStatementDataSource cSource, GreenField.DataContracts.FinancialStatementFiscalType cFiscalType, string cCurrency, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData> EndRetrieveCOASpecificData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsDataServiceFaultFa" +
+            "ult", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveDocumentsData(string searchString, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> EndRetrieveDocumentsData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -1788,6 +1795,25 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveDocumentsDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveDocumentsDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ExternalResearchOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations>, GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations {
         
         private BeginOperationDelegate onBeginRetrieveIssuerIdDelegate;
@@ -1874,6 +1900,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveCOASpecificDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveDocumentsDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveDocumentsDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveDocumentsDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -1954,6 +1986,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         public event System.EventHandler<RetrieveRatioSecurityReferenceDataCompletedEventArgs> RetrieveRatioSecurityReferenceDataCompleted;
         
         public event System.EventHandler<RetrieveCOASpecificDataCompletedEventArgs> RetrieveCOASpecificDataCompleted;
+        
+        public event System.EventHandler<RetrieveDocumentsDataCompletedEventArgs> RetrieveDocumentsDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -2637,6 +2671,52 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                         cCurrency}, this.onEndRetrieveCOASpecificDataDelegate, this.onRetrieveCOASpecificDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveDocumentsData(string searchString, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveDocumentsData(searchString, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveDocumentsData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveDocumentsData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveDocumentsData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string searchString = ((string)(inValues[0]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveDocumentsData(searchString, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveDocumentsData(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveDocumentsData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveDocumentsDataCompleted(object state) {
+            if ((this.RetrieveDocumentsDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveDocumentsDataCompleted(this, new RetrieveDocumentsDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveDocumentsDataAsync(string searchString) {
+            this.RetrieveDocumentsDataAsync(searchString, null);
+        }
+        
+        public void RetrieveDocumentsDataAsync(string searchString, object userState) {
+            if ((this.onBeginRetrieveDocumentsDataDelegate == null)) {
+                this.onBeginRetrieveDocumentsDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveDocumentsData);
+            }
+            if ((this.onEndRetrieveDocumentsDataDelegate == null)) {
+                this.onEndRetrieveDocumentsDataDelegate = new EndOperationDelegate(this.OnEndRetrieveDocumentsData);
+            }
+            if ((this.onRetrieveDocumentsDataCompletedDelegate == null)) {
+                this.onRetrieveDocumentsDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveDocumentsDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveDocumentsDataDelegate, new object[] {
+                        searchString}, this.onEndRetrieveDocumentsDataDelegate, this.onRetrieveDocumentsDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -2909,6 +2989,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData> EndRetrieveCOASpecificData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData>)(base.EndInvoke("RetrieveCOASpecificData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveDocumentsData(string searchString, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = searchString;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveDocumentsData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> EndRetrieveDocumentsData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData>)(base.EndInvoke("RetrieveDocumentsData", _args, result)));
                 return _result;
             }
         }

@@ -230,9 +230,9 @@ namespace GreenField.Gadgets.ViewModels
                 _issuerReferenceInfo = value;
                 if (value != null)
                 {
-                    CurrencyInfo = new ObservableCollection<String> { IssuerReferenceInfo.CurrencyCode };
+                    CurrencyInfo = new ObservableCollection<String> { "USD" };
                     if (IssuerReferenceInfo.CurrencyCode != "USD")
-                        CurrencyInfo.Add("USD");
+                        CurrencyInfo.Add(IssuerReferenceInfo.CurrencyCode);
 
                     SelectedCurrency = CurrencyInfo[0];
                 }
@@ -253,7 +253,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected FinancialStatementDataSource
         /// </summary>
-        private FinancialStatementDataSource _selectedDataSource = FinancialStatementDataSource.REUTERS;
+        private FinancialStatementDataSource _selectedDataSource = FinancialStatementDataSource.PRIMARY;
         public FinancialStatementDataSource SelectedDataSource
         {
             get { return _selectedDataSource; }

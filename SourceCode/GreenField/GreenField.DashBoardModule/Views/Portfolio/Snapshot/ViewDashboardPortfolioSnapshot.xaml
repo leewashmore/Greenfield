@@ -12,9 +12,12 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.DashboardModule;component/Assets/DashboardStyle.xaml"/>
+                <ResourceDictionary>
+                    <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
@@ -26,7 +29,7 @@
                                      RowHeight="Auto"
                                      MinimizedItemsPosition="Right" 
                                      IsDockingEnabled="False"
-                                     IsVirtualizing="True"
+                                     IsVirtualizing="False"
                                      IsItemDraggingEnabled="True"
                                      ScrollBarVisibility="Visible" 
                                      MinimizedRowHeight="200"

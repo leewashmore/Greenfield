@@ -160,6 +160,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
+    <Compile Include="ViewModels\Documents\ViewModelDocuments.cs" />
     <Compile Include="ViewModels\ViewModelCOASpecific.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelValuations.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimateSummary.cs" />
@@ -213,6 +214,9 @@
     </Compile>
     <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewTargetPrice.xaml.cs">
       <DependentUpon>ViewTargetPrice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Documents\ViewDocuments.xaml.cs">
+      <DependentUpon>ViewDocuments.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewCOASpecific.xaml.cs">
       <DependentUpon>ViewCOASpecific.xaml</DependentUpon>
@@ -381,6 +385,10 @@
     <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewTargetPrice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Documents\ViewDocuments.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewCOASpecific.xaml">
       <SubType>Designer</SubType>

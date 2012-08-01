@@ -888,5 +888,82 @@ namespace GreenField.Web.Services
             }
         }
         #endregion
+
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<DocumentCategoricalData> RetrieveDocumentsData(String searchString)
+        {
+            try
+            {
+                List<DocumentCategoricalData> result = new List<DocumentCategoricalData>();
+                result.Add(new DocumentCategoricalData()
+                {
+                    DocumentCategoryType = DocumentCategoryType.COMPANY_MEETING_NOTES,
+                    DocumentCompanyName = "Company1",
+                    DocumentCompanyTicker = "CompanyTicker1",
+                    DocumentCatalogData = new DocumentCatalogData()
+                    {
+                        FileId = 1,
+                        FileMetaTags = "Finance, specific catalog",
+                        FileName = "Financial Statement 27-07-2012.docx",
+                        FilePath = @"http://sharepointLocalSite/Documents/Financial Statement 27-07-2012.docx",
+                        FileUploadedBy = "Rahul Vig",
+                        FileUploadedOn = DateTime.Now.AddDays(-5)
+                    },
+                    CommentDetails = new List<CommentDetails>
+                    {
+                        new CommentDetails() { Comment = "Comment1", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-1) },
+                        new CommentDetails() { Comment = "Comment2", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-2) },
+                        new CommentDetails() { Comment = "Comment3", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-3) }
+                    }
+                });
+                result.Add(new DocumentCategoricalData()
+                {
+                    DocumentCategoryType = DocumentCategoryType.COMPANY_MEETING_NOTES,
+                    DocumentCompanyName = "Company2",
+                    DocumentCompanyTicker = "CompanyTicker2",
+                    DocumentCatalogData = new DocumentCatalogData()
+                    {
+                        FileId = 1,
+                        FileMetaTags = "Finance, specific catalog 2",
+                        FileName = "Financial Statement 30-07-2012.docx",
+                        FilePath = @"http://sharepointLocalSite/Documents/Financial Statement 27-07-2012.docx",
+                        FileUploadedBy = "Rahul Vig",
+                        FileUploadedOn = DateTime.Now.AddDays(-2)
+                    },
+                    CommentDetails = new List<CommentDetails>
+                    {
+                        new CommentDetails() { Comment = "Comment1", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-1) },
+                        new CommentDetails() { Comment = "Comment2", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-1) },
+                        new CommentDetails() { Comment = "Comment3", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-2) }
+                    }
+                });
+
+                result.Add(new DocumentCategoricalData()
+                {
+                    DocumentCategoryType = DocumentCategoryType.BLOG,
+                    DocumentCompanyName = "Company1",
+                    DocumentCompanyTicker = "CompanyTicker1",
+                    DocumentCatalogData = null,
+                    CommentDetails = new List<CommentDetails>
+                    {
+                        new CommentDetails() { Comment = "Comment1", CommentBy = "Abhinav Singh", CommentOn = DateTime.Now.AddDays(-1) },
+                        new CommentDetails() { Comment = "Comment2", CommentBy = "Abhinav Singh", CommentOn = DateTime.Now.AddDays(-22) },
+                        new CommentDetails() { Comment = "Comment3", CommentBy = "Abhinav Singh", CommentOn = DateTime.Now.AddDays(-31) }
+                    }
+                });
+
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
     }
 }
