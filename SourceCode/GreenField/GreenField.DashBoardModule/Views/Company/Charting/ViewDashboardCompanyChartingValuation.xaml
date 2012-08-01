@@ -8,13 +8,16 @@
     xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
 
+    
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.DashboardModule;component/Assets/DashboardStyle.xaml"/>
+                <ResourceDictionary>
+                    <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-        <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>        
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
@@ -26,7 +29,7 @@
                                      RowHeight="Auto"
                                      MinimizedItemsPosition="Right" 
                                      IsDockingEnabled="False"
-                                     IsVirtualizing="True"
+                                     IsVirtualizing="False"
                                      IsItemDraggingEnabled="True"
                                      ScrollBarVisibility="Visible" 
                                      MinimizedRowHeight="200"

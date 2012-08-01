@@ -118,6 +118,8 @@ namespace GreenField.Common
         public List<MacroDatabaseKeyAnnualReportData> MacroInfo { get; set; }
     }
 
+    public delegate void ConstructDocumentSearchResultEventHandler(List<DocumentCategoricalData> e);    
+
     public class RelativePerformanceGridCellData
     {
         public string CountryID { get; set; }

@@ -139,6 +139,15 @@
   <wsdl:message name="ExternalResearchOperations_RetrieveCOASpecificData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q14:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveDocumentsData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveDocumentsData" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveDocumentsData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveDocumentsDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveDocumentsData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q15:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="ExternalResearchOperations">
     <wsdl:operation name="RetrieveIssuerId">
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerId" message="tns:ExternalResearchOperations_RetrieveIssuerId_InputMessage" />
@@ -209,6 +218,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCOASpecificData" message="tns:ExternalResearchOperations_RetrieveCOASpecificData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCOASpecificDataResponse" message="tns:ExternalResearchOperations_RetrieveCOASpecificData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCOASpecificDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveCOASpecificData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveDocumentsData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsData" message="tns:ExternalResearchOperations_RetrieveDocumentsData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsDataResponse" message="tns:ExternalResearchOperations_RetrieveDocumentsData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveDocumentsData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ExternalResearchOperations" type="tns:ExternalResearchOperations">
@@ -371,6 +385,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveCOASpecificData">
       <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveCOASpecificData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveDocumentsData">
+      <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

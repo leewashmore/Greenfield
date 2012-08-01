@@ -219,5 +219,8 @@ namespace GreenField.ServiceCaller
         void RetrieveConsensusEstimatesSummaryData(EntitySelectionData entitySelectionData, Action<List<ConsensusEstimatesSummaryData>> callback);
 
         #endregion
+
+        void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback);
+
     }
 }

@@ -198,8 +198,8 @@
                                 </telerik:RadRibbonDropDownButton.DropDownContent>
                             </telerik:RadRibbonDropDownButton>
                         </telerik:RadRibbonGroup>
-                        <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                            <telerik:RadRibbonButton LargeImage="Images/Notepad.png" Text="Documents" Size="Large" Background="#9DA6C0"/>
+                        <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                            <telerik:RadRibbonButton LargeImage="Images/Notepad.png" Text="Documents" Size="Large" Command="{Binding DashboardCompanyDocumentsCommand}" Background="#9DA6C0"/>
                         </telerik:RadRibbonGroup>
                         <telerik:RadRibbonGroup Header="" Style="{StaticResource RadRibbonGroupCustomStyle}">
                             <telerik:RadRibbonDropDownButton Text="Charting" LargeImage="Images/graph.png" Size="Large" Background="#9DA6C0" >
