@@ -8,8 +8,8 @@
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>            
-        </Grid.RowDefinitions>       
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <ContentControl x:Name="cctrDashboardContent" Grid.Row="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
-    </Grid>    
+    </Grid>
 </UserControl>

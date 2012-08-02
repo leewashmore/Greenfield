@@ -49,20 +49,20 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             EntitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
 
-            //PeriodColumns.PeriodColumnNavigate += (e) =>
-            //{
-            //    if (e.PeriodColumnNamespace == GetType().FullName)
-            //    {
-            //        BusyIndicatorNotification(true, "Retrieving data for updated time span");
-            //        Iterator = e.PeriodColumnNavigationDirection == NavigationDirection.LEFT ? Iterator - 1 : Iterator + 1;
-            //        PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator, defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
-            //        ConsensusEstimateDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(ConsensusEstimateDetailInfo, out periodRecord,
-            //            periodRecord,subGroups:null);
-            //        PeriodRecord = periodRecord;
-            //        PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, displayPeriodType: false);
-            //        BusyIndicatorNotification();
-            //    }
-            //};
+            PeriodColumns.PeriodColumnNavigate += (e) =>
+            {
+                if (e.PeriodColumnNamespace == GetType().FullName)
+                {
+                    BusyIndicatorNotification(true, "Retrieving data for updated time span");
+                    Iterator = e.PeriodColumnNavigationDirection == NavigationDirection.LEFT ? Iterator - 1 : Iterator + 1;
+                    PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator, 3, 4, 6, false);
+                    COASpecificDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(COASpecificInfo, out periodRecord,
+                        periodRecord, subGroups: null);
+                    PeriodRecord = periodRecord;
+                    PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, displayPeriodType: false);
+                    BusyIndicatorNotification();
+                }
+            };
 
             if (_eventAggregator != null)
             {
@@ -80,27 +80,27 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
 
-        //#region Period Information
-        ///// <summary>
-        ///// Iteration Count
-        ///// </summary>
-        //public Int32 Iterator { get; set; }
+        #region Period Information
+        /// <summary>
+        /// Iteration Count
+        /// </summary>
+        public Int32 Iterator { get; set; }
 
-        ///// <summary>
-        ///// Period Record storing period information based on iteration
-        ///// </summary>
-        //private PeriodRecord _periodRecord;
-        //public PeriodRecord PeriodRecord
-        //{
-        //    get
-        //    {
-        //        if (_periodRecord == null)
-        //            _periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
-        //        return _periodRecord;
-        //    }
-        //    set { _periodRecord = value; }
-        //}
-        //#endregion
+        /// <summary>
+        /// Period Record storing period information based on iteration
+        /// </summary>
+        private PeriodRecord _periodRecord;
+        public PeriodRecord PeriodRecord
+        {
+            get
+            {
+                if (_periodRecord == null)
+                    _periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
+                return _periodRecord;
+            }
+            set { _periodRecord = value; }
+        }
+        #endregion
 
         #region IsActive
         /// <summary>
@@ -286,7 +286,8 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-
+        #endregion
+        #region COASpecificData List
         private List<COASpecificData> coaSpecificInfo;
         public List<COASpecificData> COASpecificInfo
         {
@@ -297,43 +298,59 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         coaSpecificInfo = value;
                         RaisePropertyChanged(() => this.COASpecificInfo);
+                        SetCOASpecificDisplayInfo();
                        
                     }                
             }
         
         }
+
+        /// <summary>
+        /// Pivoted COA Specific  Information to be dispayed on grid
+        /// </summary>
+        private List<PeriodColumnDisplayData> _coaSpecificDisplayInfo;
+        public List<PeriodColumnDisplayData> COASpecificDisplayInfo
+        {
+            get { return _coaSpecificDisplayInfo; }
+            set
+            {
+                _coaSpecificDisplayInfo = value;
+                RaisePropertyChanged(() => this.COASpecificDisplayInfo);
+            }
+        }
         #endregion
 
-        //#region Period Column Headers
-        ///// <summary>
-        ///// Stores period column headers
-        ///// </summary>
-        //private List<String> _periodColumnHeader;
-        //public List<String> PeriodColumnHeader
-        //{
-        //    get
-        //    {
-        //        if (_periodColumnHeader == null)
-        //            _periodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
-        //        return _periodColumnHeader;
-        //    }
-        //    set
-        //    {
-        //        _periodColumnHeader = value;
-        //        RaisePropertyChanged(() => this.PeriodColumnHeader);
-        //        if (value != null)
-        //        {
-        //            PeriodColumns.RaisePeriodColumnUpdateCompleted(new PeriodColumnUpdateEventArg()
-        //            {
-        //                PeriodColumnNamespace = GetType().FullName,
-        //                PeriodColumnHeader = value,
-        //                PeriodRecord = PeriodRecord,
-        //                PeriodIsYearly = true
-        //            });
-        //        }
-        //    }
-        //}
-        //#endregion
+
+        #region Period Column Headers
+        /// <summary>
+        /// Stores period column headers
+        /// </summary>
+        private List<String> _periodColumnHeader;
+        public List<String> PeriodColumnHeader
+        {
+            get
+            {
+                if (_periodColumnHeader == null)
+                    _periodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
+                return _periodColumnHeader;
+            }
+            set
+            {
+                _periodColumnHeader = value;
+                RaisePropertyChanged(() => this.PeriodColumnHeader);
+                if (value != null)
+                {
+                    PeriodColumns.RaisePeriodColumnUpdateCompleted(new PeriodColumnUpdateEventArg()
+                    {
+                        PeriodColumnNamespace = GetType().FullName,
+                        PeriodColumnHeader = value,
+                        PeriodRecord = PeriodRecord,
+                        PeriodIsYearly = true
+                    });
+                }
+            }
+        }
+        #endregion
 
         #endregion
 
@@ -451,6 +468,19 @@ namespace GreenField.Gadgets.ViewModels
                 COASpecificInfo = new List<COASpecificData>();
                 _dbInteractivity.RetrieveCOASpecificData(IssuerReferenceInfo.IssuerId, IssuerReferenceInfo.SecurityId, SelectedDataSource, SelectedFiscalType, SelectedCurrency, RetrieveCOASpecificDataCallbackMethod);
             }
+        }
+       
+
+        public void SetCOASpecificDisplayInfo()
+        {
+            BusyIndicatorNotification(true, "Updating information based on selected preference");
+
+            PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator,3,4,6,false);
+            COASpecificDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(COASpecificInfo, out periodRecord, periodRecord, subGroups: null);
+            PeriodRecord = periodRecord;
+            PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
+
+            BusyIndicatorNotification();
         }
         
         #endregion

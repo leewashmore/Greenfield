@@ -610,38 +610,38 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\AddToChart.png" />
-    <Resource Include="Images\Delete.png" />
-    <Resource Include="Images\ExportExcel.png" />
-    <Resource Include="Images\flipIcon.jpg" />
+    <Resource Include="Views\Images\AddToChart.png" />
+    <Resource Include="Views\Images\Delete.png" />
+    <Resource Include="Views\Images\ExportExcel.png" />
+    <Resource Include="Views\Images\flipIcon.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\zoom_in.png" />
-    <Resource Include="Images\zoom_out.png" />
+    <Resource Include="Views\Images\zoom_in.png" />
+    <Resource Include="Views\Images\zoom_out.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\AddEntity.png" />
-    <Resource Include="Images\AddGroup.png" />
-    <Resource Include="Images\RemoveEntity.png" />
-    <Resource Include="Images\RemoveGroup.png" />
+    <Resource Include="Views\Images\AddEntity.png" />
+    <Resource Include="Views\Images\AddGroup.png" />
+    <Resource Include="Views\Images\RemoveEntity.png" />
+    <Resource Include="Views\Images\RemoveGroup.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Excel.png" />
-    <Resource Include="Images\PDF.png" />
-    <Resource Include="Images\Print.png" />
+    <Resource Include="Views\Images\Excel.png" />
+    <Resource Include="Views\Images\PDF.png" />
+    <Resource Include="Views\Images\Print.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\ToggleIcon.jpg" />
+    <Resource Include="Views\Images\ToggleIcon.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\LeftArrow.png" />
+    <Resource Include="Views\Images\LeftArrow.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\MoveBackward.png" />
-    <Resource Include="Images\MoveForward.png" />
+    <Resource Include="Views\Images\MoveBackward.png" />
+    <Resource Include="Views\Images\MoveForward.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Flip.png" />
+    <Resource Include="Views\Images\Flip.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.Views
 {
@@ -21,13 +22,22 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+
+            //Update column headers and visibility
+            PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord();
+            PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, new PeriodColumnUpdateEventArg()
+            {
+                PeriodColumnNamespace = typeof(ViewModelCOASpecific).FullName,
+                PeriodRecord = periodRecord,
+                PeriodColumnHeader = PeriodColumns.SetColumnHeaders(periodRecord),
+                PeriodIsYearly = true
+            });
+
+            //Event Subcription - PeriodColumnUpdateEvent
+            PeriodColumns.PeriodColumnUpdate += new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);
         }
 
-        public override void Dispose()
-        {
-            (this.DataContext as ViewModelConsensusEstimatesDetails).Dispose();
-            this.DataContext = null;
-        }
+       
 
         #region Properties
         /// <summary>
@@ -65,7 +75,7 @@ namespace GreenField.Gadgets.Views
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
             {
-                PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
+                PeriodColumnNamespace = typeof(ViewModelCOASpecific).FullName,
                 PeriodColumnNavigationDirection = NavigationDirection.LEFT
             });
         }
@@ -79,7 +89,7 @@ namespace GreenField.Gadgets.Views
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
             {
-                PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
+                PeriodColumnNamespace = typeof(ViewModelCOASpecific).FullName,
                 PeriodColumnNavigationDirection = NavigationDirection.RIGHT
             });
         }
@@ -94,5 +104,31 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
         #endregion
+
+        /// <summary>
+        /// PeriodColumnUpdateEvent Event Handler - Updates column information and enables export button first time data is received
+        /// </summary>
+        /// <param name="e">PeriodColumnUpdateEventArg</param>
+        void PeriodColumns_PeriodColumnUpdate(PeriodColumnUpdateEventArg e)
+        {
+            if (e.PeriodColumnNamespace == typeof(ViewModelCOASpecific).FullName && IsActive)
+            {
+                PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, e, isQuarterImplemented: false);              
+                this.btnExportExcel.IsEnabled = true;
+            }
+        }
+
+        #region Event Unsubscribe
+        public override void Dispose()
+        {
+            PeriodColumns.PeriodColumnUpdate -= new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);
+
+            (this.DataContext as ViewModelCOASpecific).Dispose();
+            this.DataContext = null;
+        }
+        #endregion
+
+
+
     }
 }
