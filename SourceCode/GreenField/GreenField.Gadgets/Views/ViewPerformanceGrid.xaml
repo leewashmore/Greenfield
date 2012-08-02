@@ -42,7 +42,7 @@
                                      RowStyle="{StaticResource GridViewRowStyle}"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                      RowLoaded="dgPerformance_RowLoaded"
-                                     AlternateRowBackground="#d8d5d4"
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                      AlternationCount="2"
                                      ElementExporting="dgPerformanceGrid_ElementExporting"
                                   EnableRowVirtualization="false">

@@ -53,6 +53,7 @@
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
                                      RowLoaded="dgContributorDetractor_RowLoaded"
                                      GridLinesVisibility="None"
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                      RowStyleSelector="{StaticResource GridRowMarkerStyle}" 
                                      Foreground="White" 
                                      RowHeight="15"

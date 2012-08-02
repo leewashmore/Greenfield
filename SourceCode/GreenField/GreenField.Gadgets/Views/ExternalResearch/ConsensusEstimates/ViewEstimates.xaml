@@ -129,7 +129,7 @@
                                  ScrollMode="Deferred"
                                  CanUserResizeColumns="False"                                     
                                  AlternationCount="2" 
-                                 AlternateRowBackground="#D8D5D4"       
+                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"   
                                  RowHeight="15" 
                                          EnableColumnVirtualization="False"
                                          EnableRowVirtualization="False"

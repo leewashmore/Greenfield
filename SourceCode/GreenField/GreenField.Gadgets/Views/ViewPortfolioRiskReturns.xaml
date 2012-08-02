@@ -40,7 +40,7 @@
                                      RowStyle="{StaticResource GridViewRowStyle}"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                      RowLoaded="dgPortfolioRiskReturn_RowLoaded"
-                                     AlternateRowBackground="#d8d5d4"
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                      AlternationCount="2"
                                      ElementExporting="dgRiskReturnGrid_ElementExporting"
                                   EnableRowVirtualization="false">

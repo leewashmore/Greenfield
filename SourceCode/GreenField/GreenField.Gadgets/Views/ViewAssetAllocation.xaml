@@ -24,7 +24,7 @@
                                      CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                                      CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                     FontFamily="Arial" FontSize="7" GroupPanelBackground="#9F1D21"                                         
+                                     FontFamily="Arial" FontSize="7" GroupPanelBackground="#e4e5e5"                                         
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                      RowStyle="{StaticResource GridViewRowStyle}"

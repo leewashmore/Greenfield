@@ -109,7 +109,7 @@
                                          UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" FontSize="7" 
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         GroupPanelBackground="#9F1D21"
+                                         GroupPanelBackground="#e4e5e5"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
