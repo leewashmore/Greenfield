@@ -118,6 +118,9 @@ namespace GreenField.Web.Helpers
                 if (dimensionTransactionData == null || securityExtensionData == null)
                     throw new InvalidOperationException();
 
+                if (dimensionTransactionData.Count == 0)
+                    return securityExtensionData;
+
                 decimal sumBuyTransactions;
                 decimal sumSellTransactions;
                 decimal sumTotalTransaction;
