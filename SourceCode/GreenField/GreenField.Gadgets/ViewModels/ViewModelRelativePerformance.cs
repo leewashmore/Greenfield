@@ -440,7 +440,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     RelativePerformanceToggledSectorGridBuildEvent.Invoke(new RelativePerformanceToggledSectorGridBuildEventArgs()
                     {
-                        RelativePerformanceCountryNameInfo = SecurityDetails.Select(r => r.SecurityCountryId).Distinct().ToList(),
+                        RelativePerformanceCountryNameInfo = SecurityDetails.OrderBy(r => r.SecurityCountryId).Select(r => r.SecurityCountryId).Distinct().ToList(),
                         RelativePerformanceSecurityInfo = SecurityDetails.ToList()
                     });
                 }
