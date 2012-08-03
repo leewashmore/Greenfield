@@ -114,7 +114,7 @@ namespace GreenField.Gadgets.Views
             if (e.PeriodColumnNamespace == typeof(ViewModelCOASpecific).FullName && IsActive)
             {
                 PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, e, isQuarterImplemented: false);              
-                this.btnExportExcel.IsEnabled = true;
+                //this.btnExportExcel.IsEnabled = true;
             }
         }
 

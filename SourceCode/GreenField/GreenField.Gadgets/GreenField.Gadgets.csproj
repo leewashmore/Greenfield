@@ -152,6 +152,7 @@
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
     <Compile Include="Models\FinancialStatementDisplayData.cs" />
     <Compile Include="Models\FiveYearDataModels.cs" />
+    <Compile Include="Models\GadgetWithPeriodColumns.cs" />
     <Compile Include="Models\PerformancePeriodData.cs" />
     <Compile Include="Models\PeriodAttributeData.cs" />
     <Compile Include="Models\RegionSpecificData.cs" />
@@ -618,38 +619,38 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\Images\AddToChart.png" />
-    <Resource Include="Views\Images\Delete.png" />
-    <Resource Include="Views\Images\ExportExcel.png" />
-    <Resource Include="Views\Images\flipIcon.jpg" />
+    <Resource Include="Images\AddToChart.png" />
+    <Resource Include="Images\Delete.png" />
+    <Resource Include="Images\ExportExcel.png" />
+    <Resource Include="Images\flipIcon.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\Images\zoom_in.png" />
-    <Resource Include="Views\Images\zoom_out.png" />
+    <Resource Include="Images\zoom_in.png" />
+    <Resource Include="Images\zoom_out.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\Images\AddEntity.png" />
-    <Resource Include="Views\Images\AddGroup.png" />
-    <Resource Include="Views\Images\RemoveEntity.png" />
-    <Resource Include="Views\Images\RemoveGroup.png" />
+    <Resource Include="Images\AddEntity.png" />
+    <Resource Include="Images\AddGroup.png" />
+    <Resource Include="Images\RemoveEntity.png" />
+    <Resource Include="Images\RemoveGroup.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\Images\Excel.png" />
-    <Resource Include="Views\Images\PDF.png" />
-    <Resource Include="Views\Images\Print.png" />
+    <Resource Include="Images\Excel.png" />
+    <Resource Include="Images\PDF.png" />
+    <Resource Include="Images\Print.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\Images\ToggleIcon.jpg" />
+    <Resource Include="Images\ToggleIcon.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\Images\LeftArrow.png" />
+    <Resource Include="Images\LeftArrow.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\Images\MoveBackward.png" />
-    <Resource Include="Views\Images\MoveForward.png" />
+    <Resource Include="Images\MoveBackward.png" />
+    <Resource Include="Images\MoveForward.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Views\Images\Flip.png" />
+    <Resource Include="Images\Flip.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

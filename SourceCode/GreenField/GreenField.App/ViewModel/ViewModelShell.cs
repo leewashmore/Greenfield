@@ -566,7 +566,7 @@ namespace GreenField.App.ViewModel
             set
             {
                 _countryTypeInfo = value;
-                CountryName = value.OrderBy(t => t.CountryName).Select(t => t.CountryName).Distinct().ToList();
+                CountryName = value.OrderBy(t => t.CountryName).Select(t => t.CountryName).Distinct().ToList();               
                 RaisePropertyChanged(() => this.CountryTypeInfo);
             }
         }

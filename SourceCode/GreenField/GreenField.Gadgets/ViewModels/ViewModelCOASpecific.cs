@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using GreenField.DataContracts.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Models;
+using System.Linq;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -34,7 +35,8 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger; 
+        private ILoggerFacade _logger;
+        private String defaultGadgetDesc;
         #endregion
 
         #region Constructor
@@ -288,6 +290,40 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
         #region COASpecificData List
+
+
+        private List<String> coaSpecificGadgetNameInfo;
+        public List<String> COASpecificGadgetNameInfo
+        {
+            get { return coaSpecificGadgetNameInfo; }
+            set
+            {
+                if (coaSpecificGadgetNameInfo != value)
+                {
+                    coaSpecificGadgetNameInfo = value;                  
+                    RaisePropertyChanged(() => this.COASpecificGadgetNameInfo);                    
+                }
+            }
+
+        }
+
+        private String selectedCOASpecificGadgetNameInfo;
+        public String SelectedCOASpecificGadgetNameInfo
+        {
+            get { return selectedCOASpecificGadgetNameInfo; }
+            set
+            {
+                if (selectedCOASpecificGadgetNameInfo != value)
+                {
+                    selectedCOASpecificGadgetNameInfo = value;
+                    COASpecificFilteredInfo = COASpecificInfo.Where(t => t.GridDesc == value).ToList();
+                    RaisePropertyChanged(() => this.SelectedCOASpecificGadgetNameInfo);
+                }
+            }
+
+        }
+
+
         private List<COASpecificData> coaSpecificInfo;
         public List<COASpecificData> COASpecificInfo
         {
@@ -297,12 +333,45 @@ namespace GreenField.Gadgets.ViewModels
                    if (coaSpecificInfo != value)
                     {
                         coaSpecificInfo = value;
+                        COASpecificGadgetNameInfo =  value.Select(t => t.GridDesc).Distinct().ToList();
+                        defaultGadgetDesc = value.Select(t => t.GridDesc).FirstOrDefault();
+                        COASpecificFilteredInfo = COASpecificInfo.Where(t => t.GridDesc == defaultGadgetDesc).ToList();
                         RaisePropertyChanged(() => this.COASpecificInfo);
                         SetCOASpecificDisplayInfo();
-                       
                     }                
             }
         
+        }
+
+        private List<COASpecificData> coaSpecificFilterdInfo;
+        public List<COASpecificData> COASpecificFilteredInfo
+        {
+            get { return coaSpecificFilterdInfo; }
+            set
+            {
+                   if (coaSpecificFilterdInfo != value)
+                    {
+                        coaSpecificFilterdInfo = value;
+                        RaisePropertyChanged(() => this.COASpecificFilteredInfo);                       
+                    }                
+            }
+
+        }
+
+        private List<GadgetWithPeriodColumns> coaSpecificChartInfo;
+        public List<GadgetWithPeriodColumns> COASpecificChartInfo
+        {
+            get { return coaSpecificChartInfo; }
+            set
+            {
+                if (coaSpecificChartInfo != value)
+                {
+                    coaSpecificChartInfo = value;
+                    RaisePropertyChanged(() => this.COASpecificChartInfo);                   
+
+                }
+            }
+
         }
 
         /// <summary>

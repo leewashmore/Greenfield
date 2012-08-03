@@ -179,7 +179,7 @@ namespace GreenField.DashboardModule.Views
 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 300,
-                Content =null// new ViewCOASpecific(new ViewModelCOASpecific(param))
+                Content = new ViewCOASpecific(new ViewModelCOASpecific(param))
             });
         }
 
