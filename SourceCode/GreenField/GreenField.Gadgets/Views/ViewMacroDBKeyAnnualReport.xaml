@@ -87,7 +87,7 @@
                                          UseLayoutRounding="True" 
                                          ShowGroupFooters="False"
                                          FontSize="7" 
-                                         AlternateRowBackground="#d8d5d4"
+                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          AlternationCount="2"
                                          FontFamily="Arial" 
                                          ShowColumnFooters="False" 

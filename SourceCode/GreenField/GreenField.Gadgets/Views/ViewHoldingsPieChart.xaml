@@ -95,7 +95,7 @@
                                      RowStyle="{StaticResource GridViewRowStyle}"
                                      RowLoaded="dgHoldingsPercentageSector_RowLoaded"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                     AlternateRowBackground="#d8d5d4"
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                      AlternationCount="2"
                                      EnableRowVirtualization="false">
                             

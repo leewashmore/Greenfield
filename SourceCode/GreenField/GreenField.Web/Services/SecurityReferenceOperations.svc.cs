@@ -446,6 +446,13 @@ namespace GreenField.Web.Services
         {
             try
             {
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
                 List<DimensionEntitiesService.GF_SELECTION_BASEVIEW> data = DimensionEntity.GF_SELECTION_BASEVIEW.ToList();
                 List<EntitySelectionData> result = new List<EntitySelectionData>();
                 if (data != null)

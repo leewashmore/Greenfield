@@ -76,7 +76,7 @@
                                          IsReadOnly="True"
                                          CanUserReorderColumns="False" 
                                          CanUserSortColumns="True"
-                                         FrozenColumnCount="4" 
+                                         FrozenColumnCount="2" 
                                          Grouping="dgPortfolioDetails_Grouping" 
                                          Filtering="dgPortfolioDetails_Filtering"
                                          Filtered="dgPortfolioDetails_Filtered" 
@@ -99,7 +99,7 @@
                                          MinColumnWidth="70"
                                          RowLoaded="dgPortfolioDetails_RowLoaded" EnableRowVirtualization="false">
                         <telerik:RadGridView.Columns >
-                            <telerik:GridViewDataColumn Header="Ticker" UniqueName="Ticker" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
+                            <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" HeaderTextAlignment="Left"
                                                         TextAlignment="Left"/>

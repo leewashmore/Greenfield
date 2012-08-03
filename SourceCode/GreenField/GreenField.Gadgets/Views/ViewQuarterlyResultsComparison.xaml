@@ -85,7 +85,7 @@
                                              GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                              RowStyle="{StaticResource GridViewRowStyle}"
                                              GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                             AlternateRowBackground="#d8d5d4"
+                                             AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                              AlternationCount="2">
                             <telerik:RadGridView.Columns>
                                 <telerik:GridViewDataColumn x:Name="dgcIssuerName"                                                    

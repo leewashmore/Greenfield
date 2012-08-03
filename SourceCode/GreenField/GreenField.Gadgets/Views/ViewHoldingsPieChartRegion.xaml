@@ -97,7 +97,7 @@
                                      RowStyle="{StaticResource GridViewRowStyle}"
                                      RowLoaded="dgHoldingsPercentageRegion_RowLoaded"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                     AlternateRowBackground="#d8d5d4"
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                      AlternationCount="2" EnableRowVirtualization="false">
                             <telerik:RadGridView.Columns>
                                 <telerik:GridViewDataColumn Header="Benchmark Name" 

@@ -246,7 +246,7 @@
                                      CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                                      CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                     FontFamily="Arial" FontSize="7" GroupPanelBackground="#9F1D21" CanUserResizeColumns="False"                                     
+                                     FontFamily="Arial" FontSize="7" GroupPanelBackground="#e4e5e5" CanUserResizeColumns="False"                                     
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" AlternationCount="2" AlternateRowBackground="#D8D5D4"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" Visibility="Collapsed"
                                      RowStyle="{StaticResource GridViewRowStyle}" ElementExporting="dgScatterGraph_ElementExporting"

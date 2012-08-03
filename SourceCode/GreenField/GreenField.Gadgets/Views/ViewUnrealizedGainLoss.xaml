@@ -226,24 +226,41 @@
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                         <telerik:RadGridView Name="dgUnrealizedGainLoss" AutoGenerateColumns="False"
                                  ItemsSource="{Binding PlottedSeries, Mode=TwoWay}"
-                                 CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="dgUnrealizedGainLoss_ElementExporting"
+                                 CanUserDeleteRows="False" IsReadOnly="True" 
+                                             ElementExporting="dgUnrealizedGainLoss_ElementExporting"
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
-                                 RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
-                                 telerik:StyleManager.Theme="Metro" Visibility="Visible" FontSize="7"
-                                             RowLoaded="dgUnrealizedGainLoss_RowLoaded" EnableRowVirtualization="False">
+                                 RowIndicatorVisibility="Collapsed" 
+                                             ShowGroupPanel="False"
+                                             AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                             RowStyle="{StaticResource GridViewRowStyle}"
+                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                             AlternationCount="2"
+                                             GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}"
+                                 telerik:StyleManager.Theme="Metro" 
+                                             Visibility="Visible" 
+                                             FontSize="7"
+                                             RowLoaded="dgUnrealizedGainLoss_RowLoaded"
+                                             GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                             EnableRowVirtualization="False">
                             <telerik:RadGridView.Columns>
                                 <telerik:GridViewDataColumn Header="Issue Name" DataMemberBinding="{Binding IssueName}" 
-                                                            HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                            CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}"
-                                                            HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                            CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn Header="Type" DataMemberBinding="{Binding Type}"
-                                                            HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                            CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn Header="Closing Date" DataMemberBinding="{Binding FromDate, StringFormat=d}"
-                                                            HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                            CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn Header="Closing Price" DataMemberBinding="{Binding DailyClosingPrice, StringFormat=c}"
-                                                            HeaderCellStyle="{StaticResource GridViewHeaderCell}"/>
+                                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                            CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn Header="Unrealized Gain/Loss" DataMemberBinding="{Binding UnrealizedGainLoss}"
-                                                            DataFormatString="{}{0:n5}" HeaderCellStyle="{StaticResource GridViewHeaderCell}" />
+                                                            DataFormatString="{}{0:n5}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                            CellStyle="{StaticResource GridViewCellStyle}"/>
                             </telerik:RadGridView.Columns>
                         </telerik:RadGridView>
                     </Border>

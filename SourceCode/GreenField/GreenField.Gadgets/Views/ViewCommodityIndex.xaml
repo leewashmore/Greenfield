@@ -37,7 +37,7 @@
                                      UseLayoutRounding="True"
                                      FontFamily="Arial" 
                                      FontSize="7" 
-                                     GroupPanelBackground="#9F1D21"
+                                     GroupPanelBackground="#e4e5e5"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                      RowStyle="{StaticResource GridViewRowStyle}"
