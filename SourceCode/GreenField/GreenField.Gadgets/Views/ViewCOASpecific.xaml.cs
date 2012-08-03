@@ -35,9 +35,10 @@ namespace GreenField.Gadgets.Views
 
             //Event Subcription - PeriodColumnUpdateEvent
             PeriodColumns.PeriodColumnUpdate += new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);
-        }
-
-       
+            this.grdRadChart.Visibility = Visibility.Collapsed;
+            this.grdRadGridView.Visibility = Visibility.Visible;
+           
+        }       
 
         #region Properties
         /// <summary>
@@ -127,6 +128,38 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+        /// <summary>
+        /// Flipping between Grid & Chart
+        /// Using the method FlipItem in class Flipper.cs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFlip_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.grdRadGridView.Visibility == Visibility.Visible)
+                Flipper.FlipItem(this.grdRadGridView, this.grdRadChart);
+            else
+                Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
+        }
+
+        ///// <summary>
+        ///// Data Retrieval Indicator
+        ///// </summary>
+        ///// <param name="e"></param>
+        //void dataContextSource_performanceGraphDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        //{
+        //    if (e.ShowBusy)
+        //    {
+        //        this.busyIndicatorChart.IsBusy = true;
+        //        this.busyIndicatorGrid.IsBusy = true;
+        //    }
+        //    else
+        //    {
+        //        this.busyIndicatorChart.IsBusy = false;
+        //        this.busyIndicatorGrid.IsBusy = false;
+        //    }
+        //}
 
 
 

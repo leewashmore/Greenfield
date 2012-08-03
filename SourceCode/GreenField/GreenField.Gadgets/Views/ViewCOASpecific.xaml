@@ -86,15 +86,21 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
                                 <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Gadget Controls" FontWeight="Bold" VerticalAlignment="Center"/>
                                 <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
 
-                                <!--<telerik:RadButton Grid.Column="2" Click="btnExportExcel_Click" HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="False"
+                                <telerik:RadButton Grid.Column="2" Click="btnExportExcel_Click" HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="False"
                                                Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export">
                                     <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
-                                </telerik:RadButton>-->
-                            </Grid>
+                                </telerik:RadButton> 
+                            <telerik:RadButton x:Name="btnFlip" Grid.Column="3" Height="15" Width="15" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                        Click="btnFlip_Click" ToolTipService.ToolTip="Flip">
+                                <Image Source="../Images/flipIcon.jpg" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                            </telerik:RadButton>
+
+                        </Grid>
                         </telerik:RadExpander.Header>
                         <telerik:RadExpander.Content>
                             <Grid Grid.Column="0">
@@ -103,7 +109,8 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="100"/>
@@ -133,7 +140,12 @@
                                     </telerik:RadComboBox.ItemTemplate>
                                 </telerik:RadComboBox>-->
 
-                                <!--Fiscal Type Selector-->
+                            <!--<TextBlock  Grid.Row="4" Grid.Column="0" Text="Select the Gadget" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" HorizontalAlignment="Center" />
+                            <telerik:RadComboBox   Grid.Row="4" Grid.Column="1"  MinHeight="15" Height="15" ItemsSource="{Binding COASpecificGadgetNameInfo}"
+                                                 HorizontalAlignment="Center" SelectedValue="{Binding SelectedCOASpecificGadgetNameInfo, Mode=TwoWay}"
+                                                FontFamily="Arial" FontSize="7"/>-->
+
+                            <!--Fiscal Type Selector-->
                                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Fiscal Type" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
                                 <telerik:RadComboBox Grid.Row="1" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding FiscalTypeInfo}"
                                                  VerticalContentAlignment="Center" SelectedItem="{Binding SelectedFiscalType, Mode=TwoWay}"
@@ -150,6 +162,8 @@
                                 <telerik:RadComboBox Grid.Row="3" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding CurrencyInfo}"
                                                  VerticalContentAlignment="Center" SelectedValue="{Binding SelectedCurrency, Mode=TwoWay}"
                                                  Margin="2,2,2,0" FontFamily="Arial" FontSize="7"/>
+                                
+                                
                             </Grid>
                         </telerik:RadExpander.Content>
                     </telerik:RadExpander>
@@ -161,7 +175,7 @@
                     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" BusyContent="{Binding BusyIndicatorContent}"
                                       IsBusy="{Binding BusyIndicatorIsBusy}" DisplayAfter="0" FontFamily="Arial" FontSize="7">
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                            <telerik:RadGridView Name="dgCOASpecific" AutoGenerateColumns="False" Visibility="Collapsed"
+                            <telerik:RadGridView Name="dgCOASpecific" AutoGenerateColumns="False"
                                      CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                                      CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
@@ -193,13 +207,18 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-
-                        <telerik:RadComboBox  MinHeight="15" Height="15" ItemsSource="{Binding COASpecificGadgetNameInfo}"
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>                      
+                        <TextBlock  Grid.Column="0" Text="Select the Gadget" FontFamily="Arial" FontSize="7" Margin="100,2,0,0" HorizontalAlignment="Center" />
+                        <telerik:RadComboBox   Grid.Column="1"  MinHeight="15" Height="15" ItemsSource="{Binding COASpecificGadgetNameInfo}"
                                                  HorizontalAlignment="Center" SelectedValue="{Binding SelectedCOASpecificGadgetNameInfo, Mode=TwoWay}"
-                                                FontFamily="Arial" FontSize="7"/>
+                                                FontFamily="Arial" FontSize="7" Width="120"/>
                     </Grid>
                     <Grid Grid.Row="1">
-                    <telerik:RadBusyIndicator x:Name="busyIndicatorChart" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                        <telerik:RadBusyIndicator x:Name="busyIndicatorChart" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" BusyContent="{Binding BusyIndicatorContent}"
+                                      IsBusy="{Binding BusyIndicatorIsBusy}">
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                             <telerik:RadChart x:Name="chCOASpecific" Visibility="Visible" telerik:StyleManager.Theme="Metro"
                                       ItemsSource="{Binding COASpecificFilteredInfo, Mode=TwoWay}">                                
