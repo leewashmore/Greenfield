@@ -145,7 +145,7 @@ namespace GreenField.Web.Services
 
                 List<FinancialStatementData> result = null;
 
-                result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency).ToList();
+               // result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency).ToList();
 
                 return result;
             }
@@ -183,69 +183,46 @@ namespace GreenField.Web.Services
                 if (data == null)
                     return result;
 
-                data = data.OrderBy(record => record.ESTIMATE_DESC).OrderByDescending(record => record.PERIOD_YEAR).ToList();
-
+                data = data.OrderBy(record => record.ESTIMATE_DESC).ThenByDescending(record => record.PERIOD_YEAR).ToList();
+                List<string> requiredDescriptors = new List<string>() { "Revenue", "EBITDA", "Net Income (Pre Exceptional)", "Earnings Per Share (Pre Exceptional)", "Return on Assets", "Return on Equity" };
                 for (int i = 0; i < data.Count; i++)
                 {
-                    ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
-                    temp.IssuerId = data[i].ISSUER_ID;
-                    temp.EstimateId = data[i].ESTIMATE_ID;
-                    temp.Description = data[i].ESTIMATE_DESC;
-                    temp.Period = data[i].Period;
-                    temp.AmountType = data[i].AMOUNT_TYPE;
-                    temp.PeriodYear = data[i].PERIOD_YEAR;
-                    temp.PeriodType = data[i].PERIOD_TYPE;
-                    temp.Amount = data[i].AMOUNT;
-                    temp.AshmoreEmmAmount = data[i].ASHMOREEMM_AMOUNT;
-                    temp.NumberOfEstimates = data[i].NUMBER_OF_ESTIMATES;
-                    temp.High = data[i].HIGH;
-                    temp.Low = data[i].LOW;
-                    temp.StandardDeviation = data[i].STANDARD_DEVIATION;
-                    temp.SourceCurrency = data[i].SOURCE_CURRENCY;
-                    temp.DataSource = data[i].DATA_SOURCE;
-                    temp.DataSourceDate = data[i].DATA_SOURCE_DATE;
-                    temp.Actual = data[i].ACTUAL;
-
-                    temp.YOYGrowth = data[i].AMOUNT;
-                    temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
-                    if (i != data.Count - 1)
+                    if (requiredDescriptors.Contains(data[i].ESTIMATE_DESC))
                     {
-                        if (data[i].ESTIMATE_DESC == data[i + 1].ESTIMATE_DESC &&
-                            data[i].PERIOD_YEAR == data[i + 1].PERIOD_YEAR + 1)
+                        ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
+                        temp.IssuerId = data[i].ISSUER_ID;
+                        temp.EstimateId = data[i].ESTIMATE_ID;
+                        temp.Description = data[i].ESTIMATE_DESC;
+                        temp.Period = data[i].Period;
+                        temp.AmountType = data[i].AMOUNT_TYPE;
+                        temp.PeriodYear = data[i].PERIOD_YEAR;
+                        temp.PeriodType = data[i].PERIOD_TYPE;
+                        temp.Amount = data[i].AMOUNT;
+                        temp.AshmoreEmmAmount = data[i].ASHMOREEMM_AMOUNT;
+                        temp.NumberOfEstimates = data[i].NUMBER_OF_ESTIMATES;
+                        temp.High = data[i].HIGH;
+                        temp.Low = data[i].LOW;
+                        temp.StandardDeviation = data[i].STANDARD_DEVIATION;
+                        temp.SourceCurrency = data[i].SOURCE_CURRENCY;
+                        temp.DataSource = data[i].DATA_SOURCE;
+                        temp.DataSourceDate = data[i].DATA_SOURCE_DATE;
+                        temp.Actual = data[i].ACTUAL;
+                        temp.ConsensusMedian = data[i].AMOUNT;
+                        temp.YOYGrowth = data[i].AMOUNT;
+                        temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
+                        if (i != data.Count - 1)
                         {
-                            temp.YOYGrowth = temp.YOYGrowth - data[i + 1].AMOUNT;
+                            if (data[i].ESTIMATE_DESC == data[i + 1].ESTIMATE_DESC &&
+                                data[i].PERIOD_YEAR == data[i + 1].PERIOD_YEAR + 1)
+                            {
+                                if(data[i+1].AMOUNT != 0)
+                                temp.YOYGrowth = (temp.YOYGrowth / data[i + 1].AMOUNT) - 1;
+                            }
                         }
-                    }
 
-                    result.Add(temp);
-
-                }
-
-
-                //foreach (ConsensusEstimateDetailData item in data)
-                //{
-                //    temp = new ConsensusEstimateDetail();
-                //    temp.IssuerId = item.ISSUER_ID;
-                //    temp.EstimateId = item.ESTIMATE_ID;
-                //    temp.Description = item.ESTIMATE_DESC;
-                //    temp.Period = item.Period;
-                //    temp.AmountType = item.AMOUNT_TYPE;
-                //    temp.PeriodYear = item.PERIOD_YEAR;
-                //    temp.PeriodType = item.PERIOD_TYPE;
-                //    temp.Amount = item.AMOUNT;
-                //    temp.AshmoreEmmAmount = item.ASHMOREEMM_AMOUNT;
-                //    temp.NumberOfEstimates = item.NUMBER_OF_ESTIMATES;
-                //    temp.High = item.HIGH;
-                //    temp.Low = item.LOW;
-                //    temp.StandardDeviation = item.STANDARD_DEVIATION;
-                //    temp.SourceCurrency = item.SOURCE_CURRENCY;
-                //    temp.DataSource = item.DATA_SOURCE;
-                //    temp.DataSourceDate = item.DATA_SOURCE_DATE;
-                //    temp.Actual = item.ACTUAL;
-
-                //    result.Add(temp);
-                //}
-
+                        result.Add(temp);
+                    }                 
+                }          
                 return result;
             }
             catch (Exception ex)
@@ -481,6 +458,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
 
         /// <summary>
         /// Service Method for ConsensusEstimateGadget- Valuations

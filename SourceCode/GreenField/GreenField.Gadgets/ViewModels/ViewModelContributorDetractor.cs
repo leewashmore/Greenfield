@@ -34,11 +34,13 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
-       
+             
         /// <summary>
         /// DashboardGadgetPayLoad fields
         /// </summary>
         PortfolioSelectionData _PortfolioSelectionData;
+        #endregion
+
         #region Constructor
         /// <summary>
         /// Constructor
@@ -170,7 +172,7 @@ namespace GreenField.Gadgets.ViewModels
         }
         
         #endregion    
-        #endregion       
+              
 
         #region Event Handlers
 

@@ -19,10 +19,38 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewConsensusEstimatesDetails : ViewBaseUserControl
     {
+        #region Properties
+        /// <summary>
+        /// property to set data context
+        /// </summary>
+        private ViewModelConsensusEstimatesDetails _dataContextConsensusEstimatesDetails;
+        public ViewModelConsensusEstimatesDetails DataContextConsensusEstimatesDetails
+        {
+            get { return _dataContextConsensusEstimatesDetails; }
+            set { _dataContextConsensusEstimatesDetails = value; }
+        }
+
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextConsensusEstimatesDetails != null) //DataContext instance
+                    DataContextConsensusEstimatesDetails.IsActive = _isActive;
+            }
+        }
+        #endregion
+
         public ViewConsensusEstimatesDetails(ViewModelConsensusEstimatesDetails dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            DataContextConsensusEstimatesDetails = dataContextSource;
 
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
             PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimate, new PeriodColumnUpdateEventArg()

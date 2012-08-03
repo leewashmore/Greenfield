@@ -1435,6 +1435,11 @@ namespace GreenField.App.ViewModel
             get { return new DelegateCommand<object>(DashboardCompanyFinancialsCashFlowCommandMethod); }
         }
 
+        public ICommand DashboardCompanyFinstatCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCompanyFinstatCommandMethod); }
+        }
+
         public ICommand DashboardCompanyFinancialsFinStatCommand
         {
             get { return new DelegateCommand<object>(DashboardCompanyFinancialsFinStatCommandMethod); }
@@ -1872,6 +1877,25 @@ namespace GreenField.App.ViewModel
                 ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_FINANCIALS_CASH_FLOW);
                 UpdateToolBoxSelectorVisibility();
                 _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsCashFlow", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardCompanyFinstatCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.COMPANY_FINANCIALS_FINSTAT);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCompanyFinancialsFinStat", UriKind.Relative));
             }
             catch (Exception ex)
             {

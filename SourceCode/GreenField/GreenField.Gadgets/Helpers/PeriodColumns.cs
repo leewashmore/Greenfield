@@ -661,7 +661,7 @@ namespace GreenField.Gadgets.Helpers
             try
             {
                 PropertyInfo[] propertyInfo = data.GetType().GetProperties();
-                if (propertyInfo.Any(record => record.Name == groupItem.GroupPropertyName))
+                if(propertyInfo.Any(record => record.Name == groupItem.GroupPropertyName))
                 {
                     object groupdata = data.GetType().GetProperty(groupItem.GroupPropertyName).GetValue(data, null);
 
@@ -685,7 +685,8 @@ namespace GreenField.Gadgets.Helpers
                             return (groupdata).ToString();
                     }
                 }
-                return null;
+
+                return null;               
             }
             catch (Exception)
             {

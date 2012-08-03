@@ -82,7 +82,7 @@
                                          Background="White"
                                          AutoGenerateColumns="False" 
                                          AlternationCount="2"
-                                         AlternateRowBackground="#d8d5d4"
+                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          ItemsSource="{Binding SectorBreakdownInfo}" 
                                          telerik:StyleManager.Theme="Metro"
                                          CanUserSelect="False" 

@@ -45,7 +45,7 @@
                                  FontSize="7"
                                  ShowGroupPanel="False" 
                                  AlternationCount="2" 
-                                 AlternateRowBackground="#d8d5d4"
+                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                  ShowColumnFooters="False" 
                                  SelectionUnit="FullRow"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"

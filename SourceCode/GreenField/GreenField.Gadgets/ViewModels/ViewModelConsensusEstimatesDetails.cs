@@ -24,6 +24,9 @@ using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View model for ViewModelConsensusEstimatesDetails class
+    /// </summary>
     public class ViewModelConsensusEstimatesDetails : NotificationObject
     {
         #region Fields
@@ -54,8 +57,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (e.PeriodColumnNamespace == GetType().FullName)
                 {
                     BusyIndicatorNotification(true, "Retrieving data for updated time span");
-                    PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator, defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
                     Iterator = e.PeriodColumnNavigationDirection == NavigationDirection.LEFT ? Iterator - 1 : Iterator + 1;
+                    PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator, defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
                     ConsensusEstimateDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(ConsensusEstimateDetailInfo, out periodRecord,
                         periodRecord, subGroups: DataGrouping);
                     PeriodRecord = periodRecord;
@@ -86,7 +89,16 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _dataGrouping = new List<PeriodColumnGroupingDetail>();
                     _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "YOY", GroupPropertyName = "YOYGrowth", GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Consensus Median", GroupPropertyName = "ConsensusMedian", GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "AshmoreEMM", GroupPropertyName = "AshmoreEmmAmount", GroupDataType = PeriodColumnGroupingType.DECIMAL });
                     _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Variance%", GroupPropertyName = "Variance", GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Actual", GroupPropertyName = "Actual", GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "# Of Estimates", GroupPropertyName = "NumberOfEstimates", GroupDataType = PeriodColumnGroupingType.INT });
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "High", GroupPropertyName = "High", GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Low", GroupPropertyName = "Low", GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Std Dev", GroupPropertyName = "StandardDeviation", GroupDataType = PeriodColumnGroupingType.DECIMAL });
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Last Update", GroupPropertyName = "DataSourceDate", GroupDataType = PeriodColumnGroupingType.SHORT_DATETIME });
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Reported Currency", GroupPropertyName = "SourceCurrency", GroupDataType = PeriodColumnGroupingType.STRING });
                 }
                 return _dataGrouping;
             }
@@ -311,6 +323,27 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion  
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                if (_isActive != value)
+                {
+                    _isActive = value;
+                    if (IssuerReferenceInfo != null && IsActive)
+                        RetrieveConsensusEstimatesDetailsData();
+                }
+            }
+        }
         #endregion
 
         #region Event Handlers
@@ -326,7 +359,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     EntitySelectionInfo = result;
 
-                    if (EntitySelectionInfo != null)
+                    if (EntitySelectionInfo != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
                         _dbInteractivity.RetrieveIssuerReferenceData(result, RetrieveIssuerReferenceDataCallbackMethod);
@@ -410,10 +443,12 @@ namespace GreenField.Gadgets.ViewModels
 
         private void RetrieveConsensusEstimatesDetailsData()
         {
+            if (IssuerReferenceInfo != null && IsActive)
             _dbInteractivity.RetrieveConsensusEstimateDetailedData(IssuerReferenceInfo.IssuerId,
                                                                 SelectedPeriodType,
                                                                 SelectedCurrency,
                                                                 RetrieveConsensusEstimateDetailedDataCallbackMethod);
+            BusyIndicatorNotification(true, "Retrieving Data based on selected security");
         }
 
         public void SetConsensusEstimateDetailDisplayInfo()
