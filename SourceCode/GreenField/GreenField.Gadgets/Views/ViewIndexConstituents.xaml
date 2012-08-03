@@ -63,7 +63,7 @@
                                          ScrollMode="RealTime"
                                          FontSize="7"
                                          FontFamily="Arial"
-                                         
+                                         RowLoaded="dgIndexConstituents_RowLoaded"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          AlternationCount="2" 
                                          EnableRowVirtualization="False" 

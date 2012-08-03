@@ -109,7 +109,6 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
-        
+                
     }
 }

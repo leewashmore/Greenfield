@@ -233,6 +233,11 @@ namespace GreenField.Web.Services
             }
         }
 
+        //[OperationContract]
+        //[FaultContract(typeof(ServiceFault))]
+        //public List<FinstatData> RetrieveFinstatData(string issuerId,string securityId, FinancialStatementDataSource dataSource, String currency
+
+
         /// <summary>
         /// Gets Basic Data
         /// </summary>

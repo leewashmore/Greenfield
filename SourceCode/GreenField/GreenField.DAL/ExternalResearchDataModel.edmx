@@ -764,6 +764,13 @@
           <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
           <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetFinstatDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+        </Function>
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
@@ -868,6 +875,13 @@
             <Parameter Name="cCurrency" Mode="In" Type="String" />
             <Parameter Name="cIssuerID" Mode="In" Type="String" />
             <Parameter Name="cSecurityID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetFinstatDetail" ReturnType="Collection(ExternalResearchModel.FinstatData)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
 
 				</EntityContainer>
@@ -1397,7 +1411,23 @@
 					<Property Type="String" Name="MACRO_ECON_DATA_CURRENT" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
 					<Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_NAME" MaxLength="20" FixedLength="false" Unicode="false" />
 					<Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="20" FixedLength="false" Unicode="false" />
-				</EntityType>      
+				</EntityType>
+        <ComplexType Name="FinstatData" >
+			<Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10"/>
+			<Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10"/>
+			<Property Type="Int32" Name="ESTIMATE_ID" Nullable="false"/>
+			<Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+			<Property Type="Int32" Name="DATA_ID" Nullable="false" />
+			<Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6"/>
+			<Property Type="Int32" Name="MULTIPLIER" Nullable="false" />
+			<Property Type="Int32" Name="DECIMALS" Nullable="false" />
+			<Property Type="String" Name="PERCENTAGE" Nullable="false" MaxLength="10"/>
+			<Property Type="String" Name="BOLD_FONT" Nullable="false" MaxLength="10"/>
+			<Property Type="String" Name="GROUP_NAME" Nullable="false" MaxLength="50"/>
+			<Property Type="String" Name="SORT_ORDER" Nullable="false" MaxLength="50"/>
+			<Property Type="String" Name="HARMONIC" Nullable="false" MaxLength="10"/>
+			<Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100"/>
+        </ComplexType>      
 
 			</Schema>
 		</edmx:ConceptualModels>
@@ -1832,6 +1862,26 @@
                 <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="Period_Type" ColumnName="Period_Type" />
                 <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetFinstatDetail" FunctionName="ExternalResearchModel.Store.GetFinstatDetail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.FinstatData">
+                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+                <ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
+                <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+                <ScalarProperty Name="BOLD_FONT" ColumnName="BOLD_FONT" />
+                <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="HARMONIC" ColumnName="HARMONIC" />
+                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -1153,7 +1153,7 @@ namespace GreenField.Web.Services
                         SectorName = record.GICS_LVL1
                     });
                 }
-                result = result.Distinct().ToList();
+                result = result.Distinct().OrderBy(r => r.SectorName).ToList();
                 return result;
             }
             catch (Exception ex)
@@ -1198,7 +1198,7 @@ namespace GreenField.Web.Services
                 {
                     countryCodes.Add(record.COUNTRY);
                 }
-                countryCodes = countryCodes.Distinct().ToList();
+                countryCodes = countryCodes.Distinct().OrderBy(a => a).ToList();
 
                 List<RelativePerformanceSectorData> sectors = new List<RelativePerformanceSectorData>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION record in dailyData)
@@ -1209,7 +1209,7 @@ namespace GreenField.Web.Services
                         SectorName = record.GICS_LVL1
                     });
                 }
-                sectors = sectors.Distinct().ToList();
+                sectors = sectors.Distinct().OrderBy(r => r.SectorName).ToList();
 
                 foreach (string countryCode in countryCodes)
                 {
