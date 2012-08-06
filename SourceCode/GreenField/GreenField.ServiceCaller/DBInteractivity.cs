@@ -2791,10 +2791,10 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrievePRevenueData(EntitySelectionData entitySelectionData, Action<List<PRevenueData>> callback)
+        public void RetrievePRevenueData(EntitySelectionData entitySelectionData, string chartTitle, Action<List<PRevenueData>> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
-            client.RetrievePRevenueDataAsync(entitySelectionData);
+            client.RetrievePRevenueDataAsync(entitySelectionData, chartTitle);
             client.RetrievePRevenueDataCompleted += (se, e) =>
             {
                 if (e.Error == null)

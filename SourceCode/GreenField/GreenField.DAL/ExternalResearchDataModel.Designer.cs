@@ -1169,6 +1169,47 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<FinstatData>("GetFinstatDetail", iSSUER_IDParameter, sECURITY_IDParameter, dATA_SOURCEParameter, fISCAL_TYPEParameter, cURRENCYParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="securityId">No Metadata Documentation available.</param>
+        /// <param name="issuerId">No Metadata Documentation available.</param>
+        /// <param name="chartTitle">No Metadata Documentation available.</param>
+        public ObjectResult<GetEV_EBITDAData_Result> Get_EV_EBITDA(global::System.String securityId, global::System.String issuerId, global::System.String chartTitle)
+        {
+            ObjectParameter securityIdParameter;
+            if (securityId != null)
+            {
+                securityIdParameter = new ObjectParameter("securityId", securityId);
+            }
+            else
+            {
+                securityIdParameter = new ObjectParameter("securityId", typeof(global::System.String));
+            }
+    
+            ObjectParameter issuerIdParameter;
+            if (issuerId != null)
+            {
+                issuerIdParameter = new ObjectParameter("issuerId", issuerId);
+            }
+            else
+            {
+                issuerIdParameter = new ObjectParameter("issuerId", typeof(global::System.String));
+            }
+    
+            ObjectParameter chartTitleParameter;
+            if (chartTitle != null)
+            {
+                chartTitleParameter = new ObjectParameter("chartTitle", chartTitle);
+            }
+            else
+            {
+                chartTitleParameter = new ObjectParameter("chartTitle", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<GetEV_EBITDAData_Result>("Get_EV_EBITDA", securityIdParameter, issuerIdParameter, chartTitleParameter);
+        }
 
         #endregion
     }
@@ -9086,6 +9127,179 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _ENTERPRISE_VALUE;
         partial void OnENTERPRISE_VALUEChanging(Nullable<global::System.Decimal> value);
         partial void OnENTERPRISE_VALUEChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="GetEV_EBITDAData_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class GetEV_EBITDAData_Result : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new GetEV_EBITDAData_Result object.
+        /// </summary>
+        /// <param name="periodLabel">Initial value of the PeriodLabel property.</param>
+        /// <param name="period_End_Date">Initial value of the Period_End_Date property.</param>
+        public static GetEV_EBITDAData_Result CreateGetEV_EBITDAData_Result(global::System.String periodLabel, global::System.DateTime period_End_Date)
+        {
+            GetEV_EBITDAData_Result getEV_EBITDAData_Result = new GetEV_EBITDAData_Result();
+            getEV_EBITDAData_Result.PeriodLabel = periodLabel;
+            getEV_EBITDAData_Result.Period_End_Date = period_End_Date;
+            return getEV_EBITDAData_Result;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PeriodLabel
+        {
+            get
+            {
+                return _PeriodLabel;
+            }
+            set
+            {
+                OnPeriodLabelChanging(value);
+                ReportPropertyChanging("PeriodLabel");
+                _PeriodLabel = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("PeriodLabel");
+                OnPeriodLabelChanged();
+            }
+        }
+        private global::System.String _PeriodLabel;
+        partial void OnPeriodLabelChanging(global::System.String value);
+        partial void OnPeriodLabelChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime Period_End_Date
+        {
+            get
+            {
+                return _Period_End_Date;
+            }
+            set
+            {
+                OnPeriod_End_DateChanging(value);
+                ReportPropertyChanging("Period_End_Date");
+                _Period_End_Date = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Period_End_Date");
+                OnPeriod_End_DateChanged();
+            }
+        }
+        private global::System.DateTime _Period_End_Date;
+        partial void OnPeriod_End_DateChanging(global::System.DateTime value);
+        partial void OnPeriod_End_DateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> EBITDA
+        {
+            get
+            {
+                return _EBITDA;
+            }
+            set
+            {
+                OnEBITDAChanging(value);
+                ReportPropertyChanging("EBITDA");
+                _EBITDA = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EBITDA");
+                OnEBITDAChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _EBITDA;
+        partial void OnEBITDAChanging(Nullable<global::System.Decimal> value);
+        partial void OnEBITDAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> NetDebt
+        {
+            get
+            {
+                return _NetDebt;
+            }
+            set
+            {
+                OnNetDebtChanging(value);
+                ReportPropertyChanging("NetDebt");
+                _NetDebt = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NetDebt");
+                OnNetDebtChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _NetDebt;
+        partial void OnNetDebtChanging(Nullable<global::System.Decimal> value);
+        partial void OnNetDebtChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> USDPrice
+        {
+            get
+            {
+                return _USDPrice;
+            }
+            set
+            {
+                OnUSDPriceChanging(value);
+                ReportPropertyChanging("USDPrice");
+                _USDPrice = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("USDPrice");
+                OnUSDPriceChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _USDPrice;
+        partial void OnUSDPriceChanging(Nullable<global::System.Decimal> value);
+        partial void OnUSDPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> Shares_Outstanding
+        {
+            get
+            {
+                return _Shares_Outstanding;
+            }
+            set
+            {
+                OnShares_OutstandingChanging(value);
+                ReportPropertyChanging("Shares_Outstanding");
+                _Shares_Outstanding = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("Shares_Outstanding");
+                OnShares_OutstandingChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _Shares_Outstanding;
+        partial void OnShares_OutstandingChanging(Nullable<global::System.Decimal> value);
+        partial void OnShares_OutstandingChanged();
 
         #endregion
     }
