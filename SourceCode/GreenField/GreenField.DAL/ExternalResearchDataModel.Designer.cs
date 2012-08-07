@@ -1221,6 +1221,47 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<BrokerDetail>("GetBrokerDetail", iSSUER_IDParameter, eSTIMATE_TYPEParameter, pERIOD_TYPEParameter, cURRENCYParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="securityId">No Metadata Documentation available.</param>
+        /// <param name="issuerId">No Metadata Documentation available.</param>
+        /// <param name="chartTitle">No Metadata Documentation available.</param>
+        public ObjectResult<GetEV_EBITDAData_Result> Get_EV_EBITDA(global::System.String securityId, global::System.String issuerId, global::System.String chartTitle)
+        {
+            ObjectParameter securityIdParameter;
+            if (securityId != null)
+            {
+                securityIdParameter = new ObjectParameter("securityId", securityId);
+            }
+            else
+            {
+                securityIdParameter = new ObjectParameter("securityId", typeof(global::System.String));
+            }
+    
+            ObjectParameter issuerIdParameter;
+            if (issuerId != null)
+            {
+                issuerIdParameter = new ObjectParameter("issuerId", issuerId);
+            }
+            else
+            {
+                issuerIdParameter = new ObjectParameter("issuerId", typeof(global::System.String));
+            }
+    
+            ObjectParameter chartTitleParameter;
+            if (chartTitle != null)
+            {
+                chartTitleParameter = new ObjectParameter("chartTitle", chartTitle);
+            }
+            else
+            {
+                chartTitleParameter = new ObjectParameter("chartTitle", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<GetEV_EBITDAData_Result>("Get_EV_EBITDA", securityIdParameter, issuerIdParameter, chartTitleParameter);
+        }
 
         #endregion
     }

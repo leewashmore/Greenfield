@@ -1909,7 +1909,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-            <ResultMapping>
+            <!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
                 <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
@@ -1920,7 +1920,7 @@
                 <ScalarProperty Name="Reported_Currency" ColumnName="Reported_Currency" />
               </ComplexTypeMapping>
             </ResultMapping>
-          </FunctionImportMapping>
+          </FunctionImportMapping>-->
 
 				</EntityContainerMapping>
 			</Mapping>
