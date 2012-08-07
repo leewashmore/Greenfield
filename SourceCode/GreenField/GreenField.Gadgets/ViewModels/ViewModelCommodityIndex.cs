@@ -49,7 +49,9 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Private member stores commodity grid visibility
         /// </summary>
-        private Visibility _commodityGridVisibility = Visibility.Collapsed;       
+        private Visibility _commodityGridVisibility = Visibility.Collapsed;      
+ 
+        private bool _isBusyIndicatorStatus;
 
         #endregion
         #region Constructor
@@ -67,6 +69,9 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<CommoditySelectionSetEvent>().Subscribe(HandleCommodityReferenceSet);
             if(_commodityID != null && IsActive)
                 _dbInteractivity.RetrieveCommoditySelectionData(RetrieveCommodityDataCallbackMethod);
+            //if (CommodityDataLoadEvent != null)
+                //CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                CallingWebMethod();
         }
         #endregion
 
@@ -100,6 +105,19 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
+        /// sets BusyIndicator visibilty
+        /// </summary>
+        public bool IsBusyIndicatorStatus
+        {
+            get { return _isBusyIndicatorStatus; }
+            set
+            {
+                _isBusyIndicatorStatus = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorStatus);
+            }
+        }
+
+        /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
         private bool _isActive;
@@ -109,21 +127,23 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _isActive = value;
-                if (_commodityID != null && _isActive)
-                {
-                    if (CommodityDataLoadEvent != null)
-                        CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    _dbInteractivity.RetrieveCommodityData(_commodityID, RetrieveCommodityDataCallbackMethod);
-                }
+                CallingWebMethod();
+                //if (_commodityID != null && _isActive)
+                //{
+                //    if (CommodityDataLoadEvent != null)
+                //        CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                //    _dbInteractivity.RetrieveCommodityData(_commodityID, RetrieveCommodityDataCallbackMethod);
+                //}
             }
         }
         #endregion
 
         #region Event
-        /// <summary>
-        /// event to handle data retrieval progress indicator
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler CommodityDataLoadEvent;
+        ///// <summary>
+        ///// event to handle data retrieval progress indicator
+        ///// </summary>
+        //public event DataRetrievalProgressIndicatorEventHandler CommodityDataLoadEvent;
+
         /// <summary>
         /// event to handle data
         /// </summary>
@@ -137,17 +157,11 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (commodityID != null)
+                if (commodityID != null && IsActive)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, commodityID, 1);
                     _commodityID = commodityID;
-
-                    if (_commodityID != null && IsActive)
-                    {
-                        if (CommodityDataLoadEvent != null)
-                            CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveCommodityData(_commodityID, RetrieveCommodityDataCallbackMethod);
-                    }
+                    CallingWebMethod();
                 }
                 else
                 {
@@ -183,8 +197,8 @@ namespace GreenField.Gadgets.ViewModels
                     CommodityGridVisibility = Visibility.Visible;
                     CommodityData = result;
                     //this.RaisePropertyChanged(() => this.CommodityData);
-                    if (CommodityDataLoadEvent != null)
-                        CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    //if (CommodityDataLoadEvent != null)
+                    //    CommodityDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                     RetrieveCommodityDataCompleteEvent(new RetrieveCommodityDataCompleteEventArgs() { CommodityInfo = result });
 
                 }
@@ -199,7 +213,19 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            finally { IsBusyIndicatorStatus = false; }
             Logging.LogEndMethod(_logger, methodNamespace);
+        }
+        #endregion
+
+        #region WEB METHOD CALL
+        private void CallingWebMethod()
+        {
+            if (IsActive)
+            {
+                _dbInteractivity.RetrieveCommodityData(_commodityID, RetrieveCommodityDataCallbackMethod);
+                IsBusyIndicatorStatus = true;
+            }
         }
         #endregion
         #region EventUnSubscribe
