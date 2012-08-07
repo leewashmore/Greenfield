@@ -70,8 +70,8 @@ namespace GreenField.ServiceCaller
 
         void RetrievePortfolioRiskReturnData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, Action<List<PortfolioRiskReturnData>> callback);
 
-        void RetrieveBenchmarkFilterSelectionData(String benchmarkCode, String BenchmarkName, String filterType, Action<List<BenchmarkFilterSelectionData>> callback);        
-        
+        void RetrieveBenchmarkFilterSelectionData(String benchmarkCode, String BenchmarkName, String filterType, Action<List<BenchmarkFilterSelectionData>> callback);
+
         void RetrieveMarketSnapshotSelectionData(string userName, Action<List<MarketSnapshotSelectionData>> callback);
 
         void RetrieveMarketSnapshotPreference(int snapshotPreferenceId, Action<List<MarketSnapshotPreference>> callback);
@@ -110,7 +110,7 @@ namespace GreenField.ServiceCaller
 
         void RemoveMarketSnapshotPreference(string userName, string snapshotName, Action<bool?> callback);
 
-        void RetrieveFilterSelectionData(DateTime? effectiveDate, Action<List<FilterSelectionData>> callback);
+        void RetrieveFilterSelectionData(PortfolioSelectionData selectedPortfolio, DateTime? effectiveDate, Action<List<FilterSelectionData>> callback);
 
         void RetrieveRelativePerformanceData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period, Action<List<RelativePerformanceData>> callback);
 
@@ -128,7 +128,7 @@ namespace GreenField.ServiceCaller
 
         void RetrievePerformanceGridData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String country, Action<List<PerformanceGridData>> callback);
 
-        void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate,String nodeName, Action<List<AttributionData>> callback);
+        void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String nodeName, Action<List<AttributionData>> callback);
 
         void RetrieveHeatMapData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String period, Action<List<HeatMapData>> callback);
 
@@ -193,7 +193,7 @@ namespace GreenField.ServiceCaller
         void RetrievePRevenueData(EntitySelectionData entitySelectionData, Action<List<PRevenueData>> callback);
 
         #region ConsensusEstimatesGadgets
-        
+
         void RetrieveBasicData(EntitySelectionData entitySelectionData, Action<List<BasicData>> callback);
 
         void RetrieveTargetPriceData(EntitySelectionData entitySelectionData, Action<List<TargetPriceCEData>> callback);
@@ -204,7 +204,7 @@ namespace GreenField.ServiceCaller
 
 
         #endregion
-        
+
 
         void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetail>> callback);
 

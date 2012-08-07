@@ -1277,13 +1277,13 @@ namespace GreenField.ServiceCaller
         /// <param name="filterType">Filter Type selected by the user</param>
         /// <param name="effectiveDate">Effected Date selected by the user</param>
         /// <param name="callback">callback method</param>
-        public void RetrieveFilterSelectionData(DateTime? effectiveDate, Action<List<FilterSelectionData>> callback)
+        public void RetrieveFilterSelectionData(PortfolioSelectionData selectedPortfolio, DateTime? effectiveDate, Action<List<FilterSelectionData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-            client.RetrieveFilterSelectionDataAsync(effectiveDate);
+            client.RetrieveFilterSelectionDataAsync(selectedPortfolio, effectiveDate);
             client.RetrieveFilterSelectionDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -1461,7 +1461,7 @@ namespace GreenField.ServiceCaller
         /// <param name="portfolioSelectionData">Contains the selected portfolio</param>
         /// <param name="effectiveDate">Contains the selected effective date</param>
         /// <param name="callback">callback</param>
-        public void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate,String nodeName, Action<List<AttributionData>> callback)
+        public void RetrieveAttributionData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, String nodeName, Action<List<AttributionData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");

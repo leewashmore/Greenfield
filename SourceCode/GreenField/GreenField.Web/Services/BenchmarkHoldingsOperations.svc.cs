@@ -948,14 +948,19 @@ namespace GreenField.Web.Services
         /// <returns>HoldingsFilterSelectionData Object</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<FilterSelectionData> RetrieveFilterSelectionData(DateTime? effectiveDate)
+        public List<FilterSelectionData> RetrieveFilterSelectionData(PortfolioSelectionData selectedPortfolio, DateTime? effectiveDate)
         {
             try
             {
+                if (selectedPortfolio == null)
+                    return new List<FilterSelectionData>();
+                if (effectiveDate == null)
+                    return new List<FilterSelectionData>();
+
                 List<FilterSelectionData> result = new List<FilterSelectionData>();
 
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> data = DimensionEntity.GF_PORTFOLIO_HOLDINGS
-                    .Where(t => t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                    .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
                     .ToList();
 
                 List<FilterSelectionData> distinctRegions = data

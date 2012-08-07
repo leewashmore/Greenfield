@@ -113,7 +113,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             "e")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault), Action="http://tempuri.org/BenchmarkHoldingsOperations/RetrieveFilterSelectionDataService" +
             "FaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveFilterSelectionData(System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveFilterSelectionData(GreenField.DataContracts.PortfolioSelectionData selectedPortfolio, System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.FilterSelectionData> EndRetrieveFilterSelectionData(System.IAsyncResult result);
         
@@ -1081,8 +1081,8 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveFilterSelectionData(System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveFilterSelectionData(effectiveDate, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations.BeginRetrieveFilterSelectionData(GreenField.DataContracts.PortfolioSelectionData selectedPortfolio, System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveFilterSelectionData(selectedPortfolio, effectiveDate, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1091,8 +1091,9 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
         }
         
         private System.IAsyncResult OnBeginRetrieveFilterSelectionData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Nullable<System.DateTime> effectiveDate = ((System.Nullable<System.DateTime>)(inValues[0]));
-            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveFilterSelectionData(effectiveDate, callback, asyncState);
+            GreenField.DataContracts.PortfolioSelectionData selectedPortfolio = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
+            System.Nullable<System.DateTime> effectiveDate = ((System.Nullable<System.DateTime>)(inValues[1]));
+            return ((GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations)(this)).BeginRetrieveFilterSelectionData(selectedPortfolio, effectiveDate, callback, asyncState);
         }
         
         private object[] OnEndRetrieveFilterSelectionData(System.IAsyncResult result) {
@@ -1108,11 +1109,11 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
             }
         }
         
-        public void RetrieveFilterSelectionDataAsync(System.Nullable<System.DateTime> effectiveDate) {
-            this.RetrieveFilterSelectionDataAsync(effectiveDate, null);
+        public void RetrieveFilterSelectionDataAsync(GreenField.DataContracts.PortfolioSelectionData selectedPortfolio, System.Nullable<System.DateTime> effectiveDate) {
+            this.RetrieveFilterSelectionDataAsync(selectedPortfolio, effectiveDate, null);
         }
         
-        public void RetrieveFilterSelectionDataAsync(System.Nullable<System.DateTime> effectiveDate, object userState) {
+        public void RetrieveFilterSelectionDataAsync(GreenField.DataContracts.PortfolioSelectionData selectedPortfolio, System.Nullable<System.DateTime> effectiveDate, object userState) {
             if ((this.onBeginRetrieveFilterSelectionDataDelegate == null)) {
                 this.onBeginRetrieveFilterSelectionDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveFilterSelectionData);
             }
@@ -1123,6 +1124,7 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 this.onRetrieveFilterSelectionDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveFilterSelectionDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrieveFilterSelectionDataDelegate, new object[] {
+                        selectedPortfolio,
                         effectiveDate}, this.onEndRetrieveFilterSelectionDataDelegate, this.onRetrieveFilterSelectionDataCompletedDelegate, userState);
         }
         
@@ -1729,9 +1731,10 @@ namespace GreenField.ServiceCaller.BenchmarkHoldingsDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveFilterSelectionData(System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = effectiveDate;
+            public System.IAsyncResult BeginRetrieveFilterSelectionData(GreenField.DataContracts.PortfolioSelectionData selectedPortfolio, System.Nullable<System.DateTime> effectiveDate, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = selectedPortfolio;
+                _args[1] = effectiveDate;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveFilterSelectionData", _args, callback, asyncState);
                 return _result;
             }

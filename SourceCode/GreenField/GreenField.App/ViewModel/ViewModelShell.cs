@@ -329,6 +329,15 @@ namespace GreenField.App.ViewModel
                     {
                         SelectorPayload.PortfolioSelectionData = value;
                         _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Publish(value);
+                        if (_dbInteractivity != null && _filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
+                        {
+                            BusyIndicatorContent = "Retrieving...";
+                            if (ShellFilterDataLoadEvent != null)
+                            {
+                                ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                            }
+                            _dbInteractivity.RetrieveFilterSelectionData(value, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
+                        }
                     }
                 }
             }
@@ -400,14 +409,14 @@ namespace GreenField.App.ViewModel
                 {
                     SelectorPayload.EffectiveDate = Convert.ToDateTime(value);
                     _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Publish(Convert.ToDateTime(value));
-                    if (_dbInteractivity != null && _filterValueVisibility == Visibility.Visible)
+                    if (_dbInteractivity != null && _filterValueVisibility == Visibility.Visible && SelectedPortfolioInfo != null)
                     {
                         BusyIndicatorContent = "Retrieving...";
                         if (ShellFilterDataLoadEvent != null)
                         {
                             ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         }
-                        _dbInteractivity.RetrieveFilterSelectionData(value, RetrieveFilterSelectionDataCallbackMethod);
+                        _dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, value, RetrieveFilterSelectionDataCallbackMethod);
                     }
                 }
             }
@@ -787,7 +796,8 @@ namespace GreenField.App.ViewModel
                         {
                             ShellFilterDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         }
-                        _dbInteractivity.RetrieveFilterSelectionData(SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
+                        _dbInteractivity.RetrieveFilterSelectionData(SelectedPortfolioInfo, SelectedEffectiveDateInfo, RetrieveFilterSelectionDataCallbackMethod);
+                        
                     }
                 }
             }
