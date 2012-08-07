@@ -1,27 +1,15 @@
 ﻿using System;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Ink;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Events;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using System.Collections.ObjectModel;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using System.Collections.Generic;
-using GreenField.Common.Helper;
 using GreenField.Gadgets.Helpers;
 using GreenField.Common;
 using System.Linq;
 using GreenField.DataContracts;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -190,6 +178,11 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _getBenchmarkData = value;
+                if (SelectedPortfolioId != null && _effectiveDate != null && IsActive)
+                {
+                    BusyIndicatorStatus = true;
+                    RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
+                }
                 this.RaisePropertyChanged(() => this.GetBenchmarkData);
             }
         }
@@ -347,6 +340,25 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Get Benchmark Securities
+        /// </summary>
+        private bool _getBenchmarkCheck;
+        public bool GetBenchmarkCheck
+        {
+            get
+            {
+                return _getBenchmarkCheck;
+            }
+            set
+            {
+                _getBenchmarkCheck = value;
+
+                this.RaisePropertyChanged(() => this.GetBenchmarkCheck);
+            }
+        }
+
+
         #endregion
 
         #region CallbackMethods
@@ -365,7 +377,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     SelectedPortfolioDetailsData.Clear();
-                    SelectedPortfolioDetailsData.AddRange(CalculatePortfolioValues(result));
+                    SelectedPortfolioDetailsData.AddRange(CalculatePortfolioValues(result).OrderBy(a => a.ActivePosition).ThenBy(a => a.PortfolioWeight).ToList());
                 }
             }
             catch (Exception ex)
@@ -450,11 +462,9 @@ namespace GreenField.Gadgets.ViewModels
 
                     List<PortfolioDetailsData> collection = new List<PortfolioDetailsData>(SelectedPortfolioDetailsData);
                     SelectedPortfolioDetailsData.Clear();
-                    SelectedPortfolioDetailsData.AddRange(collection);
+                    SelectedPortfolioDetailsData.AddRange(collection.OrderBy(a => a.ActivePosition).ThenBy(a => a.PortfolioWeight).ToList());
                     collection.Clear();
-
                 }
-
             }
             catch (Exception ex)
             {
@@ -514,7 +524,10 @@ namespace GreenField.Gadgets.ViewModels
                     item.ReBenchmarkWeight = item.BenchmarkWeight;
 
                 }
-                return portfolioDetailsData;
+                if (portfolioDetailsData != null)
+                    return portfolioDetailsData;
+                else
+                    return new List<PortfolioDetailsData>();
             }
             catch (Exception ex)
             {
@@ -667,3 +680,4 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
     }
 }
+
