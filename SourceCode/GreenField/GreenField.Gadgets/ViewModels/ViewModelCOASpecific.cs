@@ -289,6 +289,8 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
+
+
         #region COASpecificData List
 
 
@@ -335,7 +337,7 @@ namespace GreenField.Gadgets.ViewModels
                         coaSpecificInfo = value;
                         COASpecificGadgetNameInfo =  value.Select(t => t.GridDesc).Distinct().ToList();
                         defaultGadgetDesc = value.Select(t => t.GridDesc).FirstOrDefault();
-                        COASpecificFilteredInfo = COASpecificInfo.Where(t => t.GridDesc == defaultGadgetDesc).ToList();
+                        COASpecificFilteredInfo = COASpecificInfo.Where(t => t.GridDesc == defaultGadgetDesc).ToList(); 
                         RaisePropertyChanged(() => this.COASpecificInfo);
                         SetCOASpecificDisplayInfo();
                     }                
@@ -352,27 +354,40 @@ namespace GreenField.Gadgets.ViewModels
                    if (coaSpecificFilterdInfo != value)
                     {
                         coaSpecificFilterdInfo = value;
+                        List<String> defaultSeries = COASpecificFilteredInfo.Select(t => t.Description).Distinct().ToList();
+                       
+                        ComparisonSeries.Clear();
+                        foreach (String t in defaultSeries)
+                        {
+                            GadgetWithPeriodColumns entry = new GadgetWithPeriodColumns();
+                            entry.GridId = null;
+                            entry.GadgetName = null;
+                            entry.GadgetDesc = t;
+                            entry.Amount = null;
+                            entry.PeriodYear = null;
+                            ComparisonSeries.Add(entry);
+                        }            
                         RaisePropertyChanged(() => this.COASpecificFilteredInfo);                       
                     }                
             }
 
         }
 
-        private List<GadgetWithPeriodColumns> coaSpecificChartInfo;
-        public List<GadgetWithPeriodColumns> COASpecificChartInfo
+       
+       
+        private ObservableCollection<GadgetWithPeriodColumns> comparisonSeries = new ObservableCollection<GadgetWithPeriodColumns>();
+        public ObservableCollection<GadgetWithPeriodColumns> ComparisonSeries
         {
-            get { return coaSpecificChartInfo; }
+            get { return comparisonSeries; }
             set
             {
-                if (coaSpecificChartInfo != value)
-                {
-                    coaSpecificChartInfo = value;
-                    RaisePropertyChanged(() => this.COASpecificChartInfo);                   
-
-                }
+                    comparisonSeries = value;
+                    RaisePropertyChanged(() => this.ComparisonSeries);                
             }
 
         }
+
+        
 
         /// <summary>
         /// Pivoted COA Specific  Information to be dispayed on grid
@@ -420,6 +435,23 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
+
+        /// <summary>
+        /// Show/Hide Add to Chart Control
+        /// </summary>
+        private string _addToChartVisibility ;
+        public string AddToChartVisibility
+        {
+            get
+            {
+                return _addToChartVisibility;
+            }
+            set
+            {
+                _addToChartVisibility = value;
+                this.RaisePropertyChanged(() => this.AddToChartVisibility);
+            }
+        }
 
         #endregion
 
