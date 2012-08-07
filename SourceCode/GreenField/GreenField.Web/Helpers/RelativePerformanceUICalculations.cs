@@ -61,6 +61,7 @@ namespace GreenField.Web.Helpers
                             }
                             result.Add(data);
                         }
+
                     }
                 }
 
@@ -79,6 +80,14 @@ namespace GreenField.Web.Helpers
                         data.SortId = 2;
                         result.Add(data);
                     }
+                }
+
+                //To be Removed
+                if (result != null)
+                {
+                    RelativePerformanceUIData removeSecurity = result.Where(a => a.EntityName.ToUpper().Trim() == "SECURITY ID").FirstOrDefault();
+                    if (removeSecurity != null)
+                        result.Remove(removeSecurity);
                 }
 
                 return result;
