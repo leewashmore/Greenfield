@@ -13,8 +13,7 @@ namespace GreenField.Gadgets.Models
 {
     public class GadgetWithPeriodColumns
     {
-      
-        public Int32 GridId { get; set; }
+        public Int32? GridId { get; set; }
 
         public String GadgetName { get; set; }
 
@@ -22,7 +21,7 @@ namespace GreenField.Gadgets.Models
         
         public Decimal? Amount { get; set; }
       
-        public Int32 PeriodYear { get; set; }
+        public Int32? PeriodYear { get; set; }
 
     }
 }
