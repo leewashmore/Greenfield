@@ -84,5 +84,8 @@ namespace GreenField.DataContracts
         [DataMember]
         public decimal? ReBenchmarkWeight { get; set; }
 
+        [DataMember]
+        public string Type { get; set; }
+
     }
 }

@@ -6,6 +6,21 @@
 		<edmx:StorageModels>
 		<Schema Namespace="ExternalResearchModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="ExternalResearchModelStoreContainer">
+          <EntitySet Name="CALC_LOG" EntityType="ExternalResearchModel.Store.CALC_LOG" store:Type="Tables" store:Schema="dbo" store:Name="CALC_LOG">
+            <DefiningQuery>SELECT 
+      [CALC_LOG].[LOG_ID] AS [LOG_ID], 
+      [CALC_LOG].[LOG_DATE] AS [LOG_DATE], 
+      [CALC_LOG].[DATA_ID] AS [DATA_ID], 
+      [CALC_LOG].[ISSUER_ID] AS [ISSUER_ID], 
+      [CALC_LOG].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [CALC_LOG].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [CALC_LOG].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
+      [CALC_LOG].[FISCAL_TYPE] AS [FISCAL_TYPE], 
+      [CALC_LOG].[CURRENCY] AS [CURRENCY], 
+      [CALC_LOG].[TXT] AS [TXT]
+      FROM [dbo].[CALC_LOG] AS [CALC_LOG]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="ChangeScripts" EntityType="ExternalResearchModel.Store.ChangeScripts" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CONSENSUS_MASTER" EntityType="ExternalResearchModel.Store.CONSENSUS_MASTER" store:Type="Tables" store:Schema="dbo" store:Name="CONSENSUS_MASTER">
             <DefiningQuery>SELECT 
       [CONSENSUS_MASTER].[ESTIMATE_ID] AS [ESTIMATE_ID], 
@@ -72,6 +87,42 @@
       [DATA_MASTER].[STATEMENT_TYPE] AS [STATEMENT_TYPE]
       FROM [dbo].[DATA_MASTER] AS [DATA_MASTER]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.Store.FAIR_VALUE" store:Type="Tables" store:Schema="dbo" store:Name="FAIR_VALUE">
+            <DefiningQuery>SELECT 
+      [FAIR_VALUE].[VALUE_TYPE] AS [VALUE_TYPE], 
+      [FAIR_VALUE].[SECURITY_ID] AS [SECURITY_ID], 
+      [FAIR_VALUE].[FV_MEASURE] AS [FV_MEASURE], 
+      [FAIR_VALUE].[FV_BUY] AS [FV_BUY], 
+      [FAIR_VALUE].[FV_SELL] AS [FV_SELL], 
+      [FAIR_VALUE].[CURRENT_MEASURE_VALUE] AS [CURRENT_MEASURE_VALUE], 
+      [FAIR_VALUE].[UPSIDE] AS [UPSIDE]
+      FROM [dbo].[FAIR_VALUE] AS [FAIR_VALUE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="FINANCIAL_GRIDS_DISPLAY" EntityType="ExternalResearchModel.Store.FINANCIAL_GRIDS_DISPLAY" store:Type="Tables" store:Schema="dbo" store:Name="FINANCIAL_GRIDS_DISPLAY">
+            <DefiningQuery>SELECT 
+      [FINANCIAL_GRIDS_DISPLAY].[GRID_ID] AS [GRID_ID], 
+      [FINANCIAL_GRIDS_DISPLAY].[COA_TYPE] AS [COA_TYPE], 
+      [FINANCIAL_GRIDS_DISPLAY].[SORT_ORDER] AS [SORT_ORDER], 
+      [FINANCIAL_GRIDS_DISPLAY].[DATA_ID] AS [DATA_ID], 
+      [FINANCIAL_GRIDS_DISPLAY].[ESTIMATE_ID] AS [ESTIMATE_ID], 
+      [FINANCIAL_GRIDS_DISPLAY].[DECIMALS] AS [DECIMALS], 
+      [FINANCIAL_GRIDS_DISPLAY].[PERCENTAGE] AS [PERCENTAGE]
+      FROM [dbo].[FINANCIAL_GRIDS_DISPLAY] AS [FINANCIAL_GRIDS_DISPLAY]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="FINSTAT_DISPLAY" EntityType="ExternalResearchModel.Store.FINSTAT_DISPLAY" store:Type="Tables" store:Schema="dbo" store:Name="FINSTAT_DISPLAY">
+            <DefiningQuery>SELECT 
+      [FINSTAT_DISPLAY].[DATA_ID] AS [DATA_ID], 
+      [FINSTAT_DISPLAY].[ESTIMATE_ID] AS [ESTIMATE_ID], 
+      [FINSTAT_DISPLAY].[COA_TYPE] AS [COA_TYPE], 
+      [FINSTAT_DISPLAY].[SORT_ORDER] AS [SORT_ORDER], 
+      [FINSTAT_DISPLAY].[GROUP_NAME] AS [GROUP_NAME], 
+      [FINSTAT_DISPLAY].[BOLD_FONT] AS [BOLD_FONT], 
+      [FINSTAT_DISPLAY].[DECIMALS] AS [DECIMALS], 
+      [FINSTAT_DISPLAY].[MULTIPLIER] AS [MULTIPLIER], 
+      [FINSTAT_DISPLAY].[PERCENTAGE] AS [PERCENTAGE], 
+      [FINSTAT_DISPLAY].[HARMONIC] AS [HARMONIC]
+      FROM [dbo].[FINSTAT_DISPLAY] AS [FINSTAT_DISPLAY]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="FX_RATES" EntityType="ExternalResearchModel.Store.FX_RATES" store:Type="Tables" store:Schema="dbo" store:Name="FX_RATES">
             <DefiningQuery>SELECT 
       [FX_RATES].[CURRENCY] AS [CURRENCY], 
@@ -81,59 +132,120 @@
       [FX_RATES].[AVG12MonthRATE] AS [AVG12MonthRATE]
       FROM [dbo].[FX_RATES] AS [FX_RATES]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="INTERNAL_DATA_ANNUAL" EntityType="ExternalResearchModel.Store.INTERNAL_DATA_ANNUAL" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_DATA_ANNUAL">
+          <EntitySet Name="FX_RATES_OLD" EntityType="ExternalResearchModel.Store.FX_RATES_OLD" store:Type="Tables" store:Schema="dbo" store:Name="FX_RATES_OLD">
             <DefiningQuery>SELECT 
-      [INTERNAL_DATA_ANNUAL].[ISSUER_ID] AS [ISSUER_ID], 
-      [INTERNAL_DATA_ANNUAL].[REF_NO] AS [REF_NO], 
-      [INTERNAL_DATA_ANNUAL].[REPORT_YEAR] AS [REPORT_YEAR], 
-      [INTERNAL_DATA_ANNUAL].[COA] AS [COA], 
-      [INTERNAL_DATA_ANNUAL].[AMOUNT] AS [AMOUNT]
-      FROM [dbo].[INTERNAL_DATA_ANNUAL] AS [INTERNAL_DATA_ANNUAL]</DefiningQuery>
+      [FX_RATES_OLD].[CURRENCY] AS [CURRENCY], 
+      [FX_RATES_OLD].[FX_DATE] AS [FX_DATE], 
+      [FX_RATES_OLD].[FX_RATE] AS [FX_RATE], 
+      [FX_RATES_OLD].[AVG90DAYRATE] AS [AVG90DAYRATE], 
+      [FX_RATES_OLD].[AVG12MonthRATE] AS [AVG12MonthRATE]
+      FROM [dbo].[FX_RATES_OLD] AS [FX_RATES_OLD]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="INTERNAL_DATA_INTERIM" EntityType="ExternalResearchModel.Store.INTERNAL_DATA_INTERIM" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_DATA_INTERIM">
+          <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="ExternalResearchModel.Store.GF_PRICING_BASEVIEW" store:Type="Tables" store:Schema="dbo" store:Name="GF_PRICING_BASEVIEW">
             <DefiningQuery>SELECT 
-      [INTERNAL_DATA_INTERIM].[ISSUER_ID] AS [ISSUER_ID], 
-      [INTERNAL_DATA_INTERIM].[REF_NO] AS [REF_NO], 
-      [INTERNAL_DATA_INTERIM].[Report_YEAR] AS [Report_YEAR], 
-      [INTERNAL_DATA_INTERIM].[COA] AS [COA], 
-      [INTERNAL_DATA_INTERIM].[AMOUNT] AS [AMOUNT]
-      FROM [dbo].[INTERNAL_DATA_INTERIM] AS [INTERNAL_DATA_INTERIM]</DefiningQuery>
+      [GF_PRICING_BASEVIEW].[INSTRUMENT_ID] AS [INSTRUMENT_ID], 
+      [GF_PRICING_BASEVIEW].[TYPE] AS [TYPE], 
+      [GF_PRICING_BASEVIEW].[TICKER] AS [TICKER], 
+      [GF_PRICING_BASEVIEW].[ISSUE_NAME] AS [ISSUE_NAME], 
+      [GF_PRICING_BASEVIEW].[FROMDATE] AS [FROMDATE], 
+      [GF_PRICING_BASEVIEW].[DAILY_CLOSING_PRICE] AS [DAILY_CLOSING_PRICE], 
+      [GF_PRICING_BASEVIEW].[DAILY_PRICE_RETURN] AS [DAILY_PRICE_RETURN], 
+      [GF_PRICING_BASEVIEW].[DAILY_GROSS_RETURN] AS [DAILY_GROSS_RETURN], 
+      [GF_PRICING_BASEVIEW].[VALUME] AS [VALUME], 
+      [GF_PRICING_BASEVIEW].[DAILY_SPOT_FX] AS [DAILY_SPOT_FX]
+      FROM [dbo].[GF_PRICING_BASEVIEW] AS [GF_PRICING_BASEVIEW]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="INTERNAL_ISSUER" EntityType="ExternalResearchModel.Store.INTERNAL_ISSUER" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_ISSUER">
+          <EntitySet Name="GF_SECURITY_BASEVIEW2" EntityType="ExternalResearchModel.Store.GF_SECURITY_BASEVIEW2" store:Type="Tables" store:Schema="dbo" store:Name="GF_SECURITY_BASEVIEW2">
             <DefiningQuery>SELECT 
-      [INTERNAL_ISSUER].[ISSUER_ID] AS [ISSUER_ID], 
-      [INTERNAL_ISSUER].[COA_TYPE] AS [COA_TYPE], 
-      [INTERNAL_ISSUER].[LastPrimaryModelLoad] AS [LastPrimaryModelLoad], 
-      [INTERNAL_ISSUER].[LastIndustryModelLoad] AS [LastIndustryModelLoad]
-      FROM [dbo].[INTERNAL_ISSUER] AS [INTERNAL_ISSUER]</DefiningQuery>
+      [GF_SECURITY_BASEVIEW2].[ID] AS [ID], 
+      [GF_SECURITY_BASEVIEW2].[GF_ID] AS [GF_ID], 
+      [GF_SECURITY_BASEVIEW2].[SECURITY_ID] AS [SECURITY_ID], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME], 
+      [GF_SECURITY_BASEVIEW2].[ISSUE_NAME] AS [ISSUE_NAME], 
+      [GF_SECURITY_BASEVIEW2].[ISIN] AS [ISIN], 
+      [GF_SECURITY_BASEVIEW2].[SEDOL] AS [SEDOL], 
+      [GF_SECURITY_BASEVIEW2].[SECS_INSTYPE] AS [SECS_INSTYPE], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_INSTR_TYPE] AS [ASEC_INSTR_TYPE], 
+      [GF_SECURITY_BASEVIEW2].[SECURITY_TYPE] AS [SECURITY_TYPE], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_FC_SEC_REF] AS [ASEC_FC_SEC_REF], 
+      [GF_SECURITY_BASEVIEW2].[LOOK_THRU_FUND] AS [LOOK_THRU_FUND], 
+      [GF_SECURITY_BASEVIEW2].[FIFTYTWO_WEEK_LOW] AS [FIFTYTWO_WEEK_LOW], 
+      [GF_SECURITY_BASEVIEW2].[FIFTYTWO_WEEK_HIGH] AS [FIFTYTWO_WEEK_HIGH], 
+      [GF_SECURITY_BASEVIEW2].[SECURITY_VOLUME_AVG_90D] AS [SECURITY_VOLUME_AVG_90D], 
+      [GF_SECURITY_BASEVIEW2].[SECURITY_VOLUME_AVG_6M] AS [SECURITY_VOLUME_AVG_6M], 
+      [GF_SECURITY_BASEVIEW2].[SECURITY_VOLUME_AVG_30D] AS [SECURITY_VOLUME_AVG_30D], 
+      [GF_SECURITY_BASEVIEW2].[GREENFIELD_FLAG] AS [GREENFIELD_FLAG], 
+      [GF_SECURITY_BASEVIEW2].[FLOAT_AMOUNT] AS [FLOAT_AMOUNT], 
+      [GF_SECURITY_BASEVIEW2].[CUSIP] AS [CUSIP], 
+      [GF_SECURITY_BASEVIEW2].[STOCK_EXCHANGE_ID] AS [STOCK_EXCHANGE_ID], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_ISSUED_VOLUME] AS [ASEC_ISSUED_VOLUME], 
+      [GF_SECURITY_BASEVIEW2].[ISSUER_ID] AS [ISSUER_ID], 
+      [GF_SECURITY_BASEVIEW2].[TRADING_CURRENCY] AS [TRADING_CURRENCY], 
+      [GF_SECURITY_BASEVIEW2].[SHARES_OUTSTANDING] AS [SHARES_OUTSTANDING], 
+      [GF_SECURITY_BASEVIEW2].[BETA] AS [BETA], 
+      [GF_SECURITY_BASEVIEW2].[BARRA_BETA] AS [BARRA_BETA], 
+      [GF_SECURITY_BASEVIEW2].[TICKER] AS [TICKER], 
+      [GF_SECURITY_BASEVIEW2].[MSCI] AS [MSCI], 
+      [GF_SECURITY_BASEVIEW2].[BARRA] AS [BARRA], 
+      [GF_SECURITY_BASEVIEW2].[ISO_COUNTRY_CODE] AS [ISO_COUNTRY_CODE], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_SEC_COUNTRY_NAME] AS [ASEC_SEC_COUNTRY_NAME], 
+      [GF_SECURITY_BASEVIEW2].[ASHEMM_PROPRIETARY_REGION_CODE] AS [ASHEMM_PROPRIETARY_REGION_CODE], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_SEC_COUNTRY_ZONE_NAME] AS [ASEC_SEC_COUNTRY_ZONE_NAME], 
+      [GF_SECURITY_BASEVIEW2].[ISSUER_NAME] AS [ISSUER_NAME], 
+      [GF_SECURITY_BASEVIEW2].[ASHEMM_ONE_LINER_DESCRIPTION] AS [ASHEMM_ONE_LINER_DESCRIPTION], 
+      [GF_SECURITY_BASEVIEW2].[BLOOMBERG_DESCRIPTION] AS [BLOOMBERG_DESCRIPTION], 
+      [GF_SECURITY_BASEVIEW2].[ASHMOREEMM_INDUSTRY_ANALYST] AS [ASHMOREEMM_INDUSTRY_ANALYST], 
+      [GF_SECURITY_BASEVIEW2].[ASHMOREEMM_PRIMARY_ANALYST] AS [ASHMOREEMM_PRIMARY_ANALYST], 
+      [GF_SECURITY_BASEVIEW2].[ASHMOREEMM_PORTFOLIO_MANAGER] AS [ASHMOREEMM_PORTFOLIO_MANAGER], 
+      [GF_SECURITY_BASEVIEW2].[WEBSITE] AS [WEBSITE], 
+      [GF_SECURITY_BASEVIEW2].[FISCAL_YEAR_END] AS [FISCAL_YEAR_END], 
+      [GF_SECURITY_BASEVIEW2].[XREF] AS [XREF], 
+      [GF_SECURITY_BASEVIEW2].[REPORTNUMBER] AS [REPORTNUMBER], 
+      [GF_SECURITY_BASEVIEW2].[GICS_SECTOR] AS [GICS_SECTOR], 
+      [GF_SECURITY_BASEVIEW2].[GICS_SECTOR_NAME] AS [GICS_SECTOR_NAME], 
+      [GF_SECURITY_BASEVIEW2].[GICS_INDUSTRY] AS [GICS_INDUSTRY], 
+      [GF_SECURITY_BASEVIEW2].[GICS_INDUSTRY_NAME] AS [GICS_INDUSTRY_NAME], 
+      [GF_SECURITY_BASEVIEW2].[GICS_SUB_INDUSTRY] AS [GICS_SUB_INDUSTRY], 
+      [GF_SECURITY_BASEVIEW2].[GICS_SUB_INDUSTRY_NAME] AS [GICS_SUB_INDUSTRY_NAME], 
+      [GF_SECURITY_BASEVIEW2].[SHARES_PER_ADR] AS [SHARES_PER_ADR], 
+      [GF_SECURITY_BASEVIEW2].[ADR_UNDERLYING_TICKER] AS [ADR_UNDERLYING_TICKER], 
+      [GF_SECURITY_BASEVIEW2].[MARKET_CAP_IN_TRADING_CURRENCY] AS [MARKET_CAP_IN_TRADING_CURRENCY], 
+      [GF_SECURITY_BASEVIEW2].[CLOSING_PRICE] AS [CLOSING_PRICE], 
+      [GF_SECURITY_BASEVIEW2].[LAST_CLOSE_FX_QUO_CURR_TO_USD] AS [LAST_CLOSE_FX_QUO_CURR_TO_USD], 
+      [GF_SECURITY_BASEVIEW2].[LAST_CLOSE_DATE] AS [LAST_CLOSE_DATE], 
+      [GF_SECURITY_BASEVIEW2].[TOT_CURR_SHRS_OUTST_ALL_CLASS] AS [TOT_CURR_SHRS_OUTST_ALL_CLASS]
+      FROM [dbo].[GF_SECURITY_BASEVIEW2] AS [GF_SECURITY_BASEVIEW2]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="INTERNAL_STATEMENT_ANNUAL" EntityType="ExternalResearchModel.Store.INTERNAL_STATEMENT_ANNUAL" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_STATEMENT_ANNUAL">
+          <EntitySet Name="GRID_TYPES" EntityType="ExternalResearchModel.Store.GRID_TYPES" store:Type="Tables" store:Schema="dbo" store:Name="GRID_TYPES">
             <DefiningQuery>SELECT 
-      [INTERNAL_STATEMENT_ANNUAL].[ISSUER_ID] AS [ISSUER_ID], 
-      [INTERNAL_STATEMENT_ANNUAL].[REF_NO] AS [REF_NO], 
-      [INTERNAL_STATEMENT_ANNUAL].[FISCAL_YEAR] AS [FISCAL_YEAR], 
-      [INTERNAL_STATEMENT_ANNUAL].[ROOT_SOURCE] AS [ROOT_SOURCE], 
-      [INTERNAL_STATEMENT_ANNUAL].[ROOT_SOURCE_DATE] AS [ROOT_SOURCE_DATE], 
-      [INTERNAL_STATEMENT_ANNUAL].[PERIOD_LENGTH] AS [PERIOD_LENGTH], 
-      [INTERNAL_STATEMENT_ANNUAL].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
-      [INTERNAL_STATEMENT_ANNUAL].[CURRENCY] AS [CURRENCY], 
-      [INTERNAL_STATEMENT_ANNUAL].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
-      FROM [dbo].[INTERNAL_STATEMENT_ANNUAL] AS [INTERNAL_STATEMENT_ANNUAL]</DefiningQuery>
+      [GRID_TYPES].[GRID_ID] AS [GRID_ID], 
+      [GRID_TYPES].[COA_TYPE] AS [COA_TYPE], 
+      [GRID_TYPES].[SHOW_GRID] AS [SHOW_GRID], 
+      [GRID_TYPES].[SORT_ORDER] AS [SORT_ORDER], 
+      [GRID_TYPES].[GRID_DESC] AS [GRID_DESC]
+      FROM [dbo].[GRID_TYPES] AS [GRID_TYPES]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="INTERNAL_STATEMENT_INTERIM" EntityType="ExternalResearchModel.Store.INTERNAL_STATEMENT_INTERIM" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_STATEMENT_INTERIM">
+          <EntitySet Name="INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION" EntityType="ExternalResearchModel.Store.INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION">
             <DefiningQuery>SELECT 
-      [INTERNAL_STATEMENT_INTERIM].[ISSUER_ID] AS [ISSUER_ID], 
-      [INTERNAL_STATEMENT_INTERIM].[REF_NO] AS [REF_NO], 
-      [INTERNAL_STATEMENT_INTERIM].[FISCAL_YEAR] AS [FISCAL_YEAR], 
-      [INTERNAL_STATEMENT_INTERIM].[STATEMENT_TYPE] AS [STATEMENT_TYPE], 
-      [INTERNAL_STATEMENT_INTERIM].[INTERIM_NUMBER] AS [INTERIM_NUMBER], 
-      [INTERNAL_STATEMENT_INTERIM].[ROOT_SOURCE] AS [ROOT_SOURCE], 
-      [INTERNAL_STATEMENT_INTERIM].[ROOT_SOURCE_DATE] AS [ROOT_SOURCE_DATE], 
-      [INTERNAL_STATEMENT_INTERIM].[PERIOD_LENGTH] AS [PERIOD_LENGTH], 
-      [INTERNAL_STATEMENT_INTERIM].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
-      [INTERNAL_STATEMENT_INTERIM].[CURRENCY] AS [CURRENCY], 
-      [INTERNAL_STATEMENT_INTERIM].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
-      FROM [dbo].[INTERNAL_STATEMENT_INTERIM] AS [INTERNAL_STATEMENT_INTERIM]</DefiningQuery>
+      [INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION].[ISSUER_ID] AS [ISSUER_ID], 
+      [INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION].[DATA_SOURCE] AS [DATA_SOURCE], 
+      [INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION].[PERCENTAGE] AS [PERCENTAGE], 
+      [INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION].[LAST_UPDATED] AS [LAST_UPDATED]
+      FROM [dbo].[INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION] AS [INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="INTERNAL_STATEMENT" EntityType="ExternalResearchModel.Store.INTERNAL_STATEMENT" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_STATEMENT">
+            <DefiningQuery>SELECT 
+      [INTERNAL_STATEMENT].[ISSUER_ID] AS [ISSUER_ID], 
+      [INTERNAL_STATEMENT].[REF_NO] AS [REF_NO], 
+      [INTERNAL_STATEMENT].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [INTERNAL_STATEMENT].[ROOT_SOURCE] AS [ROOT_SOURCE], 
+      [INTERNAL_STATEMENT].[ROOT_SOURCE_DATE] AS [ROOT_SOURCE_DATE], 
+      [INTERNAL_STATEMENT].[PERIOD_LENGTH] AS [PERIOD_LENGTH], 
+      [INTERNAL_STATEMENT].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
+      [INTERNAL_STATEMENT].[CURRENCY] AS [CURRENCY], 
+      [INTERNAL_STATEMENT].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
+      FROM [dbo].[INTERNAL_STATEMENT] AS [INTERNAL_STATEMENT]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="ISSUER_SHARES" EntityType="ExternalResearchModel.Store.ISSUER_SHARES" store:Type="Tables" store:Schema="dbo" store:Name="ISSUER_SHARES">
             <DefiningQuery>SELECT 
@@ -223,56 +335,74 @@
       [REUTERS_XREF].[PROVIDER] AS [PROVIDER]
       FROM [dbo].[REUTERS_XREF] AS [REUTERS_XREF]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="tblCETargetPrice" EntityType="ExternalResearchModel.Store.tblCETargetPrice" store:Type="Tables" store:Schema="dbo" store:Name="tblCETargetPrice">
+          <EntitySet Name="ssr_macro_datav3" EntityType="ExternalResearchModel.Store.ssr_macro_datav3" store:Type="Tables" store:Schema="dbo" store:Name="ssr_macro_datav3">
             <DefiningQuery>SELECT 
-      [tblCETargetPrice].[XRef] AS [XRef], 
-      [tblCETargetPrice].[StartDate] AS [StartDate], 
-      [tblCETargetPrice].[EndDate] AS [EndDate], 
-      [tblCETargetPrice].[OriginalDate] AS [OriginalDate], 
-      [tblCETargetPrice].[ExpirationDate] AS [ExpirationDate], 
-      [tblCETargetPrice].[Unit] AS [Unit], 
-      [tblCETargetPrice].[NumOfEsts] AS [NumOfEsts], 
-      [tblCETargetPrice].[High] AS [High], 
-      [tblCETargetPrice].[Low] AS [Low], 
-      [tblCETargetPrice].[Mean] AS [Mean], 
-      [tblCETargetPrice].[StdDev] AS [StdDev], 
-      [tblCETargetPrice].[Median] AS [Median], 
-      [tblCETargetPrice].[Currency] AS [Currency]
-      FROM [dbo].[tblCETargetPrice] AS [tblCETargetPrice]</DefiningQuery>
+      [ssr_macro_datav3].[ID] AS [ID], 
+      [ssr_macro_datav3].[COUNTRY_CODE] AS [COUNTRY_CODE], 
+      [ssr_macro_datav3].[FIELD] AS [FIELD], 
+      [ssr_macro_datav3].[YEAR] AS [YEAR], 
+      [ssr_macro_datav3].[VALUE] AS [VALUE], 
+      [ssr_macro_datav3].[update_dt] AS [update_dt], 
+      [ssr_macro_datav3].[update_source] AS [update_source]
+      FROM [dbo].[ssr_macro_datav3] AS [ssr_macro_datav3]</DefiningQuery>
           </EntitySet>
-          <EntitySet Name="tblCompanyInfo" EntityType="ExternalResearchModel.Store.tblCompanyInfo" store:Type="Tables" store:Schema="dbo" store:Name="tblCompanyInfo">
+          <EntitySet Name="STATEMENT_CONSENSUS_MAPPING" EntityType="ExternalResearchModel.Store.STATEMENT_CONSENSUS_MAPPING" store:Type="Tables" store:Schema="dbo" store:Name="STATEMENT_CONSENSUS_MAPPING">
             <DefiningQuery>SELECT 
-      [tblCompanyInfo].[XRef] AS [XRef], 
-      [tblCompanyInfo].[ReportNumber] AS [ReportNumber], 
-      [tblCompanyInfo].[Name] AS [Name], 
-      [tblCompanyInfo].[Country] AS [Country], 
-      [tblCompanyInfo].[Ticker] AS [Ticker], 
-      [tblCompanyInfo].[CUSIP] AS [CUSIP], 
-      [tblCompanyInfo].[ISIN] AS [ISIN], 
-      [tblCompanyInfo].[SEDOL] AS [SEDOL], 
-      [tblCompanyInfo].[VALOREN] AS [VALOREN], 
-      [tblCompanyInfo].[RIC] AS [RIC], 
-      [tblCompanyInfo].[DisplayRIC] AS [DisplayRIC], 
-      [tblCompanyInfo].[RecentSplitDate] AS [RecentSplitDate], 
-      [tblCompanyInfo].[RecentCapitalAdjDate] AS [RecentCapitalAdjDate], 
-      [tblCompanyInfo].[Consensus] AS [Consensus], 
-      [tblCompanyInfo].[Estimate] AS [Estimate], 
-      [tblCompanyInfo].[Earnings] AS [Earnings], 
-      [tblCompanyInfo].[Periodicity] AS [Periodicity], 
-      [tblCompanyInfo].[CurrentPeriod] AS [CurrentPeriod], 
-      [tblCompanyInfo].[pEndDate] AS [pEndDate], 
-      [tblCompanyInfo].[fYearEnd] AS [fYearEnd], 
-      [tblCompanyInfo].[fPeriodEnd] AS [fPeriodEnd], 
-      [tblCompanyInfo].[CurrentPrice] AS [CurrentPrice], 
-      [tblCompanyInfo].[CurrentPriceDate] AS [CurrentPriceDate], 
-      [tblCompanyInfo].[Currency] AS [Currency], 
-      [tblCompanyInfo].[OutstandingShares] AS [OutstandingShares], 
-      [tblCompanyInfo].[Active] AS [Active]
-      FROM [dbo].[tblCompanyInfo] AS [tblCompanyInfo]</DefiningQuery>
+      [STATEMENT_CONSENSUS_MAPPING].[STATEMENT_TYPE] AS [STATEMENT_TYPE], 
+      [STATEMENT_CONSENSUS_MAPPING].[ESTIMATE_ID] AS [ESTIMATE_ID], 
+      [STATEMENT_CONSENSUS_MAPPING].[DESCRIPTION] AS [DESCRIPTION], 
+      [STATEMENT_CONSENSUS_MAPPING].[SORT_ORDER] AS [SORT_ORDER], 
+      [STATEMENT_CONSENSUS_MAPPING].[EARNINGS] AS [EARNINGS]
+      FROM [dbo].[STATEMENT_CONSENSUS_MAPPING] AS [STATEMENT_CONSENSUS_MAPPING]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="sysdiagrams" EntityType="ExternalResearchModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="test_security_list" EntityType="ExternalResearchModel.Store.test_security_list" store:Type="Tables" store:Schema="dbo" store:Name="test_security_list">
+            <DefiningQuery>SELECT 
+      [test_security_list].[SECURITY_ID] AS [SECURITY_ID]
+      FROM [dbo].[test_security_list] AS [test_security_list]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.BENCHMARK_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.BENCHMARK_NODE_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.CALC_LOG' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="CALC_LOG">
+          <Key>
+            <PropertyRef Name="LOG_ID" />
+            <PropertyRef Name="LOG_DATE" />
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="TXT" />
+          </Key>
+          <Property Name="LOG_ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="LOG_DATE" Type="datetime" Nullable="false" />
+          <Property Name="DATA_ID" Type="int" />
+          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+          <Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
+          <Property Name="FISCAL_TYPE" Type="char" Nullable="false" MaxLength="8" />
+          <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="TXT" Type="varchar" Nullable="false" MaxLength="1024" />
+        </EntityType>
+        <EntityType Name="ChangeScripts">
+          <Key>
+            <PropertyRef Name="ScriptVersion" />
+          </Key>
+          <Property Name="ScriptVersion" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="DateExecuted" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CONSENSUS_MASTER">
           <Key>
@@ -299,7 +429,7 @@
           <Property Name="CURRENT" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Country_Master">
           <Key>
@@ -318,7 +448,7 @@
           <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="CURRENT_CONSENSUS_ESTIMATES">
           <Key>
@@ -359,7 +489,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="DATA_MASTER">
           <Key>
@@ -389,7 +519,74 @@
           <Property Name="STATEMENT_TYPE" Type="varchar" MaxLength="3" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="FAIR_VALUE">
+          <Key>
+            <PropertyRef Name="VALUE_TYPE" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="FV_MEASURE" />
+            <PropertyRef Name="FV_BUY" />
+            <PropertyRef Name="FV_SELL" />
+            <PropertyRef Name="CURRENT_MEASURE_VALUE" />
+            <PropertyRef Name="UPSIDE" />
+          </Key>
+          <Property Name="VALUE_TYPE" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="FV_MEASURE" Type="int" Nullable="false" />
+          <Property Name="FV_BUY" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="FV_SELL" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="CURRENT_MEASURE_VALUE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPSIDE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.FINANCIAL_GRIDS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="FINANCIAL_GRIDS_DISPLAY">
+          <Key>
+            <PropertyRef Name="GRID_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="SORT_ORDER" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="DECIMALS" />
+            <PropertyRef Name="PERCENTAGE" />
+          </Key>
+          <Property Name="GRID_ID" Type="int" Nullable="false" />
+          <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
+          <Property Name="SORT_ORDER" Type="int" Nullable="false" />
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="ESTIMATE_ID" Type="int" />
+          <Property Name="DECIMALS" Type="int" Nullable="false" />
+          <Property Name="PERCENTAGE" Type="char" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.FINSTAT_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="FINSTAT_DISPLAY">
+          <Key>
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="SORT_ORDER" />
+            <PropertyRef Name="GROUP_NAME" />
+            <PropertyRef Name="BOLD_FONT" />
+            <PropertyRef Name="DECIMALS" />
+            <PropertyRef Name="MULTIPLIER" />
+            <PropertyRef Name="PERCENTAGE" />
+            <PropertyRef Name="HARMONIC" />
+          </Key>
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="ESTIMATE_ID" Type="int" />
+          <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
+          <Property Name="SORT_ORDER" Type="int" Nullable="false" />
+          <Property Name="GROUP_NAME" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="BOLD_FONT" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="DECIMALS" Type="int" Nullable="false" />
+          <Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="PERCENTAGE" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="HARMONIC" Type="char" Nullable="false" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="FX_RATES">
           <Key>
@@ -404,60 +601,145 @@
           <Property Name="AVG12MonthRATE" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.INTERNAL_DATA_ANNUAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.FX_RATES_OLD' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="INTERNAL_DATA_ANNUAL">
+        <EntityType Name="FX_RATES_OLD">
           <Key>
-            <PropertyRef Name="ISSUER_ID" />
-            <PropertyRef Name="REF_NO" />
-            <PropertyRef Name="REPORT_YEAR" />
-            <PropertyRef Name="COA" />
-            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="FX_DATE" />
+            <PropertyRef Name="FX_RATE" />
           </Key>
-          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="REF_NO" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="REPORT_YEAR" Type="int" Nullable="false" />
-          <Property Name="COA" Type="char" Nullable="false" MaxLength="8" />
-          <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="FX_DATE" Type="datetime" Nullable="false" />
+          <Property Name="FX_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="AVG90DAYRATE" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="AVG12MonthRATE" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.INTERNAL_DATA_INTERIM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.GF_PRICING_BASEVIEW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="INTERNAL_DATA_INTERIM">
+        <EntityType Name="GF_PRICING_BASEVIEW">
           <Key>
-            <PropertyRef Name="ISSUER_ID" />
-            <PropertyRef Name="REF_NO" />
-            <PropertyRef Name="Report_YEAR" />
-            <PropertyRef Name="COA" />
-            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="INSTRUMENT_ID" />
+            <PropertyRef Name="FROMDATE" />
           </Key>
-          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="REF_NO" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="Report_YEAR" Type="int" Nullable="false" />
-          <Property Name="COA" Type="char" Nullable="false" MaxLength="8" />
-          <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="INSTRUMENT_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="TYPE" Type="varchar" MaxLength="10" />
+          <Property Name="TICKER" Type="varchar" MaxLength="20" />
+          <Property Name="ISSUE_NAME" Type="varchar" MaxLength="100" />
+          <Property Name="FROMDATE" Type="datetime" Nullable="false" />
+          <Property Name="DAILY_CLOSING_PRICE" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DAILY_PRICE_RETURN" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DAILY_GROSS_RETURN" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="VALUME" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DAILY_SPOT_FX" Type="decimal" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.GF_SECURITY_BASEVIEW2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="INTERNAL_ISSUER">
+        <EntityType Name="GF_SECURITY_BASEVIEW2">
           <Key>
-            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GF_ID" Type="float" />
+          <Property Name="SECURITY_ID" Type="nvarchar" MaxLength="50" />
+          <Property Name="ASEC_SEC_SHORT_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISSUE_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISIN" Type="nvarchar" MaxLength="255" />
+          <Property Name="SEDOL" Type="nvarchar" MaxLength="255" />
+          <Property Name="SECS_INSTYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_INSTR_TYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="SECURITY_TYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_FC_SEC_REF" Type="float" />
+          <Property Name="LOOK_THRU_FUND" Type="nvarchar" MaxLength="255" />
+          <Property Name="FIFTYTWO_WEEK_LOW" Type="float" />
+          <Property Name="FIFTYTWO_WEEK_HIGH" Type="float" />
+          <Property Name="SECURITY_VOLUME_AVG_90D" Type="nvarchar" MaxLength="255" />
+          <Property Name="SECURITY_VOLUME_AVG_6M" Type="float" />
+          <Property Name="SECURITY_VOLUME_AVG_30D" Type="float" />
+          <Property Name="GREENFIELD_FLAG" Type="nvarchar" MaxLength="255" />
+          <Property Name="FLOAT_AMOUNT" Type="float" />
+          <Property Name="CUSIP" Type="nvarchar" MaxLength="255" />
+          <Property Name="STOCK_EXCHANGE_ID" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_ISSUED_VOLUME" Type="float" />
+          <Property Name="ISSUER_ID" Type="float" />
+          <Property Name="TRADING_CURRENCY" Type="nvarchar" MaxLength="255" />
+          <Property Name="SHARES_OUTSTANDING" Type="float" />
+          <Property Name="BETA" Type="float" />
+          <Property Name="BARRA_BETA" Type="float" />
+          <Property Name="TICKER" Type="nvarchar" MaxLength="255" />
+          <Property Name="MSCI" Type="float" />
+          <Property Name="BARRA" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISO_COUNTRY_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_SEC_COUNTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_SEC_COUNTRY_ZONE_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISSUER_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHEMM_ONE_LINER_DESCRIPTION" Type="nvarchar" MaxLength="255" />
+          <Property Name="BLOOMBERG_DESCRIPTION" Type="ntext" />
+          <Property Name="ASHMOREEMM_INDUSTRY_ANALYST" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHMOREEMM_PRIMARY_ANALYST" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHMOREEMM_PORTFOLIO_MANAGER" Type="nvarchar" MaxLength="255" />
+          <Property Name="WEBSITE" Type="nvarchar" MaxLength="255" />
+          <Property Name="FISCAL_YEAR_END" Type="nvarchar" MaxLength="255" />
+          <Property Name="XREF" Type="float" />
+          <Property Name="REPORTNUMBER" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SECTOR" Type="float" />
+          <Property Name="GICS_SECTOR_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_INDUSTRY" Type="float" />
+          <Property Name="GICS_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SUB_INDUSTRY" Type="float" />
+          <Property Name="GICS_SUB_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="SHARES_PER_ADR" Type="float" />
+          <Property Name="ADR_UNDERLYING_TICKER" Type="nvarchar" MaxLength="255" />
+          <Property Name="MARKET_CAP_IN_TRADING_CURRENCY" Type="float" />
+          <Property Name="CLOSING_PRICE" Type="float" />
+          <Property Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" Type="float" />
+          <Property Name="LAST_CLOSE_DATE" Type="datetime" />
+          <Property Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.GRID_TYPES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="GRID_TYPES">
+          <Key>
+            <PropertyRef Name="GRID_ID" />
             <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="SORT_ORDER" />
+            <PropertyRef Name="GRID_DESC" />
           </Key>
-          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="GRID_ID" Type="int" Nullable="false" />
           <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
-          <Property Name="LastPrimaryModelLoad" Type="datetime" />
-          <Property Name="LastIndustryModelLoad" Type="datetime" />
+          <Property Name="SHOW_GRID" Type="char" MaxLength="1" />
+          <Property Name="SORT_ORDER" Type="int" Nullable="false" />
+          <Property Name="GRID_DESC" Type="varchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.INTERNAL_STATEMENT_ANNUAL' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="INTERNAL_STATEMENT_ANNUAL">
+        <EntityType Name="INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERCENTAGE" />
+            <PropertyRef Name="LAST_UPDATED" />
+          </Key>
+          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="DATA_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="PERCENTAGE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="LAST_UPDATED" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.INTERNAL_STATEMENT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="INTERNAL_STATEMENT">
           <Key>
             <PropertyRef Name="ISSUER_ID" />
             <PropertyRef Name="REF_NO" />
-            <PropertyRef Name="FISCAL_YEAR" />
+            <PropertyRef Name="PERIOD_YEAR" />
             <PropertyRef Name="ROOT_SOURCE" />
             <PropertyRef Name="ROOT_SOURCE_DATE" />
             <PropertyRef Name="PERIOD_LENGTH" />
@@ -467,7 +749,7 @@
           </Key>
           <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="REF_NO" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="FISCAL_YEAR" Type="int" Nullable="false" />
+          <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
           <Property Name="ROOT_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
           <Property Name="ROOT_SOURCE_DATE" Type="datetime" Nullable="false" />
           <Property Name="PERIOD_LENGTH" Type="int" Nullable="false" />
@@ -476,36 +758,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.INTERNAL_STATEMENT_INTERIM' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <EntityType Name="INTERNAL_STATEMENT_INTERIM">
-          <Key>
-            <PropertyRef Name="ISSUER_ID" />
-            <PropertyRef Name="REF_NO" />
-            <PropertyRef Name="FISCAL_YEAR" />
-            <PropertyRef Name="STATEMENT_TYPE" />
-            <PropertyRef Name="INTERIM_NUMBER" />
-            <PropertyRef Name="ROOT_SOURCE" />
-            <PropertyRef Name="ROOT_SOURCE_DATE" />
-            <PropertyRef Name="PERIOD_LENGTH" />
-            <PropertyRef Name="PERIOD_END_DATE" />
-            <PropertyRef Name="CURRENCY" />
-            <PropertyRef Name="AMOUNT_TYPE" />
-          </Key>
-          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="REF_NO" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="FISCAL_YEAR" Type="int" Nullable="false" />
-          <Property Name="STATEMENT_TYPE" Type="char" Nullable="false" MaxLength="4" />
-          <Property Name="INTERIM_NUMBER" Type="int" Nullable="false" />
-          <Property Name="ROOT_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="ROOT_SOURCE_DATE" Type="datetime" Nullable="false" />
-          <Property Name="PERIOD_LENGTH" Type="int" Nullable="false" />
-          <Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
-          <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
-          <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
-        </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES">
           <Key>
@@ -518,7 +771,7 @@
           <Property Name="SHARES_OUTSTANDING" Type="decimal" Nullable="false" Precision="32" Scale="2" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="ISSUER_SHARES_COMPOSITION">
           <Key>
@@ -529,7 +782,7 @@
           <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Data">
           <Key>
@@ -547,7 +800,7 @@
           <Property Name="UPDATE_SOURCE" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="Macroeconomic_Display">
           <Key>
@@ -568,7 +821,7 @@
           <Property Name="HELP_TEXT" Type="varchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS">
           <Key>
@@ -606,7 +859,7 @@
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS_DISPLAY">
           <Key>
@@ -630,7 +883,10 @@
           <Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.PORTFOLIO_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PRICES">
           <Key>
@@ -647,7 +903,7 @@
           <Property Name="ADR_CONV" Type="decimal" Nullable="false" Precision="32" Scale="6" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="REUTERS_XREF">
           <Key>
@@ -664,61 +920,54 @@
           <Property Name="PROVIDER" Type="char" Nullable="false" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.tblCETargetPrice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.ssr_macro_datav3' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="tblCETargetPrice">
+        <EntityType Name="ssr_macro_datav3">
           <Key>
-            <PropertyRef Name="XRef" />
-            <PropertyRef Name="StartDate" />
-            <PropertyRef Name="OriginalDate" />
+            <PropertyRef Name="ID" />
           </Key>
-          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
-          <Property Name="StartDate" Type="datetime" Nullable="false" />
-          <Property Name="EndDate" Type="datetime" />
-          <Property Name="OriginalDate" Type="datetime" Nullable="false" />
-          <Property Name="ExpirationDate" Type="datetime" />
-          <Property Name="Unit" Type="varchar" MaxLength="2" />
-          <Property Name="NumOfEsts" Type="int" />
-          <Property Name="High" Type="real" />
-          <Property Name="Low" Type="real" />
-          <Property Name="Mean" Type="real" />
-          <Property Name="StdDev" Type="real" />
-          <Property Name="Median" Type="real" />
-          <Property Name="Currency" Type="char" MaxLength="3" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="COUNTRY_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="FIELD" Type="nvarchar" MaxLength="255" />
+          <Property Name="YEAR" Type="float" />
+          <Property Name="VALUE" Type="float" />
+          <Property Name="update_dt" Type="datetime" />
+          <Property Name="update_source" Type="nvarchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data1707.dbo.tblCompanyInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      warning 6002: The table/view 'AIMS_Data0608.dbo.STATEMENT_CONSENSUS_MAPPING' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="tblCompanyInfo">
+        <EntityType Name="STATEMENT_CONSENSUS_MAPPING">
           <Key>
-            <PropertyRef Name="XRef" />
+            <PropertyRef Name="STATEMENT_TYPE" />
+            <PropertyRef Name="ESTIMATE_ID" />
+            <PropertyRef Name="DESCRIPTION" />
+            <PropertyRef Name="SORT_ORDER" />
           </Key>
-          <Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
-          <Property Name="ReportNumber" Type="varchar" MaxLength="5" />
-          <Property Name="Name" Type="varchar" MaxLength="80" />
-          <Property Name="Country" Type="char" MaxLength="3" />
-          <Property Name="Ticker" Type="varchar" MaxLength="15" />
-          <Property Name="CUSIP" Type="varchar" MaxLength="12" />
-          <Property Name="ISIN" Type="varchar" MaxLength="12" />
-          <Property Name="SEDOL" Type="varchar" MaxLength="12" />
-          <Property Name="VALOREN" Type="varchar" MaxLength="12" />
-          <Property Name="RIC" Type="varchar" MaxLength="21" />
-          <Property Name="DisplayRIC" Type="varchar" MaxLength="21" />
-          <Property Name="RecentSplitDate" Type="datetime" />
-          <Property Name="RecentCapitalAdjDate" Type="datetime" />
-          <Property Name="Consensus" Type="varchar" MaxLength="20" />
-          <Property Name="Estimate" Type="varchar" MaxLength="10" />
-          <Property Name="Earnings" Type="varchar" MaxLength="10" />
-          <Property Name="Periodicity" Type="varchar" MaxLength="2" />
-          <Property Name="CurrentPeriod" Type="char" MaxLength="2" />
-          <Property Name="pEndDate" Type="smalldatetime" />
-          <Property Name="fYearEnd" Type="char" MaxLength="6" />
-          <Property Name="fPeriodEnd" Type="char" MaxLength="6" />
-          <Property Name="CurrentPrice" Type="real" />
-          <Property Name="CurrentPriceDate" Type="smalldatetime" />
-          <Property Name="Currency" Type="char" MaxLength="3" />
-          <Property Name="OutstandingShares" Type="decimal" />
-          <Property Name="Active" Type="bit" />
+          <Property Name="STATEMENT_TYPE" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
+          <Property Name="DESCRIPTION" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="SORT_ORDER" Type="int" Nullable="false" />
+          <Property Name="EARNINGS" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.test_security_list' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="test_security_list">
+          <Key>
+            <PropertyRef Name="SECURITY_ID" />
+          </Key>
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
         </EntityType>
         <Function Name="Get_Consensus_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
@@ -730,11 +979,6 @@
         <Function Name="Get_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="int" Mode="In" />
         </Function>
-        <Function Name="Get_PRevenue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="securityId" Type="varchar" Mode="In" />
-          <Parameter Name="issuerId" Type="varchar" Mode="In" />
-          <Parameter Name="chartTitle" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="Get_Statement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
@@ -742,11 +986,6 @@
           <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
           <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
-        </Function>
-        <Function Name="GetConsensusEstimateData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Issuer_Id" Type="nvarchar" Mode="In" />
-          <Parameter Name="periodType" Type="nvarchar" Mode="In" />
-          <Parameter Name="currency" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetConsensusEstimatesMedian" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
@@ -767,13 +1006,6 @@
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
-        <Function Name="usp_GetDataForPeriodGadgets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="cSource" Type="varchar" Mode="In" />
-          <Parameter Name="cFiscalType" Type="varchar" Mode="In" />
-          <Parameter Name="cCurrency" Type="varchar" Mode="In" />
-          <Parameter Name="cIssuerID" Type="varchar" Mode="In" />
-          <Parameter Name="cSecurityID" Type="varchar" Mode="In" />
-        </Function>
       </Schema></edmx:StorageModels>
 
 		<!-- CSDL content -->
@@ -781,26 +1013,9 @@
 			<Schema Namespace="ExternalResearchModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
 					xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
 				<EntityContainer Name="ExternalResearchEntities" annotation:LazyLoadingEnabled="true">
-					<EntitySet Name="CURRENT_CONSENSUS_ESTIMATES" EntityType="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES" />
-					<EntitySet Name="DATA_MASTER" EntityType="ExternalResearchModel.DATA_MASTER" />
-					<EntitySet Name="FX_RATES" EntityType="ExternalResearchModel.FX_RATES" />
-					<EntitySet Name="INTERNAL_DATA_ANNUAL" EntityType="ExternalResearchModel.INTERNAL_DATA_ANNUAL" />
-					<EntitySet Name="INTERNAL_DATA_INTERIM" EntityType="ExternalResearchModel.INTERNAL_DATA_INTERIM" />
-					<EntitySet Name="INTERNAL_ISSUER" EntityType="ExternalResearchModel.INTERNAL_ISSUER" />
-					<EntitySet Name="INTERNAL_STATEMENT_ANNUAL" EntityType="ExternalResearchModel.INTERNAL_STATEMENT_ANNUAL" />
-					<EntitySet Name="INTERNAL_STATEMENT_INTERIM" EntityType="ExternalResearchModel.INTERNAL_STATEMENT_INTERIM" />
-					<EntitySet Name="ISSUER_SHARES" EntityType="ExternalResearchModel.ISSUER_SHARES" />
-					<EntitySet Name="ISSUER_SHARES_COMPOSITION" EntityType="ExternalResearchModel.ISSUER_SHARES_COMPOSITION" />
-					<EntitySet Name="Macroeconomic_Data" EntityType="ExternalResearchModel.Macroeconomic_Data" />
-					<EntitySet Name="Macroeconomic_Display" EntityType="ExternalResearchModel.Macroeconomic_Display" />
-					<EntitySet Name="PERIOD_FINANCIALS" EntityType="ExternalResearchModel.PERIOD_FINANCIALS" />
-					<EntitySet Name="PERIOD_FINANCIALS_DISPLAY" EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" />
-					<EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.REUTERS_XREF" />
 					<FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
 						<Parameter Name="SecurityID" Mode="In" Type="String" />
 					</FunctionImport>
-					<EntitySet Name="tblCETargetPrices" EntityType="ExternalResearchModel.tblCETargetPrice" />
-					<EntitySet Name="tblCompanyInfoes" EntityType="ExternalResearchModel.tblCompanyInfo" />
 					<FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
           <Parameter Name="XRef" Mode="In" Type="String" />
           </FunctionImport>
@@ -847,7 +1062,6 @@
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
-					<EntitySet Name="PRICES" EntityType="ExternalResearchModel.PRICE" />
 					<FunctionImport Name="Get_PRevenue" ReturnType="Collection(ExternalResearchModel.GetPRevenueData_Result)">
             <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="issuerId" Mode="In" Type="String" />
@@ -869,266 +1083,34 @@
             <Parameter Name="cIssuerID" Mode="In" Type="String" />
             <Parameter Name="cSecurityID" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="CALC_LOG" EntityType="ExternalResearchModel.CALC_LOG" />
+          <EntitySet Name="ChangeScripts" EntityType="ExternalResearchModel.ChangeScript" />
+          <EntitySet Name="CURRENT_CONSENSUS_ESTIMATES" EntityType="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES" />
+          <EntitySet Name="DATA_MASTER" EntityType="ExternalResearchModel.DATA_MASTER" />
+          <EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.FAIR_VALUE" />
+          <EntitySet Name="FINANCIAL_GRIDS_DISPLAY" EntityType="ExternalResearchModel.FINANCIAL_GRIDS_DISPLAY" />
+          <EntitySet Name="FINSTAT_DISPLAY" EntityType="ExternalResearchModel.FINSTAT_DISPLAY" />
+          <EntitySet Name="FX_RATES" EntityType="ExternalResearchModel.FX_RATES" />
+          <EntitySet Name="FX_RATES_OLD" EntityType="ExternalResearchModel.FX_RATES_OLD" />
+          <EntitySet Name="GF_PRICING_BASEVIEW_EXTERNAL" EntityType="ExternalResearchModel.GF_PRICING_BASEVIEW_EXTERNAL" />
+          <EntitySet Name="GF_SECURITY_BASEVIEW2" EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW2" />
+          <EntitySet Name="GRID_TYPES" EntityType="ExternalResearchModel.GRID_TYPES" />
+          <EntitySet Name="INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION" EntityType="ExternalResearchModel.INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION" />
+          <EntitySet Name="INTERNAL_STATEMENT" EntityType="ExternalResearchModel.INTERNAL_STATEMENT" />
+          <EntitySet Name="ISSUER_SHARES" EntityType="ExternalResearchModel.ISSUER_SHARES" />
+          <EntitySet Name="ISSUER_SHARES_COMPOSITION" EntityType="ExternalResearchModel.ISSUER_SHARES_COMPOSITION" />
+          <EntitySet Name="Macroeconomic_Data" EntityType="ExternalResearchModel.Macroeconomic_Data" />
+          <EntitySet Name="Macroeconomic_Display" EntityType="ExternalResearchModel.Macroeconomic_Display" />
+          <EntitySet Name="PERIOD_FINANCIALS" EntityType="ExternalResearchModel.PERIOD_FINANCIALS" />
+          <EntitySet Name="PERIOD_FINANCIALS_DISPLAY" EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" />
+          <EntitySet Name="PRICES" EntityType="ExternalResearchModel.PRICE" />
+          <EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.REUTERS_XREF" />
+          <EntitySet Name="ssr_macro_datav3" EntityType="ExternalResearchModel.ssr_macro_datav3" />
+          <EntitySet Name="STATEMENT_CONSENSUS_MAPPING" EntityType="ExternalResearchModel.STATEMENT_CONSENSUS_MAPPING" />
+          <EntitySet Name="sysdiagrams" EntityType="ExternalResearchModel.sysdiagram" />
+          <EntitySet Name="test_security_list" EntityType="ExternalResearchModel.test_security_list" />
 
 				</EntityContainer>
-
-				<EntityType Name="CURRENT_CONSENSUS_ESTIMATES">
-					<Key>
-						<PropertyRef Name="ISSUER_ID" />
-						<PropertyRef Name="SECURITY_ID" />
-						<PropertyRef Name="DATA_SOURCE" />
-						<PropertyRef Name="DATA_SOURCE_DATE" />
-						<PropertyRef Name="PERIOD_TYPE" />
-						<PropertyRef Name="PERIOD_YEAR" />
-						<PropertyRef Name="PERIOD_END_DATE" />
-						<PropertyRef Name="FISCAL_TYPE" />
-						<PropertyRef Name="ESTIMATE_ID" />
-						<PropertyRef Name="CURRENCY" />
-						<PropertyRef Name="AMOUNT" />
-						<PropertyRef Name="NUMBER_OF_ESTIMATES" />
-						<PropertyRef Name="HIGH" />
-						<PropertyRef Name="LOW" />
-						<PropertyRef Name="SOURCE_CURRENCY" />
-						<PropertyRef Name="STANDARD_DEVIATION" />
-						<PropertyRef Name="AMOUNT_TYPE" />
-					</Key>
-					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="SECURITY_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="DATA_SOURCE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-					<Property Name="DATA_SOURCE_DATE" Type="DateTime" Nullable="false" />
-					<Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
-					<Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
-					<Property Name="PERIOD_END_DATE" Type="DateTime" Nullable="false" />
-					<Property Name="FISCAL_TYPE" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="true" />
-					<Property Name="ESTIMATE_ID" Type="Int32" Nullable="false" />
-					<Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-					<Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
-					<Property Name="NUMBER_OF_ESTIMATES" Type="Int32" Nullable="false" />
-					<Property Name="HIGH" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
-					<Property Name="LOW" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
-					<Property Name="SOURCE_CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-					<Property Name="STANDARD_DEVIATION" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
-					<Property Name="AMOUNT_TYPE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
-				</EntityType>
-				<EntityType Name="FX_RATES">
-					<Key>
-						<PropertyRef Name="CURRENCY" />
-						<PropertyRef Name="FX_DATE" />
-						<PropertyRef Name="FX_RATE" />
-					</Key>
-					<Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-					<Property Name="FX_DATE" Type="DateTime" Nullable="false" />
-					<Property Name="FX_RATE" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
-					<Property Name="AVG90DAYRATE" Type="Decimal" Precision="32" Scale="6" />
-					<Property Name="AVG12MonthRATE" Type="Decimal" Precision="32" Scale="6" />
-				</EntityType>
-				<EntityType Name="INTERNAL_DATA_ANNUAL">
-					<Key>
-						<PropertyRef Name="ISSUER_ID" />
-						<PropertyRef Name="REF_NO" />
-						<PropertyRef Name="REPORT_YEAR" />
-						<PropertyRef Name="COA" />
-						<PropertyRef Name="AMOUNT" />
-					</Key>
-					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="REF_NO" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="REPORT_YEAR" Type="Int32" Nullable="false" />
-					<Property Name="COA" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="true" />
-					<Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
-				</EntityType>
-				<EntityType Name="INTERNAL_DATA_INTERIM">
-					<Key>
-						<PropertyRef Name="ISSUER_ID" />
-						<PropertyRef Name="REF_NO" />
-						<PropertyRef Name="Report_YEAR" />
-						<PropertyRef Name="COA" />
-						<PropertyRef Name="AMOUNT" />
-					</Key>
-					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="REF_NO" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="Report_YEAR" Type="Int32" Nullable="false" />
-					<Property Name="COA" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="true" />
-					<Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
-				</EntityType>
-				<EntityType Name="INTERNAL_ISSUER">
-					<Key>
-						<PropertyRef Name="ISSUER_ID" />
-						<PropertyRef Name="COA_TYPE" />
-					</Key>
-					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="COA_TYPE" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="false" />
-					<Property Name="LastPrimaryModelLoad" Type="DateTime" />
-					<Property Name="LastIndustryModelLoad" Type="DateTime" />
-				</EntityType>
-				<EntityType Name="INTERNAL_STATEMENT_ANNUAL">
-					<Key>
-						<PropertyRef Name="ISSUER_ID" />
-						<PropertyRef Name="REF_NO" />
-						<PropertyRef Name="FISCAL_YEAR" />
-						<PropertyRef Name="ROOT_SOURCE" />
-						<PropertyRef Name="ROOT_SOURCE_DATE" />
-						<PropertyRef Name="PERIOD_LENGTH" />
-						<PropertyRef Name="PERIOD_END_DATE" />
-						<PropertyRef Name="CURRENCY" />
-						<PropertyRef Name="AMOUNT_TYPE" />
-					</Key>
-					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="REF_NO" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="FISCAL_YEAR" Type="Int32" Nullable="false" />
-					<Property Name="ROOT_SOURCE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-					<Property Name="ROOT_SOURCE_DATE" Type="DateTime" Nullable="false" />
-					<Property Name="PERIOD_LENGTH" Type="Int32" Nullable="false" />
-					<Property Name="PERIOD_END_DATE" Type="DateTime" Nullable="false" />
-					<Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-					<Property Name="AMOUNT_TYPE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
-				</EntityType>
-				<EntityType Name="INTERNAL_STATEMENT_INTERIM">
-					<Key>
-						<PropertyRef Name="ISSUER_ID" />
-						<PropertyRef Name="REF_NO" />
-						<PropertyRef Name="FISCAL_YEAR" />
-						<PropertyRef Name="STATEMENT_TYPE" />
-						<PropertyRef Name="INTERIM_NUMBER" />
-						<PropertyRef Name="ROOT_SOURCE" />
-						<PropertyRef Name="ROOT_SOURCE_DATE" />
-						<PropertyRef Name="PERIOD_LENGTH" />
-						<PropertyRef Name="PERIOD_END_DATE" />
-						<PropertyRef Name="CURRENCY" />
-						<PropertyRef Name="AMOUNT_TYPE" />
-					</Key>
-					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="REF_NO" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="FISCAL_YEAR" Type="Int32" Nullable="false" />
-					<Property Name="STATEMENT_TYPE" Type="String" Nullable="false" MaxLength="4" Unicode="false" FixedLength="true" />
-					<Property Name="INTERIM_NUMBER" Type="Int32" Nullable="false" />
-					<Property Name="ROOT_SOURCE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-					<Property Name="ROOT_SOURCE_DATE" Type="DateTime" Nullable="false" />
-					<Property Name="PERIOD_LENGTH" Type="Int32" Nullable="false" />
-					<Property Name="PERIOD_END_DATE" Type="DateTime" Nullable="false" />
-					<Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-					<Property Name="AMOUNT_TYPE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
-				</EntityType>
-				<EntityType Name="ISSUER_SHARES">
-					<Key>
-						<PropertyRef Name="ISSUER_ID" />
-						<PropertyRef Name="SHARES_DATE" />
-						<PropertyRef Name="SHARES_OUTSTANDING" />
-					</Key>
-					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="SHARES_DATE" Type="DateTime" Nullable="false" />
-					<Property Name="SHARES_OUTSTANDING" Type="Int32" Nullable="false" />
-				</EntityType>
-				<EntityType Name="ISSUER_SHARES_COMPOSITION">
-					<Key>
-						<PropertyRef Name="ISSUER_ID" />
-						<PropertyRef Name="SECURITY_ID" />
-					</Key>
-					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="SECURITY_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-				</EntityType>
-				<EntityType Name="Macroeconomic_Data">
-					<Key>
-						<PropertyRef Name="COUNTRY_CODE" />
-						<PropertyRef Name="FIELD" />
-						<PropertyRef Name="YEAR1" />
-						<PropertyRef Name="UPDATE_DATE" />
-						<PropertyRef Name="UPDATE_SOURCE" />
-					</Key>
-					<Property Name="COUNTRY_CODE" Type="String" Nullable="false" MaxLength="4" Unicode="false" FixedLength="true" />
-					<Property Name="FIELD" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
-					<Property Name="YEAR1" Type="Int32" Nullable="false" />
-					<Property Name="VALUE" Type="Decimal" Precision="32" Scale="6" />
-					<Property Name="UPDATE_DATE" Type="DateTime" Nullable="false" />
-					<Property Name="UPDATE_SOURCE" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-				</EntityType>
-				<EntityType Name="Macroeconomic_Display">
-					<Key>
-						<PropertyRef Name="DISPLAY_TYPE" />
-						<PropertyRef Name="FIELD" />
-						<PropertyRef Name="CATEGORY_NAME" />
-						<PropertyRef Name="FIELD_DESC" />
-						<PropertyRef Name="DATATYPE" />
-						<PropertyRef Name="SORT_ORDER" />
-					</Key>
-					<Property Name="DISPLAY_TYPE" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="FIELD" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
-					<Property Name="CATEGORY_NAME" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
-					<Property Name="FIELD_DESC" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-					<Property Name="DATATYPE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-					<Property Name="DECIMALS" Type="Int32" />
-					<Property Name="SORT_ORDER" Type="Int32" Nullable="false" />
-					<Property Name="HELP_TEXT" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-				</EntityType>
-				<EntityType Name="PERIOD_FINANCIALS">
-					<Key>
-						<PropertyRef Name="ISSUER_ID" />
-						<PropertyRef Name="SECURITY_ID" />
-						<PropertyRef Name="COA_TYPE" />
-						<PropertyRef Name="DATA_SOURCE" />
-						<PropertyRef Name="ROOT_SOURCE" />
-						<PropertyRef Name="ROOT_SOURCE_DATE" />
-						<PropertyRef Name="PERIOD_TYPE" />
-						<PropertyRef Name="PERIOD_YEAR" />
-						<PropertyRef Name="PERIOD_END_DATE" />
-						<PropertyRef Name="FISCAL_TYPE" />
-						<PropertyRef Name="CURRENCY" />
-						<PropertyRef Name="DATA_ID" />
-						<PropertyRef Name="AMOUNT" />
-						<PropertyRef Name="SOURCE_CURRENCY" />
-						<PropertyRef Name="AMOUNT_TYPE" />
-					</Key>
-					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="SECURITY_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="COA_TYPE" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="false" />
-					<Property Name="DATA_SOURCE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-					<Property Name="ROOT_SOURCE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
-					<Property Name="ROOT_SOURCE_DATE" Type="DateTime" Nullable="false" />
-					<Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
-					<Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
-					<Property Name="PERIOD_END_DATE" Type="DateTime" Nullable="false" />
-					<Property Name="FISCAL_TYPE" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="true" />
-					<Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-					<Property Name="DATA_ID" Type="Int32" Nullable="false" />
-					<Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
-					<Property Name="CALCULATION_DIAGRAM" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
-					<Property Name="SOURCE_CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
-					<Property Name="AMOUNT_TYPE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
-				</EntityType>
-				<EntityType Name="PERIOD_FINANCIALS_DISPLAY">
-					<Key>
-						<PropertyRef Name="DATA_ID" />
-						<PropertyRef Name="DATA_DESC" />
-						<PropertyRef Name="COA_TYPE" />
-						<PropertyRef Name="SORT_ORDER" />
-						<PropertyRef Name="GROUP_NAME" />
-						<PropertyRef Name="BOLD_FONT" />
-						<PropertyRef Name="DECIMALS" />
-						<PropertyRef Name="MULTIPLIER" />
-					</Key>
-					<Property Name="DATA_ID" Type="Int32" Nullable="false" />
-					<Property Name="DATA_DESC" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-					<Property Name="STATEMENT_TYPE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-					<Property Name="COA_TYPE" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-					<Property Name="SORT_ORDER" Type="Int32" Nullable="false" />
-					<Property Name="GROUP_NAME" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-					<Property Name="BOLD_FONT" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
-					<Property Name="DECIMALS" Type="Int32" Nullable="false" />
-					<Property Name="MULTIPLIER" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
-				</EntityType>
-				<EntityType Name="REUTERS_XREF">
-					<Key>
-						<PropertyRef Name="ReportNumber" />
-						<PropertyRef Name="ISSUER_ID" />
-						<PropertyRef Name="PROVIDER" />
-					</Key>
-					<Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
-					<Property Name="Xref" Type="String" MaxLength="9" Unicode="false" FixedLength="false" />
-					<Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="SECURITY_ID" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="ASEC_SEC_SHORT_NAME" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
-					<Property Name="NAME" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
-					<Property Name="PROVIDER" Type="String" Nullable="false" MaxLength="1" Unicode="false" FixedLength="true" />
-				</EntityType>
 				<ComplexType Name="GetBasicData_Result">
 					<Property Type="Decimal" Name="MARKET_CAPITALIZATION" Nullable="true" Precision="18" Scale="0" />
 					<Property Type="Decimal" Name="ENTERPRISE_VALUE" Nullable="true" Precision="18" Scale="0" />
@@ -1149,57 +1131,6 @@
 					<Property Type="DateTime" Name="RootSourceDate" Nullable="true" />
 					<Property Type="String" Name="CalculationDiagram" Nullable="true" />
 				</ComplexType>
-				<EntityType Name="tblCETargetPrice">
-					<Key>
-						<PropertyRef Name="XRef" />
-						<PropertyRef Name="StartDate" />
-						<PropertyRef Name="OriginalDate" />
-					</Key>
-					<Property Type="String" Name="XRef" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-					<Property Type="DateTime" Name="StartDate" Nullable="false" />
-					<Property Type="DateTime" Name="EndDate" />
-					<Property Type="DateTime" Name="OriginalDate" Nullable="false" />
-					<Property Type="DateTime" Name="ExpirationDate" />
-					<Property Type="String" Name="Unit" MaxLength="2" FixedLength="false" Unicode="false" />
-					<Property Type="Int32" Name="NumOfEsts" />
-					<Property Type="Single" Name="High" />
-					<Property Type="Single" Name="Low" />
-					<Property Type="Single" Name="Mean" />
-					<Property Type="Single" Name="StdDev" />
-					<Property Type="Single" Name="Median" />
-					<Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
-				</EntityType>
-				<EntityType Name="tblCompanyInfo">
-					<Key>
-						<PropertyRef Name="XRef" />
-					</Key>
-					<Property Type="String" Name="XRef" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="ReportNumber" MaxLength="5" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="Name" MaxLength="80" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="Country" MaxLength="3" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="Ticker" MaxLength="15" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="CUSIP" MaxLength="12" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="ISIN" MaxLength="12" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="SEDOL" MaxLength="12" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="VALOREN" MaxLength="12" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="RIC" MaxLength="21" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="DisplayRIC" MaxLength="21" FixedLength="false" Unicode="false" />
-					<Property Type="DateTime" Name="RecentSplitDate" />
-					<Property Type="DateTime" Name="RecentCapitalAdjDate" />
-					<Property Type="String" Name="Consensus" MaxLength="20" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="Estimate" MaxLength="10" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="Earnings" MaxLength="10" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="Periodicity" MaxLength="2" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="CurrentPeriod" MaxLength="2" FixedLength="true" Unicode="false" />
-					<Property Type="DateTime" Name="pEndDate" />
-					<Property Type="String" Name="fYearEnd" MaxLength="6" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="fPeriodEnd" MaxLength="6" FixedLength="true" Unicode="false" />
-					<Property Type="Single" Name="CurrentPrice" />
-					<Property Type="DateTime" Name="CurrentPriceDate" />
-					<Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
-					<Property Type="Decimal" Name="OutstandingShares" Precision="18" Scale="0" />
-					<Property Type="Boolean" Name="Active" />
-				</EntityType>
 				<ComplexType Name="GetTargetPrice_Result">
 					<Property Type="String" Name="Xref" Nullable="false" MaxLength="9" />
 					<Property Type="String" Name="Ticker" Nullable="true" MaxLength="15" />
@@ -1310,34 +1241,6 @@
 					<Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10"/>
 					<Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23"/>
 				</ComplexType>
-
-				<EntityType Name="DATA_MASTER">
-					<Key>
-						<PropertyRef Name="DATA_ID" />
-						<PropertyRef Name="FX_CONV_TYPE" />
-						<PropertyRef Name="CALENDARIZE" />
-						<PropertyRef Name="INDUSTRIAL" />
-						<PropertyRef Name="BANK" />
-						<PropertyRef Name="INSURANCE" />
-						<PropertyRef Name="UTILITY" />
-						<PropertyRef Name="QUARTERLY" />
-						<PropertyRef Name="DATA_DESC" />
-					</Key>
-					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
-					<Property Type="String" Name="COA" MaxLength="8" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="FX_CONV_TYPE" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="CALENDARIZE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="INDUSTRIAL" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="BANK" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="INSURANCE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="UTILITY" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="QUARTERLY" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="COA_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="ANNUAL" MaxLength="1" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="CURRENT" MaxLength="1" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
-				</EntityType>
 				<ComplexType Name="ConsensusEstimateDetailData" >
 					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20"/>
 					<Property Type="Int32" Name="ESTIMATE_ID" Nullable="false" />
@@ -1358,21 +1261,6 @@
 					<Property Type="Decimal" Name="ACTUAL" Nullable="true" Precision="32" Scale="6" />
 					<!--<Property Type="String" Name="ESTIMATE_TYPE" Nullable="false" />-->
 				</ComplexType>
-
-				<EntityType Name="PRICE">
-					<Key>
-						<PropertyRef Name="SECURITY_ID" />
-						<PropertyRef Name="PRICE_DATE" />
-						<PropertyRef Name="PRICE1" />
-						<PropertyRef Name="FX_RATE" />
-						<PropertyRef Name="ADR_CONV" />
-					</Key>
-					<Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-					<Property Type="DateTime" Name="PRICE_DATE" Nullable="false" />
-					<Property Type="Decimal" Name="PRICE1" Nullable="false" Precision="32" Scale="6" />
-					<Property Type="Decimal" Name="FX_RATE" Nullable="false" Precision="32" Scale="6" />
-					<Property Type="Decimal" Name="ADR_CONV" Nullable="false" Precision="32" Scale="6" />
-				</EntityType>
 				<ComplexType Name="GetPRevenueData_Result" >
 					<Property Type="String" Name="PeriodLabel" Nullable="true" />
 					<Property Type="DateTime" Name="Period_End_Date" Nullable="true" />
@@ -1397,7 +1285,487 @@
 					<Property Type="String" Name="MACRO_ECON_DATA_CURRENT" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
 					<Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_NAME" MaxLength="20" FixedLength="false" Unicode="false" />
 					<Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="20" FixedLength="false" Unicode="false" />
-				</EntityType>      
+				</EntityType>
+        <EntityType Name="CALC_LOG">
+          <Key>
+            <PropertyRef Name="LOG_ID" />
+            <PropertyRef Name="LOG_DATE" />
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="TXT" />
+          </Key>
+          <Property Type="Int32" Name="LOG_ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="LOG_DATE" Nullable="false" />
+          <Property Type="Int32" Name="DATA_ID" />
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+          <Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" />
+          <Property Type="String" Name="FISCAL_TYPE" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="TXT" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ChangeScript">
+          <Key>
+            <PropertyRef Name="ScriptVersion" />
+          </Key>
+          <Property Type="String" Name="ScriptVersion" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DateExecuted" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CURRENT_CONSENSUS_ESTIMATES">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="DATA_SOURCE_DATE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="ESTIMATE_ID" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="NUMBER_OF_ESTIMATES" />
+            <PropertyRef Name="HIGH" />
+            <PropertyRef Name="LOW" />
+            <PropertyRef Name="SOURCE_CURRENCY" />
+            <PropertyRef Name="STANDARD_DEVIATION" />
+            <PropertyRef Name="AMOUNT_TYPE" />
+          </Key>
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" />
+          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+          <Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" />
+          <Property Type="String" Name="FISCAL_TYPE" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="ESTIMATE_ID" Nullable="false" />
+          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="NUMBER_OF_ESTIMATES" Nullable="false" />
+          <Property Type="Decimal" Name="HIGH" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="LOW" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="Decimal" Name="STANDARD_DEVIATION" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DATA_MASTER">
+          <Key>
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="FX_CONV_TYPE" />
+            <PropertyRef Name="CALENDARIZE" />
+            <PropertyRef Name="INDUSTRIAL" />
+            <PropertyRef Name="BANK" />
+            <PropertyRef Name="INSURANCE" />
+            <PropertyRef Name="UTILITY" />
+            <PropertyRef Name="QUARTERLY" />
+            <PropertyRef Name="DATA_DESC" />
+          </Key>
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="String" Name="COA" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="FX_CONV_TYPE" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CALENDARIZE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="INDUSTRIAL" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="BANK" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="INSURANCE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="UTILITY" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="QUARTERLY" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COA_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ANNUAL" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CURRENT" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="FAIR_VALUE">
+          <Key>
+            <PropertyRef Name="VALUE_TYPE" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="FV_MEASURE" />
+            <PropertyRef Name="FV_BUY" />
+            <PropertyRef Name="FV_SELL" />
+            <PropertyRef Name="CURRENT_MEASURE_VALUE" />
+            <PropertyRef Name="UPSIDE" />
+          </Key>
+          <Property Type="String" Name="VALUE_TYPE" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="FV_MEASURE" Nullable="false" />
+          <Property Type="Decimal" Name="FV_BUY" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="FV_SELL" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="CURRENT_MEASURE_VALUE" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="UPSIDE" Nullable="false" Precision="32" Scale="6" />
+        </EntityType>
+        <EntityType Name="FINANCIAL_GRIDS_DISPLAY">
+          <Key>
+            <PropertyRef Name="GRID_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="SORT_ORDER" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="DECIMALS" />
+            <PropertyRef Name="PERCENTAGE" />
+          </Key>
+          <Property Type="Int32" Name="GRID_ID" Nullable="false" />
+          <Property Type="String" Name="COA_TYPE" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="Int32" Name="ESTIMATE_ID" />
+          <Property Type="Int32" Name="DECIMALS" Nullable="false" />
+          <Property Type="String" Name="PERCENTAGE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="FINSTAT_DISPLAY">
+          <Key>
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="SORT_ORDER" />
+            <PropertyRef Name="GROUP_NAME" />
+            <PropertyRef Name="BOLD_FONT" />
+            <PropertyRef Name="DECIMALS" />
+            <PropertyRef Name="MULTIPLIER" />
+            <PropertyRef Name="PERCENTAGE" />
+            <PropertyRef Name="HARMONIC" />
+          </Key>
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="Int32" Name="ESTIMATE_ID" />
+          <Property Type="String" Name="COA_TYPE" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
+          <Property Type="String" Name="GROUP_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BOLD_FONT" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="DECIMALS" Nullable="false" />
+          <Property Type="Decimal" Name="MULTIPLIER" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="PERCENTAGE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="HARMONIC" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="FX_RATES">
+          <Key>
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="FX_DATE" />
+            <PropertyRef Name="FX_RATE" />
+          </Key>
+          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="DateTime" Name="FX_DATE" Nullable="false" />
+          <Property Type="Decimal" Name="FX_RATE" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="AVG90DAYRATE" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="AVG12MonthRATE" Precision="32" Scale="6" />
+        </EntityType>
+        <EntityType Name="FX_RATES_OLD">
+          <Key>
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="FX_DATE" />
+            <PropertyRef Name="FX_RATE" />
+          </Key>
+          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="DateTime" Name="FX_DATE" Nullable="false" />
+          <Property Type="Decimal" Name="FX_RATE" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="AVG90DAYRATE" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="AVG12MonthRATE" Precision="32" Scale="6" />
+        </EntityType>
+        <EntityType Name="GF_PRICING_BASEVIEW_EXTERNAL">
+          <Key>
+            <PropertyRef Name="INSTRUMENT_ID" />
+            <PropertyRef Name="FROMDATE" />
+          </Key>
+          <Property Type="String" Name="INSTRUMENT_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TYPE" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TICKER" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ISSUE_NAME" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="FROMDATE" Nullable="false" />
+          <Property Type="Decimal" Name="DAILY_CLOSING_PRICE" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="DAILY_PRICE_RETURN" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="DAILY_GROSS_RETURN" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="VALUME" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="DAILY_SPOT_FX" Precision="32" Scale="6" />
+        </EntityType>
+        <EntityType Name="GF_SECURITY_BASEVIEW2">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Double" Name="GF_ID" />
+          <Property Type="String" Name="SECURITY_ID" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASEC_SEC_SHORT_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISSUE_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISIN" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SEDOL" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SECS_INSTYPE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASEC_INSTR_TYPE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SECURITY_TYPE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="ASEC_FC_SEC_REF" />
+          <Property Type="String" Name="LOOK_THRU_FUND" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="FIFTYTWO_WEEK_LOW" />
+          <Property Type="Double" Name="FIFTYTWO_WEEK_HIGH" />
+          <Property Type="String" Name="SECURITY_VOLUME_AVG_90D" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="SECURITY_VOLUME_AVG_6M" />
+          <Property Type="Double" Name="SECURITY_VOLUME_AVG_30D" />
+          <Property Type="String" Name="GREENFIELD_FLAG" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="FLOAT_AMOUNT" />
+          <Property Type="String" Name="CUSIP" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="STOCK_EXCHANGE_ID" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="ASEC_ISSUED_VOLUME" />
+          <Property Type="Double" Name="ISSUER_ID" />
+          <Property Type="String" Name="TRADING_CURRENCY" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="SHARES_OUTSTANDING" />
+          <Property Type="Double" Name="BETA" />
+          <Property Type="Double" Name="BARRA_BETA" />
+          <Property Type="String" Name="TICKER" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="MSCI" />
+          <Property Type="String" Name="BARRA" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISO_COUNTRY_CODE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASEC_SEC_COUNTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASEC_SEC_COUNTRY_ZONE_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISSUER_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHEMM_ONE_LINER_DESCRIPTION" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BLOOMBERG_DESCRIPTION" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHMOREEMM_INDUSTRY_ANALYST" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHMOREEMM_PRIMARY_ANALYST" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHMOREEMM_PORTFOLIO_MANAGER" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="WEBSITE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FISCAL_YEAR_END" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="XREF" />
+          <Property Type="String" Name="REPORTNUMBER" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="GICS_SECTOR" />
+          <Property Type="String" Name="GICS_SECTOR_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="GICS_INDUSTRY" />
+          <Property Type="String" Name="GICS_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="GICS_SUB_INDUSTRY" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="SHARES_PER_ADR" />
+          <Property Type="String" Name="ADR_UNDERLYING_TICKER" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="MARKET_CAP_IN_TRADING_CURRENCY" />
+          <Property Type="Double" Name="CLOSING_PRICE" />
+          <Property Type="Double" Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" />
+          <Property Type="DateTime" Name="LAST_CLOSE_DATE" />
+          <Property Type="Double" Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" />
+        </EntityType>
+        <EntityType Name="GRID_TYPES">
+          <Key>
+            <PropertyRef Name="GRID_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="SORT_ORDER" />
+            <PropertyRef Name="GRID_DESC" />
+          </Key>
+          <Property Type="Int32" Name="GRID_ID" Nullable="false" />
+          <Property Type="String" Name="COA_TYPE" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SHOW_GRID" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
+          <Property Type="String" Name="GRID_DESC" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERCENTAGE" />
+            <PropertyRef Name="LAST_UPDATED" />
+          </Key>
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="Decimal" Name="PERCENTAGE" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="DateTime" Name="LAST_UPDATED" Nullable="false" />
+        </EntityType>
+        <EntityType Name="INTERNAL_STATEMENT">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="REF_NO" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="ROOT_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE_DATE" />
+            <PropertyRef Name="PERIOD_LENGTH" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="AMOUNT_TYPE" />
+          </Key>
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="REF_NO" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" />
+          <Property Type="Int32" Name="PERIOD_LENGTH" Nullable="false" />
+          <Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" />
+          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ISSUER_SHARES">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SHARES_DATE" />
+            <PropertyRef Name="SHARES_OUTSTANDING" />
+          </Key>
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="SHARES_DATE" Nullable="false" />
+          <Property Type="Decimal" Name="SHARES_OUTSTANDING" Nullable="false" Precision="32" Scale="2" />
+        </EntityType>
+        <EntityType Name="ISSUER_SHARES_COMPOSITION">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+          </Key>
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Macroeconomic_Data">
+          <Key>
+            <PropertyRef Name="COUNTRY_CODE" />
+            <PropertyRef Name="FIELD" />
+            <PropertyRef Name="YEAR1" />
+            <PropertyRef Name="UPDATE_DATE" />
+            <PropertyRef Name="UPDATE_SOURCE" />
+          </Key>
+          <Property Type="String" Name="COUNTRY_CODE" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="FIELD" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="YEAR1" Nullable="false" />
+          <Property Type="Decimal" Name="VALUE" Precision="32" Scale="6" />
+          <Property Type="DateTime" Name="UPDATE_DATE" Nullable="false" />
+          <Property Type="String" Name="UPDATE_SOURCE" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Macroeconomic_Display">
+          <Key>
+            <PropertyRef Name="DISPLAY_TYPE" />
+            <PropertyRef Name="FIELD" />
+            <PropertyRef Name="CATEGORY_NAME" />
+            <PropertyRef Name="FIELD_DESC" />
+            <PropertyRef Name="DATATYPE" />
+            <PropertyRef Name="SORT_ORDER" />
+          </Key>
+          <Property Type="String" Name="DISPLAY_TYPE" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FIELD" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CATEGORY_NAME" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FIELD_DESC" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DATATYPE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="DECIMALS" />
+          <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
+          <Property Type="String" Name="HELP_TEXT" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PERIOD_FINANCIALS">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE_DATE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="SOURCE_CURRENCY" />
+            <PropertyRef Name="AMOUNT_TYPE" />
+          </Key>
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COA_TYPE" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" />
+          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+          <Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" />
+          <Property Type="String" Name="FISCAL_TYPE" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="CALCULATION_DIAGRAM" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PERIOD_FINANCIALS_DISPLAY">
+          <Key>
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="DATA_DESC" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="SORT_ORDER" />
+            <PropertyRef Name="GROUP_NAME" />
+            <PropertyRef Name="BOLD_FONT" />
+            <PropertyRef Name="DECIMALS" />
+            <PropertyRef Name="MULTIPLIER" />
+          </Key>
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="STATEMENT_TYPE" MaxLength="10" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="COA_TYPE" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
+          <Property Type="String" Name="GROUP_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="BOLD_FONT" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="DECIMALS" Nullable="false" />
+          <Property Type="Decimal" Name="MULTIPLIER" Nullable="false" Precision="32" Scale="6" />
+        </EntityType>
+        <EntityType Name="PRICE">
+          <Key>
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="PRICE_DATE" />
+            <PropertyRef Name="PRICE1" />
+            <PropertyRef Name="FX_RATE" />
+            <PropertyRef Name="ADR_CONV" />
+          </Key>
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="PRICE_DATE" Nullable="false" />
+          <Property Type="Decimal" Name="PRICE1" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="FX_RATE" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="ADR_CONV" Nullable="false" Precision="32" Scale="6" />
+        </EntityType>
+        <EntityType Name="REUTERS_XREF">
+          <Key>
+            <PropertyRef Name="ReportNumber" />
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="PROVIDER" />
+          </Key>
+          <Property Type="String" Name="ReportNumber" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Xref" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_ID" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ASEC_SEC_SHORT_NAME" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="NAME" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PROVIDER" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="ssr_macro_datav3">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="COUNTRY_CODE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FIELD" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="YEAR" />
+          <Property Type="Double" Name="VALUE" />
+          <Property Type="DateTime" Name="update_dt" />
+          <Property Type="String" Name="update_source" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="STATEMENT_CONSENSUS_MAPPING">
+          <Key>
+            <PropertyRef Name="STATEMENT_TYPE" />
+            <PropertyRef Name="ESTIMATE_ID" />
+            <PropertyRef Name="DESCRIPTION" />
+            <PropertyRef Name="SORT_ORDER" />
+          </Key>
+          <Property Type="String" Name="STATEMENT_TYPE" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="ESTIMATE_ID" Nullable="false" />
+          <Property Type="String" Name="DESCRIPTION" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
+          <Property Type="String" Name="EARNINGS" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Type="String" Name="name" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="principal_id" Nullable="false" />
+          <Property Type="Int32" Name="diagram_id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="version" />
+          <Property Type="Binary" Name="definition" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="test_security_list">
+          <Key>
+            <PropertyRef Name="SECURITY_ID" />
+          </Key>
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>      
 
 			</Schema>
 		</edmx:ConceptualModels>
@@ -1405,270 +1773,6 @@
 		<edmx:Mappings>
 			<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
 				<EntityContainerMapping StorageEntityContainer="ExternalResearchModelStoreContainer" CdmEntityContainer="ExternalResearchEntities">
-					<EntitySetMapping Name="CURRENT_CONSENSUS_ESTIMATES">
-						<EntityTypeMapping TypeName="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES">
-							<MappingFragment StoreEntitySet="CURRENT_CONSENSUS_ESTIMATES">
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-								<ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
-								<ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
-								<ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
-								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-								<ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
-								<ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
-								<ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
-								<ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
-								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-								<ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
-								<ScalarProperty Name="HIGH" ColumnName="HIGH" />
-								<ScalarProperty Name="LOW" ColumnName="LOW" />
-								<ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
-								<ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
-								<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="FX_RATES">
-						<EntityTypeMapping TypeName="ExternalResearchModel.FX_RATES">
-							<MappingFragment StoreEntitySet="FX_RATES">
-								<ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
-								<ScalarProperty Name="FX_DATE" ColumnName="FX_DATE" />
-								<ScalarProperty Name="FX_RATE" ColumnName="FX_RATE" />
-								<ScalarProperty Name="AVG90DAYRATE" ColumnName="AVG90DAYRATE" />
-								<ScalarProperty Name="AVG12MonthRATE" ColumnName="AVG12MonthRATE" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="INTERNAL_DATA_ANNUAL">
-						<EntityTypeMapping TypeName="ExternalResearchModel.INTERNAL_DATA_ANNUAL">
-							<MappingFragment StoreEntitySet="INTERNAL_DATA_ANNUAL">
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="REF_NO" ColumnName="REF_NO" />
-								<ScalarProperty Name="REPORT_YEAR" ColumnName="REPORT_YEAR" />
-								<ScalarProperty Name="COA" ColumnName="COA" />
-								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="INTERNAL_DATA_INTERIM">
-						<EntityTypeMapping TypeName="ExternalResearchModel.INTERNAL_DATA_INTERIM">
-							<MappingFragment StoreEntitySet="INTERNAL_DATA_INTERIM">
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="REF_NO" ColumnName="REF_NO" />
-								<ScalarProperty Name="Report_YEAR" ColumnName="Report_YEAR" />
-								<ScalarProperty Name="COA" ColumnName="COA" />
-								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="INTERNAL_ISSUER">
-						<EntityTypeMapping TypeName="ExternalResearchModel.INTERNAL_ISSUER">
-							<MappingFragment StoreEntitySet="INTERNAL_ISSUER">
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
-								<ScalarProperty Name="LastPrimaryModelLoad" ColumnName="LastPrimaryModelLoad" />
-								<ScalarProperty Name="LastIndustryModelLoad" ColumnName="LastIndustryModelLoad" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="INTERNAL_STATEMENT_ANNUAL">
-						<EntityTypeMapping TypeName="ExternalResearchModel.INTERNAL_STATEMENT_ANNUAL">
-							<MappingFragment StoreEntitySet="INTERNAL_STATEMENT_ANNUAL">
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="REF_NO" ColumnName="REF_NO" />
-								<ScalarProperty Name="FISCAL_YEAR" ColumnName="FISCAL_YEAR" />
-								<ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
-								<ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
-								<ScalarProperty Name="PERIOD_LENGTH" ColumnName="PERIOD_LENGTH" />
-								<ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
-								<ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
-								<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="INTERNAL_STATEMENT_INTERIM">
-						<EntityTypeMapping TypeName="ExternalResearchModel.INTERNAL_STATEMENT_INTERIM">
-							<MappingFragment StoreEntitySet="INTERNAL_STATEMENT_INTERIM">
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="REF_NO" ColumnName="REF_NO" />
-								<ScalarProperty Name="FISCAL_YEAR" ColumnName="FISCAL_YEAR" />
-								<ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
-								<ScalarProperty Name="INTERIM_NUMBER" ColumnName="INTERIM_NUMBER" />
-								<ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
-								<ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
-								<ScalarProperty Name="PERIOD_LENGTH" ColumnName="PERIOD_LENGTH" />
-								<ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
-								<ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
-								<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="ISSUER_SHARES">
-						<EntityTypeMapping TypeName="ExternalResearchModel.ISSUER_SHARES">
-							<MappingFragment StoreEntitySet="ISSUER_SHARES">
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="SHARES_DATE" ColumnName="SHARES_DATE" />
-								<ScalarProperty Name="SHARES_OUTSTANDING" ColumnName="SHARES_OUTSTANDING" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="ISSUER_SHARES_COMPOSITION">
-						<EntityTypeMapping TypeName="ExternalResearchModel.ISSUER_SHARES_COMPOSITION">
-							<MappingFragment StoreEntitySet="ISSUER_SHARES_COMPOSITION">
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="Macroeconomic_Data">
-						<EntityTypeMapping TypeName="ExternalResearchModel.Macroeconomic_Data">
-							<MappingFragment StoreEntitySet="Macroeconomic_Data">
-								<ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
-								<ScalarProperty Name="FIELD" ColumnName="FIELD" />
-								<ScalarProperty Name="YEAR1" ColumnName="YEAR1" />
-								<ScalarProperty Name="VALUE" ColumnName="VALUE" />
-								<ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
-								<ScalarProperty Name="UPDATE_SOURCE" ColumnName="UPDATE_SOURCE" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="Macroeconomic_Display">
-						<EntityTypeMapping TypeName="ExternalResearchModel.Macroeconomic_Display">
-							<MappingFragment StoreEntitySet="Macroeconomic_Display">
-								<ScalarProperty Name="DISPLAY_TYPE" ColumnName="DISPLAY_TYPE" />
-								<ScalarProperty Name="FIELD" ColumnName="FIELD" />
-								<ScalarProperty Name="CATEGORY_NAME" ColumnName="CATEGORY_NAME" />
-								<ScalarProperty Name="FIELD_DESC" ColumnName="FIELD_DESC" />
-								<ScalarProperty Name="DATATYPE" ColumnName="DATATYPE" />
-								<ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
-								<ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
-								<ScalarProperty Name="HELP_TEXT" ColumnName="HELP_TEXT" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="PERIOD_FINANCIALS">
-						<EntityTypeMapping TypeName="ExternalResearchModel.PERIOD_FINANCIALS">
-							<MappingFragment StoreEntitySet="PERIOD_FINANCIALS">
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-								<ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
-								<ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
-								<ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
-								<ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
-								<ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
-								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-								<ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
-								<ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
-								<ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
-								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-								<ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
-								<ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
-								<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="PERIOD_FINANCIALS_DISPLAY">
-						<EntityTypeMapping TypeName="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY">
-							<MappingFragment StoreEntitySet="PERIOD_FINANCIALS_DISPLAY">
-								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-								<ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
-								<ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
-								<ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
-								<ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
-								<ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
-								<ScalarProperty Name="BOLD_FONT" ColumnName="BOLD_FONT" />
-								<ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
-								<ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="REUTERS_XREF">
-						<EntityTypeMapping TypeName="ExternalResearchModel.REUTERS_XREF">
-							<MappingFragment StoreEntitySet="REUTERS_XREF">
-								<ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-								<ScalarProperty Name="Xref" ColumnName="Xref" />
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-								<ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
-								<ScalarProperty Name="NAME" ColumnName="NAME" />
-								<ScalarProperty Name="PROVIDER" ColumnName="PROVIDER" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="tblCETargetPrices">
-						<EntityTypeMapping TypeName="ExternalResearchModel.tblCETargetPrice">
-							<MappingFragment StoreEntitySet="tblCETargetPrice">
-								<ScalarProperty Name="Currency" ColumnName="Currency" />
-								<ScalarProperty Name="Median" ColumnName="Median" />
-								<ScalarProperty Name="StdDev" ColumnName="StdDev" />
-								<ScalarProperty Name="Mean" ColumnName="Mean" />
-								<ScalarProperty Name="Low" ColumnName="Low" />
-								<ScalarProperty Name="High" ColumnName="High" />
-								<ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
-								<ScalarProperty Name="Unit" ColumnName="Unit" />
-								<ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-								<ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
-								<ScalarProperty Name="EndDate" ColumnName="EndDate" />
-								<ScalarProperty Name="StartDate" ColumnName="StartDate" />
-								<ScalarProperty Name="XRef" ColumnName="XRef" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="tblCompanyInfoes">
-						<EntityTypeMapping TypeName="ExternalResearchModel.tblCompanyInfo">
-							<MappingFragment StoreEntitySet="tblCompanyInfo">
-								<ScalarProperty Name="Active" ColumnName="Active" />
-								<ScalarProperty Name="OutstandingShares" ColumnName="OutstandingShares" />
-								<ScalarProperty Name="Currency" ColumnName="Currency" />
-								<ScalarProperty Name="CurrentPriceDate" ColumnName="CurrentPriceDate" />
-								<ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
-								<ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-								<ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
-								<ScalarProperty Name="pEndDate" ColumnName="pEndDate" />
-								<ScalarProperty Name="CurrentPeriod" ColumnName="CurrentPeriod" />
-								<ScalarProperty Name="Periodicity" ColumnName="Periodicity" />
-								<ScalarProperty Name="Earnings" ColumnName="Earnings" />
-								<ScalarProperty Name="Estimate" ColumnName="Estimate" />
-								<ScalarProperty Name="Consensus" ColumnName="Consensus" />
-								<ScalarProperty Name="RecentCapitalAdjDate" ColumnName="RecentCapitalAdjDate" />
-								<ScalarProperty Name="RecentSplitDate" ColumnName="RecentSplitDate" />
-								<ScalarProperty Name="DisplayRIC" ColumnName="DisplayRIC" />
-								<ScalarProperty Name="RIC" ColumnName="RIC" />
-								<ScalarProperty Name="VALOREN" ColumnName="VALOREN" />
-								<ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
-								<ScalarProperty Name="ISIN" ColumnName="ISIN" />
-								<ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
-								<ScalarProperty Name="Ticker" ColumnName="Ticker" />
-								<ScalarProperty Name="Country" ColumnName="Country" />
-								<ScalarProperty Name="Name" ColumnName="Name" />
-								<ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-								<ScalarProperty Name="XRef" ColumnName="XRef" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-
-
-					<EntitySetMapping Name="DATA_MASTER">
-						<EntityTypeMapping TypeName="ExternalResearchModel.DATA_MASTER">
-							<MappingFragment StoreEntitySet="DATA_MASTER">
-								<ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
-								<ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
-								<ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
-								<ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
-								<ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
-								<ScalarProperty Name="QUARTERLY" ColumnName="QUARTERLY" />
-								<ScalarProperty Name="UTILITY" ColumnName="UTILITY" />
-								<ScalarProperty Name="INSURANCE" ColumnName="INSURANCE" />
-								<ScalarProperty Name="BANK" ColumnName="BANK" />
-								<ScalarProperty Name="INDUSTRIAL" ColumnName="INDUSTRIAL" />
-								<ScalarProperty Name="CALENDARIZE" ColumnName="CALENDARIZE" />
-								<ScalarProperty Name="FX_CONV_TYPE" ColumnName="FX_CONV_TYPE" />
-								<ScalarProperty Name="COA" ColumnName="COA" />
-								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
 					<FunctionImportMapping FunctionImportName="GetConsensusDetail" FunctionName="ExternalResearchModel.Store.Get_Consensus_Detail">
 						<ResultMapping>
 							<ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimateDetailData">
@@ -1689,30 +1793,6 @@
 								<ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
 								<ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
 								<ScalarProperty Name="ACTUAL" ColumnName="ACTUAL" />
-							</ComplexTypeMapping>
-						</ResultMapping>
-					</FunctionImportMapping>
-					<EntitySetMapping Name="PRICES">
-						<EntityTypeMapping TypeName="ExternalResearchModel.PRICE">
-							<MappingFragment StoreEntitySet="PRICES">
-								<ScalarProperty Name="ADR_CONV" ColumnName="ADR_CONV" />
-								<ScalarProperty Name="FX_RATE" ColumnName="FX_RATE" />
-								<ScalarProperty Name="PRICE1" ColumnName="PRICE" />
-								<ScalarProperty Name="PRICE_DATE" ColumnName="PRICE_DATE" />
-								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<FunctionImportMapping FunctionImportName="Get_PRevenue" FunctionName="ExternalResearchModel.Store.Get_PRevenue">
-						<ResultMapping>
-							<ComplexTypeMapping TypeName="ExternalResearchModel.GetPRevenueData_Result">
-								<ScalarProperty Name="PeriodLabel" ColumnName="PeriodLabel" />
-								<ScalarProperty Name="Period_End_Date" ColumnName="Period_End_Date" />
-								<ScalarProperty Name="Amount" ColumnName="Amount" />
-								<ScalarProperty Name="Period_Type" ColumnName="PeriodType" />
-								<ScalarProperty Name="Period_Year" ColumnName="PeriodYear" />
-								<ScalarProperty Name="USDPrice" ColumnName="USDPrice" />
-								<ScalarProperty Name="Shares_Outstanding" ColumnName="SharesOutstanding" />
 							</ComplexTypeMapping>
 						</ResultMapping>
 					</FunctionImportMapping>
@@ -1816,25 +1896,399 @@
 							</ComplexTypeMapping>
 						</ResultMapping>
 					</FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetDataForPeriodGadgets" FunctionName="ExternalResearchModel.Store.usp_GetDataForPeriodGadgets">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.COASpecificData">
-                <ScalarProperty Name="GridId" ColumnName="GridId" />
-                <ScalarProperty Name="ShowGrid" ColumnName="ShowGrid" />
-                <ScalarProperty Name="GridDesc" ColumnName="GridDesc" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="AmountType" ColumnName="AmountType" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
-                <ScalarProperty Name="Decimals" ColumnName="Decimals" />
-                <ScalarProperty Name="IsPercentage" ColumnName="IsPercentage" />
-                <ScalarProperty Name="RootSource" ColumnName="RootSource" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="Period_Type" ColumnName="Period_Type" />
-                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+          <EntitySetMapping Name="CALC_LOG">
+            <EntityTypeMapping TypeName="ExternalResearchModel.CALC_LOG">
+              <MappingFragment StoreEntitySet="CALC_LOG">
+                <ScalarProperty Name="TXT" ColumnName="TXT" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="LOG_DATE" ColumnName="LOG_DATE" />
+                <ScalarProperty Name="LOG_ID" ColumnName="LOG_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ChangeScripts">
+            <EntityTypeMapping TypeName="ExternalResearchModel.ChangeScript">
+              <MappingFragment StoreEntitySet="ChangeScripts">
+                <ScalarProperty Name="DateExecuted" ColumnName="DateExecuted" />
+                <ScalarProperty Name="ScriptVersion" ColumnName="ScriptVersion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CURRENT_CONSENSUS_ESTIMATES">
+            <EntityTypeMapping TypeName="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES">
+              <MappingFragment StoreEntitySet="CURRENT_CONSENSUS_ESTIMATES">
+                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+                <ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
+                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+                <ScalarProperty Name="LOW" ColumnName="LOW" />
+                <ScalarProperty Name="HIGH" ColumnName="HIGH" />
+                <ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+                <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
+                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DATA_MASTER">
+            <EntityTypeMapping TypeName="ExternalResearchModel.DATA_MASTER">
+              <MappingFragment StoreEntitySet="DATA_MASTER">
+                <ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
+                <ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
+                <ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
+                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+                <ScalarProperty Name="QUARTERLY" ColumnName="QUARTERLY" />
+                <ScalarProperty Name="UTILITY" ColumnName="UTILITY" />
+                <ScalarProperty Name="INSURANCE" ColumnName="INSURANCE" />
+                <ScalarProperty Name="BANK" ColumnName="BANK" />
+                <ScalarProperty Name="INDUSTRIAL" ColumnName="INDUSTRIAL" />
+                <ScalarProperty Name="CALENDARIZE" ColumnName="CALENDARIZE" />
+                <ScalarProperty Name="FX_CONV_TYPE" ColumnName="FX_CONV_TYPE" />
+                <ScalarProperty Name="COA" ColumnName="COA" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FAIR_VALUE">
+            <EntityTypeMapping TypeName="ExternalResearchModel.FAIR_VALUE">
+              <MappingFragment StoreEntitySet="FAIR_VALUE">
+                <ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
+                <ScalarProperty Name="CURRENT_MEASURE_VALUE" ColumnName="CURRENT_MEASURE_VALUE" />
+                <ScalarProperty Name="FV_SELL" ColumnName="FV_SELL" />
+                <ScalarProperty Name="FV_BUY" ColumnName="FV_BUY" />
+                <ScalarProperty Name="FV_MEASURE" ColumnName="FV_MEASURE" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="VALUE_TYPE" ColumnName="VALUE_TYPE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FINANCIAL_GRIDS_DISPLAY">
+            <EntityTypeMapping TypeName="ExternalResearchModel.FINANCIAL_GRIDS_DISPLAY">
+              <MappingFragment StoreEntitySet="FINANCIAL_GRIDS_DISPLAY">
+                <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+                <ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
+                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+                <ScalarProperty Name="GRID_ID" ColumnName="GRID_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FINSTAT_DISPLAY">
+            <EntityTypeMapping TypeName="ExternalResearchModel.FINSTAT_DISPLAY">
+              <MappingFragment StoreEntitySet="FINSTAT_DISPLAY">
+                <ScalarProperty Name="HARMONIC" ColumnName="HARMONIC" />
+                <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+                <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+                <ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
+                <ScalarProperty Name="BOLD_FONT" ColumnName="BOLD_FONT" />
+                <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FX_RATES">
+            <EntityTypeMapping TypeName="ExternalResearchModel.FX_RATES">
+              <MappingFragment StoreEntitySet="FX_RATES">
+                <ScalarProperty Name="AVG12MonthRATE" ColumnName="AVG12MonthRATE" />
+                <ScalarProperty Name="AVG90DAYRATE" ColumnName="AVG90DAYRATE" />
+                <ScalarProperty Name="FX_RATE" ColumnName="FX_RATE" />
+                <ScalarProperty Name="FX_DATE" ColumnName="FX_DATE" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FX_RATES_OLD">
+            <EntityTypeMapping TypeName="ExternalResearchModel.FX_RATES_OLD">
+              <MappingFragment StoreEntitySet="FX_RATES_OLD">
+                <ScalarProperty Name="AVG12MonthRATE" ColumnName="AVG12MonthRATE" />
+                <ScalarProperty Name="AVG90DAYRATE" ColumnName="AVG90DAYRATE" />
+                <ScalarProperty Name="FX_RATE" ColumnName="FX_RATE" />
+                <ScalarProperty Name="FX_DATE" ColumnName="FX_DATE" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GF_PRICING_BASEVIEW_EXTERNAL">
+            <EntityTypeMapping TypeName="ExternalResearchModel.GF_PRICING_BASEVIEW_EXTERNAL">
+              <MappingFragment StoreEntitySet="GF_PRICING_BASEVIEW">
+                <ScalarProperty Name="DAILY_SPOT_FX" ColumnName="DAILY_SPOT_FX" />
+                <ScalarProperty Name="VALUME" ColumnName="VALUME" />
+                <ScalarProperty Name="DAILY_GROSS_RETURN" ColumnName="DAILY_GROSS_RETURN" />
+                <ScalarProperty Name="DAILY_PRICE_RETURN" ColumnName="DAILY_PRICE_RETURN" />
+                <ScalarProperty Name="DAILY_CLOSING_PRICE" ColumnName="DAILY_CLOSING_PRICE" />
+                <ScalarProperty Name="FROMDATE" ColumnName="FROMDATE" />
+                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="INSTRUMENT_ID" ColumnName="INSTRUMENT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GF_SECURITY_BASEVIEW2">
+            <EntityTypeMapping TypeName="ExternalResearchModel.GF_SECURITY_BASEVIEW2">
+              <MappingFragment StoreEntitySet="GF_SECURITY_BASEVIEW2">
+                <ScalarProperty Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" ColumnName="TOT_CURR_SHRS_OUTST_ALL_CLASS" />
+                <ScalarProperty Name="LAST_CLOSE_DATE" ColumnName="LAST_CLOSE_DATE" />
+                <ScalarProperty Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" ColumnName="LAST_CLOSE_FX_QUO_CURR_TO_USD" />
+                <ScalarProperty Name="CLOSING_PRICE" ColumnName="CLOSING_PRICE" />
+                <ScalarProperty Name="MARKET_CAP_IN_TRADING_CURRENCY" ColumnName="MARKET_CAP_IN_TRADING_CURRENCY" />
+                <ScalarProperty Name="ADR_UNDERLYING_TICKER" ColumnName="ADR_UNDERLYING_TICKER" />
+                <ScalarProperty Name="SHARES_PER_ADR" ColumnName="SHARES_PER_ADR" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
+                <ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
+                <ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
+                <ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
+                <ScalarProperty Name="REPORTNUMBER" ColumnName="REPORTNUMBER" />
+                <ScalarProperty Name="XREF" ColumnName="XREF" />
+                <ScalarProperty Name="FISCAL_YEAR_END" ColumnName="FISCAL_YEAR_END" />
+                <ScalarProperty Name="WEBSITE" ColumnName="WEBSITE" />
+                <ScalarProperty Name="ASHMOREEMM_PORTFOLIO_MANAGER" ColumnName="ASHMOREEMM_PORTFOLIO_MANAGER" />
+                <ScalarProperty Name="ASHMOREEMM_PRIMARY_ANALYST" ColumnName="ASHMOREEMM_PRIMARY_ANALYST" />
+                <ScalarProperty Name="ASHMOREEMM_INDUSTRY_ANALYST" ColumnName="ASHMOREEMM_INDUSTRY_ANALYST" />
+                <ScalarProperty Name="BLOOMBERG_DESCRIPTION" ColumnName="BLOOMBERG_DESCRIPTION" />
+                <ScalarProperty Name="ASHEMM_ONE_LINER_DESCRIPTION" ColumnName="ASHEMM_ONE_LINER_DESCRIPTION" />
+                <ScalarProperty Name="ISSUER_NAME" ColumnName="ISSUER_NAME" />
+                <ScalarProperty Name="ASEC_SEC_COUNTRY_ZONE_NAME" ColumnName="ASEC_SEC_COUNTRY_ZONE_NAME" />
+                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
+                <ScalarProperty Name="ASEC_SEC_COUNTRY_NAME" ColumnName="ASEC_SEC_COUNTRY_NAME" />
+                <ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
+                <ScalarProperty Name="BARRA" ColumnName="BARRA" />
+                <ScalarProperty Name="MSCI" ColumnName="MSCI" />
+                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
+                <ScalarProperty Name="BARRA_BETA" ColumnName="BARRA_BETA" />
+                <ScalarProperty Name="BETA" ColumnName="BETA" />
+                <ScalarProperty Name="SHARES_OUTSTANDING" ColumnName="SHARES_OUTSTANDING" />
+                <ScalarProperty Name="TRADING_CURRENCY" ColumnName="TRADING_CURRENCY" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="ASEC_ISSUED_VOLUME" ColumnName="ASEC_ISSUED_VOLUME" />
+                <ScalarProperty Name="STOCK_EXCHANGE_ID" ColumnName="STOCK_EXCHANGE_ID" />
+                <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
+                <ScalarProperty Name="FLOAT_AMOUNT" ColumnName="FLOAT_AMOUNT" />
+                <ScalarProperty Name="GREENFIELD_FLAG" ColumnName="GREENFIELD_FLAG" />
+                <ScalarProperty Name="SECURITY_VOLUME_AVG_30D" ColumnName="SECURITY_VOLUME_AVG_30D" />
+                <ScalarProperty Name="SECURITY_VOLUME_AVG_6M" ColumnName="SECURITY_VOLUME_AVG_6M" />
+                <ScalarProperty Name="SECURITY_VOLUME_AVG_90D" ColumnName="SECURITY_VOLUME_AVG_90D" />
+                <ScalarProperty Name="FIFTYTWO_WEEK_HIGH" ColumnName="FIFTYTWO_WEEK_HIGH" />
+                <ScalarProperty Name="FIFTYTWO_WEEK_LOW" ColumnName="FIFTYTWO_WEEK_LOW" />
+                <ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
+                <ScalarProperty Name="ASEC_FC_SEC_REF" ColumnName="ASEC_FC_SEC_REF" />
+                <ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
+                <ScalarProperty Name="ASEC_INSTR_TYPE" ColumnName="ASEC_INSTR_TYPE" />
+                <ScalarProperty Name="SECS_INSTYPE" ColumnName="SECS_INSTYPE" />
+                <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
+                <ScalarProperty Name="ISIN" ColumnName="ISIN" />
+                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="GF_ID" ColumnName="GF_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GRID_TYPES">
+            <EntityTypeMapping TypeName="ExternalResearchModel.GRID_TYPES">
+              <MappingFragment StoreEntitySet="GRID_TYPES">
+                <ScalarProperty Name="GRID_DESC" ColumnName="GRID_DESC" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="SHOW_GRID" ColumnName="SHOW_GRID" />
+                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+                <ScalarProperty Name="GRID_ID" ColumnName="GRID_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION">
+            <EntityTypeMapping TypeName="ExternalResearchModel.INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION">
+              <MappingFragment StoreEntitySet="INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION">
+                <ScalarProperty Name="LAST_UPDATED" ColumnName="LAST_UPDATED" />
+                <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INTERNAL_STATEMENT">
+            <EntityTypeMapping TypeName="ExternalResearchModel.INTERNAL_STATEMENT">
+              <MappingFragment StoreEntitySet="INTERNAL_STATEMENT">
+                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+                <ScalarProperty Name="PERIOD_LENGTH" ColumnName="PERIOD_LENGTH" />
+                <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="REF_NO" ColumnName="REF_NO" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ISSUER_SHARES">
+            <EntityTypeMapping TypeName="ExternalResearchModel.ISSUER_SHARES">
+              <MappingFragment StoreEntitySet="ISSUER_SHARES">
+                <ScalarProperty Name="SHARES_OUTSTANDING" ColumnName="SHARES_OUTSTANDING" />
+                <ScalarProperty Name="SHARES_DATE" ColumnName="SHARES_DATE" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ISSUER_SHARES_COMPOSITION">
+            <EntityTypeMapping TypeName="ExternalResearchModel.ISSUER_SHARES_COMPOSITION">
+              <MappingFragment StoreEntitySet="ISSUER_SHARES_COMPOSITION">
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Macroeconomic_Data">
+            <EntityTypeMapping TypeName="ExternalResearchModel.Macroeconomic_Data">
+              <MappingFragment StoreEntitySet="Macroeconomic_Data">
+                <ScalarProperty Name="UPDATE_SOURCE" ColumnName="UPDATE_SOURCE" />
+                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+                <ScalarProperty Name="YEAR1" ColumnName="YEAR1" />
+                <ScalarProperty Name="FIELD" ColumnName="FIELD" />
+                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Macroeconomic_Display">
+            <EntityTypeMapping TypeName="ExternalResearchModel.Macroeconomic_Display">
+              <MappingFragment StoreEntitySet="Macroeconomic_Display">
+                <ScalarProperty Name="HELP_TEXT" ColumnName="HELP_TEXT" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
+                <ScalarProperty Name="DATATYPE" ColumnName="DATATYPE" />
+                <ScalarProperty Name="FIELD_DESC" ColumnName="FIELD_DESC" />
+                <ScalarProperty Name="CATEGORY_NAME" ColumnName="CATEGORY_NAME" />
+                <ScalarProperty Name="FIELD" ColumnName="FIELD" />
+                <ScalarProperty Name="DISPLAY_TYPE" ColumnName="DISPLAY_TYPE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERIOD_FINANCIALS">
+            <EntityTypeMapping TypeName="ExternalResearchModel.PERIOD_FINANCIALS">
+              <MappingFragment StoreEntitySet="PERIOD_FINANCIALS">
+                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+                <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERIOD_FINANCIALS_DISPLAY">
+            <EntityTypeMapping TypeName="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY">
+              <MappingFragment StoreEntitySet="PERIOD_FINANCIALS_DISPLAY">
+                <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+                <ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
+                <ScalarProperty Name="BOLD_FONT" ColumnName="BOLD_FONT" />
+                <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+                <ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
+                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRICES">
+            <EntityTypeMapping TypeName="ExternalResearchModel.PRICE">
+              <MappingFragment StoreEntitySet="PRICES">
+                <ScalarProperty Name="ADR_CONV" ColumnName="ADR_CONV" />
+                <ScalarProperty Name="FX_RATE" ColumnName="FX_RATE" />
+                <ScalarProperty Name="PRICE1" ColumnName="PRICE" />
+                <ScalarProperty Name="PRICE_DATE" ColumnName="PRICE_DATE" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REUTERS_XREF">
+            <EntityTypeMapping TypeName="ExternalResearchModel.REUTERS_XREF">
+              <MappingFragment StoreEntitySet="REUTERS_XREF">
+                <ScalarProperty Name="PROVIDER" ColumnName="PROVIDER" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="Xref" ColumnName="Xref" />
+                <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ssr_macro_datav3">
+            <EntityTypeMapping TypeName="ExternalResearchModel.ssr_macro_datav3">
+              <MappingFragment StoreEntitySet="ssr_macro_datav3">
+                <ScalarProperty Name="update_source" ColumnName="update_source" />
+                <ScalarProperty Name="update_dt" ColumnName="update_dt" />
+                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
+                <ScalarProperty Name="YEAR" ColumnName="YEAR" />
+                <ScalarProperty Name="FIELD" ColumnName="FIELD" />
+                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STATEMENT_CONSENSUS_MAPPING">
+            <EntityTypeMapping TypeName="ExternalResearchModel.STATEMENT_CONSENSUS_MAPPING">
+              <MappingFragment StoreEntitySet="STATEMENT_CONSENSUS_MAPPING">
+                <ScalarProperty Name="EARNINGS" ColumnName="EARNINGS" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="DESCRIPTION" ColumnName="DESCRIPTION" />
+                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+                <ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ExternalResearchModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="test_security_list">
+            <EntityTypeMapping TypeName="ExternalResearchModel.test_security_list">
+              <MappingFragment StoreEntitySet="test_security_list">
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
 
 				</EntityContainerMapping>
 			</Mapping>
@@ -1858,27 +2312,35 @@
 		<Diagrams>
 			<Diagram Name="ExternalResearchDataModel" ZoomLevel="62">
 				<EntityTypeShape EntityType="ExternalResearchModel.CONSENSUS_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.7494921874999996" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES" Width="1.5" PointX="4.75" PointY="0.75" Height="4.2879036458333335" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.FX_RATES" Width="1.5" PointX="6.75" PointY="0.75" Height="1.9802864583333317" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.INTERNAL_DATA_ANNUAL" Width="1.5" PointX="2.75" PointY="6.75" Height="1.9802864583333317" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.INTERNAL_DATA_INTERIM" Width="1.5" PointX="6.75" PointY="3.75" Height="1.9802864583333317" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.INTERNAL_ISSUER" Width="1.5" PointX="4.75" PointY="6.75" Height="1.7879850260416674" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.INTERNAL_STATEMENT_ANNUAL" Width="1.5" PointX="6.75" PointY="6.75" Height="2.7494921874999996" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.INTERNAL_STATEMENT_INTERIM" Width="1.5" PointX="8.75" PointY="0.75" Height="3.1340950520833353" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.ISSUER_SHARES" Width="1.5" PointX="8.75" PointY="4.75" Height="1.5956835937500031" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.ISSUER_SHARES_COMPOSITION" Width="1.5" PointX="8.75" PointY="7.75" Height="1.4033821614583317" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.Macroeconomic_Data" Width="1.5" PointX="0.75" PointY="9.75" Height="2.1725878906250031" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.Macroeconomic_Display" Width="1.5" PointX="2.75" PointY="9.75" Height="2.5571907552083388" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS" Width="1.5" PointX="10.75" PointY="0.75" Height="4.0956022135416674" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" Width="1.5" PointX="4.75" PointY="10.75" Height="2.7494921875000031" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.REUTERS_XREF" Width="1.5" PointX="10.75" PointY="5.75" Height="2.3648893229166674" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.tblCETargetPrice" Width="1.5" PointX="7.375" PointY="10.75" Height="3.5186979166666674" />
-				<EntityTypeShape EntityType="ExternalResearchModel.tblCompanyInfo" Width="1.5" PointX="9.375" PointY="10.75" Height="6.0186165364583317" />
-				<EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="11.375" PointY="9.75" Height="3.7109993489583317" />
 				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="13.375" PointY="0.75" Height="2.3648893229166674" />
-				<EntityTypeShape EntityType="ExternalResearchModel.PRICE" Width="1.5" PointX="0.75" PointY="13.75" Height="1.9802864583333388" />
 				<EntityTypeShape EntityType="ExternalResearchModel.COUNTRY_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
 				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.CALC_LOG" Width="1.5" PointX="4.75" PointY="0.75" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.ChangeScript" Width="1.5" PointX="0.75" PointY="4.75" Height="1.4033821614583246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES" Width="1.5" PointX="2.75" PointY="4.75" Height="4.2879036458333246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="4.75" PointY="4.75" Height="3.7109993489583246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="6.75" PointY="0.75" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.FINANCIAL_GRIDS_DISPLAY" Width="1.5" PointX="6.75" PointY="4.75" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.FINSTAT_DISPLAY" Width="1.5" PointX="8.75" PointY="0.75" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.FX_RATES" Width="1.5" PointX="8.75" PointY="4.75" Height="1.9802864583333246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.FX_RATES_OLD" Width="1.5" PointX="6.75" PointY="8.75" Height="1.9802864583333246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.GF_PRICING_BASEVIEW_EXTERNAL" Width="1.5" PointX="8.75" PointY="7.75" Height="2.9417936197916674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.GF_SECURITY_BASEVIEW2" Width="1.5" PointX="10.75" PointY="0.75" Height="11.97996093750001" />
+        <EntityTypeShape EntityType="ExternalResearchModel.GRID_TYPES" Width="1.5" PointX="0.75" PointY="10.75" Height="1.9802864583333246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION" Width="1.5" PointX="2.75" PointY="10.75" Height="1.9802864583333246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.INTERNAL_STATEMENT" Width="1.5" PointX="4.75" PointY="11.75" Height="2.7494921875000102" />
+        <EntityTypeShape EntityType="ExternalResearchModel.ISSUER_SHARES" Width="1.5" PointX="6.75" PointY="11.75" Height="1.5956835937500102" />
+        <EntityTypeShape EntityType="ExternalResearchModel.ISSUER_SHARES_COMPOSITION" Width="1.5" PointX="12.75" PointY="4.75" Height="1.4033821614583246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.Macroeconomic_Data" Width="1.5" PointX="12.75" PointY="7.75" Height="2.1725878906250102" />
+        <EntityTypeShape EntityType="ExternalResearchModel.Macroeconomic_Display" Width="1.5" PointX="12.75" PointY="10.75" Height="2.5571907552083246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS" Width="1.5" PointX="0.75" PointY="13.75" Height="4.0956022135416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" Width="1.5" PointX="8.75" PointY="13.75" Height="2.7494921875000102" />
+        <EntityTypeShape EntityType="ExternalResearchModel.PRICE" Width="1.5" PointX="14.75" PointY="8.75" Height="1.9802864583333246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.REUTERS_XREF" Width="1.5" PointX="10.75" PointY="14.75" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.ssr_macro_datav3" Width="1.5" PointX="14.75" PointY="11.75" Height="2.3648893229166674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.STATEMENT_CONSENSUS_MAPPING" Width="1.5" PointX="15.75" PointY="0.75" Height="1.9802864583333246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.sysdiagram" Width="1.5" PointX="2.75" PointY="15.75" Height="1.9802864583333246" />
+        <EntityTypeShape EntityType="ExternalResearchModel.test_security_list" Width="1.5" PointX="4.75" PointY="15.75" Height="1.2110807291666674" />
 			</Diagram>
 		</Diagrams>
 	</Designer>

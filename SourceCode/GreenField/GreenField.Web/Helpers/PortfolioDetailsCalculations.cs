@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using GreenField.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
 
 namespace GreenField.Web.Helpers
 {
@@ -11,6 +12,48 @@ namespace GreenField.Web.Helpers
     /// </summary>
     public static class PortfolioDetailsCalculations
     {
+        /// <summary>
+        /// Method to add Securites only present in Benchmark_Holdings to result set
+        /// </summary>
+        /// <param name="result">Collection of PortfolioDetailsData containing data of Securities held by Portfolio</param>
+        /// <param name="onlyBenchmarkSecurities">Collection of GF_BENCHMARK_HOLDINGS, contains securities only held by Benchmark & not by Portfolio</param>
+        /// <returns>Collection of PortfolioDetailsData</returns>
+        public static List<PortfolioDetailsData> AddBenchmarkSecurities(List<PortfolioDetailsData> result, List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities)
+        {
+            if (onlyBenchmarkSecurities == null)
+                return result;
+
+            if (onlyBenchmarkSecurities.Count == 0)
+                return result;
+
+            if (result == null)
+                return new List<PortfolioDetailsData>();
+
+            foreach (GF_BENCHMARK_HOLDINGS item in onlyBenchmarkSecurities)
+            {
+                PortfolioDetailsData benchmarkResult = new PortfolioDetailsData();
+                benchmarkResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
+                benchmarkResult.IssueName = item.ISSUE_NAME;
+                benchmarkResult.Ticker = item.TICKER;
+                benchmarkResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
+                benchmarkResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
+                benchmarkResult.SectorName = item.GICS_SECTOR_NAME;
+                benchmarkResult.IndustryName = item.GICS_INDUSTRY_NAME;
+                benchmarkResult.SubIndustryName = item.GICS_SUB_INDUSTRY_NAME;
+                benchmarkResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
+                benchmarkResult.SecurityType = item.SECURITY_TYPE;
+                benchmarkResult.BalanceNominal = item.BALANCE_NOMINAL;
+                benchmarkResult.DirtyValuePC = item.DIRTY_VALUE_PC;
+                benchmarkResult.BenchmarkWeight = item.BENCHMARK_WEIGHT;
+                benchmarkResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
+                benchmarkResult.Type = "BENCHMARK";
+                result.Add(benchmarkResult);
+            }
+
+            return result;
+
+        }
+
         /// <summary>
         /// Method to calculate the Portfolio Weight & ActivePosition
         /// </summary>
@@ -43,6 +86,89 @@ namespace GreenField.Web.Helpers
                 //item.AshEmmModelWeight = item.AshEmmModelWeight / sumModelWeight;
             }
             return portfolioDetailsData;
+        }
+
+        /// <summary>
+        /// Add Data returned from View(GF_PORTFOLIO_HOLDINGS) to resultSet
+        /// </summary>
+        /// <param name="dimensionPortfolioHoldingsData">List of type GF_PORTFOLIO_HOLDINGS returned from GF_PORTFOLIO_LTHOLDINGS</param>
+        /// <param name="dimensionBenchmarkHoldingsData">List of type GF_BENCHMARK_HOLDINGS returned from GF_BENCHMARK_HOLDINGS</param>
+        /// <returns>List of PortfolioDetailsData</returns>
+        public static List<PortfolioDetailsData> AddPortfolioSecurities(List<GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData, List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData)
+        {
+            List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
+
+            if (dimensionPortfolioHoldingsData == null)
+                return result;
+            if (dimensionPortfolioHoldingsData.Count == 0)
+                return result;
+            if (dimensionBenchmarkHoldingsData == null)
+                return result;
+
+            foreach (GF_PORTFOLIO_HOLDINGS item in dimensionPortfolioHoldingsData)
+            {
+                PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
+                portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
+                portfolioResult.IssueName = item.ISSUE_NAME;
+                portfolioResult.Ticker = item.TICKER;
+                portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
+                portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
+                portfolioResult.SectorName = item.GICS_SECTOR_NAME;
+                portfolioResult.IndustryName = item.GICS_INDUSTRY_NAME;
+                portfolioResult.SubIndustryName = item.GICS_SUB_INDUSTRY_NAME;
+                portfolioResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
+                portfolioResult.SecurityType = item.SECURITY_TYPE;
+                portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
+                portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
+                portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                            Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                            Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
+                portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
+                result.Add(portfolioResult);
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Add Data returned from View(GF_PORTFOLIO_LTHOLDINGS) to resultSet
+        /// </summary>
+        /// <param name="dimensionPortfolioLTHoldingsData">List of type GF_PORTFOLIO_LTHOLDINGS returned from GF_PORTFOLIO_LTHOLDINGS</param>
+        /// <param name="dimensionBenchmarkHoldingsData">List of type GF_BENCHMARK_HOLDINGS returned from GF_BENCHMARK_HOLDINGS</param>
+        /// <returns>List of PortfolioDetailsData</returns>
+        public static List<PortfolioDetailsData> AddPortfolioLTSecurities(List<GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData, List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData)
+        {
+            List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
+
+            if (dimensionPortfolioLTHoldingsData == null)
+                return result;
+            if (dimensionPortfolioLTHoldingsData.Count == 0)
+                return result;
+            if (dimensionBenchmarkHoldingsData == null)
+                return result;
+
+            foreach (GF_PORTFOLIO_LTHOLDINGS item in dimensionPortfolioLTHoldingsData)
+            {
+                PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
+                portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
+                portfolioResult.IssueName = item.ISSUE_NAME;
+                portfolioResult.Ticker = item.TICKER;
+                portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
+                portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
+                portfolioResult.SectorName = item.GICS_SECTOR_NAME;
+                portfolioResult.IndustryName = item.GICS_INDUSTRY_NAME;
+                portfolioResult.SubIndustryName = item.GICS_SUB_INDUSTRY_NAME;
+                portfolioResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
+                portfolioResult.SecurityType = item.SECURITY_TYPE;
+                portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
+                portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
+                portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
+                            Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
+                            Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
+                portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
+                result.Add(portfolioResult);
+            }
+
+            return result;
         }
     }
 }
