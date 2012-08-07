@@ -65,7 +65,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextSource = dataContextSource;
-            dataContextSource.CommodityDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceCommodityLoadEvent);
+            //dataContextSource.CommodityDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceCommodityLoadEvent);
             dataContextSource.RetrieveCommodityDataCompleteEvent += new RetrieveCommodityDataCompleteEventHandler(RetrieveCommodityDataCompletedEvent);
 
         }
@@ -76,13 +76,13 @@ namespace GreenField.Gadgets.Views
         /// event to handle RadBusyIndicator
         /// </summary>
         /// <param name="e"></param>
-        void DataContextSourceCommodityLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        {
-            if (e.ShowBusy)
-                this.gridBusyIndicator.IsBusy = true;
-            else
-                this.gridBusyIndicator.IsBusy = false;
-        }
+        //void DataContextSourceCommodityLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
+        //{
+        //    if (e.ShowBusy)
+        //        this.gridBusyIndicator.IsBusy = true;
+        //    else
+        //        this.gridBusyIndicator.IsBusy = false;
+        //}
         public void RetrieveCommodityDataCompletedEvent(RetrieveCommodityDataCompleteEventArgs e)
         {
             _commodityInfo = e.CommodityInfo;

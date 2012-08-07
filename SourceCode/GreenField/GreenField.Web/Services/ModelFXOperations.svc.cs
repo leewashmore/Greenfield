@@ -182,11 +182,11 @@ namespace GreenField.Web.Services
         {
             try
             {
-                //bool isServiceUp;
-                //isServiceUp = CheckServiceAvailability.ServiceAvailability();
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
-                //if (!isServiceUp)
-                //    throw new Exception();
+                if (!isServiceUp)
+                    throw new Exception();
 
                 List<CommodityResult> resultDB = new List<CommodityResult>();                
                 List<FXCommodityData> calculatedViewResult = new List<FXCommodityData>();
@@ -203,10 +203,15 @@ namespace GreenField.Web.Services
                 if (entity.GF_PRICING_BASEVIEW == null && entity.GF_PRICING_BASEVIEW.Count() == 0)
                     return null;
                 
-                //Retrieving data from database             
-                resultDB = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS @commodityID={0}", selectedCommodityID).ToList();
-                //resultDB = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS").ToList();
-
+                //Retrieving data from database   
+                if (String.IsNullOrEmpty(selectedCommodityID))
+                {
+                    selectedCommodityID = GreenfieldConstants.COMMODITY_ALL;
+                    resultDB = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS @commodityID={0}", selectedCommodityID).ToList();
+                }
+                else
+                    resultDB = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS @commodityID={0}", selectedCommodityID).ToList();
+                 
                 //Retrieving Data from Views
 
                 if (selectedCommodityID != null && selectedCommodityID != string.Empty)
