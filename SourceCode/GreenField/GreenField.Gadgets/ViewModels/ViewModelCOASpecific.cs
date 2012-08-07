@@ -638,21 +638,18 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="param"></param>
         private void DeleteCommandMethod(object param)
         {
-            GadgetWithPeriodColumns a = param as GadgetWithPeriodColumns;
+            GadgetWithPeriodColumns a = param as GadgetWithPeriodColumns;            
             List<COASpecificData> removeItem = new List<COASpecificData>();
-            removeItem = COASpecificFilteredInfo.Where(w => w.Description == a.GadgetDesc).ToList();
+            //removeItem = COASpecificFilteredInfo.Where(w => w.Description == a.GadgetDesc).ToList();
             //if (removeItem != null)
             //    PlottedSeries.RemoveRange(removeItem);
             ComparisonSeries.Remove(a);
             AddToComboBoxSeries.Add(a.GadgetDesc);
-            foreach (COASpecificData r in removeItem)
-            {
-                COASpecificFilteredInfo.Remove(r);
-            }
-            COASpecificFilteredInfo = COASpecificFilteredInfo;
-            
-
-
+            //foreach (COASpecificData r in removeItem)
+            //{
+            //    COASpecificFilteredInfo.Remove(r);
+            //}
+            //COASpecificFilteredInfo = COASpecificFilteredInfo;     
             //ChartEntityList.Remove(a);
             //if (ChartEntityList.Count == 1)
             //{
@@ -664,10 +661,12 @@ namespace GreenField.Gadgets.ViewModels
         /// Add to Chart Command Method
         /// </summary>
         /// <param name="param"></param>
-        GadgetWithPeriodColumns entry = new GadgetWithPeriodColumns();
+       
        
         private void AddCommandMethod(object param)
         {
+            GadgetWithPeriodColumns entry = new GadgetWithPeriodColumns();
+
             if (SelectedSeriesCB != null)
             { 
                             entry.GridId = null;
