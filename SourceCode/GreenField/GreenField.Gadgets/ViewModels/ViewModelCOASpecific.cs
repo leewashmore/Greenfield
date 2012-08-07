@@ -353,11 +353,9 @@ namespace GreenField.Gadgets.ViewModels
             get { return coaSpecificFilterdInfo; }
             set
             {
-                   if (coaSpecificFilterdInfo != value)
-                    {
+                   
                         coaSpecificFilterdInfo = value;
-                        List<String> defaultSeries = COASpecificFilteredInfo.Select(t => t.Description).Distinct().ToList();
-                       
+                        List<String> defaultSeries = COASpecificFilteredInfo.Select(t => t.Description).Distinct().ToList();                       
                         ComparisonSeries.Clear();
                         foreach (String t in defaultSeries)
                         {
@@ -370,7 +368,7 @@ namespace GreenField.Gadgets.ViewModels
                             ComparisonSeries.Add(entry);
                         }            
                         RaisePropertyChanged(() => this.COASpecificFilteredInfo);                       
-                    }                
+                                  
             }
 
         }
@@ -642,13 +640,14 @@ namespace GreenField.Gadgets.ViewModels
             List<COASpecificData> removeItem = new List<COASpecificData>();
             //removeItem = COASpecificFilteredInfo.Where(w => w.Description == a.GadgetDesc).ToList();
             //if (removeItem != null)
-            //    PlottedSeries.RemoveRange(removeItem);
+            //    foreach (COASpecificData r in removeItem)
+            //    {
+            //        COASpecificFilteredInfo.Remove(r);
+            //    }
+            //COASpecificFilteredInfo = COASpecificFilteredInfo;
             ComparisonSeries.Remove(a);
             AddToComboBoxSeries.Add(a.GadgetDesc);
-            //foreach (COASpecificData r in removeItem)
-            //{
-            //    COASpecificFilteredInfo.Remove(r);
-            //}
+            
             //COASpecificFilteredInfo = COASpecificFilteredInfo;     
             //ChartEntityList.Remove(a);
             //if (ChartEntityList.Count == 1)
