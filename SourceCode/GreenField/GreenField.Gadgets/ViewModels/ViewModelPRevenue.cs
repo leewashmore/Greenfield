@@ -53,6 +53,12 @@ namespace GreenField.Gadgets.ViewModels
         /// Stores Chart data
         /// </summary>
         private RangeObservableCollection<PRevenueData> _PRevenuePlottedData;
+
+        /// <summary>
+        /// Stores chart title
+        /// </summary>
+        private string _chartTitle = "P/Revenue";
+
         #endregion
 
         #region Constructor
@@ -66,11 +72,7 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            if (_securitySelectionData != null && IsActive)
-            {
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrievePRevenueDataCallbackMethod);
-                BusyIndicatorStatus = true;
-            }
+            CallingWebMethod();
             if (_eventAggregator != null)
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe((HandleSecurityReferenceSet));
         }
@@ -205,13 +207,6 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        #region EVENTS
-        /// <summary>
-        /// event to handle data retrieval progress indicator
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler PRevenueDataLoadEvent;
-
-        #endregion
 
         #region EVENTHANDLERS
         /// <summary>
@@ -228,13 +223,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
                     _securitySelectionData = entitySelectionData;
-
-                    if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
-                    {
-                        if (PRevenueDataLoadEvent != null)
-                            PRevenueDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePRevenueData(entitySelectionData, RetrievePRevenueDataCallbackMethod);
-                    }
+                    CallingWebMethod();
                 }
                 else
                 {
@@ -264,6 +253,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (pRevenueData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, pRevenueData, 1);
+                    //PRevenuePlottedData = new RangeObservableCollection<PRevenueData>(pRevenueData);
                     PRevenuePlottedData.Clear();
                     PRevenuePlottedData.AddRange(pRevenueData.ToList());
                 }
@@ -277,6 +267,7 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            finally { BusyIndicatorStatus = false; }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
@@ -287,7 +278,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (_securitySelectionData != null && IsActive)
             {
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrievePRevenueDataCallbackMethod);
+                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, _chartTitle, RetrievePRevenueDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
         }

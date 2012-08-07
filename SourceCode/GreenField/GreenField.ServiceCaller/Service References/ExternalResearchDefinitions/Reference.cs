@@ -661,6 +661,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private string TRADING_CURRENCYField;
         
+        private string WACC_COST_DEBTField;
+        
+        private string WACC_COST_EQUITYField;
+        
+        private string WACC_COST_PFDField;
+        
         private string WEBSITEField;
         
         private string XREFField;
@@ -1368,6 +1374,45 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WACC_COST_DEBT {
+            get {
+                return this.WACC_COST_DEBTField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WACC_COST_DEBTField, value) != true)) {
+                    this.WACC_COST_DEBTField = value;
+                    this.RaisePropertyChanged("WACC_COST_DEBT");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WACC_COST_EQUITY {
+            get {
+                return this.WACC_COST_EQUITYField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WACC_COST_EQUITYField, value) != true)) {
+                    this.WACC_COST_EQUITYField = value;
+                    this.RaisePropertyChanged("WACC_COST_EQUITY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WACC_COST_PFD {
+            get {
+                return this.WACC_COST_PFDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WACC_COST_PFDField, value) != true)) {
+                    this.WACC_COST_PFDField = value;
+                    this.RaisePropertyChanged("WACC_COST_PFD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string WEBSITE {
             get {
                 return this.WEBSITEField;
@@ -1488,7 +1533,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrievePRevenueData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrievePRevenueDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrievePRevenueDataServiceFaultFau" +
             "lt", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrievePRevenueData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrievePRevenueData(GreenField.DataContracts.EntitySelectionData entitySelectionData, string chartTitle, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.PRevenueData> EndRetrievePRevenueData(System.IAsyncResult result);
         
@@ -2478,8 +2523,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrievePRevenueData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrievePRevenueData(entitySelectionData, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrievePRevenueData(GreenField.DataContracts.EntitySelectionData entitySelectionData, string chartTitle, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrievePRevenueData(entitySelectionData, chartTitle, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2489,7 +2534,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private System.IAsyncResult OnBeginRetrievePRevenueData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
-            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrievePRevenueData(entitySelectionData, callback, asyncState);
+            string chartTitle = ((string)(inValues[1]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrievePRevenueData(entitySelectionData, chartTitle, callback, asyncState);
         }
         
         private object[] OnEndRetrievePRevenueData(System.IAsyncResult result) {
@@ -2505,11 +2551,11 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             }
         }
         
-        public void RetrievePRevenueDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData) {
-            this.RetrievePRevenueDataAsync(entitySelectionData, null);
+        public void RetrievePRevenueDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, string chartTitle) {
+            this.RetrievePRevenueDataAsync(entitySelectionData, chartTitle, null);
         }
         
-        public void RetrievePRevenueDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, object userState) {
+        public void RetrievePRevenueDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, string chartTitle, object userState) {
             if ((this.onBeginRetrievePRevenueDataDelegate == null)) {
                 this.onBeginRetrievePRevenueDataDelegate = new BeginOperationDelegate(this.OnBeginRetrievePRevenueData);
             }
@@ -2520,7 +2566,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 this.onRetrievePRevenueDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrievePRevenueDataCompleted);
             }
             base.InvokeAsync(this.onBeginRetrievePRevenueDataDelegate, new object[] {
-                        entitySelectionData}, this.onEndRetrievePRevenueDataDelegate, this.onRetrievePRevenueDataCompletedDelegate, userState);
+                        entitySelectionData,
+                        chartTitle}, this.onEndRetrievePRevenueDataDelegate, this.onRetrievePRevenueDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2935,9 +2982,10 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrievePRevenueData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
+            public System.IAsyncResult BeginRetrievePRevenueData(GreenField.DataContracts.EntitySelectionData entitySelectionData, string chartTitle, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
                 _args[0] = entitySelectionData;
+                _args[1] = chartTitle;
                 System.IAsyncResult _result = base.BeginInvoke("RetrievePRevenueData", _args, callback, asyncState);
                 return _result;
             }

@@ -55,6 +55,7 @@
       <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
       <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AshmoreEmmAmount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="ConsensusMedian" type="xs:decimal" />
       <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DataSourceDate" type="xs:dateTime" />
       <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />

@@ -1012,11 +1012,10 @@ namespace GreenField.Web.Services
         /// <returns>List of type Portfolio Details Data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<PortfolioDetailsData> RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime effectiveDate, bool lookThruEnabled, bool excludeCash = false, bool objGetBenchmark = true)
+        public List<PortfolioDetailsData> RetrievePortfolioDetailsData(PortfolioSelectionData objPortfolioIdentifier, DateTime effectiveDate, bool lookThruEnabled, bool excludeCash = false, bool objGetBenchmark = false)
         {
             try
             {
-                objGetBenchmark = true;
                 List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
                 //Arguement Null Case, return Empty Set
                 if ((objPortfolioIdentifier == null) || (effectiveDate == null))

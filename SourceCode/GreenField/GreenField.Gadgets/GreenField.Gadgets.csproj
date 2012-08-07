@@ -152,6 +152,7 @@
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
     <Compile Include="Models\FinancialStatementDisplayData.cs" />
     <Compile Include="Models\FiveYearDataModels.cs" />
+    <Compile Include="Models\GadgetWithPeriodColumns.cs" />
     <Compile Include="Models\PerformancePeriodData.cs" />
     <Compile Include="Models\PeriodAttributeData.cs" />
     <Compile Include="Models\RegionSpecificData.cs" />

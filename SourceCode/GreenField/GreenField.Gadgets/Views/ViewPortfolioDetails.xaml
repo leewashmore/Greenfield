@@ -41,7 +41,7 @@
             </Grid.ColumnDefinitions>
 
             <CheckBox Content="Include Benchmark" Grid.Column="1" ToolTipService.ToolTip="Include Benchmark Securities" 
-                      FontFamily="Arial" FontSize="7" Height="15" VerticalContentAlignment="Center" />
+                      FontFamily="Arial" FontSize="7" Height="15" VerticalContentAlignment="Center" IsChecked="{Binding GetBenchmarkData,Mode=TwoWay}" />
             <Button Height="15" Width="15" Grid.Column="2"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center"

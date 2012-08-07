@@ -43,7 +43,7 @@ namespace GreenField.Web.Helpers
                 benchmarkResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
                 benchmarkResult.SecurityType = item.SECURITY_TYPE;
                 benchmarkResult.BalanceNominal = item.BALANCE_NOMINAL;
-                benchmarkResult.DirtyValuePC = item.DIRTY_VALUE_PC;
+                benchmarkResult.DirtyValuePC = 0;
                 benchmarkResult.BenchmarkWeight = item.BENCHMARK_WEIGHT;
                 benchmarkResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
                 benchmarkResult.Type = "BENCHMARK";
@@ -51,7 +51,6 @@ namespace GreenField.Web.Helpers
             }
 
             return result;
-
         }
 
         /// <summary>

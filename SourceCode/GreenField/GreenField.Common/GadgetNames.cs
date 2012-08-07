@@ -20,9 +20,9 @@ namespace GreenField.Common
         public static string EXTERNAL_RESEARCH_PRICING = "Pricing Information External Research 4.1.3.1 / 4.4.3";
         public static string INTERNAL_RESEARCH_PRICING_DETAILED = "Pricing Detailed Internal Research 5.1.1.1";
         public static string EXTERNAL_RESEARCH_VALUATIONS = "Valuation Information External Research 4.1.3.8 / 4.4.3";
-        public static string HOLDINGS_CHART_EXTENTION = "Chart Extention Holdings 4.4.1.1";
+        public static string HOLDINGS_CHART_EXTENTION = "Chart Extention Holdings";
         public static string EXTERNAL_RESEARCH_GROWTH = "Growth Information External Research 4.1.3.9 / 4.4.3";
-        public static string BENCHMARK_RELATIVE_PERFORMANCE = "Relative Performance Benchmarks 4.1.1.5";
+        public static string BENCHMARK_RELATIVE_PERFORMANCE = "Relative Performance Benchmarks";
         public static string EXTERNAL_RESEARCH_MARGINS = "Margins Information External Research 4.1.3.2 / 4.4.3";
         public static string EXTERNAL_RESEARCH_BASIC_DATA = "Basic Data";// Information External Research 4.1.4.1";
         public static string EXTERNAL_RESEARCH_LEVERAGE_CAPITAL_FINANCIAL_STRENGTH = "Leverage/Capital Structure / Financial Strength External Research 4.1.3.3 / 4.1.3.4 / 4.4.3";

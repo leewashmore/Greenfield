@@ -62,6 +62,9 @@
       <xs:element minOccurs="0" name="TICKER" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TOT_CURR_SHRS_OUTST_ALL_CLASS" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="TRADING_CURRENCY" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WACC_COST_DEBT" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WACC_COST_EQUITY" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="WACC_COST_PFD" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="WEBSITE" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="XREF" nillable="true" type="xs:string" />
     </xs:sequence>

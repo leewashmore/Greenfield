@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.Views
 {
@@ -21,13 +22,23 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-        }
 
-        public override void Dispose()
-        {
-            (this.DataContext as ViewModelConsensusEstimatesDetails).Dispose();
-            this.DataContext = null;
-        }
+            //Update column headers and visibility
+            PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord();
+            PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, new PeriodColumnUpdateEventArg()
+            {
+                PeriodColumnNamespace = typeof(ViewModelCOASpecific).FullName,
+                PeriodRecord = periodRecord,
+                PeriodColumnHeader = PeriodColumns.SetColumnHeaders(periodRecord),
+                PeriodIsYearly = true
+            });
+
+            //Event Subcription - PeriodColumnUpdateEvent
+            PeriodColumns.PeriodColumnUpdate += new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);
+            this.grdRadChart.Visibility = Visibility.Collapsed;
+            this.grdRadGridView.Visibility = Visibility.Visible;
+           
+        }       
 
         #region Properties
         /// <summary>
@@ -65,7 +76,7 @@ namespace GreenField.Gadgets.Views
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
             {
-                PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
+                PeriodColumnNamespace = typeof(ViewModelCOASpecific).FullName,
                 PeriodColumnNavigationDirection = NavigationDirection.LEFT
             });
         }
@@ -79,7 +90,7 @@ namespace GreenField.Gadgets.Views
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
             {
-                PeriodColumnNamespace = typeof(ViewModelFinancialStatements).FullName,
+                PeriodColumnNamespace = typeof(ViewModelCOASpecific).FullName,
                 PeriodColumnNavigationDirection = NavigationDirection.RIGHT
             });
         }
@@ -94,5 +105,63 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
         #endregion
+
+        /// <summary>
+        /// PeriodColumnUpdateEvent Event Handler - Updates column information and enables export button first time data is received
+        /// </summary>
+        /// <param name="e">PeriodColumnUpdateEventArg</param>
+        void PeriodColumns_PeriodColumnUpdate(PeriodColumnUpdateEventArg e)
+        {
+            if (e.PeriodColumnNamespace == typeof(ViewModelCOASpecific).FullName && IsActive)
+            {
+                PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, e, isQuarterImplemented: false);              
+                //this.btnExportExcel.IsEnabled = true;
+            }
+        }
+
+        #region Event Unsubscribe
+        public override void Dispose()
+        {
+            PeriodColumns.PeriodColumnUpdate -= new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);
+
+            (this.DataContext as ViewModelCOASpecific).Dispose();
+            this.DataContext = null;
+        }
+        #endregion
+
+        /// <summary>
+        /// Flipping between Grid & Chart
+        /// Using the method FlipItem in class Flipper.cs
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFlip_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.grdRadGridView.Visibility == Visibility.Visible)
+                Flipper.FlipItem(this.grdRadGridView, this.grdRadChart);
+            else
+                Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
+        }
+
+        ///// <summary>
+        ///// Data Retrieval Indicator
+        ///// </summary>
+        ///// <param name="e"></param>
+        //void dataContextSource_performanceGraphDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        //{
+        //    if (e.ShowBusy)
+        //    {
+        //        this.busyIndicatorChart.IsBusy = true;
+        //        this.busyIndicatorGrid.IsBusy = true;
+        //    }
+        //    else
+        //    {
+        //        this.busyIndicatorChart.IsBusy = false;
+        //        this.busyIndicatorGrid.IsBusy = false;
+        //    }
+        //}
+
+
+
     }
 }

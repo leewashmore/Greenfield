@@ -161,6 +161,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q22:EntitySelectionData" />
+        <xs:element minOccurs="0" name="chartTitle" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

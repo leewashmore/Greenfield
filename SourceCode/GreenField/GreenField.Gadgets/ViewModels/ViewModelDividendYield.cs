@@ -53,6 +53,11 @@ namespace GreenField.Gadgets.ViewModels
         /// Stores Chart data
         /// </summary>
         private RangeObservableCollection<PRevenueData> _DividendYieldPlottedData;
+
+        /// <summary>
+        /// Stores chart title
+        /// </summary>
+        private string _chartTitle = "Dividend Yield";
         #endregion
 
         #region Constructor
@@ -66,11 +71,7 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            if (_securitySelectionData != null)
-            {
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrieveDividendYieldDataCallbackMethod);
-                BusyIndicatorStatus = true;
-            }
+            CallingWebMethod();
             if (_eventAggregator != null)
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe((HandleSecurityReferenceSet));
         }
@@ -229,12 +230,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
                     _securitySelectionData = entitySelectionData;
 
-                    if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
-                    {
-                        if (DividendYieldDataLoadEvent != null)
-                            DividendYieldDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePRevenueData(entitySelectionData, RetrieveDividendYieldDataCallbackMethod);
-                    }
+                    CallingWebMethod();
                 }
                 else
                 {
@@ -277,6 +273,7 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            finally { BusyIndicatorStatus = false; }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
@@ -287,7 +284,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (_securitySelectionData != null && IsActive)
             {
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrieveDividendYieldDataCallbackMethod);
+                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, _chartTitle, RetrieveDividendYieldDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
         }
