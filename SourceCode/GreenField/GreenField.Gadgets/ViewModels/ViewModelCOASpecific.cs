@@ -21,6 +21,7 @@ using GreenField.DataContracts.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.Models;
 using System.Linq;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -290,7 +291,6 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-
         #region COASpecificData List
 
 
@@ -317,8 +317,9 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (selectedCOASpecificGadgetNameInfo != value)
                 {
-                    selectedCOASpecificGadgetNameInfo = value;
+                    selectedCOASpecificGadgetNameInfo = value;                   
                     COASpecificFilteredInfo = COASpecificInfo.Where(t => t.GridDesc == value).ToList();
+                    AddToComboBoxSeries.Clear();                    
                     RaisePropertyChanged(() => this.SelectedCOASpecificGadgetNameInfo);
                 }
             }
@@ -336,8 +337,8 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         coaSpecificInfo = value;
                         COASpecificGadgetNameInfo =  value.Select(t => t.GridDesc).Distinct().ToList();
-                        defaultGadgetDesc = value.Select(t => t.GridDesc).FirstOrDefault();
-                        COASpecificFilteredInfo = COASpecificInfo.Where(t => t.GridDesc == defaultGadgetDesc).ToList(); 
+                        defaultGadgetDesc = value.Select(t => t.GridDesc).FirstOrDefault();  
+                        COASpecificFilteredInfo = COASpecificInfo.Where(t => t.GridDesc == defaultGadgetDesc).ToList();                        
                         RaisePropertyChanged(() => this.COASpecificInfo);
                         SetCOASpecificDisplayInfo();
                     }                
@@ -345,7 +346,8 @@ namespace GreenField.Gadgets.ViewModels
         
         }
 
-        private List<COASpecificData> coaSpecificFilterdInfo;
+        private List<COASpecificData> addItem = new List<COASpecificData>();
+        private List<COASpecificData> coaSpecificFilterdInfo = new List<COASpecificData>();
         public List<COASpecificData> COASpecificFilteredInfo
         {
             get { return coaSpecificFilterdInfo; }
@@ -387,7 +389,17 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
-        
+        private ObservableCollection<String> addToComboBoxSeries = new ObservableCollection<String>();
+        public ObservableCollection<String> AddToComboBoxSeries
+        {
+            get { return addToComboBoxSeries; }
+            set
+            {
+                addToComboBoxSeries = value;
+                RaisePropertyChanged(() => this.AddToComboBoxSeries);
+            }
+
+        }
 
         /// <summary>
         /// Pivoted COA Specific  Information to be dispayed on grid
@@ -403,7 +415,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
-
 
         #region Period Column Headers
         /// <summary>
@@ -450,6 +461,39 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _addToChartVisibility = value;
                 this.RaisePropertyChanged(() => this.AddToChartVisibility);
+            }
+        }
+
+        #region ICommand
+        /// <summary>
+        /// Delete Series from Chart
+        /// </summary>
+        public ICommand DeleteCommand
+        {
+            get { return new DelegateCommand<object>(DeleteCommandMethod); }
+        }
+
+        /// <summary>
+        /// Add to chart method
+        /// </summary>
+        public ICommand AddCommand
+        {
+            get { return new DelegateCommand<object>(AddCommandMethod); }
+        }
+        #endregion
+
+        /// <summary>
+        /// Stores selected Series From Combo Box
+        /// </summary>
+        private String _selectedSeriesCB;
+        public String SelectedSeriesCB
+        {
+            get { return _selectedSeriesCB; }
+            set
+            {
+                _selectedSeriesCB = value;
+                RaisePropertyChanged(() => this.SelectedSeriesCB);                
+
             }
         }
 
@@ -584,6 +628,59 @@ namespace GreenField.Gadgets.ViewModels
             BusyIndicatorNotification();
         }
         
+        #endregion
+
+        #region ICommand Methods
+
+        /// <summary>
+        /// Delete Series from Chart
+        /// </summary>
+        /// <param name="param"></param>
+        private void DeleteCommandMethod(object param)
+        {
+            GadgetWithPeriodColumns a = param as GadgetWithPeriodColumns;
+            List<COASpecificData> removeItem = new List<COASpecificData>();
+            removeItem = COASpecificFilteredInfo.Where(w => w.Description == a.GadgetDesc).ToList();
+            //if (removeItem != null)
+            //    PlottedSeries.RemoveRange(removeItem);
+            ComparisonSeries.Remove(a);
+            AddToComboBoxSeries.Add(a.GadgetDesc);
+            foreach (COASpecificData r in removeItem)
+            {
+                COASpecificFilteredInfo.Remove(r);
+            }
+            COASpecificFilteredInfo = COASpecificFilteredInfo;
+            
+
+
+            //ChartEntityList.Remove(a);
+            //if (ChartEntityList.Count == 1)
+            //{
+            //    RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
+            //}
+        }
+
+        /// <summary>
+        /// Add to Chart Command Method
+        /// </summary>
+        /// <param name="param"></param>
+        GadgetWithPeriodColumns entry = new GadgetWithPeriodColumns();
+       
+        private void AddCommandMethod(object param)
+        {
+            if (SelectedSeriesCB != null)
+            { 
+                            entry.GridId = null;
+                            entry.GadgetName = null;
+                            entry.GadgetDesc =SelectedSeriesCB;
+                            entry.Amount = null;
+                            entry.PeriodYear = null;
+                            ComparisonSeries.Add(entry);              
+            }
+
+            AddToComboBoxSeries.Remove(SelectedSeriesCB);
+            
+        }
         #endregion
     }
 }

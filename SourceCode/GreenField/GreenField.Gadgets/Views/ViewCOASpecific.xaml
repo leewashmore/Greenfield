@@ -8,6 +8,7 @@
     xmlns:common="clr-namespace:GreenField.Common;assembly=GreenField.Common"
     xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"                         
     mc:Ignorable="d"
+     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:telerikCharting="clr-namespace:Telerik.Windows.Controls.Charting;assembly=Telerik.Windows.Controls.Charting"                         
     d:DesignHeight="300" d:DesignWidth="400">
 
@@ -50,6 +51,64 @@
                             </Setter.Value>
                         </Setter>
                     </Style>
+                </ResourceDictionary>
+                <ResourceDictionary x:Name="GadgetSpecificStyles">
+                    <helpers:DataContextProxy x:Key="DataContextProxy"/>
+                    <helpers:FlattenGroupConverter x:Key="FlattenGroupConverter"/>
+                    <helpers:ItemStyleSelector x:Key="ItemStyleSelector">
+                        <helpers:ItemStyleSelector.GroupStyle>
+                            <Style TargetType="ContentControl">
+                                <Setter Property="IsEnabled" Value="False" />
+                                <Setter Property="FontWeight" Value="Bold" />
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </helpers:ItemStyleSelector.GroupStyle>
+                        <helpers:ItemStyleSelector.ItemStyle>
+                            <Style TargetType="ContentControl">
+                                <Setter Property="ContentTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock FontWeight="Bold" FontSize="7" FontFamily="Arial" Text="{Binding LongName}" />
+                                                <TextBlock Text=" (" FontSize="7" FontFamily="Arial" />
+                                                <TextBlock Text="{Binding ShortName}" FontSize="7" FontFamily="Arial" />
+                                                <TextBlock Text=")" FontSize="7" FontFamily="Arial" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </helpers:ItemStyleSelector.ItemStyle>
+                    </helpers:ItemStyleSelector>
+
+                    <telerik:TextToVisibilityConverter x:Key="textToVisibilityConverter" />
+                    <SolidColorBrush x:Key="LegendForeground" Color="#FF000000" />
+                    <LinearGradientBrush x:Key="LegendBackground" EndPoint="1.96,0.5" StartPoint="-0.96,0.5">
+                        <GradientStop Color="#FFB5B5B5"/>
+                        <GradientStop Color="#FFF0F0F0" Offset="0.5"/>
+                    </LinearGradientBrush>
+                    <SolidColorBrush x:Key="LegendBorderBrush" Color="#FF848484" />
+                    <Thickness x:Key="LegendBorderThickness">1</Thickness>
+
+                    <system:Double x:Key="LegendItemMarkerMaskStrokeThickness">1</system:Double>
+                    <SolidColorBrush x:Key="LegendItemMarkerMaskStroke" Color="White" />
+                    <LinearGradientBrush x:Key="LegendItemMarkerMask" EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#D8FFFFFF" Offset="0.009"/>
+                        <GradientStop Color="#66FFFFFF" Offset="1"/>
+                        <GradientStop Color="Transparent" Offset="0.43"/>
+                        <GradientStop Color="#7FFFFFFF" Offset="0.42"/>
+                    </LinearGradientBrush>
+                    <SolidColorBrush x:Key="LegendItemMarkerMaskOpacityMask" Color="#FF000000" />
+                    <SolidColorBrush x:Key="LegendItemMarkerMask2" Color="Transparent" />
+
+                    <telerik:MarkerShape x:Key="LegendItemMarkerShape">SquareRounded</telerik:MarkerShape>
+
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -183,6 +242,8 @@
                                              Name="cmbAddSeries"                                             
                                              IsEditable="True"                                             
                                              Width="150"
+                                             ItemsSource="{Binding AddToComboBoxSeries}"   
+                                             SelectedValue="{Binding SelectedSeriesCB, Mode=TwoWay}"        
                                              CanAutocompleteSelectItems="True"
                                              CanKeyboardNavigationSelectItems="False"
                                              OpenDropDownOnFocus="True" 
@@ -197,7 +258,7 @@
                                     </telerik:RadComboBox.ItemsPanel>
                                 </telerik:RadComboBox>
                                 <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
-                                  Width="20" Height="20" Background="White">
+                                  Width="20" Height="20" Background="White" Command="{Binding AddCommand}">
                                     <Image Source="../Images/AddToChart.png"/>
                                 </Button>
                             </Grid>
@@ -216,7 +277,8 @@
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock Grid.Column="0" FontSize="7" FontFamily="Arial"  Text="{Binding GadgetDesc, Mode=TwoWay}" 
                                                        HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="2,0,0,0" />
-                                                    <telerik:RadButton Background="White" Grid.Column="1" 
+                                                    <telerik:RadButton Background="White" Grid.Column="1" Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteCommand}" 
+                                                               CommandParameter="{Binding}"
                                                                 Width="20" HorizontalAlignment="Right"
                                                                VerticalAlignment="Stretch" Height="8" Margin="0.5,0.5,2,0.5">
                                                         <TextBlock Text="X" FontFamily="Arial" FontSize="6" FontWeight="Bold"
