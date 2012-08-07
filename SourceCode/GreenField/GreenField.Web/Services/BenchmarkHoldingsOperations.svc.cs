@@ -1017,7 +1017,6 @@ namespace GreenField.Web.Services
             try
             {
                 List<PortfolioDetailsData> result = new List<PortfolioDetailsData>();
-
                 //Arguement Null Case, return Empty Set
                 if ((objPortfolioIdentifier == null) || (effectiveDate == null))
                     return result;
@@ -1029,20 +1028,20 @@ namespace GreenField.Web.Services
 
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dimensionPortfolioHoldingsData;
                 List<DimensionEntitiesService.GF_PORTFOLIO_LTHOLDINGS> dimensionPortfolioLTHoldingsData;
-
+                List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData;
 
                 if (lookThruEnabled)
                 {
                     #region LookThru
                     if (excludeCash)
                     {
-                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS
-                            .Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                            && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
                     }
                     else
                     {
-                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS
-                            .Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                        dimensionPortfolioLTHoldingsData = entity.GF_PORTFOLIO_LTHOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                            && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
                     }
 
                     //If Service returned empty set
@@ -1055,32 +1054,30 @@ namespace GreenField.Web.Services
                     if (benchmarkIdLT.Count != 1)
                         throw new InvalidOperationException("More than 1 Benchmark is assigned to the Selected Portfolio" + objPortfolioIdentifier.PortfolioId.ToUpper().ToString());
 
-                    List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
-                        Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                    List<GF_BENCHMARK_HOLDINGS> asb = dimensionBenchmarkHoldingsData.OrderBy(a => a.ISSUE_NAME).ToList();
-
-
-                    foreach (GF_PORTFOLIO_LTHOLDINGS item in dimensionPortfolioLTHoldingsData)
+                    if (excludeCash)
                     {
-                        PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
-                        portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
-                        portfolioResult.IssueName = item.ISSUE_NAME;
-                        portfolioResult.Ticker = item.TICKER;
-                        portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
-                        portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
-                        portfolioResult.SectorName = item.GICS_SECTOR_NAME;
-                        portfolioResult.IndustryName = item.GICS_INDUSTRY_NAME;
-                        portfolioResult.SubIndustryName = item.GICS_SUB_INDUSTRY_NAME;
-                        portfolioResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
-                        portfolioResult.SecurityType = item.SECURITY_TYPE;
-                        portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
-                        portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
-                        portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
-                                    Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
-                                    Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
-                        portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
-                        result.Add(portfolioResult);
+                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) &&
+                            (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
                     }
+                    else
+                    {
+                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
+                                       Where(a => (a.BENCHMARK_ID == benchmarkIdLT.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                    }
+
+                    result = PortfolioDetailsCalculations.AddPortfolioLTSecurities(dimensionPortfolioLTHoldingsData, dimensionBenchmarkHoldingsData);
+
+                    #region BenchmarkSecurities
+
+                    if (objGetBenchmark)
+                    {
+                        List<string> portfolioSecurityID = dimensionPortfolioLTHoldingsData.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
+                        List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = dimensionBenchmarkHoldingsData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
+                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities);
+                    }
+
+                    #endregion
+
                     #endregion
                 }
                 else
@@ -1088,14 +1085,18 @@ namespace GreenField.Web.Services
                     #region NonLookThru
                     if (excludeCash)
                     {
-                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS
-                            .Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
+                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
                     }
                     else
                     {
-                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS
-                            .Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                        dimensionPortfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => (a.PORTFOLIO_ID.ToUpper() == objPortfolioIdentifier.PortfolioId.ToUpper())
+                                && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
                     }
+
+                    if (dimensionPortfolioHoldingsData == null)
+                        return new List<PortfolioDetailsData>();
+
                     //If Service returned empty set
                     if (dimensionPortfolioHoldingsData.Count == 0)
                         return result;
@@ -1104,33 +1105,32 @@ namespace GreenField.Web.Services
                     List<string> benchmarkId = dimensionPortfolioHoldingsData.Select(a => a.BENCHMARK_ID).Distinct().ToList();
                     //If the DataBase doesn't return a single Benchmark for a Portfolio
                     if (benchmarkId.Count != 1)
-                        throw new InvalidOperationException();
+                        throw new InvalidOperationException("More than 1 Benchmark is found for the Selected Portfolio: " + objPortfolioIdentifier.PortfolioId);
 
-                    List<GF_BENCHMARK_HOLDINGS> dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
-                        Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date) && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
-                    List<GF_BENCHMARK_HOLDINGS> asb = dimensionBenchmarkHoldingsData.OrderBy(a => a.ISSUE_NAME).ToList();
-
-                    foreach (GF_PORTFOLIO_HOLDINGS item in dimensionPortfolioHoldingsData)
+                    if (excludeCash)
                     {
-                        PortfolioDetailsData portfolioResult = new PortfolioDetailsData();
-                        portfolioResult.AsecSecShortName = item.ASEC_SEC_SHORT_NAME;
-                        portfolioResult.IssueName = item.ISSUE_NAME;
-                        portfolioResult.Ticker = item.TICKER;
-                        portfolioResult.ProprietaryRegionCode = item.ASHEMM_PROP_REGION_CODE;
-                        portfolioResult.IsoCountryCode = item.ISO_COUNTRY_CODE;
-                        portfolioResult.SectorName = item.GICS_SECTOR_NAME;
-                        portfolioResult.IndustryName = item.GICS_INDUSTRY_NAME;
-                        portfolioResult.SubIndustryName = item.GICS_SUB_INDUSTRY_NAME;
-                        portfolioResult.MarketCapUSD = item.MARKET_CAP_IN_USD;
-                        portfolioResult.SecurityType = item.SECURITY_TYPE;
-                        portfolioResult.BalanceNominal = item.BALANCE_NOMINAL;
-                        portfolioResult.DirtyValuePC = item.DIRTY_VALUE_PC;
-                        portfolioResult.BenchmarkWeight = ((dimensionBenchmarkHoldingsData.
-                                    Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault() == null) ? 0 : dimensionBenchmarkHoldingsData.
-                                    Where(a => a.ISSUE_NAME == portfolioResult.IssueName).FirstOrDefault().BENCHMARK_WEIGHT);
-                        portfolioResult.AshEmmModelWeight = item.ASH_EMM_MODEL_WEIGHT;
-                        result.Add(portfolioResult);
+                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)
+                            && (a.SECURITYTHEMECODE.ToUpper() != "CASH")).ToList();
                     }
+                    else
+                    {
+                        dimensionBenchmarkHoldingsData = entity.GF_BENCHMARK_HOLDINGS.
+                                        Where(a => (a.BENCHMARK_ID == benchmarkId.First()) && (a.PORTFOLIO_DATE == effectiveDate.Date)).ToList();
+                    }
+
+                    result = PortfolioDetailsCalculations.AddPortfolioSecurities(dimensionPortfolioHoldingsData, dimensionBenchmarkHoldingsData);
+
+                    #region BenchmarkSecurities
+
+                    if (objGetBenchmark)
+                    {
+                        List<string> portfolioSecurityID = dimensionPortfolioHoldingsData.Select(a => a.ASEC_SEC_SHORT_NAME).ToList();
+                        List<GF_BENCHMARK_HOLDINGS> onlyBenchmarkSecurities = dimensionBenchmarkHoldingsData.Where(a => !portfolioSecurityID.Contains(a.ASEC_SEC_SHORT_NAME)).ToList();
+                        result = PortfolioDetailsCalculations.AddBenchmarkSecurities(result, onlyBenchmarkSecurities);
+                    }
+
+                    #endregion
+
                     #endregion
                 }
 
@@ -1143,6 +1143,7 @@ namespace GreenField.Web.Services
                 return null;
             }
         }
+
 
         /// <summary>
         /// Method to Retreive Asset Allocation Data

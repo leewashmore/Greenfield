@@ -37,21 +37,24 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <Button Height="15" Width="15" Grid.Column="1"
+            <CheckBox Content="Include Benchmark" Grid.Column="1" ToolTipService.ToolTip="Include Benchmark Securities" 
+                      FontFamily="Arial" FontSize="7" Height="15" VerticalContentAlignment="Center" IsChecked="{Binding GetBenchmarkData,Mode=TwoWay}" />
+            <Button Height="15" Width="15" Grid.Column="2"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                         Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
                 <Image Source="../Images/ExportExcel.png" />
             </Button>
-            <Button Height="15" Width="15" Grid.Column="2"
+            <Button Height="15" Width="15" Grid.Column="3"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnExportPDF"
                         Margin="5,0,0,0" Click="btnExportPDF_Click">
                 <Image Source="../Images/PDF.png" />
             </Button>
-            <Button Height="15" Width="15" Grid.Column="3"
+            <Button Height="15" Width="15" Grid.Column="4"
                         BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
                         Margin="5,0,0,0" Click="btnPrint_Click">
@@ -68,7 +71,6 @@
                     <telerik:RadGridView x:Name="dgPortfolioDetails" 
                                          ShowGroupPanel="True" 
                                          AutoGenerateColumns="False" 
-                                         telerik:StyleManager.Theme="Metro"
                                          ItemsSource="{Binding SelectedPortfolioDetailsData}"
                                          CanUserFreezeColumns="False" 
                                          CanUserDeleteRows="False"
@@ -94,10 +96,12 @@
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          ElementExporting="dgPortfolioDetails_ElementExporting"
-                                         ScrollMode="RealTime"
+                                         ScrollMode="Deferred"
                                          AlternationCount="2"
                                          MinColumnWidth="70"
-                                         RowLoaded="dgPortfolioDetails_RowLoaded" EnableRowVirtualization="false">
+                                         RowLoaded="dgPortfolioDetails_RowLoaded" 
+                                         EnableRowVirtualization="True"
+                                         EnableColumnVirtualization="True">
                         <telerik:RadGridView.Columns >
                             <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
@@ -188,7 +192,7 @@
 
         <Grid Grid.Row="3">
             <telerik:RadRichTextBox x:Name="RichTextBox">
-        <!--For Printing the grid-->        
+                <!--For Printing the grid-->
             </telerik:RadRichTextBox>
         </Grid>
 
@@ -196,5 +200,6 @@
             <TextBlock x:Name="txtMessage" FontFamily="Arial" FontSize="7" Height="12" Foreground="Red"
                        Text=" * The values for Model Weight are not correct as the corresponding View doesn't have relevant data"/>
         </Grid>
-        </Grid>
+    </Grid>
 </helpers:ViewBaseUserControl>
+
