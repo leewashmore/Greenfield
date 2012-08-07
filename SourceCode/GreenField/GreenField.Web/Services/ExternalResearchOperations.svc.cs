@@ -184,11 +184,24 @@ namespace GreenField.Web.Services
                     return result;
 
                 data = data.OrderBy(record => record.ESTIMATE_DESC).ThenByDescending(record => record.PERIOD_YEAR).ToList();
-                List<string> requiredDescriptors = new List<string>() { "Revenue", "EBITDA", "Net Income (Pre Exceptional)", "Earnings Per Share (Pre Exceptional)", "Return on Assets", "Return on Equity" };
+                List<string> dataDescriptors = data.Select(r => r.ESTIMATE_DESC).Distinct().ToList();
+
+                List<BrokerDetail> brokerDetailsList = new List<BrokerDetail>();
+                foreach (string item in dataDescriptors)
+	            {
+                    List<BrokerDetail> temp = new List<BrokerDetail>();
+                    temp = entity.GetBrokerDetail(issuerId,item,_periodType,currency).ToList();
+                    if(temp != null)
+                    foreach (BrokerDetail value in temp)
+	                {
+                          brokerDetailsList.Add(value);		 
+	                }		 
+	            }
+
                 for (int i = 0; i < data.Count; i++)
                 {
-                    if (requiredDescriptors.Contains(data[i].ESTIMATE_DESC))
-                    {
+                    //if (requiredDescriptors.Contains(data[i].ESTIMATE_DESC))
+                    //{
                         ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
                         temp.IssuerId = data[i].ISSUER_ID;
                         temp.EstimateId = data[i].ESTIMATE_ID;
@@ -221,7 +234,7 @@ namespace GreenField.Web.Services
                         }
 
                         result.Add(temp);
-                    }                 
+                   // }                 
                 }          
                 return result;
             }

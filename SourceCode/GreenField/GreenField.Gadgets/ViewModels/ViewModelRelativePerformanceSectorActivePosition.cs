@@ -61,7 +61,6 @@ namespace GreenField.Gadgets.ViewModels
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
                 _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet);
-                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Subscribe(HandleRelativePerformanceGridClickEvent);
             }
         }
         #endregion
@@ -264,37 +263,6 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        /// <summary>
-        /// Event Handler to subscribed event 'RelativePerformanceGridClickEvent'
-        /// </summary>
-        /// <param name="relativePerformanceGridCellData">RelativePerformanceGridCellData</param>
-        public void HandleRelativePerformanceGridClickEvent(RelativePerformanceGridCellData filter)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (filter != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, filter, 1);
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
-                    {
-                        _dbInteractivity.RetrieveRelativePerformanceSectorActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSectorActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
-                        BusyIndicatorStatus = true;
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
         #endregion
 
         #region Callback Methods
@@ -340,7 +308,6 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
             _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
             _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Unsubscribe(HandlePeriodReferenceSet);
-            _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Unsubscribe(HandleRelativePerformanceGridClickEvent);
         }
         #endregion
     }

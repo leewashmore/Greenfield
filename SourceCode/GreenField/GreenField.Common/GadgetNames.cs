@@ -190,10 +190,10 @@ namespace GreenField.Common
 
         #region Performance Relative Performance
         public static string PERFORMANCE_RELATIVE_PERFORMANCE = "Excess Contribution";
-        public static string PERFORMANCE_COUNTRY_ACTIVE_POSITION = "Country Active Position (Relative Performance)";
-        public static string PERFORMANCE_SECTOR_ACTIVE_POSITION = "Sector Active Position (Relative Performance)";
-        public static string PERFORMANCE_SECURITY_ACTIVE_POSITION = "Security Active Position (Relative Performance)";
-        public static string PERFORMANCE_CONTRIBUTOR_DETRACTOR = "All Securities"; 
+        public static string PERFORMANCE_COUNTRY_ACTIVE_POSITION = "Country Active Position";
+        public static string PERFORMANCE_SECTOR_ACTIVE_POSITION = "Sector Active Position";
+        public static string PERFORMANCE_SECURITY_ACTIVE_POSITION = "Security Active Position";
+        public static string PERFORMANCE_CONTRIBUTOR_DETRACTOR = "Contributor Detractor"; 
         #endregion
 
         #region Benchmark Summary

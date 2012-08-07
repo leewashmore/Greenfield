@@ -75,8 +75,9 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             dataContextSource.RelativePerformanceGridBuildEvent += new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
-            dataContextSource.RelativePerformanceToggledSectorGridBuildEvent += new RelativePerformanceToggledSectorGridBuildEventHandler(RelativePerformanceToggledSectorGridBuildEvent);
             this.DataContextRelativePerformance = dataContextSource;
+
+            this.AddHandler(GridViewHeaderCell.MouseLeftButtonDownEvent, new MouseButtonEventHandler(MouseDownOnHeaderCell), true);
         } 
         #endregion
 
@@ -155,6 +156,44 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        private void MouseDownOnHeaderCell(object sender, MouseEventArgs args)
+        {
+            if (dgRelativePerformance.Items.Count != 0)
+            {
+                GridViewHeaderCell cellClicked = ((FrameworkElement)args.OriginalSource).ParentOfType<GridViewHeaderCell>();
+                if (cellClicked == null)
+                {
+                    GridViewFooterCell footerTotalClicked = ((FrameworkElement)args.OriginalSource).ParentOfType<GridViewFooterCell>();
+                    if (footerTotalClicked == null)
+                        return;
+
+                    if ((args.OriginalSource as TextBlock).Text == "Total")
+                    {
+                        _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
+                        {
+                            CountryID = null,
+                            SectorID = null,
+                        });
+
+                        this.dgRelativePerformance.SelectedItems.Clear();
+                    }
+                }
+                else
+                {
+                    if (cellClicked.Column.UniqueName == "Total")
+                    {
+                        _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
+                        {
+                            CountryID = null,
+                            SectorID = null,
+                        });
+
+                        this.dgRelativePerformance.SelectedItems.Clear();
+                    }
+                }
+            }
+        } 
+
         /// <summary>
         /// identifying the cell clicked 
         /// </summary>
@@ -170,25 +209,7 @@ namespace GreenField.Gadgets.Views
 
             //when cells on Column ID column, toggled grid is displayed
             if (selectedColumnIndex == 0)
-            {
-                btnExportExcel.Visibility = Visibility.Collapsed;
-                btnExportPDF.Visibility = Visibility.Collapsed;
-                btnPrint.Visibility = Visibility.Collapsed;
-                dgRelativePerformance.Visibility = Visibility.Collapsed;
-                brdSectorSecurityDetails.Visibility = Visibility.Collapsed;
-                btnToggle.Visibility = Visibility.Visible;
-                dgCountrySecurityDetails.Visibility = Visibility.Visible;
-
-                _eventAggregator.GetEvent<RelativePerformanceGridCountrySectorClickEvent>().Publish(new RelativePerformanceGridCellData()
-                {
-                    CountryID = (e.AddedCells[0].Item as RelativePerformanceData).CountryId,
-                    SectorID = null,
-                });
-
-                this.dgRelativePerformance.SelectedItems.Clear();
-
-                return;
-            }
+            return;
 
             //Ignore null cells
             if (selectedColumnIndex != this.dgRelativePerformance.Columns.Count - 1)
@@ -210,8 +231,6 @@ namespace GreenField.Gadgets.Views
                 CountryID = countryID,
                 SectorID = sectorID,
             });
-
-
         }
 
         void DataContextSource_RelativePerformanceGridBuildEvent(RelativePerformanceGridBuildEventArgs e)
@@ -371,65 +390,6 @@ namespace GreenField.Gadgets.Views
 
         }        
 
-        void RelativePerformanceToggledSectorGridBuildEvent(RelativePerformanceToggledSectorGridBuildEventArgs e)
-        {
-            if (outerPanel.Children != null)
-                outerPanel.Children.Clear();
-
-            if (e.RelativePerformanceCountryNameInfo != null)
-            {
-                ScrollViewer svc = new ScrollViewer() { HorizontalScrollBarVisibility = ScrollBarVisibility.Auto,VerticalScrollBarVisibility = ScrollBarVisibility.Auto};
-                Grid grd = new Grid() {ShowGridLines = false };
-                grd.UseLayoutRounding = true;
-                int maxRows = GetMaxRows(e);
-                
-                //setting number of rows in grid
-                for (int i = 0; i <= maxRows; i++)
-                {
-                    grd.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                }
-
-                int countryNum = 0;
-
-                //setting number of columns in grid
-                foreach (string countryName in e.RelativePerformanceCountryNameInfo)
-                {
-                    int securityNum = 1;
-                    List<string> s1 = e.RelativePerformanceSecurityInfo.Where(t => t.SecurityCountryId == countryName).Select(t => t.SecurityName).ToList();
-                    TextBox txtHeader = new TextBox() { 
-                        Text = countryName,
-                        FontWeight = FontWeights.Bold,
-                        IsReadOnly = true,
-                        Background = new SolidColorBrush(Color.FromArgb(255, 203, 212, 241)),
-                        Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0)),
-                        FontSize = 7,
-                        Margin = new Thickness(2)
-                    };
-                    grd.ColumnDefinitions.Add(new ColumnDefinition() {Width = GridLength.Auto });
-                    int colIndex = grd.ColumnDefinitions.Count() -1;
-                    txtHeader.SetValue(Grid.RowProperty, 0);
-                    txtHeader.SetValue(Grid.ColumnProperty, colIndex);
-                    grd.Children.Add(txtHeader);
-                    foreach (string securityName in s1)
-                    {                        
-                        TextBlock txtSecurityName = new TextBlock() { 
-                            Text = securityName,
-                            FontSize = 7,
-                            Margin = new Thickness(2)
-                        };
-                        txtSecurityName.SetValue(Grid.ColumnProperty, countryNum);
-                        txtSecurityName.SetValue(Grid.RowProperty, securityNum);
-                        grd.Children.Add(txtSecurityName);
-                        securityNum = securityNum + 1;
-                    }
-                    countryNum = countryNum + 1;
-                }
-                svc.ScrollIntoView(grd);
-                svc.Content = grd;
-                outerPanel.Children.Add(svc);
-            }
-        }
-
         #endregion
 
         #region Export To Excel Methods
@@ -497,52 +457,19 @@ namespace GreenField.Gadgets.Views
                     counter = s1.Count();
             }
             return counter;
-        }
-
-        private void btn_ToggleClick(object sender, RoutedEventArgs e)
-        {
-            this.dgRelativePerformance.SelectedItems.Clear();
-            btnExportExcel.Visibility = Visibility.Visible;
-            btnExportPDF.Visibility = Visibility.Visible;
-            btnPrint.Visibility = Visibility.Visible;
-            dgRelativePerformance.Visibility = Visibility.Visible;
-            btnToggle.Visibility = Visibility.Collapsed;
-            brdSectorSecurityDetails.Visibility = Visibility.Collapsed;
-            dgCountrySecurityDetails.Visibility = Visibility.Collapsed;
-        }
+        }        
 
         private void FooterCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.OriginalSource is TextBlock)
             {
-                string sectorID = ((e.OriginalSource as TextBlock).Tag).ToString();
-                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
-                {
-                    SectorID = sectorID
-                });
+                    string sectorID = ((e.OriginalSource as TextBlock).Tag).ToString();
+                    _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
+                    {
+                        SectorID = sectorID
+                    });           
             }
-        }
-
-        private void CustomHeaderCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.OriginalSource is TextBlock)
-            {
-                string sectorID = (e.OriginalSource as TextBlock).Text.ToString();
-                _eventAggregator.GetEvent<RelativePerformanceGridCountrySectorClickEvent>().Publish(new RelativePerformanceGridCellData()
-                {
-                    CountryID = null,
-                    SectorID = sectorID
-                });
-
-                btnExportExcel.Visibility = Visibility.Collapsed;
-                btnExportPDF.Visibility = Visibility.Collapsed;
-                btnPrint.Visibility = Visibility.Collapsed;
-                dgRelativePerformance.Visibility = Visibility.Collapsed;
-                btnToggle.Visibility = Visibility.Visible;
-                dgCountrySecurityDetails.Visibility = Visibility.Collapsed;
-                brdSectorSecurityDetails.Visibility = Visibility.Visible;
-            }
-        }
+        }       
 
         #endregion
                 

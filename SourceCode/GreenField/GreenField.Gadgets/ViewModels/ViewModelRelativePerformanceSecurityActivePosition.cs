@@ -32,7 +32,10 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
 
         //Selection Data
-       PortfolioSelectionData _PortfolioSelectionData;       
+       PortfolioSelectionData _PortfolioSelectionData;
+
+       //To check that grid is not re populated for same values when Excess Contribution is clicked
+       RelativePerformanceGridCellData checkValue = new RelativePerformanceGridCellData();
         #endregion
 
         #region Constructor
@@ -317,12 +320,16 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (filter != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, filter, 1);
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
+                    if (checkValue.CountryID != filter.CountryID || checkValue.SectorID != filter.SectorID)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
-                        BusyIndicatorStatus = true;
-                    }                    
+                        checkValue = filter;
+                        Logging.LogMethodParameter(_logger, methodNamespace, filter, 1);
+                        if (_effectiveDate != null && _PortfolioSelectionData != null && Period != null && IsActive)
+                        {
+                            _dbInteractivity.RetrieveRelativePerformanceSecurityActivePositionData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityActivePositionDataCallbackMethod, filter.CountryID, filter.SectorID);
+                            BusyIndicatorStatus = true;
+                        }
+                    }
                 }
                 else
                 {

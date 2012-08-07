@@ -720,6 +720,12 @@
           <Property Name="OutstandingShares" Type="decimal" />
           <Property Name="Active" Type="bit" />
         </EntityType>
+        <Function Name="Broker_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ESTIMATE_TYPE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+        </Function>
         <Function Name="Get_Consensus_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
@@ -881,7 +887,14 @@
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="Get_EV_EBITDA" ReturnType="Collection(ExternalResearchModel.GetEV_EBITDAData_Result)">
+          <FunctionImport Name="GetBrokerDetail" ReturnType="Collection(ExternalResearchModel.BrokerDetail)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ESTIMATE_TYPE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
+          </FunctionImport>
+          
+ <FunctionImport Name="Get_EV_EBITDA" ReturnType="Collection(ExternalResearchModel.GetEV_EBITDAData_Result)">
             <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="issuerId" Mode="In" Type="String" />
             <Parameter Name="chartTitle" Mode="In" Type="String" />
@@ -1431,15 +1444,23 @@
 			<Property Type="String" Name="HARMONIC" Nullable="false" MaxLength="10"/>
 			<Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100"/>
         </ComplexType>
-        <ComplexType Name="GetEV_EBITDAData_Result" >
+        <ComplexType Name="BrokerDetail">
+          <Property Type="String" Name="broker_name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="EstimateType" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="fPeriodEnd" Nullable="true" MaxLength="6" />
+          <Property Type="Single" Name="Amount" Nullable="true" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Last_Update_Date" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Reported_Currency" Nullable="true" MaxLength="3" />
+        </ComplexType>      
+ <ComplexType Name="GetEV_EBITDAData_Result" >
           <Property Type="String" Name="PeriodLabel" Nullable="false" />
           <Property Type="DateTime" Name="Period_End_Date" Nullable="false" />
           <Property Type="Decimal" Name="EBITDA" Nullable="true" />
           <Property Type="Decimal" Name="NetDebt" Nullable="true" />
           <Property Type="Decimal" Name="USDPrice" Nullable="true" />
           <Property Type="Decimal" Name="Shares_Outstanding" Nullable="true" />
-        </ComplexType>      
-
+        </ComplexType>  
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -1876,7 +1897,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Get_EV_EBITDA" FunctionName="ExternalResearchModel.Store.Get_EV_EBITDA">
+         <FunctionImportMapping FunctionImportName="Get_EV_EBITDA" FunctionName="ExternalResearchModel.Store.Get_EV_EBITDA">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.GetEV_EBITDAData_Result">
                 <ScalarProperty Name="PeriodLabel" ColumnName="PeriodLabel" />
@@ -1885,6 +1906,18 @@
                 <ScalarProperty Name="NetDebt" ColumnName="NetDebt" />
                 <ScalarProperty Name="USDPrice" ColumnName="USDPrice" />
                 <ScalarProperty Name="Shares_Outstanding" ColumnName="Shares_Outstanding" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
+                <ScalarProperty Name="broker_name" ColumnName="broker_name" />
+                <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
+                <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Last_Update_Date" ColumnName="Last_Update_Date" />
+                <ScalarProperty Name="Reported_Currency" ColumnName="Reported_Currency" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

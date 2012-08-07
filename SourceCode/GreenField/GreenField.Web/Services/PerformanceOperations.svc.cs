@@ -1755,27 +1755,27 @@ namespace GreenField.Web.Services
             switch (period)
             {
                 case "1D":
-                    benchmarkWeight = row.BM1_RC_AVG_WGT_1D;
+                    benchmarkWeight = (row.BM1_RC_AVG_WGT_1D) * 100;
                     break;
 
                 case "1W":
-                    benchmarkWeight = row.BM1_RC_AVG_WGT_1W;
+                    benchmarkWeight = (row.BM1_RC_AVG_WGT_1W) * 100;
                     break;
 
                 case "MTD":
-                    benchmarkWeight = row.BM1_RC_AVG_WGT_MTD;
+                    benchmarkWeight = (row.BM1_RC_AVG_WGT_MTD) * 100;
                     break;
 
                 case "YTD":
-                    benchmarkWeight = row.BM1_RC_AVG_WGT_YTD;
+                    benchmarkWeight = (row.BM1_RC_AVG_WGT_YTD) * 100;
                     break;
 
                 case "QTD":
-                    benchmarkWeight = row.BM1_RC_AVG_WGT_QTD;
+                    benchmarkWeight = (row.BM1_RC_AVG_WGT_QTD) * 100;
                     break;
 
                 case "1Y":
-                    benchmarkWeight = row.BM1_RC_AVG_WGT_1Y;
+                    benchmarkWeight = (row.BM1_RC_AVG_WGT_1Y) * 100;
                     break;
 
                 default:
@@ -1796,27 +1796,27 @@ namespace GreenField.Web.Services
             switch (period)
             {
                 case "1D":
-                    portfolioWeight = row.POR_RC_AVG_WGT_1D;
+                    portfolioWeight = (row.POR_RC_AVG_WGT_1D) * 100;
                     break;
 
                 case "1W":
-                    portfolioWeight = row.POR_RC_AVG_WGT_1W;
+                    portfolioWeight = (row.POR_RC_AVG_WGT_1W) * 100;
                     break;
 
                 case "MTD":
-                    portfolioWeight = row.POR_RC_AVG_WGT_MTD;
+                    portfolioWeight = (row.POR_RC_AVG_WGT_MTD) * 100;
                     break;
 
                 case "YTD":
-                    portfolioWeight = row.POR_RC_AVG_WGT_YTD;
+                    portfolioWeight = (row.POR_RC_AVG_WGT_YTD) * 100;
                     break;
 
                 case "QTD":
-                    portfolioWeight = row.POR_RC_AVG_WGT_QTD;
+                    portfolioWeight = (row.POR_RC_AVG_WGT_QTD) * 100;
                     break;
 
                 case "1Y":
-                    portfolioWeight = row.POR_RC_AVG_WGT_1Y;
+                    portfolioWeight = (row.POR_RC_AVG_WGT_1Y) * 100;
                     break;
 
                 default:

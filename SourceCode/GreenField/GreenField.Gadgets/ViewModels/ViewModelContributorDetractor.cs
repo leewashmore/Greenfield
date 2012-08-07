@@ -39,6 +39,10 @@ namespace GreenField.Gadgets.ViewModels
         /// DashboardGadgetPayLoad fields
         /// </summary>
         PortfolioSelectionData _PortfolioSelectionData;
+
+        //To check that grid is not re populated for same values when Excess Contribution is clicked
+        RelativePerformanceGridCellData checkValue = new RelativePerformanceGridCellData();
+
         #endregion
 
         #region Constructor
@@ -288,11 +292,15 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (relativePerformanceGridCellData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, relativePerformanceGridCellData, 1);
-                    if (EffectiveDate != null && _PortfolioSelectionData != null && IsActive)
+                    if (checkValue.CountryID != relativePerformanceGridCellData.CountryID || checkValue.SectorID != relativePerformanceGridCellData.SectorID)
                     {
-                        _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate),_period, RetrieveRelativePerformanceSecurityDataCallbackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID);
-                        BusyIndicatorStatus = true;
+                        checkValue = relativePerformanceGridCellData;
+                        Logging.LogMethodParameter(_logger, methodNamespace, relativePerformanceGridCellData, 1);
+                        if (EffectiveDate != null && _PortfolioSelectionData != null && IsActive)
+                        {
+                            _dbInteractivity.RetrieveRelativePerformanceSecurityData(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate), _period, RetrieveRelativePerformanceSecurityDataCallbackMethod, relativePerformanceGridCellData.CountryID, relativePerformanceGridCellData.SectorID);
+                            BusyIndicatorStatus = true;
+                        }
                     }
                 }
                 else
