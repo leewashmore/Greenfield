@@ -52,7 +52,12 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores Chart data
         /// </summary>
-        private  RangeObservableCollection<PRevenueData> _PCEPlottedData;
+        private RangeObservableCollection<PRevenueData> _PCEPlottedData;
+
+        /// <summary>
+        /// Stores chart title
+        /// </summary>
+        private string _chartTitle = "P/CE";
         #endregion
 
         #region Constructor
@@ -66,11 +71,7 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            if (_securitySelectionData != null && IsActive )
-            {                
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrievePCEDataCallbackMethod );
-                BusyIndicatorStatus = true;
-            }
+            CallingWebMethod();
             if (_eventAggregator != null)
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe((HandleSecurityReferenceSet));
         }
@@ -229,12 +230,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
                     _securitySelectionData = entitySelectionData;
 
-                    if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
-                    {
-                        if (PCEDataLoadEvent != null)
-                            PCEDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrievePRevenueData(entitySelectionData, RetrievePCEDataCallbackMethod);
-                    }
+                    CallingWebMethod();
                 }
                 else
                 {
@@ -264,7 +260,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (pRevenueData != null && IsActive)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, pRevenueData, 1);
-                    PCEPlottedData.Clear();                    
+                    PCEPlottedData.Clear();
                     PCEPlottedData.AddRange(pRevenueData.ToList());
                 }
                 else
@@ -277,6 +273,7 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            finally { BusyIndicatorStatus = true; }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
@@ -287,7 +284,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (_securitySelectionData != null && IsActive)
             {
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, RetrievePCEDataCallbackMethod);
+                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, _chartTitle, RetrievePCEDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
         }
@@ -303,7 +300,7 @@ namespace GreenField.Gadgets.ViewModels
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
-                
+
             }
         }
 
