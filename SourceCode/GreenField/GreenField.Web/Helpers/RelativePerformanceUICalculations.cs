@@ -85,7 +85,7 @@ namespace GreenField.Web.Helpers
                 //To be Removed
                 if (result != null)
                 {
-                    RelativePerformanceUIData removeSecurity = result.Where(a => a.EntityName.ToUpper().Trim() == "SECURITY ID").FirstOrDefault();
+                    RelativePerformanceUIData removeSecurity = result.Where(a => a.EntityType.ToUpper().Trim() == "SECURITY ID").FirstOrDefault();
                     if (removeSecurity != null)
                         result.Remove(removeSecurity);
                 }
