@@ -34,6 +34,7 @@ SET FMTONLY OFF
 
 BEGIN
 
+
 DECLARE @TEMP_QUARTERLY_RESULT TABLE 
 (
  ISSUER_ID VARCHAR(20),
@@ -65,7 +66,7 @@ INSERT INTO @TEMP_QUARTERLY_RESULT(ISSUER_ID,IssuerName,Region,Country,Sector,In
 Currency,Q1,Q2,Q3,Q4,Annual,QuarterlySum,QuarterlySumPercentage,XREF)
 SELECT aa.ISSUER_ID,bb.ISSUE_NAME,bb.ASEC_SEC_COUNTRY_ZONE_NAME,bb.ASEC_SEC_COUNTRY_NAME,bb.GICS_SECTOR_NAME,
 bb.GICS_INDUSTRY_NAME,aa.CURRENCY,aa.Q1,aa.Q2,aa.Q3,aa.Q4,aa.A,
-(aa.Q1 + aa.Q2+aa.Q3+aa.Q4)AS QuarterlySum,(aa.Q1 + aa.Q2+aa.Q3+aa.Q4)/aa.A AS QuarterlySumPercentage,bb.XREF
+(aa.Q1 + aa.Q2+aa.Q3+aa.Q4)AS QuarterlySum,((aa.Q1 + aa.Q2+aa.Q3+aa.Q4)/aa.A)*100 AS QuarterlySumPercentage,bb.XREF
 FROM GF_SECURITY_BASEVIEW bb
 JOIN
 (
@@ -97,7 +98,7 @@ WHEN 'EPS' THEN 11
 WHEN 'EPSREP' THEN 13
 WHEN 'EBG' THEN 12
 END
-FROM @TEMP_QUARTERLY_RESULT aa JOIN tblCompanyInfo bb ON aa.XREF = bb.XRef
+FROM @TEMP_QUARTERLY_RESULT aa JOIN [Reuters].[dbo].tblCompanyInfo  bb ON aa.XREF = bb.XRef
 END
 
 UPDATE @TEMP_QUARTERLY_RESULT
@@ -110,8 +111,10 @@ FROM @TEMP_QUARTERLY_RESULT aa JOIN CURRENT_CONSENSUS_ESTIMATES bb
 ON aa.ISSUER_ID = bb.ISSUER_ID AND aa.EstimateId = bb.ESTIMATE_ID AND aa.Currency = bb.CURRENCY
 
 UPDATE @TEMP_QUARTERLY_RESULT
-SET ConsensusPercentage  = Consensus/Annual
+SET ConsensusPercentage  = (Consensus/Annual)*100
 FROM @TEMP_QUARTERLY_RESULT
+
+
 SELECT * FROM @TEMP_QUARTERLY_RESULT
 END
 GO
