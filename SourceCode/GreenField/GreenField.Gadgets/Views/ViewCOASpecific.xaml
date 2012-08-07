@@ -110,6 +110,9 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                     <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
@@ -162,9 +165,80 @@
                                 <telerik:RadComboBox Grid.Row="3" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding CurrencyInfo}"
                                                  VerticalContentAlignment="Center" SelectedValue="{Binding SelectedCurrency, Mode=TwoWay}"
                                                  Margin="2,2,2,0" FontFamily="Arial" FontSize="7"/>
-                                
-                                
+
+                            <Grid Grid.Row="4" Margin="0,2,0,0">
+                                <TextBlock Grid.Column="0" Text="Add to Chart" HorizontalAlignment="Center" VerticalAlignment="Top" 
+                                   Visibility="{Binding AddToChartVisibility, Mode=TwoWay}"/>
                             </Grid>
+
+                            <Grid Grid.Row="5" Margin="0,2,2,0" Visibility="{Binding AddToChartVisibility, Mode=TwoWay}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <telerik:RadComboBox Grid.Column="0" 
+                                             FontFamily="Arial"
+                                             FontSize="7"
+                                             Name="cmbAddSeries"                                             
+                                             IsEditable="True"                                             
+                                             Width="150"
+                                             CanAutocompleteSelectItems="True"
+                                             CanKeyboardNavigationSelectItems="False"
+                                             OpenDropDownOnFocus="True" 
+                                             StaysOpenOnEdit="True"                                              
+                                             HorizontalAlignment="Right" 
+                                             TextSearchMode="Contains"
+                                             IsTextSearchEnabled="False" >
+                                    <telerik:RadComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </telerik:RadComboBox.ItemsPanel>
+                                </telerik:RadComboBox>
+                                <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
+                                  Width="20" Height="20" Background="White">
+                                    <Image Source="../Images/AddToChart.png"/>
+                                </Button>
+                            </Grid>
+
+                            <!--List of Comparison entities-->
+                            <Grid Grid.Row="6">
+
+                                <ItemsControl  HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Height="15" Margin="0,2,0,0">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <TextBlock Grid.Column="0" FontSize="7" FontFamily="Arial"  Text="{Binding GadgetDesc, Mode=TwoWay}" 
+                                                       HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="2,0,0,0" />
+                                                    <telerik:RadButton Background="White" Grid.Column="1" 
+                                                                Width="20" HorizontalAlignment="Right"
+                                                               VerticalAlignment="Stretch" Height="8" Margin="0.5,0.5,2,0.5">
+                                                        <TextBlock Text="X" FontFamily="Arial" FontSize="6" FontWeight="Bold"
+                                                           HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gray" />
+                                                    </telerik:RadButton>
+                                                </Grid>
+                                            </Border>
+                                            <!--<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                        <TextBlock Text="{Binding ShortName, Mode=TwoWay}" HorizontalAlignment="Right" />
+                                        <Button Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteCommand}" 
+                                        CommandParameter="{Binding}"  Width="20" HorizontalAlignment="Right">
+                                            <Image Source="../Images/Delete.png"/>
+                                        </Button>
+                                    </StackPanel>-->
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </Grid>
+
+
+                        </Grid>
                         </telerik:RadExpander.Content>
                     </telerik:RadExpander>
                 </Grid>
