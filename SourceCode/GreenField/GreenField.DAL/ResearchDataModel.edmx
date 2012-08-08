@@ -1025,7 +1025,7 @@
 		</Options>
 		<!-- Diagram content (shape and connector positions) -->
 		<Diagrams>
-			<Diagram Name="ResearchDataModel">
+			<Diagram Name="ResearchDataModel" ZoomLevel="97">
 				<EntityTypeShape EntityType="ResearchModel.UserDashboardPreferance" Width="1.5" PointX="9.5" PointY="12.625" Height="1.5956835937500031" />
 				<EntityTypeShape EntityType="ResearchModel.tblDashboardPreference" Width="1.5" PointX="6.25" PointY="12.625" Height="2.5571907552083317" />
 				<EntityTypeShape EntityType="ResearchModel.tblHoldingsData" Width="3.75" PointX="2.875" PointY="3.375" Height="8.51853515625001" />
