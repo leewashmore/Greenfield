@@ -45,7 +45,7 @@ namespace GreenField.Common
 
         #region Financials
         #region Financials Summary
-        public static string EXTERNAL_RESEARCH_FUNDAMENTALS_SUMMARY = "Fundamental Summary External Research 4.1.2.1";
+        public static string EXTERNAL_RESEARCH_FUNDAMENTALS_SUMMARY = "Fundamental Summary";
         #endregion
         #region Financials Income statement
         public static string EXTERNAL_RESEARCH_INCOME_STATEMENT = "Income Statement";

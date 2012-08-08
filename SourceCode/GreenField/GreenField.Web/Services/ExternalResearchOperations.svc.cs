@@ -145,7 +145,7 @@ namespace GreenField.Web.Services
 
                 List<FinancialStatementData> result = null;
 
-               // result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency).ToList();
+               result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency).ToList();
 
                 return result;
             }

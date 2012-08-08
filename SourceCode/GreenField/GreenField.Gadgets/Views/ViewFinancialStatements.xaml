@@ -206,8 +206,8 @@
                                      CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
                                      FontFamily="Arial" FontSize="7" GroupPanelBackground="#e4e5e5" CanUserResizeColumns="False"                                     
-                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" AlternationCount="2" AlternateRowBackground="#D8D5D4"
-                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" AlternationCount="2" 
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                      RowStyle="{StaticResource GridViewRowStyle}" ElementExporting="dgFinancialReportExt_ElementExporting"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}" ShowColumnHeaders="False"
                                      RowLoaded="dgFinancialReport_RowLoaded">
