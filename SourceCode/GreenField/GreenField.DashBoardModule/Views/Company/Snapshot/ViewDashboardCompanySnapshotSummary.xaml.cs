@@ -171,7 +171,7 @@ namespace GreenField.DashboardModule.Views
 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.INTERNAL_RESEARCH_CONSESUS_ESTIMATE_SUMMARY, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 300,
-                Content =null//  new ViewConsensusEstimateSummary(new ViewModelConsensusEstimateSummary(param))
+                Content =new ViewConsensusEstimateSummary(new ViewModelConsensusEstimateSummary(param))
             });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
