@@ -495,7 +495,7 @@ namespace GreenField.App.ViewModel
         #region Region Selector
 
         private CollectionViewSource _regionItems;
-        public CollectionViewSource RegionItems 
+        public CollectionViewSource RegionItems
         {
             get
             {
@@ -519,7 +519,7 @@ namespace GreenField.App.ViewModel
             }
             set
             {
-                _regionTypeInfo = value;                
+                _regionTypeInfo = value;
                 if (value != null)
                     AddItemsToRegionSelectorComboBox(value);
 
@@ -984,7 +984,7 @@ namespace GreenField.App.ViewModel
         {
             get
             {
-                return new List<String> { "Country", "Sector", "Security"};
+                return new List<String> { "Country", "Sector", "Security" };
             }
         }
 
@@ -1389,7 +1389,7 @@ namespace GreenField.App.ViewModel
                 return new DelegateCommand<object>(RoleManagementCommandMethod);
             }
         }
-        
+
         #region Dashboard
         #region Company
         #region Snapshot
@@ -2460,7 +2460,7 @@ namespace GreenField.App.ViewModel
 
         #region Screening
         #region Quarterly Comparison
-   
+
         private void QuarterlyComparisonCommandMethod(object param)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -2501,7 +2501,7 @@ namespace GreenField.App.ViewModel
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        
+
         }
         #endregion
 
@@ -3559,7 +3559,7 @@ namespace GreenField.App.ViewModel
             PortfolioSelectorVisibility = ToolBoxItemVisibility.PORTFOLIO_SELECTOR_VISIBILITY;
             EffectiveDateSelectorVisibility = ToolBoxItemVisibility.EFFECTIVE_DATE_SELECTOR_VISIBILITY;
             PeriodSelectorVisibility = ToolBoxItemVisibility.PERIOD_SELECTOR_VISIBILITY;
-            CountrySelectorVisibility = ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY;            
+            CountrySelectorVisibility = ToolBoxItemVisibility.COUNTRY_SELECTOR_VISIBILITY;
             SnapshotSelectorVisibility = ToolBoxItemVisibility.SNAPSHOT_SELECTOR_VISIBILITY;
             FilterTypeVisibility = ToolBoxItemVisibility.FILTER_TYPE_SELECTOR_VISIBILITY;
             FilterValueVisibility = ToolBoxItemVisibility.FILTER_VALUE_SELECTOR_VISIBILITY;
@@ -3570,7 +3570,7 @@ namespace GreenField.App.ViewModel
             NodeSelectorVisibility = ToolBoxItemVisibility.NODENAME_SELECTOR_VISIBILITY;
 
         }
-        
+
         private void RetrieveMarketSnapshotSelectionData()
         {
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
@@ -3610,7 +3610,7 @@ namespace GreenField.App.ViewModel
 
             Logging.LogEndMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
         }
-        
+
         private void RetrieveFXCommoditySelectionCallbackMethod(List<FXCommodityData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -3642,7 +3642,7 @@ namespace GreenField.App.ViewModel
                 List<DataItem> regionList = new List<DataItem>();
                 foreach (GreenField.DataContracts.RegionSelectionData item in items)
                 {
-                    DataItem region = new DataItem{  Text = item.Country,DisplayText=item.CountryNames,Category = item.Region,IsSelected = false};
+                    DataItem region = new DataItem { Text = item.Country, DisplayText = item.CountryNames, Category = item.Region, IsSelected = false };
                     region.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(region_PropertyChanged);
                     regionList.Add(region);
                 }
