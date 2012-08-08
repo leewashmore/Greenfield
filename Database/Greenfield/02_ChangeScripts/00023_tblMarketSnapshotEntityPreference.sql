@@ -35,6 +35,10 @@ CREATE TABLE [dbo].[tblMarketSnapshotEntityPreference](
 	[EntityReturnType] [nvarchar](50) NULL,
 	[EntityOrder] [int] NOT NULL,
 	[EntityType] [nvarchar](50) NOT NULL,
+	[EntityId] [nvarchar](50) NOT NULL,
+	[EntityNodeType] [nvarchar](50) NULL,
+	[EntityNodeValueCode] [nvarchar](50) NULL,
+	[EntityNodeValueName] [nvarchar](50) NULL,
  CONSTRAINT [PK_tblMarketSnapshotEntityPreference] PRIMARY KEY CLUSTERED 
 (
 	[EntityPreferenceId] ASC
