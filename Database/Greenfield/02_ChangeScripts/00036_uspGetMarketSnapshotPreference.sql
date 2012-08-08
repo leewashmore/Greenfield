@@ -35,25 +35,29 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	Select 
-	MSGP.GroupName,
-	MSGP.GroupPreferenceID,
+	      Select 
+      MSGP.GroupName,
+      MSGP.GroupPreferenceID,
     MSEP.EntityPreferenceId,
     MSEP.EntityName,
     MSEP.EntityOrder,
     MSEP.EntityReturnType,
-    MSEP.EntityType
+    MSEP.EntityType,
+    MSEP.EntityId,
+    MSEP.EntityNodeType,
+    MSEP.EntityNodeValueCode,
+    MSEP.EntityNodeValueName
     
-	FROM 
-	tblMarketSnapshotGroupPreference MSGP
-	LEFT OUTER JOIN tblMarketSnapshotEntityPreference MSEP
-	ON MSGP.GroupPreferenceID = MSEP.GroupPreferenceID
+      FROM 
+      tblMarketSnapshotGroupPreference MSGP
+      LEFT OUTER JOIN tblMarketSnapshotEntityPreference MSEP
+      ON MSGP.GroupPreferenceID = MSEP.GroupPreferenceID
   
     WHERE 
     MSGP.SnapshotPreferenceId = 
-		(SELECT SnapshotPreferenceId FROM tblMarketSnapshotPreference
-			WHERE SnapshotPreferenceId = @SnapshotPreferenceId)
- 
+            (SELECT SnapshotPreferenceId FROM tblMarketSnapshotPreference
+                  WHERE SnapshotPreferenceId = @SnapshotPreferenceId)
+
 END
 
 
