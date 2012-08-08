@@ -1,0 +1,213 @@
+﻿<controls:ChildWindow x:Class="GreenField.Gadgets.Helpers.ChildExportOptions"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" FontFamily="Arial" FontSize="7" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls">
+
+    <controls:ChildWindow.Resources>
+        <Style x:Key="rcpButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border CornerRadius="0" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="ColorPicker_ButtonBorder_MouseOver" Color="#FFFFC92B" />
+        <LinearGradientBrush x:Key="ColorPicker_ButtonBackground_MouseOver" EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FFFFFBA3" Offset="1" />
+            <GradientStop Color="#FFFFFBDA" Offset="0" />
+            <GradientStop Color="#FFFFD25A" Offset="0.43" />
+            <GradientStop Color="#FFFEEBAE" Offset="0.42" />
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="ColorPicker_ButtonInnerBorder_MouseOver" Color="#FFFFFFFF" />
+        <ControlTemplate x:Key="rcpControlTemplate" TargetType="telerik:RadColorPicker">
+            <Grid x:Name="Root"
+        		HorizontalAlignment="{TemplateBinding HorizontalAlignment}"
+        		VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                <VisualStateManager.VisualStateGroups>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="MouseOver">
+                            <Storyboard Duration="0">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Over_back"
+        							Storyboard.TargetProperty="Opacity">
+                                    <DiscreteDoubleKeyFrame KeyTime="0"
+        								Value="1" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <Storyboard Duration="0">
+                                <DoubleAnimationUsingKeyFrames Storyboard.TargetName="Over_back"
+        							Storyboard.TargetProperty="Opacity">
+                                    <DiscreteDoubleKeyFrame KeyTime="0"
+        								Value="1" />
+                                </DoubleAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </VisualState>
+                        <VisualState x:Name="Disabled" />
+                    </VisualStateGroup>
+                </VisualStateManager.VisualStateGroups>
+                <Grid x:Name="Placement" Width="150">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Border x:Name="Over_back"
+        				Opacity="0"
+        				Height="25"
+        				CornerRadius="1"
+        				Background="{StaticResource ColorPicker_ButtonBackground_MouseOver}"
+        				BorderBrush="{StaticResource ColorPicker_ButtonBorder_MouseOver}"
+        				BorderThickness="1"
+        				Width="150"
+        				Grid.ColumnSpan="2">
+                        <Border CornerRadius="0"
+        					BorderThickness="1"
+        					BorderBrush="{StaticResource ColorPicker_ButtonInnerBorder_MouseOver}" />
+                    </Border>
+
+                    <Button x:Name="LeftButton"
+        				Style="{StaticResource rcpButtonStyle}"
+        				HorizontalContentAlignment="Center" />
+
+                    <ToggleButton Grid.Column="1"
+        				x:Name="ToggleButtonElement"
+        				IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+        				Style="{TemplateBinding ExpanderButtonStyle}" Cursor="Hand" />
+                </Grid>
+                <telerik:Popup Owner="{Binding RelativeSource={RelativeSource TemplatedParent}}"
+        			CloseOnOutsideClick="True" Placement="Bottom"
+        			IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}" >
+                    <Grid>
+                        <Border x:Name="DropDownBorder">
+                            <telerik:RadColorSelector x:Name="ColorSelector"
+        						MainPaletteItemsStyle="{TemplateBinding MainPaletteItemsStyle}"
+        						MainPaletteColumnsCount="{TemplateBinding MainPaletteColumnsCount}"
+        						MainPaletteOrientation="{TemplateBinding MainPaletteOrientation}"
+        						MainPaletteHeaderText="{TemplateBinding MainPaletteHeaderText}"
+        						MainPalette="{TemplateBinding MainPalette}"
+        						HeaderPalette="{TemplateBinding HeaderPalette}"
+        						HeaderPaletteVisibility="{TemplateBinding HeaderPaletteVisibility}"
+        						StandardPalette="{TemplateBinding StandardPalette}"
+        						StandardPaletteVisibility="{TemplateBinding StandardPaletteVisibility}"
+        						StandardPaletteHeaderText="{TemplateBinding StandardPaletteHeaderText}"
+        						AutomaticColor="{TemplateBinding AutomaticColor}"
+        						NoColorText="{TemplateBinding NoColorText}"
+        						BorderBrush="{TemplateBinding BorderBrush}"
+        						BorderThickness="{TemplateBinding BorderThickness}"
+        						NoColorVisibility="{TemplateBinding NoColorVisibility}"
+        						SelectedColor="{TemplateBinding SelectedColor}"
+        						Background="{TemplateBinding Background}"
+        						FontWeight="{TemplateBinding FontWeight}"
+        						FontStyle="{TemplateBinding FontStyle}"
+        						Foreground="{TemplateBinding Foreground}" />
+                        </Border>
+                    </Grid>
+                </telerik:Popup>
+            </Grid>
+        </ControlTemplate>
+    </controls:ChildWindow.Resources>
+
+    <Grid x:Name="LayoutRoot" Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="txtExportOptions" Grid.Column="0" Text="Export: " VerticalAlignment="Center"/>
+            <telerik:RadComboBox x:Name="cbExportOptions" Grid.Column="1" SelectedIndex="0"
+                                 SelectionChanged="cbExportOptions_SelectionChanged"/>
+        </Grid>
+
+        <Border x:Name="brdOptions"  Grid.Row="1" Margin="0,5,0,0" BorderBrush="Gray" BorderThickness="1">
+            <Grid x:Name="grdOptions" Margin="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Export Element Options" FontWeight="Bold"/>
+                    <Grid Grid.Row="1">
+                        <telerik:RadComboBox x:Name="cbExportElementType" SelectedIndex="0" SelectionChanged="cbExportElementType_SelectionChanged"/>
+                    </Grid>
+                    <Grid Grid.Row="2" Margin="0,2,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Background: " VerticalAlignment="Center"/>
+                        <Border BorderThickness="0.5" BorderBrush="Gray" Grid.Column="1">
+                            <telerik:RadColorPicker x:Name="rcpBackground" AutomaticColor="White" SelectedColor="White" Template="{StaticResource rcpControlTemplate}"
+                                                SelectedColorChanged="rcpBackground_SelectedColorChanged" />
+                        </Border>
+                    </Grid>
+                    <Grid Grid.Row="3" Margin="0,2,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Foreground: " VerticalAlignment="Center"/>
+                        <Border BorderThickness="0.5" BorderBrush="Gray" Grid.Column="1">
+                            <telerik:RadColorPicker x:Name="rcpForeground" AutomaticColor="Black" SelectedColor="Black" Template="{StaticResource rcpControlTemplate}"
+                                                SelectedColorChanged="rcpForeground_SelectedColorChanged" />
+                        </Border>
+                    </Grid>
+                    <Grid Grid.Row="4" Margin="0,2,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Font: " VerticalAlignment="Center"/>
+                        <telerik:RadComboBox x:Name="cbFontFamily" Grid.Column="1" SelectionChanged="cbFontFamily_SelectionChanged"/>
+                    </Grid>
+                    <Grid Grid.Row="5" Margin="0,2,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="FontSize: " VerticalAlignment="Center"/>
+                        <telerik:RadNumericUpDown x:Name="rnudFontSize" Grid.Column="1" IsInteger="False" Minimum="1" Value="10" ValueFormat="Numeric" SmallChange="0.5"
+                                              ValueChanged="rnudFontSize_ValueChanged"/>
+                    </Grid>
+                    <Grid Grid.Row="6" Margin="0,2,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="FontWeight: " VerticalAlignment="Center"/>
+                        <telerik:RadComboBox x:Name="cbFontWeight" Grid.Column="1" SelectionChanged="cbFontWeight_SelectionChanged"/>
+                    </Grid>
+                    <Grid Grid.Row="7" Margin="0,2,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="Text Allignment: " VerticalAlignment="Center"/>
+                        <telerik:RadComboBox x:Name="cbTextAllignment" Grid.Column="1" SelectionChanged="cbTextAllignment_SelectionChanged">
+
+                        </telerik:RadComboBox>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+        <telerik:RadButton x:Name="OKButton" Click="OKButton_Click" Grid.Row="2" Content="OK" IsEnabled="False" Width="75" Height="Auto" HorizontalAlignment="Right" Margin="0,2,79,0"/>
+        <telerik:RadButton x:Name="CancelButton" Click="CancelButton_Click" Grid.Row="2" Content="Cancel" Width="75" Height="Auto" HorizontalAlignment="Right" Margin="0,2,0,0" />        
+    </Grid>
+</controls:ChildWindow>

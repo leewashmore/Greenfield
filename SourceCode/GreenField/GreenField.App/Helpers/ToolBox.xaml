@@ -1,0 +1,538 @@
+﻿<UserControl x:Class="GreenField.App.Helpers.ToolBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:helpers="clr-namespace:GreenField.App.Helpers" 
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" >
+
+    <UserControl.Resources>
+
+        <Style TargetType="ScrollViewer" x:Key="ScrollViewerStyle">
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Top" />
+            <Setter Property="VerticalScrollBarVisibility" Value="Disabled" />
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFA3AEB9" Offset="0"/>
+                        <GradientStop Color="#FF8399A9" Offset="0.375"/>
+                        <GradientStop Color="#FF718597" Offset="0.375"/>
+                        <GradientStop Color="#FF617584" Offset="1"/>
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Border CornerRadius="2" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid Background="{TemplateBinding Background}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <ScrollContentPresenter x:Name="ScrollContentPresenter"
+                                                  Cursor="{TemplateBinding Cursor}"
+                                                  Margin="{TemplateBinding Padding}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"/>
+
+                                <Rectangle Grid.Column="1" Grid.Row="1" Fill="#FFE9EEF4"/>
+
+                                <ScrollBar x:Name="VerticalScrollBar" Width="5"
+                                           IsTabStop="False"
+                                           Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                                           Grid.Column="1" Grid.Row="0" Orientation="Vertical"
+                                           ViewportSize="{TemplateBinding ViewportHeight}"
+                                           Maximum="{TemplateBinding ScrollableHeight}"
+                                           Minimum="0"
+                                           Value="{TemplateBinding VerticalOffset}"
+                                     Margin="0,-1,-1,-1"/>
+
+                                <ScrollBar x:Name="HorizontalScrollBar" Height="5"
+                                     IsTabStop="False"
+                                     Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                     Grid.Column="0" Grid.Row="1" Orientation="Horizontal"
+                                     ViewportSize="{TemplateBinding ViewportWidth}"
+                                     Maximum="{TemplateBinding ScrollableWidth}"
+                                     Minimum="0"
+                                     MaxHeight="5"
+                                     Value="{TemplateBinding HorizontalOffset}"
+                                     Margin="-1,0,-1,-1"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="BlendScrollViewerStyle" TargetType="ScrollViewer">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="VerticalContentAlignment" Value="Top"/>
+            <Setter Property="VerticalScrollBarVisibility" Value="Visible"/>
+            <Setter Property="Padding" Value="4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollViewer">
+                        <Border BorderThickness="{TemplateBinding BorderThickness}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <ScrollContentPresenter x:Name="ScrollContentPresenter" 
+                                Cursor="{TemplateBinding Cursor}" 
+                                ContentTemplate="{TemplateBinding ContentTemplate}"
+                                Margin="{TemplateBinding Padding}"/>
+                                <Rectangle Grid.Column="1" 
+                                           Fill="#FFE9EEF4" 
+                                           Grid.Row="1"/>
+                                <ScrollBar x:Name="VerticalScrollBar" 
+                                            Grid.Column="1" 
+                                            IsTabStop="False" 
+                                            Maximum="{TemplateBinding ScrollableHeight}" 
+                                            Margin="0,-1,-1,-1" 
+                                            Minimum="0" 
+                                            Orientation="Vertical" 
+                                            Grid.Row="0" 
+                                            Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" 
+                                            Value="{TemplateBinding VerticalOffset}" 
+                                            ViewportSize="{TemplateBinding ViewportHeight}" 
+                                            Width="5"/>
+                                <ScrollBar x:Name="HorizontalScrollBar" 
+                                            Grid.Column="0" 
+                                            Height="5" 
+                                            IsTabStop="False" 
+                                            Maximum="{TemplateBinding ScrollableWidth}"
+                                            Margin="-1,0,-1,-1" 
+                                            Minimum="0"
+                                            Orientation="Horizontal" 
+                                            Grid.Row="1" 
+                                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" 
+                                            Value="{TemplateBinding HorizontalOffset}" 
+                                            ViewportSize="{TemplateBinding ViewportWidth}"/>
+                            </Grid>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <helpers:FlattenGroupConverter x:Key="FlattenGroupConverter" />
+        <helpers:ItemStyleSelector x:Key="ItemStyleSelector">
+            <helpers:ItemStyleSelector.GroupStyle>
+                <Style TargetType="ContentControl">
+                    <Setter Property="IsEnabled" Value="False" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </helpers:ItemStyleSelector.GroupStyle>
+            <helpers:ItemStyleSelector.ItemStyle>
+                <Style TargetType="ContentControl">
+                    <Setter Property="ContentTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <CheckBox Content="{Binding Path=DisplayText}"
+                                          IsChecked="{Binding Path=IsSelected,Mode=TwoWay}"
+                                          Height="16" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" />
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </helpers:ItemStyleSelector.ItemStyle>
+        </helpers:ItemStyleSelector>
+    </UserControl.Resources>
+
+
+    <Grid x:Name="LayoutRoot" Height="35" >
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled" Style="{StaticResource ScrollViewerStyle}" x:Name="scrollViewer">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!--Security Selector-->
+                <Grid Visibility="{Binding SecuritySelectorVisibility}" Margin="5,0,0,0" Grid.Column="0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Security" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="7" 
+                                   FontFamily="Arial" FontWeight="Bold"/>
+                        <telerik:RadComboBox x:Name="cbsecuritySelector"
+                                         ItemsSource="{Binding SecuritySelectorInfo}"
+                                         SelectedItem="{Binding SelectedSecurityInfo, Mode=TwoWay}"
+                                         Text="{Binding SecuritySearchText, Mode=TwoWay}"
+                                         EmptyText="Search Security..." 
+                                         FontSize="7"
+                                         FontFamily="Arial"
+                                         telerik:TextSearch.TextPath="LongName"
+                                         Width="150" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                            <telerik:RadComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding LongName}"/>
+                                        <TextBlock Text="{Binding ShortName, StringFormat=' (\{0\}, '}"/>
+                                        <TextBlock Text="{Binding SecurityType, StringFormat='\{0\}:'}"/>
+                                        <TextBlock Text="{Binding InstrumentID, StringFormat='\{0\})'}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:RadComboBox.ItemTemplate>
+                        </telerik:RadComboBox>
+                    </StackPanel>
+                </Grid>
+
+                <!--Portfolio Selector-->
+                <Grid Margin="5,0,0,0" Visibility="{Binding PortfolioSelectorVisibility}" Grid.Column="1">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Portfolio" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" 
+                                   FontFamily="Arial" FontWeight="Bold"/>
+
+                        <telerik:RadComboBox x:Name="cbPortfolioSelector"
+                                         ItemsSource="{Binding PortfolioSelectorInfo}"
+                                         SelectedItem="{Binding SelectedPortfolioInfo, Mode=TwoWay}"
+                                         Text="{Binding PortfolioSearchText, Mode=TwoWay}"
+                                         FontSize="7"
+                                         FontFamily="Arial"
+                                         DisplayMemberPath="PortfolioId"
+                                         EmptyText="Search Portfolio..."                                     
+                                         telerik:TextSearch.TextPath="PortfolioId"
+                                         Width="auto" 
+                                         Height="25"
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False"
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False"
+                                         >
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
+
+                    </StackPanel>
+                </Grid>
+
+                <!--Effective Date Selector-->
+                <Grid Margin="5,0,0,0" Visibility="{Binding EffectiveDateSelectorVisibility}" Grid.Column="2">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                        <telerik:RadDatePicker x:Name="dpEffectiveDateSelector"
+                                           SelectedValue="{Binding SelectedEffectiveDateInfo, Mode=TwoWay}"
+                                               FontSize="7"
+                                               VerticalContentAlignment="Center"
+                                               FontFamily="Arial"
+                                           Width="auto"                                           
+                                           Margin="5,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+
+                <!--Period Selector-->
+                <Grid Margin="5,0,0,0" Visibility="{Binding PeriodSelectorVisibility}" Grid.Column="3">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Period" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                        <telerik:RadComboBox x:Name="cbPeriodSelector"
+                                         EmptyText="Select Period..." 
+                                         ItemsSource="{Binding PeriodTypeInfo}"
+                                         SelectedValue="{Binding SelectedPeriodType,Mode=TwoWay}"    
+                                         Width="auto"                                          
+                                         FontSize="7"
+                                         FontFamily="Arial"                                        
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
+                    </StackPanel>
+                </Grid>
+
+                <!--Filter Selector-->
+                <Grid Margin="5,0,0,0" Visibility="{Binding FilterTypeVisibility}" Grid.Column="4">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Filter" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                        <telerik:RadComboBox x:Name="cbFilterSelector"
+                                         EmptyText="Select Filter..." 
+                                         ItemsSource="{Binding FilterTypeInfo}"
+                                         SelectedValue="{Binding SelectedFilterType, Mode=TwoWay}"                                             
+                                         FontSize="7"
+                                         FontFamily="Arial"
+                                         Width="auto" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
+                    </StackPanel>
+                </Grid>
+
+                <!--Value Selector-->
+                <Grid Margin="5,0,0,0" Visibility="{Binding FilterValueVisibility}" Grid.Column="5">
+                    <telerik:RadBusyIndicator x:Name="filterBusyIndicator"                                  
+                              BusyContent="{Binding BusyIndicatorContent}"
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" telerik:StyleManager.Theme="Metro">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Text="Value" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                            <telerik:RadComboBox x:Name="cbValueSelector"
+                                         EmptyText="Select Value..." 
+                                         ItemsSource="{Binding FilterSelectorInfo}"
+                                         DisplayMemberPath="FilterValues"
+                                         SelectedValue="{Binding SelectedFilterValueInfo, Mode=TwoWay}"
+                                         FontSize="7"
+                                         FontFamily="Arial" 
+                                         Width="auto" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                                <telerik:RadComboBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <VirtualizingStackPanel />
+                                    </ItemsPanelTemplate>
+                                </telerik:RadComboBox.ItemsPanel>
+                            </telerik:RadComboBox>
+                        </StackPanel>
+                    </telerik:RadBusyIndicator>
+                </Grid>
+
+
+                <!--Country Selector-->
+                <Grid Margin="5,0,0,0" Visibility="{Binding CountrySelectorVisibility}" Grid.Column="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Country" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="7" FontFamily="Arial" FontWeight="Bold"/>
+                        <telerik:RadComboBox x:Name="cbCountrySelector"
+                                         EmptyText="Search Country..." 
+                                         SelectedValue="{Binding CountryCode,Mode=TwoWay}"
+                                         Text="{Binding CountrySearchText, Mode=TwoWay}"
+                                         Width="150" 
+                                         Margin="5,0,0,0"
+                                         FontFamily="Arial"
+                                         FontSize="7"
+                                         IsEditable="True"                                       
+                                         ItemsSource="{Binding CountryName}"                                        
+                                         CanAutocompleteSelectItems="True" 
+                                         TextOptions.TextHintingMode="Fixed"
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"                                                 
+                                         IsTextSearchEnabled="False">
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
+                    </StackPanel>
+                </Grid>               
+
+                <!--Snapshot Selector-->
+                <Grid Margin="5,0,0,0" Visibility="{Binding SnapshotSelectorVisibility}" Grid.Column="8">
+                    <telerik:RadBusyIndicator x:Name="snapshotBusyIndicator" BusyContent="{Binding BusyIndicatorContent}" DisplayAfter="0" FontSize="8" FontFamily="Arial" IsIndeterminate="True">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBlock Text="Snapshot" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                            <telerik:RadComboBox ItemsSource="{Binding MarketSnapshotSelectorInfo}"
+                                     SelectedItem="{Binding SelectedMarketSnapshotSelectionInfo, Mode=TwoWay}"
+                                     Text="{Binding MarketPerformanceSnapshotSearchText, Mode=TwoWay}"
+                                     DisplayMemberPath="SnapshotName"      
+                                             VerticalContentAlignment="Center"
+                                     FontSize="7"
+                                     FontFamily="Arial"
+                                     telerik:TextSearch.TextPath="SnapshotName"  
+                                     TextOptions.TextHintingMode="Fixed" 
+                                     CanAutocompleteSelectItems="False"
+                                     EmptyText="Search Snapshot..."
+                                     Width="auto"
+                                     Margin="5,0,0,0"
+                                     CanKeyboardNavigationSelectItems="False"
+                                     HorizontalAlignment="Center"
+                                     OpenDropDownOnFocus="True"
+                                     StaysOpenOnEdit="True"
+                                     IsTextSearchEnabled="true"
+                                     IsEditable="True" 
+                                     IsFilteringEnabled="True"/>
+                            <telerik:RadButton Name="btnSaveMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
+                            Margin="2,0,0,0" ToolTipService.ToolTip="Save" Command="{Binding MarketSnapshotSaveCommand}"
+                                           telerik:StyleManager.Theme="Metro">
+                                <Image Source="/GreenField.App;component/Images/SaveSnapshot.png" Stretch="Fill"/>
+                            </telerik:RadButton>
+                            <Button Name="btnSaveAsMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
+                            Margin="2,0,0,0" ToolTipService.ToolTip="Save As" Command="{Binding MarketSnapshotSaveAsCommand}">
+                                <Image Source="/GreenField.App;component/Images/SaveAsSnapshot.png" Stretch="Fill"/>
+                            </Button>
+                            <telerik:RadButton Name="btnAddNewMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
+                            Margin="2,0,0,0" ToolTipService.ToolTip="Add New" Command="{Binding MarketSnapshotAddCommand}"
+                                           telerik:StyleManager.Theme="Metro">
+                                <Image Source="/GreenField.App;component/Images/AddSnapshot.png" Stretch="Fill"/>
+                            </telerik:RadButton>
+                            <Button Name="btnDeleteMarketSnapshot" VerticalAlignment="Center" HorizontalAlignment="Left" Width="Auto" Height="Auto" 
+                            Margin="2,0,0,0" ToolTipService.ToolTip="Delete" Command="{Binding MarketSnapshotRemoveCommand}"
+                                telerik:StyleManager.Theme="Metro">
+                                <Image Source="/GreenField.App;component/Images/RemoveSnapshot.png" Stretch="Fill"/>
+                            </Button>
+                        </StackPanel>
+                    </telerik:RadBusyIndicator>
+                </Grid>
+                <Grid Margin="5,0,0,0" Visibility="{Binding MktCapExCashSelectorVisibility}" Grid.Column="9">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <CheckBox Content="Cash/No Cash" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="7" 
+                          IsChecked="{Binding IsExCashSecurity , Mode=TwoWay}" Grid.Row="0" Name="chkExCashSecurity" ToolTipService.ToolTip="Check to Exclude Cash" />
+                    </StackPanel>
+
+                </Grid>
+                <!--Commodity Selector-->
+                <Grid Visibility="{Binding CommoditySelectorVisibility}" Margin="5,0,0,0" Grid.Column="11">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Commodity" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                        <telerik:RadComboBox x:Name="cbCommoditySelector"
+                                         EmptyText="Search Commodity..." 
+                                         SelectedValue="{Binding SelCommodityId,Mode=TwoWay}"
+                                         Width="150" 
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         ItemsSource="{Binding CommodityIDs}"                                        
+                                         CanAutocompleteSelectItems="True" 
+                                         TextOptions.TextHintingMode="Fixed"
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"                                        
+                                         IsTextSearchEnabled="False"    
+                                     >
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
+                    </StackPanel>
+                </Grid>
+
+                <!--RegionFX Selector-->
+                <Grid Margin="5,0,0,0" Visibility="{Binding RegionFXSelectorVisibility}" Grid.Column="12">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Region" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="7" FontFamily="Arial" FontWeight="Bold"/>
+                        <telerik:RadComboBox x:Name="cbRegionFXSelector"                                                                                                                       
+                                         Width="150"                                         
+                                         IsEditable="True"                                       
+                                         ItemsSource="{Binding RegionItems.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
+                                         EmptyText="Select Country"
+                                         telerik:TextSearch.TextPath="DisplayPath"                                                                   
+                                         ItemContainerStyleSelector="{StaticResource ItemStyleSelector}">                           
+                        </telerik:RadComboBox>
+                    </StackPanel>
+                </Grid>
+                <Grid Margin="5,0,0,0" Visibility="{Binding LookThruSelectorVisibility}" Grid.Column="13">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <CheckBox Content="LookThru" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial" FontSize="7" 
+                          IsChecked="{Binding IsLookThruEnabled , Mode=TwoWay}" Grid.Row="0" Name="chkLookThruEnabled" ToolTipService.ToolTip="Check to Enable LookThru" />
+                    </StackPanel>
+                </Grid>
+
+                <!--NodeName Selector-->
+                <Grid Margin="5,0,0,0" Visibility="{Binding NodeSelectorVisibility}" Grid.Column="14">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <TextBlock Text="Filter Node" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
+                        <telerik:RadComboBox x:Name="cbNodeNameSelector"
+                                         EmptyText="Select Node..." 
+                                         ItemsSource="{Binding NodeNameInfo}"
+                                         SelectedValue="{Binding SelectedNodeName,Mode=TwoWay}"    
+                                         Width="auto"                                          
+                                         FontSize="7"
+                                         FontFamily="Arial"                                        
+                                         Margin="5,0,0,0"
+                                         IsEditable="True"
+                                         CanAutocompleteSelectItems="True" 
+                                         CanKeyboardNavigationSelectItems="False" 
+                                         HorizontalAlignment="Left"
+                                         OpenDropDownOnFocus="True"
+                                         StaysOpenOnEdit="True"
+                                         TextOptions.TextHintingMode="Fixed"
+                                         IsTextSearchEnabled="False">
+                            <telerik:RadComboBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <VirtualizingStackPanel />
+                                </ItemsPanelTemplate>
+                            </telerik:RadComboBox.ItemsPanel>
+                        </telerik:RadComboBox>
+                    </StackPanel>
+                </Grid>
+
+
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

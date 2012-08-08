@@ -1,0 +1,100 @@
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewRelativePerformanceUI"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="400">
+
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
+            <TextBlock Text="Relative Performance UI" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+        </Grid>
+
+        <!--Export Controls-->
+        <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Height="15" Width="15" Grid.Column="1"
+                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                        Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
+                <Image Source="../Images/ExportExcel.png" />
+            </Button>
+
+            <Button Height="15" Width="15" Grid.Column="3"
+                        BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
+                        Margin="5,0,0,0" Click="btnPrint_Click">
+                <Image Source="../Images/Print.png" />
+            </Button>
+        </Grid>
+
+
+        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
+                                              DisplayAfter="0" Grid.Row="1" IsBusy="{Binding BusyIndicatorStatus}">
+            <telerik:RadGridView x:Name="dgRelativePerformanceUI" 
+                                 ItemsSource="{Binding RelativePerformanceReturnData}" 
+                                 AutoGenerateColumns="False" 
+                                 CanUserSelect="False" 
+                                 CanUserReorderColumns="False" 
+                                 CanUserInsertRows="False" ColumnWidth="*"
+                                 telerik:StyleManager.Theme="Metro"
+                                 CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
+                                 RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
+                                 FontFamily="Arial" FontSize="7" 
+                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                 GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                 RowLoaded="dgRelativePerformanceUI_RowLoaded"
+                                 RowStyle="{StaticResource GridViewRowStyle}"
+                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                 EnableRowVirtualization="false">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn  Header="Name"  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                 DataMemberBinding="{Binding EntityName}"  HeaderTextAlignment="Left" 
+                                                 CellStyle="{StaticResource GridViewCellStyle}"/>
+                    <telerik:GridViewDataColumn  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                 Header="MTD" TextAlignment="Right" UniqueName="MTD"
+                                                 DataMemberBinding="{Binding MTDReturn, StringFormat=\{0:n4\}%}" 
+                                                 HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                    <telerik:GridViewDataColumn  Header="QTD" UniqueName="QTD" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                 DataMemberBinding="{Binding QTDReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
+                                                 HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                    <telerik:GridViewDataColumn  Header="YTD" UniqueName="YTD" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                 DataMemberBinding="{Binding YTDReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
+                                                 HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
+                    <telerik:GridViewDataColumn  Header="1-Year" UniqueName="One Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                 DataMemberBinding="{Binding OneYearReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
+                                                 HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
+                    <!--<telerik:GridViewDataColumn  Header="3-Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                 DataMemberBinding="{Binding ThreeYearReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
+                                                 Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
+                    <telerik:GridViewDataColumn  Header="5-Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                 DataMemberBinding="{Binding FiveYearReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
+                                                 Width="Auto" HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>-->
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+        </telerik:RadBusyIndicator>
+    </Grid>
+</helpers:ViewBaseUserControl>

@@ -1,0 +1,96 @@
+﻿<UserControl x:Class="GreenField.Module.Views.AggregatedDataView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
+             xmlns:ig="http://schemas.infragistics.com/xaml">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="300"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20" />
+                <RowDefinition Height="25" />
+                <RowDefinition Height="25" />
+            </Grid.RowDefinitions>
+
+            <sdk:Label Name="lblPortfolioCodeList" Content="Portfolio Code" Grid.Column="0" Grid.Row="0"/>
+            <!--<ComboBox Name="cbPortfolioCode"  HorizontalAlignment="Left" Width="120" Grid.Row="0"  Grid.Column="1"   
+                      ItemsSource="{Binding AggregateViewList}" SelectedValue="{Binding SelectedView, Mode=TwoWay}" />-->
+            
+            <ComboBox Name="cbPortfolioName"  HorizontalAlignment="Left" Width="120" Grid.Row="0"  Grid.Column="1"   
+                      ItemsSource="{Binding PortfolioNames}" SelectedValue="{Binding SelectedView, Mode=TwoWay}" />
+
+        </Grid>
+        
+        <telerik:RadGridView Name="dgAggregateData" ItemsSource="{Binding AggregateDataList}" 
+                    AutoGenerateColumns="True" ColumnWidth="SizeToHeader" Grid.Row="3" HorizontalAlignment="Stretch">
+        </telerik:RadGridView> 
+        
+        
+        <!--**********************************************************************************************
+                                        Change the Controls Here
+        
+        <ig:XamDataChart Name="xamDataChart" VerticalZoomable="True" HorizontalZoomable="True" Grid.Row="5"
+                         HorizontalAlignment="Stretch" HorizontalZoombarVisibility="Visible" WindowScaleHorizontal="0.3"
+                         VerticalZoombarVisibility="Visible" Legend="{Binding ElementName=MyLegendItem}">            
+            <ig:XamDataChart.Axes>
+                <ig:CategoryXAxis x:Name="xAxis" ItemsSource="{Binding AggregateDataList}" Label="{}{SEC_SECSHORT}" />
+                <ig:NumericYAxis x:Name="yAxis" />
+            </ig:XamDataChart.Axes>
+            <ig:XamDataChart.Series>
+                <ig:ColumnSeries Title="NET_INCOME_ACT_2009"    
+                               ItemsSource="{Binding AggregateDataList}"    
+                               XAxis="{Binding ElementName=xAxis}"  
+                               YAxis="{Binding ElementName=yAxis}"  
+                               ValueMemberPath="NET_INCOME_ACT_2009" 
+                               Legend="{Binding ElementName=MyLegendItem}"/>
+                <ig:ColumnSeries Title="NET_INCOME_ACT_2010"    
+                               ItemsSource="{Binding AggregateDataList}"    
+                               XAxis="{Binding ElementName=xAxis}"  
+                               YAxis="{Binding ElementName=yAxis}"  
+                               ValueMemberPath="NET_INCOME_ACT_2010" 
+                               Legend="{Binding ElementName=MyLegendItem}"/>            
+            <ig:ColumnSeries Title="NET_INCOME_EST_2011"    
+                               ItemsSource="{Binding AggregateDataList}"    
+                               XAxis="{Binding ElementName=xAxis}"  
+                               YAxis="{Binding ElementName=yAxis}"  
+                               ValueMemberPath="NET_INCOME_EST_2011"
+                             Legend="{Binding ElementName=MyLegendItem}"/>            
+            <ig:ColumnSeries Title="NET_INCOME_EST_2012"    
+                               ItemsSource="{Binding AggregateDataList}"    
+                               XAxis="{Binding ElementName=xAxis}"  
+                               YAxis="{Binding ElementName=yAxis}"  
+                               ValueMemberPath="NET_INCOME_EST_2012"
+                             Legend="{Binding ElementName=MyLegendItem}"/>
+                <ig:ColumnSeries Title="NET_INCOME_EST_2013"    
+                               ItemsSource="{Binding AggregateDataList}"    
+                               XAxis="{Binding ElementName=xAxis}"  
+                               YAxis="{Binding ElementName=yAxis}"  
+                               ValueMemberPath="NET_INCOME_EST_2013"
+                                 Legend="{Binding ElementName=MyLegendItem}"/>
+            </ig:XamDataChart.Series>
+        </ig:XamDataChart>
+        <ig:Legend x:Name="MyLegendItem" VerticalAlignment="Top" Content="Legend" Grid.Row="5" HorizontalAlignment="Right"/>
+        
+        ***************************************************************************************************************-->
+        
+    </Grid>
+ </UserControl>

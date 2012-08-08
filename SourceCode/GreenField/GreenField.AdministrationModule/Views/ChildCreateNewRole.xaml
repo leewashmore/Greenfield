@@ -1,0 +1,58 @@
+﻿<controls:ChildWindow x:Class="GreenField.AdministrationModule.Views.ChildCreateNewRole"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+           xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+           Title="CreateNewRole" HasCloseButton="False" KeyDown="ChildWindow_KeyDown">
+    <controls:ChildWindow.Resources>
+        <Storyboard x:Name="invalidFieldNotificationTransition">
+            <DoubleAnimation From="0"
+                             To="5"
+                             Duration="00:00:0.1"
+                             Storyboard.TargetName="invalidFieldPopup"
+                             Storyboard.TargetProperty="HorizontalOffset">
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="recurrentFieldNotificationTransition">
+            <DoubleAnimation From="0"
+                             To="5"
+                             Duration="00:00:0.1"
+                             Storyboard.TargetName="recurrentFieldPopup"
+                             Storyboard.TargetProperty="HorizontalOffset">
+            </DoubleAnimation>
+        </Storyboard>
+    </controls:ChildWindow.Resources>
+
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Name="txtblkRoleName" 
+                           VerticalAlignment="Center"
+                           Foreground="Black"
+                           Text="Role Name:"/>
+                <TextBox HorizontalAlignment="Left"
+                         Margin="10,0,0,0"
+                         Name="txtEnterValue" 
+                         BorderBrush="Black"
+                         VerticalAlignment="Center" 
+                         Width="200"
+                         TextChanged="txtEnterValue_TextChanged"/>
+                <Popup x:Name="invalidFieldPopup"/>
+                <Popup x:Name="recurrentFieldPopup"/>
+            </StackPanel>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <telerik:RadButton x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" Height="23" IsEnabled="False" />
+            <telerik:RadButton x:Name="CancelButton" Margin="5,0,0,0" Content="Cancel" Click="CancelButton_Click" Width="75" Height="23"/>
+        </StackPanel>
+        
+    </Grid>
+</controls:ChildWindow>

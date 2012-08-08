@@ -1,0 +1,418 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BEFDA960-2EED-4D30-A2A6-36C0E899516E}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GreenField.DashBoardModule</RootNamespace>
+    <AssemblyName>GreenField.DashBoardModule</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.MefExtensions">
+      <HintPath>..\Lib\Microsoft.Practices.Prism.MefExtensions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\Lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations, Version=2.0.5.0, Culture=neutral, PublicKeyToken=ddd0da4d3e678217, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data.Input, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\Lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\Lib\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Toolkit.Internals">
+      <HintPath>..\Lib\System.Windows.Controls.Toolkit.Internals.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\Lib\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>..\Lib\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data">
+      <HintPath>..\Lib\Telerik.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input">
+      <HintPath>..\Lib\Telerik.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation">
+      <HintPath>..\Lib\Telerik.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RibbonBar">
+      <HintPath>..\Lib\Telerik.Windows.Controls.RibbonBar.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RibbonView">
+      <HintPath>..\Lib\Telerik.Windows.Controls.RibbonView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\Lib\Telerik.Windows.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.PersistenceFramework">
+      <HintPath>..\Lib\Telerik.Windows.PersistenceFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Expression_Dark">
+      <HintPath>..\Lib\Telerik.Windows.Themes.Expression_Dark.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DashboardModule.cs" />
+    <Compile Include="Helpers\GetDashboardTileContent.cs" />
+    <Compile Include="Helpers\TypeResolution.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Portfolio\Benchmark\ViewDashboardPortfolioBenchmarkComponents.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioBenchmarkComponents.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Benchmark\ViewDashboardPortfolioBenchmarkSummary.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioBenchmarkSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceRelativePerformance.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioPerformanceRelativePerformance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceAttribution.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioPerformanceAttribution.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceSummary.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioPerformanceSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Markets\Commodities\ViewDashboardMarketsCommoditiesSummary.xaml.cs">
+      <DependentUpon>ViewDashboardMarketsCommoditiesSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Markets\MacroEconomics\ViewDashboardMarketsMacroEconomicsCountrySummary.xaml.cs">
+      <DependentUpon>ViewDashboardMarketsMacroEconomicsCountrySummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Markets\MacroEconomics\ViewDashboardMarketsMacroEconomicsEMSummary.xaml.cs">
+      <DependentUpon>ViewDashboardMarketsMacroEconomicsEMSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotInternalModelValuation.xaml.cs">
+      <DependentUpon>ViewDashboardMarketsSnapshotInternalModelValuation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotMarketPerformance.xaml.cs">
+      <DependentUpon>ViewDashboardMarketsSnapshotMarketPerformance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotSummary.xaml.cs">
+      <DependentUpon>ViewDashboardMarketsSnapshotSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Documents\ViewDashboardCompanyDocuments.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyDocuments.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Corporate Governance\ViewDashboardCompanyCorporateGovernanceQuestionnaire.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyCorporateGovernanceQuestionnaire.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Corporate Governance\ViewDashboardCompanyCorporateGovernanceReport.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyCorporateGovernanceReport.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Charting\ViewDashboardCompanyChartingValuation.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyChartingValuation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Charting\ViewDashboardCompanyChartingContext.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyChartingContext.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Valuation\ViewDashboardCompanyValuationDiscountedCashFlow.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyValuationDiscountedCashFlow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Valuation\ViewDashboardCompanyValuationFairValue.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyValuationFairValue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsPeerComparison.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsPeerComparison.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsFinStat.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsFinStat.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsCashFlow.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsCashFlow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsBalanceSheet.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsBalanceSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsIncomeStatement.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsIncomeStatement.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsSummary.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyFinancialsSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Screening\ViewDashboardQuarterlyResultsComparison.xaml.cs">
+      <DependentUpon>ViewDashboardQuarterlyResultsComparison.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewDashBoard.xaml.cs">
+      <DependentUpon>ViewDashBoard.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Charting\ViewDashboardCompanyChartingClosingPrice.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyChartingClosingPrice.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Charting\ViewDashboardCompanyChartingUnrealizedGain.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyChartingUnrealizedGain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesComparison.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyEstimatesComparison.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesConsensus.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyEstimatesConsensus.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesDetailed.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyEstimatesDetailed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotCompanyProfile.xaml.cs">
+      <DependentUpon>ViewDashboardCompanySnapshotCompanyProfile.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotSummary.xaml.cs">
+      <DependentUpon>ViewDashboardCompanySnapshotSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotTearSheet.xaml.cs">
+      <DependentUpon>ViewDashboardCompanySnapshotTearSheet.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Holdings\ViewDashboardPortfolioHoldings.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioHoldings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Portfolio\Snapshot\ViewDashboardPortfolioSnapshot.xaml.cs">
+      <DependentUpon>ViewDashboardPortfolioSnapshot.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GreenField.Common\GreenField.Common.csproj">
+      <Project>{46F8DB66-D3C6-4F12-B31B-60744ED3D840}</Project>
+      <Name>GreenField.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.DataContracts\GreenField.DataContracts.Silverlight.csproj">
+      <Project>{14F42BE6-0FC1-4296-A82C-B85FE0C182B3}</Project>
+      <Name>GreenField.DataContracts.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.Gadgets\GreenField.Gadgets.csproj">
+      <Project>{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}</Project>
+      <Name>GreenField.Gadgets</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.ServiceCaller\GreenField.ServiceCaller.csproj">
+      <Project>{F46363AA-C93C-4396-8C99-3C513EF3A875}</Project>
+      <Name>GreenField.ServiceCaller</Name>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.SessionManager\GreenField.UserSession.csproj">
+      <Project>{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}</Project>
+      <Name>GreenField.UserSession</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Assets\DashboardStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Portfolio\Benchmark\ViewDashboardPortfolioBenchmarkComponents.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Portfolio\Benchmark\ViewDashboardPortfolioBenchmarkSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceRelativePerformance.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceAttribution.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Portfolio\Performance\ViewDashboardPortfolioPerformanceSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Markets\Commodities\ViewDashboardMarketsCommoditiesSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Markets\MacroEconomics\ViewDashboardMarketsMacroEconomicsCountrySummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Markets\MacroEconomics\ViewDashboardMarketsMacroEconomicsEMSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotInternalModelValuation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotMarketPerformance.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Markets\Snapshot\ViewDashboardMarketsSnapshotSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Documents\ViewDashboardCompanyDocuments.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Corporate Governance\ViewDashboardCompanyCorporateGovernanceQuestionnaire.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Corporate Governance\ViewDashboardCompanyCorporateGovernanceReport.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Charting\ViewDashboardCompanyChartingValuation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Charting\ViewDashboardCompanyChartingContext.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Valuation\ViewDashboardCompanyValuationDiscountedCashFlow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Valuation\ViewDashboardCompanyValuationFairValue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsPeerComparison.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsFinStat.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsCashFlow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsBalanceSheet.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsIncomeStatement.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Screening\ViewDashboardQuarterlyResultsComparison.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewDashBoard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Company\Charting\ViewDashboardCompanyChartingClosingPrice.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Company\Charting\ViewDashboardCompanyChartingUnrealizedGain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesComparison.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesConsensus.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Company\Estimates\ViewDashboardCompanyEstimatesDetailed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotCompanyProfile.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotSummary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Company\Snapshot\ViewDashboardCompanySnapshotTearSheet.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Portfolio\Holdings\ViewDashboardPortfolioHoldings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Portfolio\Snapshot\ViewDashboardPortfolioSnapshot.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

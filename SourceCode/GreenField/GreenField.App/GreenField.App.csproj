@@ -1,0 +1,274 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F914419C-A86A-487F-9757-8DF5151FAA77}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GreenField.App</RootNamespace>
+    <AssemblyName>GreenField.App</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>true</SilverlightApplication>
+    <SupportedCultures>
+    </SupportedCultures>
+    <XapOutputs>true</XapOutputs>
+    <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
+    <XapFilename>GreenField.App.xap</XapFilename>
+    <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
+    <SilverlightAppEntry>GreenField.App.App</SilverlightAppEntry>
+    <TestPageFileName>GATEVA.AppTestPage.html</TestPageFileName>
+    <CreateTestPage>true</CreateTestPage>
+    <ValidateXaml>true</ValidateXaml>
+    <EnableOutOfBrowser>false</EnableOutOfBrowser>
+    <OutOfBrowserSettingsFile>Properties\OutOfBrowserSettings.xml</OutOfBrowserSettingsFile>
+    <UsePlatformExtensions>false</UsePlatformExtensions>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+    <LinkedServerProject>
+    </LinkedServerProject>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20525.0</ExpressionBlendVersion>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.MefExtensions">
+      <HintPath>..\Lib\Microsoft.Practices.Prism.MefExtensions.dll</HintPath>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Windows.Controls.Input.Toolkit">
+      <HintPath>..\Lib\System.Windows.Controls.Input.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Controls.Navigation, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Windows.Controls.Toolkit">
+      <HintPath>..\Lib\System.Windows.Controls.Toolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Data, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>..\Lib\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Data">
+      <HintPath>..\Lib\Telerik.Windows.Controls.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Input">
+      <HintPath>..\Lib\Telerik.Windows.Controls.Input.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation">
+      <HintPath>..\Lib\Telerik.Windows.Controls.Navigation.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.RibbonView">
+      <HintPath>..\Lib\Telerik.Windows.Controls.RibbonView.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\Lib\Telerik.Windows.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Expression_Dark">
+      <HintPath>..\Lib\Telerik.Windows.Themes.Expression_Dark.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Metro">
+      <HintPath>..\Lib\Telerik.Windows.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Office_Black">
+      <HintPath>..\Lib\Telerik.Windows.Themes.Office_Black.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Office_Blue">
+      <HintPath>..\Lib\Telerik.Windows.Themes.Office_Blue.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Office_Silver">
+      <HintPath>..\Lib\Telerik.Windows.Themes.Office_Silver.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Summer">
+      <HintPath>..\Lib\Telerik.Windows.Themes.Summer.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Transparent">
+      <HintPath>..\Lib\Telerik.Windows.Themes.Transparent.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Vista">
+      <HintPath>..\Lib\Telerik.Windows.Themes.Vista.dll</HintPath>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Windows7">
+      <HintPath>..\Lib\Telerik.Windows.Themes.Windows7.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Helpers\DataItem.cs" />
+    <Compile Include="Helpers\FlattenGroupConverter.cs" />
+    <Compile Include="Helpers\ItemStyleSelector.cs" />
+    <Compile Include="Helpers\ToolBoxSelecter.cs" />
+    <Compile Include="Models\SecuritySelectionData.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceClientFactory.cs" />
+    <Compile Include="Shell.xaml.cs">
+      <DependentUpon>Shell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ToolBox.xaml.cs">
+      <DependentUpon>ToolBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\ViewModelShell.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\GreenField.ServiceCaller\ServiceReferences.ClientConfig">
+      <Link>ServiceReferences.ClientConfig</Link>
+    </Content>
+    <Resource Include="Images\TopHoldings.png" />
+    <Resource Include="Images\IndexConstituents.png" />
+    <Resource Include="Images\Breakdown.png" />
+    <Resource Include="Images\top10Holdings.png" />
+    <Resource Include="Images\assetAllocation.png" />
+    <Resource Include="Images\equityPortfolio.png" />
+    <Resource Include="Images\holdingsPieChart.png" />
+    <Resource Include="Images\RemoveSnapshot.png" />
+    <Resource Include="Images\AddSnapshot.png" />
+    <Resource Include="Images\SaveAsSnapshot.png" />
+    <Resource Include="Images\SaveSnapshot.png" />
+    <Resource Include="Images\balancesheet.png" />
+    <Resource Include="Images\saveButtonImage.png" />
+    <Resource Include="Images\HoldingsImage.png" />
+    <Resource Include="Images\PerformanceChart.png" />
+    <Resource Include="Images\blogs.png" />
+    <Resource Include="Images\com.png" />
+    <Resource Include="Images\commitee.png" />
+    <Resource Include="Images\company.png" />
+    <Resource Include="Images\context.png" />
+    <Resource Include="Images\country.png" />
+    <Resource Include="Images\Dashcode.png" />
+    <Resource Include="Images\Dollars.png" />
+    <Resource Include="Images\earning-statements.png" />
+    <Resource Include="Images\EMsummary.png" />
+    <Resource Include="Images\finance.png" />
+    <Resource Include="Images\graph.png" />
+    <Resource Include="Images\HoldEm.png" />
+    <Resource Include="Images\investment.png" />
+    <Resource Include="Images\meeting_notes.png" />
+    <Resource Include="Images\mobilenotes.png" />
+    <Resource Include="Images\models.png" />
+    <Resource Include="Images\Notepad.png" />
+    <Resource Include="Images\notes.png" />
+    <Resource Include="Images\Pic-Balance.png" />
+    <Resource Include="Images\report.png" />
+    <Resource Include="Images\research.png" />
+    <Resource Include="Images\role.png" />
+    <Resource Include="Images\roller.png" />
+    <Resource Include="Images\snapshot.png" />
+    <Resource Include="Images\sum.png" />
+    <Resource Include="Images\tearsheet.png" />
+    <Resource Include="Images\User.png" />
+    <Resource Include="Images\value.png" />
+    <Resource Include="Images\volume.png" />
+    <None Include="Properties\AppManifest.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Assets\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Helpers\ToolBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GreenField.AdministrationModule\GreenField.AdministrationModule.csproj">
+      <Project>{DDB40CCE-A142-4911-8B48-6424B737D8F7}</Project>
+      <Name>GreenField.AdministrationModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.Common\GreenField.Common.csproj">
+      <Project>{46F8DB66-D3C6-4F12-B31B-60744ED3D840}</Project>
+      <Name>GreenField.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.DashBoardModule\GreenField.DashboardModule.csproj">
+      <Project>{BEFDA960-2EED-4D30-A2A6-36C0E899516E}</Project>
+      <Name>GreenField.DashboardModule</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.DataContracts\GreenField.DataContracts.Silverlight.csproj">
+      <Project>{14F42BE6-0FC1-4296-A82C-B85FE0C182B3}</Project>
+      <Name>GreenField.DataContracts.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.Gadgets\GreenField.Gadgets.csproj">
+      <Project>{E741FBBE-A033-44F2-B1F1-1E7F554ED6D4}</Project>
+      <Name>GreenField.Gadgets</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.ServiceCaller\GreenField.ServiceCaller.csproj">
+      <Project>{F46363AA-C93C-4396-8C99-3C513EF3A875}</Project>
+      <Name>GreenField.ServiceCaller</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.SessionManager\GreenField.UserSession.csproj">
+      <Project>{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}</Project>
+      <Name>GreenField.UserSession</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

@@ -1,0 +1,154 @@
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewTargetPrice"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" FontSize="7" FontFamily="Arial"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
+
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" 
+                              BusyContent="{Binding BusyIndicatorContent}"
+                              IsBusy="{Binding BusyIndicatorIsBusy}">
+
+        <Grid x:Name="LayoutRoot" Background="White" Visibility="{Binding MarketCapGadgetVisibility, Mode=TwoWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15" />
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="15"/>
+                <RowDefinition Height="15"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.5*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border x:Name="BlankBorder" Background="#e4e5e5" Grid.Row="0" Grid.Column="0">
+                <TextBlock Foreground="Black" Text="Target Price/Consensus Recommendation" FontFamily="Arial" FontSize="7"  FontWeight="Bold"  VerticalAlignment="Center" />
+            </Border>
+            <Border x:Name="BlankBorder2" Background="#e4e5e5" Grid.Row="0" Grid.Column="1">
+                <TextBlock Text="" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                Foreground="Black" FontFamily="Arial" FontSize="7" />
+            </Border>
+
+            <!--Ticker-->
+            <TextBlock Grid.Row="1" Grid.Column="0" Margin="2,0,0,0" Text="Ticker" FontWeight="Bold" HorizontalAlignment="Left" 
+                       VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            <TextBlock Grid.Row="1" Grid.Column="1" Margin="2,0,0,0" 
+                       Text="{Binding TargetPriceData.Ticker, StringFormat=\{0:n0\}}" 
+                       HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+
+
+            <!--CurrentPrice-->
+            <Border x:Name="CurrentPriceBorder"  Background="#d8d5d4" Grid.Row="2" Grid.Column="0">
+                <TextBlock  Margin="2,0,0,0" Text="{Binding CurrentPriceText}" FontWeight="Bold" HorizontalAlignment="Left" 
+                            VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+            <Border x:Name="CurrentPriceDataBorder" Background="#d8d5d4" Grid.Row="2" Grid.Column="1">
+                <TextBlock Grid.Row="2" Grid.Column="1" Margin="2,0,0,0" 
+                           Text="{Binding TargetPriceData.CurrentPrice, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" 
+                           VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <!--MedianTargetPrice-->
+            <Border Grid.Row="3" Grid.Column="0" >
+                <TextBlock Text="Median Target Price" Margin="2,0,0,0" FontWeight="Bold" HorizontalAlignment="Left" 
+                           VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <Border  Grid.Row="3" Grid.Column="1">
+                <TextBlock Margin="2,0,0,0" 
+                           Text="{Binding TargetPriceData.MedianTargetPrice}" 
+                           HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <!--Last Update-->
+            <Border Background="#d8d5d4" Grid.Row="4" Grid.Column="0">
+                <TextBlock Text="Last Update"  Margin="2,0,0,0" 
+                           FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <Border Background="#d8d5d4" Grid.Row="4" Grid.Column="1">
+                <TextBlock  Margin="2,0,0,0" 
+                       Text="{Binding TargetPriceData.LastUpdate,StringFormat=d}"  
+                       HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <!--# of Estimates-->
+            <Border Grid.Row="5" Grid.Column="0" >
+                <TextBlock Text="# of Estimates " Margin="2,0,0,0" FontWeight="Bold" HorizontalAlignment="Left" 
+                           VerticalAlignment="Center" 
+                           FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <Border  Grid.Row="5" Grid.Column="1">
+                <TextBlock  Margin="2,0,0,0" 
+                            Text="{Binding TargetPriceData.NoOfEstimates}" 
+                            HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <!--High-->
+            <Border Grid.Row="6" Grid.Column="0" Background="#d8d5d4" >
+                <TextBlock Text="High " Margin="2,0,0,0" FontWeight="Bold" HorizontalAlignment="Left" 
+                           VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <Border Background="#d8d5d4" Grid.Row="6" Grid.Column="1">
+                <TextBlock  Margin="2,0,0,0" 
+                       Text="{Binding TargetPriceData.High}" 
+                       HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <!--Low-->
+            <Border Grid.Row="7" Grid.Column="0"   >
+                <TextBlock Text="Low" FontWeight="Bold" Margin="2,0,0,0" HorizontalAlignment="Left" 
+                           VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+            <Border  Grid.Row="7" Grid.Column="1">
+                <TextBlock  Margin="2,0,0,0" 
+                            Text="{Binding TargetPriceData.Low}" 
+                            HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <!--Standard Deviation-->
+            <Border Grid.Row="8" Grid.Column="0" Margin="2,0,0,0" Background="#d8d5d4">
+                <TextBlock Text="Standard Deviation" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                           FontFamily="Arial" FontSize="7"   />
+            </Border>
+            <Border Background="#d8d5d4" Grid.Row="8" Grid.Column="1">
+                <TextBlock Grid.Row="8" Grid.Column="1" Margin="2,0,0,0" 
+                       Text="{Binding TargetPriceData.StandardDeviation}" 
+                       HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <!--Consensus Recommendation-->
+            <Border Grid.Row="9" Grid.Column="0"  >
+                <TextBlock Text="Consensus Recommendation" Margin="2,0,0,0" FontWeight="Bold" HorizontalAlignment="Left" 
+                           VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+            <Border  Grid.Row="9" Grid.Column="1">
+                <TextBlock Margin="2,0,0,0" 
+                           Text="{Binding TargetPriceData.ConsensusRecommendation}" 
+                           HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"   />
+            </Border>
+
+        </Grid>
+    </telerik:RadBusyIndicator>
+
+</helpers:ViewBaseUserControl>

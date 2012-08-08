@@ -1,0 +1,57 @@
+﻿<UserControl xmlns:ig="http://schemas.infragistics.com/xaml"  xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"  x:Class="GreenField.Module.Views.DetailedEstimateView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+    mc:Ignorable="d"
+             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+            xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="5*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="1" Width="500" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="5" />
+                <RowDefinition />
+                <RowDefinition Height="5" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <sdk:Label Name="lblCompanyList" Content="Company" Grid.Column="0" Grid.Row="0"/>
+            <ComboBox Name="cbCompanyList" Grid.Row="0" Grid.Column="1" ItemsSource="{Binding CompanyList}" Width="200" 
+                  HorizontalAlignment="Left" DisplayMemberPath="Name" SelectedValue="{Binding SelectedCompany, Mode=TwoWay}" SelectedValuePath="Name"/>
+            <sdk:Label Name="lblPeriodType" Content="Period Type" Grid.Column="0" Grid.Row="2"/>
+            <ComboBox Name="cbPeriodType" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding PeriodType}" Width="200" 
+                  HorizontalAlignment="Left" DisplayMemberPath="Value" SelectedValue="{Binding SelectedPeriodType, Mode=TwoWay}" SelectedValuePath="Key"/>
+            <sdk:Label Name="lblEstimateType" Content="Estimate Type" Grid.Column="0" Grid.Row="4"/>
+            <ComboBox Name="cbEstimateType" Grid.Row="4" Grid.Column="1" ItemsSource="{Binding EstimateType}" Width="200" 
+                  HorizontalAlignment="Left" SelectedValue="{Binding SelectedEstimateType, Mode=TwoWay}"/>
+        </Grid>        
+        <telerik:RadGridView Name="dgDetailedEstimates" ItemsSource="{Binding DetailedEstimates}" Grid.Row="3"
+                    AutoGenerateColumns="True" ColumnWidth="*">
+            <!--<ig:XamGrid.PagerSettings>
+                <ig:PagerSettings AllowPaging="Bottom" PageSize="10" />
+            </ig:XamGrid.PagerSettings>
+            <ig:XamGrid.Columns>                
+                <ig:TextColumn Key="Name" HeaderText="Name" />
+                <ig:TextColumn Key="AmtType" HeaderText="AmtType"  />
+                <ig:TextColumn Key="FY2009" HeaderText="FY2009" FormatString="{}{0: ### ### ###.000}" />
+                <ig:TextColumn Key="FY2010" HeaderText="FY2010" FormatString="{}{0: ### ### ###.000}" />
+                <ig:TextColumn Key="FY2011" HeaderText="FY2011" FormatString="{}{0: ### ### ###.000}"/>
+                <ig:TextColumn Key="FY2012" HeaderText="FY2012" FormatString="{}{0: ### ### ###.000}"/>
+                <ig:TextColumn Key="FY2013" HeaderText="FY2013" FormatString="{}{0: ### ### ###.000}"/>
+                <ig:TextColumn Key="FY2014" HeaderText="FY2014" FormatString="{}{0: ### ### ###.000}"/>
+                <ig:TextColumn Key="FY2015" HeaderText="FY2015" FormatString="{}{0: ### ### ###.000}"/>
+            </ig:XamGrid.Columns>-->
+        </telerik:RadGridView>        
+    </Grid>
+</UserControl>

@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F46363AA-C93C-4396-8C99-3C513EF3A875}</ProjectGuid>
+    <ProjectTypeGuids>{A1591282-1198-4647-A2B1-27E5FF5F6F3B};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GreenField.ServiceCaller</RootNamespace>
+    <AssemblyName>GreenField.ServiceCaller</AssemblyName>
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <!-- This property group is only here to support building this project using the 
+       MSBuild 3.5 toolset. In order to work correctly with this older toolset, it needs 
+       to set the TargetFrameworkVersion to v3.5 -->
+  <PropertyGroup Condition="'$(MSBuildToolsVersion)' == '3.5'">
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism">
+      <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\Lib\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System.ComponentModel.Composition, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows" />
+    <Reference Include="system" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Controls, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Windows.Browser" />
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>..\Lib\Telerik.Windows.Controls.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DBInteractivity.cs" />
+    <Compile Include="IDBInteractivity.cs" />
+    <Compile Include="ILogger.cs" />
+    <Compile Include="IManageDashboard.cs" />
+    <Compile Include="IManageLogins.cs" />
+    <Compile Include="IManageSessions.cs" />
+    <Compile Include="Logger.cs" />
+    <Compile Include="Helper\Logging.cs" />
+    <Compile Include="ManageDashboard.cs" />
+    <Compile Include="ManageLogins.cs" />
+    <Compile Include="ManageSessions.cs" />
+    <Compile Include="Helper\Prompt\Message.xaml.cs">
+      <DependentUpon>Message.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helper\Prompt\Prompt.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\BenchmarkHoldingsDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DashboardDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ExternalResearchDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\LoggingDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\LoginDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\ModelFXDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\PerformanceDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SecurityReferenceDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\SessionDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\DataSources\GreenField.DataContracts.AssetAllocationData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.AttributionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.BasicData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkChartReturnData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkFilterSelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkGridReturnData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkSelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.ChartExtensionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateDetail.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateMedian.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimatesValuations.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.CountrySelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.COASpecificData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.PRevenueData1.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.QuarterlyResultsData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.RegionSelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCategoricalData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.EntitySelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.FilterSelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.FXCommodityData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.HeatMapData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.HoldingsPercentageData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.IndexConstituentsData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.IssuerReferenceData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.MacroDatabaseKeyAnnualReportData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.MarketCapitalizationData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.MembershipUserInfo.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.PerformanceGraphData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.PerformanceGridData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.PortfolioDetailsData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.PortfolioRiskReturnData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.PortfolioSelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.PricingReferenceData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.RegionBreakdownData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.RegionSelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceActivePositionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceSectorData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceSecurityData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.RelativePerformanceUIData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.RiskIndexExposuresData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.SectorBreakdownData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.SectorSelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.SecurityOverviewData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.Session.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.TargetPriceCEData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.TopBenchmarkSecuritiesData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.TopHoldingsData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.UnrealizedGainLossData.datasource" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.wsdl" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DashboardDefinitions\DashboardOperations.disco" />
+    <None Include="Service References\DashboardDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\DashboardDefinitions\configuration.svcinfo" />
+    <None Include="Service References\DashboardDefinitions\GreenField.ServiceCaller.DashboardDefinitions.tblDashboardPreference.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DashboardDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.wsdl" />
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.GF_SECURITY_BASEVIEW.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\LoggingDefinitions\LoggingOperations.disco" />
+    <None Include="Service References\LoggingDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\LoggingDefinitions\configuration.svcinfo" />
+    <None Include="Service References\LoggingDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\LoginDefinitions\LoginOperations.wsdl" />
+    <None Include="Service References\LoginDefinitions\LoginOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginDefinitions\LoginOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginDefinitions\LoginOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginDefinitions\LoginOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoginDefinitions\LoginOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.wsdl" />
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotSelectionData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.wsdl" />
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.disco" />
+    <None Include="Service References\SecurityReferenceDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\SecurityReferenceDefinitions\configuration.svcinfo" />
+    <None Include="Service References\SecurityReferenceDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\SessionDefinitions\SessionOperations.disco" />
+    <None Include="Service References\SessionDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\SessionDefinitions\configuration.svcinfo" />
+    <None Include="Service References\SessionDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.disco" />
+    <None Include="Service References\ExternalResearchDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\ExternalResearchDefinitions\configuration.svcinfo" />
+    <None Include="Service References\ExternalResearchDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\PerformanceDefinitions\PerformanceOperations.disco" />
+    <None Include="Service References\PerformanceDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\PerformanceDefinitions\configuration.svcinfo" />
+    <None Include="Service References\PerformanceDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.disco" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\configuration.svcinfo" />
+    <None Include="Service References\BenchmarkHoldingsDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\ModelFXDefinitions\ModelFXOperations.disco" />
+    <None Include="Service References\ModelFXDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\ModelFXDefinitions\configuration.svcinfo" />
+    <None Include="Service References\ModelFXDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\LoginDefinitions\LoginOperations.disco" />
+    <None Include="Service References\LoginDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\LoginDefinitions\configuration.svcinfo" />
+    <None Include="Service References\LoginDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="ServiceReferences.ClientConfig">
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Service References\DashboardDefinitions\DashboardOperations.wsdl" />
+    <None Include="Service References\DashboardDefinitions\DashboardOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DashboardDefinitions\DashboardOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DashboardDefinitions\DashboardOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DashboardDefinitions\DashboardOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DashboardDefinitions\DashboardOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DashboardDefinitions\DashboardOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoggingDefinitions\LoggingOperations.wsdl" />
+    <None Include="Service References\LoggingDefinitions\LoggingOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoggingDefinitions\LoggingOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\LoggingDefinitions\LoggingOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.wsdl" />
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SecurityReferenceDefinitions\SecurityReferenceOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionDefinitions\SessionOperations.wsdl" />
+    <None Include="Service References\SessionDefinitions\SessionOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionDefinitions\SessionOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionDefinitions\SessionOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionDefinitions\SessionOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\SessionDefinitions\SessionOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\BenchmarkHoldingsDefinitions\" />
+    <WCFMetadataStorage Include="Service References\DashboardDefinitions\" />
+    <WCFMetadataStorage Include="Service References\ExternalResearchDefinitions\" />
+    <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
+    <WCFMetadataStorage Include="Service References\LoginDefinitions\" />
+    <WCFMetadataStorage Include="Service References\ModelFXDefinitions\" />
+    <WCFMetadataStorage Include="Service References\PerformanceDefinitions\" />
+    <WCFMetadataStorage Include="Service References\SecurityReferenceDefinitions\" />
+    <WCFMetadataStorage Include="Service References\SessionDefinitions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Helper\Prompt\Message.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GreenField.DataContracts\GreenField.DataContracts.Silverlight.csproj">
+      <Project>{14F42BE6-0FC1-4296-A82C-B85FE0C182B3}</Project>
+      <Name>GreenField.DataContracts.Silverlight</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GreenField.SessionManager\GreenField.UserSession.csproj">
+      <Project>{B8F4F078-2ED3-4CCC-9CB3-708A69CEB4EB}</Project>
+      <Name>GreenField.UserSession</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{A1591282-1198-4647-A2B1-27E5FF5F6F3B}">
+        <SilverlightProjectProperties />
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

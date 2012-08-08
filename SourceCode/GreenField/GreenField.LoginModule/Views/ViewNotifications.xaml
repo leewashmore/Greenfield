@@ -1,0 +1,57 @@
+﻿<UserControl x:Class="GreenField.LoginModule.Views.ViewNotifications"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" FontSize="12" Width="400">
+
+    <UserControl.Resources>
+        <Storyboard x:Name="FlipStart">
+            <DoubleAnimation From="0"
+                             To="90"
+                             Duration="00:00:0.5"
+                             Storyboard.TargetName="ViewPanelProjection"
+                             Storyboard.TargetProperty="RotationY">
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="FlipEnd" >
+            <DoubleAnimation From="270"
+                             To="360"
+                             Duration="00:00:0.5"
+                             Storyboard.TargetName="ViewPanelProjection"
+                             Storyboard.TargetProperty="RotationY">
+            </DoubleAnimation>
+        </Storyboard>    
+    </UserControl.Resources>
+    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="15">
+
+        <Border.Projection>
+            <PlaneProjection x:Name="ViewPanelProjection"/>
+        </Border.Projection>
+        
+        <Grid x:Name="LayoutRoot" Margin="5">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Completed" SourceName="FlipStart">
+                    <i:InvokeCommandAction Command="{Binding CancelCommand}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Click" SourceName="hbtnCancel">
+                    <ei:ControlStoryboardAction Storyboard="{StaticResource FlipStart}" ControlStoryboardOption="Play"/>
+                </i:EventTrigger>
+                <ei:DataTrigger Binding="{Binding NavigateTo, Mode=TwoWay}" Value="true" Comparison="Equal">
+                    <ei:ControlStoryboardAction Storyboard="{StaticResource FlipEnd}" ControlStoryboardOption="Play"/>
+                </ei:DataTrigger>
+            </i:Interaction.Triggers>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Margin="5,5,0,5" Text="{Binding NotificationText}" Width="380" 
+                       HorizontalAlignment="Left" VerticalAlignment="Center" TextWrapping="Wrap"/>
+            <HyperlinkButton x:Name="hbtnCancel" Grid.Row="1" Content="Back to Login Screen" FontSize="10" Foreground="DarkBlue" Margin="5"
+                             VerticalAlignment="Bottom" HorizontalAlignment="Right"/>
+        </Grid>
+    </Border>
+</UserControl>

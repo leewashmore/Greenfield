@@ -1,0 +1,12 @@
+Application With UnRealised Chart/Closing Price Chart & Combo Box(Changed functionality: 
+using EntitySelectionData instead of SecurityReferenceData) as on 3rd March 2012 Morning.
+
+****Applied common theme(Metro) accross the charts and Grids in both the Unrealised Chart & Closing Price Chart.
+
+****Integrated code 14thMarch 
+Adds Closing Price Chart
+Fund Selector,
+Benchmark Selector,
+Effective Date
+Changed Dashboard Constructor Implementation
+Test

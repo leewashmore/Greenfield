@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0fff959b-2862-4ecb-8aa7-f1136b5ddb79" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:59430/Services/LoginOperations.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="LoginOperations.xsd" MetadataType="Schema" ID="b1936b1a-0d71-40d9-9b16-467a4b5bdb6f" SourceId="1" SourceUrl="http://localhost:59430/Services/LoginOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="LoginOperations1.xsd" MetadataType="Schema" ID="7eb9ab8e-2d77-409a-ab1e-e5a508a57311" SourceId="1" SourceUrl="http://localhost:59430/Services/LoginOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="LoginOperations.wsdl" MetadataType="Wsdl" ID="8e0f55c2-748b-4ed4-b699-384993e56adf" SourceId="1" SourceUrl="http://localhost:59430/Services/LoginOperations.svc?wsdl" />
+    <MetadataFile FileName="LoginOperations2.xsd" MetadataType="Schema" ID="950ffceb-17ea-41d4-9819-b06e01dba51a" SourceId="1" SourceUrl="http://localhost:59430/Services/LoginOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="LoginOperations3.xsd" MetadataType="Schema" ID="e7a9a508-96f8-45f8-a4c2-28725b6f6065" SourceId="1" SourceUrl="http://localhost:59430/Services/LoginOperations.svc?xsd=xsd4" />
+    <MetadataFile FileName="LoginOperations.disco" MetadataType="Disco" ID="af37d273-47d6-4bce-aa71-5631a647608d" SourceId="1" SourceUrl="http://localhost:59430/Services/LoginOperations.svc?disco" />
+    <MetadataFile FileName="LoginOperations4.xsd" MetadataType="Schema" ID="92bccd99-0bf1-438e-8d52-3b2934b46f40" SourceId="1" SourceUrl="http://localhost:59430/Services/LoginOperations.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

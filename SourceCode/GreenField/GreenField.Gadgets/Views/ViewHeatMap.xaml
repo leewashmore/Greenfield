@@ -1,0 +1,52 @@
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewHeatMap"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"   
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+    <Grid x:Name="LayoutRoot">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <telerik:ExtendedDataConverter x:Key="ExtendedDataConverter" />
+            <DataTemplate x:Key="CustomToolTipDataTemplate">
+                <StackPanel Margin="10,5">
+                    <TextBlock FontWeight="Bold" Text="{Binding Path=Data, Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CNTRY_NAME'}" />
+                    <TextBlock Text="{Binding Path=Data,  Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CountryYTD',StringFormat='P'}"   />
+                </StackPanel>
+            </DataTemplate>
+        </Grid.Resources>
+        <telerik:RadBusyIndicator x:Name="busyIndicatorMap" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+            <telerik:RadMap x:Name="RadMap1"       
+                        Background="LightBlue"
+                        BorderBrush="Black"
+                        BorderThickness="1"                        
+                        UseDefaultLayout="False"
+                        MouseClickMode="None" 
+                        MouseDoubleClickMode="None"                      
+                        IsMouseWheelZoomEnabled="False" 
+                        Grid.Column="0" 
+                        Grid.Row="0"
+                        MouseLeftButtonUp="shape_MouseLeftButtonUp">
+                <telerik:RadMap.Provider>
+                    <telerik:EmptyProvider />
+                </telerik:RadMap.Provider>
+                <telerik:InformationLayer x:Name="informationLayer">
+                    <telerik:InformationLayer.Reader>
+                        <telerik:MapShapeReader Source="{Binding ShapefileSourceUri}" 
+                                            DataSource="{Binding ShapefileDataSourceUri}"
+                                            ToolTipTemplate="{StaticResource CustomToolTipDataTemplate}"                                            
+                                            PreviewReadCompleted="MapPreviewReadCompleted" />
+                    </telerik:InformationLayer.Reader>
+                </telerik:InformationLayer>
+            </telerik:RadMap>
+        </telerik:RadBusyIndicator>
+    </Grid>
+</helpers:ViewBaseUserControl>

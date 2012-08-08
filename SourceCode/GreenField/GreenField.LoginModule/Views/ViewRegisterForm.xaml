@@ -1,0 +1,187 @@
+﻿<UserControl x:Class="GreenField.LoginModule.Views.ViewRegisterForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:vsm="clr-namespace:System.Windows;assembly=System.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+    xmlns:support="clr-namespace:GreenField.LoginModule.SupportClasses"
+    xmlns:resources="clr-namespace:GreenField.LoginModule.Resources"
+    mc:Ignorable="d" FontSize="12" Width="400">
+
+    <UserControl.Resources>
+        <Storyboard x:Name="missingFieldNotificationTransition">
+            <DoubleAnimation From="0"
+                             To="5"
+                             Duration="00:00:0.1"
+                             Storyboard.TargetName="missingFieldPopup"
+                             Storyboard.TargetProperty="HorizontalOffset">
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="invalidLoginIdNotificationTransition">
+            <DoubleAnimation From="0"
+                             To="5"
+                             Duration="00:00:0.1"
+                             Storyboard.TargetName="invalidLoginIdPopup"
+                             Storyboard.TargetProperty="HorizontalOffset">
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="invalidPasswordNotificationTransition">
+            <DoubleAnimation From="0"
+                             To="5"
+                             Duration="00:00:0.1"
+                             Storyboard.TargetName="invalidPasswordPopup"
+                             Storyboard.TargetProperty="HorizontalOffset">
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="invalidConfPasswordNotificationTransition">
+            <DoubleAnimation From="0"
+                             To="5"
+                             Duration="00:00:0.1"
+                             Storyboard.TargetName="invalidConfPasswordPopup"
+                             Storyboard.TargetProperty="HorizontalOffset">
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="invalidEmailNotificationTransition">
+            <DoubleAnimation From="0"
+                             To="5"
+                             Duration="00:00:0.1"
+                             Storyboard.TargetName="invalidEmailPopup"
+                             Storyboard.TargetProperty="HorizontalOffset">
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="FlipStart">
+            <DoubleAnimation From="0"
+                             To="90"
+                             Duration="00:00:0.5"
+                             Storyboard.TargetName="ViewPanelProjection"
+                             Storyboard.TargetProperty="RotationY">
+            </DoubleAnimation>
+        </Storyboard>
+        <Storyboard x:Name="FlipEnd" >
+            <DoubleAnimation From="270"
+                             To="360"
+                             Duration="00:00:0.5"
+                             Storyboard.TargetName="ViewPanelProjection"
+                             Storyboard.TargetProperty="RotationY">
+            </DoubleAnimation>
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="15">
+
+        <Border.Projection>
+            <PlaneProjection x:Name="ViewPanelProjection"/>
+        </Border.Projection>
+
+        <Grid x:Name="LayoutRoot" Margin="5">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="Opened" SourceName="missingFieldPopup">
+                    <ei:ControlStoryboardAction Storyboard="{StaticResource missingFieldNotificationTransition}" ControlStoryboardOption="Play"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Opened" SourceName="invalidLoginIdPopup">
+                    <ei:ControlStoryboardAction Storyboard="{StaticResource invalidLoginIdNotificationTransition}" ControlStoryboardOption="Play"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Opened" SourceName="invalidPasswordPopup">
+                    <ei:ControlStoryboardAction Storyboard="{StaticResource invalidPasswordNotificationTransition}" ControlStoryboardOption="Play"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Opened" SourceName="invalidConfPasswordPopup">
+                    <ei:ControlStoryboardAction Storyboard="{StaticResource invalidConfPasswordNotificationTransition}" ControlStoryboardOption="Play"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Opened" SourceName="invalidEmailPopup">
+                    <ei:ControlStoryboardAction Storyboard="{StaticResource invalidEmailNotificationTransition}" ControlStoryboardOption="Play"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Completed" SourceName="FlipStart">
+                    <i:InvokeCommandAction Command="{Binding CancelCommand}"/>
+                </i:EventTrigger>
+                <i:EventTrigger EventName="Click" SourceName="btnCancel">
+                    <ei:ControlStoryboardAction Storyboard="{StaticResource FlipStart}" ControlStoryboardOption="Play"/>
+                </i:EventTrigger>
+                <ei:DataTrigger Binding="{Binding NavigateTo, Mode=TwoWay}" Value="true" Comparison="Equal">
+                    <ei:ControlStoryboardAction Storyboard="{StaticResource FlipEnd}" ControlStoryboardOption="Play"/>
+                </ei:DataTrigger>
+            </i:Interaction.Triggers>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5,5,5,0">
+                <TextBlock Width="378" Text="Registration" FontWeight="Bold"/>
+                <Popup x:Name="missingFieldPopup" IsOpen="{Binding MissingFieldPopupIsOpen}" Child="{Binding MissingFieldPopupChild}" VerticalOffset="15"/>
+            </StackPanel>
+
+            <toolkit:Separator VerticalAlignment="Bottom" Height="5" Margin="5,5,5,0" BorderThickness="1" BorderBrush="#193441"/>
+            
+            <StackPanel Grid.Row="2" Orientation="Vertical" Margin="5,5,5,0">
+
+                <!--Login Id Field-->
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Login Id" VerticalAlignment="Center" Width="120" Foreground="{Binding LoginBorderBrush}"/>
+                    <TextBox Width="252" Margin="5,0,0,0" Text="{Binding LoginIdText, Mode=TwoWay}" BorderBrush="{Binding LoginBorderBrush}"
+                             support:EnterKeyDown.Command="{Binding RegisterCommand}"
+                             support:EnterKeyDown.CommandArgument="{Binding Path=Text, RelativeSource={RelativeSource Self}}"/>
+                    <Popup x:Name="invalidLoginIdPopup" IsOpen="{Binding InvalidLoginIdPopupIsOpen}" Child="{Binding InvalidLoginIdPopupChild}" HorizontalOffset="5"/>
+                </StackPanel>
+
+                <!--Password Field-->
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <TextBlock Text="Password" VerticalAlignment="Center" Width="120" Foreground="{Binding PasswordBorderBrush}"/>
+                    <PasswordBox Width="253" Margin="5,0,0,0" BorderBrush="{Binding PasswordBorderBrush}" Password="{Binding PasswordText, Mode=TwoWay}"
+                                 support:EnterKeyDown.Command="{Binding RegisterCommand}"
+                                 support:EnterKeyDown.CommandArgument="{Binding Path=Password, RelativeSource={RelativeSource Self}}"/>
+                    <Popup x:Name="invalidPasswordPopup" IsOpen="{Binding InvalidPasswordPopupIsOpen}" Child="{Binding InvalidPasswordPopupChild}"/>
+                </StackPanel>
+
+                <!--Confirm Password Field-->
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <TextBlock Text="Confirm Password" VerticalAlignment="Center" Width="120" Foreground="{Binding ConfPasswordBorderBrush}"/>
+                    <PasswordBox Width="253" Margin="5,0,0,0" BorderBrush="{Binding ConfPasswordBorderBrush}"
+                                 Password="{Binding ConfirmPasswordText, Mode=TwoWay}"
+                                 support:EnterKeyDown.Command="{Binding RegisterCommand}"
+                                 support:EnterKeyDown.CommandArgument="{Binding Path=Password, RelativeSource={RelativeSource Self}}"/>
+                    <Popup x:Name="invalidConfPasswordPopup" IsOpen="{Binding InvalidConfPasswordPopupIsOpen}" Child="{Binding InvalidConfPasswordPopupChild}" HorizontalOffset="5"/>
+                </StackPanel>
+
+                <!--Email Field-->
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <TextBlock Text="Email" VerticalAlignment="Center" Width="120" Foreground="{Binding EmailBorderBrush}"/>
+                    <TextBox Width="253" Margin="5,0,0,0" BorderBrush="{Binding EmailBorderBrush}" Text="{Binding EmailText, Mode=TwoWay}"
+                             support:EnterKeyDown.Command="{Binding RegisterCommand}"
+                             support:EnterKeyDown.CommandArgument="{Binding Path=Text, RelativeSource={RelativeSource Self}}"/>
+                    <Popup x:Name="invalidEmailPopup" IsOpen="{Binding InvalidEmailPopupIsOpen}" Child="{Binding InvalidEmailPopupChild}" HorizontalOffset="5"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0" >
+                    <TextBlock Text="Security Question" VerticalAlignment="Center" Width="120" Foreground="{Binding SecurityQuestionBorderBrush}"/>
+                    <telerik:RadComboBox Width="253" TextOptions.TextHintingMode="Animated" Margin="5,0,0,0" BorderBrush="{Binding SecurityQuestionBorderBrush}" 
+                                         ItemsSource="{Binding SecurityQuestionsList}"  x:Name="securityQuestionComboBox"
+                                         SelectedItem="{Binding SecurityQuestionText, Mode=TwoWay}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <TextBlock Text="Security Answer" VerticalAlignment="Center" Width="120" Foreground="{Binding SecurityAnswerBorderBrush}"/>
+                    <TextBox Width="253" Margin="5,0,0,0" BorderBrush="{Binding SecurityAnswerBorderBrush}"
+                             Text="{Binding SecurityAnswerText, Mode=TwoWay}"
+                             support:EnterKeyDown.Command="{Binding RegisterCommand}"
+                             support:EnterKeyDown.CommandArgument="{Binding Path=Text, RelativeSource={RelativeSource Self}}"/>
+                </StackPanel>
+            </StackPanel>
+
+
+            <telerik:RadButton Grid.Row="3" Margin="5" x:Name="btnRegister" HorizontalAlignment="Left" Width="75" 
+                    Content="Register" Command="{Binding RegisterCommand}"/>
+            <HyperlinkButton x:Name="btnCancel" Margin="5" FontSize="10" Grid.Row="3" Foreground="DarkBlue"
+                             VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                             Content="Back to Login Screen"/>
+
+
+
+        </Grid>
+    </Border>
+</UserControl>

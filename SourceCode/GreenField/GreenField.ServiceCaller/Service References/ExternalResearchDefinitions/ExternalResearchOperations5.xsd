@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="EntitySelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LongName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
+  <xs:simpleType name="FinancialStatementDataSource">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="REUTERS" />
+      <xs:enumeration value="PRIMARY" />
+      <xs:enumeration value="INDUSTRY" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementDataSource" nillable="true" type="tns:FinancialStatementDataSource" />
+  <xs:simpleType name="FinancialStatementPeriodType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ANNUAL" />
+      <xs:enumeration value="QUARTER" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementPeriodType" nillable="true" type="tns:FinancialStatementPeriodType" />
+  <xs:simpleType name="FinancialStatementFiscalType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FISCAL" />
+      <xs:enumeration value="CALENDAR" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementFiscalType" nillable="true" type="tns:FinancialStatementFiscalType" />
+  <xs:simpleType name="FinancialStatementStatementType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="BAL" />
+      <xs:enumeration value="CAS" />
+      <xs:enumeration value="INC" />
+      <xs:enumeration value="FUN" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FinancialStatementStatementType" nillable="true" type="tns:FinancialStatementStatementType" />
+  <xs:complexType name="ArrayOfConsensusEstimateDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ConsensusEstimateDetail" nillable="true" type="tns:ConsensusEstimateDetail" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfConsensusEstimateDetail" nillable="true" type="tns:ArrayOfConsensusEstimateDetail" />
+  <xs:complexType name="ConsensusEstimateDetail">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Actual" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AshmoreEmmAmount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataSourceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstimateId" type="xs:int" />
+      <xs:element minOccurs="0" name="High" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Low" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NumberOfEstimates" type="xs:int" />
+      <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
+      <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Variance" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YOYGrowth" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConsensusEstimateDetail" nillable="true" type="tns:ConsensusEstimateDetail" />
+  <xs:complexType name="ArrayOfBasicData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BasicData" nillable="true" type="tns:BasicData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBasicData" nillable="true" type="tns:ArrayOfBasicData" />
+  <xs:complexType name="BasicData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AverageVolume" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Beta" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="BetaSource" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EnterpriseValue" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="MarketCapitalization" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SharesOutstanding" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WeekRange52" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BasicData" nillable="true" type="tns:BasicData" />
+  <xs:complexType name="ArrayOfTargetPriceCEData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TargetPriceCEData" nillable="true" type="tns:TargetPriceCEData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTargetPriceCEData" nillable="true" type="tns:ArrayOfTargetPriceCEData" />
+  <xs:complexType name="TargetPriceCEData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ConsensusRecommendation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentPrice" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CurrentPriceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="High" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LastUpdate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Low" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MedianTargetPrice" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="NoOfEstimates" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StandardDeviation" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TargetPriceCEData" nillable="true" type="tns:TargetPriceCEData" />
+  <xs:complexType name="ArrayOfConsensusEstimateMedian">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ConsensusEstimateMedian" nillable="true" type="tns:ConsensusEstimateMedian" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfConsensusEstimateMedian" nillable="true" type="tns:ArrayOfConsensusEstimateMedian" />
+  <xs:complexType name="ConsensusEstimateMedian">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Actual" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AshmoreEmmAmount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataSourceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstimateId" type="xs:int" />
+      <xs:element minOccurs="0" name="High" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Low" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NumberOfEstimates" type="xs:int" />
+      <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
+      <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Variance" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YOYGrowth" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConsensusEstimateMedian" nillable="true" type="tns:ConsensusEstimateMedian" />
+  <xs:complexType name="ArrayOfConsensusEstimatesValuations">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ConsensusEstimatesValuations" nillable="true" type="tns:ConsensusEstimatesValuations" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfConsensusEstimatesValuations" nillable="true" type="tns:ArrayOfConsensusEstimatesValuations" />
+  <xs:complexType name="ConsensusEstimatesValuations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Actual" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AshmoreEmmAmount" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataSourceDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EstimateId" type="xs:int" />
+      <xs:element minOccurs="0" name="High" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Low" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NumberOfEstimates" type="xs:int" />
+      <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
+      <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Variance" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="YOYGrowth" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ConsensusEstimatesValuations" nillable="true" type="tns:ConsensusEstimatesValuations" />
+  <xs:simpleType name="ScatterGraphContext">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Region" />
+      <xs:enumeration value="Country" />
+      <xs:enumeration value="Sector" />
+      <xs:enumeration value="Industry" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ScatterGraphContext" nillable="true" type="tns:ScatterGraphContext" />
+  <xs:complexType name="ArrayOfDocumentCategoricalData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentCategoricalData" nillable="true" type="tns:DocumentCategoricalData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDocumentCategoricalData" nillable="true" type="tns:ArrayOfDocumentCategoricalData" />
+  <xs:complexType name="DocumentCategoricalData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CommentDetails" nillable="true" type="tns:ArrayOfCommentDetails" />
+      <xs:element minOccurs="0" name="DocumentCatalogData" nillable="true" type="tns:DocumentCatalogData" />
+      <xs:element minOccurs="0" name="DocumentCategoryType" type="tns:DocumentCategoryType" />
+      <xs:element minOccurs="0" name="DocumentCompanyName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentCompanyTicker" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DocumentCategoricalData" nillable="true" type="tns:DocumentCategoricalData" />
+  <xs:complexType name="ArrayOfCommentDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CommentDetails" nillable="true" type="tns:CommentDetails" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCommentDetails" nillable="true" type="tns:ArrayOfCommentDetails" />
+  <xs:complexType name="CommentDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CommentBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CommentOn" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CommentDetails" nillable="true" type="tns:CommentDetails" />
+  <xs:complexType name="DocumentCatalogData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FileId" type="xs:int" />
+      <xs:element minOccurs="0" name="FileMetaTags" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FilePath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileUploadedBy" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileUploadedOn" type="xs:dateTime" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DocumentCatalogData" nillable="true" type="tns:DocumentCatalogData" />
+  <xs:simpleType name="DocumentCategoryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="COMPANY_MEETING_NOTES">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="COMPANY_ISSUED_DOCUMENTS">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="EARNING_CALLS">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="MODELS">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="IC_PRESENTATIONS">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BROKER_REPORTS">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="COMPANY_FINANCIAL_FILINGS">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="BLOG">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DocumentCategoryType" nillable="true" type="tns:DocumentCategoryType" />
+</xs:schema>

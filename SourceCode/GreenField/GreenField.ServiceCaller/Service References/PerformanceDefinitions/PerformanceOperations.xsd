@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DAL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+  <xs:complexType name="ArrayOfMarketSnapshotSelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketSnapshotSelectionData" nillable="true" type="tns:MarketSnapshotSelectionData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMarketSnapshotSelectionData" nillable="true" type="tns:ArrayOfMarketSnapshotSelectionData" />
+  <xs:complexType name="MarketSnapshotSelectionData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q1:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="SnapshotName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SnapshotPreferenceId" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MarketSnapshotSelectionData" nillable="true" type="tns:MarketSnapshotSelectionData" />
+  <xs:complexType name="ArrayOfMarketSnapshotPreference">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketSnapshotPreference" nillable="true" type="tns:MarketSnapshotPreference" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMarketSnapshotPreference" nillable="true" type="tns:ArrayOfMarketSnapshotPreference" />
+  <xs:complexType name="MarketSnapshotPreference">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="EntityId" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EntityName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EntityNodeType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EntityNodeValueCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EntityNodeValueName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EntityOrder" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="EntityPreferenceId" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="EntityReturnType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EntityType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroupName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="GroupPreferenceID" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MarketSnapshotPreference" nillable="true" type="tns:MarketSnapshotPreference" />
+</xs:schema>
