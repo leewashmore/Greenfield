@@ -87,18 +87,21 @@ namespace GreenField.Gadgets.Views
         #region Export To Excel Methods
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            ChildExportOptions childExportOptions = new ChildExportOptions
-                (
-                new List<RadExportOptions>
-                {
-                    new RadExportOptions() 
-                    {
-                        Element = this.dgQuarterlyComparison,
-                        ElementName = "Quarterly Comparison Results",
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-                    } 
-                }, "Export Options: " + GadgetNames.QUARTERLY_RESULTS_COMPARISON);
-            childExportOptions.Show();
+            //ChildExportOptions childExportOptions = new ChildExportOptions
+            //    (
+            //    new List<RadExportOptions>
+            //    {
+            //        new RadExportOptions() 
+            //        {
+            //            Element = this.dgQuarterlyComparison,
+            //            ElementName = "Quarterly Comparison Results",
+            //            ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+            //        } 
+            //    }, "Export Options: " + GadgetNames.QUARTERLY_RESULTS_COMPARISON);
+            //childExportOptions.Show();
+            ExportExcel.ExportGridExcel(dgQuarterlyComparison);
+            
+
         }
         private void dgQuarterlyResults_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {

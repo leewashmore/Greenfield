@@ -83,7 +83,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             this.DataContextPortfolioDetails = dataContextSource;
             this.dgPortfolioDetails.GroupPanelStyle = this.Resources["GridViewGroupPanelStyle"] as Style;
-            
+
         }
 
         #endregion
@@ -105,19 +105,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {
-                    new RadExportOptions() { ElementName = ExportTypes.PORTFOLIO_DETAILS_UI, Element = this.dgPortfolioDetails, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },         
-                };
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_PORTFOLIO_DETAILS_UI);
-                childExportOptions.Show();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            ExportExcel.ExportGridExcel(dgPortfolioDetails);
         }
 
         /// <summary>
@@ -418,7 +406,7 @@ namespace GreenField.Gadgets.Views
 
         #region RadDocument
 
-        
+
 
         #endregion
 
@@ -484,7 +472,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void dgPortfolioDetails_Filtering(object sender, Telerik.Windows.Controls.GridView.GridViewFilteringEventArgs e)
-        {            
+        {
             MemberColumnFilterDescriptor filteredColumn = e.ColumnFilterDescriptor as MemberColumnFilterDescriptor;
             DataContextPortfolioDetails.FilterDescriptor = filteredColumn.Member;
             //e.ColumnFilterDescriptor.Column.UniqueName;

@@ -298,7 +298,7 @@ namespace GreenField.Gadgets.Helpers
     public static class RadGridView_ElementExport
     {
 
-        public static List<ExportElementOptions> ExportElementOptions;
+        public static List<ExportElementOptions> ExportElementOptions = new List<ExportElementOptions>() { };
 
         /// <summary>
         /// Handles RadGridView Element Export in predefined prameterized details

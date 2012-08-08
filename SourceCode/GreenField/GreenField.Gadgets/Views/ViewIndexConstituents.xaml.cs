@@ -63,7 +63,7 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Event
-       
+
         /// <summary>
         /// Handling row loaded event of grid
         /// </summary>
@@ -71,26 +71,30 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgIndexConstituents_RowLoaded(object sender, RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e); 
-        }   
+            GroupedGridRowLoadedHandler.Implement(e);
+        }
         #endregion
 
         #region Export To Excel Methods
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            ChildExportOptions childExportOptions = new ChildExportOptions
-                (
-                new List<RadExportOptions>
-                {
-                    new RadExportOptions() 
-                    {
-                        Element = this.dgIndexConstituents,
-                        ElementName = "Index Constituent Data",
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-                    } 
-                }, "Export Options: " + GadgetNames.BENCHMARK_INDEX_CONSTITUENTS);
-            childExportOptions.Show();
-           }
+            //ChildExportOptions childExportOptions = new ChildExportOptions
+            //    (
+            //    new List<RadExportOptions>
+            //    {
+            //        new RadExportOptions() 
+            //        {
+            //            Element = this.dgIndexConstituents,
+            //            ElementName = "Index Constituent Data",
+            //            ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+            //        } 
+            //    }, "Export Options: " + GadgetNames.BENCHMARK_INDEX_CONSTITUENTS);
+            //childExportOptions.Show();
+
+            ExportExcel.ExportGridExcel(dgIndexConstituents);
+
+
+        }
         private void dgIndexConstituents_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
@@ -109,6 +113,6 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-                
+
     }
 }

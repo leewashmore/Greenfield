@@ -116,14 +116,17 @@ namespace GreenField.Gadgets.Views
                 {
                     if (this.dgRegionBreakdown.Visibility == Visibility.Visible)
                     {
-                        ChildExportOptions childExportOptions = new ChildExportOptions
-                    (new List<RadExportOptions>{new RadExportOptions() 
-                    {
-                        Element = this.dgRegionBreakdown,
-                        ElementName = "Region Breakdown Data",
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-                    }}, "Export Options: " + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
-                    childExportOptions.Show();
+                    //    ChildExportOptions childExportOptions = new ChildExportOptions
+                    //(new List<RadExportOptions>{new RadExportOptions() 
+                    //{
+                    //    Element = this.dgRegionBreakdown,
+                    //    ElementName = "Region Breakdown Data",
+                    //    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                    //}}, "Export Options: " + GadgetNames.HOLDINGS_REGION_BREAKDOWN);
+                    //    childExportOptions.Show();
+
+                        ExportExcel.ExportGridExcel(dgRegionBreakdown);
+
                     }
                 }
             }
@@ -153,8 +156,8 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         private void dgRegionBreakdown_RowLoaded(object sender, RowLoadedEventArgs e)
-        {   
-          GroupedGridRowLoadedHandler.Implement(e);
-        }       
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }
     }
 }

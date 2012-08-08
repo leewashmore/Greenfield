@@ -168,7 +168,8 @@ namespace GreenField.Gadgets.Views
                 if (chDividendYield.Visibility == Visibility.Visible)
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.Dividend_Yield, Element = this.chDividendYield, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
                 else if (dgDividendYield.Visibility == Visibility.Visible)
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.Dividend_Yield_DATA, Element = this.chDividendYield, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.Dividend_Yield_DATA, Element = this.chDividendYield, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    ExportExcel.ExportGridExcel(dgDividendYield);
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_DividendYield);
                 childExportOptions.Show();

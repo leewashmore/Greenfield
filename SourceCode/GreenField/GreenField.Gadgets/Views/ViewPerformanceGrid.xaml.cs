@@ -45,8 +45,8 @@ namespace GreenField.Gadgets.Views
         {
             if (e.ShowBusy)
             {
-               
-                this.busyIndicatorGrid.IsBusy = true;         
+
+                this.busyIndicatorGrid.IsBusy = true;
             }
             else
             {
@@ -71,14 +71,16 @@ namespace GreenField.Gadgets.Views
 
                 if (this.dgPerformance.Visibility == Visibility.Visible)
                 {
-                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {
-                  
-                      new RadExportOptions() { ElementName = "Performance Grid", Element = this.dgPerformance, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
-                    
-                };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRID);
-                    childExportOptions.Show();
+                    //    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                    //{
+
+                    //      new RadExportOptions() { ElementName = "Performance Grid", Element = this.dgPerformance, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+
+                    //};
+                    //    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_GRID);
+                    //    childExportOptions.Show();
+                    ExportExcel.ExportGridExcel(dgPerformance);
+
                 }
 
             }
@@ -92,7 +94,7 @@ namespace GreenField.Gadgets.Views
         {
             RadGridView_ElementExport.ElementExporting(e);
         }
-    
+
         #endregion
 
         #region Properties
@@ -120,7 +122,7 @@ namespace GreenField.Gadgets.Views
                     ((ViewModelPerformanceGrid)DataContext).IsActive = _isActive;
             }
         }
-        #endregion        
+        #endregion
 
         #region RemoveEvents
 

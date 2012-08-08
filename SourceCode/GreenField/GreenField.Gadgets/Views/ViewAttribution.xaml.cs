@@ -26,13 +26,13 @@ namespace GreenField.Gadgets.Views
         /// Constructor
         /// </summary>
         /// <param name="DataContextSource">ViewModelAttribution as Data context for this View</param>
-        public ViewAttribution(ViewModelAttribution dataContextSource )
+        public ViewAttribution(ViewModelAttribution dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            this.DataContextAttribution = dataContextSource;            
-                dataContextSource.attributionDataLoadedEvent +=
-            new DataRetrievalProgressIndicatorEventHandler(dataContextSource_attributionDataLoadedEvent);
+            this.DataContextAttribution = dataContextSource;
+            dataContextSource.attributionDataLoadedEvent +=
+        new DataRetrievalProgressIndicatorEventHandler(dataContextSource_attributionDataLoadedEvent);
         }
         #endregion
 
@@ -74,11 +74,11 @@ namespace GreenField.Gadgets.Views
         {
             if (e.ShowBusy)
             {
-                this.busyIndicatorGrid.IsBusy = true;              
+                this.busyIndicatorGrid.IsBusy = true;
             }
             else
             {
-                this.busyIndicatorGrid.IsBusy = false;                
+                this.busyIndicatorGrid.IsBusy = false;
             }
         }
         #endregion
@@ -116,20 +116,20 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-
-
-                if (this.dgAttribution.Visibility == Visibility.Visible)
-                    {
-                        List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {
+                //if (this.dgAttribution.Visibility == Visibility.Visible)
+                //{
+                //    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                //{
                   
-                      new RadExportOptions() { ElementName = "Performance Attribution", Element = this.dgAttribution, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                //      new RadExportOptions() { ElementName = "Performance Attribution", Element = this.dgAttribution, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
                     
-                };
-                        ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_ATTRIBUTION);
-                        childExportOptions.Show();
-                    }
-                
+                //};
+                //    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_ATTRIBUTION);
+                //    childExportOptions.Show();
+                //}
+                ExportExcel.ExportGridExcel(dgAttribution);
+
+
             }
             catch (Exception ex)
             {

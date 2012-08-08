@@ -19,7 +19,7 @@ end
 
 GO
 
-CREATE procedure [dbo].[GetConsensusEstimatesValuation](
+Create procedure [dbo].[GetConsensusEstimatesValuation](
 	@ISSUER_ID			varchar(20)					-- The company identifier		
 ,	@DATA_SOURCE		varchar(10)  = 'REUTERS'	-- REUTERS, PRIMARY, INDUSTRY
 ,	@PERIOD_TYPE		char(2) = 'A'				-- A, Q
@@ -140,9 +140,6 @@ as
 	-- Clean up
 	drop table #Actual;
 	drop table #Estimate;
-
-
-
 
 
 GO

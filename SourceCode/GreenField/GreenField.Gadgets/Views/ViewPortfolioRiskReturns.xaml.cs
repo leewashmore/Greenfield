@@ -30,7 +30,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            this.DataContextRiskReturn = dataContextSource;           
+            this.DataContextRiskReturn = dataContextSource;
             dataContextSource.portfolioRiskReturnDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_portfolioRiskReturnDataLoadedEvent);
         }
@@ -68,17 +68,20 @@ namespace GreenField.Gadgets.Views
             {
 
 
-                if (this.dgPortfolioRiskReturn.Visibility == Visibility.Visible)
-                {
-                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                {
-                  
-                      new RadExportOptions() { ElementName = "Portfolio Risk Return", Element = this.dgPortfolioRiskReturn, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
-                    
-                };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_RISK_RETURN);
-                    childExportOptions.Show();
-                }
+                //if (this.dgPortfolioRiskReturn.Visibility == Visibility.Visible)
+                //{
+                //    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                //{
+
+                //      new RadExportOptions() { ElementName = "Portfolio Risk Return", Element = this.dgPortfolioRiskReturn, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+
+                //};
+                //    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_RISK_RETURN);
+                //    childExportOptions.Show();
+                //}
+
+                ExportExcel.ExportGridExcel(dgPortfolioRiskReturn);
+
 
             }
             catch (Exception ex)
@@ -132,6 +135,6 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-       
+
     }
 }

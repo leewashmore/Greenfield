@@ -19,7 +19,7 @@ end
 
 GO
 
-CREATE procedure [dbo].[GetConsensusEstimatesMedian](
+Create procedure [dbo].[GetConsensusEstimatesMedian](
 	@ISSUER_ID			varchar(20)					-- The company identifier		
 ,	@DATA_SOURCE		varchar(10)  = 'REUTERS'	-- REUTERS, PRIMARY, INDUSTRY
 ,	@PERIOD_TYPE		char(2) = 'A'				-- A, Q
@@ -33,7 +33,7 @@ Declare
 @netIncomeType int,
 @epsktype int
 
-SET @earnings = (Select Earnings from tblCompanyInfo 
+SET @earnings = (Select Earnings from [Reuters].[dbo].tblCompanyInfo 
 				where XRef IN (Select XRef from GF_SECURITY_BASEVIEW 
 								where ISSUER_ID = @Issuer_Id));
 								
@@ -175,11 +175,6 @@ SET @netIncomeType =   CASE @earnings
 	-- Clean up
 	drop table #Actual;
 	drop table #Estimate;
-
-
-
-
-
 GO
 
 

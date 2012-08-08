@@ -57,8 +57,8 @@ namespace GreenField.Gadgets.Views
             _dataContextSource = dataContextSource;
             this.SetGridHeaders();
 
-            
-        } 
+
+        }
         #endregion
 
         #region Event Handlers
@@ -274,16 +274,17 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            RadExportOptionsInfo.Add(new RadExportOptions()
-            {
-                ElementName = this.txtHeader.Text,
-                Element = this.radGridSnapshot,
-                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-            });
+            //List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            //RadExportOptionsInfo.Add(new RadExportOptions()
+            //{
+            //    ElementName = this.txtHeader.Text,
+            //    Element = this.radGridSnapshot,
+            //    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+            //});
 
-            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);
-            childExportOptions.Show();
+            //ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);
+            //childExportOptions.Show();
+            ExportExcel.ExportGridExcel(radGridSnapshot);
         }
 
         /// <summary>
@@ -538,7 +539,7 @@ namespace GreenField.Gadgets.Views
                 //        : dropBenchmarkDetails.BenchmarkOrder;
                 //}
             }
-        } 
+        }
         #endregion
 
         #region Event Unsubscribe
@@ -548,6 +549,6 @@ namespace GreenField.Gadgets.Views
             this._dataContextSource = null;
             this.DataContext = null;
         }
-        #endregion        
+        #endregion
     }
 }

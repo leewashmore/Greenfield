@@ -65,10 +65,10 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-           // dataContextSource.RiskIndexExposuresDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRiskIndexExposuresLoadedevent);
+            // dataContextSource.RiskIndexExposuresDataLoadedEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceRiskIndexExposuresLoadedevent);
             this.DataContextViewModelTopHoldings = dataContextSource;
         }
-        #endregion        
+        #endregion
 
         #region Method to Flip
         /// <summary>
@@ -121,14 +121,15 @@ namespace GreenField.Gadgets.Views
                 {
                     if (this.dgRelativeRisk.Visibility == Visibility.Visible)
                     {
-                        ChildExportOptions childExportOptions = new ChildExportOptions
-                    (new List<RadExportOptions>{new RadExportOptions() 
-                    {
-                        Element = this.dgRelativeRisk,
-                        ElementName = "Relative Risk Data",
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-                    }}, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
-                        childExportOptions.Show();
+                        //    ChildExportOptions childExportOptions = new ChildExportOptions
+                        //(new List<RadExportOptions>{new RadExportOptions() 
+                        //{
+                        //    Element = this.dgRelativeRisk,
+                        //    ElementName = "Relative Risk Data",
+                        //    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                        //}}, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
+                        //    childExportOptions.Show();
+                        ExportExcel.ExportGridExcel(dgRelativeRisk);
                     }
                 }
             }
@@ -147,7 +148,7 @@ namespace GreenField.Gadgets.Views
         private void dgRelativeRisk_RowLoaded(object sender, RowLoadedEventArgs e)
         {
             GroupedGridRowLoadedHandler.Implement(e);
-        }  
+        }
 
         #region Dispose Method
         /// <summary>
@@ -171,7 +172,7 @@ namespace GreenField.Gadgets.Views
                         Select(a => a.Value).FirstOrDefault());
                     (this.DataContext as ViewModelRiskIndexExposures).AxisXMaxValue = Convert.ToDecimal(((this.DataContext as ViewModelRiskIndexExposures).RiskIndexExposuresChartInfo.OrderByDescending(a => a.Value)).
                         Select(a => a.Value).FirstOrDefault());
-                    
+
                     this.chartRelativerisk.DefaultView.ChartArea.AxisY.Step = 10;
                 }
             }

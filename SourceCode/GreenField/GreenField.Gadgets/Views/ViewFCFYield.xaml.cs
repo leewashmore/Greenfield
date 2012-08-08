@@ -168,7 +168,9 @@ namespace GreenField.Gadgets.Views
                 if (chFCFYield.Visibility == Visibility.Visible)
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.FCF_Yield, Element = this.chFCFYield, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
                 else if (dgFCFYield.Visibility == Visibility.Visible)
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.FCF_Yield_DATA, Element = this.chFCFYield, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.FCF_Yield_DATA, Element = this.chFCFYield, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    ExportExcel.ExportGridExcel(dgFCFYield);
+
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_FCFYield);
                 childExportOptions.Show();

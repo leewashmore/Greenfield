@@ -20,7 +20,7 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewPCE : ViewBaseUserControl
     {
-        
+
         #region Variables
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-         /// <summary>
+        /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
         private bool _isActive;
@@ -74,7 +74,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextPCE = dataContextSource;
-            dataContextSource.ChartArea = this.chPCE.DefaultView.ChartArea;           
+            dataContextSource.ChartArea = this.chPCE.DefaultView.ChartArea;
             this.ApplyChartStyles();
         }
         private void dgPCE_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
@@ -116,7 +116,7 @@ namespace GreenField.Gadgets.Views
                     if (_maxValPrevenue > _axisYMaxVal && _maxValPrevenue % 5 != 0)
                         _axisYMaxVal = Convert.ToDecimal(Math.Floor(Convert.ToDouble(_minValPrevenue / 5))) * _incrementVal + _incrementVal;
 
-                    if (_axisYMinVal > 0) 
+                    if (_axisYMinVal > 0)
                         _axisYMinVal = 0;
                     (this.DataContext as ViewModelPCE).AxisXMinValue = _axisYMinVal;
                     (this.DataContext as ViewModelPCE).AxisXMaxValue = _axisYMaxVal;
@@ -130,7 +130,7 @@ namespace GreenField.Gadgets.Views
                         this.chPCE.DefaultView.ChartArea.AxisY.Step = 5.0;
                     }
                 }
-            
+
             }
 
         }
@@ -168,7 +168,11 @@ namespace GreenField.Gadgets.Views
                 if (chPCE.Visibility == Visibility.Visible)
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_CE, Element = this.chPCE, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
                 else if (dgPCE.Visibility == Visibility.Visible)
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_CE_DATA, Element = this.chPCE, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                {
+                    //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_CE_DATA, Element = this.chPCE, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    ExportExcel.ExportGridExcel(dgPCE);
+                    return;
+                }
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PCE);
                 childExportOptions.Show();

@@ -131,20 +131,21 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            String elementName = "Consensus Estimate - " + (this.DataContextEstimates.EntitySelectionInfo).LongName + " (" + (this.DataContextEstimates.EntitySelectionInfo).ShortName + ") " +
-                (_periodIsYearly ? this.dgConsensusEstimate.Columns[2].Header : this.dgConsensusEstimate.Columns[6].Header) + " - " +
-                (_periodIsYearly ? this.dgConsensusEstimate.Columns[7].Header : this.dgConsensusEstimate.Columns[11].Header);
-            RadExportOptionsInfo.Add(new RadExportOptions()
-            {
-                ElementName = elementName,
-                Element = this.dgConsensusEstimate
-                ,
-                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-            });
+            //List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            //String elementName = "Consensus Estimate - " + (this.DataContextEstimates.EntitySelectionInfo).LongName + " (" + (this.DataContextEstimates.EntitySelectionInfo).ShortName + ") " +
+            //    (_periodIsYearly ? this.dgConsensusEstimate.Columns[2].Header : this.dgConsensusEstimate.Columns[6].Header) + " - " +
+            //    (_periodIsYearly ? this.dgConsensusEstimate.Columns[7].Header : this.dgConsensusEstimate.Columns[11].Header);
+            //RadExportOptionsInfo.Add(new RadExportOptions()
+            //{
+            //    ElementName = elementName,
+            //    Element = this.dgConsensusEstimate
+            //    ,
+            //    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+            //});
 
-            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
-            childExportOptions.Show();
+            //ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
+            //childExportOptions.Show();
+            ExportExcel.ExportGridExcel(dgConsensusEstimate);
         }
     }
 }

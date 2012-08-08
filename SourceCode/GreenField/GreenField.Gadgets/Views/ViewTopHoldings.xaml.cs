@@ -56,24 +56,25 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextViewModelTopHoldings = dataContextSource;
-        } 
+        }
         #endregion
 
         #region Export To Excel Methods
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            ChildExportOptions childExportOptions = new ChildExportOptions
-                (
-                new List<RadExportOptions>
-                {
-                    new RadExportOptions() 
-                    {
-                        Element = this.dgTopHoldings,
-                        ElementName = "Top 10 Holdings Data",
-                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-                    } 
-                }, "Export Options: " + GadgetNames.HOLDINGS_TOP_TEN_HOLDINGS);
-            childExportOptions.Show();
+            //ChildExportOptions childExportOptions = new ChildExportOptions
+            //    (
+            //    new List<RadExportOptions>
+            //    {
+            //        new RadExportOptions() 
+            //        {
+            //            Element = this.dgTopHoldings,
+            //            ElementName = "Top 10 Holdings Data",
+            //            ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+            //        } 
+            //    }, "Export Options: " + GadgetNames.HOLDINGS_TOP_TEN_HOLDINGS);
+            //childExportOptions.Show();
+            ExportExcel.ExportGridExcel(dgTopHoldings);
         }
         private void dgTopHoldings_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
@@ -91,13 +92,13 @@ namespace GreenField.Gadgets.Views
             this.DataContextViewModelTopHoldings.Dispose();
             this.DataContextViewModelTopHoldings = null;
             this.DataContext = null;
-        } 
+        }
         #endregion
 
         private void dgTopHoldings_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
             //GroupedGridRowLoadedHandler.Implement(e);
         }
-       
+
     }
 }
