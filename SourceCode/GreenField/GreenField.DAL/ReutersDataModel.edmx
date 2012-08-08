@@ -1030,7 +1030,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="ReutersDataModel">
+      <Diagram Name="ReutersDataModel" ZoomLevel="74">
         <EntityTypeShape EntityType="ReutersModel.BENCHMARK_FINANCIALS" Width="1.5" PointX="0.75" PointY="0.75" Height="2.5571907552083335" IsExpanded="true" />
         <EntityTypeShape EntityType="ReutersModel.BENCHMARK_NODE_FINANCIALS" Width="1.5" PointX="2.75" PointY="0.75" Height="3.1340950520833326" IsExpanded="true" />
         <EntityTypeShape EntityType="ReutersModel.PORTFOLIO_FINANCIALS" Width="1.5" PointX="4.75" PointY="0.75" Height="2.5571907552083335" IsExpanded="true" />

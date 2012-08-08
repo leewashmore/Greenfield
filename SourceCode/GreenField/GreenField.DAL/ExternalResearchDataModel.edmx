@@ -259,57 +259,6 @@
 							FROM [dbo].[REUTERS_XREF] AS [REUTERS_XREF]
 						</DefiningQuery>
 					</EntitySet>
-					<EntitySet Name="tblCETargetPrice" EntityType="ExternalResearchModel.Store.tblCETargetPrice" store:Type="Tables" store:Schema="dbo" store:Name="tblCETargetPrice">
-						<DefiningQuery>
-							SELECT
-							[tblCETargetPrice].[XRef] AS [XRef],
-							[tblCETargetPrice].[StartDate] AS [StartDate],
-							[tblCETargetPrice].[EndDate] AS [EndDate],
-							[tblCETargetPrice].[OriginalDate] AS [OriginalDate],
-							[tblCETargetPrice].[ExpirationDate] AS [ExpirationDate],
-							[tblCETargetPrice].[Unit] AS [Unit],
-							[tblCETargetPrice].[NumOfEsts] AS [NumOfEsts],
-							[tblCETargetPrice].[High] AS [High],
-							[tblCETargetPrice].[Low] AS [Low],
-							[tblCETargetPrice].[Mean] AS [Mean],
-							[tblCETargetPrice].[StdDev] AS [StdDev],
-							[tblCETargetPrice].[Median] AS [Median],
-							[tblCETargetPrice].[Currency] AS [Currency]
-							FROM [dbo].[tblCETargetPrice] AS [tblCETargetPrice]
-						</DefiningQuery>
-					</EntitySet>
-					<EntitySet Name="tblCompanyInfo" EntityType="ExternalResearchModel.Store.tblCompanyInfo" store:Type="Tables" store:Schema="dbo" store:Name="tblCompanyInfo">
-						<DefiningQuery>
-							SELECT
-							[tblCompanyInfo].[XRef] AS [XRef],
-							[tblCompanyInfo].[ReportNumber] AS [ReportNumber],
-							[tblCompanyInfo].[Name] AS [Name],
-							[tblCompanyInfo].[Country] AS [Country],
-							[tblCompanyInfo].[Ticker] AS [Ticker],
-							[tblCompanyInfo].[CUSIP] AS [CUSIP],
-							[tblCompanyInfo].[ISIN] AS [ISIN],
-							[tblCompanyInfo].[SEDOL] AS [SEDOL],
-							[tblCompanyInfo].[VALOREN] AS [VALOREN],
-							[tblCompanyInfo].[RIC] AS [RIC],
-							[tblCompanyInfo].[DisplayRIC] AS [DisplayRIC],
-							[tblCompanyInfo].[RecentSplitDate] AS [RecentSplitDate],
-							[tblCompanyInfo].[RecentCapitalAdjDate] AS [RecentCapitalAdjDate],
-							[tblCompanyInfo].[Consensus] AS [Consensus],
-							[tblCompanyInfo].[Estimate] AS [Estimate],
-							[tblCompanyInfo].[Earnings] AS [Earnings],
-							[tblCompanyInfo].[Periodicity] AS [Periodicity],
-							[tblCompanyInfo].[CurrentPeriod] AS [CurrentPeriod],
-							[tblCompanyInfo].[pEndDate] AS [pEndDate],
-							[tblCompanyInfo].[fYearEnd] AS [fYearEnd],
-							[tblCompanyInfo].[fPeriodEnd] AS [fPeriodEnd],
-							[tblCompanyInfo].[CurrentPrice] AS [CurrentPrice],
-							[tblCompanyInfo].[CurrentPriceDate] AS [CurrentPriceDate],
-							[tblCompanyInfo].[Currency] AS [Currency],
-							[tblCompanyInfo].[OutstandingShares] AS [OutstandingShares],
-							[tblCompanyInfo].[Active] AS [Active]
-							FROM [dbo].[tblCompanyInfo] AS [tblCompanyInfo]
-						</DefiningQuery>
-					</EntitySet>
 				</EntityContainer>
 				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data3107.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -706,60 +655,9 @@
 				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data3107.dbo.tblCETargetPrice' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-				<EntityType Name="tblCETargetPrice">
-					<Key>
-						<PropertyRef Name="XRef" />
-						<PropertyRef Name="StartDate" />
-						<PropertyRef Name="OriginalDate" />
-					</Key>
-					<Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
-					<Property Name="StartDate" Type="datetime" Nullable="false" />
-					<Property Name="EndDate" Type="datetime" />
-					<Property Name="OriginalDate" Type="datetime" Nullable="false" />
-					<Property Name="ExpirationDate" Type="datetime" />
-					<Property Name="Unit" Type="varchar" MaxLength="2" />
-					<Property Name="NumOfEsts" Type="int" />
-					<Property Name="High" Type="real" />
-					<Property Name="Low" Type="real" />
-					<Property Name="Mean" Type="real" />
-					<Property Name="StdDev" Type="real" />
-					<Property Name="Median" Type="real" />
-					<Property Name="Currency" Type="char" MaxLength="3" />
-				</EntityType>
 				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data3107.dbo.tblCompanyInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-				<EntityType Name="tblCompanyInfo">
-					<Key>
-						<PropertyRef Name="XRef" />
-					</Key>
-					<Property Name="XRef" Type="varchar" Nullable="false" MaxLength="9" />
-					<Property Name="ReportNumber" Type="varchar" MaxLength="5" />
-					<Property Name="Name" Type="varchar" MaxLength="80" />
-					<Property Name="Country" Type="char" MaxLength="3" />
-					<Property Name="Ticker" Type="varchar" MaxLength="15" />
-					<Property Name="CUSIP" Type="varchar" MaxLength="12" />
-					<Property Name="ISIN" Type="varchar" MaxLength="12" />
-					<Property Name="SEDOL" Type="varchar" MaxLength="12" />
-					<Property Name="VALOREN" Type="varchar" MaxLength="12" />
-					<Property Name="RIC" Type="varchar" MaxLength="21" />
-					<Property Name="DisplayRIC" Type="varchar" MaxLength="21" />
-					<Property Name="RecentSplitDate" Type="datetime" />
-					<Property Name="RecentCapitalAdjDate" Type="datetime" />
-					<Property Name="Consensus" Type="varchar" MaxLength="20" />
-					<Property Name="Estimate" Type="varchar" MaxLength="10" />
-					<Property Name="Earnings" Type="varchar" MaxLength="10" />
-					<Property Name="Periodicity" Type="varchar" MaxLength="2" />
-					<Property Name="CurrentPeriod" Type="char" MaxLength="2" />
-					<Property Name="pEndDate" Type="smalldatetime" />
-					<Property Name="fYearEnd" Type="char" MaxLength="6" />
-					<Property Name="fPeriodEnd" Type="char" MaxLength="6" />
-					<Property Name="CurrentPrice" Type="real" />
-					<Property Name="CurrentPriceDate" Type="smalldatetime" />
-					<Property Name="Currency" Type="char" MaxLength="3" />
-					<Property Name="OutstandingShares" Type="decimal" />
-					<Property Name="Active" Type="bit" />
-				</EntityType>
 				<Function Name="Broker_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
 					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
 					<Parameter Name="ESTIMATE_TYPE" Type="varchar" Mode="In" />
@@ -851,8 +749,6 @@
 					<FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
 						<Parameter Name="SecurityID" Mode="In" Type="String" />
 					</FunctionImport>
-					<EntitySet Name="tblCETargetPrices" EntityType="ExternalResearchModel.tblCETargetPrice" />
-					<EntitySet Name="tblCompanyInfoes" EntityType="ExternalResearchModel.tblCompanyInfo" />
 					<FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
 						<Parameter Name="XRef" Mode="In" Type="String" />
 					</FunctionImport>
@@ -1220,57 +1116,6 @@
 					<Property Type="DateTime" Name="RootSourceDate" Nullable="true" />
 					<Property Type="String" Name="CalculationDiagram" Nullable="true" />
 				</ComplexType>
-				<EntityType Name="tblCETargetPrice">
-					<Key>
-						<PropertyRef Name="XRef" />
-						<PropertyRef Name="StartDate" />
-						<PropertyRef Name="OriginalDate" />
-					</Key>
-					<Property Type="String" Name="XRef" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-					<Property Type="DateTime" Name="StartDate" Nullable="false" />
-					<Property Type="DateTime" Name="EndDate" />
-					<Property Type="DateTime" Name="OriginalDate" Nullable="false" />
-					<Property Type="DateTime" Name="ExpirationDate" />
-					<Property Type="String" Name="Unit" MaxLength="2" FixedLength="false" Unicode="false" />
-					<Property Type="Int32" Name="NumOfEsts" />
-					<Property Type="Single" Name="High" />
-					<Property Type="Single" Name="Low" />
-					<Property Type="Single" Name="Mean" />
-					<Property Type="Single" Name="StdDev" />
-					<Property Type="Single" Name="Median" />
-					<Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
-				</EntityType>
-				<EntityType Name="tblCompanyInfo">
-					<Key>
-						<PropertyRef Name="XRef" />
-					</Key>
-					<Property Type="String" Name="XRef" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="ReportNumber" MaxLength="5" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="Name" MaxLength="80" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="Country" MaxLength="3" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="Ticker" MaxLength="15" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="CUSIP" MaxLength="12" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="ISIN" MaxLength="12" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="SEDOL" MaxLength="12" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="VALOREN" MaxLength="12" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="RIC" MaxLength="21" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="DisplayRIC" MaxLength="21" FixedLength="false" Unicode="false" />
-					<Property Type="DateTime" Name="RecentSplitDate" />
-					<Property Type="DateTime" Name="RecentCapitalAdjDate" />
-					<Property Type="String" Name="Consensus" MaxLength="20" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="Estimate" MaxLength="10" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="Earnings" MaxLength="10" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="Periodicity" MaxLength="2" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="CurrentPeriod" MaxLength="2" FixedLength="true" Unicode="false" />
-					<Property Type="DateTime" Name="pEndDate" />
-					<Property Type="String" Name="fYearEnd" MaxLength="6" FixedLength="true" Unicode="false" />
-					<Property Type="String" Name="fPeriodEnd" MaxLength="6" FixedLength="true" Unicode="false" />
-					<Property Type="Single" Name="CurrentPrice" />
-					<Property Type="DateTime" Name="CurrentPriceDate" />
-					<Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
-					<Property Type="Decimal" Name="OutstandingShares" Precision="18" Scale="0" />
-					<Property Type="Boolean" Name="Active" />
-				</EntityType>
 				<ComplexType Name="GetTargetPrice_Result">
 					<Property Type="String" Name="Xref" Nullable="false" MaxLength="9" />
 					<Property Type="String" Name="Ticker" Nullable="true" MaxLength="15" />
@@ -1699,57 +1544,6 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
-					<EntitySetMapping Name="tblCETargetPrices">
-						<EntityTypeMapping TypeName="ExternalResearchModel.tblCETargetPrice">
-							<MappingFragment StoreEntitySet="tblCETargetPrice">
-								<ScalarProperty Name="Currency" ColumnName="Currency" />
-								<ScalarProperty Name="Median" ColumnName="Median" />
-								<ScalarProperty Name="StdDev" ColumnName="StdDev" />
-								<ScalarProperty Name="Mean" ColumnName="Mean" />
-								<ScalarProperty Name="Low" ColumnName="Low" />
-								<ScalarProperty Name="High" ColumnName="High" />
-								<ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
-								<ScalarProperty Name="Unit" ColumnName="Unit" />
-								<ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-								<ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
-								<ScalarProperty Name="EndDate" ColumnName="EndDate" />
-								<ScalarProperty Name="StartDate" ColumnName="StartDate" />
-								<ScalarProperty Name="XRef" ColumnName="XRef" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="tblCompanyInfoes">
-						<EntityTypeMapping TypeName="ExternalResearchModel.tblCompanyInfo">
-							<MappingFragment StoreEntitySet="tblCompanyInfo">
-								<ScalarProperty Name="Active" ColumnName="Active" />
-								<ScalarProperty Name="OutstandingShares" ColumnName="OutstandingShares" />
-								<ScalarProperty Name="Currency" ColumnName="Currency" />
-								<ScalarProperty Name="CurrentPriceDate" ColumnName="CurrentPriceDate" />
-								<ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
-								<ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-								<ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
-								<ScalarProperty Name="pEndDate" ColumnName="pEndDate" />
-								<ScalarProperty Name="CurrentPeriod" ColumnName="CurrentPeriod" />
-								<ScalarProperty Name="Periodicity" ColumnName="Periodicity" />
-								<ScalarProperty Name="Earnings" ColumnName="Earnings" />
-								<ScalarProperty Name="Estimate" ColumnName="Estimate" />
-								<ScalarProperty Name="Consensus" ColumnName="Consensus" />
-								<ScalarProperty Name="RecentCapitalAdjDate" ColumnName="RecentCapitalAdjDate" />
-								<ScalarProperty Name="RecentSplitDate" ColumnName="RecentSplitDate" />
-								<ScalarProperty Name="DisplayRIC" ColumnName="DisplayRIC" />
-								<ScalarProperty Name="RIC" ColumnName="RIC" />
-								<ScalarProperty Name="VALOREN" ColumnName="VALOREN" />
-								<ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
-								<ScalarProperty Name="ISIN" ColumnName="ISIN" />
-								<ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
-								<ScalarProperty Name="Ticker" ColumnName="Ticker" />
-								<ScalarProperty Name="Country" ColumnName="Country" />
-								<ScalarProperty Name="Name" ColumnName="Name" />
-								<ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-								<ScalarProperty Name="XRef" ColumnName="XRef" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
 
 
 					<EntitySetMapping Name="DATA_MASTER">
@@ -1999,8 +1793,6 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS" Width="1.5" PointX="10.75" PointY="0.75" Height="4.0956022135416674" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" Width="1.5" PointX="4.75" PointY="10.75" Height="2.7494921875000031" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.REUTERS_XREF" Width="1.5" PointX="10.75" PointY="5.75" Height="2.3648893229166674" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.tblCETargetPrice" Width="1.5" PointX="7.375" PointY="10.75" Height="3.5186979166666674" />
-				<EntityTypeShape EntityType="ExternalResearchModel.tblCompanyInfo" Width="1.5" PointX="9.375" PointY="10.75" Height="6.0186165364583317" />
 				<EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="11.375" PointY="9.75" Height="3.7109993489583317" />
 				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="13.375" PointY="0.75" Height="2.3648893229166674" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PRICE" Width="1.5" PointX="0.75" PointY="13.75" Height="1.9802864583333388" />
