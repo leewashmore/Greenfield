@@ -14,8 +14,8 @@
     <!--Grid Styles-->
     <!--###########-->
 
-    <SolidColorBrush x:Key="ControlOuterBorder" Color="#9F1D21"/>
-    <SolidColorBrush x:Key="ControlInnerBorder" Color="#9F1D21"/>
+    <SolidColorBrush x:Key="ControlOuterBorder" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="ControlInnerBorder" Color="#e4e5e5"/>
     <SolidColorBrush x:Key="GridView_GroupRowIndicator" Color="White"/>
     <SolidColorBrush x:Key="GridView_RowIndicatorCellBackground" Color="#e4e5e5"/>
     <telerik:Office_BlackTheme x:Key="Theme"/>

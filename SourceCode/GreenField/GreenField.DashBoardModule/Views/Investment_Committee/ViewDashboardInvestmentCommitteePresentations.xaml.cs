@@ -63,7 +63,7 @@ namespace GreenField.DashboardModule.Views
                 RegionManager = _regionManager
             };
 
-            this.cctrDashboardContent.Content = new ViewPresentations(new ViewModelPresentations(param));
+            this.cctrDashboardContent.Content = null;// new ViewPresentations(new ViewModelPresentations(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
