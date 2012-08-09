@@ -39,9 +39,10 @@ CREATE TABLE [dbo].[tblMarketSnapshotEntityPreference](
 	[EntityNodeType] [nvarchar](50) NULL,
 	[EntityNodeValueCode] [nvarchar](50) NULL,
 	[EntityNodeValueName] [nvarchar](50) NULL,
- CONSTRAINT [PK_tblMarketSnapshotEntityPreference] PRIMARY KEY CLUSTERED 
+ CONSTRAINT [UNIQUE_PRIMARY] UNIQUE CLUSTERED 
 (
-	[EntityPreferenceId] ASC
+	[GroupPreferenceId] ASC,
+	[EntityOrder] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 

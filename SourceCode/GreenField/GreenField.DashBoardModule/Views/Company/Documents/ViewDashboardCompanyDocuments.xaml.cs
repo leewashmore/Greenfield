@@ -29,17 +29,21 @@ namespace GreenField.DashboardModule.Views
         private IEventAggregator _eventAggregator;
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
+        private IManageAlerts _manageAlerts;
+        private IManageDocuments _manageDocuments;
         #endregion
 
         [ImportingConstructor]
         public ViewDashboardCompanyDocuments(ILoggerFacade logger, IEventAggregator eventAggregator,
-            IDBInteractivity dbInteractivity)
+            IDBInteractivity dbInteractivity, IManageAlerts manageAlerts, IManageDocuments manageDocuments)
         {
             InitializeComponent();
 
             _eventAggregator = eventAggregator;
             _logger = logger;
             _dBInteractivity = dbInteractivity;
+            _manageAlerts = manageAlerts;
+            _manageDocuments = manageDocuments;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
@@ -57,7 +61,9 @@ namespace GreenField.DashboardModule.Views
                 DashboardGadgetPayload = payload,
                 DBInteractivity = _dBInteractivity,
                 EventAggregator = _eventAggregator,
-                LoggerFacade = _logger
+                LoggerFacade = _logger,
+                ManageAlerts = _manageAlerts,
+                ManageDocuments = _manageDocuments
             };
 
             this.cctrDashboardContent.Content = new ViewDocuments(new ViewModelDocuments(param));

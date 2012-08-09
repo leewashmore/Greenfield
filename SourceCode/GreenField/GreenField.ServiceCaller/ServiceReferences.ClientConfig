@@ -60,6 +60,15 @@
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
+        <binding name="AlertOperations" closeTimeout="00:10:00" openTimeout="00:10:00"
+          receiveTimeout="00:10:00" sendTimeout="00:10:00" maxBufferSize="2147483647"
+          maxReceivedMessageSize="2147483647">
+          <security mode="None" />
+        </binding>
+        <binding name="DocumentWorkspaceOperations" maxBufferSize="2147483647"
+          maxReceivedMessageSize="2147483647">
+          <security mode="None" />
+        </binding>
    </basicHttpBinding>
   </bindings>
 
@@ -97,6 +106,13 @@
    <endpoint address="http://localhost:59430/Services/MeetingService.svc"
     binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_MeetingService"
     contract="MeetingServiceReference.MeetingService" name="BasicHttpBinding_MeetingService" />
+      <endpoint address="http://localhost:59430/Services/AlertOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="AlertOperations"
+        contract="AlertDefinitions.AlertOperations" name="AlertOperations" />
+      <endpoint address="http://localhost:59430/Services/DocumentWorkspaceOperations.svc"
+        binding="basicHttpBinding" bindingConfiguration="DocumentWorkspaceOperations"
+        contract="DocumentWorkspaceDefinitions.DocumentWorkspaceOperations"
+        name="DocumentWorkspaceOperations" />
   </client>
 
 	</system.serviceModel>

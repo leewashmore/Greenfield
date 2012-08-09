@@ -50,4 +50,45 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="RatioComparisonData" nillable="true" type="tns:RatioComparisonData" />
+  <xs:complexType name="ArrayOftblCompanyInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="tblCompanyInfo" nillable="true" type="tns:tblCompanyInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOftblCompanyInfo" nillable="true" type="tns:ArrayOftblCompanyInfo" />
+  <xs:complexType name="tblCompanyInfo">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:EntityObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Active" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="CUSIP" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Consensus" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Currency" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CurrentPeriod" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CurrentPrice" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="CurrentPriceDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="DisplayRIC" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Earnings" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Estimate" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ISIN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="OutstandingShares" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="Periodicity" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RIC" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="RecentCapitalAdjDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="RecentSplitDate" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ReportNumber" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SEDOL" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VALOREN" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="XRef" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="fPeriodEnd" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="fYearEnd" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="pEndDate" nillable="true" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="tblCompanyInfo" nillable="true" type="tns:tblCompanyInfo" />
 </xs:schema>

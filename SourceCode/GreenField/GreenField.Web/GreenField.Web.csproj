@@ -57,6 +57,28 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Service References\DocumentCopyService\Copy.wsdl" />
+    <None Include="Service References\DocumentCopyService\GreenField.Web.DocumentCopyService.CopyResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentCopyService\GreenField.Web.DocumentCopyService.FieldInformation.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DocumentWorkspaceService\Dws.disco" />
+    <None Include="Service References\DocumentWorkspaceService\configuration91.svcinfo" />
+    <None Include="Service References\DocumentWorkspaceService\configuration.svcinfo" />
+    <None Include="Service References\DocumentWorkspaceService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DocumentCopyService\Copy.disco" />
+    <None Include="Service References\DocumentCopyService\configuration91.svcinfo" />
+    <None Include="Service References\DocumentCopyService\configuration.svcinfo" />
+    <None Include="Service References\DocumentCopyService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <Content Include="Services\AlertOperations.svc" />
     <Content Include="ClientAccessPolicy.xml" />
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
@@ -76,6 +98,7 @@
       <Generator>DataServiceClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Services\DocumentWorkspaceOperations.svc" />
     <Content Include="Services\ExternalResearchOperations.svc" />
     <Content Include="Services\MeetingService.svc" />
     <Content Include="Services\ModelFXOperations.svc" />
@@ -97,8 +120,22 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <None Include="Service References\DimensionEntitiesService\service.edmx" />
+    <None Include="Service References\DocumentWorkspaceService\Dws.wsdl" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Service References\DocumentCopyService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DocumentWorkspaceService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AlertOperations.svc.cs">
+      <DependentUpon>AlertOperations.svc</DependentUpon>
+    </Compile>
     <Compile Include="DataContracts\IssuerReferenceData.cs" />
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
     <Compile Include="DataContracts\PopulatedMarketPerformanceSnapshotData.cs" />
@@ -124,6 +161,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\DocumentWorkspaceOperations.svc.cs">
+      <DependentUpon>DocumentWorkspaceOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\ExternalResearchOperations.svc.cs">
       <DependentUpon>ExternalResearchOperations.svc</DependentUpon>
@@ -193,7 +233,10 @@
       <Type>datasvcmap</Type>
     </ServiceReferenceMetadataStorage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\DocumentCopyService\" />
+    <WCFMetadataStorage Include="Service References\DocumentWorkspaceService\" />
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
   <ProjectExtensions>

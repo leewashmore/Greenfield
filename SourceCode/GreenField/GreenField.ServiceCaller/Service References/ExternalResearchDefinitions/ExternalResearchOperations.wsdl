@@ -11,6 +11,7 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd7" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" />
       <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd8" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DimensionEntitiesService" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd9" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ExternalResearchOperations_RetrieveIssuerId_InputMessage">
@@ -148,6 +149,15 @@
   <wsdl:message name="ExternalResearchOperations_RetrieveDocumentsData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q15:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveCompanyData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCompanyData" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveCompanyData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCompanyDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExternalResearchOperations_RetrieveCompanyData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q16:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="ExternalResearchOperations">
     <wsdl:operation name="RetrieveIssuerId">
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveIssuerId" message="tns:ExternalResearchOperations_RetrieveIssuerId_InputMessage" />
@@ -223,6 +233,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsData" message="tns:ExternalResearchOperations_RetrieveDocumentsData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsDataResponse" message="tns:ExternalResearchOperations_RetrieveDocumentsData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveDocumentsData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCompanyData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCompanyData" message="tns:ExternalResearchOperations_RetrieveCompanyData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCompanyDataResponse" message="tns:ExternalResearchOperations_RetrieveCompanyData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/ExternalResearchOperations/RetrieveCompanyDataServiceFaultFault" name="ServiceFaultFault" message="tns:ExternalResearchOperations_RetrieveCompanyData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ExternalResearchOperations" type="tns:ExternalResearchOperations">
@@ -397,6 +412,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveDocumentsData">
       <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCompanyData">
+      <soap:operation soapAction="http://tempuri.org/ExternalResearchOperations/RetrieveCompanyData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

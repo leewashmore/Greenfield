@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AIMSDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="AIMSDataModelStoreContainer">
+          <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="AIMSDataModel.Store.GF_PRICING_BASEVIEW" store:Type="Tables" store:Schema="dbo" store:Name="GF_PRICING_BASEVIEW">
+            <DefiningQuery>SELECT 
+      [GF_PRICING_BASEVIEW].[GF_ID] AS [GF_ID], 
+      [GF_PRICING_BASEVIEW].[INSTRUMENT_ID] AS [INSTRUMENT_ID], 
+      [GF_PRICING_BASEVIEW].[TYPE] AS [TYPE], 
+      [GF_PRICING_BASEVIEW].[TICKER] AS [TICKER], 
+      [GF_PRICING_BASEVIEW].[ISSUE_NAME] AS [ISSUE_NAME], 
+      [GF_PRICING_BASEVIEW].[FROMDATE] AS [FROMDATE], 
+      [GF_PRICING_BASEVIEW].[DAILY_CLOSING_PRICE] AS [DAILY_CLOSING_PRICE], 
+      [GF_PRICING_BASEVIEW].[DAILY_PRICE_RETURN] AS [DAILY_PRICE_RETURN], 
+      [GF_PRICING_BASEVIEW].[DAILY_GROSS_RETURN] AS [DAILY_GROSS_RETURN], 
+      [GF_PRICING_BASEVIEW].[VOLUME] AS [VOLUME], 
+      [GF_PRICING_BASEVIEW].[DAILY_SPOT_FX] AS [DAILY_SPOT_FX]
+      FROM [dbo].[GF_PRICING_BASEVIEW] AS [GF_PRICING_BASEVIEW]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="AIMSDataModel.Store.GF_SECURITY_BASEVIEW" store:Type="Tables" Schema="dbo" />
+        </EntityContainer>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data_POC.dbo.GF_PRICING_BASEVIEW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="GF_PRICING_BASEVIEW">
+          <Key>
+            <PropertyRef Name="GF_ID" />
+          </Key>
+          <Property Name="GF_ID" Type="float" Nullable="false" />
+          <Property Name="INSTRUMENT_ID" Type="varchar" MaxLength="50" />
+          <Property Name="TYPE" Type="varchar" MaxLength="50" />
+          <Property Name="TICKER" Type="varchar" MaxLength="50" />
+          <Property Name="ISSUE_NAME" Type="varchar" MaxLength="255" />
+          <Property Name="FROMDATE" Type="datetime" />
+          <Property Name="DAILY_CLOSING_PRICE" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DAILY_PRICE_RETURN" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DAILY_GROSS_RETURN" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="VOLUME" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DAILY_SPOT_FX" Type="decimal" Precision="32" Scale="6" />
+        </EntityType>
+        <EntityType Name="GF_SECURITY_BASEVIEW">
+          <Key>
+            <PropertyRef Name="GF_ID" />
+          </Key>
+          <Property Name="GF_ID" Type="float" Nullable="false" />
+          <Property Name="SECURITY_ID" Type="varchar" MaxLength="20" />
+          <Property Name="ASEC_SEC_SHORT_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISSUE_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISIN" Type="nvarchar" MaxLength="255" />
+          <Property Name="SEDOL" Type="nvarchar" MaxLength="255" />
+          <Property Name="SECS_INSTYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_INSTR_TYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="SECURITY_TYPE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_FC_SEC_REF" Type="float" />
+          <Property Name="LOOK_THRU_FUND" Type="nvarchar" MaxLength="255" />
+          <Property Name="FIFTYTWO_WEEK_LOW" Type="float" />
+          <Property Name="FIFTYTWO_WEEK_HIGH" Type="float" />
+          <Property Name="SECURITY_VOLUME_AVG_90D" Type="nvarchar" MaxLength="255" />
+          <Property Name="SECURITY_VOLUME_AVG_6M" Type="float" />
+          <Property Name="SECURITY_VOLUME_AVG_30D" Type="float" />
+          <Property Name="GREENFIELD_FLAG" Type="nvarchar" MaxLength="255" />
+          <Property Name="FLOAT_AMOUNT" Type="float" />
+          <Property Name="CUSIP" Type="nvarchar" MaxLength="255" />
+          <Property Name="STOCK_EXCHANGE_ID" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_ISSUED_VOLUME" Type="float" />
+          <Property Name="ISSUER_ID" Type="varchar" MaxLength="20" />
+          <Property Name="TRADING_CURRENCY" Type="nvarchar" MaxLength="255" />
+          <Property Name="SHARES_OUTSTANDING" Type="float" />
+          <Property Name="BETA" Type="float" />
+          <Property Name="BARRA_BETA" Type="float" />
+          <Property Name="TICKER" Type="nvarchar" MaxLength="255" />
+          <Property Name="MSCI" Type="float" />
+          <Property Name="BARRA" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISO_COUNTRY_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_SEC_COUNTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASEC_SEC_COUNTRY_ZONE_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ISSUER_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHEMM_ONE_LINER_DESCRIPTION" Type="nvarchar" MaxLength="255" />
+          <Property Name="BLOOMBERG_DESCRIPTION" Type="ntext" />
+          <Property Name="ASHMOREEMM_INDUSTRY_ANALYST" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHMOREEMM_PRIMARY_ANALYST" Type="nvarchar" MaxLength="255" />
+          <Property Name="ASHMOREEMM_PORTFOLIO_MANAGER" Type="nvarchar" MaxLength="255" />
+          <Property Name="WEBSITE" Type="nvarchar" MaxLength="255" />
+          <Property Name="FISCAL_YEAR_END" Type="nvarchar" MaxLength="255" />
+          <Property Name="XREF" Type="float" />
+          <Property Name="REPORTNUMBER" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SECTOR" Type="float" />
+          <Property Name="GICS_SECTOR_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_INDUSTRY" Type="float" />
+          <Property Name="GICS_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="GICS_SUB_INDUSTRY" Type="float" />
+          <Property Name="GICS_SUB_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+          <Property Name="SHARES_PER_ADR" Type="float" />
+          <Property Name="ADR_UNDERLYING_TICKER" Type="nvarchar" MaxLength="255" />
+          <Property Name="MARKET_CAP_IN_TRADING_CURRENCY" Type="float" />
+          <Property Name="CLOSING_PRICE" Type="float" />
+          <Property Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" Type="float" />
+          <Property Name="LAST_CLOSE_DATE" Type="datetime" />
+          <Property Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" Type="float" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data_POC.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <Function Name="usp_UpdateGFPricingBaseview" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="usp_UpdateGFSecurityBaseview" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AIMSDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="AIMSEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="usp_UpdateGFPricingBaseview" ReturnType="Collection(Int32)">
+          <Parameter Name="xmlScript" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="AIMSDataModel.GF_SECURITY_BASEVIEW" />
+          <FunctionImport Name="usp_UpdateGFSecurityBaseview" ReturnType="Collection(Int32)">
+          <Parameter Name="xmlScript" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="AIMSDataModel.GF_PRICING_BASEVIEW" />
+        </EntityContainer>
+        <EntityType Name="GF_SECURITY_BASEVIEW">
+          <Key>
+            <PropertyRef Name="GF_ID" />
+          </Key>
+          <Property Type="Double" Name="GF_ID" Nullable="false" />
+          <Property Type="String" Name="SECURITY_ID" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ASEC_SEC_SHORT_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISSUE_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISIN" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SEDOL" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SECS_INSTYPE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASEC_INSTR_TYPE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SECURITY_TYPE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="ASEC_FC_SEC_REF" />
+          <Property Type="String" Name="LOOK_THRU_FUND" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="FIFTYTWO_WEEK_LOW" />
+          <Property Type="Double" Name="FIFTYTWO_WEEK_HIGH" />
+          <Property Type="String" Name="SECURITY_VOLUME_AVG_90D" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="SECURITY_VOLUME_AVG_6M" />
+          <Property Type="Double" Name="SECURITY_VOLUME_AVG_30D" />
+          <Property Type="String" Name="GREENFIELD_FLAG" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="FLOAT_AMOUNT" />
+          <Property Type="String" Name="CUSIP" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="STOCK_EXCHANGE_ID" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="ASEC_ISSUED_VOLUME" />
+          <Property Type="String" Name="ISSUER_ID" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TRADING_CURRENCY" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="SHARES_OUTSTANDING" />
+          <Property Type="Double" Name="BETA" />
+          <Property Type="Double" Name="BARRA_BETA" />
+          <Property Type="String" Name="TICKER" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="MSCI" />
+          <Property Type="String" Name="BARRA" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISO_COUNTRY_CODE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASEC_SEC_COUNTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASEC_SEC_COUNTRY_ZONE_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ISSUER_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHEMM_ONE_LINER_DESCRIPTION" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BLOOMBERG_DESCRIPTION" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHMOREEMM_INDUSTRY_ANALYST" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHMOREEMM_PRIMARY_ANALYST" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ASHMOREEMM_PORTFOLIO_MANAGER" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="WEBSITE" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FISCAL_YEAR_END" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="XREF" />
+          <Property Type="String" Name="REPORTNUMBER" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="GICS_SECTOR" />
+          <Property Type="String" Name="GICS_SECTOR_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="GICS_INDUSTRY" />
+          <Property Type="String" Name="GICS_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="GICS_SUB_INDUSTRY" />
+          <Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="SHARES_PER_ADR" />
+          <Property Type="String" Name="ADR_UNDERLYING_TICKER" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="MARKET_CAP_IN_TRADING_CURRENCY" />
+          <Property Type="Double" Name="CLOSING_PRICE" />
+          <Property Type="Double" Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" />
+          <Property Type="DateTime" Name="LAST_CLOSE_DATE" />
+          <Property Type="Double" Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" />
+        </EntityType>
+        <EntityType Name="GF_PRICING_BASEVIEW">
+          <Key>
+            <PropertyRef Name="GF_ID" />
+          </Key>
+          <Property Type="Double" Name="GF_ID" Nullable="false" />
+          <Property Type="String" Name="INSTRUMENT_ID" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TYPE" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="TICKER" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ISSUE_NAME" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="FROMDATE" />
+          <Property Type="Decimal" Name="DAILY_CLOSING_PRICE" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="DAILY_PRICE_RETURN" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="DAILY_GROSS_RETURN" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="VOLUME" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="DAILY_SPOT_FX" Precision="32" Scale="6" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AIMSDataModelStoreContainer" CdmEntityContainer="AIMSEntities">
+          <FunctionImportMapping FunctionImportName="usp_UpdateGFPricingBaseview" FunctionName="AIMSDataModel.Store.usp_UpdateGFPricingBaseview" />
+          <EntitySetMapping Name="GF_SECURITY_BASEVIEW">
+            <EntityTypeMapping TypeName="AIMSDataModel.GF_SECURITY_BASEVIEW">
+              <MappingFragment StoreEntitySet="GF_SECURITY_BASEVIEW">
+                <ScalarProperty Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" ColumnName="TOT_CURR_SHRS_OUTST_ALL_CLASS" />
+                <ScalarProperty Name="LAST_CLOSE_DATE" ColumnName="LAST_CLOSE_DATE" />
+                <ScalarProperty Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" ColumnName="LAST_CLOSE_FX_QUO_CURR_TO_USD" />
+                <ScalarProperty Name="CLOSING_PRICE" ColumnName="CLOSING_PRICE" />
+                <ScalarProperty Name="MARKET_CAP_IN_TRADING_CURRENCY" ColumnName="MARKET_CAP_IN_TRADING_CURRENCY" />
+                <ScalarProperty Name="ADR_UNDERLYING_TICKER" ColumnName="ADR_UNDERLYING_TICKER" />
+                <ScalarProperty Name="SHARES_PER_ADR" ColumnName="SHARES_PER_ADR" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
+                <ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
+                <ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
+                <ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
+                <ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
+                <ScalarProperty Name="REPORTNUMBER" ColumnName="REPORTNUMBER" />
+                <ScalarProperty Name="XREF" ColumnName="XREF" />
+                <ScalarProperty Name="FISCAL_YEAR_END" ColumnName="FISCAL_YEAR_END" />
+                <ScalarProperty Name="WEBSITE" ColumnName="WEBSITE" />
+                <ScalarProperty Name="ASHMOREEMM_PORTFOLIO_MANAGER" ColumnName="ASHMOREEMM_PORTFOLIO_MANAGER" />
+                <ScalarProperty Name="ASHMOREEMM_PRIMARY_ANALYST" ColumnName="ASHMOREEMM_PRIMARY_ANALYST" />
+                <ScalarProperty Name="ASHMOREEMM_INDUSTRY_ANALYST" ColumnName="ASHMOREEMM_INDUSTRY_ANALYST" />
+                <ScalarProperty Name="BLOOMBERG_DESCRIPTION" ColumnName="BLOOMBERG_DESCRIPTION" />
+                <ScalarProperty Name="ASHEMM_ONE_LINER_DESCRIPTION" ColumnName="ASHEMM_ONE_LINER_DESCRIPTION" />
+                <ScalarProperty Name="ISSUER_NAME" ColumnName="ISSUER_NAME" />
+                <ScalarProperty Name="ASEC_SEC_COUNTRY_ZONE_NAME" ColumnName="ASEC_SEC_COUNTRY_ZONE_NAME" />
+                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
+                <ScalarProperty Name="ASEC_SEC_COUNTRY_NAME" ColumnName="ASEC_SEC_COUNTRY_NAME" />
+                <ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
+                <ScalarProperty Name="BARRA" ColumnName="BARRA" />
+                <ScalarProperty Name="MSCI" ColumnName="MSCI" />
+                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
+                <ScalarProperty Name="BARRA_BETA" ColumnName="BARRA_BETA" />
+                <ScalarProperty Name="BETA" ColumnName="BETA" />
+                <ScalarProperty Name="SHARES_OUTSTANDING" ColumnName="SHARES_OUTSTANDING" />
+                <ScalarProperty Name="TRADING_CURRENCY" ColumnName="TRADING_CURRENCY" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="ASEC_ISSUED_VOLUME" ColumnName="ASEC_ISSUED_VOLUME" />
+                <ScalarProperty Name="STOCK_EXCHANGE_ID" ColumnName="STOCK_EXCHANGE_ID" />
+                <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
+                <ScalarProperty Name="FLOAT_AMOUNT" ColumnName="FLOAT_AMOUNT" />
+                <ScalarProperty Name="GREENFIELD_FLAG" ColumnName="GREENFIELD_FLAG" />
+                <ScalarProperty Name="SECURITY_VOLUME_AVG_30D" ColumnName="SECURITY_VOLUME_AVG_30D" />
+                <ScalarProperty Name="SECURITY_VOLUME_AVG_6M" ColumnName="SECURITY_VOLUME_AVG_6M" />
+                <ScalarProperty Name="SECURITY_VOLUME_AVG_90D" ColumnName="SECURITY_VOLUME_AVG_90D" />
+                <ScalarProperty Name="FIFTYTWO_WEEK_HIGH" ColumnName="FIFTYTWO_WEEK_HIGH" />
+                <ScalarProperty Name="FIFTYTWO_WEEK_LOW" ColumnName="FIFTYTWO_WEEK_LOW" />
+                <ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
+                <ScalarProperty Name="ASEC_FC_SEC_REF" ColumnName="ASEC_FC_SEC_REF" />
+                <ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
+                <ScalarProperty Name="ASEC_INSTR_TYPE" ColumnName="ASEC_INSTR_TYPE" />
+                <ScalarProperty Name="SECS_INSTYPE" ColumnName="SECS_INSTYPE" />
+                <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
+                <ScalarProperty Name="ISIN" ColumnName="ISIN" />
+                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="GF_ID" ColumnName="GF_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_UpdateGFSecurityBaseview" FunctionName="AIMSDataModel.Store.usp_UpdateGFSecurityBaseview" />
+          <EntitySetMapping Name="GF_PRICING_BASEVIEW">
+            <EntityTypeMapping TypeName="AIMSDataModel.GF_PRICING_BASEVIEW">
+              <MappingFragment StoreEntitySet="GF_PRICING_BASEVIEW">
+                <ScalarProperty Name="DAILY_SPOT_FX" ColumnName="DAILY_SPOT_FX" />
+                <ScalarProperty Name="VOLUME" ColumnName="VOLUME" />
+                <ScalarProperty Name="DAILY_GROSS_RETURN" ColumnName="DAILY_GROSS_RETURN" />
+                <ScalarProperty Name="DAILY_PRICE_RETURN" ColumnName="DAILY_PRICE_RETURN" />
+                <ScalarProperty Name="DAILY_CLOSING_PRICE" ColumnName="DAILY_CLOSING_PRICE" />
+                <ScalarProperty Name="FROMDATE" ColumnName="FROMDATE" />
+                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
+                <ScalarProperty Name="TYPE" ColumnName="TYPE" />
+                <ScalarProperty Name="INSTRUMENT_ID" ColumnName="INSTRUMENT_ID" />
+                <ScalarProperty Name="GF_ID" ColumnName="GF_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="AIMSDateModel">
+        <EntityTypeShape EntityType="AIMSDataModel.GF_SECURITY_BASEVIEW" Width="1.5" PointX="2.125" PointY="0.5" Height="11.787659505208332" />
+        <EntityTypeShape EntityType="AIMSDataModel.GF_PRICING_BASEVIEW" Width="1.5" PointX="0.5" PointY="0.5" Height="3.1340950520833335" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

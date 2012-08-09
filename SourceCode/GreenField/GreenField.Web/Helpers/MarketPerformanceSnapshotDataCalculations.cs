@@ -158,9 +158,9 @@ namespace GreenField.Web.Helpers
                 return result * 100;
             }
             catch (Exception)
-            {
+            {                
                 throw;
-            }
+            }                        
         }
     }
 }

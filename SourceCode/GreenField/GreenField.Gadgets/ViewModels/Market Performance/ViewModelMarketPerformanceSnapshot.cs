@@ -2019,7 +2019,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (!_createGroupInfo.Contains(preference.GroupName))
                     {
-                        XElement createEntity = new XElement("CreateEntity");
+                        XElement createEntity = new XElement("CreateEntity", new XAttribute("GroupPreferenceId", preference.GroupPreferenceID.ToString()));
                         if (preference.EntityName != null)
                             createEntity.Add(new XAttribute("EntityName", preference.EntityName.ToString()));
                         if (preference.EntityReturnType != null)
