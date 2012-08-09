@@ -20,7 +20,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="Portfolio Risk Return" HorizontalAlignment="Center" VerticalAlignment="Top" Height="15"/>
+        <TextBlock Grid.Row="0" Text="Risk/Return" HorizontalAlignment="Center" VerticalAlignment="Top" Height="15"/>
         <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
                                        Margin="0,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
             <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>

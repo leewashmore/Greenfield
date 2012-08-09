@@ -317,8 +317,8 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (selectedCOASpecificGadgetNameInfo != value)
                 {
-                    selectedCOASpecificGadgetNameInfo = value;                   
-                    COASpecificFilteredInfo = COASpecificInfo.Where(t => t.GridDesc == value).ToList();
+                    selectedCOASpecificGadgetNameInfo = value;
+                    COASpecificFilteredInfo = new ObservableCollection<COASpecificData>(COASpecificInfo.Where(t => t.GridDesc == value));
                     AddToComboBoxSeries.Clear();                    
                     RaisePropertyChanged(() => this.SelectedCOASpecificGadgetNameInfo);
                 }
@@ -338,7 +338,7 @@ namespace GreenField.Gadgets.ViewModels
                         coaSpecificInfo = value;
                         COASpecificGadgetNameInfo =  value.Select(t => t.GridDesc).Distinct().ToList();
                         defaultGadgetDesc = value.Select(t => t.GridDesc).FirstOrDefault();  
-                        COASpecificFilteredInfo = COASpecificInfo.Where(t => t.GridDesc == defaultGadgetDesc).ToList();                        
+                        COASpecificFilteredInfo = new ObservableCollection<COASpecificData>(COASpecificInfo.Where(t => t.GridDesc == defaultGadgetDesc));                        
                         RaisePropertyChanged(() => this.COASpecificInfo);
                         SetCOASpecificDisplayInfo();
                     }                
@@ -346,32 +346,34 @@ namespace GreenField.Gadgets.ViewModels
         
         }
 
-        private List<COASpecificData> addItem = new List<COASpecificData>();
-        private List<COASpecificData> coaSpecificFilterdInfo = new List<COASpecificData>();
-        public List<COASpecificData> COASpecificFilteredInfo
+        private ObservableCollection<COASpecificData> coaSpecificFilterdInfo = new ObservableCollection<COASpecificData>();
+        public ObservableCollection<COASpecificData> COASpecificFilteredInfo
         {
             get { return coaSpecificFilterdInfo; }
             set
             {
-                   
-                        coaSpecificFilterdInfo = value;
-                        List<String> defaultSeries = COASpecificFilteredInfo.Select(t => t.Description).Distinct().ToList();                       
-                        ComparisonSeries.Clear();
-                        foreach (String t in defaultSeries)
-                        {
-                            GadgetWithPeriodColumns entry = new GadgetWithPeriodColumns();
-                            entry.GridId = null;
-                            entry.GadgetName = null;
-                            entry.GadgetDesc = t;
-                            entry.Amount = null;
-                            entry.PeriodYear = null;
-                            ComparisonSeries.Add(entry);
-                        }            
-                        RaisePropertyChanged(() => this.COASpecificFilteredInfo);                       
+                if (value != null)
+                {
+                    coaSpecificFilterdInfo = value;
+                    List<String> defaultSeries = COASpecificFilteredInfo.Select(t => t.Description).Distinct().ToList();
+                    ComparisonSeries.Clear();
+                    foreach (String t in defaultSeries)
+                    {
+                        GadgetWithPeriodColumns entry = new GadgetWithPeriodColumns();
+                        entry.GridId = null;
+                        entry.GadgetName = null;
+                        entry.GadgetDesc = t;
+                        entry.Amount = null;
+                        entry.PeriodYear = null;
+                        ComparisonSeries.Add(entry);
+                    }
+                    RaisePropertyChanged(() => this.COASpecificFilteredInfo);
+                }  
                                   
             }
 
         }
+
 
        
        
@@ -638,13 +640,14 @@ namespace GreenField.Gadgets.ViewModels
         {
             GadgetWithPeriodColumns a = param as GadgetWithPeriodColumns;            
             List<COASpecificData> removeItem = new List<COASpecificData>();
-            //removeItem = COASpecificFilteredInfo.Where(w => w.Description == a.GadgetDesc).ToList();
-            //if (removeItem != null)
-            //    foreach (COASpecificData r in removeItem)
-            //    {
-            //        COASpecificFilteredInfo.Remove(r);
-            //    }
-            //COASpecificFilteredInfo = COASpecificFilteredInfo;
+            removeItem = COASpecificFilteredInfo.Where(w => w.Description == a.GadgetDesc).ToList();
+            if (removeItem != null)
+                foreach (COASpecificData r in removeItem)
+                {
+                    COASpecificFilteredInfo.Remove(r);
+                }
+            COASpecificFilteredInfo = COASpecificFilteredInfo;
+            RaisePropertyChanged(() => this.COASpecificFilteredInfo);
             ComparisonSeries.Remove(a);
             AddToComboBoxSeries.Add(a.GadgetDesc);
             

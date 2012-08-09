@@ -357,7 +357,7 @@
                                       IsBusy="{Binding BusyIndicatorIsBusy}">
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                             <telerik:RadChart x:Name="chCOASpecific" Visibility="Visible" telerik:StyleManager.Theme="Metro"
-                                      ItemsSource="{Binding COASpecificFilteredInfo, Mode=TwoWay}">                                
+                                      ItemsSource="{Binding COASpecificFilteredInfo}">                                
                                 <telerik:RadChart.DefaultView>
                                     <telerik:ChartDefaultView ChartLegendPosition="Right">
                                         <telerik:ChartDefaultView.ChartArea>
