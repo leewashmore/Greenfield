@@ -33,7 +33,7 @@ Declare
 @netIncomeType int,
 @epsktype int
 
-SET @earnings = (Select Earnings from [Reuters].[dbo].tblCompanyInfo 
+SET @earnings = (Select Earnings from tblCompanyInfo 
 				where XRef IN (Select XRef from GF_SECURITY_BASEVIEW 
 								where ISSUER_ID = @Issuer_Id));
 								
@@ -175,12 +175,12 @@ SET @netIncomeType =   CASE @earnings
 	-- Clean up
 	drop table #Actual;
 	drop table #Estimate;
+
+
+
+
+
 GO
-
-
-
-
-
 
 
 
