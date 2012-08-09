@@ -1,0 +1,62 @@
+﻿<controls:ChildWindow x:Class="Ashmore.Emm.GreenField.ICP.Meeting.Module.Views.ChildAcceptRequestPresentations"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="347" Height="116">
+
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="left"
+                    VerticalAlignment="Top">
+            <TextBlock Text="Meeting Date" 
+                       Width="120"/>
+            <ComboBox x:Name="cmbBoxMeetingDate"
+                      Margin="10,0,0,0" 
+                      Width="194"
+                      SelectionChanged="cmbBoxMeetingDate_SelectionChanged">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding MeetingDateTime, StringFormat='g'}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+        <StackPanel Grid.Row="0" 
+                    Margin="0,30,0,0"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="left"
+                    VerticalAlignment="Top">
+            <TextBlock Text="Meeting Closed Date"
+                       Width="120"/>
+            <TextBlock x:Name="txtBoxMeetingClosingDate"
+                      Margin="10,0,0,0" 
+                      Text="{Binding MeetingDateTime, StringFormat='g'}"
+                      Width="194"/>
+        </StackPanel>
+
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+            <Button x:Name="btnAccept" 
+                    Content="OK"
+                    IsEnabled="False"
+                    Width="75" Height="23" 
+                    HorizontalAlignment="Right" Click="btnAccept_Click" />
+            <Button x:Name="btnCancel" 
+                    Content="Cancel"
+                    Width="75" Height="23"
+                    Margin="10,0,0,0" Click="btnCancel_Click" />
+        </StackPanel>
+
+    </Grid>
+</controls:ChildWindow>
+
+<!--DialogResult="{Binding DialogResultProperty}"-->

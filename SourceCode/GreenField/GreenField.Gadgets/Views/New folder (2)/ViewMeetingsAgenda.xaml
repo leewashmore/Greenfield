@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="Ashmore.Emm.GreenField.ICP.Meeting.Module.Views.ViewMeetingsAgenda"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:ig="http://schemas.infragistics.com/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="spnlICPMeetingsAgendaHeader"
+                        Grid.Row="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                <TextBlock x:Name="tblkICPMeetingsAgendaHeader"
+                       Text="Investment Commitee (IC) Meeting "
+                       FontWeight="Bold"/>
+                <TextBlock x:Name="tblkICPMeetingsAgendaHeaderDate"
+                       Text="{Binding MeetingDateProperty}"
+                       FontWeight="Bold"/>
+            </StackPanel>
+
+            <ig:XamGrid x:Name="dgICPMeetingsAgendaPresentationList"
+                        Grid.Row="1"
+                        ActiveItem="{Binding GridActiveItemProperty, Mode=TwoWay}"
+                        ItemsSource="{Binding PresentationListProperty}"
+                        AutoGenerateColumns="False">
+
+                <ig:XamGrid.SelectionSettings>
+                    <ig:SelectionSettings CellSelection="None" CellClickAction="SelectRow" ColumnSelection="None" RowSelection="Single"/>
+                </ig:XamGrid.SelectionSettings>
+
+                <ig:XamGrid.Columns>
+                    <ig:TextColumn x:Name="dgcICPMeetingsAgendaPresentationListPresenter"
+                                   Key="Presenter"
+                                   Width="*"
+                                   HeaderText="Presenter"/>
+                    <ig:TextColumn x:Name="dgcICPMeetingsAgendaPresentationListCompany"
+                                   Key="SecurityName"
+                                   Width="*"
+                                   HeaderText="Company"/>
+                    <ig:TextColumn x:Name="dgcICPMeetingsAgendaPresentationListTicker"
+                                   Key="SecurityTicker"
+                                   Width="*"
+                                   HeaderText="Ticker"/>
+                    <ig:TextColumn x:Name="dgcICPMeetingsAgendaPresentationListStatus"
+                                   Key="Status"
+                                   Width="*"
+                                   HeaderText="Status"/>
+                    <ig:TextColumn x:Name="dgcICPMeetingsAgendaPresentationListCountry"
+                                   Key="SecurityCountry"
+                                   Width="*"
+                                   HeaderText="Country"/>
+                    <ig:TextColumn x:Name="dgcICPMeetingsAgendaPresentationListIndustry"
+                                   Key="SecurityIndustry"
+                                   Width="*"
+                                   HeaderText="Industry"/>
+                </ig:XamGrid.Columns>
+            </ig:XamGrid>
+            <StackPanel x:Name="spnlICPMeetingsAgendaNavigate"
+                        Grid.Row="3"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <Button x:Name="btnICPMeetingsAgendaEdit"
+                        Command="{Binding EditCommand}"
+                        VerticalAlignment="Center"
+                        Content="Edit"/>
+                <Button x:Name="btnICPMeetingsAgendaAccept"
+                        Command="{Binding AcceptCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="Accept"/>
+                <Button x:Name="btnICPMeetingsAgendaWithdraw"
+                        Command="{Binding WithdrawCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="Withdraw"/>
+                <Button x:Name="btnICPMeetingsAgendaFinalize"
+                        Command="{Binding FinalizeCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="Finalize"/>
+                <Button x:Name="btnICPMeetingsAgendaBack"
+                        Command="{Binding BackCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="Back"/>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</UserControl>

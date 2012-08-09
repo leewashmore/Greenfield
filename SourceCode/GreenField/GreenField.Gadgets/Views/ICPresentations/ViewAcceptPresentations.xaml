@@ -1,0 +1,51 @@
+﻿<controls:ChildWindow x:Class="Ashmore.Emm.GreenField.ICP.Meeting.Module.Views.ViewAcceptPresentations"
+           xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+           xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+           xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
+           Width="300" Height="100">
+
+    <Grid x:Name="LayoutRoot" Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" 
+                    Orientation="Horizontal"
+                    HorizontalAlignment="left"
+                    VerticalAlignment="Center">
+            <TextBlock Text="Meeting Date"/>
+            <ComboBox Margin="10,0,0,0" 
+                      Width="194"
+                      ItemsSource="{Binding MeetingList}"
+                      SelectedItem="{Binding SelectedMeeting, Mode=TwoWay}"
+                      >
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding MeetingDateTime, StringFormat='g'}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+
+
+        <StackPanel Grid.Row="1"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center">
+            <Button x:Name="OKButton" 
+                    Content="OK"
+                    Command="{Binding AcceptCommand}"
+                    Width="75" Height="23" 
+                    HorizontalAlignment="Right" Click="OKButton_Click" />
+            <Button x:Name="CancelButton" 
+                    Content="Cancel"
+                    Command="{Binding CancelCommand}"
+                    Width="75" Height="23"
+                    Margin="10,0,0,0" Click="CancelButton_Click" />
+        </StackPanel>
+
+    </Grid>
+</controls:ChildWindow>
+
+<!--DialogResult="{Binding DialogResultProperty}"-->

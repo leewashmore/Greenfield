@@ -1,0 +1,132 @@
+﻿<UserControl x:Class="Ashmore.Emm.GreenField.ICP.Meeting.Module.Views.ViewCreateUpdateMeetings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ig="http://schemas.infragistics.com/xaml"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
+
+    <Grid x:Name="LayoutRoot" Background="White" Margin="10" ShowGridLines="True" >
+        <!--<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">-->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="tblkICPMeetingsCreateHeader"
+                       Grid.Row="0"
+                       Text="{Binding HeaderProperty}"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            <Grid x:Name="grdICPMeetingsCreateInput"
+                  Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="tblkICPMeetingsCreateDate"
+                           Grid.Column="1"
+                           HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Text="Meeting Date"/>
+                <ig:XamDateTimeInput x:Name="dtinpICPMeetingsCreateDate"
+                                     Value="{Binding MeetingInfo.MeetingDateProperty, Mode=TwoWay}"
+                                     Margin="5,0,0,0"
+                                         Mask="{}mm/dd/yyyy"
+                                     Grid.Column="2"
+                                     VerticalAlignment="Center"/>
+                <TextBlock x:Name="tblkICPMeetingsCreateTime"
+                           Margin="5,0,0,0"
+                           Grid.Column="3"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Text="Meeting Time"/>
+                <ig:XamDateTimeInput x:Name="dtinpICPMeetingsCreateTime"
+                                     Value="{Binding MeetingInfo.MeetingTimeProperty, Mode=TwoWay}"
+                                     Margin="5,0,0,0"
+                                     Mask="{}{time}"
+                                     Grid.Column="4"
+                                     Format="hh:mm tt"
+                                     SpinButtonDisplayMode="Always"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Left"
+                                     Width="100"/>
+            </Grid>
+            <Grid x:Name="grdICPMeetingsCreateClosedDateTimeInput"
+                  Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="tblkICPMeetingsCreateClosedDate"
+                           Grid.Column="1"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Text="Meeting Closed Date"/>
+                <ig:XamDateTimeInput x:Name="dtinpICPMeetingsCreateClosedDate"
+                                     Value="{Binding MeetingInfo.MeetingClosedDateProperty, Mode=TwoWay}"
+                                     Margin="5,0,0,0"
+                                         Mask="{}mm/dd/yyyy"
+                                     Grid.Column="2"
+                                     VerticalAlignment="Center">
+                    <ig:XamDateTimeInput.ValueConstraint>
+                        <ig:ValueConstraint MaxInclusive="{Binding MeetingInfo.MeetingDateProperty}"/>
+                    </ig:XamDateTimeInput.ValueConstraint>
+                </ig:XamDateTimeInput>
+                <TextBlock x:Name="tblkICPMeetingsCreateClosedTime"
+                           Margin="5,0,0,0"
+                           Grid.Column="3"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Right"
+                           Text="Meeting Closed Time"/>
+                <ig:XamDateTimeInput x:Name="dtinpICPMeetingsCreateClosedTime"
+                                     Value="{Binding MeetingInfo.MeetingClosedTimeProperty, Mode=TwoWay}"
+                                     Margin="5,0,0,0"
+                                     Mask="{}{time}"
+                                     Grid.Column="4"
+                                     Format="hh:mm tt"
+                                     SpinButtonDisplayMode="Always"
+                                     VerticalAlignment="Center"
+                                     HorizontalAlignment="Left"
+                                     Width="100"/>
+            </Grid>
+            <TextBlock x:Name="tblkICPMeetingsCreateDescription"
+                       Grid.Row="3"
+                       Text="Description"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"/>
+            <TextBox x:Name="tbICPMeetingsCreateDescription"
+                         Text="{Binding MeetingInfo.DescriptionProperty, Mode=TwoWay}"
+                         TextWrapping="Wrap"
+                         HorizontalAlignment="Stretch"
+                         Grid.Row="4"/>
+            <StackPanel Grid.Row="5"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <Button x:Name="btnICPMeetingsCreate"
+                        Command="{Binding FinalizeCommand}"
+                        Content="{Binding FinalizeButtonContentProperty}"/>
+                <Button x:Name="btnICPMeetingsBack"
+                        Margin="10,0,0,0"
+                        Command="{Binding BackCommand}"
+                        Content="Back"/>
+            </StackPanel>
+            
+        </Grid>
+        <!--</ScrollViewer>-->
+    </Grid>
+</UserControl>

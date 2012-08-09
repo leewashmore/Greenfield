@@ -1,0 +1,118 @@
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewMeetings"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
+    d:DesignHeight="300" d:DesignWidth="800">
+
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
+
+    <Grid x:Name="LayoutRoot" Background="White" Margin="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="tblkICPMeetingsListHeader"
+                       Grid.Row="0"
+                       Text="Investment Commitee (IC) Meetings"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            <StackPanel x:Name="spnlICPMeetingsListFilter"
+                        Grid.Row="1"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <TextBlock x:Name="tblkICPMeetingsListFilter"
+                           VerticalAlignment="Center"
+                           Text="Meeting Date"/>
+                <telerik:RadDateTimePicker x:Name="dtinpICPMeetingsListFilter"
+                                     Margin="5,0,0,0"
+                                     SelectedValue="{Binding SearchDateProperty, Mode=TwoWay}"
+                                     VerticalAlignment="Center"
+                                     Width="100"/>
+
+
+                <Button x:Name="btnICPMeetingsListFilter"
+                        Command="{Binding SeachDateFilterCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="Search"/>
+                <Button x:Name="btnICPMeetingsListReset"
+                        Command="{Binding ResetCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="Reset"/>
+            </StackPanel>
+            <telerik:RadGridView x:Name="dgICPMeetingsList"
+                        ItemsSource="{Binding MeetingListProperty}"
+                        Grid.Row="2"
+                        SelectedItem="{Binding GridActiveItemProperty, Mode=TwoWay}"
+                        Margin="0,5,0,5"
+                        AutoGenerateColumns="False">      
+
+                <telerik:RadGridView.Columns>
+
+                    <telerik:GridViewDataColumn x:Name="dgcICPMeetingsListDate"
+                                                   DataFormatString="{}{0:MM/dd/yyyy}"
+                                                   Width="Auto"
+                                                   Header="Meeting Date"/>
+
+
+                    <telerik:GridViewDataColumn x:Name="dgcICPMeetingsListTime"
+                                   DataFormatString="{}{0:hh:mm tt}"
+                                   Width="Auto"
+                                   Header="Meeting Time"/>
+
+                    <telerik:GridViewDataColumn x:Name="dgcICPMeetingsListDescription"
+                                   Width="*"
+                                   Header="Description"/>
+
+                    </telerik:RadGridView.Columns>
+                        
+            </telerik:RadGridView>
+                    
+            <StackPanel x:Name="spnlICPMeetingsListNavigate"
+                        Grid.Row="3"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <Button x:Name="btnICPMeetingsListEdit"
+                        Command="{Binding EditCommand}"
+                        VerticalAlignment="Center"
+                        Content="Edit"/>
+                <Button x:Name="btnICPMeetingsListCancel"
+                        Command="{Binding CancelCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="Cancel"/>
+                <Button x:Name="btnICPMeetingsListView"
+                        Command="{Binding ViewMeetingAgendaCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="View Meeting Agenda"/>
+            </StackPanel>
+            <HyperlinkButton x:Name="hlbtnICPMeetingsListNew"
+                             Command="{Binding NewMeetingCommand}"
+                             Grid.Row="4"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Content="New Meeting"/>
+        </Grid>
+
+    </Grid>
+    </helpers:ViewBaseUserControl>

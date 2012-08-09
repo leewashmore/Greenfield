@@ -1,0 +1,109 @@
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewMeetingsAgenda"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
+    d:DesignHeight="300" d:DesignWidth="800">
+
+    <helpers:ViewBaseUserControl.Resources>
+            <ResourceDictionary>
+                <ResourceDictionary.MergedDictionaries>
+                    <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
+        </helpers:ViewBaseUserControl.Resources>
+
+        <Grid x:Name="LayoutRoot" Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+            <StackPanel x:Name="spnlICPMeetingsAgendaHeader"
+                        Grid.Row="0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                <TextBlock x:Name="tblkICPMeetingsAgendaHeader"
+                       Text="Investment Commitee (IC) Meeting "
+                       FontWeight="Bold"/>
+                <TextBlock x:Name="tblkICPMeetingsAgendaHeaderDate"
+                       Text="{Binding MeetingDateProperty}"
+                       FontWeight="Bold"/>
+            </StackPanel>
+
+            <telerik:RadGridView x:Name="dgICPMeetingsAgendaPresentationList"
+                        Grid.Row="1"
+                        SelectedItem="{Binding GridActiveItemProperty, Mode=TwoWay}"
+                        ItemsSource="{Binding PresentationListProperty}"
+                        AutoGenerateColumns="False">
+
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn x:Name="dgcICPMeetingsAgendaPresentationListPresenter"
+                                   DataMemberBinding="Presenter"
+                                   Width="*"
+                                   Header="Presenter"/>
+
+
+                    <telerik:GridViewDataColumn x:Name="dgcICPMeetingsAgendaPresentationListCompany"
+                                   DataMemberBinding="SecurityName"
+                                   Width="*"
+                                   Header="Company"/>
+                    <telerik:GridViewDataColumn x:Name="dgcICPMeetingsAgendaPresentationListTicker"
+                                   DataMemberBinding="SecurityTicker"
+                                   Width="*"
+                                   Header="Ticker"/>
+                    <telerik:GridViewDataColumn x:Name="dgcICPMeetingsAgendaPresentationListStatus"
+                                   DataMemberBinding="Status"
+                                   Width="*"
+                                   Header="Status"/>
+                    <telerik:GridViewDataColumn x:Name="dgcICPMeetingsAgendaPresentationListCountry"
+                                   DataMemberBinding="SecurityCountry"
+                                   Width="*"
+                                   Header="Country"/>
+                    <telerik:GridViewDataColumn x:Name="dgcICPMeetingsAgendaPresentationListIndustry"
+                                   DataMemberBinding="SecurityIndustry"
+                                   Width="*"
+                                   Header="Industry"/>
+                    </telerik:RadGridView.Columns>
+             </telerik:RadGridView>
+                 
+            <StackPanel x:Name="spnlICPMeetingsAgendaNavigate"
+                        Grid.Row="3"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                <Button x:Name="btnICPMeetingsAgendaEdit"
+                        Command="{Binding EditCommand}"
+                        VerticalAlignment="Center"
+                        Content="Edit"/>
+                <Button x:Name="btnICPMeetingsAgendaAccept"
+                        Command="{Binding AcceptCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="Accept"/>
+                <Button x:Name="btnICPMeetingsAgendaWithdraw"
+                        Command="{Binding WithdrawCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="Withdraw"/>
+                <Button x:Name="btnICPMeetingsAgendaFinalize"
+                        Command="{Binding FinalizeCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="Finalize"/>
+                <Button x:Name="btnICPMeetingsAgendaBack"
+                        Command="{Binding BackCommand}"
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Content="Back"/>
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+</helpers:ViewBaseUserControl>

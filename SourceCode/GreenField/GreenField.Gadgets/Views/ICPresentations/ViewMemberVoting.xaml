@@ -1,0 +1,227 @@
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewMemberVoting"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+    d:DesignHeight="500" d:DesignWidth="550">
+    
+        <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
+
+
+    <Grid x:Name="LayoutRoot" Background="White" Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Investment Commitee (IC) Presentation"
+                   FontWeight="Bold"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
+        <!--Presentation Details-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Presentation Date : "/>
+                    <TextBlock Text="{Binding PresentationInfo.PresentationDate}"
+                               FontStyle="Italic" FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="Presenter : "/>
+                    <TextBlock Text="{Binding PresentationInfo.Presenter}"
+                               FontStyle="Italic" FontWeight="Bold" 
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        
+        <!--Security Details-->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Vertical"
+                            Grid.Column="0">
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+                    <TextBlock Text="Security Name :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
+                    <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityName}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+                    <TextBlock Text="Ticker :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
+                    <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityTicker}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+                    <TextBlock Text="Country :"  VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
+                    <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityCountry}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+                    <TextBlock Text="Industry :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
+                    <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityIndustry}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+                    <TextBlock Text="EMM Holdings :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
+                    <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityPosition}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,5">
+                    <TextBlock Text="Index Weighting :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
+                    <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityGlobalActiveWeight}"/>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical"
+                            Grid.Column="1">
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+                    <TextBlock Text="Last Closing Price :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
+                    <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityLastClosingPrice}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+                    <TextBlock Text="Market Capitalization :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
+                    <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityMarketCapitalization}"/>
+                </StackPanel>
+                <StackPanel x:Name="EntryPFV" Orientation="Horizontal" VerticalAlignment="Center" Margin="5,5,0,0" Visibility="Visible">
+                    <TextBlock Text="P/FV Measure :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
+                    <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityPFVMeasure}"/>
+                </StackPanel>
+
+                <StackPanel Visibility="{Binding VoterInfo.VisibilityModeProperty}"  Orientation="Horizontal" Margin="5,5,0,0" VerticalAlignment="Center">
+                    <TextBlock  VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right">P/FV Measure :</TextBlock>
+                    <ComboBox Margin="5,0,0,0" Width="200" HorizontalAlignment="Center" SelectedItem="{Binding VoterInfo.VoterPFVMeasure,Mode=TwoWay}" ItemsSource="{Binding PFVMeasureInfo}"/>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,0" VerticalAlignment="Center" x:Name="EntryRange" Visibility="Visible">
+                    <TextBlock Text="Buy-Sell Range :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
+                    <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityBuySellRange}"/>
+                </StackPanel>
+
+                <StackPanel Visibility="{Binding VoterInfo.VisibilityModeProperty}"  Orientation="Horizontal" Margin="5,5,0,0" VerticalAlignment="Center">
+                    <TextBlock VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right" >Buy-Sell Range :</TextBlock>
+                    <TextBox FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0"
+                             Width="25" Text="{Binding VoterInfo.VoterBuyRange,Mode=TwoWay}"></TextBox>
+                    <TextBlock VerticalAlignment="Center" Margin="5,0,0,0">-</TextBlock>
+                    <TextBox FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" 
+                             Width="25" Text="{Binding VoterInfo.VoterSellRange,Mode=TwoWay}"></TextBox>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
+                    <TextBlock Text="Recommendation :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
+                    <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="14" Foreground="DarkGreen" Text="{Binding PresentationInfo.SecurityRecommendation}"/>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+        
+     
+
+        <!-- Packet and attachment preview -->
+        <Grid Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Center">
+            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                <TextBlock Text="Preview" FontWeight="Bold" HorizontalAlignment="Center" />
+                <ItemsControl ItemsSource="{Binding AttachmentInfo}"  HorizontalAlignment="Center">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <HyperlinkButton Width="100" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                             Margin="10,10,0,0"
+                                             Content="{Binding AttachmentName}"
+                                             Command="{Binding OpenAttachmentCommand}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+
+        <!-- Member Vote Input -->
+        <Border Grid.Row="4"  BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Center" Margin="0,10,0,0">
+            <StackPanel Orientation="Vertical">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                    <TextBlock Text="Vote" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="0,10,0,0">
+                        <RadioButton IsEnabled="{Binding VotingEnabled}" Content="Agree with Recommendation" Margin="5,0,0,0" IsChecked="{Binding VoterInfo.RbtnAgree, Mode=TwoWay}"/>
+                        <RadioButton IsEnabled="{Binding VotingEnabled}" Content="Modify" Margin="5,0,0,0" IsChecked="{Binding VoterInfo.RbtnModify, Mode=TwoWay}"/>
+                        <RadioButton IsEnabled="{Binding VotingEnabled}" Content="Abstain" Margin="5,0,0,0" IsChecked="{Binding VoterInfo.RbtnAbstain, Mode=TwoWay}"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <CheckBox IsEnabled="{Binding VotingEnabled}" Margin="5,0,5,10" IsChecked="{Binding VoterInfo.RequestDiscussion,Mode=TwoWay}">Request Discussion at Meeting</CheckBox>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Additional Notes -->
+        <Grid Grid.Row="5">
+            <TextBlock Text="Notes" HorizontalAlignment="Left" Margin="0,10,0,0" />
+            <TextBox IsEnabled="{Binding VotingEnabled}" 
+                     Text="{Binding VoterInfo.VoterNotes, Mode=TwoWay}" 
+                     VerticalScrollBarVisibility="Auto" AcceptsReturn="True" 
+                     TextWrapping="Wrap" Margin="0,30,0,0" />
+        </Grid>
+
+        <!-- Blog Details -->
+        <StackPanel Grid.Row="6" Orientation="Vertical" x:Name="sbNotes">
+            <TextBlock Text="Blog" Margin="0,10,0,0" />
+            <Border BorderBrush="Black" BorderThickness="1" Margin="0,5,0,0">
+                <ItemsControl ItemsSource="{Binding BlogList}" HorizontalAlignment="Center">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding BlogCreationDate}" Width="100" VerticalAlignment="Top" Margin="5,0,0,0" HorizontalAlignment="Left" />
+                                <TextBlock Text="{Binding BlogCreatedBy}" Width="60" VerticalAlignment="Top" TextAlignment="Right" Margin="0" HorizontalAlignment="Center" />
+                                <TextBlock Text="{Binding BlogComment}"  Margin="10,0,0,0" VerticalAlignment="Top" Width="331" Height="18" TextWrapping="Wrap" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Border>
+            <StackPanel Orientation="Horizontal">
+                <TextBox IsEnabled="{Binding VotingEnabled}" Width="430" Margin="0,5,0,5" Text="{Binding BlogComment, Mode=TwoWay}"/>
+                <StackPanel Orientation="Horizontal" Margin="5,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="Alert :" TextAlignment="Right" VerticalAlignment="Center" Margin="0" />
+                    <ComboBox IsEnabled="{Binding VotingEnabled}" Margin="5,0,0,0" VerticalAlignment="Center"
+                              SelectedItem="{Binding SelectedAlertItem}" ItemsSource="{Binding SelectAlert}"/>
+                </StackPanel>
+                <Button Content="+" FontWeight="Bold" VerticalAlignment="Center" Margin="5,5,0,5" 
+                        IsEnabled="{Binding VotingEnabled}"
+                        Command="{Binding AddCommentButton}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Update Execution -->
+        <Grid Grid.Row="7">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="{Binding FinalExecutionText}" Command="{Binding FinalExecutionCommand}"></Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</helpers:ViewBaseUserControl>
