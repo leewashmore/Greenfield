@@ -261,7 +261,5 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-        void RetrieveCompanyData(Action<List<tblCompanyInfo>> callback);
-
     }
 }

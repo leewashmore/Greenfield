@@ -19,7 +19,11 @@
             <DataTemplate x:Key="CustomToolTipDataTemplate">
                 <StackPanel Margin="10,5">
                     <TextBlock FontWeight="Bold" Text="{Binding Path=Data, Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CNTRY_NAME'}" />
-                    <TextBlock Text="{Binding Path=Data,  Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CountryYTD',StringFormat='P'}"   />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Portfolio: ("/>
+                        <TextBlock Text="{Binding Path=Data,  Converter={StaticResource ExtendedDataConverter}, ConverterParameter='CountryYTD',StringFormat='P'}"/>
+                        <TextBlock Text=")"/>
+                    </StackPanel>
                 </StackPanel>
             </DataTemplate>
         </Grid.Resources>

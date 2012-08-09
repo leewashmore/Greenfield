@@ -372,6 +372,34 @@ namespace GreenField.Gadgets.Views
 
         }
 
+        void DocumentCommentUpdation(object sender, RoutedEventArgs e)
+        {
+            RadButton element = sender as RadButton;
+            if (element != null)
+            {
+                CommentUpdationData commentUpdationData = element.Tag as CommentUpdationData;
+                if (commentUpdationData != null)
+                {
+                    DocumentCategoricalData data = commentUpdationData.CommentUpdationInfo as DocumentCategoricalData;
+                    if(data != null)
+                    {
+                        DocumentCategoricalData selectedDocument = documentCategoricalInfo.Where(record => record == data).FirstOrDefault();
+                        if(selectedDocument != null)
+                        {
+                            selectedDocument.CommentDetails.Add(new CommentDetails()
+                            {
+                                Comment = commentUpdationData.CommentUpdationInput.Text,
+                                CommentBy = SessionManager.SESSION.UserName,
+                                CommentOn = DateTime.Now
+                            });
+
+                            ConstructDocumentSearchResult(documentCategoricalInfo);
+                        }                        
+                    }                    
+                }
+            }            
+        }
+
         private RadTreeViewItem InsertTreeViewItem_Blog(DocumentCategoricalData data)
         {
             RadTreeViewItem blogTreeViewItem = new RadTreeViewItem() { HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch };
@@ -535,34 +563,6 @@ namespace GreenField.Gadgets.Views
             #endregion
 
             return blogTreeViewItem;
-        }
-
-        void DocumentCommentUpdation(object sender, RoutedEventArgs e)
-        {
-            RadButton element = sender as RadButton;
-            if (element != null)
-            {
-                CommentUpdationData commentUpdationData = element.Tag as CommentUpdationData;
-                if (commentUpdationData != null)
-                {
-                    DocumentCategoricalData data = commentUpdationData.CommentUpdationInfo as DocumentCategoricalData;
-                    if (data != null)
-                    {
-                        DocumentCategoricalData selectedDocument = documentCategoricalInfo.Where(record => record == data).FirstOrDefault();
-                        if (selectedDocument != null)
-                        {
-                            selectedDocument.CommentDetails.Add(new CommentDetails()
-                            {
-                                Comment = commentUpdationData.CommentUpdationInput.Text,
-                                CommentBy = SessionManager.SESSION.UserName,
-                                CommentOn = DateTime.Now
-                            });
-
-                            ConstructDocumentSearchResult(documentCategoricalInfo);
-                        }
-                    }
-                }
-            }
         }
 
         private void UpdateNotification()

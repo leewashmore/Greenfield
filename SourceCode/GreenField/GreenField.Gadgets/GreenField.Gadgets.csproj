@@ -230,9 +230,6 @@
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
-    <Compile Include="Views\Documents\ChildViewDocumentsUpload.xaml.cs">
-      <DependentUpon>ChildViewDocumentsUpload.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml.cs">
       <DependentUpon>ViewEstimates.xaml</DependentUpon>
     </Compile>
@@ -426,10 +423,6 @@
     <Page Include="Helpers\ChildExportOptions.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Documents\ChildViewDocumentsUpload.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml">
       <SubType>Designer</SubType>

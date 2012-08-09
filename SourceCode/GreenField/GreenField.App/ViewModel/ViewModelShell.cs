@@ -7,7 +7,7 @@ using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Commands;
 using System.Windows.Browser;
 using GreenField.Common;
-using GreenField.ServiceCaller; 
+using GreenField.ServiceCaller;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Practices.Prism.Events;
@@ -3687,7 +3687,7 @@ namespace GreenField.App.ViewModel
                         EventAggregator = _eventAggregator,
                         LoggerFacade = _logger,
                         DashboardGadgetPayload = SelectorPayload,
-                        RegionManager = _regionManager                        
+                        RegionManager = _regionManager
                     };
             }
             catch (Exception ex)

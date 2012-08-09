@@ -83,8 +83,6 @@ namespace GreenField.Common
         public IEventAggregator EventAggregator { get; set; }
         public IDBInteractivity DBInteractivity { get; set; }
         public IManageSessions ManageSessions { get; set; }
-        public IManageAlerts ManageAlerts { get; set; }
-        public IManageDocuments ManageDocuments { get; set; }
         public ILoggerFacade LoggerFacade { get; set; }
         public DashboardGadgetPayload DashboardGadgetPayload { get; set; }
         public IRegionManager RegionManager { get; set; }

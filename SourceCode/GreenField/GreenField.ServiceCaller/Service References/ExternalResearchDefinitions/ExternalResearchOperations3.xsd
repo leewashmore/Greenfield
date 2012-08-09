@@ -233,16 +233,4 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveCompanyData">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveCompanyDataResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveCompanyDataResult" nillable="true" type="q32:ArrayOftblCompanyInfo" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
 </xs:schema>

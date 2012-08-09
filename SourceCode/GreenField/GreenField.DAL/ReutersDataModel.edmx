@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="ReutersModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+      <Schema Namespace="ReutersModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="ReutersModelStoreContainer">
           <EntitySet Name="BENCHMARK_FINANCIALS" EntityType="ReutersModel.Store.BENCHMARK_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="BENCHMARK_FINANCIALS">
             <DefiningQuery>SELECT 
@@ -486,7 +486,64 @@
           <Property Name="UnitReported" Type="char" MaxLength="3" />
           <Property Name="SystemDate" Type="datetime" />
         </EntityType>
-      </Schema></edmx:StorageModels>
+        <!--Errors Found During Generation:
+      warning 6013: The table/view 'Reuters.dbo.tblConsensusRecommendation' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="tblConsensusRecommendation">
+        <Property Name="XRef" Type="nvarchar" MaxLength="9" />
+        <Property Name="StartDate" Type="datetime" />
+        <Property Name="EndDate" Type="datetime" />
+        <Property Name="OriginalDate" Type="datetime" />
+        <Property Name="ExpirationDate" Type="datetime" />
+        <Property Name="MeanRating" Type="real" />
+        <Property Name="MeanLabel" Type="nvarchar" MaxLength="20" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'Reuters.dbo.tblStatementRef' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="tblStatementRef">
+        <Property Name="ReportNumber" Type="nvarchar" MaxLength="5" />
+        <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
+        <Property Name="FiscalYear" Type="int" />
+        <Property Name="StatementType" Type="nvarchar" MaxLength="3" />
+        <Property Name="UpdateType" Type="nvarchar" MaxLength="10" />
+        <Property Name="UpdateDate" Type="datetime" />
+        <Property Name="CompleteStatement" Type="bit" />
+        <Property Name="PeriodLengthCode" Type="nvarchar" MaxLength="1" />
+        <Property Name="PeriodLength" Type="int" />
+        <Property Name="PeriodEndDate" Type="datetime" />
+        <Property Name="ReportedAccountingStandardCode" Type="nvarchar" MaxLength="20" />
+        <Property Name="ReportedAccountingStandard" Type="nvarchar" MaxLength="100" />
+        <Property Name="CurrencyConvertedTo" Type="nvarchar" MaxLength="3" />
+        <Property Name="CurrencyReported" Type="nvarchar" MaxLength="3" />
+        <Property Name="RepToConvExRate" Type="real" />
+        <Property Name="UnitConvertedTo" Type="nvarchar" MaxLength="3" />
+        <Property Name="UnitReported" Type="nvarchar" MaxLength="3" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'Reuters.dbo.tblStd' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="tblStd">
+        <Property Name="ReportNumber" Type="nvarchar" MaxLength="5" />
+        <Property Name="ReportYear" Type="int" />
+        <Property Name="COA" Type="nvarchar" MaxLength="10" />
+        <Property Name="RefNo" Type="nvarchar" MaxLength="10" />
+        <Property Name="Amount" Type="real" />
+      </EntityType>
+      Errors Found During Generation:
+      warning 6013: The table/view 'Reuters.dbo.tblStdCompanyInfo' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+      
+      <EntityType Name="tblStdCompanyInfo">
+        <Property Name="ReportNumber" Type="nvarchar" MaxLength="5" />
+        <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        <Property Name="Active" Type="bit" />
+        <Property Name="LatestFinancialsAnnual" Type="datetime" />
+        <Property Name="LatestFinancialsInterim" Type="datetime" />
+        <Property Name="Currency" Type="nvarchar" MaxLength="3" />
+        <Property Name="COAType" Type="nvarchar" MaxLength="3" />
+      </EntityType>-->
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ReutersModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -515,14 +572,14 @@
             <PropertyRef Name="AMOUNT" />
             <PropertyRef Name="UPDATE_DATE" />
           </Key>
-          <Property Type="String" Name="BENCHMARK_ID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="BENCHMARK_DATE" Nullable="false" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="DateTime" Name="UPDATE_DATE" Nullable="false" />
+          <Property Name="BENCHMARK_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="BENCHMARK_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+          <Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
+          <Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="BENCHMARK_NODE_FINANCIALS">
           <Key>
@@ -534,17 +591,17 @@
             <PropertyRef Name="AMOUNT" />
             <PropertyRef Name="UPDATE_DATE" />
           </Key>
-          <Property Type="String" Name="BENCHMARK_ID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="NODE_NAME1" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="NODE_ID1" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="NODE_NAME2" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="NODE_ID2" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="DateTime" Name="UPDATE_DATE" Nullable="false" />
+          <Property Name="BENCHMARK_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="NODE_NAME1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="NODE_ID1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="NODE_NAME2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="NODE_ID2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+          <Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
+          <Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="PORTFOLIO_FINANCIALS">
           <Key>
@@ -557,14 +614,14 @@
             <PropertyRef Name="AMOUNT" />
             <PropertyRef Name="UPDATE_DATE" />
           </Key>
-          <Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="PORTFOLIO_DATE" Nullable="false" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="DateTime" Name="UPDATE_DATE" Nullable="false" />
+          <Property Name="PORTFOLIO_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="PORTFOLIO_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+          <Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
+          <Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblActual">
           <Key>
@@ -575,31 +632,31 @@
             <PropertyRef Name="fPeriodEnd" />
             <PropertyRef Name="PeriodEndDate" />
           </Key>
-          <Property Type="String" Name="XRef" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PeriodType" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="EstimateType" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="fYearEnd" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="fPeriodEnd" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Type="DateTime" Name="PeriodEndDate" Nullable="false" />
-          <Property Type="String" Name="Unit" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Type="Single" Name="ActualValue" />
-          <Property Type="DateTime" Name="AnnouncementDate" />
-          <Property Type="DateTime" Name="UpdateDate" />
-          <Property Type="String" Name="Currency" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+          <Property Name="PeriodType" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="EstimateType" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="fYearEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
+          <Property Name="fPeriodEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
+          <Property Name="PeriodEndDate" Type="DateTime" Nullable="false" />
+          <Property Name="Unit" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="ActualValue" Type="Single" />
+          <Property Name="AnnouncementDate" Type="DateTime" />
+          <Property Name="UpdateDate" Type="DateTime" />
+          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="false" />
         </EntityType>
         <EntityType Name="tblBroker">
           <Key>
             <PropertyRef Name="broker_id" />
           </Key>
-          <Property Type="String" Name="broker_id" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="start" />
-          <Property Type="String" Name="broker_name" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="address1" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="address2" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="city" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="state_region" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="postalcode" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="country" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="broker_id" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="start" Type="DateTime" />
+          <Property Name="broker_name" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="address1" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="address2" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="city" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="state_region" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="postalcode" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="country" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
         </EntityType>
         <EntityType Name="tblCETargetPrice">
           <Key>
@@ -607,50 +664,50 @@
             <PropertyRef Name="StartDate" />
             <PropertyRef Name="OriginalDate" />
           </Key>
-          <Property Type="String" Name="XRef" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="StartDate" Nullable="false" />
-          <Property Type="DateTime" Name="EndDate" />
-          <Property Type="DateTime" Name="OriginalDate" Nullable="false" />
-          <Property Type="DateTime" Name="ExpirationDate" />
-          <Property Type="String" Name="Unit" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="NumOfEsts" />
-          <Property Type="Single" Name="High" />
-          <Property Type="Single" Name="Low" />
-          <Property Type="Single" Name="Mean" />
-          <Property Type="Single" Name="StdDev" />
-          <Property Type="Single" Name="Median" />
-          <Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" />
+          <Property Name="OriginalDate" Type="DateTime" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" />
+          <Property Name="Unit" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="NumOfEsts" Type="Int32" />
+          <Property Name="High" Type="Single" />
+          <Property Name="Low" Type="Single" />
+          <Property Name="Mean" Type="Single" />
+          <Property Name="StdDev" Type="Single" />
+          <Property Name="Median" Type="Single" />
+          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
         </EntityType>
         <EntityType Name="tblCompanyInfo">
           <Key>
             <PropertyRef Name="XRef" />
           </Key>
-          <Property Type="String" Name="XRef" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ReportNumber" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Name" MaxLength="80" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Country" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="Ticker" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CUSIP" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ISIN" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SEDOL" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="VALOREN" MaxLength="12" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="RIC" MaxLength="21" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DisplayRIC" MaxLength="21" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="RecentSplitDate" />
-          <Property Type="DateTime" Name="RecentCapitalAdjDate" />
-          <Property Type="String" Name="Consensus" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Estimate" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Earnings" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Periodicity" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CurrentPeriod" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Type="DateTime" Name="pEndDate" />
-          <Property Type="String" Name="fYearEnd" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="fPeriodEnd" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Type="Single" Name="CurrentPrice" />
-          <Property Type="DateTime" Name="CurrentPriceDate" />
-          <Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Type="Decimal" Name="OutstandingShares" Precision="18" Scale="0" />
-          <Property Type="Boolean" Name="Active" />
+          <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+          <Property Name="ReportNumber" Type="String" MaxLength="5" Unicode="false" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="80" Unicode="false" FixedLength="false" />
+          <Property Name="Country" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="Ticker" Type="String" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="CUSIP" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="ISIN" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="SEDOL" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="VALOREN" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
+          <Property Name="RIC" Type="String" MaxLength="21" Unicode="false" FixedLength="false" />
+          <Property Name="DisplayRIC" Type="String" MaxLength="21" Unicode="false" FixedLength="false" />
+          <Property Name="RecentSplitDate" Type="DateTime" />
+          <Property Name="RecentCapitalAdjDate" Type="DateTime" />
+          <Property Name="Consensus" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="Estimate" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="Earnings" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="Periodicity" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="CurrentPeriod" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="pEndDate" Type="DateTime" />
+          <Property Name="fYearEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
+          <Property Name="fPeriodEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
+          <Property Name="CurrentPrice" Type="Single" />
+          <Property Name="CurrentPriceDate" Type="DateTime" />
+          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="OutstandingShares" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Active" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblConsensusEstimate">
           <Key>
@@ -662,24 +719,24 @@
             <PropertyRef Name="StartDate" />
             <PropertyRef Name="OriginalDate" />
           </Key>
-          <Property Type="String" Name="XRef" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="PeriodEndDate" Nullable="false" />
-          <Property Type="String" Name="fYearEnd" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="fPeriodEnd" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="EstimateType" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PeriodType" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="StartDate" Nullable="false" />
-          <Property Type="DateTime" Name="EndDate" />
-          <Property Type="DateTime" Name="OriginalDate" Nullable="false" />
-          <Property Type="DateTime" Name="ExpirationDate" />
-          <Property Type="String" Name="Unit" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="NumOfEsts" />
-          <Property Type="Single" Name="High" />
-          <Property Type="Single" Name="Low" />
-          <Property Type="Single" Name="Mean" />
-          <Property Type="Single" Name="StdDev" />
-          <Property Type="Single" Name="Median" />
-          <Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+          <Property Name="PeriodEndDate" Type="DateTime" Nullable="false" />
+          <Property Name="fYearEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
+          <Property Name="fPeriodEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
+          <Property Name="EstimateType" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="PeriodType" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" />
+          <Property Name="OriginalDate" Type="DateTime" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" />
+          <Property Name="Unit" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="NumOfEsts" Type="Int32" />
+          <Property Name="High" Type="Single" />
+          <Property Name="Low" Type="Single" />
+          <Property Name="Mean" Type="Single" />
+          <Property Name="StdDev" Type="Single" />
+          <Property Name="Median" Type="Single" />
+          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
         </EntityType>
         <EntityType Name="tblDetailedEstimate">
           <Key>
@@ -692,25 +749,25 @@
             <PropertyRef Name="StartDate" />
             <PropertyRef Name="OriginalDate" />
           </Key>
-          <Property Type="String" Name="XRef" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="fYearEnd" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="fPeriodEnd" MaxLength="6" FixedLength="true" Unicode="false" />
-          <Property Type="DateTime" Name="PeriodEndDate" Nullable="false" />
-          <Property Type="String" Name="BrokerID" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PeriodType" Nullable="false" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="EstimateType" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="StartDate" Nullable="false" />
-          <Property Type="DateTime" Name="EndDate" />
-          <Property Type="DateTime" Name="OriginalDate" Nullable="false" />
-          <Property Type="DateTime" Name="ExpirationDate" />
-          <Property Type="DateTime" Name="ConfirmationDate" />
-          <Property Type="DateTime" Name="SuppressStartDate" />
-          <Property Type="DateTime" Name="SuppressEndDate" />
-          <Property Type="DateTime" Name="SuppressOriginalDate" />
-          <Property Type="DateTime" Name="SuppressExpirationDate" />
-          <Property Type="String" Name="Unit" MaxLength="2" FixedLength="false" Unicode="false" />
-          <Property Type="Single" Name="Amount" />
-          <Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="XRef" Type="String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+          <Property Name="fYearEnd" Type="String" Nullable="false" MaxLength="6" Unicode="false" FixedLength="true" />
+          <Property Name="fPeriodEnd" Type="String" MaxLength="6" Unicode="false" FixedLength="true" />
+          <Property Name="PeriodEndDate" Type="DateTime" Nullable="false" />
+          <Property Name="BrokerID" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="PeriodType" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="EstimateType" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" />
+          <Property Name="OriginalDate" Type="DateTime" Nullable="false" />
+          <Property Name="ExpirationDate" Type="DateTime" />
+          <Property Name="ConfirmationDate" Type="DateTime" />
+          <Property Name="SuppressStartDate" Type="DateTime" />
+          <Property Name="SuppressEndDate" Type="DateTime" />
+          <Property Name="SuppressOriginalDate" Type="DateTime" />
+          <Property Name="SuppressExpirationDate" Type="DateTime" />
+          <Property Name="Unit" Type="String" MaxLength="2" Unicode="false" FixedLength="false" />
+          <Property Name="Amount" Type="Single" />
+          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
         </EntityType>
         <EntityType Name="tblStdInterim">
           <Key>
@@ -720,287 +777,239 @@
             <PropertyRef Name="RefNo" />
             <PropertyRef Name="Amount" />
           </Key>
-          <Property Type="String" Name="ReportNumber" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="ReportYear" Nullable="false" />
-          <Property Type="String" Name="COA" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="RefNo" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
-          <Property Type="Single" Name="Amount" Nullable="false" />
+          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
+          <Property Name="ReportYear" Type="Int32" Nullable="false" />
+          <Property Name="COA" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="13" Unicode="false" FixedLength="false" />
+          <Property Name="Amount" Type="Single" Nullable="false" />
         </EntityType>
         <EntityType Name="tblStdInterimCompanyInfo">
           <Key>
             <PropertyRef Name="ReportNumber" />
           </Key>
-          <Property Type="String" Name="ReportNumber" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Name" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" Name="Active" />
-          <Property Type="DateTime" Name="LatestFinancialsAnnual" />
-          <Property Type="DateTime" Name="LatestFinancialsInterim" />
-          <Property Type="String" Name="Currency" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="COAType" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
+          <Property Name="Name" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="Active" Type="Boolean" />
+          <Property Name="LatestFinancialsAnnual" Type="DateTime" />
+          <Property Name="LatestFinancialsInterim" Type="DateTime" />
+          <Property Name="Currency" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="COAType" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
         </EntityType>
         <EntityType Name="tblStdInterimRef">
           <Key>
             <PropertyRef Name="ReportNumber" />
             <PropertyRef Name="RefNo" />
           </Key>
-          <Property Type="String" Name="ReportNumber" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="RefNo" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="FiscalYear" />
-          <Property Type="String" Name="StatementType" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Type="Int16" Name="InterimNumber" />
-          <Property Type="String" Name="UpdateType" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="UpdateDate" />
-          <Property Type="Boolean" Name="CompleteStatement" />
-          <Property Type="String" Name="PeriodLengthCode" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="Int32" Name="PeriodLength" />
-          <Property Type="DateTime" Name="PeriodEndDate" />
-          <Property Type="String" Name="Source" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="SourceDate" />
-          <Property Type="String" Name="ReportedAccountingStandardCode" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ReportedAccountingStandard" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" Name="STECFlag" />
-          <Property Type="String" Name="CurrencyConvertedTo" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="CurrencyReported" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Type="Single" Name="RepToConvExRate" />
-          <Property Type="String" Name="UnitConvertedTo" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="UnitReported" MaxLength="3" FixedLength="true" Unicode="false" />
-          <Property Type="DateTime" Name="SystemDate" />
+          <Property Name="ReportNumber" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="false" />
+          <Property Name="RefNo" Type="String" Nullable="false" MaxLength="13" Unicode="false" FixedLength="false" />
+          <Property Name="FiscalYear" Type="Int32" />
+          <Property Name="StatementType" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="InterimNumber" Type="Int16" />
+          <Property Name="UpdateType" Type="String" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="UpdateDate" Type="DateTime" />
+          <Property Name="CompleteStatement" Type="Boolean" />
+          <Property Name="PeriodLengthCode" Type="String" MaxLength="1" Unicode="false" FixedLength="true" />
+          <Property Name="PeriodLength" Type="Int32" />
+          <Property Name="PeriodEndDate" Type="DateTime" />
+          <Property Name="Source" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="SourceDate" Type="DateTime" />
+          <Property Name="ReportedAccountingStandardCode" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="ReportedAccountingStandard" Type="String" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="STECFlag" Type="Boolean" />
+          <Property Name="CurrencyConvertedTo" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="CurrencyReported" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="RepToConvExRate" Type="Single" />
+          <Property Name="UnitConvertedTo" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="UnitReported" Type="String" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="SystemDate" Type="DateTime" />
         </EntityType>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ReutersModelStoreContainer" CdmEntityContainer="ReutersEntities">
-          <EntitySetMapping Name="BENCHMARK_FINANCIALS">
-            <EntityTypeMapping TypeName="ReutersModel.BENCHMARK_FINANCIALS">
-              <MappingFragment StoreEntitySet="BENCHMARK_FINANCIALS">
-                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-                <ScalarProperty Name="BENCHMARK_DATE" ColumnName="BENCHMARK_DATE" />
-                <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BENCHMARK_NODE_FINANCIALS">
-            <EntityTypeMapping TypeName="ReutersModel.BENCHMARK_NODE_FINANCIALS">
-              <MappingFragment StoreEntitySet="BENCHMARK_NODE_FINANCIALS">
-                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-                <ScalarProperty Name="NODE_ID2" ColumnName="NODE_ID2" />
-                <ScalarProperty Name="NODE_NAME2" ColumnName="NODE_NAME2" />
-                <ScalarProperty Name="NODE_ID1" ColumnName="NODE_ID1" />
-                <ScalarProperty Name="NODE_NAME1" ColumnName="NODE_NAME1" />
-                <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PORTFOLIO_FINANCIALS">
-            <EntityTypeMapping TypeName="ReutersModel.PORTFOLIO_FINANCIALS">
-              <MappingFragment StoreEntitySet="PORTFOLIO_FINANCIALS">
-                <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-                <ScalarProperty Name="PORTFOLIO_DATE" ColumnName="PORTFOLIO_DATE" />
-                <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblActuals">
-            <EntityTypeMapping TypeName="ReutersModel.tblActual">
-              <MappingFragment StoreEntitySet="tblActual">
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="AnnouncementDate" ColumnName="AnnouncementDate" />
-                <ScalarProperty Name="ActualValue" ColumnName="ActualValue" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
-                <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-                <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
-                <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
-                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-                <ScalarProperty Name="XRef" ColumnName="XRef" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblBrokers">
-            <EntityTypeMapping TypeName="ReutersModel.tblBroker">
-              <MappingFragment StoreEntitySet="tblBrokers">
-                <ScalarProperty Name="country" ColumnName="country" />
-                <ScalarProperty Name="postalcode" ColumnName="postalcode" />
-                <ScalarProperty Name="state_region" ColumnName="state_region" />
-                <ScalarProperty Name="city" ColumnName="city" />
-                <ScalarProperty Name="address2" ColumnName="address2" />
-                <ScalarProperty Name="address1" ColumnName="address1" />
-                <ScalarProperty Name="broker_name" ColumnName="broker_name" />
-                <ScalarProperty Name="start" ColumnName="start" />
-                <ScalarProperty Name="broker_id" ColumnName="broker_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblCETargetPrices">
-            <EntityTypeMapping TypeName="ReutersModel.tblCETargetPrice">
-              <MappingFragment StoreEntitySet="tblCETargetPrice">
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="Median" ColumnName="Median" />
-                <ScalarProperty Name="StdDev" ColumnName="StdDev" />
-                <ScalarProperty Name="Mean" ColumnName="Mean" />
-                <ScalarProperty Name="Low" ColumnName="Low" />
-                <ScalarProperty Name="High" ColumnName="High" />
-                <ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="XRef" ColumnName="XRef" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblCompanyInfoes">
-            <EntityTypeMapping TypeName="ReutersModel.tblCompanyInfo">
-              <MappingFragment StoreEntitySet="tblCompanyInfo">
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="OutstandingShares" ColumnName="OutstandingShares" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="CurrentPriceDate" ColumnName="CurrentPriceDate" />
-                <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
-                <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-                <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
-                <ScalarProperty Name="pEndDate" ColumnName="pEndDate" />
-                <ScalarProperty Name="CurrentPeriod" ColumnName="CurrentPeriod" />
-                <ScalarProperty Name="Periodicity" ColumnName="Periodicity" />
-                <ScalarProperty Name="Earnings" ColumnName="Earnings" />
-                <ScalarProperty Name="Estimate" ColumnName="Estimate" />
-                <ScalarProperty Name="Consensus" ColumnName="Consensus" />
-                <ScalarProperty Name="RecentCapitalAdjDate" ColumnName="RecentCapitalAdjDate" />
-                <ScalarProperty Name="RecentSplitDate" ColumnName="RecentSplitDate" />
-                <ScalarProperty Name="DisplayRIC" ColumnName="DisplayRIC" />
-                <ScalarProperty Name="RIC" ColumnName="RIC" />
-                <ScalarProperty Name="VALOREN" ColumnName="VALOREN" />
-                <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
-                <ScalarProperty Name="ISIN" ColumnName="ISIN" />
-                <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
-                <ScalarProperty Name="Ticker" ColumnName="Ticker" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-                <ScalarProperty Name="XRef" ColumnName="XRef" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblConsensusEstimates">
-            <EntityTypeMapping TypeName="ReutersModel.tblConsensusEstimate">
-              <MappingFragment StoreEntitySet="tblConsensusEstimate">
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="Median" ColumnName="Median" />
-                <ScalarProperty Name="StdDev" ColumnName="StdDev" />
-                <ScalarProperty Name="Mean" ColumnName="Mean" />
-                <ScalarProperty Name="Low" ColumnName="Low" />
-                <ScalarProperty Name="High" ColumnName="High" />
-                <ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-                <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
-                <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-                <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
-                <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
-                <ScalarProperty Name="XRef" ColumnName="XRef" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblDetailedEstimates">
-            <EntityTypeMapping TypeName="ReutersModel.tblDetailedEstimate">
-              <MappingFragment StoreEntitySet="tblDetailedEstimate">
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="Unit" ColumnName="Unit" />
-                <ScalarProperty Name="SuppressExpirationDate" ColumnName="SuppressExpirationDate" />
-                <ScalarProperty Name="SuppressOriginalDate" ColumnName="SuppressOriginalDate" />
-                <ScalarProperty Name="SuppressEndDate" ColumnName="SuppressEndDate" />
-                <ScalarProperty Name="SuppressStartDate" ColumnName="SuppressStartDate" />
-                <ScalarProperty Name="ConfirmationDate" ColumnName="ConfirmationDate" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
-                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-                <ScalarProperty Name="BrokerID" ColumnName="BrokerID" />
-                <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
-                <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-                <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
-                <ScalarProperty Name="XRef" ColumnName="XRef" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblStdInterims">
-            <EntityTypeMapping TypeName="ReutersModel.tblStdInterim">
-              <MappingFragment StoreEntitySet="tblStdInterim">
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
-                <ScalarProperty Name="COA" ColumnName="COA" />
-                <ScalarProperty Name="ReportYear" ColumnName="ReportYear" />
-                <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblStdInterimCompanyInfoes">
-            <EntityTypeMapping TypeName="ReutersModel.tblStdInterimCompanyInfo">
-              <MappingFragment StoreEntitySet="tblStdInterimCompanyInfo">
-                <ScalarProperty Name="COAType" ColumnName="COAType" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="LatestFinancialsInterim" ColumnName="LatestFinancialsInterim" />
-                <ScalarProperty Name="LatestFinancialsAnnual" ColumnName="LatestFinancialsAnnual" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblStdInterimRefs">
-            <EntityTypeMapping TypeName="ReutersModel.tblStdInterimRef">
-              <MappingFragment StoreEntitySet="tblStdInterimRef">
-                <ScalarProperty Name="SystemDate" ColumnName="SystemDate" />
-                <ScalarProperty Name="UnitReported" ColumnName="UnitReported" />
-                <ScalarProperty Name="UnitConvertedTo" ColumnName="UnitConvertedTo" />
-                <ScalarProperty Name="RepToConvExRate" ColumnName="RepToConvExRate" />
-                <ScalarProperty Name="CurrencyReported" ColumnName="CurrencyReported" />
-                <ScalarProperty Name="CurrencyConvertedTo" ColumnName="CurrencyConvertedTo" />
-                <ScalarProperty Name="STECFlag" ColumnName="STECFlag" />
-                <ScalarProperty Name="ReportedAccountingStandard" ColumnName="ReportedAccountingStandard" />
-                <ScalarProperty Name="ReportedAccountingStandardCode" ColumnName="ReportedAccountingStandardCode" />
-                <ScalarProperty Name="SourceDate" ColumnName="SourceDate" />
-                <ScalarProperty Name="Source" ColumnName="Source" />
-                <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
-                <ScalarProperty Name="PeriodLength" ColumnName="PeriodLength" />
-                <ScalarProperty Name="PeriodLengthCode" ColumnName="PeriodLengthCode" />
-                <ScalarProperty Name="CompleteStatement" ColumnName="CompleteStatement" />
-                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
-                <ScalarProperty Name="UpdateType" ColumnName="UpdateType" />
-                <ScalarProperty Name="InterimNumber" ColumnName="InterimNumber" />
-                <ScalarProperty Name="StatementType" ColumnName="StatementType" />
-                <ScalarProperty Name="FiscalYear" ColumnName="FiscalYear" />
-                <ScalarProperty Name="RefNo" ColumnName="RefNo" />
-                <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+          <EntitySetMapping Name="BENCHMARK_FINANCIALS"><EntityTypeMapping TypeName="ReutersModel.BENCHMARK_FINANCIALS"><MappingFragment StoreEntitySet="BENCHMARK_FINANCIALS">
+            <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
+            <ScalarProperty Name="BENCHMARK_DATE" ColumnName="BENCHMARK_DATE" />
+            <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+            <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+            <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+            <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+            <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+            <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="BENCHMARK_NODE_FINANCIALS"><EntityTypeMapping TypeName="ReutersModel.BENCHMARK_NODE_FINANCIALS"><MappingFragment StoreEntitySet="BENCHMARK_NODE_FINANCIALS">
+            <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
+            <ScalarProperty Name="NODE_NAME1" ColumnName="NODE_NAME1" />
+            <ScalarProperty Name="NODE_ID1" ColumnName="NODE_ID1" />
+            <ScalarProperty Name="NODE_NAME2" ColumnName="NODE_NAME2" />
+            <ScalarProperty Name="NODE_ID2" ColumnName="NODE_ID2" />
+            <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+            <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+            <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+            <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+            <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+            <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PORTFOLIO_FINANCIALS"><EntityTypeMapping TypeName="ReutersModel.PORTFOLIO_FINANCIALS"><MappingFragment StoreEntitySet="PORTFOLIO_FINANCIALS">
+            <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
+            <ScalarProperty Name="PORTFOLIO_DATE" ColumnName="PORTFOLIO_DATE" />
+            <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+            <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+            <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+            <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+            <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+            <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblActuals"><EntityTypeMapping TypeName="ReutersModel.tblActual"><MappingFragment StoreEntitySet="tblActual">
+            <ScalarProperty Name="XRef" ColumnName="XRef" />
+            <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+            <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
+            <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
+            <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+            <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
+            <ScalarProperty Name="Unit" ColumnName="Unit" />
+            <ScalarProperty Name="ActualValue" ColumnName="ActualValue" />
+            <ScalarProperty Name="AnnouncementDate" ColumnName="AnnouncementDate" />
+            <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+            <ScalarProperty Name="Currency" ColumnName="Currency" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblBrokers"><EntityTypeMapping TypeName="ReutersModel.tblBroker"><MappingFragment StoreEntitySet="tblBrokers">
+            <ScalarProperty Name="broker_id" ColumnName="broker_id" />
+            <ScalarProperty Name="start" ColumnName="start" />
+            <ScalarProperty Name="broker_name" ColumnName="broker_name" />
+            <ScalarProperty Name="address1" ColumnName="address1" />
+            <ScalarProperty Name="address2" ColumnName="address2" />
+            <ScalarProperty Name="city" ColumnName="city" />
+            <ScalarProperty Name="state_region" ColumnName="state_region" />
+            <ScalarProperty Name="postalcode" ColumnName="postalcode" />
+            <ScalarProperty Name="country" ColumnName="country" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblCETargetPrices"><EntityTypeMapping TypeName="ReutersModel.tblCETargetPrice"><MappingFragment StoreEntitySet="tblCETargetPrice">
+            <ScalarProperty Name="XRef" ColumnName="XRef" />
+            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+            <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
+            <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+            <ScalarProperty Name="Unit" ColumnName="Unit" />
+            <ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
+            <ScalarProperty Name="High" ColumnName="High" />
+            <ScalarProperty Name="Low" ColumnName="Low" />
+            <ScalarProperty Name="Mean" ColumnName="Mean" />
+            <ScalarProperty Name="StdDev" ColumnName="StdDev" />
+            <ScalarProperty Name="Median" ColumnName="Median" />
+            <ScalarProperty Name="Currency" ColumnName="Currency" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblCompanyInfoes"><EntityTypeMapping TypeName="ReutersModel.tblCompanyInfo"><MappingFragment StoreEntitySet="tblCompanyInfo">
+            <ScalarProperty Name="XRef" ColumnName="XRef" />
+            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Country" ColumnName="Country" />
+            <ScalarProperty Name="Ticker" ColumnName="Ticker" />
+            <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
+            <ScalarProperty Name="ISIN" ColumnName="ISIN" />
+            <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
+            <ScalarProperty Name="VALOREN" ColumnName="VALOREN" />
+            <ScalarProperty Name="RIC" ColumnName="RIC" />
+            <ScalarProperty Name="DisplayRIC" ColumnName="DisplayRIC" />
+            <ScalarProperty Name="RecentSplitDate" ColumnName="RecentSplitDate" />
+            <ScalarProperty Name="RecentCapitalAdjDate" ColumnName="RecentCapitalAdjDate" />
+            <ScalarProperty Name="Consensus" ColumnName="Consensus" />
+            <ScalarProperty Name="Estimate" ColumnName="Estimate" />
+            <ScalarProperty Name="Earnings" ColumnName="Earnings" />
+            <ScalarProperty Name="Periodicity" ColumnName="Periodicity" />
+            <ScalarProperty Name="CurrentPeriod" ColumnName="CurrentPeriod" />
+            <ScalarProperty Name="pEndDate" ColumnName="pEndDate" />
+            <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
+            <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+            <ScalarProperty Name="CurrentPrice" ColumnName="CurrentPrice" />
+            <ScalarProperty Name="CurrentPriceDate" ColumnName="CurrentPriceDate" />
+            <ScalarProperty Name="Currency" ColumnName="Currency" />
+            <ScalarProperty Name="OutstandingShares" ColumnName="OutstandingShares" />
+            <ScalarProperty Name="Active" ColumnName="Active" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblConsensusEstimates"><EntityTypeMapping TypeName="ReutersModel.tblConsensusEstimate"><MappingFragment StoreEntitySet="tblConsensusEstimate">
+            <ScalarProperty Name="XRef" ColumnName="XRef" />
+            <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
+            <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
+            <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+            <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
+            <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+            <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
+            <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+            <ScalarProperty Name="Unit" ColumnName="Unit" />
+            <ScalarProperty Name="NumOfEsts" ColumnName="NumOfEsts" />
+            <ScalarProperty Name="High" ColumnName="High" />
+            <ScalarProperty Name="Low" ColumnName="Low" />
+            <ScalarProperty Name="Mean" ColumnName="Mean" />
+            <ScalarProperty Name="StdDev" ColumnName="StdDev" />
+            <ScalarProperty Name="Median" ColumnName="Median" />
+            <ScalarProperty Name="Currency" ColumnName="Currency" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblDetailedEstimates"><EntityTypeMapping TypeName="ReutersModel.tblDetailedEstimate"><MappingFragment StoreEntitySet="tblDetailedEstimate">
+            <ScalarProperty Name="XRef" ColumnName="XRef" />
+            <ScalarProperty Name="fYearEnd" ColumnName="fYearEnd" />
+            <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+            <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
+            <ScalarProperty Name="BrokerID" ColumnName="BrokerID" />
+            <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+            <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
+            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+            <ScalarProperty Name="OriginalDate" ColumnName="OriginalDate" />
+            <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+            <ScalarProperty Name="ConfirmationDate" ColumnName="ConfirmationDate" />
+            <ScalarProperty Name="SuppressStartDate" ColumnName="SuppressStartDate" />
+            <ScalarProperty Name="SuppressEndDate" ColumnName="SuppressEndDate" />
+            <ScalarProperty Name="SuppressOriginalDate" ColumnName="SuppressOriginalDate" />
+            <ScalarProperty Name="SuppressExpirationDate" ColumnName="SuppressExpirationDate" />
+            <ScalarProperty Name="Unit" ColumnName="Unit" />
+            <ScalarProperty Name="Amount" ColumnName="Amount" />
+            <ScalarProperty Name="Currency" ColumnName="Currency" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblStdInterims"><EntityTypeMapping TypeName="ReutersModel.tblStdInterim"><MappingFragment StoreEntitySet="tblStdInterim">
+            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+            <ScalarProperty Name="ReportYear" ColumnName="ReportYear" />
+            <ScalarProperty Name="COA" ColumnName="COA" />
+            <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+            <ScalarProperty Name="Amount" ColumnName="Amount" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblStdInterimCompanyInfoes"><EntityTypeMapping TypeName="ReutersModel.tblStdInterimCompanyInfo"><MappingFragment StoreEntitySet="tblStdInterimCompanyInfo">
+            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+            <ScalarProperty Name="Name" ColumnName="Name" />
+            <ScalarProperty Name="Active" ColumnName="Active" />
+            <ScalarProperty Name="LatestFinancialsAnnual" ColumnName="LatestFinancialsAnnual" />
+            <ScalarProperty Name="LatestFinancialsInterim" ColumnName="LatestFinancialsInterim" />
+            <ScalarProperty Name="Currency" ColumnName="Currency" />
+            <ScalarProperty Name="COAType" ColumnName="COAType" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="tblStdInterimRefs"><EntityTypeMapping TypeName="ReutersModel.tblStdInterimRef"><MappingFragment StoreEntitySet="tblStdInterimRef">
+            <ScalarProperty Name="ReportNumber" ColumnName="ReportNumber" />
+            <ScalarProperty Name="RefNo" ColumnName="RefNo" />
+            <ScalarProperty Name="FiscalYear" ColumnName="FiscalYear" />
+            <ScalarProperty Name="StatementType" ColumnName="StatementType" />
+            <ScalarProperty Name="InterimNumber" ColumnName="InterimNumber" />
+            <ScalarProperty Name="UpdateType" ColumnName="UpdateType" />
+            <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+            <ScalarProperty Name="CompleteStatement" ColumnName="CompleteStatement" />
+            <ScalarProperty Name="PeriodLengthCode" ColumnName="PeriodLengthCode" />
+            <ScalarProperty Name="PeriodLength" ColumnName="PeriodLength" />
+            <ScalarProperty Name="PeriodEndDate" ColumnName="PeriodEndDate" />
+            <ScalarProperty Name="Source" ColumnName="Source" />
+            <ScalarProperty Name="SourceDate" ColumnName="SourceDate" />
+            <ScalarProperty Name="ReportedAccountingStandardCode" ColumnName="ReportedAccountingStandardCode" />
+            <ScalarProperty Name="ReportedAccountingStandard" ColumnName="ReportedAccountingStandard" />
+            <ScalarProperty Name="STECFlag" ColumnName="STECFlag" />
+            <ScalarProperty Name="CurrencyConvertedTo" ColumnName="CurrencyConvertedTo" />
+            <ScalarProperty Name="CurrencyReported" ColumnName="CurrencyReported" />
+            <ScalarProperty Name="RepToConvExRate" ColumnName="RepToConvExRate" />
+            <ScalarProperty Name="UnitConvertedTo" ColumnName="UnitConvertedTo" />
+            <ScalarProperty Name="UnitReported" ColumnName="UnitReported" />
+            <ScalarProperty Name="SystemDate" ColumnName="SystemDate" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1022,18 +1031,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram Name="ReutersDataModel" ZoomLevel="74">
-        <EntityTypeShape EntityType="ReutersModel.BENCHMARK_FINANCIALS" Width="1.5" PointX="0.75" PointY="0.75" Height="2.5571907552083388" />
-        <EntityTypeShape EntityType="ReutersModel.BENCHMARK_NODE_FINANCIALS" Width="1.5" PointX="2.75" PointY="0.75" Height="3.1340950520833388" />
-        <EntityTypeShape EntityType="ReutersModel.PORTFOLIO_FINANCIALS" Width="1.5" PointX="4.75" PointY="0.75" Height="2.5571907552083388" />
-        <EntityTypeShape EntityType="ReutersModel.tblActual" Width="1.5" PointX="0.75" PointY="4.75" Height="3.1340950520833388" />
-        <EntityTypeShape EntityType="ReutersModel.tblBroker" Width="1.5" PointX="2.75" PointY="4.75" Height="2.7494921875000031" />
-        <EntityTypeShape EntityType="ReutersModel.tblCETargetPrice" Width="1.5" PointX="4.75" PointY="4.75" Height="3.5186979166666674" />
-        <EntityTypeShape EntityType="ReutersModel.tblCompanyInfo" Width="1.5" PointX="6.75" PointY="0.75" Height="6.0186165364583317" />
-        <EntityTypeShape EntityType="ReutersModel.tblConsensusEstimate" Width="1.5" PointX="6.75" PointY="7.75" Height="4.4802050781250031" />
-        <EntityTypeShape EntityType="ReutersModel.tblDetailedEstimate" Width="1.5" PointX="8.75" PointY="0.75" Height="4.6725065104166674" />
-        <EntityTypeShape EntityType="ReutersModel.tblStdInterim" Width="1.5" PointX="0.75" PointY="8.75" Height="1.9802864583333282" />
-        <EntityTypeShape EntityType="ReutersModel.tblStdInterimCompanyInfo" Width="1.5" PointX="8.75" PointY="6.75" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="ReutersModel.tblStdInterimRef" Width="1.5" PointX="2.75" PointY="9.75" Height="5.2494108072916674" />
+        <EntityTypeShape EntityType="ReutersModel.BENCHMARK_FINANCIALS" Width="1.5" PointX="0.75" PointY="0.75" Height="2.5571907552083335" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReutersModel.BENCHMARK_NODE_FINANCIALS" Width="1.5" PointX="2.75" PointY="0.75" Height="3.1340950520833326" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReutersModel.PORTFOLIO_FINANCIALS" Width="1.5" PointX="4.75" PointY="0.75" Height="2.5571907552083335" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReutersModel.tblActual" Width="1.5" PointX="0.75" PointY="4.75" Height="3.1340950520833335" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReutersModel.tblBroker" Width="1.5" PointX="2.75" PointY="4.75" Height="2.7494921874999996" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReutersModel.tblCETargetPrice" Width="1.5" PointX="4.75" PointY="4.75" Height="3.5186979166666674" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReutersModel.tblCompanyInfo" Width="1.5" PointX="6.75" PointY="0.75" Height="6.0186165364583317" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReutersModel.tblConsensusEstimate" Width="1.5" PointX="6.75" PointY="7.75" Height="4.480205078125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReutersModel.tblDetailedEstimate" Width="1.5" PointX="8.75" PointY="0.75" Height="4.6725065104166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReutersModel.tblStdInterim" Width="1.5" PointX="0.75" PointY="8.75" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReutersModel.tblStdInterimCompanyInfo" Width="1.5" PointX="8.75" PointY="6.75" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="ReutersModel.tblStdInterimRef" Width="1.5" PointX="2.75" PointY="9.75" Height="5.2494108072916674" IsExpanded="true" />
       </Diagram>
     </Diagrams>
   </Designer>

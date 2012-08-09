@@ -24,7 +24,6 @@
   </MetadataSources>
   <Metadata>
     <MetadataFile FileName="ExternalResearchOperations.xsd" MetadataType="Schema" ID="83bf0a55-1a27-4a0d-b4c6-4ede26e92dc4" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd4" />
-    <MetadataFile FileName="ExternalResearchOperations9.xsd" MetadataType="Schema" ID="b42ac837-3b29-4a6b-adce-9be2e68d6a8d" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd9" />
     <MetadataFile FileName="ExternalResearchOperations.wsdl" MetadataType="Wsdl" ID="c8135bf8-ade6-4166-80b5-f71837474c93" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?wsdl" />
     <MetadataFile FileName="ExternalResearchOperations1.xsd" MetadataType="Schema" ID="badbbe0a-b335-4f3f-b8ff-3d87cf481db1" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd3" />
     <MetadataFile FileName="ExternalResearchOperations2.xsd" MetadataType="Schema" ID="90422f6e-b75b-4f1f-9b81-83f9623be1ae" SourceId="1" SourceUrl="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd1" />

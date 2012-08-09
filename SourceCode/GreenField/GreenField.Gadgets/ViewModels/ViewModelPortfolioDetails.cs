@@ -680,4 +680,3 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
     }
 }
-

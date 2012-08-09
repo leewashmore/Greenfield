@@ -17,7 +17,6 @@ using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Practices.Prism.Commands;
-using GreenField.Gadgets.Views.Documents;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -40,11 +39,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade _logger;
-
-        private IManageDocuments _manageDocuments;
-
-        private ChildViewDocumentsUpload _uploadWindow;
+        private ILoggerFacade _logger;        
         #endregion       
 
         #region Constructor
@@ -53,21 +48,6 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-            _manageDocuments = param.ManageDocuments;
-            _uploadWindow = new ChildViewDocumentsUpload(_dbInteractivity, _logger);
-            //param.ManageAlerts.SendAlert(new List<String> { "Rahul.Vig@headstrong.com" }, new List<String> { "Akshay.Mathur2@headstrong.com" }
-            //    , "This is a test mail", "Test", (Boolean? result) =>
-            //{
-
-            //});            
-
-            _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);
-            
-        }
-
-        void _uploadWindow_Unloaded(object sender, RoutedEventArgs e)
-        {
-            _manageDocuments.UploadDocument(_uploadWindow.UploadFileName, _uploadWindow.UploadFileByteStream, (result) => { MessageBox.Show(result.ToString()); });
         }
 
         #endregion
@@ -101,21 +81,9 @@ namespace GreenField.Gadgets.ViewModels
             get { return new DelegateCommand<object>(DocumentSearchCommandMethod); }
         }
 
-        public ICommand UploadDocumentCommand
-        {
-            get { return new DelegateCommand<object>(UploadDocumentCommandMethod); }
-        }
-
         private void DocumentSearchCommandMethod(object param)
         {
             _dbInteractivity.RetrieveDocumentsData(SearchString, RetrieveDocumentsDataCallbackMethod);
-        }
-
-        private void UploadDocumentCommandMethod(object param)
-        {
-            _uploadWindow.Show();
-
-
         }
 
         private void RetrieveDocumentsDataCallbackMethod(List<DocumentCategoricalData> result)
