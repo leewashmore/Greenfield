@@ -160,4 +160,31 @@ namespace GreenField.Common
     {
         public List<GreenField.DataContracts.FXCommodityData> CommodityInfo { get; set; }
     }
+
+
+#region IC PRESENTATION
+
+    public static class StatusTypes
+    {
+        public static int InProgress = 1;
+        public static int Requested = 2;
+        public static int PendingDocuments = 3;
+        public static int ReadyOpenforVoting = 4;
+        public static int ReadyClosed = 5;
+        public static int Presented = 6;
+        public static int Closed = 7;
+        public static int Withdrawn = 8;
+
+    }
+
+    public static class VoteTypes
+    {
+        public static int Agree = 7;
+        public static int Modify = 8;
+        public static int Abstain = 9;
+    }
+
+
+    public enum ViewPluginFlagEnumeration { Create,Upload, Update, View };
+#endregion
 }

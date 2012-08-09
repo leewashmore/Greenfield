@@ -1558,7 +1558,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveCOASpecificData(string issuerId, System.Nullable<int> securityId, GreenField.DataContracts.FinancialStatementDataSource cSource, GreenField.DataContracts.FinancialStatementFiscalType cFiscalType, string cCurrency, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData> EndRetrieveCOASpecificData(System.IAsyncResult result);
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.COASpecificData> EndRetrieveCOASpecificData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveDocumentsDataServiceFaultFa" +
@@ -1830,10 +1830,10 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             this.results = results;
         }
         
-        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData> Result {
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.COASpecificData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData>)(this.results[0]));
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.COASpecificData>)(this.results[0]));
             }
         }
     }
@@ -2670,7 +2670,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveCOASpecificData(System.IAsyncResult result) {
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.COASpecificData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveCOASpecificData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveCOASpecificData(result);
         }
         
@@ -2684,7 +2684,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         private object[] OnEndRetrieveCOASpecificData(System.IAsyncResult result) {
-            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveCOASpecificData(result);
+            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.COASpecificData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveCOASpecificData(result);
             return new object[] {
                     retVal};
         }
@@ -3034,9 +3034,9 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 return _result;
             }
             
-            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData> EndRetrieveCOASpecificData(System.IAsyncResult result) {
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.COASpecificData> EndRetrieveCOASpecificData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.COASpecificData>)(base.EndInvoke("RetrieveCOASpecificData", _args, result)));
+                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.COASpecificData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.COASpecificData>)(base.EndInvoke("RetrieveCOASpecificData", _args, result)));
                 return _result;
             }
             

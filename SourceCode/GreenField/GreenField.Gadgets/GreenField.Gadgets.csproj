@@ -85,6 +85,7 @@
     <Reference Include="System.Windows.Browser" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Xml.Serialization, Version=2.0.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Telerik.Windows.Controls">
       <HintPath>..\Lib\Telerik.Windows.Controls.dll</HintPath>
     </Reference>
@@ -155,7 +156,15 @@
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
     <Compile Include="Models\FinancialStatementDisplayData.cs" />
     <Compile Include="Models\FiveYearDataModels.cs" />
-    <Compile Include="Models\GadgetWithPeriodColumns.cs" />
+    <Compile Include="Models\ICPresentations\ICPAttachmentInfo.cs" />
+     <Compile Include="Models\GadgetWithPeriodColumns.cs" />
+    <Compile Include="Models\ICPresentations\ICPBlogInfo.cs" />
+    <Compile Include="Models\ICPresentations\ICPMeetingInfo.cs" />
+    <Compile Include="Models\ICPresentations\ICPMeetingNavigation.cs" />
+    <Compile Include="Models\ICPresentations\ICPNavigationInfo.cs" />
+    <Compile Include="Models\ICPresentations\ICPPresentationInfo.cs" />
+    <Compile Include="Models\ICPresentations\ICPSecurityInfo.cs" />
+    <Compile Include="Models\ICPresentations\ICPVoterInfo.cs" />
     <Compile Include="Models\PerformancePeriodData.cs" />
     <Compile Include="Models\PeriodAttributeData.cs" />
     <Compile Include="Models\RegionSpecificData.cs" />
@@ -164,7 +173,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
+    <Compile Include="ViewModels\ICPresentations\ViewModelCreateUpdateMeetings.cs" />
     <Compile Include="ViewModels\Documents\ViewModelDocuments.cs" />
+
+    <Compile Include="ViewModels\ICPresentations\ViewModelCreateUpdatePresentations.cs" />
+    <Compile Include="ViewModels\ICPresentations\ViewModelMeetings.cs" />
+    <Compile Include="ViewModels\ICPresentations\ViewModelMeetingsAgenda.cs" />
+    <Compile Include="ViewModels\ICPresentations\ViewModelMemberVoting.cs" />
+    <Compile Include="ViewModels\ICPresentations\ViewModelPresentations.cs" />
     <Compile Include="ViewModels\ViewModelCOASpecific.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelValuations.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimateSummary.cs" />
@@ -220,8 +236,30 @@
     <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewTargetPrice.xaml.cs">
       <DependentUpon>ViewTargetPrice.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ICPresentations\ChildAcceptRequestPresentations.xaml.cs">
+      <DependentUpon>ChildAcceptRequestPresentations.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Documents\ViewDocuments.xaml.cs">
       <DependentUpon>ViewDocuments.xaml</DependentUpon>
+    </Compile>
+
+    <Compile Include="Views\ICPresentations\ViewCreateUpdateMeetings.xaml.cs">
+      <DependentUpon>ViewCreateUpdateMeetings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ViewCreateUpdatePresentations.xaml.cs">
+      <DependentUpon>ViewCreateUpdatePresentations.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ViewMeetings.xaml.cs">
+      <DependentUpon>ViewMeetings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ViewMeetingsAgenda.xaml.cs">
+      <DependentUpon>ViewMeetingsAgenda.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ViewMemberVoting.xaml.cs">
+      <DependentUpon>ViewMemberVoting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ViewPresentations.xaml.cs">
+      <DependentUpon>ViewPresentations.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewCOASpecific.xaml.cs">
       <DependentUpon>ViewCOASpecific.xaml</DependentUpon>
@@ -394,9 +432,37 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ICPresentations\ChildAcceptRequestPresentations.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Documents\ViewDocuments.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewCreateUpdateMeetings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewCreateUpdatePresentations.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewMeetings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewMeetingsAgenda.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewMemberVoting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewPresentations.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewCOASpecific.xaml">
       <SubType>Designer</SubType>
@@ -655,6 +721,7 @@
   <ItemGroup>
     <Resource Include="Images\Flip.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

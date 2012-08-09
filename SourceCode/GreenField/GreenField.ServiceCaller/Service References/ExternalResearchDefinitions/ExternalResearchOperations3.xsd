@@ -215,7 +215,7 @@
   <xs:element name="RetrieveCOASpecificDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveCOASpecificDataResult" nillable="true" type="q30:ArrayOfCOASpecificData" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveCOASpecificDataResult" nillable="true" type="q30:ArrayOfCOASpecificData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

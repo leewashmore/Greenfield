@@ -243,23 +243,23 @@
                         <telerik:RadRibbonTab.Header>
                             <TextBlock Text="Investment Committee" Foreground="White" FontSize="12" FontFamily="Arial" FontWeight="Bold"/>
                         </telerik:RadRibbonTab.Header>
-                        <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                            <telerik:RadRibbonButton LargeImage="Images/finance.png" Text="Create/Edit" Size="Large" Background="#9DA6C0"/>
+                        <telerik:RadRibbonGroup Header="Create/Edit" IsEnabled="True" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                            <telerik:RadRibbonButton LargeImage="Images/finance.png" Text="Create/Edit" Size="Large" Command="{Binding DashboardInvestmentCommitteeCreateEditCommand}" Background="#9DA6C0"/>
                         </telerik:RadRibbonGroup>
-                        <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                            <telerik:RadRibbonButton LargeImage="Images/com.png" Text="Vote" Size="Large" Background="#9DA6C0"/>
+                        <telerik:RadRibbonGroup Header="Vote" IsEnabled="True" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                            <telerik:RadRibbonButton LargeImage="Images/com.png" Text="Vote" Size="Large" Command="{Binding DashboardInvestmentCommitteeVoteCommand}" Background="#9DA6C0"/>
                         </telerik:RadRibbonGroup>
-                        <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                            <telerik:RadRibbonButton LargeImage="Images/report.png" Text="Pre-Meeting Report" Size="Large" Background="#9DA6C0"/>
+                        <telerik:RadRibbonGroup Header="Pre-Meeting Report" IsEnabled="True" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                            <telerik:RadRibbonButton LargeImage="Images/report.png" Text="Pre-Meeting Report" Size="Large" Command="{Binding DashboardInvestmentCommitteePreMeetingReportCommand}" Background="#9DA6C0"/>
                         </telerik:RadRibbonGroup>
-                        <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                            <telerik:RadRibbonButton LargeImage="Images/meeting_notes.png" Text="Meeting Minutes" Size="Large" Background="#9DA6C0"/>
+                        <telerik:RadRibbonGroup Header="Meeting Minutes" IsEnabled="True" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                            <telerik:RadRibbonButton LargeImage="Images/meeting_notes.png" Text="Meeting Minutes" Size="Large" Command="{Binding DashboardInvestmentCommitteeMeetingMinutesCommand}" Background="#9DA6C0"/>
                         </telerik:RadRibbonGroup>
-                        <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                            <telerik:RadRibbonButton LargeImage="Images/EMsummary.png" Text="Summary Report" Size="Large" Background="#9DA6C0"/>
+                        <telerik:RadRibbonGroup Header="Summary Report" IsEnabled="True" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                            <telerik:RadRibbonButton LargeImage="Images/EMsummary.png" Text="Summary Report" Size="Large" Command="{Binding DashboardInvestmentCommitteeSummaryReportCommand}" Background="#9DA6C0"/>
                         </telerik:RadRibbonGroup>
-                        <telerik:RadRibbonGroup Header="" IsEnabled="False" Style="{StaticResource RadRibbonGroupCustomStyle}">
-                            <telerik:RadRibbonButton LargeImage="Images/report.png" Text="Metrics Report" Size="Large" Background="#9DA6C0"/>
+                        <telerik:RadRibbonGroup Header="Metrics Report" IsEnabled="True" Style="{StaticResource RadRibbonGroupCustomStyle}">
+                            <telerik:RadRibbonButton LargeImage="Images/report.png" Text="Metrics Report" Size="Large" Command="{Binding DashboardInvestmentCommitteeMetricsReportCommand}" Background="#9DA6C0"/>
                         </telerik:RadRibbonGroup>
                     </telerik:RadRibbonTab>
                     <telerik:RadRibbonTab Style="{StaticResource RadRibbonTabStyle1}">

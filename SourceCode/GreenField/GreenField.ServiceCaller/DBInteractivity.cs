@@ -16,6 +16,7 @@ using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using GreenField.DataContracts.DataContracts;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.UserSession;
+using GreenField.ServiceCaller.MeetingServiceReference;
 
 
 namespace GreenField.ServiceCaller
@@ -2951,6 +2952,822 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
+        #endregion
+
+
+        #region Investment Committee
+
+
+        #region Meetings
+
+        public void GetMeetings(Action<List<MeetingInfo>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.GetMeetingsAsync();
+
+            client.GetMeetingsCompleted += (se, e) =>
+            {
+                 if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+          
+    
+
+
+
+        }
+
+        public void GetMeetingDates(Action<List<DateTime?>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.GetMeetingDatesAsync(callback);
+
+            client.GetMeetingDatesCompleted += (se, e) =>
+            {
+                //Action<List<DateTime?>> callBackMethod = e.UserState as Action<List<DateTime?>>;
+
+                //if (callBackMethod != null)
+                //{
+                //    callBackMethod(e.Result.ToList());
+                //}
+
+                 if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+          
+
+           // client.GetMeetingDatesAsync(callback);
+        }
+
+        public void GetMeetingsByDate(DateTime date, Action<List<MeetingInfo>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.GetMeetingsByDateAsync(date, callback);
+
+            client.GetMeetingsByDateCompleted += (se, e) =>
+            {
+                //Action<List<MeetingInfo>> callBackMethod = e.UserState as Action<List<MeetingInfo>>;
+
+                //if (callBackMethod != null)
+                //{
+                //    callBackMethod(e.Result.ToList());
+                //}
+                 if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+            //client.GetMeetingsByDateAsync(date, callback);
+        }
+        #endregion
+
+        #region CRUD Operations
+
+        public void CreateMeeting(MeetingInfo meeting, Action<string> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.CreateMeetingAsync(meeting, callback);
+
+            client.CreateMeetingCompleted += (se, e) =>
+            {
+                Action<string> callBackMethod = e.UserState as Action<string>;
+                
+
+                if (e.Error == null)
+                {
+                    if (callBackMethod != null)
+                    {
+                        callBackMethod("Created successfully!");
+                    }
+          
+                    else
+                    {
+                        callBackMethod(null);
+                    }
+                }
+            
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+           // client.CreateMeetingAsync(meeting, callback);
+        }
+
+        public void UpdateMeeting(MeetingInfo meeting, Action<string> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+
+            client.UpdateMeetingCompleted += (se, e) =>
+            {
+                //Action<string> callBackMethod = e.UserState as Action<string>;
+
+                //if (callBackMethod != null)
+                //{
+                //    callBackMethod("Updated successfully!");
+                //}if (e.Error == null)
+                Action<string> callBackMethod = e.UserState as Action<string>;
+
+                if (e.Error == null)
+                {
+                    if (callBackMethod != null)
+                    {
+                        callBackMethod("Updated successfully!");
+                    }
+
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+           // client.UpdateMeetingAsync(meeting, callback);
+        }
+
+        public void CreateMeetingPresentationMapping(MeetingPresentationMappingInfo meetingPresentationMappingInfo, Action<string> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.CreateMeetingPresentationMappingAsync(meetingPresentationMappingInfo);
+
+            client.CreateMeetingPresentationMappingCompleted += (se, e) =>
+            {
+                Action<string> callBackMethod = e.UserState as Action<string>;
+
+                if (e.Error == null)
+                {
+                    if (callBackMethod != null)
+                    {
+                        callBackMethod("Mapping inserted successfully!");
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                } 
+
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+          //  client.CreateMeetingPresentationMappingAsync(meetingPresentationMappingInfo);
+
+        }
+
+        public void UpdateMeetingPresentationMapping(MeetingPresentationMappingInfo meetingPresentationMappingInfo, Action<string> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.UpdateMeetingPresentationMappingAsync(meetingPresentationMappingInfo, callback);
+
+            client.UpdateMeetingPresentationMappingCompleted += (se, e) =>
+            {
+               Action<string> callBackMethod = e.UserState as Action<string>;
+
+                if (e.Error == null)
+                {
+                    if (callBackMethod != null)
+                    {
+                        callBackMethod("Mapping updated successfully!");
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+                
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+          //  client.UpdateMeetingPresentationMappingAsync(meetingPresentationMappingInfo, callback);
+
+        }
+
+        public void CreatePresentation(PresentationInfo presentation, Action<long?> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.CreatePresentationAsync(presentation, callback);
+
+            client.CreatePresentationCompleted += (se, e) =>
+            {
+                 Action<long?> callBackMethod = e.UserState as Action<long?>;
+                 if(e.Error == null)
+                {
+                     if (callBackMethod != null)
+                     {
+                         callBackMethod(e.Result);
+                     }
+                     else
+                     {
+                         callback(null);
+                     }
+                }
+
+                 else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                 {
+                     FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                         = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                     if (callback != null)
+                         callback(null);
+                 }
+                 else
+                 {
+                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                     if (callback != null)
+                         callback(null);
+                 }
+
+                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+            //client.CreatePresentationAsync(presentation, callback);
+        }
+
+        public void UpdatePresentation(PresentationInfo presentationInfo, Action<string> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.UpdatePresentationAsync(presentationInfo, callback);
+
+            client.UpdatePresentationCompleted += (se, e) =>
+            {
+                Action<string> callBackMethod = e.UserState as Action<string>;
+                if (e.Error == null)
+                {
+                    if (callBackMethod != null)
+                    {
+                        callBackMethod("Status updated successfully!");
+                    } 
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+                
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };         
+            
+            //client.UpdatePresentationAsync(presentationInfo, callback);
+
+        }
+
+        public void CreateVoterInfo(VoterInfo voterInfo, Action<string> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.CreateVoterInfoAsync(voterInfo, callback);
+
+            client.CreateVoterInfoCompleted += (se, e) =>
+            {
+                Action<string> callBackMethod = e.UserState as Action<string>;
+                if (e.Error == null)
+                {
+                    if (callBackMethod != null)
+                    {
+                        callBackMethod("Your vote has been registered.");
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };                      
+
+            //client.CreateVoterInfoAsync(voterInfo, callback);
+        }
+
+        public void CreateFileInfo(ObservableCollection<AttachedFileInfo> fileInfoColl, Action<string> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.CreateFileInfoAsync(fileInfoColl, callback);
+
+            client.CreateFileInfoCompleted += (se, e) =>
+            {
+                Action<string> callBackMethod = e.UserState as Action<string>;
+                if (e.Error == null)
+                {
+                    if (callBackMethod != null)
+                    {
+                        callBackMethod("File(s) Saved");
+                    }
+                    else
+                    {
+                        callback(null);
+                    }
+                }
+
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };                 
+            
+            //client.CreateFileInfoAsync(fileInfoColl, callback);
+        }
+
+
+        #endregion
+
+        #region Presentations
+
+        public void GetPresentations(Action<List<PresentationInfoResult>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.GetPresentationsAsync(callback);
+
+            client.GetPresentationsCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+
+             
+            //client.GetPresentationsAsync(callback);
+        }
+
+        public void GetPresentationsByMeetingID(long meetingID, Action<List<PresentationInfoResult>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.GetPresentationsByMeetingIDAsync(meetingID, callback);
+
+            client.GetPresentationsByMeetingIDCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+           // client.GetPresentationsByMeetingIDAsync(meetingID, callback);
+        }
+
+        public void GetPresentationsByMeetingDatePresenterStatus(DateTime? meetingDate, string presenter, string status, Action<List<PresentationInfoResult>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.GetPresentationsByMeetingDatePresenterStatusAsync(meetingDate, presenter, status, callback);
+
+            client.GetPresentationsByMeetingDatePresenterStatusCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+            //client.GetPresentationsByMeetingDatePresenterStatusAsync(meetingDate, presenter, status, callback);
+        }
+
+        public void GetDistinctPresenters(Action<List<string>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.GetDistinctPresentersAsync(callback);
+
+            client.GetDistinctPresentersCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+            //client.GetDistinctPresentersAsync(callback);
+        }
+
+        #endregion
+
+        #region Status Type
+
+        public void GetStatusTypes(Action<List<StatusType>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.GetStatusTypesAsync(callback);
+
+            client.GetStatusTypesCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+            //client.GetStatusTypesAsync(callback);
+        }
+
+        #endregion
+
+        #region Attached Files
+
+        public void GetFileInfo(long presentationID, Action<List<AttachedFileInfo>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingServiceClient client = new MeetingServiceClient();
+            client.GetFileInfoAsync(presentationID, callback);
+
+            client.GetFileInfoCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingServiceReference.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+            //client.GetFileInfoAsync(presentationID, callback);
+        }
+
+        #endregion
+
+
+
         #endregion
 
         public void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback)

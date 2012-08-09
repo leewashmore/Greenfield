@@ -51,6 +51,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExternalResearchDataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="ICPresentationDataModel1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ICPresentationDataModel.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResearchDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -74,6 +79,10 @@
     <EntityDeploy Include="ExternalResearchDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ExternalResearchDataModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <EntityDeploy Include="ICPresentationDataModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ICPresentationDataModel1.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <EntityDeploy Include="ReutersDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

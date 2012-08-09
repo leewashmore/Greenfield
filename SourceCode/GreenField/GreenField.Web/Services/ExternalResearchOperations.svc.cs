@@ -936,21 +936,21 @@ namespace GreenField.Web.Services
         #region Gadget With Period Columns
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<GreenField.DataContracts.DataContracts.COASpecificData> RetrieveCOASpecificData(String issuerId, int? securityId, FinancialStatementDataSource cSource, FinancialStatementFiscalType cFiscalType, String cCurrency)
+        public List<GreenField.DataContracts.COASpecificData> RetrieveCOASpecificData(String issuerId, int? securityId, FinancialStatementDataSource cSource, FinancialStatementFiscalType cFiscalType, String cCurrency)
         {
             try
             {
                 string _dataSource = EnumUtils.ToString(cSource);
                 string _fiscalType = EnumUtils.ToString(cFiscalType);                
                 List<GreenField.DAL.COASpecificData> result = new List<GreenField.DAL.COASpecificData>();
-                 List<GreenField.DataContracts.DataContracts.COASpecificData> mainResult = new List<GreenField.DataContracts.DataContracts.COASpecificData>();
+                 List<GreenField.DataContracts.COASpecificData> mainResult = new List<GreenField.DataContracts.COASpecificData>();
                 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 ExternalResearchEntities research = new ExternalResearchEntities();
                 result = research.GetDataForPeriodGadgets(_dataSource, _fiscalType, cCurrency, issuerId, securityId.ToString()).ToList();
                 foreach (GreenField.DAL.COASpecificData item in result)
                 {
-                    GreenField.DataContracts.DataContracts.COASpecificData  entry = new GreenField.DataContracts.DataContracts.COASpecificData();
+                    GreenField.DataContracts.COASpecificData  entry = new GreenField.DataContracts.COASpecificData();
                     entry.Amount = item.Amount;
                     entry.AmountType = item.AmountType;
                     entry.DataSource = item.DataSource;

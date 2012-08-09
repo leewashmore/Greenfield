@@ -82,6 +82,7 @@
     <Compile Include="Helper\Logging.cs" />
     <Compile Include="ManageDashboard.cs" />
     <Compile Include="ManageLogins.cs" />
+    <Compile Include="ManageMeetings.cs" />
     <Compile Include="ManageSessions.cs" />
     <Compile Include="Helper\Prompt\Message.xaml.cs">
       <DependentUpon>Message.xaml</DependentUpon>
@@ -109,6 +110,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service References\LoginDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\MeetingServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -146,6 +152,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkGridReturnData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ChartExtensionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.COASpecificData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateDetail.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateMedian.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimatesValuations.datasource" />
@@ -274,6 +281,43 @@
     <None Include="Service References\LoginDefinitions\LoginOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\MeetingServiceReference\GreenField.ServiceCaller.MeetingServiceReference.AttachedFileInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MeetingServiceReference\GreenField.ServiceCaller.MeetingServiceReference.MeetingInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MeetingServiceReference\GreenField.ServiceCaller.MeetingServiceReference.PresentationInfoResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MeetingServiceReference\GreenField.ServiceCaller.MeetingServiceReference.StatusType.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MeetingServiceReference\MeetingService.wsdl" />
+    <None Include="Service References\MeetingServiceReference\MeetingService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingServiceReference\MeetingService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingServiceReference\MeetingService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingServiceReference\MeetingService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingServiceReference\MeetingService4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingServiceReference\MeetingService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingServiceReference\MeetingService6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingServiceReference\MeetingService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations.wsdl" />
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations.xsd">
       <SubType>Designer</SubType>
@@ -376,6 +420,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\MeetingServiceReference\MeetingService.disco" />
+    <None Include="Service References\MeetingServiceReference\configuration91.svcinfo" />
+    <None Include="Service References\MeetingServiceReference\configuration.svcinfo" />
+    <None Include="Service References\MeetingServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
@@ -444,6 +495,7 @@
     <WCFMetadataStorage Include="Service References\ExternalResearchDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoginDefinitions\" />
+    <WCFMetadataStorage Include="Service References\MeetingServiceReference\" />
     <WCFMetadataStorage Include="Service References\ModelFXDefinitions\" />
     <WCFMetadataStorage Include="Service References\PerformanceDefinitions\" />
     <WCFMetadataStorage Include="Service References\SecurityReferenceDefinitions\" />

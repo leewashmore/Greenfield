@@ -19,7 +19,6 @@
       FROM [dbo].[Country_Master] AS [Country_Master]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="tblDashboardPreference" EntityType="ResearchModel.Store.tblDashboardPreference" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="tblHoldingsData" EntityType="ResearchModel.Store.tblHoldingsData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblMarketSnapshotEntityPreference" EntityType="ResearchModel.Store.tblMarketSnapshotEntityPreference" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblMarketSnapshotGroupPreference" EntityType="ResearchModel.Store.tblMarketSnapshotGroupPreference" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="tblMarketSnapshotPreference" EntityType="ResearchModel.Store.tblMarketSnapshotPreference" store:Type="Tables" Schema="dbo" />
@@ -80,50 +79,6 @@
           <Property Name="GadgetState" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="GadgetPosition" Type="int" Nullable="false" />
           <Property Name="PreferenceGroupID" Type="varchar" Nullable="false" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="tblHoldingsData">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="PORTFOLIO_DATE" Type="datetime" Nullable="false" />
-          <Property Name="PORTFOLIO_ID" Type="varchar" MaxLength="50" />
-          <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="varchar" MaxLength="50" />
-          <Property Name="PORTFOLIO_CURRENCY" Type="varchar" MaxLength="50" />
-          <Property Name="BENCHMARK_ID" Type="varchar" MaxLength="50" />
-          <Property Name="ISSUER_ID" Type="int" />
-          <Property Name="ASEC_SEC_SHORT_NAME" Type="varchar" MaxLength="255" />
-          <Property Name="ISSUE_NAME" Type="varchar" MaxLength="255" />
-          <Property Name="TICKER" Type="varchar" MaxLength="50" />
-          <Property Name="SECURITYTHEMECODE" Type="varchar" MaxLength="50" />
-          <Property Name="ASEC_INSTR_TYPE" Type="varchar" MaxLength="50" />
-          <Property Name="SECURITY_TYPE" Type="varchar" MaxLength="50" />
-          <Property Name="BALANCE_NOMINAL" Type="real" />
-          <Property Name="DIRTY_PRICE" Type="real" />
-          <Property Name="TRADING_CURRENCY" Type="varchar" MaxLength="50" />
-          <Property Name="DIRTY_VALUE_PC" Type="real" />
-          <Property Name="PORTFOLIO_DIRTY_VALUE_PC" Type="real" />
-          <Property Name="PORTFOLIO_WEIGHT" Type="real" />
-          <Property Name="BENCHMARK_WEIGHT" Type="real" />
-          <Property Name="ASH_EMM_MODEL_WEIGHT" Type="real" />
-          <Property Name="MARKET_CAP_IN_USD" Type="real" />
-          <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="50" />
-          <Property Name="ISO_COUNTRY_CODE" Type="varchar" MaxLength="50" />
-          <Property Name="GICS_SECTOR" Type="int" />
-          <Property Name="GICS_INDUSTRY" Type="int" />
-          <Property Name="GICS_SUB_INDUSTRY" Type="int" />
-          <Property Name="GICS_SECTOR_NAME" Type="varchar" MaxLength="255" />
-          <Property Name="GICS_INDUSTRY_NAME" Type="varchar" MaxLength="255" />
-          <Property Name="GICS_SUB_INDUSTRY_NAME" Type="varchar" MaxLength="255" />
-          <Property Name="LOOK_THRU_FUND" Type="varchar" MaxLength="50" />
-          <Property Name="BARRA_RISK_FACTOR_MOMENTUM" Type="real" />
-          <Property Name="BARRA_RISK_FACTOR_VOLATILITY" Type="real" />
-          <Property Name="BARRA_RISK_FACTOR_VALUE" Type="real" />
-          <Property Name="BARRA_RISK_FACTOR_SIZE" Type="real" />
-          <Property Name="BARRA_RISK_FACTOR_SIZE_NONLINEAR" Type="real" />
-          <Property Name="BARRA_RISK_FACTOR_GROWTH" Type="real" />
-          <Property Name="BARRA_RISK_FACTOR_LIQUIDITY" Type="real" />
-          <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="real" />
         </EntityType>
         <EntityType Name="tblMarketSnapshotEntityPreference">
           <Key>
@@ -276,8 +231,158 @@
           <Parameter Name="snapshotname" Type="nvarchar(max)" Mode="In" />
           <Parameter Name="snapshotpreferenceid" Type="int" Mode="In" />
         </Function>
+        <Function Name="usp_InsertFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="presentationID" Type="bigint" Mode="In" />
+          <Parameter Name="fileName" Type="varchar" Mode="In" />
+          <Parameter Name="fileData" Type="varchar(max)" Mode="In" />
+          <Parameter Name="createdBy" Type="varchar" Mode="In" />
+          <Parameter Name="createdOn" Type="datetime" Mode="In" />
+          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="usp_InsertMeetingInformation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="meetingDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="meetingClosedDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
+          <Parameter Name="createdBy" Type="varchar" Mode="In" />
+          <Parameter Name="createdOn" Type="datetime" Mode="In" />
+          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="usp_InsertMeetingPresentationMappingInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="meetingID" Type="bigint" Mode="In" />
+          <Parameter Name="presentationID" Type="bigint" Mode="In" />
+          <Parameter Name="createdBy" Type="varchar" Mode="In" />
+          <Parameter Name="createdOn" Type="datetime" Mode="In" />
+          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="usp_InsertPresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="presenter" Type="varchar" Mode="In" />
+          <Parameter Name="statusTypeID" Type="bigint" Mode="In" />
+          <Parameter Name="securityTicker" Type="varchar" Mode="In" />
+          <Parameter Name="securityName" Type="varchar" Mode="In" />
+          <Parameter Name="securityCountry" Type="varchar" Mode="In" />
+          <Parameter Name="securityCountryCode" Type="varchar" Mode="In" />
+          <Parameter Name="securityIndustry" Type="varchar" Mode="In" />
+          <Parameter Name="securityCashPosition" Type="real" Mode="In" />
+          <Parameter Name="securityPosition" Type="bigint" Mode="In" />
+          <Parameter Name="securityMSCIStdWeight" Type="real" Mode="In" />
+          <Parameter Name="securityMSCIIMIWeight" Type="real" Mode="In" />
+          <Parameter Name="securityGlobalActiveWeight" Type="real" Mode="In" />
+          <Parameter Name="securityLastClosingPrice" Type="real" Mode="In" />
+          <Parameter Name="securityMarketCapitalization" Type="real" Mode="In" />
+          <Parameter Name="securityPFVMeasure" Type="varchar" Mode="In" />
+          <Parameter Name="securityBuyRange" Type="real" Mode="In" />
+          <Parameter Name="securitySellRange" Type="real" Mode="In" />
+          <Parameter Name="securityRecommendation" Type="varchar" Mode="In" />
+          <Parameter Name="investmentThesis" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="background" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="valuations" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="earningsOutlook" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="competitiveAdvantage" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="competitiveDisadvantage" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="committeePFVMeasure" Type="varchar" Mode="In" />
+          <Parameter Name="committeeBuyRange" Type="real" Mode="In" />
+          <Parameter Name="committeeSellRange" Type="real" Mode="In" />
+          <Parameter Name="committeeRecommendation" Type="varchar" Mode="In" />
+          <Parameter Name="committeeRangeEffectiveThrough" Type="datetime" Mode="In" />
+          <Parameter Name="acceptWithoutDiscussionFlag" Type="bit" Mode="In" />
+          <Parameter Name="adminNotes" Type="varchar" Mode="In" />
+          <Parameter Name="createdBy" Type="varchar" Mode="In" />
+          <Parameter Name="createdOn" Type="datetime" Mode="In" />
+          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="usp_InsertVoterInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="presentationID" Type="bigint" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="notes" Type="varchar" Mode="In" />
+          <Parameter Name="voteTypeID" Type="bigint" Mode="In" />
+          <Parameter Name="attendanceTypeID" Type="bigint" Mode="In" />
+          <Parameter Name="postMeetingFlag" Type="bit" Mode="In" />
+          <Parameter Name="discussionFlag" Type="bit" Mode="In" />
+          <Parameter Name="voterPFVMeasure" Type="varchar" Mode="In" />
+          <Parameter Name="voterBuyRange" Type="real" Mode="In" />
+          <Parameter Name="voterSellRange" Type="real" Mode="In" />
+          <Parameter Name="voterRecommendation" Type="varchar" Mode="In" />
+          <Parameter Name="createdBy" Type="varchar" Mode="In" />
+          <Parameter Name="createdOn" Type="datetime" Mode="In" />
+          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="usp_SelectMeetingInfoDistinctMeetingDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_SelectPresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_SelectPresentationInfoByMeetingDatePresenterStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="meetingDate" Type="datetime" Mode="In" />
+          <Parameter Name="presenter" Type="varchar" Mode="In" />
+          <Parameter Name="status" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_SelectPresentationInfoByMeetingID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="meetingID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="usp_SelectPresentationInfoByPresentationDate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="presentationDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="usp_SelectPresentationInfoDistinctPresenters" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="usp_SelectVoterInfoByPresentationIDPostMeetingFlag" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="presentationID" Type="bigint" Mode="In" />
+          <Parameter Name="postMeetingFlag" Type="bit" Mode="In" />
+        </Function>
         <Function Name="usp_UpdateMarketPerformanceSnapshot" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="updateXML" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="usp_UpdateMeetingInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="meetingDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="meetingClosedDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="description" Type="varchar" Mode="In" />
+          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
+          <Parameter Name="meetingID" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="usp_UpdateMeetingPresentationMappingInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="meetingID" Type="bigint" Mode="In" />
+          <Parameter Name="presentationID" Type="bigint" Mode="In" />
+          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="usp_UpdatePresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="presentationID" Type="bigint" Mode="In" />
+          <Parameter Name="presenter" Type="varchar" Mode="In" />
+          <Parameter Name="statusTypeID" Type="bigint" Mode="In" />
+          <Parameter Name="securityTicker" Type="varchar" Mode="In" />
+          <Parameter Name="securityName" Type="varchar" Mode="In" />
+          <Parameter Name="securityCountry" Type="varchar" Mode="In" />
+          <Parameter Name="securityCountryCode" Type="varchar" Mode="In" />
+          <Parameter Name="securityIndustry" Type="varchar" Mode="In" />
+          <Parameter Name="securityCashPosition" Type="real" Mode="In" />
+          <Parameter Name="securityPosition" Type="bigint" Mode="In" />
+          <Parameter Name="securityMSCIStdWeight" Type="real" Mode="In" />
+          <Parameter Name="securityMSCIIMIWeight" Type="real" Mode="In" />
+          <Parameter Name="securityGlobalActiveWeight" Type="real" Mode="In" />
+          <Parameter Name="securityLastClosingPrice" Type="real" Mode="In" />
+          <Parameter Name="securityMarketCapitalization" Type="real" Mode="In" />
+          <Parameter Name="securityPFVMeasure" Type="varchar" Mode="In" />
+          <Parameter Name="securityBuyRange" Type="real" Mode="In" />
+          <Parameter Name="securitySellRange" Type="real" Mode="In" />
+          <Parameter Name="securityRecommendation" Type="varchar" Mode="In" />
+          <Parameter Name="investmentThesis" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="background" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="valuations" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="earningsOutlook" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="competitiveAdvantage" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="competitiveDisadvantage" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="committeePFVMeasure" Type="varchar" Mode="In" />
+          <Parameter Name="committeeBuyRange" Type="real" Mode="In" />
+          <Parameter Name="committeeSellRange" Type="real" Mode="In" />
+          <Parameter Name="committeeRecommendation" Type="varchar" Mode="In" />
+          <Parameter Name="committeeRangeEffectiveThrough" Type="datetime" Mode="In" />
+          <Parameter Name="acceptWithoutDiscussionFlag" Type="bit" Mode="In" />
+          <Parameter Name="adminNotes" Type="varchar" Mode="In" />
+          <Parameter Name="createdBy" Type="varchar" Mode="In" />
+          <Parameter Name="createdOn" Type="datetime" Mode="In" />
+          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
+          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
 		<!-- CSDL content -->
@@ -308,7 +413,6 @@
 						<Parameter Name="StoredValue" Mode="In" Type="String" />
 					</FunctionImport>
 					<EntitySet Name="tblDashboardPreferences" EntityType="ResearchModel.tblDashboardPreference" />
-					<EntitySet Name="tblHoldingsDatas" EntityType="ResearchModel.tblHoldingsData" />
 					<FunctionImport Name="GetDashBoardPreferenceByUserName" EntitySet="tblDashboardPreferences" ReturnType="Collection(ResearchModel.tblDashboardPreference)">
           <Parameter Name="UserName" Mode="In" Type="String" />
           </FunctionImport>
@@ -377,7 +481,7 @@
             <Parameter Name="snapshotpreferenceid" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateMarketPerformanceSnapshot" ReturnType="Collection(Int32)">
-            <Parameter Name="updateXML" Mode="In" Type="String" />
+          <Parameter Name="updateXML" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="tblMarketSnapshotEntityPreference" EntityType="ResearchModel.tblMarketSnapshotEntityPreference" />
           <AssociationSet Name="FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference" Association="ResearchModel.FK_tblMarketSnapshotEntityPreference_tblMarketSnapshotGroupPreference">
@@ -387,6 +491,87 @@
           <FunctionImport Name="GetMarketSnapshotPreference" ReturnType="Collection(ResearchModel.MarketSnapshotPreference)">
           <Parameter Name="SnapshotPreferenceId" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="InsertFileInfo" ReturnType="Collection(Int64)">
+            <Parameter Name="presentationID" Mode="In" Type="Int64" />
+            <Parameter Name="fileName" Mode="In" Type="String" />
+            <Parameter Name="fileData" Mode="In" Type="String" />
+            <Parameter Name="createdBy" Mode="In" Type="String" />
+            <Parameter Name="createdOn" Mode="In" Type="DateTime" />
+            <Parameter Name="modifiedBy" Mode="In" Type="String" />
+            <Parameter Name="modifiedOn" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InsertMeetingInformation" ReturnType="Collection(DateTime)">
+            <Parameter Name="meetingDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="meetingClosedDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="description" Mode="In" Type="String" />
+            <Parameter Name="createdBy" Mode="In" Type="String" />
+            <Parameter Name="createdOn" Mode="In" Type="DateTime" />
+            <Parameter Name="modifiedBy" Mode="In" Type="String" />
+            <Parameter Name="modifiedOn" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InsertMeetingPresentationMappingInfo" ReturnType="Collection(Int64)">
+            <Parameter Name="meetingID" Mode="In" Type="Int64" />
+            <Parameter Name="presentationID" Mode="In" Type="Int64" />
+            <Parameter Name="createdBy" Mode="In" Type="String" />
+            <Parameter Name="createdOn" Mode="In" Type="DateTime" />
+            <Parameter Name="modifiedBy" Mode="In" Type="String" />
+            <Parameter Name="modifiedOn" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InsertPresentationInfo" ReturnType="Collection(Int64)">
+            <Parameter Name="presenter" Mode="In" Type="String" />
+            <Parameter Name="statusTypeID" Mode="In" Type="Int64" />
+            <Parameter Name="securityTicker" Mode="In" Type="String" />
+            <Parameter Name="securityName" Mode="In" Type="String" />
+            <Parameter Name="securityCountry" Mode="In" Type="String" />
+            <Parameter Name="securityCountryCode" Mode="In" Type="String" />
+            <Parameter Name="securityIndustry" Mode="In" Type="String" />
+            <Parameter Name="securityCashPosition" Mode="In" Type="Single" />
+            <Parameter Name="securityPosition" Mode="In" Type="Int64" />
+            <Parameter Name="securityMSCIStdWeight" Mode="In" Type="Single" />
+            <Parameter Name="securityMSCIIMIWeight" Mode="In" Type="Single" />
+            <Parameter Name="securityGlobalActiveWeight" Mode="In" Type="Single" />
+            <Parameter Name="securityLastClosingPrice" Mode="In" Type="Single" />
+            <Parameter Name="securityMarketCapitalization" Mode="In" Type="Single" />
+            <Parameter Name="securityPFVMeasure" Mode="In" Type="String" />
+            <Parameter Name="securityBuyRange" Mode="In" Type="Single" />
+            <Parameter Name="securitySellRange" Mode="In" Type="Single" />
+            <Parameter Name="securityRecommendation" Mode="In" Type="String" />
+            <Parameter Name="investmentThesis" Mode="In" Type="String" />
+            <Parameter Name="background" Mode="In" Type="String" />
+            <Parameter Name="valuations" Mode="In" Type="String" />
+            <Parameter Name="earningsOutlook" Mode="In" Type="String" />
+            <Parameter Name="competitiveAdvantage" Mode="In" Type="String" />
+            <Parameter Name="competitiveDisadvantage" Mode="In" Type="String" />
+            <Parameter Name="committeePFVMeasure" Mode="In" Type="String" />
+            <Parameter Name="committeeBuyRange" Mode="In" Type="Single" />
+            <Parameter Name="committeeSellRange" Mode="In" Type="Single" />
+            <Parameter Name="committeeRecommendation" Mode="In" Type="String" />
+            <Parameter Name="committeeRangeEffectiveThrough" Mode="In" Type="DateTime" />
+            <Parameter Name="acceptWithoutDiscussionFlag" Mode="In" Type="Boolean" />
+            <Parameter Name="adminNotes" Mode="In" Type="String" />
+            <Parameter Name="createdBy" Mode="In" Type="String" />
+            <Parameter Name="createdOn" Mode="In" Type="DateTime" />
+            <Parameter Name="modifiedBy" Mode="In" Type="String" />
+            <Parameter Name="modifiedOn" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InsertVoterInfo" ReturnType="Collection(Int64)">
+            <Parameter Name="presentationID" Mode="In" Type="Int64" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="notes" Mode="In" Type="String" />
+            <Parameter Name="voteTypeID" Mode="In" Type="Int64" />
+            <Parameter Name="attendanceTypeID" Mode="In" Type="Int64" />
+            <Parameter Name="postMeetingFlag" Mode="In" Type="Boolean" />
+            <Parameter Name="discussionFlag" Mode="In" Type="Boolean" />
+            <Parameter Name="voterPFVMeasure" Mode="In" Type="String" />
+            <Parameter Name="voterBuyRange" Mode="In" Type="Single" />
+            <Parameter Name="voterSellRange" Mode="In" Type="Single" />
+            <Parameter Name="voterRecommendation" Mode="In" Type="String" />
+            <Parameter Name="createdBy" Mode="In" Type="String" />
+            <Parameter Name="createdOn" Mode="In" Type="DateTime" />
+            <Parameter Name="modifiedBy" Mode="In" Type="String" />
+            <Parameter Name="modifiedOn" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetMeetingInfoDistinctMeetingDates" ReturnType="Collection(DateTime)" />
 				</EntityContainer>
 				<ComplexType Name="ConsensusEstimates_Result">
 					<Property Type="String" Name="Xref" Nullable="true" MaxLength="9" />
@@ -458,50 +643,6 @@
 					<Property Type="String" Name="GadgetState" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
 					<Property Type="Int32" Name="GadgetPosition" Nullable="false" />
 					<Property Type="String" Name="PreferenceGroupID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-				</EntityType>
-				<EntityType Name="tblHoldingsData">
-					<Key>
-						<PropertyRef Name="ID" />
-					</Key>
-					<Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-					<Property Type="DateTime" Name="PORTFOLIO_DATE" Nullable="false" />
-					<Property Type="String" Name="PORTFOLIO_ID" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="PORTFOLIO_THEME_SUBGROUP_CODE" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="PORTFOLIO_CURRENCY" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="BENCHMARK_ID" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="Int32" Name="ISSUER_ID" />
-					<Property Type="String" Name="ASEC_SEC_SHORT_NAME" MaxLength="255" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="ISSUE_NAME" MaxLength="255" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="TICKER" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="SECURITYTHEMECODE" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="ASEC_INSTR_TYPE" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="SECURITY_TYPE" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="Single" Name="BALANCE_NOMINAL" />
-					<Property Type="Single" Name="DIRTY_PRICE" />
-					<Property Type="String" Name="TRADING_CURRENCY" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="Single" Name="DIRTY_VALUE_PC" />
-					<Property Type="Single" Name="PORTFOLIO_DIRTY_VALUE_PC" />
-					<Property Type="Single" Name="PORTFOLIO_WEIGHT" />
-					<Property Type="Single" Name="BENCHMARK_WEIGHT" />
-					<Property Type="Single" Name="ASH_EMM_MODEL_WEIGHT" />
-					<Property Type="Single" Name="MARKET_CAP_IN_USD" />
-					<Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="ISO_COUNTRY_CODE" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="Int32" Name="GICS_SECTOR" />
-					<Property Type="Int32" Name="GICS_INDUSTRY" />
-					<Property Type="Int32" Name="GICS_SUB_INDUSTRY" />
-					<Property Type="String" Name="GICS_SECTOR_NAME" MaxLength="255" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="GICS_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" MaxLength="255" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="LOOK_THRU_FUND" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="Single" Name="BARRA_RISK_FACTOR_MOMENTUM" />
-					<Property Type="Single" Name="BARRA_RISK_FACTOR_VOLATILITY" />
-					<Property Type="Single" Name="BARRA_RISK_FACTOR_VALUE" />
-					<Property Type="Single" Name="BARRA_RISK_FACTOR_SIZE" />
-					<Property Type="Single" Name="BARRA_RISK_FACTOR_SIZE_NONLINEAR" />
-					<Property Type="Single" Name="BARRA_RISK_FACTOR_GROWTH" />
-					<Property Type="Single" Name="BARRA_RISK_FACTOR_LIQUIDITY" />
-					<Property Type="Single" Name="BARRA_RISK_FACTOR_LEVERAGE" />
 				</EntityType>
 				<ComplexType Name="MarketSnapshotSelectionData">
 					<Property Type="Int32" Name="SnapshotPreferenceId" Nullable="false" />
@@ -659,7 +800,7 @@
           <Property Type="String" Name="EntityNodeValueCode" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="EntityNodeValueName" Nullable="true" MaxLength="50" />
         </ComplexType>
-			</Schema>
+        </Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
 		<edmx:Mappings>
@@ -750,51 +891,6 @@
 								<ScalarProperty Name="GadgetViewClassName" ColumnName="GadgetViewClassName" />
 								<ScalarProperty Name="UserName" ColumnName="UserName" />
 								<ScalarProperty Name="PreferenceID" ColumnName="PreferenceID" />
-							</MappingFragment>
-						</EntityTypeMapping>
-					</EntitySetMapping>
-					<EntitySetMapping Name="tblHoldingsDatas">
-						<EntityTypeMapping TypeName="ResearchModel.tblHoldingsData">
-							<MappingFragment StoreEntitySet="tblHoldingsData">
-								<ScalarProperty Name="BARRA_RISK_FACTOR_LEVERAGE" ColumnName="BARRA_RISK_FACTOR_LEVERAGE" />
-								<ScalarProperty Name="BARRA_RISK_FACTOR_LIQUIDITY" ColumnName="BARRA_RISK_FACTOR_LIQUIDITY" />
-								<ScalarProperty Name="BARRA_RISK_FACTOR_GROWTH" ColumnName="BARRA_RISK_FACTOR_GROWTH" />
-								<ScalarProperty Name="BARRA_RISK_FACTOR_SIZE_NONLINEAR" ColumnName="BARRA_RISK_FACTOR_SIZE_NONLINEAR" />
-								<ScalarProperty Name="BARRA_RISK_FACTOR_SIZE" ColumnName="BARRA_RISK_FACTOR_SIZE" />
-								<ScalarProperty Name="BARRA_RISK_FACTOR_VALUE" ColumnName="BARRA_RISK_FACTOR_VALUE" />
-								<ScalarProperty Name="BARRA_RISK_FACTOR_VOLATILITY" ColumnName="BARRA_RISK_FACTOR_VOLATILITY" />
-								<ScalarProperty Name="BARRA_RISK_FACTOR_MOMENTUM" ColumnName="BARRA_RISK_FACTOR_MOMENTUM" />
-								<ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
-								<ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
-								<ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
-								<ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
-								<ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
-								<ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
-								<ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
-								<ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
-								<ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
-								<ScalarProperty Name="MARKET_CAP_IN_USD" ColumnName="MARKET_CAP_IN_USD" />
-								<ScalarProperty Name="ASH_EMM_MODEL_WEIGHT" ColumnName="ASH_EMM_MODEL_WEIGHT" />
-								<ScalarProperty Name="BENCHMARK_WEIGHT" ColumnName="BENCHMARK_WEIGHT" />
-								<ScalarProperty Name="PORTFOLIO_WEIGHT" ColumnName="PORTFOLIO_WEIGHT" />
-								<ScalarProperty Name="PORTFOLIO_DIRTY_VALUE_PC" ColumnName="PORTFOLIO_DIRTY_VALUE_PC" />
-								<ScalarProperty Name="DIRTY_VALUE_PC" ColumnName="DIRTY_VALUE_PC" />
-								<ScalarProperty Name="TRADING_CURRENCY" ColumnName="TRADING_CURRENCY" />
-								<ScalarProperty Name="DIRTY_PRICE" ColumnName="DIRTY_PRICE" />
-								<ScalarProperty Name="BALANCE_NOMINAL" ColumnName="BALANCE_NOMINAL" />
-								<ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
-								<ScalarProperty Name="ASEC_INSTR_TYPE" ColumnName="ASEC_INSTR_TYPE" />
-								<ScalarProperty Name="SECURITYTHEMECODE" ColumnName="SECURITYTHEMECODE" />
-								<ScalarProperty Name="TICKER" ColumnName="TICKER" />
-								<ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
-								<ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
-								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-								<ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
-								<ScalarProperty Name="PORTFOLIO_CURRENCY" ColumnName="PORTFOLIO_CURRENCY" />
-								<ScalarProperty Name="PORTFOLIO_THEME_SUBGROUP_CODE" ColumnName="PORTFOLIO_THEME_SUBGROUP_CODE" />
-								<ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
-								<ScalarProperty Name="PORTFOLIO_DATE" ColumnName="PORTFOLIO_DATE" />
-								<ScalarProperty Name="ID" ColumnName="ID" />
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
@@ -1005,7 +1101,13 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-				</EntityContainerMapping>
+          <FunctionImportMapping FunctionImportName="InsertFileInfo" FunctionName="ResearchModel.Store.usp_InsertFileInfo" />
+          <FunctionImportMapping FunctionImportName="InsertMeetingInformation" FunctionName="ResearchModel.Store.usp_InsertMeetingInformation" />
+          <FunctionImportMapping FunctionImportName="InsertMeetingPresentationMappingInfo" FunctionName="ResearchModel.Store.usp_InsertMeetingPresentationMappingInfo" />
+          <FunctionImportMapping FunctionImportName="InsertPresentationInfo" FunctionName="ResearchModel.Store.usp_InsertPresentationInfo" />
+          <FunctionImportMapping FunctionImportName="InsertVoterInfo" FunctionName="ResearchModel.Store.usp_InsertVoterInfo" />
+          <FunctionImportMapping FunctionImportName="GetMeetingInfoDistinctMeetingDates" FunctionName="ResearchModel.Store.usp_SelectMeetingInfoDistinctMeetingDates" />
+          </EntityContainerMapping>
 			</Mapping>
 		</edmx:Mappings>
 	</edmx:Runtime>
@@ -1028,7 +1130,6 @@
 			<Diagram Name="ResearchDataModel" ZoomLevel="97">
 				<EntityTypeShape EntityType="ResearchModel.UserDashboardPreferance" Width="1.5" PointX="9.5" PointY="12.625" Height="1.5956835937500031" />
 				<EntityTypeShape EntityType="ResearchModel.tblDashboardPreference" Width="1.5" PointX="6.25" PointY="12.625" Height="2.5571907552083317" />
-				<EntityTypeShape EntityType="ResearchModel.tblHoldingsData" Width="3.75" PointX="2.875" PointY="3.375" Height="8.51853515625001" />
 				<EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotGroupPreference" Width="1.5" PointX="5.125" PointY="0.5" Height="1.9802864583333331" />
 				<EntityTypeShape EntityType="ResearchModel.tblMarketSnapshotPreference" Width="1.5" PointX="2.875" PointY="0.5" Height="1.7879850260416674" />
 				<AssociationConnector Association="ResearchModel.FK_tblMarketSnapshotGroupPreference_tblMarketSnapshotPreference" >

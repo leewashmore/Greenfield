@@ -120,7 +120,16 @@ namespace GreenField.DashboardModule
             #region Quarterly Comparison
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardQuarterlyResultsComparison));
             #endregion
+            #endregion
 
+            #region Investment Committee
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeCreateEdit));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeVote));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteePreMeetingReport));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeMeetingMinutes));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeSummaryReport));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeMetricsReport));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteePresentations));
             #endregion
 
         }

@@ -213,5 +213,19 @@ namespace GreenField.Common
         public static string QUARTERLY_RESULTS_COMPARISON = "Quarterly Results Comparison"; 
         #endregion
         #endregion
+
+        #region Investment Committee
+        public static string ICPRESENTATION_CREATE_EDIT = "IC SRD 4.1.1.2.2 - 4.1.1.2.3";
+
+        public static string ICPRESENTATION_VOTE = "IC SRD 4.1.1.2.6";
+
+        public static string ICPRESENTATION_PRE_MEETING_REPORT = "IC SRD 4.2.1";
+
+        public static string ICPRESENTATION_MEETING_MINUTES = "IC SRD 4.2.2";
+
+        public static string ICPRESENTATION_SUMMARY_REPORT = "IC SRD 4.2.4";
+
+        public static string ICPRESENTATION_METRICS_REPORT = "IC SRD 4.2.3";
+        #endregion
     }
 }

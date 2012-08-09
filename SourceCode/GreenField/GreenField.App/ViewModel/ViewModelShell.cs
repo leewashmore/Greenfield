@@ -1624,6 +1624,40 @@ namespace GreenField.App.ViewModel
         }
         #endregion
         #endregion
+
+        #region Investment Committee
+        public ICommand DashboardInvestmentCommitteeCreateEditCommand
+        {
+            get { return new DelegateCommand<object>(DashboardInvestmentCommitteeCreateEditCommandMethod); }
+        }
+        #endregion
+
+        public ICommand DashboardInvestmentCommitteeVoteCommand
+        {
+            get { return new DelegateCommand<object>(DashboardInvestmentCommitteeVoteCommandMethod); }
+        }
+
+        public ICommand DashboardInvestmentCommitteePreMeetingReportCommand
+        {
+            get { return new DelegateCommand<object>(DashboardInvestmentCommitteePreMeetingReportCommandMethod); }
+        }
+
+        public ICommand DashboardInvestmentCommitteeMeetingMinutesCommand
+        {
+            get { return new DelegateCommand<object>(DashboardInvestmentCommitteeMeetingMinutesCommandMethod); }
+        }
+
+        public ICommand DashboardInvestmentCommitteeSummaryReportCommand
+        {
+            get { return new DelegateCommand<object>(DashboardInvestmentCommitteeSummaryReportCommandMethod); }
+        }
+
+        public ICommand DashboardInvestmentCommitteeMetricsReportCommand
+        {
+            get { return new DelegateCommand<object>(DashboardInvestmentCommitteeMetricsReportCommandMethod); }
+        }
+
+       
         #endregion
 
         #region ToolBox
@@ -2482,6 +2516,123 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
+        #endregion
+
+        #region Investment Committee
+        private void DashboardInvestmentCommitteeCreateEditCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_CREATE_EDIT);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteePresentations", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardInvestmentCommitteeVoteCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeVote", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardInvestmentCommitteePreMeetingReportCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_PRE_MEETING_REPORT);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteePreMeetingReport", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardInvestmentCommitteeMeetingMinutesCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_MEETING_MINUTES);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeMeetingMinutes", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardInvestmentCommitteeSummaryReportCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_SUMMARY_REPORT);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeSummaryReport", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void DashboardInvestmentCommitteeMetricsReportCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.INVESTMENT_COMMITTEE_METRICS_REPORT);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeMetricsReport", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
         #endregion
 
         private void DashboardQuarterlyResultsComparisonCommandMethod(object param)

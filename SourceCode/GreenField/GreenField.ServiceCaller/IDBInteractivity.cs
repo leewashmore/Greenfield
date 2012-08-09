@@ -10,6 +10,7 @@ using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
+using GreenField.ServiceCaller.MeetingServiceReference;
 
 
 
@@ -219,8 +220,46 @@ namespace GreenField.ServiceCaller
         void RetrieveConsensusEstimatesSummaryData(EntitySelectionData entitySelectionData, Action<List<ConsensusEstimatesSummaryData>> callback);
 
         #endregion
+ void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback);
 
-        void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback);
+        #region Investment Committee
+
+        void GetMeetings(Action<List<MeetingInfo>> callback);
+
+        void GetMeetingDates(Action<List<DateTime?>> callback);
+
+        void GetMeetingsByDate(DateTime date, Action<List<MeetingInfo>> callback);
+
+        void CreateMeeting(MeetingInfo meeting, Action<string> callback);
+
+        void UpdateMeeting(MeetingInfo meeting, Action<string> callback);
+
+        void CreateMeetingPresentationMapping(MeetingPresentationMappingInfo meetingPresentationMappingInfo, Action<string> callback);
+
+        void UpdateMeetingPresentationMapping(MeetingPresentationMappingInfo meetingPresentationMappingInfo, Action<string> callback);
+
+        void CreatePresentation(PresentationInfo presentation, Action<long?> callback);
+
+        void UpdatePresentation(PresentationInfo presentationInfo, Action<string> callback);
+
+        void CreateVoterInfo(VoterInfo voterInfo, Action<string> callback);
+
+        void CreateFileInfo(ObservableCollection<AttachedFileInfo> fileInfoColl, Action<string> callback);
+
+        void GetPresentations(Action<List<PresentationInfoResult>> callback);
+
+        void GetPresentationsByMeetingID(long meetingID, Action<List<PresentationInfoResult>> callback);
+
+        void GetPresentationsByMeetingDatePresenterStatus(DateTime? meetingDate, string presenter, string status, Action<List<PresentationInfoResult>> callback);
+
+        void GetDistinctPresenters(Action<List<string>> callback);
+
+        void GetStatusTypes(Action<List<StatusType>> callback);
+
+        void GetFileInfo(long presentationID, Action<List<AttachedFileInfo>> callback);
+
+
+        #endregion
 
     }
 }

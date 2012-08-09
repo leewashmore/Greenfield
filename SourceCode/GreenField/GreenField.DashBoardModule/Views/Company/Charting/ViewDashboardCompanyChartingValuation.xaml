@@ -16,7 +16,7 @@
                 <ResourceDictionary>
                     <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
                 </ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>            
         </ResourceDictionary>        
     </UserControl.Resources>
 
