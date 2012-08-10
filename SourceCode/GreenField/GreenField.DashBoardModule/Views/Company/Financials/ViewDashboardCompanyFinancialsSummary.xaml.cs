@@ -62,7 +62,8 @@ namespace GreenField.DashboardModule.Views
                 AdditionalInfo = FinancialStatementType.FUNDAMENTAL_SUMMARY
             };
 
-            this.cctrDashboardContent.Content = new ViewFinancialStatements(new ViewModelFinancialStatements(param));
+            this.cctrDashboardContent.Content = null;
+                //new ViewFinancialStatements(new ViewModelFinancialStatements(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
