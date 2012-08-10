@@ -89,52 +89,7 @@ namespace GreenField.Gadgets.Views
                 this.chPE.DefaultView.ChartLegend.Items.Remove(var);
             }
         }
-
-        private void chPE_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
-        {
-            if (this.DataContext as ViewModelPE != null)
-            {
-                if ((this.DataContext as ViewModelPE).PEPlottedData != null && (this.DataContext as ViewModelPE).PEPlottedData.Count != 0)
-                {
-                    //    (this.DataContext as ViewModelPE).AxisXMinValue = Convert.ToDecimal(((this.DataContext as ViewModelPE).PEPlottedData.OrderBy(a => a.PeriodLabel)).
-                    //        Select(a => a.PeriodLabel).FirstOrDefault());
-                    //    (this.DataContext as ViewModelPE).AxisXMaxValue = Convert.ToDecimal(((this.DataContext as ViewModelPE).PEPlottedData.OrderByDescending(a => a.PeriodLabel)).
-                    //        Select(a => a.PeriodLabel).FirstOrDefault());
-
-                    //    this.chPE.DefaultView.ChartArea.AxisY.Step = 10;
-                    //}
-                    //assigning std dev minus as min val
-                    decimal _axisYMinVal = (this.DataContext as ViewModelPE).PEPlottedData.Select(a => Convert.ToDecimal(a.StdDevMinus)).FirstOrDefault();
-                    decimal _minValPrevenue = Convert.ToInt32((this.DataContext as ViewModelPE).PEPlottedData.OrderBy(a => a.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
-                    decimal _incrementVal = 5.0M;
-                    if (_minValPrevenue < _axisYMinVal && _minValPrevenue % 5 != 0)
-                        _axisYMinVal = Convert.ToDecimal(Math.Floor(Convert.ToDouble(_minValPrevenue / 5))) * _incrementVal - _incrementVal;
-
-                    //assigning std dev plus as max val
-                    decimal _axisYMaxVal = (this.DataContext as ViewModelPE).PEPlottedData.Select(a => Convert.ToDecimal(a.StdDevPlus)).FirstOrDefault();
-                    decimal _maxValPrevenue = Convert.ToInt32((this.DataContext as ViewModelPE).PEPlottedData.OrderByDescending(a => a.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
-                    if (_maxValPrevenue > _axisYMaxVal && _maxValPrevenue % 5 != 0)
-                        _axisYMaxVal = Convert.ToDecimal(Math.Floor(Convert.ToDouble(_minValPrevenue / 5))) * _incrementVal + _incrementVal;
-
-                    if (_axisYMinVal > 0)
-                        _axisYMinVal = 0;
-                    (this.DataContext as ViewModelPE).AxisXMinValue = _axisYMinVal;
-                    (this.DataContext as ViewModelPE).AxisXMaxValue = _axisYMaxVal;
-
-                    //(this.DataContext as ViewModelPRevenue).AxisYMinValue = Convert.ToDecimal((this.DataContext as ViewModelPRevenue).PRevenuePlottedData.OrderBy(a => a.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
-                    //(this.DataContext as ViewModelPRevenue).AxisYMaxValue = Convert.ToDecimal((this.DataContext as ViewModelPRevenue).PRevenuePlottedData.OrderByDescending(record => record.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
-
-                    int dataCount = (this.DataContext as ViewModelPE).PEPlottedData.Count;
-                    if (dataCount != 0)
-                    {
-                        this.chPE.DefaultView.ChartArea.AxisY.Step = 5.0;
-                    }
-                }
-
-            }
-
-        }
-
+        
         private void ApplyChartStyles()
         {
             this.chPE.DefaultView.ChartArea.AxisX.TicksDistance = 50;

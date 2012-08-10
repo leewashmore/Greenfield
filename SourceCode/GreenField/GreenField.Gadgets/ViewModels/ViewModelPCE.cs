@@ -204,15 +204,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        #endregion
-
-        #region EVENTS
-        /// <summary>
-        /// event to handle data retrieval progress indicator
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler PCEDataLoadEvent;
-
-        #endregion
+        #endregion     
 
         #region EVENTHANDLERS
         /// <summary>
@@ -273,7 +265,7 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            finally { BusyIndicatorStatus = true; }
+            finally { BusyIndicatorStatus = false; }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 

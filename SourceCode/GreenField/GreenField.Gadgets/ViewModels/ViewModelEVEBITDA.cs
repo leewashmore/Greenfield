@@ -206,14 +206,6 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        #region EVENTS
-        /// <summary>
-        /// event to handle data retrieval progress indicator
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler EVEBITDADataLoadEvent;
-
-        #endregion
-
         #region EVENTHANDLERS
         /// <summary>
         /// Event Handler to subscribed event 'SecurityReferenceSet'

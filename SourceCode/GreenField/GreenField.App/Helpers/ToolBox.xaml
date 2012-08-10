@@ -457,9 +457,8 @@
                 <Grid Visibility="{Binding CommoditySelectorVisibility}" Margin="5,0,0,0" Grid.Column="11">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Commodity" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="White" FontSize="11" FontFamily="Arial" FontWeight="Bold"/>
-                        <telerik:RadComboBox x:Name="cbCommoditySelector"
-                                         EmptyText="Search Commodity..." 
-                                         SelectedValue="{Binding SelCommodityId,Mode=TwoWay}"
+                        <telerik:RadComboBox x:Name="cbCommoditySelector"                                        
+                                         SelectedValue="{Binding CommodityID,Mode=TwoWay}"
                                          Width="150" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"
@@ -470,7 +469,9 @@
                                          HorizontalAlignment="Left"
                                          OpenDropDownOnFocus="True"
                                          StaysOpenOnEdit="True"                                        
-                                         IsTextSearchEnabled="False"    
+                                         IsTextSearchEnabled="False" 
+                                         EmptyText="Select Commodity..."
+                                        
                                      >
                             <telerik:RadComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>

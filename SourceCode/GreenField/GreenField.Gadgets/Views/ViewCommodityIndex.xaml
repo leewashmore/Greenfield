@@ -19,9 +19,25 @@
     
     <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0" IsBusy="{Binding IsBusyIndicatorStatus}">
-        <Grid x:Name="LayoutRoot" Background="White" Visibility = "{Binding CommodityGridVisibility,Mode=TwoWay}">
-        <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">           
-                <telerik:RadGridView Name="dgCommodity" 
+
+           
+            <Grid x:Name="LayoutRoot" Background="White" Visibility = "{Binding CommodityGridVisibility,Mode=TwoWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">                   
+                    <!--button to export the grid to excel-->
+                    <telerik:RadButton x:Name="btnExportExcel" Grid.Column="3" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Margin="5,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
+                        <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </telerik:RadButton>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="1">
+                <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                    <telerik:RadGridView Name="dgCommodity" 
                                      AutoGenerateColumns="false" 
                                      ItemsSource="{Binding CommodityData}" 
                                      CanUserSelect="False" 
@@ -46,8 +62,8 @@
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                      AlternateRowStyle ="{StaticResource GridViewAlternateRowStyle}"
                                      >
-                    <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn 
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn 
                             x:Name="dgcCommodityID" 
                             Width="*"  
                             Header="Commodity/Index" 
@@ -56,7 +72,7 @@
                             DataMemberBinding="{Binding CommodityID}" 
                             HeaderTextAlignment="Left" 
                             CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn 
+                            <telerik:GridViewDataColumn 
                             x:Name="dgcYTD" 
                             Width="*" 
                             Header="YTD" 
@@ -65,7 +81,7 @@
                             DataMemberBinding="{Binding YTD, Converter={StaticResource ConvertPercVAlOneDecPlace}}" 
                             HeaderTextAlignment="Right" 
                             CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn 
+                            <telerik:GridViewDataColumn 
                             x:Name="dgcYear1" 
                             Width="*" 
                             Header="1 Year" 
@@ -73,13 +89,13 @@
                             TextAlignment="Right"
                             DataMemberBinding="{Binding Year1, Converter={StaticResource ConvertPercVAlOneDecPlace}}" 
                             HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgcYear3" Width="*" Header="3 Year" 
+                            <telerik:GridViewDataColumn x:Name="dgcYear3" Width="*" Header="3 Year" 
                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                             TextAlignment="Right"
                             DataMemberBinding="{Binding Year3, Converter={StaticResource ConvertPercVAlOneDecPlace}}"  
                             HeaderTextAlignment="Right" 
                             CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgcCURRENT_YEAR_END" 
+                            <telerik:GridViewDataColumn x:Name="dgcCURRENT_YEAR_END" 
                             Width="*" 
                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                             Header="Current P" 
@@ -87,25 +103,26 @@
                             DataMemberBinding="{Binding CurrentYearEnd, StringFormat=\{0:n1\}}" 
                             HeaderTextAlignment="Right" 
                             CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgcLASTUPDATE"
+                            <telerik:GridViewDataColumn x:Name="dgcLASTUPDATE"
                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                             TextAlignment="Right"
                             DataMemberBinding="{Binding NextYearEnd, StringFormat=\{0:n1\}}" 
                             Width="*" 
                             HeaderTextAlignment="Right" 
                             CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgcLONG_TERM" 
+                            <telerik:GridViewDataColumn x:Name="dgcLONG_TERM" 
                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                             TextAlignment="Right"
                             DataMemberBinding="{Binding LongTerm, StringFormat=\{0:n1\}}" 
                             Width="*" 
                             HeaderTextAlignment="Right" 
-                            CellStyle="{StaticResource GridViewCellStyle}"/>                       
-                    </telerik:RadGridView.Columns>
+                            CellStyle="{StaticResource GridViewCellStyle}"/>
+                        </telerik:RadGridView.Columns>
 
-                </telerik:RadGridView>
-            </Border>
-    </Grid>
+                    </telerik:RadGridView>
+                </Border>
+            </Grid>
+        </Grid>
     </telerik:RadBusyIndicator>
 
 </helpers:ViewBaseUserControl>

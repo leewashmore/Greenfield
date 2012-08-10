@@ -63,7 +63,7 @@ namespace GreenField.Gadgets.Views
             set
             {
                 _isActive = value;
-                if (DataContextFCFYield != null) //DataContext instance
+                if (DataContextFCFYield != null) 
                     DataContextFCFYield.IsActive = _isActive;
             }
         }
@@ -88,53 +88,7 @@ namespace GreenField.Gadgets.Views
                 ChartLegendItem var = this.chFCFYield.DefaultView.ChartLegend.Items[0];
                 this.chFCFYield.DefaultView.ChartLegend.Items.Remove(var);
             }
-        }
-
-        private void chFCFYield_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
-        {
-            if (this.DataContext as ViewModelFCFYield != null)
-            {
-                if ((this.DataContext as ViewModelFCFYield).FCFYieldPlottedData != null && (this.DataContext as ViewModelFCFYield).FCFYieldPlottedData.Count != 0)
-                {
-                    //    (this.DataContext as ViewModelFCFYield).AxisXMinValue = Convert.ToDecimal(((this.DataContext as ViewModelFCFYield).FCFYieldPlottedData.OrderBy(a => a.PeriodLabel)).
-                    //        Select(a => a.PeriodLabel).FirstOrDefault());
-                    //    (this.DataContext as ViewModelFCFYield).AxisXMaxValue = Convert.ToDecimal(((this.DataContext as ViewModelFCFYield).FCFYieldPlottedData.OrderByDescending(a => a.PeriodLabel)).
-                    //        Select(a => a.PeriodLabel).FirstOrDefault());
-
-                    //    this.chFCFYield.DefaultView.ChartArea.AxisY.Step = 10;
-                    //}
-                    //assigning std dev minus as min val
-                    decimal _axisYMinVal = (this.DataContext as ViewModelFCFYield).FCFYieldPlottedData.Select(a => Convert.ToDecimal(a.StdDevMinus)).FirstOrDefault();
-                    decimal _minValPrevenue = Convert.ToInt32((this.DataContext as ViewModelFCFYield).FCFYieldPlottedData.OrderBy(a => a.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
-                    decimal _incrementVal = 5.0M;
-                    if (_minValPrevenue < _axisYMinVal && _minValPrevenue % 5 != 0)
-                        _axisYMinVal = Convert.ToDecimal(Math.Floor(Convert.ToDouble(_minValPrevenue / 5))) * _incrementVal - _incrementVal;
-
-                    //assigning std dev plus as max val
-                    decimal _axisYMaxVal = (this.DataContext as ViewModelFCFYield).FCFYieldPlottedData.Select(a => Convert.ToDecimal(a.StdDevPlus)).FirstOrDefault();
-                    decimal _maxValPrevenue = Convert.ToInt32((this.DataContext as ViewModelFCFYield).FCFYieldPlottedData.OrderByDescending(a => a.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
-                    if (_maxValPrevenue > _axisYMaxVal && _maxValPrevenue % 5 != 0)
-                        _axisYMaxVal = Convert.ToDecimal(Math.Floor(Convert.ToDouble(_minValPrevenue / 5))) * _incrementVal + _incrementVal;
-
-                    if (_axisYMinVal > 0)
-                        _axisYMinVal = 0;
-                    (this.DataContext as ViewModelFCFYield).AxisXMinValue = _axisYMinVal;
-                    (this.DataContext as ViewModelFCFYield).AxisXMaxValue = _axisYMaxVal;
-
-                    //(this.DataContext as ViewModelPRevenue).AxisYMinValue = Convert.ToDecimal((this.DataContext as ViewModelPRevenue).PRevenuePlottedData.OrderBy(a => a.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
-                    //(this.DataContext as ViewModelPRevenue).AxisYMaxValue = Convert.ToDecimal((this.DataContext as ViewModelPRevenue).PRevenuePlottedData.OrderByDescending(record => record.PRevenueVal).Select(a => a.PRevenueVal).FirstOrDefault());
-
-                    int dataCount = (this.DataContext as ViewModelFCFYield).FCFYieldPlottedData.Count;
-                    if (dataCount != 0)
-                    {
-                        this.chFCFYield.DefaultView.ChartArea.AxisY.Step = 5.0;
-                    }
-                }
-
-            }
-
-        }
-
+        }       
         private void ApplyChartStyles()
         {
             this.chFCFYield.DefaultView.ChartArea.AxisX.TicksDistance = 50;
@@ -167,8 +121,7 @@ namespace GreenField.Gadgets.Views
 
                 if (chFCFYield.Visibility == Visibility.Visible)
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.FCF_Yield, Element = this.chFCFYield, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
-                else if (dgFCFYield.Visibility == Visibility.Visible)
-                    //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.FCF_Yield_DATA, Element = this.chFCFYield, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                else if (dgFCFYield.Visibility == Visibility.Visible)                    
                     ExportExcel.ExportGridExcel(dgFCFYield);
 
 

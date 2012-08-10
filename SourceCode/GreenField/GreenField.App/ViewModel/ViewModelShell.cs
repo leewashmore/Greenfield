@@ -1087,6 +1087,7 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.CommodityTypeInfo);
             }
         }
+       
         /// <summary>
         /// Stores Commodity ID values
         /// </summary>
@@ -1097,10 +1098,21 @@ namespace GreenField.App.ViewModel
             set
             {
                 _commodityIDs = value;
+                CommodityID = value.LastOrDefault();
                 RaisePropertyChanged(() => this.CommodityIDs);
             }
 
         }
+        private string _CommodityID;
+        public string CommodityID
+        {
+            get { return _CommodityID;}
+            set{
+                _CommodityID = value; 
+                RaisePropertyChanged(() => this.CommodityID);
+            }
+        }               
+
         /// <summary>
         /// Stores commodity ID value selected by user
         /// </summary>
@@ -1111,7 +1123,7 @@ namespace GreenField.App.ViewModel
             set
             {
                 _selCommodityId = value;
-                RaisePropertyChanged(() => this.SelCommodityId);
+                
                 if (value != null)
                     //_selectorPayload.CommoditySelectedVal = CommodityTypeInfo.Where(rec => rec.CommodityID.ToUpper().Contains(value.ToUpper())).Select(rec => rec.CommodityID).ToString();
                     if (CommodityTypeInfo != null && CommodityTypeInfo.Count > 0)
@@ -1122,6 +1134,9 @@ namespace GreenField.App.ViewModel
                                 _selectorPayload.CommoditySelectedVal = value;
                         }
                     }
+                if(String.IsNullOrEmpty(value))
+                    SelCommodityId = CommodityIDs.LastOrDefault();
+                RaisePropertyChanged(() => this.SelCommodityId);
                 _eventAggregator.GetEvent<CommoditySelectionSetEvent>().Publish(_selectorPayload.CommoditySelectedVal);
             }
         }

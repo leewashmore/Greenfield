@@ -19,7 +19,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
-    
+
 
     <telerik:RadBusyIndicator x:Name="chartBusyIndicator" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
@@ -53,12 +53,13 @@
                                            x:Name="chPCE"
                                            telerik:StyleManager.Theme="Metro" 
                                            ItemsSource="{Binding PCEPlottedData}"
-                                           LegendStyle="{StaticResource ChartLegendStyle}"
-                                           DataBound="chPCE_DataBound">
+                                           LegendStyle="{StaticResource ChartLegendStyle}"                                           
+                                           >
                         <telerik:RadChart.PaletteBrushes>
-                            <SolidColorBrush Color="#213671"/>
+                            <SolidColorBrush Color="#0000ff"/>
                             <SolidColorBrush Color="#9F1D21"/>
-                            <SolidColorBrush Color="#BE715C"/>
+                            <SolidColorBrush Color="#213671"/>
+                            <SolidColorBrush Color="#213671"/>
                         </telerik:RadChart.PaletteBrushes>
                         <telerikChart:RadChart.DefaultView>
                             <telerikCharting:ChartDefaultView>
@@ -71,8 +72,8 @@
                                     <telerikCharting:ChartArea SmartLabelsEnabled="False"
                                                             EnableAnimations="False" NoDataString="No Data Available" Margin="0,0,0,0" 
                                                             ItemOverlapPercent="0" ItemWidthPercent="100" LegendName="chPCELegend">
-                                        <telerikCharting:ChartArea.AxisX>
-                                            <telerikCharting:AxisX>
+                                        <telerikCharting:ChartArea.AxisX >
+                                            <telerikCharting:AxisX LabelRotationAngle="45">
                                                 <telerikCharting:AxisX.AxisStyles>
                                                     <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                 </telerikCharting:AxisX.AxisStyles>
@@ -80,9 +81,10 @@
                                         </telerikCharting:ChartArea.AxisX>
 
                                         <telerikCharting:ChartArea.AxisY>
-                                            <telerikCharting:AxisY AutoRange="False" IsZeroBased="true" MaxValue="{Binding AxisXMaxValue}"
-                                                                   MinValue="{Binding AxisXMinValue}" MinorTicksVisibility="Collapsed" 
-                                                                   MajorTicksVisibility="Visible" >
+                                            <telerikCharting:AxisY AutoRange="True"  
+                                                                IsZeroBased="False"  
+                                                                DefaultLabelFormat="#VAL{n6}"
+                                                                    >
                                                 <telerikCharting:AxisY.AxisStyles>
                                                     <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                 </telerikCharting:AxisY.AxisStyles>
@@ -103,13 +105,13 @@
                         <telerik:RadChart.SeriesMappings>
 
 
-                            <telerik:SeriesMapping LegendLabel="P/CE">
+                            <telerik:SeriesMapping LegendLabel="PCE">
 
                                 <telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
-                                                                      EmptyPointBehavior="Drop" ShowItemToolTips="True"
+                                                                      EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="P/CE : #Y"/>
+                                                                      ItemToolTipFormat="PCE : #Y{n6} "/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="PRevenueVal" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -119,7 +121,7 @@
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Drop" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel"
-                                                                      ItemToolTipFormat="Average : #Y"/>
+                                                                      ItemToolTipFormat="Average : #Y{n6}"/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="Average" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -129,7 +131,7 @@
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Drop" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="StdDev+ : #Y"/>
+                                                                      ItemToolTipFormat="StdDev+ : #Y{n6}"/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="StdDevPlus" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -139,7 +141,7 @@
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Drop" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="StdDev- : #Y"/>
+                                                                      ItemToolTipFormat="StdDev- : #Y{n6}"/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="StdDevMinus" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -185,9 +187,10 @@
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Left" 
-                                                        TextAlignment="Left"/>                         
+                                                        TextAlignment="Left"/>
                             <telerik:GridViewDataColumn Header="P/CE" 
                                                         DataMemberBinding="{Binding PRevenueVal}"
+                                                        DataFormatString="{}{0:n4}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
@@ -214,7 +217,7 @@
                                                         TextAlignment="Right"
                                                         CellStyle="{StaticResource GridViewCellStyle}"/>
 
-                            
+
                         </telerik:RadGridView.Columns>
 
                     </telerik:RadGridView>

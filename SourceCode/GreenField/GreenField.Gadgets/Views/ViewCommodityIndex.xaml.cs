@@ -13,6 +13,8 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using GreenField.DataContracts;
+using GreenField.ServiceCaller;
+using Telerik.Windows.Controls;
 
 
 
@@ -98,5 +100,45 @@ namespace GreenField.Gadgets.Views
         {
             GroupedGridRowLoadedHandler.Implement(e);
         }
+        #region ExportToExcel
+
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+                if (LayoutRoot.Visibility == Visibility.Visible)
+                {
+                    //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    ExportExcel.ExportGridExcel(dgCommodity);
+                    return;
+                }
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.MODELS_FX_MACRO_ECONOMICS_COMMODITY_INDEX_RETURN);
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Event for Grid Export
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ElementExportingEvent(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
+
+        #endregion
     }
 }

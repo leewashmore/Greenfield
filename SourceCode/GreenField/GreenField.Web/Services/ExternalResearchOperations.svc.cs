@@ -665,11 +665,23 @@ namespace GreenField.Web.Services
                 int? securityId = svcData.SECURITY_ID;
 
                 if (chartTitle == "EV/EBITDA")
-                    resultDB_EV_EBITDA = extResearch.ExecuteStoreQuery<GetEV_EBITDAData_Result>("exec Get_EV_EBITDA @SecurityID={0},@issuerId={1},@chartTitle={2}", "157240", "8233223", chartTitle).ToList();//, Convert.ToString(data.SECURITY_ID)).ToList();
+                    resultDB_EV_EBITDA = null;
+                 //resultDB_EV_EBITDA = extResearch.ExecuteStoreQuery<GetEV_EBITDAData_Result>("exec Get_EV_EBITDA @SecurityID={0},@issuerId={1},@chartTitle={2}", "157240", "8233223", chartTitle).ToList();//, Convert.ToString(data.SECURITY_ID)).ToList();
                 else
                     ////Retrieving data from Period Financials table
                     resultDB = extResearch.ExecuteStoreQuery<GetPRevenueData_Result>("exec Get_PRevenue @SecurityID={0},@issuerId={1},@chartTitle={2}", "157240", "8233223", chartTitle).ToList();//, Convert.ToString(data.SECURITY_ID)).ToList();
 
+                //Comparer to fetch only unique rows
+                if (resultDB != null && resultDB.Count > 1)
+                {
+                    IEqualityComparer<GetPRevenueData_Result> comparer = new HistoricalValuationCompararer();
+                    resultDB = resultDB.Distinct(comparer).ToList();
+                }
+                 if(resultDB_EV_EBITDA != null && resultDB_EV_EBITDA.Count > 1)
+                 {
+                    IEqualityComparer<GetEV_EBITDAData_Result> comparerEV_EBITDA = new HistoricalValEV_EBITDACompararer();
+                    resultDB_EV_EBITDA = resultDB_EV_EBITDA.Distinct(comparerEV_EBITDA).ToList();
+                 }
                 #region Dummy Data
                 //TODO SEEMA:DELETE DUMMY DATA START
                 //GetPRevenueData_Result dummyData = null;
@@ -795,8 +807,6 @@ namespace GreenField.Web.Services
                     {
                         if (chartTitle == "EV/EBITDA")
                         {
-                            //TODO SEEMA Delete below line
-                            //return null;
                             if (_index + 1 < resultDB_EV_EBITDA.Count && _index + 2 < resultDB_EV_EBITDA.Count && _index + 3 < resultDB_EV_EBITDA.Count)
                             {
                                 if ((resultDB_EV_EBITDA[_index].NetDebt != null && resultDB_EV_EBITDA[_index + 1].NetDebt != null && resultDB_EV_EBITDA[_index + 2].NetDebt != null && resultDB_EV_EBITDA[_index + 3].NetDebt != null)

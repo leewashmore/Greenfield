@@ -53,12 +53,13 @@
                                            x:Name="chDividendYield"
                                            telerik:StyleManager.Theme="Metro" 
                                            ItemsSource="{Binding DividendYieldPlottedData}"
-                                           LegendStyle="{StaticResource ChartLegendStyle}"
-                                           DataBound="chDividendYield_DataBound">
+                                           LegendStyle="{StaticResource ChartLegendStyle}"                                           
+                                           >
                         <telerik:RadChart.PaletteBrushes>
-                            <SolidColorBrush Color="#213671"/>
+                            <SolidColorBrush Color="#0000ff"/>
                             <SolidColorBrush Color="#9F1D21"/>
-                            <SolidColorBrush Color="#BE715C"/>
+                            <SolidColorBrush Color="#213671"/>
+                            <SolidColorBrush Color="#213671"/>
                         </telerik:RadChart.PaletteBrushes>
                         <telerikChart:RadChart.DefaultView>
                             <telerikCharting:ChartDefaultView>
@@ -71,8 +72,8 @@
                                     <telerikCharting:ChartArea SmartLabelsEnabled="False"
                                                             EnableAnimations="False" NoDataString="No Data Available" Margin="0,0,0,0" 
                                                             ItemOverlapPercent="0" ItemWidthPercent="100" LegendName="chDividendYieldLegend">
-                                        <telerikCharting:ChartArea.AxisX>
-                                            <telerikCharting:AxisX>
+                                        <telerikCharting:ChartArea.AxisX >
+                                            <telerikCharting:AxisX LabelRotationAngle="45">
                                                 <telerikCharting:AxisX.AxisStyles>
                                                     <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                 </telerikCharting:AxisX.AxisStyles>
@@ -80,9 +81,10 @@
                                         </telerikCharting:ChartArea.AxisX>
 
                                         <telerikCharting:ChartArea.AxisY>
-                                            <telerikCharting:AxisY AutoRange="False" IsZeroBased="true" MaxValue="{Binding AxisXMaxValue}"
-                                                                   MinValue="{Binding AxisXMinValue}" MinorTicksVisibility="Collapsed" 
-                                                                   MajorTicksVisibility="Visible" >
+                                            <telerikCharting:AxisY AutoRange="True"  
+                                                                IsZeroBased="False"  
+                                                                DefaultLabelFormat="#VAL{n6}"
+                                                                    >
                                                 <telerikCharting:AxisY.AxisStyles>
                                                     <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                 </telerikCharting:AxisY.AxisStyles>
@@ -107,9 +109,9 @@
 
                                 <telerik:SeriesMapping.SeriesDefinition>
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
-                                                                      EmptyPointBehavior="Drop" ShowItemToolTips="True"
+                                                                      EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="Dividend Yield : #Y"/>
+                                                                      ItemToolTipFormat="Dividend Yield : #Y{n6} "/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="PRevenueVal" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -119,7 +121,7 @@
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Drop" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel"
-                                                                      ItemToolTipFormat="Average : #Y"/>
+                                                                      ItemToolTipFormat="Average : #Y{n6}"/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="Average" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -129,7 +131,7 @@
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Drop" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="StdDev+ : #Y"/>
+                                                                      ItemToolTipFormat="StdDev+ : #Y{n6}"/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="StdDevPlus" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -139,7 +141,7 @@
                                     <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Drop" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
-                                                                      ItemToolTipFormat="StdDev- : #Y"/>
+                                                                      ItemToolTipFormat="StdDev- : #Y{n6}"/>
                                 </telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:ItemMapping FieldName="StdDevMinus" DataPointMember="YValue" />
                                 <telerik:ItemMapping FieldName="PeriodLabel" DataPointMember="XCategory" />
@@ -154,7 +156,7 @@
                                          Background="White"
                                          AutoGenerateColumns="False" 
                                          AlternationCount="2"
-                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                         AlternateRowBackground="#d8d5d4"
                                          ItemsSource="{Binding DividendYieldPlottedData}" 
                                          telerik:StyleManager.Theme="Metro"
                                          CanUserSelect="False" 
@@ -188,6 +190,7 @@
                                                         TextAlignment="Left"/>
                             <telerik:GridViewDataColumn Header="Dividend Yield" 
                                                         DataMemberBinding="{Binding PRevenueVal}"
+                                                        DataFormatString="{}{0:n4}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
