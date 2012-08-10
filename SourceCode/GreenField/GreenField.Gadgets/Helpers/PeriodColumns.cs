@@ -275,6 +275,11 @@ namespace GreenField.Gadgets.Helpers
             foreach (String dataDesc in distinctPeriodDataDescriptors)
             {
                 T defaultRecord = data.Where(record => ((String)record.GetType().GetProperty("Description").GetValue(record, null)) == dataDesc).FirstOrDefault();
+
+                String groupDescription = null;
+                if (propertyInfo.Any(record => record.Name == "GroupDescription"))
+                    groupDescription = (String)defaultRecord.GetType().GetProperty("GroupDescription").GetValue(defaultRecord, null);
+
                 Int32? dataId = null;
                 if (propertyInfo.Any(record => record.Name == "DataId"))
                     dataId = (Int32?)defaultRecord.GetType().GetProperty("DataId").GetValue(defaultRecord, null);
@@ -494,6 +499,7 @@ namespace GreenField.Gadgets.Helpers
                     DATA_BOLD = dataBold,
                     DATA_PERCENTAGE = dataPercentage,
                     DATA_DECIMALS = dataDecimal,
+                    SUB_DATA_DESC = groupDescription,
                     YEAR_ONE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearOneData, "RootSource"),
                     YEAR_TWO_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearTwoData, "RootSource"),
                     YEAR_THREE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearThreeData, "RootSource"),

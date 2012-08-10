@@ -52,20 +52,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             EntitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
 
-            PeriodColumns.PeriodColumnNavigate += (e) =>
-            {
-                if (e.PeriodColumnNamespace == GetType().FullName)
-                {
-                    BusyIndicatorNotification(true, "Retrieving data for updated time span");
-                    Iterator = e.PeriodColumnNavigationDirection == NavigationDirection.LEFT ? Iterator - 1 : Iterator + 1;
-                    PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator, 3, 4, 6, false);
-                    COASpecificDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(COASpecificInfo, out periodRecord,
-                        periodRecord, subGroups: null);
-                    PeriodRecord = periodRecord;
-                    PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, displayPeriodType: false);
-                    BusyIndicatorNotification();
-                }
-            };
+            PeriodColumns.PeriodColumnNavigate += new PeriodColumnNavigationEvent(PeriodColumns_PeriodColumnNavigate);
 
             if (_eventAggregator != null)
             {
@@ -78,6 +65,16 @@ namespace GreenField.Gadgets.ViewModels
             }
 
            // _dbInteractivity.RetrieveCOASpecificData(EntitySelectionInfo, "REUTERS", "FISCAL", "USD",RetrieveCOASpecificDataCallbackMethod);
+        }
+
+        void PeriodColumns_PeriodColumnNavigate(PeriodColumnNavigationEventArg e)
+        {
+            if (e.PeriodColumnNamespace == GetType().FullName)
+            {
+                BusyIndicatorNotification(true, "Retrieving data for updated time span");
+                Iterator = e.PeriodColumnNavigationDirection == NavigationDirection.LEFT ? Iterator - 1 : Iterator + 1;
+                SetCOASpecificDisplayInfo();
+            }
         }
         #endregion
 
@@ -318,7 +315,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (selectedCOASpecificGadgetNameInfo != value)
                 {
                     selectedCOASpecificGadgetNameInfo = value;
-                    COASpecificFilteredInfo = new ObservableCollection<COASpecificData>(COASpecificInfo.Where(t => t.GridDesc == value));
+                    COASpecificFilteredInfo = new ObservableCollection<COASpecificData>(COASpecificInfo.Where(t => t.GroupDescription == value));
                     AddToComboBoxSeries.Clear();                    
                     RaisePropertyChanged(() => this.SelectedCOASpecificGadgetNameInfo);
                 }
@@ -336,9 +333,9 @@ namespace GreenField.Gadgets.ViewModels
                    if (coaSpecificInfo != value)
                     {
                         coaSpecificInfo = value;
-                        COASpecificGadgetNameInfo =  value.Select(t => t.GridDesc).Distinct().ToList();
-                        defaultGadgetDesc = value.Select(t => t.GridDesc).FirstOrDefault();  
-                        COASpecificFilteredInfo = new ObservableCollection<COASpecificData>(COASpecificInfo.Where(t => t.GridDesc == defaultGadgetDesc));                        
+                        COASpecificGadgetNameInfo = value.Select(t => t.GroupDescription).Distinct().ToList();
+                        defaultGadgetDesc = value.Select(t => t.GroupDescription).FirstOrDefault();
+                        COASpecificFilteredInfo = new ObservableCollection<COASpecificData>(COASpecificInfo.Where(t => t.GroupDescription == defaultGadgetDesc));                        
                         RaisePropertyChanged(() => this.COASpecificInfo);
                         SetCOASpecificDisplayInfo();
                     }                
@@ -613,17 +610,16 @@ namespace GreenField.Gadgets.ViewModels
                 COASpecificInfo = new List<COASpecificData>();
                 _dbInteractivity.RetrieveCOASpecificData(IssuerReferenceInfo.IssuerId, IssuerReferenceInfo.SecurityId, SelectedDataSource, SelectedFiscalType, SelectedCurrency, RetrieveCOASpecificDataCallbackMethod);
             }
-        }
-       
+        }       
 
         public void SetCOASpecificDisplayInfo()
         {
             BusyIndicatorNotification(true, "Updating information based on selected preference");
 
-            PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator,3,4,6,false);
+            PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator,3,4,6, false);
             COASpecificDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(COASpecificInfo, out periodRecord, periodRecord, subGroups: null);
             PeriodRecord = periodRecord;
-            PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
+            PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, true);
 
             BusyIndicatorNotification();
         }
@@ -646,17 +642,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     COASpecificFilteredInfo.Remove(r);
                 }
-            COASpecificFilteredInfo = COASpecificFilteredInfo;
-            RaisePropertyChanged(() => this.COASpecificFilteredInfo);
+            //COASpecificFilteredInfo = COASpecificFilteredInfo;
+            //RaisePropertyChanged(() => this.COASpecificFilteredInfo);
             ComparisonSeries.Remove(a);
             AddToComboBoxSeries.Add(a.GadgetDesc);
-            
-            //COASpecificFilteredInfo = COASpecificFilteredInfo;     
-            //ChartEntityList.Remove(a);
-            //if (ChartEntityList.Count == 1)
-            //{
-            //    RetrievePricingData(ChartEntityList, RetrievePricingReferenceDataCallBackMethod_SecurityReference);
-            //}
+          
         }
 
         /// <summary>
@@ -678,6 +668,19 @@ namespace GreenField.Gadgets.ViewModels
                             entry.PeriodYear = null;
                             ComparisonSeries.Add(entry);              
             }
+
+           
+            List<COASpecificData> addItem = new List<COASpecificData>();
+
+           if(selectedCOASpecificGadgetNameInfo == null)
+               addItem = (COASpecificInfo.Where(t => t.GroupDescription == defaultGadgetDesc && t.Description == SelectedSeriesCB)).ToList();
+           else
+               addItem = (COASpecificInfo.Where(t => t.GroupDescription == selectedCOASpecificGadgetNameInfo && t.Description == SelectedSeriesCB)).ToList();
+            if (addItem != null)
+                foreach (COASpecificData r in addItem)
+                {
+                    COASpecificFilteredInfo.Add(r);
+                }
 
             AddToComboBoxSeries.Remove(SelectedSeriesCB);
             

@@ -24,14 +24,14 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
 
             //Update column headers and visibility
-            PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord();
+            PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(0, 3, 4, 6, false);
             PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, new PeriodColumnUpdateEventArg()
             {
                 PeriodColumnNamespace = typeof(ViewModelCOASpecific).FullName,
                 PeriodRecord = periodRecord,
                 PeriodColumnHeader = PeriodColumns.SetColumnHeaders(periodRecord),
-                PeriodIsYearly = true
-            });
+                PeriodIsYearly = true                
+            }, false);
 
             //Event Subcription - PeriodColumnUpdateEvent
             PeriodColumns.PeriodColumnUpdate += new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);

@@ -956,7 +956,7 @@ namespace GreenField.Web.Services
                     entry.DataSource = item.DataSource;
                     entry.Decimals = item.Decimals;
                     entry.Description = item.Description;
-                    entry.GridDesc = item.GridDesc;
+                    entry.GroupDescription = item.GridDesc;
                     entry.GridId = item.GridId;
                     entry.IsPercentage = item.IsPercentage;
                     entry.PeriodType = item.Period_Type;

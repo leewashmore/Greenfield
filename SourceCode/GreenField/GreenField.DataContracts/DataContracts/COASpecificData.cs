@@ -14,7 +14,7 @@ namespace GreenField.DataContracts
         public String ShowGrid { get; set; }
 
         [DataMember]
-        public String GridDesc { get; set; }
+        public String GroupDescription { get; set; }
 
         [DataMember]
         public Decimal? Amount { get; set; }
