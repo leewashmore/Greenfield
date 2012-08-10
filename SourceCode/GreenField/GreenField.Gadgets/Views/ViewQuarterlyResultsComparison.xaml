@@ -77,7 +77,7 @@
                                              ElementExporting="dgQuarterlyResults_ElementExporting"
                                              RowIndicatorVisibility="Collapsed"  
                                              ShowGroupPanel="False"
-                                             telerik:StyleManager.Theme="Metro" 
+                                             
                                              Visibility="Visible" 
                                              FontSize="7"
                                              ItemsSource="{Binding QuarterlyResultsInfo}"

@@ -24,19 +24,19 @@
 
             <Grid Grid.Row="0">
                 <StackPanel HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal">
-                <HyperlinkButton Content="Details" HorizontalAlignment="Right" Command="{Binding DetailsCommand}"/>
+                    <HyperlinkButton Content="Details" HorizontalAlignment="Right" Command="{Binding DetailsCommand}"/>
 
-            <!--button to export the grid to excel-->
-                <Button Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20"
+                    <!--button to export the grid to excel-->
+                    <Button Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20"
                     Name="btnExportExcel" VerticalAlignment="Center" Click="btnExportExcel_Click">
-                    <Button.Content>
-                        <Image Source="../Images/ExportExcel.png" />
-                    </Button.Content>
-                </Button>
-            </StackPanel>
-        </Grid>
-        
-        <Grid Grid.Row="1">
+                        <Button.Content>
+                            <Image Source="../Images/ExportExcel.png" />
+                        </Button.Content>
+                    </Button>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1">
                 <!--grid containing data for the gadget-->
                 <telerik:RadGridView Name="dgTopHoldings" 
                                      AutoGenerateColumns="False" 
@@ -45,7 +45,6 @@
                                      CanUserReorderColumns="False" 
                                      ElementExporting="dgTopHoldings_ElementExporting"
                                      CanUserInsertRows="False" 
-                                     telerik:StyleManager.Theme="Metro"
                                      CanUserDeleteRows="False" 
                                      IsReadOnly="True" 
                                      CanUserSortColumns="False" 
@@ -69,7 +68,9 @@
                         <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" DataMemberBinding="{Binding Ticker}" Width="auto" HeaderTextAlignment="Right" 
                                                     TextAlignment="Left" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}">
                             <telerik:GridViewDataColumn.Footer>
-                                <TextBlock Text="Top 10"/>
+                                <Border> 
+                                    <TextBlock Text="Top 10"/>
+                                </Border>
                             </telerik:GridViewDataColumn.Footer>
                         </telerik:GridViewDataColumn>
                         <telerik:GridViewDataColumn x:Name="dgcName" Header="" DataMemberBinding="{Binding Holding}" Width="*" HeaderTextAlignment="Right" 
@@ -102,7 +103,7 @@
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </Grid>
-    </Grid>
+        </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>
 

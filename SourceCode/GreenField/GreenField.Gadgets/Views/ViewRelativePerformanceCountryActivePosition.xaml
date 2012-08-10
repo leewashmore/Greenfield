@@ -36,7 +36,7 @@
                                  CanUserSortColumns="False" 
                                  ShowGroupFooters="False"
                                  RowIndicatorVisibility="Collapsed" 
-                                 telerik:StyleManager.Theme="Metro" 
+                                 
                                  ShowGroupPanel="False" 
                                  ShowColumnFooters="False" 
                                  ScrollMode="RealTime"

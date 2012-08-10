@@ -81,7 +81,7 @@
                                  CanUserDeleteRows="False" IsReadOnly="True"
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
-                                 telerik:StyleManager.Theme="Metro" Visibility="Visible" 
+                                 Visibility="Visible" 
                                  ElementExporting ="dgPerformanceGraph_ElementExporting"
                                  RowLoaded="dgPerformanceGadget_RowLoaded"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"

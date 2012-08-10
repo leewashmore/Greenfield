@@ -108,7 +108,7 @@
                                      CanUserSelect="True" 
                                      CanUserReorderColumns="False" 
                                      CanUserInsertRows="False" 
-                                     telerik:StyleManager.Theme="Metro" 
+                                     
                                      RowHeight="15"
                                      FontSize="7"
                                      SelectionMode="Single"

@@ -151,7 +151,7 @@
                                  ScrollMode="RealTime" AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" 
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                 UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" 
+                                 UseLayoutRounding="True" 
                                  ColumnWidth="*" IsFilteringAllowed="False" 
                                  RowStyle="{StaticResource GridViewRowStyle}"
                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 

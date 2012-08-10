@@ -34,7 +34,7 @@
                                  CanUserSelect="False" 
                                  CanUserReorderColumns="False" 
                                  CanUserInsertRows="False" 
-                                 telerik:StyleManager.Theme="Metro" 
+                                 
                                  SelectionMode="Single"
                                  CanUserDeleteRows="False" 
                                  IsReadOnly="True" 

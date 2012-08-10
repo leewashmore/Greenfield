@@ -106,7 +106,7 @@
                                          CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="ElementExportingEvent"
                                          CanUserSortColumns="True" ScrollMode="RealTime" 
                                          RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" 
-                                         UseLayoutRounding="True" telerik:StyleManager.Theme="Metro" FontSize="7" 
+                                         UseLayoutRounding="True" FontSize="7" 
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelBackground="#e4e5e5"

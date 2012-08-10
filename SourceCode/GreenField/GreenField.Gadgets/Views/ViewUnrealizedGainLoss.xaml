@@ -236,7 +236,7 @@
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                              AlternationCount="2"
                                              GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}"
-                                 telerik:StyleManager.Theme="Metro" 
+                                 
                                              Visibility="Visible" 
                                              FontSize="7"
                                              RowLoaded="dgUnrealizedGainLoss_RowLoaded"

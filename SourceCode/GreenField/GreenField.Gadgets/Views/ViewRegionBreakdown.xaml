@@ -62,7 +62,7 @@
                         <telerik:SeriesMapping>
                             <telerik:SeriesMapping.SeriesDefinition>
                                 <telerik:DoughnutSeriesDefinition ShowItemLabels="True" EmptyPointBehavior="Gap" ShowItemToolTips="True"
-                                                             LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}%" ItemToolTipFormat="#XCAT:#Y{n2}%(#X{n2}%)">
+                                                                  LegendDisplayMode="None" ItemLabelFormat="#XCAT:#Y{n2}%" ItemToolTipFormat="#XCAT:#Y{n2}%(#X{n2}%)">
                                     <telerik:DoughnutSeriesDefinition.InteractivitySettings>
                                         <telerik:InteractivitySettings HoverScope="Item"  SelectionScope="Item" SelectionMode="Single" />
                                     </telerik:DoughnutSeriesDefinition.InteractivitySettings>
@@ -88,7 +88,6 @@
                                          AlternationCount="2"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          ItemsSource="{Binding RegionBreakdownInfo}" 
-                                         telerik:StyleManager.Theme="Metro"
                                          CanUserSelect="False" 
                                          CanUserReorderColumns="True" 
                                          CanUserInsertRows="False" 

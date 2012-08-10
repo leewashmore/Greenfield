@@ -115,7 +115,7 @@
                                  CanUserSelect="False" 
                                  CanUserReorderColumns="False" 
                                  CanUserInsertRows="False" 
-                                 telerik:StyleManager.Theme="Metro" 
+                                 
                                  CanUserDeleteRows="False"
                                  IsReadOnly="True" 
                                  CanUserSortColumns="False" 

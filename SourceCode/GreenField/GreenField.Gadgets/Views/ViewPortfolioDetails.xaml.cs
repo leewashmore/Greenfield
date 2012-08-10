@@ -463,7 +463,6 @@ namespace GreenField.Gadgets.Views
                 DataContextPortfolioDetails.GroupingColumn = "No Grouping";
             }
             this.dgPortfolioDetails.GroupPanelItemStyle = this.Resources["GridViewGroupPanelItemStyle"] as Style;
-
         }
 
         /// <summary>
@@ -475,9 +474,13 @@ namespace GreenField.Gadgets.Views
         {
             MemberColumnFilterDescriptor filteredColumn = e.ColumnFilterDescriptor as MemberColumnFilterDescriptor;
             DataContextPortfolioDetails.FilterDescriptor = filteredColumn.Member;
-            //e.ColumnFilterDescriptor.Column.UniqueName;
         }
 
+        /// <summary>
+        /// Event after grid has applied filtering. calls method to re-weight the Portfolio, Benchmark & Active-Position %
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgPortfolioDetails_Filtered(object sender, Telerik.Windows.Controls.GridView.GridViewFilteredEventArgs e)
         {
             SetGroupedData();
@@ -514,7 +517,6 @@ namespace GreenField.Gadgets.Views
                 data.Ticker = item.Ticker;
                 collection.Add(data);
             }
-
             DataContextPortfolioDetails.GroupedFilteredPortfolioDetailsData = collection;
         }
 
