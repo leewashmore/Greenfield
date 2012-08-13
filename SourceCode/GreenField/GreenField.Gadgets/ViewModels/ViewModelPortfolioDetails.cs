@@ -358,6 +358,23 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Filter Unique Value
+        /// </summary>
+        private string _filterUniqueValue;
+        public string FilterUniqueValue
+        {
+            get
+            {
+                return _filterUniqueValue; 
+            }
+            set
+            {
+                _filterUniqueValue = value;
+                this.RaisePropertyChanged(() => this.FilterUniqueValue);
+            }
+        }
+        
 
         #endregion
 
