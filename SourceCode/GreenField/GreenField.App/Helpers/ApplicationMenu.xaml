@@ -1,0 +1,224 @@
+﻿<UserControl x:Class="GreenField.App.Helpers.ApplicationMenu"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <Grid x:Name="LayoutRoot" Background="White">
+        <telerik:RadPanelBar Name="pbMainMenu" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Visible">
+
+            <!--Markets SubMenu-->
+            <telerik:RadPanelBarItem Header="Markets" x:Name="pbItemMarkets" HorizontalAlignment="Stretch"
+                                     Background="#CBD4F1" FontFamily="Arial" FontSize="12" FontWeight="Bold">
+                <telerik:RadMenu x:Name="radMenuMarkets" ClickToOpen="False" Orientation="Vertical"  
+                                 VerticalAlignment="Top" HorizontalAlignment="Stretch"  Background="#dfe6f8" FontFamily="Arial"
+                                         FontSize="10" >
+
+                    <telerik:RadMenuItem x:Name="rmItemSnapshot" Header="Snapshot" Background="#dfe6f8" FontFamily="Arial"
+                                         FontSize="10" HorizontalAlignment="Stretch">
+                        <telerik:RadMenuItem x:Name="rmItemSummary" Header="Summary" HorizontalAlignment="Stretch" 
+                                                 Command="{Binding DashboardMarketsSnapshotSummaryCommand}"
+                                               Background="#dfe6f8" FontFamily="Arial"
+                                               FontSize="10"/>
+                        <telerik:RadMenuItem x:Name="rmItemmarketPerf" Header="Market Performance" HorizontalAlignment="Stretch"
+                                                 Command="{Binding DashboardMarketsSnapshotMarketPerformanceCommand}"
+                                               Background="#dfe6f8" FontFamily="Arial"
+                                               FontSize="10"/>
+                        <telerik:RadMenuItem x:Name="rmItemInternalVModelValuation" Header="Internal Vs Model Valuation" HorizontalAlignment="Stretch"
+                                                 Command="{Binding DashboardMarketsSnapshotInternalModelValuationCommand}"
+                                               Background="#dfe6f8" FontFamily="Arial"
+                                               FontSize="10"/>
+                    </telerik:RadMenuItem>
+                    <telerik:RadMenuItem Header="Macro-Economic" x:Name="rmItemMacroEconomic" Background="#dfe6f8" FontFamily="Arial"
+                                         FontSize="10">
+                        <telerik:RadMenuItem x:Name="rmItemEsMSummary" Header="EM Summary" 
+                                                 Command="{Binding DashboardMarketsMacroEconomicsEMSummaryCommand}"
+                                               Background="#dfe6f8" FontFamily="Arial"
+                                               FontSize="10"/>
+                        <telerik:RadMenuItem x:Name="rmItemCosuntrySummary" Header="Country Summary" 
+                                                 Command="{Binding DashboardMarketsMacroEconomicsCountrySummaryCommand}"
+                                               Background="#dfe6f8" FontFamily="Arial"
+                                               FontSize="10"/>
+                    </telerik:RadMenuItem>
+                    <telerik:RadMenuItem x:Name="rmItemCommodsities" Header="Commodities" Background="#dfe6f8" FontFamily="Arial"
+                                         FontSize="10">
+                        <telerik:RadMenuItem Header="Summary" x:Name="rmItesmCommoSummary" 
+                                                 Command="{Binding DashboardMarketsCommoditiesSummaryCommand}"
+                                               Background="#dfe6f8" FontFamily="Arial"
+                                               FontSize="10"/>
+                    </telerik:RadMenuItem>
+
+                </telerik:RadMenu>
+            </telerik:RadPanelBarItem>
+
+            <!--Portfolio SubMenu-->
+            <telerik:RadPanelBarItem Header="Portfolio" x:Name="pbItemPortfolio" Background="#CBD4F1" FontFamily="Arial" FontSize="12" FontWeight="Bold">
+                <telerik:RadMenu x:Name="radMenuPortfolio" ClickToOpen="False" Orientation="Vertical"  
+                             VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#dfe6f8" FontFamily="Arial"
+                                         FontSize="10">
+
+                    <telerik:RadMenuItem x:Name="rmItemPortfolioSnapshot" Header="Snapshot" Command="{Binding DashboardPortfolioSnapshotCommand}" />
+
+                    <telerik:RadMenuItem x:Name="rmItemHoldings" Header="Holdings" Command="{Binding DashboardPortfolioHoldingsCommand}" />
+
+                    <telerik:RadMenuItem x:Name="rmItemPerformance" Header="Performance">
+                        <telerik:RadMenuItem x:Name="rmItemPortfolioSummary" Header="Summary" 
+                                             Command="{Binding DashboardPortfolioPerformanceSummaryCommand}"
+                                               Background="#dfe6f8" FontFamily="Arial"
+                                               FontSize="10"/>
+                        <telerik:RadMenuItem x:Name="rmItemAttribution" Header="Attribution"  
+                                             Command="{Binding DashboardPortfolioPerformanceAttributionCommand}"
+                                               Background="#dfe6f8" FontFamily="Arial"
+                                               FontSize="10"/>
+                        <telerik:RadMenuItem x:Name="rmItemRelativePerformance" Header="Relative Performance" 
+                                             Command="{Binding DashboardPortfolioPerformanceRelativePerformanceCommand}"
+                                               Background="#dfe6f8" FontFamily="Arial"
+                                               FontSize="10"/>
+                    </telerik:RadMenuItem>
+
+                    <telerik:RadMenuItem Header="Benchmark" x:Name="rmItemBenchmark">
+                        <telerik:RadMenuItem x:Name="rmItemBenchmarkSummary" Header="Summary"
+                                             Command="{Binding DashboardPortfolioBenchmarkSummaryCommand}"
+                                               Background="#dfe6f8" FontFamily="Arial"
+                                               FontSize="10"/>
+                        <telerik:RadMenuItem x:Name="rmItemComposition" Header="Composition"
+                                             Command="{Binding DashboardPortfolioBenchmarkComponentsCommand}"
+                                               Background="#dfe6f8" FontFamily="Arial"
+                                               FontSize="10"/>
+                    </telerik:RadMenuItem>
+
+                    <telerik:RadMenuItem x:Name="rmItemModels" Header="Models">
+                        <telerik:RadMenuItem Header="Asset Allocation" x:Name="rmItemAssetAllocation"/>
+                        <telerik:RadMenuItem Header="Stock Selection" x:Name="rmItemStockSelection"/>
+                        <telerik:RadMenuItem Header="Bottom Up" x:Name="rmItemBottomUp"/>
+                        <telerik:RadMenuItem Header="Direct Overlay" x:Name="rmItemDirectOverlay"/>
+                    </telerik:RadMenuItem>
+                </telerik:RadMenu>
+            </telerik:RadPanelBarItem>
+
+            <!--Company SubMenu-->
+            <telerik:RadPanelBarItem Header="Company" x:Name="pbItemCompany" Background="#CBD4F1" FontFamily="Arial" FontSize="12" FontWeight="Bold">
+                <telerik:RadMenu x:Name="radMenuCompany" ClickToOpen="False" Orientation="Vertical"  
+                             VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#dfe6f8" FontFamily="Arial"
+                                         FontSize="10">
+
+                    <telerik:RadMenuItem x:Name="rmItemCompanySnapshot" Header="Snapshot">
+                        <telerik:RadMenuItem x:Name="rmItemCompanySummary" Header="Summary" Command="{Binding DashboardCompanySnapshotSummaryCommand}" />
+                        <telerik:RadMenuItem x:Name="rmItemCompanyProfile" Header="Company Profile"/>
+                        <telerik:RadMenuItem x:Name="rmItemTearSheet" Header="Tear Sheet"/>
+                    </telerik:RadMenuItem>
+
+                    <telerik:RadMenuItem x:Name="rmItemFinancials" Header="Financials">
+                        <telerik:RadMenuItem Header="Summary" x:Name="rmItemFinancialsSummary"
+                                             Command="{Binding DashboardCompanyFinancialsSummaryCommand}"/>
+                        <telerik:RadMenuItem Header="Income Statement" x:Name="rmItemIncomeStatement"
+                                             Command="{Binding DashboardCompanyFinancialsIncomeStatementCommand}"/>
+                        <telerik:RadMenuItem Header="Balance Sheet" x:Name="rmItemBalanceSheet"
+                                             Command="{Binding DashboardCompanyFinancialsBalanceSheetCommand}"/>
+                        <telerik:RadMenuItem Header="Cash Flow" x:Name="rmItemCashFlow"
+                                             Command="{Binding DashboardCompanyFinancialsCashFlowCommand}"/>
+                        <telerik:RadMenuItem Header="FinStat" x:Name="rmItemFinStat"/>
+                        <telerik:RadMenuItem Header="Peer Comparison" x:Name="rmItemPeerComparison"/>
+                    </telerik:RadMenuItem>
+
+
+                    <telerik:RadMenuItem x:Name="rmItemEstimates" Header="Estimates">
+                        <telerik:RadMenuItem x:Name="rmItemConsensus" Header="Consensus"
+                                             Command="{Binding DashboardCompanyEstimatesConsensusCommand}"/>
+                        <telerik:RadMenuItem x:Name="rmItemDetailed" Header="Detailed"
+                                             Command="{Binding DashboardCompanyEstimatesDetailedCommand}"/>
+                        <telerik:RadMenuItem x:Name="rmItemComparison" Header="Comparison"/>
+                    </telerik:RadMenuItem>
+
+                    <telerik:RadMenuItem Header="Valuation" x:Name="rmItemValuation">
+                        <telerik:RadMenuItem x:Name="rmItemFairValue" Header="Fair Value"/>
+                        <telerik:RadMenuItem x:Name="rmItemDCF" Header="Discounted Cash Flows"/>
+                    </telerik:RadMenuItem>
+
+                    <telerik:RadMenuItem x:Name="rmItemDocuments" Header="Documents"/>
+
+                    <telerik:RadMenuItem x:Name="rmItemCharting" Header="Charting">
+                        <telerik:RadMenuItem Header="Price/Comparison" x:Name="rmItemPriceComparison"
+                                             Command="{Binding DashboardCompanyChartingClosingPriceCommand}"/>
+                        <telerik:RadMenuItem Header="Unrealised Gain/Loss" x:Name="rmItemUnrealisedGainLoss"
+                                             Command="{Binding DashboardCompanyChartingUnrealizedGainCommand}"/>
+                        <telerik:RadMenuItem Header="Context" x:Name="rmItemContext"
+                                             Command="{Binding DashboardCompanyChartingContextCommand}"/>
+                        <telerik:RadMenuItem Header="Valuation" x:Name="rmItemChartingValuation"
+                                             Command="{Binding DashboardCompanyChartingValuationCommand}"/>
+                    </telerik:RadMenuItem>
+
+                    <telerik:RadMenuItem Header="Corporate Governance" x:Name="rmItemCorporateGovernance">
+                        <telerik:RadMenuItem x:Name="rmItemQuestionnaire" Header="Questionnaire"/>
+                        <telerik:RadMenuItem x:Name="rmItemReport" Header="Report"/>
+                    </telerik:RadMenuItem>
+
+                </telerik:RadMenu>
+            </telerik:RadPanelBarItem>
+
+            <!--Screening SubMenu-->
+            <telerik:RadPanelBarItem Header="Screening" x:Name="pbItemScreening" Background="#CBD4F1" FontFamily="Arial" FontSize="12" FontWeight="Bold">
+                <telerik:RadMenu x:Name="radMenuScreening" ClickToOpen="False" Orientation="Vertical"  
+                             VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#dfe6f8" FontFamily="Arial"
+                                         FontSize="10">
+                    <telerik:RadMenuItem x:Name="rmItemStock" Header="Stock"/>
+                    <telerik:RadMenuItem x:Name="rmItemQuarterlyComparison" Header="Quarterly Comparison"
+                                         Command="{Binding DashboardQuarterlyResultsComparisonCommand}"/>
+                </telerik:RadMenu>
+            </telerik:RadPanelBarItem>
+
+            <!--InvestmentCommittee SubMenu-->
+            <telerik:RadPanelBarItem Header="Investment Committee" x:Name="pbItemInvestmentCommittee" Background="#CBD4F1" FontFamily="Arial" FontSize="12" FontWeight="Bold">
+                <telerik:RadMenu x:Name="radMenuInvestmentCommittee" ClickToOpen="False" Orientation="Vertical"  
+                                 VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#dfe6f8" FontFamily="Arial"
+                                         FontSize="10">
+                    <telerik:RadMenuItem x:Name="rmItemCreateEdit" Header="Create/Edit"/>
+                    <telerik:RadMenuItem x:Name="rmItemVote" Header="Vote"/>
+                    <telerik:RadMenuItem x:Name="rmItemPreMeetingReport" Header="Pre-Meeting Report"/>
+                    <telerik:RadMenuItem x:Name="rmItemMeetingMinutes" Header="Meeting Minutes"/>
+                    <telerik:RadMenuItem x:Name="rmItemSummaryReport" Header="Summary Report"/>
+                    <telerik:RadMenuItem x:Name="rmItemMetricsReport" Header="Metrics Report"/>
+                </telerik:RadMenu>
+            </telerik:RadPanelBarItem>
+
+            <!--Admin SubMenu-->
+            <telerik:RadPanelBarItem Header="Admin" x:Name="pbItemAdmin" Background="#CBD4F1" FontFamily="Arial" FontSize="12" FontWeight="Bold">
+                <telerik:RadMenu x:Name="radMenuAdmin" ClickToOpen="False" Orientation="Vertical"  
+                             VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#dfe6f8" FontFamily="Arial"
+                                         FontSize="10">
+                    <telerik:RadMenuItem x:Name="rmItemInvestmentCommittee" Header="Investment Committee">
+                        <telerik:RadMenuItem x:Name="rmItemViewAgenda" Header="View Agenda"/>
+                        <telerik:RadMenuItem x:Name="rmItemEditDate" Header="Edit Date"/>
+                        <telerik:RadMenuItem x:Name="rmItemMeetingDetails" Header="Meeting Details"/>
+                    </telerik:RadMenuItem>
+                    <telerik:RadMenuItem x:Name="rmItemBrokerResearch" Header="Broker Research"/>
+                </telerik:RadMenu>
+            </telerik:RadPanelBarItem>
+
+            <!--Gadgets SubMenu-->
+            <telerik:RadPanelBarItem Header="Gadgets" x:Name="pbItemGadgets" Background="#CBD4F1" FontFamily="Arial" FontSize="12" FontWeight="Bold">
+                <telerik:RadMenu x:Name="radMenuGadgets" ClickToOpen="False" Orientation="Vertical"  
+                             VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#dfe6f8" FontFamily="Arial"
+                                         FontSize="10">
+                </telerik:RadMenu>
+            </telerik:RadPanelBarItem>
+
+            <!--Others SubMenu-->
+            <telerik:RadPanelBarItem Header="Others" x:Name="pbItemOthers" Background="#CBD4F1" FontFamily="Arial" FontSize="12" FontWeight="Bold">
+                <telerik:RadMenu x:Name="radMenuOthers" ClickToOpen="False" Orientation="Vertical"  
+                             VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#dfe6f8" FontFamily="Arial"
+                                         FontSize="10">
+                    <telerik:RadMenuItem Header="User Management"  Command="{Binding UserManagementCommand}" />
+                    <telerik:RadMenuItem  Header="Role Management" Command="{Binding RoleManagementCommand}" />
+
+                </telerik:RadMenu>
+            </telerik:RadPanelBarItem>
+
+        </telerik:RadPanelBar>
+
+    </Grid>
+
+</UserControl>

@@ -139,6 +139,9 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Helpers\ApplicationMenu.xaml.cs">
+      <DependentUpon>ApplicationMenu.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\DataItem.cs" />
     <Compile Include="Helpers\FlattenGroupConverter.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
@@ -164,6 +167,7 @@
     <Content Include="..\GreenField.ServiceCaller\ServiceReferences.ClientConfig">
       <Link>ServiceReferences.ClientConfig</Link>
     </Content>
+    <Resource Include="Images\AIMS_Logo.jpg" />
     <Resource Include="Images\TopHoldings.png" />
     <Resource Include="Images\IndexConstituents.png" />
     <Resource Include="Images\Breakdown.png" />
@@ -213,6 +217,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Assets\Styles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Helpers\ApplicationMenu.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

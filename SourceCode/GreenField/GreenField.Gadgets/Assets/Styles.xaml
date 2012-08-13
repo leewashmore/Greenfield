@@ -11,6 +11,12 @@
     xmlns:converter="clr-namespace:GreenField.Gadgets.Helpers.Converters"
     mc:Ignorable="d">
 
+    
+
+
+
+
+
     <!--Grid Styles-->
     <!--###########-->
 
@@ -38,7 +44,7 @@
     <SolidColorBrush x:Key="GridView_GridLinesItemBorder" Color="White"/>
     <SolidColorBrush x:Key="GridView_IndentCellBackground" Color="White"/>
 
-    
+
     <!--GridViewHeaderCellStyle-->
     <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellStyleOld">
         <Setter Property="Background" Value="#e4e5e5" />
@@ -61,7 +67,7 @@
         <Setter Property="FontSize" Value="7"/>
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>-->
-    
+
     <!--GridViewCellStyle-->
     <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
         <Setter Property="Height" Value="15"/>
@@ -835,16 +841,16 @@
         <Setter Property="FontFamily" Value="Arial"/>
         <Setter Property="FontSize" Value="7"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        
+
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        
+
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="Padding" Value="5,0,3,0"/>
         <Setter Property="Foreground" Value="{StaticResource GridView_HeaderForeground}"/>
     </Style>
-     
+
 
 
     <!--#####################################################################################################################-->
