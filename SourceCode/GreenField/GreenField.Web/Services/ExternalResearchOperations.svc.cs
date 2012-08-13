@@ -665,148 +665,31 @@ namespace GreenField.Web.Services
                 int? securityId = svcData.SECURITY_ID;
 
                 if (chartTitle == "EV/EBITDA")
-                    resultDB_EV_EBITDA = null;
-                 //resultDB_EV_EBITDA = extResearch.ExecuteStoreQuery<GetEV_EBITDAData_Result>("exec Get_EV_EBITDA @SecurityID={0},@issuerId={1},@chartTitle={2}", "157240", "8233223", chartTitle).ToList();//, Convert.ToString(data.SECURITY_ID)).ToList();
-                else
-                    ////Retrieving data from Period Financials table
-                    resultDB = extResearch.ExecuteStoreQuery<GetPRevenueData_Result>("exec Get_PRevenue @SecurityID={0},@issuerId={1},@chartTitle={2}", "157240", "8233223", chartTitle).ToList();//, Convert.ToString(data.SECURITY_ID)).ToList();
-
-                //Comparer to fetch only unique rows
-                if (resultDB != null && resultDB.Count > 1)
                 {
-                    IEqualityComparer<GetPRevenueData_Result> comparer = new HistoricalValuationCompararer();
-                    resultDB = resultDB.Distinct(comparer).ToList();
-                }
-                 if(resultDB_EV_EBITDA != null && resultDB_EV_EBITDA.Count > 1)
-                 {
-                    IEqualityComparer<GetEV_EBITDAData_Result> comparerEV_EBITDA = new HistoricalValEV_EBITDACompararer();
-                    resultDB_EV_EBITDA = resultDB_EV_EBITDA.Distinct(comparerEV_EBITDA).ToList();
-                 }
-                #region Dummy Data
-                //TODO SEEMA:DELETE DUMMY DATA START
-                //GetPRevenueData_Result dummyData = null;
-                //resultDB = null;
-                //resultDB = new List<GetPRevenueData_Result>();
-
-                //dummyData = new GetPRevenueData_Result();
-                //dummyData.PeriodLabel = "Q1 2011";
-                //dummyData.Amount = 250;
-                //dummyData.USDPrice = 20;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result();
-                //dummyData.PeriodLabel = "Q2 2011";
-                //dummyData.Amount = 300;
-                //dummyData.USDPrice = 25;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result(); 
-                //dummyData.PeriodLabel = "Q3 2011";
-                //dummyData.Amount = 360;
-                //dummyData.USDPrice = 30;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result(); 
-                //dummyData.PeriodLabel = "Q4 2011";
-                //dummyData.Amount = 450;
-                //dummyData.USDPrice = 28;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result(); 
-                //dummyData.PeriodLabel = "Q2 2012";
-                //dummyData.Amount = 225;
-                //dummyData.USDPrice = 21;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result(); 
-                //dummyData.PeriodLabel = "Q3 2012";
-                //dummyData.Amount = 200;
-                //dummyData.USDPrice = 18;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-
-                //dummyData = new GetPRevenueData_Result(); 
-                //dummyData.PeriodLabel = "Q4 2012";
-                //dummyData.Amount = 200;
-                //dummyData.USDPrice = 17;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result(); 
-                //dummyData.PeriodLabel = "Q1 2013";
-                //dummyData.Amount = 200;
-                //dummyData.USDPrice = 22;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result(); 
-                //dummyData.PeriodLabel = "Q2 2013";
-                //dummyData.Amount = null;
-                //dummyData.USDPrice = 22;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result(); 
-                //dummyData.PeriodLabel = "Q3 2013";
-                //dummyData.Amount = 240;
-                //dummyData.USDPrice = 22;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result(); 
-                //dummyData.PeriodLabel = "Q4 2013";
-                //dummyData.Amount = 310;
-                //dummyData.USDPrice = 22;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result(); 
-                //dummyData.PeriodLabel = "Q1 2014";
-                //dummyData.Amount = 330;
-                //dummyData.USDPrice = 22;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result(); dummyData.PeriodLabel = "Q2 2014";
-                //dummyData.Amount = 400;
-                //dummyData.USDPrice = 22;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                //dummyData = new GetPRevenueData_Result();
-                //dummyData.PeriodLabel = "Q3 2014";
-                //dummyData.Amount = 425;
-                //dummyData.USDPrice = 22;
-                //dummyData.Shares_Outstanding = 100;
-                //resultDB.Add(dummyData);
-
-                ////DUMMY DATA END
-
-                #endregion
-
-                for (int _index = 0; _index < resultDB.Count; _index++)
-                {
-                    PRevenueData data = new PRevenueData();
-                    decimal? sumAmount = null;
-                    decimal? sumNetDebt = null;
-                    decimal? sumEBITDA = null;
-                    data.PeriodLabel = resultDB[_index].PeriodLabel;
-
-                    if ((resultDB[_index].USDPrice == null || resultDB[_index].USDPrice == 0) || (resultDB[_index].Shares_Outstanding == null || resultDB[_index].Shares_Outstanding == 0))
+                    resultDB_EV_EBITDA = extResearch.ExecuteStoreQuery<GetEV_EBITDAData_Result>("exec Get_EV_EBITDA @SecurityID={0},@issuerId={1},@chartTitle={2}", Convert.ToString(svcData.SECURITY_ID), svcData.ISSUER_ID, chartTitle).ToList();
+                    //resultDB_EV_EBITDA = extResearch.ExecuteStoreQuery<GetEV_EBITDAData_Result>("exec Get_EV_EBITDA @SecurityID={0},@issuerId={1},@chartTitle={2}", "157240", "8233223", chartTitle).ToList();
+                    //Comparer to fetch only unique rows
+                    if (resultDB_EV_EBITDA != null && resultDB_EV_EBITDA.Count > 1)
                     {
-                        data.PRevenueVal = null;
-
+                        IEqualityComparer<GetEV_EBITDAData_Result> comparerEV_EBITDA = new HistoricalValEV_EBITDACompararer();
+                        resultDB_EV_EBITDA = resultDB_EV_EBITDA.Distinct(comparerEV_EBITDA).ToList();
                     }
-                    else
+
+                    for (int _index = 0; _index < resultDB_EV_EBITDA.Count; _index++)
                     {
-                        if (chartTitle == "EV/EBITDA")
+                        PRevenueData data = new PRevenueData();
+                        decimal? sumAmount = null;
+                        decimal? sumNetDebt = null;
+                        decimal? sumEBITDA = null;
+                        data.PeriodLabel = resultDB_EV_EBITDA[_index].PeriodLabel;
+
+                        if ((resultDB_EV_EBITDA[_index].USDPrice == null || resultDB_EV_EBITDA[_index].USDPrice == 0) || (resultDB_EV_EBITDA[_index].Shares_Outstanding == null || resultDB_EV_EBITDA[_index].Shares_Outstanding == 0))
                         {
+                            data.PRevenueVal = null;
+                        }
+                        else
+                        {
+                            //Sum of Amount if 4 quarters exist
                             if (_index + 1 < resultDB_EV_EBITDA.Count && _index + 2 < resultDB_EV_EBITDA.Count && _index + 3 < resultDB_EV_EBITDA.Count)
                             {
                                 if ((resultDB_EV_EBITDA[_index].NetDebt != null && resultDB_EV_EBITDA[_index + 1].NetDebt != null && resultDB_EV_EBITDA[_index + 2].NetDebt != null && resultDB_EV_EBITDA[_index + 3].NetDebt != null)
@@ -833,7 +716,31 @@ namespace GreenField.Web.Services
                                     data.PRevenueVal = EV / EBITDA;
                                 }
                             }
-                        }
+                        }//end - if
+                        result.Add(data);
+                    }//end for loop
+                }
+                else
+                {
+                    resultDB = extResearch.ExecuteStoreQuery<GetPRevenueData_Result>("exec Get_PRevenue @SecurityID={0},@issuerId={1},@chartTitle={2}", Convert.ToString(svcData.SECURITY_ID), svcData.ISSUER_ID, chartTitle).ToList();//, Convert.ToString(data.SECURITY_ID)).ToList();
+                    //Comparer to fetch only unique rows
+                    if (resultDB != null && resultDB.Count > 1)
+                    {
+                        IEqualityComparer<GetPRevenueData_Result> comparer = new HistoricalValuationCompararer();
+                        resultDB = resultDB.Distinct(comparer).ToList();
+                    }               
+                    for (int _index = 0; _index < resultDB.Count; _index++)
+                    {
+                        PRevenueData data = new PRevenueData();
+                        decimal? sumAmount = null;
+                        decimal? sumNetDebt = null;
+                        decimal? sumEBITDA = null;
+                        data.PeriodLabel = resultDB[_index].PeriodLabel;
+
+                        if ((resultDB[_index].USDPrice == null || resultDB[_index].USDPrice == 0) || (resultDB[_index].Shares_Outstanding == null || resultDB[_index].Shares_Outstanding == 0))
+                        {
+                            data.PRevenueVal = null;
+                        }                        
                         else
                         {
                             //Sum of Amount if 4 quarters exist
@@ -855,11 +762,13 @@ namespace GreenField.Web.Services
                                     data.PRevenueVal = sumAmount / (resultDB[_index].USDPrice * resultDB[_index].Shares_Outstanding);
                                 else
                                     data.PRevenueVal = (resultDB[_index].USDPrice * resultDB[_index].Shares_Outstanding) / sumAmount;
-                            }
+                            }                           
+                            
                         }
-                    }
-                    result.Add(data);
-                }
+                        result.Add(data);
+                    }//end for loop
+                   
+                }//end - if
 
                 result = HistoricalValuationCalculations.CalculateAvg(result);
                 result = HistoricalValuationCalculations.CalculateStdDev(result);

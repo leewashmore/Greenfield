@@ -550,8 +550,6 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.COASpecificData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.COASpecificData))]
     [System.Runtime.Serialization.DataContractAttribute(Name="GF_SECURITY_BASEVIEW", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DimensionEntitiesService")]
     public partial class GF_SECURITY_BASEVIEW : object, System.ComponentModel.INotifyPropertyChanged {
         
