@@ -179,8 +179,8 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!--Data Source Selector-->
-                                <TextBlock Text="Data Source" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
-                                <telerik:RadComboBox Grid.Row="0" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding DataSourceInfo}"
+                            <TextBlock  Grid.Row="2" Grid.Column="0" Text="Data Source" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
+                                <telerik:RadComboBox Grid.Row="2" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding DataSourceInfo}"
                                                  VerticalContentAlignment="Center" SelectedItem="{Binding SelectedDataSource, Mode=TwoWay}"
                                                  Margin="2,2,2,0" FontFamily="Arial" FontSize="7">
                                     <telerik:RadComboBox.ItemTemplate>
@@ -190,22 +190,17 @@
                                     </telerik:RadComboBox.ItemTemplate>
                                 </telerik:RadComboBox>
 
-                                <!--Period Type Selector-->
-                                <!--<TextBlock Grid.Row="1" Grid.Column="0" Text="Period Type" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
-                                <telerik:RadComboBox Grid.Row="1" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding PeriodTypeInfo}"
-                                                 VerticalContentAlignment="Center" SelectedItem="{Binding SelectedPeriodType, Mode=TwoWay}" 
-                                                 Margin="2,2,2,0" FontFamily="Arial" FontSize="7">
-                                    <telerik:RadComboBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
-                                        </DataTemplate>
-                                    </telerik:RadComboBox.ItemTemplate>
-                                </telerik:RadComboBox>-->
-
-                            <!--<TextBlock  Grid.Row="4" Grid.Column="0" Text="Select the Gadget" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" HorizontalAlignment="Center" />
-                            <telerik:RadComboBox   Grid.Row="4" Grid.Column="1"  MinHeight="15" Height="15" ItemsSource="{Binding COASpecificGadgetNameInfo}"
+                            <!--<TextBlock  Grid.Column="0" Text="Select the Gadget" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" HorizontalAlignment="Center" />
+                            <telerik:RadComboBox   Grid.Column="1"  MinHeight="15" Height="15" ItemsSource="{Binding COASpecificGadgetNameInfo}"
                                                  HorizontalAlignment="Center" SelectedValue="{Binding SelectedCOASpecificGadgetNameInfo, Mode=TwoWay}"
-                                                FontFamily="Arial" FontSize="7"/>-->
+                                                FontFamily="Arial" FontSize="7" Width="120"/>-->
+
+
+
+                            <TextBlock  Grid.Row="0" Grid.Column="0" Text="Select the Gadget" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" Name="txtGadgetName" />
+                            <telerik:RadComboBox   Grid.Row="0" Grid.Column="1"  MinHeight="15" Height="15" ItemsSource="{Binding COASpecificGadgetNameInfo}"
+                                                 HorizontalAlignment="Center" SelectedValue="{Binding SelectedCOASpecificGadgetNameInfo, Mode=TwoWay}"
+                                                FontFamily="Arial" FontSize="7" Name="cbGadgetName" Width="96" />
 
                             <!--Fiscal Type Selector-->
                                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Fiscal Type" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
@@ -227,10 +222,10 @@
 
                             <Grid Grid.Row="4" Margin="0,2,0,0">
                                 <TextBlock Grid.Column="0" Text="Add to Chart" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                                   Visibility="{Binding AddToChartVisibility, Mode=TwoWay}"/>
+                                   Name="txtADD"/>
                             </Grid>
 
-                            <Grid Grid.Row="5" Margin="0,2,2,0" Visibility="{Binding AddToChartVisibility, Mode=TwoWay}">
+                            <Grid Grid.Row="5" Margin="0,2,2,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
@@ -257,7 +252,7 @@
                                         </ItemsPanelTemplate>
                                     </telerik:RadComboBox.ItemsPanel>
                                 </telerik:RadComboBox>
-                                <Button Grid.Column="1"  HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
+                                <Button Grid.Column="1" HorizontalAlignment="Right" Name="btnAddToChart" VerticalAlignment="Top" Margin="5,0,0,0"
                                   Width="20" Height="20" Background="White" Command="{Binding AddCommand}">
                                     <Image Source="../Images/AddToChart.png"/>
                                 </Button>
@@ -266,7 +261,7 @@
                             <!--List of Comparison entities-->
                             <Grid Grid.Row="6">
 
-                                <ItemsControl  HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}" >
+                                <ItemsControl  HorizontalAlignment="Stretch" VerticalAlignment="Top" ItemsSource="{Binding ComparisonSeries}"  Name="itemDel">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
                                             <Border BorderBrush="Gray" BorderThickness="1" CornerRadius="2" Height="15" Margin="0,2,0,0">
@@ -276,12 +271,12 @@
                                                         <ColumnDefinition Width="Auto"/>
                                                     </Grid.ColumnDefinitions>
                                                     <TextBlock Grid.Column="0" FontSize="7" FontFamily="Arial"  Text="{Binding GadgetDesc, Mode=TwoWay}" 
-                                                       HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="2,0,0,0" />
+                                                       HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="2,0,0,0" Name="txtDelete" />
                                                     <telerik:RadButton Background="White" Grid.Column="1" Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteCommand}" 
                                                                CommandParameter="{Binding}"
                                                                 Width="20" HorizontalAlignment="Right"
-                                                               VerticalAlignment="Stretch" Height="8" Margin="0.5,0.5,2,0.5">
-                                                        <TextBlock Text="X" FontFamily="Arial" FontSize="6" FontWeight="Bold"
+                                                               VerticalAlignment="Stretch" Height="8" Margin="0.5,0.5,2,0.5" Name="btnDelete">
+                                                        <TextBlock Name="txtCross" Text="X" FontFamily="Arial" FontSize="6" FontWeight="Bold"
                                                            HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gray" />
                                                     </telerik:RadButton>
                                                 </Grid>
@@ -308,19 +303,33 @@
                 <!--Grid-->
                 <Grid Grid.Column="1">
                 <Grid x:Name="grdRadGridView" >
-                    <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" BusyContent="{Binding BusyIndicatorContent}"
-                                      IsBusy="{Binding BusyIndicatorIsBusy}" DisplayAfter="0" FontFamily="Arial" FontSize="7">
+                    <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" FontFamily="Arial" FontSize="7">
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                            <telerik:RadGridView Name="dgCOASpecific" AutoGenerateColumns="False"
-                                     CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
-                                     CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
-                                     RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                     FontFamily="Arial" FontSize="7" GroupPanelBackground="#e4e5e5" CanUserResizeColumns="False"                                     
-                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" AlternationCount="2" AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
-                                     RowStyle="{StaticResource GridViewRowStyle}"
-                                     ItemsSource="{Binding COASpecificDisplayInfo}"
-                                     GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
+                            <telerik:RadGridView Name="dgCOASpecific" 
+                                                 AutoGenerateColumns="False"
+                                                 CanUserSelect="False" 
+                                                 CanUserReorderColumns="False" 
+                                                 CanUserInsertRows="False" 
+                                                 telerik:StyleManager.Theme="Metro"
+                                                 CanUserDeleteRows="False" 
+                                                 IsReadOnly="True" 
+                                                 CanUserSortColumns="False" 
+                                                 ScrollMode="Deferred" 
+                                                 RowIndicatorVisibility="Collapsed" 
+                                                 ShowGroupPanel="False" 
+                                                 UseLayoutRounding="True"
+                                                 FontFamily="Arial" 
+                                                 FontSize="7" 
+                                                 AutoExpandGroups="True"
+                                                 GroupPanelBackground="#e4e5e5" 
+                                                 CanUserResizeColumns="False"                                     
+                                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
+                                                 AlternationCount="2" 
+                                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                                 GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                                 RowStyle="{StaticResource GridViewRowStyle}"
+                                                 ItemsSource="{Binding COASpecificDisplayInfo}"
+                                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
                                 <telerik:RadGridView.Columns>
                                     <telerik:GridViewDataColumn x:Name="dgvcDataType" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="200"/>
                                     <telerik:GridViewDataColumn x:Name="dgcLeftClick" HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}" IsSortable="False" IsFilterable="False"/>
@@ -345,19 +354,15 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                
                     <Grid Grid.Row="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>                      
-                        <TextBlock  Grid.Column="0" Text="Select the Gadget" FontFamily="Arial" FontSize="7" Margin="100,2,0,0" HorizontalAlignment="Center" />
-                        <telerik:RadComboBox   Grid.Column="1"  MinHeight="15" Height="15" ItemsSource="{Binding COASpecificGadgetNameInfo}"
-                                                 HorizontalAlignment="Center" SelectedValue="{Binding SelectedCOASpecificGadgetNameInfo, Mode=TwoWay}"
-                                                FontFamily="Arial" FontSize="7" Width="120"/>
-                    </Grid>
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="{Binding SelectedCOASpecificGadgetNameInfo}" FontSize="11" FontWeight="Bold" FontFamily="Arial"/>                   
+                </StackPanel>
+            </Grid>
+
                     <Grid Grid.Row="1">
-                        <telerik:RadBusyIndicator x:Name="busyIndicatorChart" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" BusyContent="{Binding BusyIndicatorContent}"
-                                      IsBusy="{Binding BusyIndicatorIsBusy}">
+                        <telerik:RadBusyIndicator x:Name="busyIndicatorChart" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                             <telerik:RadChart x:Name="chCOASpecific" Visibility="Visible" telerik:StyleManager.Theme="Metro"
                                       ItemsSource="{Binding COASpecificFilteredInfo}">                                

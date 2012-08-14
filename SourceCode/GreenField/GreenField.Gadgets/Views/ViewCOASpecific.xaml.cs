@@ -33,11 +33,20 @@ namespace GreenField.Gadgets.Views
                 PeriodIsYearly = true                
             }, false);
 
+            dataContextSource.coaSpecificDataLoadedEvent +=
+          new DataRetrievalProgressIndicatorEventHandler(dataContextSource_coaSpecificDataLoadedEvent);
+
             //Event Subcription - PeriodColumnUpdateEvent
             PeriodColumns.PeriodColumnUpdate += new PeriodColumnUpdateEvent(PeriodColumns_PeriodColumnUpdate);
             this.grdRadChart.Visibility = Visibility.Collapsed;
             this.grdRadGridView.Visibility = Visibility.Visible;
-           
+            this.txtADD.Visibility = Visibility.Collapsed;
+            this.cmbAddSeries.Visibility = Visibility.Collapsed;
+            this.btnAddToChart.Visibility = Visibility.Collapsed;
+            this.itemDel.Visibility = Visibility.Collapsed;
+            this.txtGadgetName.Visibility = Visibility.Collapsed;
+            this.cbGadgetName.Visibility = Visibility.Collapsed;
+
         }       
 
         #region Properties
@@ -141,28 +150,56 @@ namespace GreenField.Gadgets.Views
         private void btnFlip_Click(object sender, RoutedEventArgs e)
         {
             if (this.grdRadGridView.Visibility == Visibility.Visible)
+            {
                 Flipper.FlipItem(this.grdRadGridView, this.grdRadChart);
+            }
             else
-                Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
+            Flipper.FlipItem(this.grdRadChart, this.grdRadGridView);
+
+            if (this.grdRadGridView.Visibility == Visibility.Visible)
+            {
+                this.txtADD.Visibility = Visibility.Visible;
+                this.cmbAddSeries.Visibility = Visibility.Visible;
+                this.btnAddToChart.Visibility = Visibility.Visible;
+                this.itemDel.Visibility = Visibility.Visible;
+                this.txtGadgetName.Visibility = Visibility.Visible;
+                this.cbGadgetName.Visibility = Visibility.Visible;
+            }
+
+            else
+            {
+                this.txtADD.Visibility = Visibility.Collapsed;
+                this.cmbAddSeries.Visibility = Visibility.Collapsed;
+                this.btnAddToChart.Visibility = Visibility.Collapsed;
+                this.itemDel.Visibility = Visibility.Collapsed;
+                this.txtGadgetName.Visibility = Visibility.Collapsed;
+                this.cbGadgetName.Visibility = Visibility.Collapsed;
+            
+            }
+            
+            
+
         }
 
-        ///// <summary>
-        ///// Data Retrieval Indicator
-        ///// </summary>
-        ///// <param name="e"></param>
-        //void dataContextSource_performanceGraphDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
-        //{
-        //    if (e.ShowBusy)
-        //    {
-        //        this.busyIndicatorChart.IsBusy = true;
-        //        this.busyIndicatorGrid.IsBusy = true;
-        //    }
-        //    else
-        //    {
-        //        this.busyIndicatorChart.IsBusy = false;
-        //        this.busyIndicatorGrid.IsBusy = false;
-        //    }
-        //}
+     
+
+        /// <summary>
+        /// Data Retrieval Indicator
+        /// </summary>
+        /// <param name="e"></param>
+        void dataContextSource_coaSpecificDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+            {
+                this.busyIndicatorChart.IsBusy = true;
+                this.busyIndicatorGrid.IsBusy = true;
+            }
+            else
+            {
+                this.busyIndicatorChart.IsBusy = false;
+                this.busyIndicatorGrid.IsBusy = false;
+            }
+        }
 
 
 
