@@ -25,6 +25,8 @@ namespace GreenField.Common
 {
     public class RelativePerformanceGridCountrySectorClickEvent : CompositePresentationEvent<RelativePerformanceGridCellData> { }
 
+    public class ToolboxUpdateEvent : CompositePresentationEvent<DashboardCategoryType> { }
+
     public class RelativePerformanceGridClickEvent : CompositePresentationEvent<RelativePerformanceGridCellData> { }
 
     public class DashboardGadgetParamFetchEvent : CompositePresentationEvent<DashboardGadgetParam> { }

@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="750"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
     xmlns:my="clr-namespace:GreenField.Common;assembly=GreenField.Common">
 
@@ -15,217 +15,239 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="25"/>
-                    <RowDefinition Height="25"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="25"/>
-                    <RowDefinition Height="25"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!--Header-->
-                <TextBlock Grid.Row="0"
-                           Text="Investment Commitee (IC) Presentation"
-                           FontWeight="Bold"
-                           HorizontalAlignment="Center"
-                           VerticalAlignment="Center"/>
+            
 
                 <!-- Presentation Details -->
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
-                            <TextBlock Text="Presenter : "
-                                   Visibility="{Binding PresenterSelectionVisibility}"/>
-                            <TextBlock Text="{Binding PresentationInfo.Presenter}"
-                                   FontStyle="Italic" FontWeight="Bold"
-                                   Visibility="{Binding PresenterSelectionVisibility}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center">
+                        
                             <TextBlock Text="Security : " 
                                    Visibility="{Binding SecuritySelectionVisibility}"
-                                   HorizontalAlignment="Center"
+                                   HorizontalAlignment="Left"
                                    VerticalAlignment="Center"/>
-                            <ComboBox Width="200"
-                                  Margin="5,0,0,0"
-                                  SelectedItem="{Binding SelectedSecurityInfo, Mode=TwoWay}" 
-                                  ItemsSource="{Binding SecurityInfo}" 
-                                  Visibility="{Binding SecuritySelectionVisibility}"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding SecurityName}"/>
-                                            <TextBlock Text=", "/>
-                                            <TextBlock Text="{Binding SecurityTicker}"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                        </StackPanel>
+                            <TextBlock Text="{Binding SecurityInfo.SecurityName}"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"
+                                   FontStyle="Italic" FontWeight="Bold"
+                                   Visibility="{Binding PresenterSelectionVisibility}"/>                                                   
                     </Grid>
-
-                    <Grid Grid.Column="1">
-                        <StackPanel Orientation="Horizontal"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center">
-                            <TextBlock Text="Status : "/>
+                    <Grid Grid.Column="1">                       
+                            <TextBlock Text="Status : " HorizontalAlignment="left" VerticalAlignment="Center"/>
                             <TextBlock Text="{Binding PresentationInfo.Status}"
                                        FontStyle="Italic" FontWeight="Bold" 
-                                       HorizontalAlignment="Center" />
-                        </StackPanel>
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Center"/>
+                        
                     </Grid>
                 </Grid>
 
-                <!-- Security Details -->
-                <Grid Grid.Row="2">
+                <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
 
-                    <StackPanel Orientation="Vertical"
-                            Grid.Column="0">
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                            <TextBlock Text="Security Name :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityName}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                            <TextBlock Text="Ticker :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityTicker}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                            <TextBlock Text="Country :"  VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityCountry}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                            <TextBlock Text="Industry :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityIndustry}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                            <TextBlock Text="EMM Holdings :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityPosition}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,5">
-                            <TextBlock Text="Index Weighting :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityGlobalActiveWeight}"/>
-                        </StackPanel>
-                    </StackPanel>
+                    <TextBlock Text="PowerPoint :"                                     
+                                   Grid.Column="1" HorizontalAlignment="Left" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
 
-                    <StackPanel Orientation="Vertical"
-                            Grid.Column="1">
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                            <TextBlock Text="Last Closing Price :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityLastClosingPrice}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                            <TextBlock Text="Market Capitalization :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityMarketCapitalization}"/>
-                        </StackPanel>
-                        <StackPanel x:Name="EntryPFV" Orientation="Horizontal" VerticalAlignment="Center" 
-                                    Margin="5,5,0,0" Visibility="Visible">
-                            <TextBlock Text="P/FV Measure :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityPFVMeasure}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,0" VerticalAlignment="Center" 
-                                    x:Name="EntryRange" Visibility="Visible">
-                            <TextBlock Text="Buy-Sell Range :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PresentationInfo.SecurityBuySellRange}"/>
-                        </StackPanel>
-                        <StackPanel Orientation="Horizontal" Margin="5,5,0,0">
-                            <TextBlock Text="Recommendation :" VerticalAlignment="Center" Width="150" HorizontalAlignment="Right" TextAlignment="Right"/>
-                            <TextBlock FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" VerticalAlignment="Center" Margin="5,0,0,0" FontSize="14" Foreground="DarkGreen" Text="{Binding PresentationInfo.SecurityRecommendation}"/>
-                        </StackPanel>
-                    </StackPanel>
+                    <TextBlock x:Name ="txtPPT" TextWrapping="Wrap"                                    
+                                   Grid.Column="2" HorizontalAlignment="Center" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
+
+                    <telerik:RadButton x:Name="btnICPPptBrowse"
+                                   Command="{Binding BrowseCommand}"                                  
+                                   Grid.Column="3"
+                                       Margin="5,5,0,5"
+                                   VerticalAlignment="Center"
+                                   Width="75"
+                                   Visibility="Visible"
+                                   HorizontalAlignment="Center"
+                                   Content="Browse"/>
                 </Grid>
 
-                <!-- Report Details -->
-                <sdk:TabControl Grid.Row="3">
-                    <sdk:TabItem Header="Investment Thesis">
-                        <!--<my:ViewTextEditor RTEditorData="{Binding PresentationInfo.InvestmentThesis, FallbackValue='', Mode=TwoWay}" 
-                                           IsEnabled="{Binding SecuritySelected}"/>-->
-                    </sdk:TabItem>
-                    <sdk:TabItem Header="Background">
-                        <!--<my:ViewTextEditor RTEditorData="{Binding PresentationInfo.Background, FallbackValue='', Mode=TwoWay}"
-                                           IsEnabled="{Binding SecuritySelected}"/>-->
-                    </sdk:TabItem>
-                    <sdk:TabItem Header="Valuations">
-                        <!--<my:ViewTextEditor RTEditorData="{Binding PresentationInfo.Valuations, FallbackValue='', Mode=TwoWay}"
-                                           IsEnabled="{Binding SecuritySelected}"/>-->
-                    </sdk:TabItem>
-                    <sdk:TabItem Header="Earnings Outlook">
-                        <!--<my:ViewTextEditor RTEditorData="{Binding PresentationInfo.EarningsOutlook, FallbackValue='', Mode=TwoWay}"
-                                           IsEnabled="{Binding SecuritySelected}"/>-->
-                    </sdk:TabItem>
-                    <sdk:TabItem Header="Competitive Advantage">
-                        <!--<my:ViewTextEditor RTEditorData="{Binding PresentationInfo.CompetitiveAdvantage, FallbackValue='', Mode=TwoWay}"
-                                           IsEnabled="{Binding SecuritySelected}"/>-->
-                    </sdk:TabItem>
-                    <sdk:TabItem Header="Competitive Disadvantage">
-                        <!--<my:ViewTextEditor RTEditorData="{Binding PresentationInfo.CompetitiveDisadvantage, FallbackValue='', Mode=TwoWay}"
-                                           IsEnabled="{Binding SecuritySelected}"/>-->
-                    </sdk:TabItem>
-                </sdk:TabControl>
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <!-- Upload Documents -->
-                <TextBlock Grid.Row="4"
-                       Text="Upload Additional Attachments"
-                       FontWeight="Bold" FontStyle="Italic" FontSize="10"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
+                    <TextBlock Text="FinStat Report :"                                     
+                                   Grid.Column="1" HorizontalAlignment="Left" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
 
-                <StackPanel Grid.Row="5" 
-                        Orientation="Horizontal" 
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                    <TextBox Width="300"
-                             Text="{Binding UploadedFileName}"/>
-                    <Button Content="Browse..." 
-                            Margin="5,0,0,0"
-                            Command="{Binding BrowseCommand}"/>
-                </StackPanel>
+                    <TextBlock x:Name ="txtFinStat" TextWrapping="Wrap"                                    
+                                   Grid.Column="2" HorizontalAlignment="Center" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
 
-                <ItemsControl Grid.Row="6"
-                          ItemsSource="{Binding AttachmentInfo}" 
-                          HorizontalAlignment="Center">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Orientation="Horizontal">
-                                <HyperlinkButton Content="{Binding AttachmentName}" 
-                                                 Visibility="{Binding AttachmentVisibility}"
-                                                 Command="{Binding OpenAttachmentCommand}"/>
-                                <Button Command="{Binding DeleteAttachmentCommand}"
-                                        Visibility="{Binding AttachmentVisibility}"
-                                        Width="20">
-                                    <Image Source="../Images/Delete.png" Height="15" Width="15"/>
-                                </Button>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                    <telerik:RadButton x:Name="btnICPFinBrowse"
+                                   Command="{Binding BrowseCommand}"                                  
+                                   Grid.Column="3"
+                                       Margin="5,5,0,5"
+                                   VerticalAlignment="Center"
+                                   Width="75"
+                                   Visibility="Visible"
+                                   HorizontalAlignment="Center"
+                                   Content="Browse"/>
+                </Grid>
 
-                <StackPanel Grid.Row="7"
-                        Orientation="Horizontal" 
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                    <Button Content="Preview"/>
-                    <Button Content="Request"
-                        Margin="5,0,0,0"
-                        x:Name="btnRequest"/>
-                    <Button Content="Save"
-                            Command="{Binding SaveCommand}"
-                            Margin="5,0,0,0"/>
-                </StackPanel>
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Investent Context :"                                     
+                                   Grid.Column="1" HorizontalAlignment="Left" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
+
+                    <TextBlock x:Name ="txtICPInvestTxt" TextWrapping="Wrap"                                    
+                                   Grid.Column="2" HorizontalAlignment="Center" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
+
+                    <telerik:RadButton x:Name="btnICPInvestBrowse"
+                                   Command="{Binding BrowseCommand}"                                  
+                                   Grid.Column="3"
+                                       Margin="5,5,0,5"
+                                   VerticalAlignment="Center"
+                                   Width="75"
+                                   Visibility="Visible"
+                                   HorizontalAlignment="Center"
+                                   Content="Browse"/>
+                </Grid>
+
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="DCF :"                                     
+                                   Grid.Column="1" HorizontalAlignment="Left" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
+
+                    <TextBlock x:Name ="txtICPDCFTxt" TextWrapping="Wrap"                                    
+                                   Grid.Column="2" HorizontalAlignment="Center" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
+
+                    <telerik:RadButton x:Name="btnICPDCFBrowse"
+                                   Command="{Binding BrowseCommand}"                                  
+                                   Grid.Column="3"
+                                       Margin="5,5,0,5"
+                                   VerticalAlignment="Center"
+                                   Width="75"
+                                   Visibility="Visible"
+                                   HorizontalAlignment="Center"
+                                   Content="Browse"/>
+                </Grid>
+
+                <Grid Grid.Row="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Additional Attachments :"                                     
+                                   Grid.Column="1" HorizontalAlignment="Left" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
+
+                    <TextBlock x:Name ="txtICPAttachtxt" TextWrapping="Wrap"                                    
+                                   Grid.Column="2" HorizontalAlignment="Center" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
+
+                    <telerik:RadButton x:Name="btnICPAttachBrowse"
+                                   Command="{Binding BrowseCommand}"                                  
+                                   Grid.Column="3"
+                                       Margin="5,5,0,5"
+                                   VerticalAlignment="Center"
+                                   Width="75"
+                                   Visibility="Visible"
+                                   HorizontalAlignment="Center"
+                                   Content="Browse"/>
+                </Grid>
+
+                <Grid Grid.Row="6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Attachment1.xx"                                     
+                                   Grid.Column="2" HorizontalAlignment="Left" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
+
+                    <TextBlock Text="X"                                     
+                                   Grid.Column="3" HorizontalAlignment="Center" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
+                </Grid>
+
+
+                <Grid Grid.Row="7">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Attachment2.xx"                                     
+                                   Grid.Column="2" HorizontalAlignment="Left" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
+                    <TextBlock Text="X"                                     
+                                   Grid.Column="3" HorizontalAlignment="Center" Margin="2,5,0,5"
+                                                                      VerticalAlignment="Center"/>
+                </Grid>
+
+                <Grid Grid.Row="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <telerik:RadButton Content=" Preview" Grid.Column="1"
+                                       Command="{Binding PreviewCommand}"
+                                         Margin="5,0,0,0"/>
+
+
+                    <telerik:RadButton Content="Submit" Grid.Column="3"
+                                       HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                       Command="{Binding SaveCommand}"
+                                         Margin="5,0,0,0"/>
+
+                </Grid>
             </Grid>
         </ScrollViewer>
     </Grid>

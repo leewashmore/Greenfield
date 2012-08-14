@@ -73,6 +73,7 @@ namespace GreenField.Gadgets.ViewModels
 
 
         #region Properties
+              
 
         private DateTime _searchDate = DateTime.Today;
         public DateTime SearchDateProperty
@@ -178,6 +179,8 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
+           
+
         }
 
 

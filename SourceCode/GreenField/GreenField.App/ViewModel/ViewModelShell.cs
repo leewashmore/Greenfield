@@ -68,6 +68,7 @@ namespace GreenField.App.ViewModel
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<MarketPerformanceSnapshotActionCompletionEvent>().Subscribe(HandleMarketPerformanceSnapshotActionCompletionEvent);
+                _eventAggregator.GetEvent<ToolboxUpdateEvent>().Subscribe(HandleToolboxUpdateEvent);
             }
             if (_manageSessions != null)
             {
@@ -1743,6 +1744,12 @@ namespace GreenField.App.ViewModel
 
             RaisePropertyChanged(() => this.MarketSnapshotSaveCommand);
             RaisePropertyChanged(() => this.MarketSnapshotRemoveCommand);
+        }
+
+        public void HandleToolboxUpdateEvent(DashboardCategoryType result)
+        {
+            ToolBoxSelecter.SetToolBoxItemVisibility(result);
+            UpdateToolBoxSelectorVisibility();
         }
         #endregion
 

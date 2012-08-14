@@ -21,25 +21,20 @@ using Microsoft.Practices.Prism.Regions;
 using GreenField.Gadgets.Helpers;
 using GreenField.DataContracts;
 
-
 namespace GreenField.DashboardModule.Views
 {
     [Export]
-    public partial class ViewDashboardInvestmentCommitteeCreataEditPresentations : ViewBaseUserControl, INavigationAware
+    public partial class ViewDashboardInvestmentCommitteeEditPresentations : ViewBaseUserControl, INavigationAware
     {
         #region Fields
         private IEventAggregator _eventAggregator;
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
         private IRegionManager _regionManager;
-        private ViewPresentations _view;
-        private ViewModelPresentations _viewModel;
-        private ViewModelICPresentationNew _viewModelNew;
-        private ViewICPresentationNew _viewNew;
         #endregion
 
         [ImportingConstructor]
-        public ViewDashboardInvestmentCommitteeCreataEditPresentations(ILoggerFacade logger, IEventAggregator eventAggregator,
+        public ViewDashboardInvestmentCommitteeEditPresentations(ILoggerFacade logger, IEventAggregator eventAggregator,
             IDBInteractivity dbInteractivity, IRegionManager regionManager)
         {
             InitializeComponent();
@@ -68,21 +63,7 @@ namespace GreenField.DashboardModule.Views
                 RegionManager = _regionManager
             };
 
-            ////for accessing the gadgets data 
-            //_viewModel = new ViewModelPresentations(param);
-            //_view = new ViewPresentations(_viewModel);
-
-            //if (_viewModel.NavigationInfo.ViewPluginFlagEnumerationObject == ViewPluginFlagEnumeration.Create)
-            //{
-            //    _viewModelNew = new ViewModelICPresentationNew(param);
-            //    _viewNew = new ViewICPresentationNew(_viewModelNew);
-            //    this.cctrDashboardContent.Content = _viewNew;
-            //}
-            //else
-            //{               
-            //    this.cctrDashboardContent.Content = _view;
-            //}
-            this.cctrDashboardContent.Content = null;
+            this.cctrDashboardContent.Content = new ViewCreateUpdatePresentations(new ViewModelCreateUpdatePresentations(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -92,7 +73,6 @@ namespace GreenField.DashboardModule.Views
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-           // navigationContext.NavigationService.Region.Context = _viewModel.NavigationInfo;
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
@@ -102,7 +82,6 @@ namespace GreenField.DashboardModule.Views
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-         //   _viewModel.ManageMeetingsServiceCalls();
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {

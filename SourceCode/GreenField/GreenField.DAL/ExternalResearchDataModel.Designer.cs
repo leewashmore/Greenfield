@@ -1118,6 +1118,14 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<GetEV_EBITDAData_Result>("Get_EV_EBITDA", securityIdParameter, issuerIdParameter, chartTitleParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectResult<Nullable<global::System.Decimal>> GetMarketCap()
+        {
+            return base.ExecuteFunction<Nullable<global::System.Decimal>>("GetMarketCap");
+        }
 
         #endregion
     }

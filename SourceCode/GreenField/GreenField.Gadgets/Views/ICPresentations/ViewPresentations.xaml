@@ -5,7 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
+    mc:Ignorable="d" FontFamily="Arial" FontSize="7"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
     d:DesignHeight="300" d:DesignWidth="800">
 
@@ -20,76 +20,34 @@
     <Grid x:Name="LayoutRoot">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="25"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="25"/>
-            </Grid.RowDefinitions>
-            <TextBlock x:Name="tblkICPPresentationsListHeader"
-                       Grid.Row="0"
-                       Text="Investment Commitee (IC) Presentations"
-                       FontWeight="Bold"
-                       HorizontalAlignment="Center"
-                       VerticalAlignment="Center"/>
-            <StackPanel x:Name="spnlICPPresentationsListFilter"
-                        Grid.Row="1"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-
-                <TextBlock x:Name="tblkICPPresentationsListFilter" 
-                                   VerticalAlignment="Center" 
-                                   Text="Presentation Date" 
-                                   Margin="200,6,100,3" Grid.Row="1" />
-                <telerik:RadDateTimePicker x:Name="dtinpICPPresentationsListFilter"
-                                     Margin="5,0,0,0"
-                                     SelectedValue="{Binding SearchDateFilter, Mode=TwoWay}"
-                                     VerticalAlignment="Center"
-                                     Width="100" />
+                <RowDefinition Height="Auto"/>
                 
-                 <TextBlock x:Name="tblkICPPresentationsListPresenterFilter"
-                           VerticalAlignment="Center"
-                           Margin="5,0,0,0"
-                           Text="Presenter"/>
-                    
-                    <ComboBox x:Name="cbICPPresentationsListPresenterFilter"
-                          VerticalAlignment="Center"
-                          ItemsSource="{Binding PresenterInfo}"
-                          SelectedItem="{Binding PresenterFilter, Mode=TwoWay}"
-                          Width="150"
-                          Margin="5,0,0,0"/>
-                    <TextBlock x:Name="tblkICPPresentationsListStatusFilter"
-                           VerticalAlignment="Center"
-                           Margin="5,0,0,0"
-                           Text="Status"/>
-                    <ComboBox x:Name="cbICPPresentationsListStatusFilter"
-                          VerticalAlignment="Center"
-                          Width="150"
-                          ItemsSource="{Binding StatusTypeInfo}"
-                          SelectedItem="{Binding StatusTypeFilter, Mode=TwoWay}"
-                          DisplayMemberPath="StatusType"                          
-                          Margin="5,0,0,0" />
-                    <Button x:Name="btnICPPresentationsListFilter"
-                        Command="{Binding SearchCommand}"
-                        Margin="5,0,0,0"
-                        Width="75"
-                        VerticalAlignment="Center"
-                        Content="Search"/>
-                    <Button x:Name="btnICPPresentationsListReset"
-                        Command="{Binding ResetCommand}"
-                        Margin="5,0,0,0"
-                        Width="75"
-                        VerticalAlignment="Center"
-                        Content="Reset"/>
-
-            </StackPanel>    
-
-
-
+            </Grid.RowDefinitions>
+            <!--Filters-->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock x:Name="tblkICPPresentationsListFilter" Text="Presentation Date"                                     
+                                   Grid.Row="1" HorizontalAlignment="Right" Margin="2,2,5,2"
+                                   VerticalAlignment="Center"/>
+                <telerik:RadDatePicker x:Name="dtinpICPPresentationsListFilter"
+                                       Grid.Column="1"
+                                       Margin="0,2,2,2"  
+                                       MinHeight="15"
+                                       SelectedValue="{Binding SearchDateFilter, Mode=TwoWay}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       Width="100" />
+            </Grid>            
+            
+            <!--Data Grid-->
             <telerik:RadGridView x:Name="dgICPPresentationsList" 
                                          ItemsSource="{Binding PresentationInfo}"
-                                         Grid.Row="2"
+                                         Grid.Row="1"
                                          telerik:StyleManager.Theme="Metro"
                                          CanUserReorderColumns ="False" 
                                          CanUserSelect="True"
@@ -102,6 +60,7 @@
                                          ShowGroupPanel="False"
                                          UseLayoutRounding="True"
                                          IsReadOnly="True"
+                                         RowIndicatorVisibility="Collapsed"
                                          ScrollMode="RealTime"
                                          FontSize="7"
                                          FontFamily="Arial"                                        
@@ -110,6 +69,7 @@
                                          EnableRowVirtualization="False"
                                          EnableColumnVirtualization="False"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         SelectedItem="{Binding SelectedPresentation, Mode=TwoWay}"
                                          RowStyle="{StaticResource GridViewRowStyle}">
                 <!--RowLoaded="rowloadedevent"-->
 
@@ -118,96 +78,121 @@
                                                 DataFormatString="{}{0:MM/dd/yyyy}"
                                                 Width="*"
                                                 Header="Presentation Date"
+                                                DataMemberBinding="{Binding PresentationDate}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Left"
-                                                TextAlignment="Left"/>
+                                                TextAlignment="Left"
+                                                IsFilterable="True"/>
 
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListStatus"
                                                 Width="*"
                                                 Header="Status"
+                                                DataMemberBinding="{Binding Status}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right"
+                                                IsFilterable="True"/>
 
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListPresenter"
                                                 Width="*"
                                                 Header="Presenter"
+                                                DataMemberBinding="{Binding Presenter}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right"
+                                                IsFilterable="True"/>
 
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListCompany"
                                                 Width="*"
                                                 Header="Security"
+                                                DataMemberBinding="{Binding SecurityName}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right"
+                                                IsFilterable="True"/>
 
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListTicker"
                                                 Width="*"
                                                 Header="Ticker"
+                                                DataMemberBinding="{Binding SecurityTicker}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right"
+                                                IsFilterable="True"/>
 
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListCountry"
                                                 Width="*"
                                                 Header="Country"
+                                                DataMemberBinding="{Binding SecurityCountry}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right"
+                                                IsFilterable="True"/>
 
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListIndustru"
                                                 Width="*"
                                                 Header="Industry"
+                                                DataMemberBinding="{Binding SecurityIndustry}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Right"
-                                                TextAlignment="Right"/>
+                                                TextAlignment="Right"
+                                                IsFilterable="True"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
-
-            <StackPanel x:Name="spnlICPPresentationsListNavigate"
-                        Grid.Row="3"
-                        Orientation="Horizontal"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center">
-                <Button x:Name="btnICPPresentationsListNew"
-                        Command="{Binding NewPresentationCommand}"
-                        VerticalAlignment="Center"
-                        Width="75"
-                        Content="NEW"/>
-                <Button x:Name="btnICPPresentationsListUpload"
-                        Command="{Binding UploadCommand}" 
-                        Margin="5,0,0,0"
-                        Width="75"
-                        VerticalAlignment="Center"
-                        Content="UPLOAD"/>
-                <Button x:Name="btnICPPresentationsListEdit"
+            
+            <!--Action Buttons-->
+            <Grid Grid.Row="2" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <telerik:RadButton x:Name="btnICPPresentationsListNew"
+                                   Command="{Binding NewPresentationCommand}"
+                                   VerticalAlignment="Center"
+                                   Width="75"
+                                   Visibility="Visible"
+                                   HorizontalAlignment="Right"
+                                   Content="NEW"/>
+                <telerik:RadButton Grid.Column="1"
+                                   x:Name="btnICPPresentationsListUpload"
+                                   Command="{Binding UploadCommand}" 
+                                   Margin="5,0,0,0"
+                                   Width="75"
+                                   Visibility="Visible"                        
+                                   VerticalAlignment="Center"
+                                   Content="UPLOAD"/>
+                <telerik:RadButton Grid.Column="2"
+                                   x:Name="btnICPPresentationsListEdit"
                         Command="{Binding EditCommand}"
                         Margin="5,0,0,0"
                         Width="75"
                         VerticalAlignment="Center"
                         Content="EDIT"/>
-                <Button x:Name="btnICPPresentationsListView"
+                <telerik:RadButton Grid.Column="3" x:Name="btnICPPresentationsListView"
                         Command="{Binding ViewCommand}"
                         Margin="5,0,0,0"
                         Width="75"
                         VerticalAlignment="Center"
                         Content="VIEW/VOTE"/>
-                <Button x:Name="btnICPPresentationsListRequest"
+                <telerik:RadButton Grid.Column="4" x:Name="btnICPPresentationsListRequest"
                         Command="{Binding WithdrawCommand}"
                         Margin="5,0,0,0"
                         Width="75"
                         VerticalAlignment="Center"
+                                   HorizontalAlignment="Left"
                         Content="WITHDRAW"/>
-            </StackPanel>
+            </Grid>
+            
             <!--<HyperlinkButton x:Name="hlbtnICPPresentationsListNew"
                              Command="{Binding NewPresentationCommand}"
                              Grid.Row="4"

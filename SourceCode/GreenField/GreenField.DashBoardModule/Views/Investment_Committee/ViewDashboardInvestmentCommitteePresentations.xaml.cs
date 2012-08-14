@@ -45,8 +45,9 @@ namespace GreenField.DashboardModule.Views
             _regionManager = regionManager;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
+           // _eventAggregator.GetEvent<ToolboxUpdateEvent>().Subscribe(HandleToolboxUpdateEvent);
 
-            this.tbHeader.Text = GadgetNames.ICPRESENTATION_CREATE_EDIT;
+            this.tbHeader.Text = GadgetNames.ICPRESENTATION_PRESENTATIONS;
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -63,7 +64,7 @@ namespace GreenField.DashboardModule.Views
                 RegionManager = _regionManager
             };
 
-            this.cctrDashboardContent.Content = null;// new ViewPresentations(new ViewModelPresentations(param));
+            this.cctrDashboardContent.Content = new ViewPresentations(new ViewModelPresentations(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

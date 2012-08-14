@@ -30,6 +30,8 @@ namespace GreenField.DashboardModule.Views
         private IEventAggregator _eventAggregator;
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
+        private ViewModelMemberVoting _viewModel;
+        private ViewMemberVoting _view;
         #endregion
 
         [ImportingConstructor]
@@ -60,7 +62,12 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = null;//new ViewMemberVoting(new ViewModelMemberVoting(param));
+            //for accessing the gadgets data 
+            _viewModel = new ViewModelMemberVoting(param);
+            _view = new ViewMemberVoting(_viewModel);           
+
+           // this.cctrDashboardContent.Content = new ViewMemberVoting(new ViewModelMemberVoting(param));
+            this.cctrDashboardContent.Content = _view;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

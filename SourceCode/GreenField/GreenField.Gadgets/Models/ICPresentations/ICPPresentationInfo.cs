@@ -334,20 +334,21 @@ namespace GreenField.Gadgets.Models
             {
                 if (SecurityBuyRange != string.Empty && SecuritySellRange != string.Empty && SecurityPosition != string.Empty)
                 {
-                    if (Double.Parse(SecurityPosition) != 0)
-                    {
-                        if (Double.Parse(SecurityLastClosingPrice) <= Double.Parse(SecuritySellRange))
-                            _securityRecommendation =  "Hold";
-                        else if (Double.Parse(SecurityLastClosingPrice) > Double.Parse(SecuritySellRange))
-                            _securityRecommendation = "Sell";
-                    }
-                    else
-                    {
-                        if (Double.Parse(SecurityLastClosingPrice) > Double.Parse(SecurityBuyRange))
-                            _securityRecommendation = "Watch";
-                        else if (Double.Parse(SecurityLastClosingPrice) <= Double.Parse(SecurityBuyRange))
-                            _securityRecommendation = "Buy";
-                    }
+                    _securityRecommendation = "Buy";
+                    //if (Double.Parse(SecurityPosition) != 0)
+                    //{
+                    //    if (Double.Parse(SecurityLastClosingPrice) <= Double.Parse(SecuritySellRange))
+                    //        _securityRecommendation =  "Hold";
+                    //    else if (Double.Parse(SecurityLastClosingPrice) > Double.Parse(SecuritySellRange))
+                    //        _securityRecommendation = "Sell";
+                    //}
+                    //else
+                    //{
+                    //    if (Double.Parse(SecurityLastClosingPrice) > Double.Parse(SecurityBuyRange))
+                    //        _securityRecommendation = "Watch";
+                    //    else if (Double.Parse(SecurityLastClosingPrice) <= Double.Parse(SecurityBuyRange))
+                    //        _securityRecommendation = "Buy";
+                    //}
                 }
                 return _securityRecommendation;
             }
@@ -512,9 +513,9 @@ namespace GreenField.Gadgets.Models
             pinfo.EarningsOutlook = this.EarningsOutlook;
             pinfo.CompetitiveAdvantage = this.CompetitiveAdvantage;
             pinfo.CompetitiveDisadvantage = this.CompetitiveDisadvantage;
-            pinfo.CreatedBy = "rvig";
+            pinfo.CreatedBy = "UserLoggedIn";
             pinfo.CreatedOn = DateTime.Now;
-            pinfo.ModifiedBy = "rvig";
+            pinfo.ModifiedBy = "UserLoggedIn";
             pinfo.ModifiedOn = DateTime.Now;
             return pinfo;
         }

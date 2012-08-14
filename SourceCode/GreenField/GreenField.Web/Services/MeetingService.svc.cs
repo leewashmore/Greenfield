@@ -16,7 +16,7 @@ using System.Data.Objects;
 using GreenField.Web.Services;
 using System.Linq;
 using System.Configuration;
-
+using GreenField.Web.DimensionEntitiesService;
 
 namespace GreenField.Web.Services
 {
@@ -27,12 +27,92 @@ namespace GreenField.Web.Services
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class MeetingService 
     {
+        private Entities dimensionEntity;
+        public Entities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                    dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+
+                return dimensionEntity;
+            }
+        }
 
         public ResourceManager ServiceFaultResourceManager
         {
             get
             {
                 return new ResourceManager(typeof(FaultDescriptions));
+            }
+        }
+
+        /// <summary>
+        /// retrieving the security data on ticker filter
+        /// </summary>
+        /// <returns>list of security overview data</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public SecurityInformation RetrieveSecurityDetails(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                if (entitySelectionData == null)
+                    return new SecurityInformation();
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+               
+                ExternalResearchEntities research = new ExternalResearchEntities();
+                ObjectResult<Decimal?> queryResult = research.GetMarketCap();
+                List<Decimal?> resultCap = new List<Decimal?>();
+                resultCap = queryResult.ToList<Decimal?>();
+                
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.TICKER == entitySelectionData.ShortName
+                        && record.ISSUE_NAME == entitySelectionData.LongName
+                        && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                        && record.SECURITY_TYPE == entitySelectionData.SecurityType)
+                    .FirstOrDefault();              
+                
+
+                if (data == null)
+                    return new SecurityInformation();
+
+                SecurityInformation result = new SecurityInformation()
+                {
+                    SecurityTicker = data.TICKER,
+                    SecurityName = data.ISSUE_NAME,
+                    SecurityCountry = data.ISO_COUNTRY_CODE,
+                    SecurityIndustry = data.GICS_INDUSTRY_NAME,
+                    Analyst = data.ASHMOREEMM_PRIMARY_ANALYST,
+                    Price = data.CLOSING_PRICE.ToString(),
+                    FVCalc = "3",
+                    SecurityBuySellvsCrnt = "$16.50(8*2013PE)-$21.50(10.5*2013PE)",
+                    TotalCurrentHoldings = "$0mn",
+                    PercentEMIF = "0%",
+                    SecurityBMWeight = "1%",
+                    SecurityActiveWeight = "Underweight",
+                    YTDRet_Absolute = "-3.5%",
+                    YTDRet_RELtoLOC = "+8%",
+                    YTDRet_RELtoEM = "-2%",
+                    SecurityRecommendation = "BUY",
+                    SecurityMarketCapitalization = "$634"//resultCap[0].ToString()
+                };
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
 
