@@ -62,7 +62,7 @@ namespace GreenField.DashboardModule.Views
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARKS_MULTILINE_BENCHMARK, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARKS_MULTILINE_BENCHMARK, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 RestoredHeight=300,
                 Content = new ViewMultiLineBenchmark(new ViewModelMultiLineBenchmark(param))
             });
@@ -70,7 +70,7 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_TOP_TEN_CONSTITUENTS, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_TOP_TEN_CONSTITUENTS, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 300,
                 Content = new ViewTopBenchmarkSecurities(new ViewModelTopBenchmarkSecurities(param))
             });
@@ -78,7 +78,7 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_HOLDINGS_SECTOR_PIECHART, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_HOLDINGS_SECTOR_PIECHART, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 320,
                 Content = new ViewHoldingsPieChart(new ViewModelHoldingsPieChart(param))
             });
@@ -86,7 +86,7 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.BENCHMARK_HOLDINGS_REGION_PIECHART, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 320,
                 Content = new ViewHoldingsPieChartRegion(new ViewModelHoldingsPieChartRegion(param))
             });

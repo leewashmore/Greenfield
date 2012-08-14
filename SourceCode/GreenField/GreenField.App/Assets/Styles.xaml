@@ -1110,4 +1110,37 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+
+    <!--TextBlock Style-->
+    <Style TargetType="TextBlock" x:Key="TextBlockStyle">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+    </Style>
+
+    <!--RadComboBox Style-->
+    <Style TargetType="telerik:RadComboBox" x:Key="RadComboBoxStyle">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--CheckBox Style-->
+    <Style TargetType="CheckBox" x:Key="CheckBoxStyle">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--ComboBoxStyle-->
+    <Style TargetType="ComboBox" x:Key="ComboBoxStyle">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
 </ResourceDictionary>

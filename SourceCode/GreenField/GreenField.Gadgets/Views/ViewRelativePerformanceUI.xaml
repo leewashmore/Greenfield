@@ -23,7 +23,8 @@
         </Grid.RowDefinitions>
 
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
-            <TextBlock Text="Relative Performance UI" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            <TextBlock Text="Relative Performance UI" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" 
+                       Style="{StaticResource TextBlockStyle}"/>
         </Grid>
 
         <!--Export Controls-->
@@ -62,7 +63,6 @@
                                  telerik:StyleManager.Theme="Metro"
                                  CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                 FontFamily="Arial" FontSize="7" 
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"

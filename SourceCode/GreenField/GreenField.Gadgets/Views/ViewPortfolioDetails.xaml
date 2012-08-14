@@ -27,7 +27,7 @@
             <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
-            <TextBlock Text="Portfolio Details UI" Grid.Column="0" HorizontalAlignment="Center" FontWeight="Bold" FontSize="10"/>
+            <TextBlock Text="Portfolio Details UI" Grid.Column="0" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
         </Grid>
 
         <!--Export Controls-->
@@ -40,8 +40,8 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <CheckBox Content="Include Benchmark" Grid.Column="1" ToolTipService.ToolTip="Include Benchmark Securities" 
-                      FontFamily="Arial" FontSize="7" Height="15" VerticalContentAlignment="Center" IsChecked="{Binding GetBenchmarkData,Mode=TwoWay}" />
+            <CheckBox Content="Include Benchmark" Grid.Column="1" ToolTipService.ToolTip="Include Benchmark Securities" Style="{StaticResource CheckBoxStyle}"
+                      Height="15" VerticalContentAlignment="Center" IsChecked="{Binding GetBenchmarkData,Mode=TwoWay}" />
             <Button Height="15" Width="15" Grid.Column="2"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center"
@@ -85,8 +85,6 @@
                                          RowIndicatorVisibility="Collapsed" 
                                          UseLayoutRounding="True" 
                                          ColumnWidth="Auto" ShowColumnFooters="False"
-                                         FontFamily="Arial"
-                                         FontSize="7"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          ShowGroupFooters="True"
@@ -197,7 +195,7 @@
         </Grid>
 
         <Grid Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Left">
-            <TextBlock x:Name="txtMessage" FontFamily="Arial" FontSize="7" Height="12" Foreground="Red"
+            <TextBlock x:Name="txtMessage" FontFamily="Arial" FontSize="9" Height="12" Foreground="Red"
                        Text=" * The values for Model Weight are not correct as the corresponding View doesn't have relevant data"/>
         </Grid>
     </Grid>

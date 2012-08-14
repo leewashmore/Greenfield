@@ -11,18 +11,12 @@
     xmlns:converter="clr-namespace:GreenField.Gadgets.Helpers.Converters"
     mc:Ignorable="d">
 
-    
-
-
-
-
-
     <!--Grid Styles-->
     <!--###########-->
 
     <SolidColorBrush x:Key="ControlOuterBorder" Color="#e4e5e5"/>
     <SolidColorBrush x:Key="ControlInnerBorder" Color="#e4e5e5"/>
-    <SolidColorBrush x:Key="GridView_GroupRowIndicator" Color="White"/>
+    <SolidColorBrush x:Key="GridView_GroupRowIndicator" Color="Black"/>
     <SolidColorBrush x:Key="GridView_RowIndicatorCellBackground" Color="#e4e5e5"/>
     <telerik:Office_BlackTheme x:Key="Theme"/>
     <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -50,8 +44,8 @@
         <Setter Property="Background" Value="#e4e5e5" />
         <Setter Property="BorderBrush" Value="#e4e5e5" />
         <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="FontSize" Value="7"/>
-        <Setter Property="MinHeight" Value="15"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="MinHeight" Value="18"/>
         <Setter Property="FontFamily" Value="Arial"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -70,15 +64,15 @@
 
     <!--GridViewCellStyle-->
     <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
-        <Setter Property="Height" Value="15"/>
+        <Setter Property="Height" Value="18"/>
         <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="7"/>
+        <Setter Property="FontSize" Value="12"/>
     </Style>
 
     <!--GridViewGroupPanelStyle-->
     <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyle">
         <Setter Property="Height" Value="10"/>
-        <Setter Property="FontSize" Value="7"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Background" Value="#e4e5e5"/>
     </Style>
@@ -90,26 +84,26 @@
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Background" Value="#e4e5e5"/>
         <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="7"/>
-        <Setter Property="MinHeight" Value="10"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="MinHeight" Value="18"/>
     </Style>
 
     <!--GridViewRowStyle-->
     <Style TargetType="telerik:GridViewRow" x:Name="GridViewRowStyle">
-        <Setter Property="Height" Value="15"/>
+        <Setter Property="Height" Value="18"/>
     </Style>
 
     <!--GridViewRowStyle-->
     <Style TargetType="telerik:GridViewRow" x:Name="GridViewAlternateRowStyle">
-        <Setter Property="Height" Value="15"/>
+        <Setter Property="Height" Value="18"/>
         <Setter Property="Background" Value="#f3f6fc"/>
     </Style>
 
     <!--GridViewHeaderRowStyle-->
     <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
-        <Setter Property="Height" Value="15"/>
+        <Setter Property="Height" Value="18"/>
         <Setter Property="Background" Value="#e4e5e5"/>
-        <Setter Property="MaxHeight" Value="15"/>
+        <Setter Property="MaxHeight" Value="18"/>
         <Setter Property="IndentLevel" Value="0"/>
     </Style>
 
@@ -227,7 +221,7 @@
                                                               Foreground="Black"
                                                               ItemsSource="{TemplateBinding AggregateResults}"
                                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                                              Margin="5,0" FontFamily="Arial" FontSize="7" FontWeight="Bold"
+                                                              Margin="5,0" FontFamily="Arial" FontSize="12" FontWeight="Bold"
                                                               Visibility="Collapsed">
                                 <telerik:AggregateResultsList.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -264,7 +258,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <telerik:GridViewGroupFooterRow x:Name="Footer" Foreground="Black" FontFamily="Arial" FontSize="7" FontWeight="Bold" telerik:StyleManager.Theme="{StaticResource Theme}" Background="{x:Null}" BorderThickness="0,0,0,1"/>
+                    <telerik:GridViewGroupFooterRow x:Name="Footer" Foreground="Black" FontFamily="Arial" FontSize="12" FontWeight="Bold" telerik:StyleManager.Theme="{StaticResource Theme}" Background="{x:Null}" BorderThickness="0,0,0,1"/>
                     <telerik:GridViewVirtualizingPanel x:Name="PART_GridViewVirtualizingPanel" Background="White" Visibility="Collapsed" VerticalAlignment="Bottom" Grid.Row="1"/>
                 </Grid>
             </Border>
@@ -283,7 +277,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="Padding" Value="10,0,0,0"/>
         <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="7"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
@@ -839,7 +833,7 @@
         <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderOuterBorder}"/>
         <Setter Property="BorderThickness" Value="0,0,1,1"/>
         <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="7"/>
+        <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="Bold"/>
 
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -859,7 +853,35 @@
 
     <!--BorderLess GridHeaderCellStyleEND-->
 
-
-
-
+    <!--TextBlock Style-->
+    <Style TargetType="TextBlock" x:Name="TextBlockStyle">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+    </Style>
+    
+    <!--RadComboBox Style-->
+    <Style TargetType="telerik:RadComboBox" x:Name="RadComboBoxStyle">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+    
+    <!--CheckBox Style-->
+    <Style TargetType="CheckBox" x:Name="CheckBoxStyle">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+    
+    <!--ComboBoxStyle-->
+    <Style TargetType="ComboBox" x:Name="ComboBoxStyle">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+    
 </ResourceDictionary>

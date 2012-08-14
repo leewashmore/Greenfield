@@ -43,7 +43,8 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold"/>
+                    <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold"
+                               Style="{StaticResource TextBlockStyle}"/>
                     <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
                     <!--Export Controls-->
                     <Button Height="15" Width="15" Grid.Column="2"
@@ -84,7 +85,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Text="Time" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                     <telerik:RadComboBox x:Name="cmbTime" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
-                                         HorizontalAlignment="Stretch" 
+                                         HorizontalAlignment="Stretch" Style="{StaticResource RadComboBoxStyle}"
                                          ItemsSource="{Binding TimeRange}" SelectedValue="{Binding SelectedTimeRange, Mode=TwoWay}" 
                                          SelectionChanged="cmbTime_SelectionChanged"/>
                 </Grid>
@@ -106,7 +107,7 @@
                                          CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="ElementExportingEvent"
                                          CanUserSortColumns="True" ScrollMode="RealTime" 
                                          RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" 
-                                         UseLayoutRounding="True" FontSize="7" 
+                                         UseLayoutRounding="True" 
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelBackground="#e4e5e5"

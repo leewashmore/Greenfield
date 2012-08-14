@@ -40,10 +40,10 @@
                                     <Setter.Value>
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal">
-                                                <TextBlock FontWeight="Bold" FontSize="7" FontFamily="Arial" Text="{Binding LongName}" />
-                                                <TextBlock Text=" (" FontSize="7" FontFamily="Arial" />
-                                                <TextBlock Text="{Binding ShortName}" FontSize="7" FontFamily="Arial" />
-                                                <TextBlock Text=")" FontSize="7" FontFamily="Arial" />
+                                                <TextBlock FontWeight="Bold" FontSize="12" FontFamily="Arial" Text="{Binding LongName}" />
+                                                <TextBlock Text=" (" FontSize="12" FontFamily="Arial" />
+                                                <TextBlock Text="{Binding ShortName}" FontSize="12" FontFamily="Arial" />
+                                                <TextBlock Text=")" FontSize="12" FontFamily="Arial" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </Setter.Value>
@@ -98,7 +98,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold"/>
+                    <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Chart Controls" FontWeight="Bold" Style="{StaticResource TextBlockStyle}" />
                     <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
                     <telerik:RadButton x:Name="btnFlip" Grid.Column="2" Height="20" Width="20" HorizontalAlignment="Center" 
                                        VerticalAlignment="Center"
@@ -134,7 +134,7 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Margin="0,0,2,0">
                         <CheckBox Content="Total Return" HorizontalAlignment="Left" x:Name="returnTypeSelectionCheckBox" 
-                          VerticalAlignment="Top" IsChecked="{Binding ReturnTypeSelection, Mode=TwoWay}" />
+                          VerticalAlignment="Top" IsChecked="{Binding ReturnTypeSelection, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}" />
                     </Grid>
 
                     <Grid Grid.Row="1" Margin="0,0,2,0">
@@ -142,9 +142,9 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Time" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Column="0" Text="Time" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadComboBox x:Name="cmbTime" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
-                                             HorizontalAlignment="Stretch" 
+                                             HorizontalAlignment="Stretch" Style="{StaticResource RadComboBoxStyle}"
                                              ItemsSource="{Binding TimeRange}" 
                                              DropDownClosed="cmbTime_DropDownClosed"  />
                     </Grid>
@@ -156,10 +156,10 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Start Date" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Column="0" Text="Start Date" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadDatePicker Grid.Column="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
                                        SelectedDate="{Binding SelectedStartDate,Mode=TwoWay}" />
-                        <TextBlock Grid.Column="2" Text="End Date" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                        <TextBlock Grid.Column="2" Text="End Date" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadDatePicker  Grid.Column="3" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
                                         SelectedDate="{Binding SelectedEndDate,Mode=TwoWay}" />
                     </Grid>
@@ -169,8 +169,8 @@
                             <ColumnDefinition Width="60"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Frequency" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                        <telerik:RadComboBox  Name="cmbFrequencyInterval"
+                        <TextBlock Grid.Column="0" Text="Frequency" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
+                        <telerik:RadComboBox  Name="cmbFrequencyInterval" Style="{StaticResource RadComboBoxStyle}"
                                       Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" 
                                       ItemsSource="{Binding FrequencyInterval,Mode=TwoWay}" 
                                       SelectedItem="{Binding SelectedFrequencyInterval, Mode=TwoWay}"  
@@ -180,7 +180,7 @@
 
                     <Grid Grid.Row="4" Margin="0,2,0,0">
                         <TextBlock Grid.Column="0" Text="Add to Chart" HorizontalAlignment="Center" VerticalAlignment="Top" 
-                                   Visibility="{Binding AddToChartVisibility, Mode=TwoWay}"/>
+                                   Visibility="{Binding AddToChartVisibility, Mode=TwoWay}" Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
 
                     <Grid Grid.Row="5" Margin="0,2,2,0" Visibility="{Binding AddToChartVisibility, Mode=TwoWay}">
@@ -190,8 +190,6 @@
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
                         <telerik:RadComboBox Grid.Column="0" 
-                                             FontFamily="Arial"
-                                             FontSize="7"
                                              Name="cmbAddSeries"
                                              ItemsSource="{Binding SeriesReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
                                              IsEditable="True" 
@@ -208,6 +206,7 @@
                                              HorizontalAlignment="Right" 
                                              TextSearchMode="Contains"
                                              IsTextSearchEnabled="False"
+                                              Style="{StaticResource RadComboBoxStyle}"
                                              DropDownOpened="cmbAddSeries_DropDownOpened">
                             <telerik:RadComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -227,13 +226,13 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <CheckBox Content="Search Begins With" HorizontalAlignment="Left" VerticalAlignment="Top" 
+                        <CheckBox Content="Search Begins With" HorizontalAlignment="Left" VerticalAlignment="Top"  Style="{StaticResource CheckBoxStyle}"
                                   IsChecked="{Binding SearchFilterEnabled, Mode=TwoWay}" Grid.Row="0" Name="chkSearchFilter" 
                                   Visibility="{Binding AddToChartVisibility, Mode=TwoWay}" />
                         <Border BorderBrush="Gray" BorderThickness="1" Grid.Row="1" CornerRadius="2" Height="15">
                             <Grid>
-                                <TextBlock Name="txtSelectedBaseSecurityName" Text="{Binding SelectedBaseSecurity, Mode=TwoWay}" 
-                                           HorizontalAlignment="Left" FontSize="7" FontFamily="Arial" FontWeight="Bold" Margin="2,0,0,0" VerticalAlignment="Center" />
+                                <TextBlock Name="txtSelectedBaseSecurityName" Text="{Binding SelectedBaseSecurity, Mode=TwoWay}"  Style="{StaticResource TextBlockStyle}"
+                                           HorizontalAlignment="Left" FontWeight="Bold" Margin="2,0,0,0" VerticalAlignment="Center" />
                             </Grid>
                         </Border>
                     </Grid>
@@ -250,13 +249,13 @@
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="Auto"/>
                                             </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" FontSize="7" FontFamily="Arial" Text="{Binding ShortName, Mode=TwoWay}" 
-                                                       HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="2,0,0,0" />
+                                            <TextBlock Grid.Column="0" Text="{Binding ShortName, Mode=TwoWay}" 
+                                                       HorizontalAlignment="Left" VerticalAlignment="Center"  Margin="2,0,0,0"  Style="{StaticResource TextBlockStyle}" />
                                             <telerik:RadButton Background="White" Grid.Column="1" 
                                                                Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteCommand}" 
                                                                CommandParameter="{Binding}" Width="20" HorizontalAlignment="Right"
                                                                VerticalAlignment="Stretch" Height="8" Margin="0.5,0.5,2,0.5">
-                                                <TextBlock Text="X" FontFamily="Arial" FontSize="6" FontWeight="Bold"
+                                                <TextBlock Text="X" FontWeight="Bold"  Style="{StaticResource TextBlockStyle}"
                                                            HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Gray" />
                                             </telerik:RadButton>
                                         </Grid>
@@ -288,11 +287,11 @@
                                          CanUserDeleteRows="False" IsReadOnly="True" ElementExporting="ElementExportingEvent"
                                          CanUserSortColumns="True" ScrollMode="Deferred" 
                                          RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
-                                         UseLayoutRounding="True" FontSize="7"
+                                         UseLayoutRounding="True" 
                                          GroupPanelBackground="#e4e5e5"
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         ColumnWidth="*" FontFamily="Arial"
+                                         ColumnWidth="*" 
                                          EnableColumnVirtualization="False"
                                          EnableRowVirtualization="False"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
