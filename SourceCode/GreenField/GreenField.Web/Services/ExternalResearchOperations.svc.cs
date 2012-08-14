@@ -90,6 +90,13 @@ namespace GreenField.Web.Services
                 String industryCode = securityDetails.GICS_INDUSTRY;
                 String industryName = securityDetails.GICS_SUB_INDUSTRY_NAME;
                 int? securityID = securityDetails.SECURITY_ID;
+                String issueName = securityDetails.ISSUE_NAME;
+               String subIndustryName = securityDetails.GICS_SUB_INDUSTRY_NAME;
+               String ticker = securityDetails.TICKER;
+               String currency = securityDetails.TRADING_CURRENCY;
+               String primaryAnalyst = securityDetails.ASHMOREEMM_PRIMARY_ANALYST;
+               String industryAnalyst = securityDetails.ASHMOREEMM_INDUSTRY_ANALYST;
+
                 String currencyCode = null;
                 String currencyName = null;
 
@@ -116,7 +123,13 @@ namespace GreenField.Web.Services
                     SectorName = sectorName,
                     IndustryCode = industryCode,
                     IndustryName = industryName,
-                    SecurityId = securityID
+                    SecurityId = securityID,
+                    IssueName = issueName,
+                    SubIndustryName = subIndustryName,
+                    Ticker = ticker,
+                    TradingCurrency = currency,
+                    PrimaryAnalyst = primaryAnalyst,
+                    IndustryAnalyst = industryAnalyst
                 };
 
                 return result;
@@ -188,15 +201,15 @@ namespace GreenField.Web.Services
 
                 List<BrokerDetail> brokerDetailsList = new List<BrokerDetail>();
                 foreach (string item in dataDescriptors)
-	            {
+                {
                     List<BrokerDetail> temp = new List<BrokerDetail>();
-                    temp = entity.GetBrokerDetail(issuerId,item,_periodType,currency).ToList();
-                    if(temp != null)
-                    foreach (BrokerDetail value in temp)
-	                {
-                          brokerDetailsList.Add(value);		 
-	                }		 
-	            }
+                    temp = entity.GetBrokerDetail(issuerId, "EPS", _periodType, currency).ToList();
+                    if (temp != null)
+                        foreach (BrokerDetail value in temp)
+                        {
+                            brokerDetailsList.Add(value);
+                        }
+                }
 
                 for (int i = 0; i < data.Count; i++)
                 {
@@ -246,10 +259,230 @@ namespace GreenField.Web.Services
             }
         }
 
-        //[OperationContract]
-        //[FaultContract(typeof(ServiceFault))]
-        //public List<FinstatData> RetrieveFinstatData(string issuerId,string securityId, FinancialStatementDataSource dataSource, String currency
+        /// <summary>
+        /// Get data for Finstat Gadget
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="securityId"></param>
+        /// <param name="dataSource"></param>
+        /// <param name="fiscalType"></param>
+        /// <param name="currency"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<FinstatDetailData> RetrieveFinstatData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, String currency,string yearRange)
+        {
+            string _dataSource = EnumUtils.ToString(dataSource);
+            string _fiscalType = EnumUtils.ToString(fiscalType);
+            int yearRangeStart = Convert.ToInt32(yearRange.Substring(0, 4));
 
+            ExternalResearchEntities entity = new ExternalResearchEntities();
+
+            List<FinstatDetail> data = new List<FinstatDetail>();
+            List<FinstatDetailData> result = new List<FinstatDetailData>();
+
+            data = entity.GetFinstatDetail(issuerId,securityId,_dataSource,_fiscalType,currency).ToList();
+
+            if (data == null || data.Count() == 0)
+                return result;
+
+            #region Preparing display data for group names
+            for (int i = 0; i < data.Count(); i++)
+            {
+                FinstatDetailData temp = new FinstatDetailData();
+                temp.Amount = data[i].AMOUNT;
+                temp.BoldFont = data[i].BOLD_FONT;
+                temp.Description = data[i].DATA_DESC;
+                temp.Decimals = data[i].DECIMALS;
+                temp.GroupDescription = data[i].GROUP_NAME;
+                temp.Harmonic = data[i].HARMONIC;
+                temp.Multiplier = data[i].MULTIPLIER;
+                temp.Percentage = data[i].PERCENTAGE;
+                temp.PeriodYear = data[i].PERIOD_YEAR;
+                temp.SortOrder = data[i].SORT_ORDER;
+                temp.AmountType = "A";
+                temp.PeriodType = "A";
+                if (data[i].HARMONIC == "Y")
+                {
+                    decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;
+                    List<FinstatDetail> availablePeriodYear = data.Where(a => a.GROUP_NAME == data[i].GROUP_NAME && a.DATA_DESC == data[i].DATA_DESC)
+                                                        .ToList();
+                    foreach (FinstatDetail item in availablePeriodYear)
+                    {
+                        if (item.PERIOD_YEAR == (yearRangeStart + 1))
+                            year1 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
+                        else if (item.PERIOD_YEAR == (yearRangeStart + 2))
+                            year2 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
+                        else if (item.PERIOD_YEAR == (yearRangeStart + 3))
+                            year3 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
+                        else if (item.PERIOD_YEAR == (yearRangeStart + 4))
+                            year4 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
+                        else if (item.PERIOD_YEAR == (yearRangeStart + 5))
+                            year5 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
+                        else if (item.PERIOD_YEAR == (yearRangeStart + 6))
+                            year6 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
+                    }
+
+                    if (year1 != 0 && year2 != 0 && year3 != 0)
+                        temp.HarmonicFirst = 1 / (year1 + year2 + year3);
+                    if (year4 != 0 && year5 != 0 && year6 != 0)
+                        temp.HarmonicFirst = 1 / (year4 + year5 + year6);
+                }
+                result.Add(temp);
+            } 
+            #endregion
+
+            #region Economic & Market Data
+            List<FinstatEconomicMarketData> economicData = entity.GetFinstatEconomicMarketData(issuerId,securityId,_dataSource,_fiscalType,currency).ToList();
+
+            //Preparing Exchange Rates
+            List<string> distinctYears = economicData.Select(a => a.PERIOD_YEAR).Distinct().ToList();
+            foreach (string item in distinctYears)
+            {
+                FinstatDetailData tempData = new FinstatDetailData();
+                tempData.GroupDescription = "Economic & Market Data";
+                tempData.Description = "Exchange Rate (Year-End)";
+                tempData.PeriodYear = Convert.ToInt32(item);
+                tempData.AmountType = "A";
+                tempData.PeriodType = "A";
+                tempData.Amount = Convert.ToDecimal(economicData.Where(a => a.PERIOD_YEAR == item).Select(a => a.FX_RATE).FirstOrDefault());
+                result.Add(tempData);
+
+                FinstatDetailData temp = new FinstatDetailData();
+                temp.GroupDescription = "Economic & Market Data";
+                temp.Description = "Exchange Rate (Average)";
+                temp.PeriodYear = Convert.ToInt32(item);
+                temp.AmountType = "A";
+                temp.PeriodType = "A";
+                temp.Amount = Convert.ToDecimal(economicData.Where(a => a.PERIOD_YEAR == item).Select(a => a.AVG12MonthRATE).FirstOrDefault());
+                result.Add(temp);
+            }
+
+            //Preparing Inflation and ST Interest Rate
+            foreach (FinstatEconomicMarketData item in economicData)
+            {
+                FinstatDetailData tempData = new FinstatDetailData();
+                tempData.GroupDescription = "Economic & Market Data";
+                tempData.Description = item.FIELD;
+                tempData.PeriodYear = item.YEAR1;
+                tempData.AmountType = "A";
+                tempData.PeriodType = "A";
+                tempData.Amount = Math.Round(((item.VALUE) * 100),1);
+                result.Add(tempData);
+            }
+            #endregion
+
+            #region Relative Analysis Data
+            List<FinstatRelativeAnalysisData> relativeData = entity.GetFinstatRelativeAnalysisData(issuerId, securityId, _dataSource, _fiscalType).ToList();
+            
+            #region direct data
+            foreach (FinstatRelativeAnalysisData item in relativeData)
+            {
+                FinstatDetailData tempData = new FinstatDetailData();
+                tempData.GroupDescription = "Relative Analysis (in USD)";
+                tempData.PeriodYear = item.PERIOD_YEAR;
+                tempData.Amount = item.AMOUNT;
+                tempData.AmountType = "A";
+                tempData.PeriodType = "A";
+                tempData.Decimals = item.DECIMALS;
+                tempData.Multiplier = item.MULTIPLIER;
+                tempData.Percentage = item.PERCENTAGE;
+                if (item.VALUE == "step1")
+                {
+                    tempData.Description = item.DATA_ID == 44 ? "Net Income" :
+                                               item.DATA_ID == 166 ? "P/E" : item.DATA_ID == 164 ? "P/BV" : item.DATA_ID == 133 ? "ROE" : "";
+                }
+                else if (item.VALUE == "step2")
+                {
+                    tempData.Description = item.DATA_ID == 11 ? "Consensus Net Income" :
+                                               item.DATA_ID == 166 ? "Consensus P/E" : item.DATA_ID == 164 ? "Consensus P/BV" : item.DATA_ID == 19 ? "Consensus ROE" : "";
+                }
+                else if (item.VALUE == "step3")
+                {
+                    tempData.Description = item.DATA_ID == 166 ? "Country P/E" :
+                                               item.DATA_ID == 164 ? "Country P/BV" : item.DATA_ID == 133 ? "Country ROE" : "";
+                }
+                else if (item.VALUE == "step5")
+                {
+                    tempData.Description = item.DATA_ID == 166 ? "Industry P/E" :
+                                               item.DATA_ID == 164 ? "Industry P/BV" : item.DATA_ID == 133 ? "Industry ROE" : "";
+                }
+                result.Add(tempData);
+            } 
+            #endregion
+
+            //remaining data
+            List<FinstatRelativeAnalysisData> step1Data = new List<FinstatRelativeAnalysisData>();
+            step1Data = relativeData.Where(a => a.VALUE == "step1" && a.DATA_ID != 44).ToList();
+
+            foreach (FinstatRelativeAnalysisData item in step1Data)
+            {
+                FinstatDetailData record = new FinstatDetailData();
+                record.GroupDescription = "Relative Analysis (in USD)";
+                record.AmountType = "A";
+                record.PeriodType = "A";
+                record.PeriodYear = item.PERIOD_YEAR;
+                switch (item.DATA_ID)
+                {
+                    case 166:
+                        record.Description = "Relative Country P/E";
+                        decimal countryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 166).Select(a => a.AMOUNT));
+                        if(countryPE != 0)
+                        record.Amount = Math.Round((item.AMOUNT / countryPE),2);
+                        break;
+                    case 164:
+                        record.Description = "Relative Country P/BV";
+                        decimal countryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 164).Select(a => a.AMOUNT));
+                        if (countryPBV != 0)
+                            record.Amount = Math.Round((item.AMOUNT / countryPBV), 2);
+                        break;
+                    case 133:
+                        record.Description = "Relative Country ROE";
+                        decimal countryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 133).Select(a => a.AMOUNT));
+                        if (countryROE != 0)
+                            record.Amount = Math.Round((item.AMOUNT / countryROE), 2);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            foreach (FinstatRelativeAnalysisData item in step1Data)
+            {
+                FinstatDetailData record = new FinstatDetailData();
+                record.GroupDescription = "Relative Analysis (in USD)";
+                record.PeriodYear = item.PERIOD_YEAR;
+                record.AmountType = "A";
+                record.PeriodType = "A";
+                switch (item.DATA_ID)
+                {
+                    case 166:
+                        record.Description = "Relative Industry P/E";
+                        decimal industryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 166).Select(a => a.AMOUNT));
+                        if (industryPE != 0)
+                            record.Amount = Math.Round((item.AMOUNT / industryPE), 2);
+                        break;
+                    case 164:
+                        record.Description = "Relative Industry P/BV";
+                        decimal industryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 164).Select(a => a.AMOUNT));
+                        if (industryPBV != 0)
+                            record.Amount = Math.Round((item.AMOUNT / industryPBV), 2);
+                        break;
+                    case 133:
+                        record.Description = "Relative Industry ROE";
+                        decimal industryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 133).Select(a => a.AMOUNT));
+                        if (industryROE != 0)
+                            record.Amount = Math.Round((item.AMOUNT / industryROE), 2);
+                        break;
+                    default:
+                        break;
+                }
+            }       
+            
+            #endregion
+
+            return result;
+        }
 
         /// <summary>
         /// Gets Basic Data

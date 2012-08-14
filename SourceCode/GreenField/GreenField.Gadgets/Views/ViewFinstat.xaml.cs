@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.Views
 {
@@ -49,8 +50,30 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             DataContextFinstat = dataContextSource;
+            PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 4, netColumnCount: 7, isQuarterImplemented: false);
+            PeriodColumns.UpdateColumnInformation(this.dgFinstat, new PeriodColumnUpdateEventArg()
+            {
+                PeriodRecord = periodRecord,
+                PeriodColumnNamespace = typeof(ViewModelFinstat).FullName,                
+                PeriodColumnHeader = PeriodColumns.SetColumnHeaders(periodRecord, displayPeriodType: false),
+                PeriodIsYearly = true
+            }, isQuarterImplemented: false, navigatingColumnStartIndex: 1);
+
+            PeriodColumns.PeriodColumnUpdate += (e) =>
+            {
+                if (e.PeriodColumnNamespace == typeof(ViewModelConsensusEstimatesDetails).FullName)
+                {
+                    PeriodColumns.UpdateColumnInformation(this.dgFinstat, e, false, 1);
+                    //this.btnExportExcel.IsEnabled = true;
+                }
+            };
         } 
         #endregion
+
+        private void dgFinstat_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            GroupedGridRowLoadedHandler.Implement(e);
+        }
 
         #region Dispose Method
         public override void Dispose()

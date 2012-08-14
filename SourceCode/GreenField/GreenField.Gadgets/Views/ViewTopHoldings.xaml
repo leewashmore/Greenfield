@@ -54,8 +54,6 @@
                                      ShowGroupPanel="False" 
                                      UseLayoutRounding="True" 
                                      ShowColumnFooters="True"
-                                     FontSize="7" 
-                                     FontFamily="Arial" 
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
                                      RowStyle="{StaticResource GridViewRowStyle}"
                                      AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
@@ -66,7 +64,8 @@
                                      EnableRowVirtualization="False">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgcTicker" Header="" DataMemberBinding="{Binding Ticker}" Width="auto" HeaderTextAlignment="Right" 
-                                                    TextAlignment="Left" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}">
+                                                    TextAlignment="Left" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}">
                             <telerik:GridViewDataColumn.Footer>
                                 <Border> 
                                     <TextBlock Text="Top 10"/>
@@ -74,7 +73,8 @@
                             </telerik:GridViewDataColumn.Footer>
                         </telerik:GridViewDataColumn>
                         <telerik:GridViewDataColumn x:Name="dgcName" Header="" DataMemberBinding="{Binding Holding}" Width="*" HeaderTextAlignment="Right" 
-                                                    TextAlignment="Left" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                    TextAlignment="Left" IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgcMarketValue" Header="Mkt Value" DataMemberBinding="{Binding MarketValue}" 
                                                     Width="*" HeaderTextAlignment="Right" TextAlignment="Right" FooterTextAlignment="Right" 
                                                     CellStyle="{StaticResource GridViewCellStyle}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"

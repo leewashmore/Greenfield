@@ -25,7 +25,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <CheckBox Content="Display Issuer" FontSize="7" FontFamily="Arial" VerticalContentAlignment="Center"
-                      IsChecked="{Binding DisplayIssuerIsChecked, Mode=TwoWay}"/>
+                      IsChecked="{Binding DisplayIssuerIsChecked, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
             <telerik:RadGridView Name="dgRelativePerformance" 
                                  Grid.Row="1"
                                  AutoGenerateColumns="False" 
@@ -34,7 +34,6 @@
                                  CanUserSelect="False" 
                                  CanUserReorderColumns="False" 
                                  CanUserInsertRows="False" 
-                                 
                                  SelectionMode="Single"
                                  CanUserDeleteRows="False" 
                                  IsReadOnly="True" 
@@ -42,7 +41,6 @@
                                  ScrollMode="RealTime" 
                                  ShowGroupFooters="False"
                                  RowIndicatorVisibility="Collapsed"
-                                 FontSize="7"
                                  ShowGroupPanel="False" 
                                  AlternationCount="2" 
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
@@ -51,19 +49,18 @@
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  RowStyle="{StaticResource GridViewRowStyle}"
                                  RowLoaded="dgRelativePerformance_RowLoaded" 
-                                 RowHeight="15"
                                  >
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn Header="Security Name" DataMemberBinding="{Binding Entity}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                Width="auto" HeaderTextAlignment="Left" TextAlignment="Left"/>
+                                                Width="auto" HeaderTextAlignment="Left" TextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn Header="Market Value" DataMemberBinding="{Binding MarketValue, StringFormat=\{0:n2\}}" Width="*" HeaderTextAlignment="Right"
-                                                TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"/>
+                                                TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn Header="Fund Wt." DataMemberBinding="{Binding FundWeight, Converter={StaticResource PercentageValueConverter}}" TextAlignment="Right" 
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" Width="auto" HeaderTextAlignment="Right"/>
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" Width="auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn Header="Benchmark Wt." DataMemberBinding="{Binding BenchmarkWeight, Converter={StaticResource PercentageValueConverter}}" HeaderTextAlignment="Right"
-                                                TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" Width="auto"/>
+                                                TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" Width="auto" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn Header="Active Position" DataMemberBinding="{Binding ActivePosition, Converter={StaticResource PercentageValueConverter}}" HeaderTextAlignment="Right"
-                                                TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" Width="auto"/>
+                                                TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" Width="auto" CellStyle="{StaticResource GridViewCellStyle}"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </Grid>

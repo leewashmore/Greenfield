@@ -32,7 +32,6 @@ namespace GreenField.Gadgets.Models
                     RaisePropertyChanged(() => this.Presenter);
                 }
             }
-
         }
 
         private DateTime? _presentationDate;

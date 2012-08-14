@@ -143,7 +143,7 @@
                                                Background="#dfe6f8" FontFamily="Arial"
                                                FontSize="10"/>
                         <telerik:RadMenuItem Header="FinStat" x:Name="rmItemFinStat"
-                                               Background="#dfe6f8" FontFamily="Arial"
+                                               Background="#dfe6f8" FontFamily="Arial" Command="{Binding DashboardCompanyFinstatCommand}"
                                                FontSize="10"/>
                         <telerik:RadMenuItem Header="Peer Comparison" x:Name="rmItemPeerComparison"
                                                Background="#dfe6f8" FontFamily="Arial"

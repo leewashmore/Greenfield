@@ -31,12 +31,14 @@ namespace GreenField.Gadgets.Models
         public String YEAR_FOUR_DATA_ROOT_SOURCE { get; set; }
         public String YEAR_FIVE_DATA_ROOT_SOURCE { get; set; }
         public String YEAR_SIX_DATA_ROOT_SOURCE { get; set; }
+        public String YEAR_SEVEN_DATA_ROOT_SOURCE { get; set; }
         public String QUARTER_ONE_DATA_ROOT_SOURCE { get; set; }
         public String QUARTER_TWO_DATA_ROOT_SOURCE { get; set; }
         public String QUARTER_THREE_DATA_ROOT_SOURCE { get; set; }
         public String QUARTER_FOUR_DATA_ROOT_SOURCE { get; set; }
         public String QUARTER_FIVE_DATA_ROOT_SOURCE { get; set; }
         public String QUARTER_SIX_DATA_ROOT_SOURCE { get; set; }
+        public String QUARTER_SEVEN_DATA_ROOT_SOURCE { get; set; }
 
         public DateTime? YEAR_ONE_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? YEAR_TWO_DATA_ROOT_SOURCE_DATE { get; set; }
@@ -44,21 +46,29 @@ namespace GreenField.Gadgets.Models
         public DateTime? YEAR_FOUR_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? YEAR_FIVE_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? YEAR_SIX_DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? YEAR_SEVEN_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? QUARTER_ONE_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? QUARTER_TWO_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? QUARTER_THREE_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? QUARTER_FOUR_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? QUARTER_FIVE_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? QUARTER_SIX_DATA_ROOT_SOURCE_DATE { get; set; }
-
-        
-
-        //public DateTime? DATA_ROOT_SOURCE_DATE { get; set; }
+        public DateTime? QUARTER_SEVEN_DATA_ROOT_SOURCE_DATE { get; set; }        
 
         /// <summary>
         /// Data Description
         /// </summary>
         public String DATA_DESC { get; set; }
+
+        /// <summary>
+        /// Data Description
+        /// </summary>
+        public String ADDITIONAL_DESC_FIRST { get; set; }
+
+        /// <summary>
+        /// Data Description
+        /// </summary>
+        public String ADDITIONAL_DESC_SECOND { get; set; }
 
         /// <summary>
         /// Data Description
@@ -96,6 +106,11 @@ namespace GreenField.Gadgets.Models
         public object YEAR_SIX { get; set; }
 
         /// <summary>
+        /// Data - Year seven annual
+        /// </summary>
+        public object YEAR_SEVEN { get; set; }
+
+        /// <summary>
         /// Data - Quarter one
         /// </summary>
         public object QUARTER_ONE { get; set; }
@@ -124,6 +139,11 @@ namespace GreenField.Gadgets.Models
         /// Data - Quarter six
         /// </summary>
         public object QUARTER_SIX { get; set; }
+
+        /// <summary>
+        /// Data - Quarter seven
+        /// </summary>
+        public object QUARTER_SEVEN { get; set; }
     }
 
     public class PeriodColumnGroupingDetail
@@ -174,6 +194,9 @@ namespace GreenField.Gadgets.Models
         public int YearSix { get; set; }
         public bool YearSixIsHistorical { get; set; }
 
+        public int YearSeven { get; set; }
+        public bool YearSevenIsHistorical { get; set; }
+
         public int QuarterOneYear { get; set; }
         public int QuarterOneQuarter { get; set; }
         public bool QuarterOneIsHistorical { get; set; }
@@ -198,90 +221,94 @@ namespace GreenField.Gadgets.Models
         public int QuarterSixQuarter { get; set; }
         public bool QuarterSixIsHistorical { get; set; }
 
+        public int QuarterSevenYear { get; set; }
+        public int QuarterSevenQuarter { get; set; }
+        public bool QuarterSevenIsHistorical { get; set; }
+
         public int DefaultHistoricalYearCount { get; set; }
         public int DefaultHistoricalQuarterCount { get; set; }
         public int NetColumnCount { get; set; }
         public bool IsQuarterImplemented { get; set; }
     }
 
-    public class PeriodColumnCEDisplayData
-    {
-        public Int32 DATA_ID { get; set; }
+    //public class PeriodColumnCEDisplayData
+    //{
+    //    public Int32 DATA_ID { get; set; }
 
-        /// <summary>
-        /// Data Description
-        /// </summary>
-        public string DATA_DESC { get; set; }
+    //    /// <summary>
+    //    /// Data Description
+    //    /// </summary>
+    //    public string DATA_DESC { get; set; }
 
-        /// <summary>
-        /// Data Description
-        /// </summary>
-        public string SUB_DATA_DESC { get; set; }
+    //    /// <summary>
+    //    /// Data Description
+    //    /// </summary>
+    //    public string SUB_DATA_DESC { get; set; }
 
-        /// <summary>
-        /// Data - Year one annual
-        /// </summary>
-        public string YEAR_ONE { get; set; }
+    //    /// <summary>
+    //    /// Data - Year one annual
+    //    /// </summary>
+    //    public string YEAR_ONE { get; set; }
 
-        /// <summary>
-        /// Data - Year two annual
-        /// </summary>
-        public string YEAR_TWO { get; set; }
+    //    /// <summary>
+    //    /// Data - Year two annual
+    //    /// </summary>
+    //    public string YEAR_TWO { get; set; }
 
-        /// <summary>
-        /// Data - Year three annual
-        /// </summary>
-        public string YEAR_THREE { get; set; }
+    //    /// <summary>
+    //    /// Data - Year three annual
+    //    /// </summary>
+    //    public string YEAR_THREE { get; set; }
 
-        /// <summary>
-        /// Data - Year four annual
-        /// </summary>
-        public string YEAR_FOUR { get; set; }
+    //    /// <summary>
+    //    /// Data - Year four annual
+    //    /// </summary>
+    //    public string YEAR_FOUR { get; set; }
 
-        /// <summary>
-        /// Data - Year five annual
-        /// </summary>
-        public string YEAR_FIVE { get; set; }
+    //    /// <summary>
+    //    /// Data - Year five annual
+    //    /// </summary>
+    //    public string YEAR_FIVE { get; set; }
 
-        /// <summary>
-        /// Data - Year six annual
-        /// </summary>
-        public string YEAR_SIX { get; set; }
+    //    /// <summary>
+    //    /// Data - Year six annual
+    //    /// </summary>
+    //    public string YEAR_SIX { get; set; }
 
-        /// <summary>
-        /// Data - Year Seven annual
-        /// </summary>
-        public string YEAR_SEVEN { get; set; }
+    //    /// <summary>
+    //    /// Data - Year Seven annual
+    //    /// </summary>
+    //    public string YEAR_SEVEN { get; set; }
 
-        /// <summary>
-        /// Data - Quarter one
-        /// </summary>
-        public string QUARTER_ONE { get; set; }
+    //    /// <summary>
+    //    /// Data - Quarter one
+    //    /// </summary>
+    //    public string QUARTER_ONE { get; set; }
 
-        /// <summary>
-        /// Data - Quarter two
-        /// </summary>
-        public string QUARTER_TWO { get; set; }
+    //    /// <summary>
+    //    /// Data - Quarter two
+    //    /// </summary>
+    //    public string QUARTER_TWO { get; set; }
 
-        /// <summary>
-        /// Data - Quarter three
-        /// </summary>
-        public string QUARTER_THREE { get; set; }
+    //    /// <summary>
+    //    /// Data - Quarter three
+    //    /// </summary>
+    //    public string QUARTER_THREE { get; set; }
 
-        /// <summary>
-        /// Data - Quarter four
-        /// </summary>
-        public string QUARTER_FOUR { get; set; }
+    //    /// <summary>
+    //    /// Data - Quarter four
+    //    /// </summary>
+    //    public string QUARTER_FOUR { get; set; }
 
-        /// <summary>
-        /// Data - Quarter five
-        /// </summary>
-        public string QUARTER_FIVE { get; set; }
+    //    /// <summary>
+    //    /// Data - Quarter five
+    //    /// </summary>
+    //    public string QUARTER_FIVE { get; set; }
 
-        /// <summary>
-        /// Data - Quarter six
-        /// </summary>
-        public string QUARTER_SIX { get; set; }
-    }
+    //    /// <summary>
+    //    /// Data - Quarter six
+    //    /// </summary>
+    //    public string QUARTER_SIX { get; set; }
+    //}
 
 }

@@ -74,6 +74,7 @@
     <Compile Include="DataContracts\Enumerations.cs" />
     <Compile Include="DataContracts\FilterSelectionData.cs" />
     <Compile Include="DataContracts\FinancialStatementInputData.cs" />
+    <Compile Include="DataContracts\FinstatDetailData.cs" />
     <Compile Include="DataContracts\FXCommodityData.cs" />
     <Compile Include="DataContracts\HeatMapData.cs" />
     <Compile Include="DataContracts\HoldingsData.cs" />

@@ -95,6 +95,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\FinancialStatementInputData.cs">
       <Link>DataContracts\FinancialStatementInputData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\FinstatDetailData.cs">
+      <Link>DataContracts\FinstatDetailData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\FXCommodityData.cs">
       <Link>DataContracts\FXCommodityData.cs</Link>
     </Compile>

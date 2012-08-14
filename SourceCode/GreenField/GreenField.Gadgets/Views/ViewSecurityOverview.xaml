@@ -26,10 +26,10 @@
                 </Grid.RowDefinitions>
 
                 <!--security name/ticker-->
-                <TextBlock Grid.Row="0" FontSize="13" x:Name="txtIssueName" TextAlignment="Center" FontWeight="Bold" Text="{Binding IssueName}"/>
+                <TextBlock Grid.Row="0" FontSize="13" x:Name="txtIssueName" TextAlignment="Center" FontWeight="Bold" Text="{Binding IssueName}" Style="{StaticResource TextBlockStyle}"/>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock FontWeight="Bold" FontStyle="Italic">(</TextBlock>
-                    <TextBlock x:Name="txtTicker" FontWeight="Bold" FontStyle="Italic" Text="{Binding Ticker}"/>
+                    <TextBlock x:Name="txtTicker" FontWeight="Bold" FontStyle="Italic" Text="{Binding Ticker}" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock FontWeight="Bold" FontStyle="Italic">)</TextBlock>
                 </StackPanel>
 
@@ -52,14 +52,14 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Country :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtCountry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Country}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Sector :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtSector" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Sector}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Industry}"/>
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Sub-Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtSubIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding SubIndustry}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Country :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtCountry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Country}" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Sector :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtSector" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Sector}" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Industry}" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Sub-Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtSubIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding SubIndustry}" Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
 
                     <Grid Grid.Column="1">
@@ -74,20 +74,20 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Primary Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtPrimaryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PrimaryAnalyst}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Currency :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtCurrency" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Currency}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Fiscal Year End :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtFiscalYearEnd" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding FiscalYearend}"/>
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Website :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtWebsite" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Website}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Primary Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtPrimaryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PrimaryAnalyst}" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Currency :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtCurrency" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Currency}" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Fiscal Year End :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtFiscalYearEnd" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding FiscalYearend}" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Website :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtWebsite" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Website}" Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
                 </Grid>
 
                 <TextBlock Grid.Row="3" TextWrapping="Wrap" Margin="5, 5, 5, 5" x:Name="txtDescription"
                        FontStyle="Italic" FontWeight="Bold" Text="{Binding Description}"
-                       HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                       HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
             </Grid>
         </telerik:RadBusyIndicator>
     </Grid>

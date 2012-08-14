@@ -42,7 +42,6 @@
                                      ScrollMode="RealTime" 
                                      ShowGroupPanel="False" 
                                      CanUserSortColumns="False"
-                                     FontSize="7"
                                      RowIndicatorVisibility="Collapsed" 
                                      ItemsSource="{Binding ContributorDetractorInfo}"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
@@ -50,21 +49,20 @@
                                      AlternationCount="2" 
                                      GridLinesVisibility="None"
                                      AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                     RowHeight="15"
                                      RowStyle="{StaticResource GridViewRowStyle}">                                    
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgCountryId" Header="Country Id" DataMemberBinding="{Binding SecurityCountryId}" Width="Auto" HeaderTextAlignment="Left"
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left" 
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}" 
                                                     CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgSecurityName" Header="Security Name" DataMemberBinding="{Binding SecurityName}" Width="Auto"  
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" HeaderTextAlignment="Left" TextAlignment="Left"
-                                                     CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
+                                                     CellStyleSelector="{StaticResource GridRowMarkerStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgBasisPts" Header="Basis Pts" DataMemberBinding="{Binding SecurityAlpha}" Width="*" TextAlignment="Right" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" HeaderTextAlignment="Right"
-                                                     CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
+                                                     CellStyleSelector="{StaticResource GridRowMarkerStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgSector" Header="Sector" DataMemberBinding="{Binding SecuritySectorName}" Width="Auto"  
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left"  HeaderTextAlignment="Left"
-                                                     CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
+                                                     CellStyleSelector="{StaticResource GridRowMarkerStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </telerik:RadBusyIndicator>

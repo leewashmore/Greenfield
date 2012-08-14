@@ -72,7 +72,7 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="incrementFactor">increment factor of iteration in period column year quarter calculation : [Default] 0</param>
         /// <param name="defaultHistoricalYearCount">year columns from left to default to hostorical data : [Default] 3</param>
         /// <param name="defaultHistoricalQuarterCount">quarter columns from left to default to historical data : [Default] 4</param>
-        /// <param name="netColumnCount">Total count of columns :[Max] 6 [Default] 6</param>
+        /// <param name="netColumnCount">Total count of columns :[Max] 7 [Default] 6</param>
         /// <param name="isQuarterImplemented">quarter data implementation : [Default] true</param>
         /// <returns>PeriodRecord</returns>
         public static PeriodRecord SetPeriodRecord(int incrementFactor = 0, int defaultHistoricalYearCount = 3, int defaultHistoricalQuarterCount = 4
@@ -121,6 +121,11 @@ namespace GreenField.Gadgets.Helpers
                 goto QUARTER_INFO;
             periodRecord.YearSix = periodRecord.YearFive + 1;
             periodRecord.YearSixIsHistorical = periodRecord.YearSix < presentYear;
+
+            if (++columnCount > netColumnCount)
+                goto QUARTER_INFO;
+            periodRecord.YearSeven = periodRecord.YearSix + 1;
+            periodRecord.YearSevenIsHistorical = periodRecord.YearSeven < presentYear;
             #endregion
 
         QUARTER_INFO:
@@ -170,6 +175,13 @@ namespace GreenField.Gadgets.Helpers
             periodRecord.QuarterSixQuarter = GetQuarter((new DateTime(presentYear, presentMonth, 1)).AddMonths((incrementFactor - defaultHistoricalQuarterCount + 5) * 3).Month);
             periodRecord.QuarterSixIsHistorical = periodRecord.QuarterSixYear < presentYear
                 ? true : (periodRecord.QuarterSixYear == presentYear ? periodRecord.QuarterSixQuarter < presentQuarter : false);
+
+            if (++columnCount > netColumnCount)
+                goto FINISH;
+            periodRecord.QuarterSevenYear = (new DateTime(presentYear, presentMonth, 1)).AddMonths((incrementFactor - defaultHistoricalQuarterCount + 6) * 3).Year;
+            periodRecord.QuarterSevenQuarter = GetQuarter((new DateTime(presentYear, presentMonth, 1)).AddMonths((incrementFactor - defaultHistoricalQuarterCount + 6) * 3).Month);
+            periodRecord.QuarterSevenIsHistorical = periodRecord.QuarterSevenYear < presentYear
+                ? true : (periodRecord.QuarterSevenYear == presentYear ? periodRecord.QuarterSevenQuarter < presentQuarter : false);
             #endregion
 
         FINISH:
@@ -209,6 +221,9 @@ namespace GreenField.Gadgets.Helpers
             if (++columnCount > periodRecord.NetColumnCount)
                 goto QUARTER_INFO;
             periodColumnHeader.Add(periodRecord.YearSix.ToString() + (displayPeriodType ? " " + (periodRecord.YearSixIsHistorical ? "A" : "E") : ""));
+            if (++columnCount > periodRecord.NetColumnCount)
+                goto QUARTER_INFO;
+            periodColumnHeader.Add(periodRecord.YearSeven.ToString() + (displayPeriodType ? " " + (periodRecord.YearSevenIsHistorical ? "A" : "E") : ""));
 
         QUARTER_INFO:
             if (!periodRecord.IsQuarterImplemented)
@@ -233,6 +248,9 @@ namespace GreenField.Gadgets.Helpers
             if (++columnCount > periodRecord.NetColumnCount)
                 goto FINISH;
             periodColumnHeader.Add(periodRecord.QuarterSixYear.ToString() + " Q" + periodRecord.QuarterSixQuarter.ToString() + (displayPeriodType ? " " + (periodRecord.QuarterSixIsHistorical ? "A" : "E") : ""));
+            if (++columnCount > periodRecord.NetColumnCount)
+                goto FINISH;
+            periodColumnHeader.Add(periodRecord.QuarterSevenYear.ToString() + " Q" + periodRecord.QuarterSevenQuarter.ToString() + (displayPeriodType ? " " + (periodRecord.QuarterSevenIsHistorical ? "A" : "E") : ""));
 
         FINISH:
             return periodColumnHeader;
@@ -249,7 +267,8 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="updatePeriodRecord">update PeriodRecord with AmountType updates : [Default] true</param>
         /// <returns>List of PeriodColumnDisplayData objects</returns>
         public static List<PeriodColumnDisplayData> SetPeriodColumnDisplayInfo<T>(List<T> data, out PeriodRecord periodRecord
-            , PeriodRecord periodRecordInfo, List<PeriodColumnGroupingDetail> subGroups = null, bool updatePeriodRecord = true)
+            , PeriodRecord periodRecordInfo, List<PeriodColumnGroupingDetail> subGroups = null, bool updatePeriodRecord = true, bool uniqueByGroupDesc = false
+            , String additionalFirstDescPropertyName = null, String additionalSecondDescPropertyName = null)
         {
             List<PeriodColumnDisplayData> result = new List<PeriodColumnDisplayData>();
             PeriodRecord period = periodRecordInfo;
@@ -269,279 +288,342 @@ namespace GreenField.Gadgets.Helpers
                 || !propertyInfo.Any(record => record.Name == "AmountType"))
                 throw new InvalidOperationException("Data type is missing requisite columns");
 
-            List<String> distinctPeriodDataDescriptors = data
-                .Select(record => (String)record.GetType().GetProperty("Description").GetValue(record, null)).Distinct().ToList();
-
-            foreach (String dataDesc in distinctPeriodDataDescriptors)
+            List<String> distinctPeriodDataGroupDescriptors = new List<string>() { "" };
+            if (uniqueByGroupDesc)
             {
-                T defaultRecord = data.Where(record => ((String)record.GetType().GetProperty("Description").GetValue(record, null)) == dataDesc).FirstOrDefault();
+                if (!propertyInfo.Any(record => record.Name == "GroupDescription"))
+                    throw new InvalidOperationException("Data type is missing requisite columns");
+                distinctPeriodDataGroupDescriptors = data
+                .Select(record => (String)record.GetType().GetProperty("GroupDescription").GetValue(record, null)).Distinct().ToList();
+            }
 
-                String groupDescription = null;
-                if (propertyInfo.Any(record => record.Name == "GroupDescription"))
-                    groupDescription = (String)defaultRecord.GetType().GetProperty("GroupDescription").GetValue(defaultRecord, null);
+            foreach (String gDesc in distinctPeriodDataGroupDescriptors)
+            {
+                List<String> distinctPeriodDataDescriptors = uniqueByGroupDesc
+                    ? data.Where(record => (String)record.GetType().GetProperty("GroupDescription").GetValue(record, null) == gDesc)
+                        .Select(record => (String)record.GetType().GetProperty("Description").GetValue(record, null)).Distinct().ToList() 
+                    : data.Select(record => (String)record.GetType().GetProperty("Description").GetValue(record, null)).Distinct().ToList();
 
-                Int32? dataId = null;
-                if (propertyInfo.Any(record => record.Name == "DataId"))
-                    dataId = (Int32?)defaultRecord.GetType().GetProperty("DataId").GetValue(defaultRecord, null);
-
-                Boolean? dataBold = false;
-                if (propertyInfo.Any(record => record.Name == "BoldFont"))
-                    dataBold = ((String)defaultRecord.GetType().GetProperty("BoldFont").GetValue(defaultRecord, null)).Trim().ToUpper() == "Y";
-
-                Boolean? dataPercentage = false;
-                if (propertyInfo.Any(record => record.Name == "IsPercentage"))
-                    dataPercentage = ((String)defaultRecord.GetType().GetProperty("IsPercentage").GetValue(defaultRecord, null)).Trim().ToUpper() == "Y";
-
-                Int32? dataDecimal = null;
-                if (propertyInfo.Any(record => record.Name == "Decimals"))
-                    dataDecimal = (Int32?)defaultRecord.GetType().GetProperty("Decimals").GetValue(defaultRecord, null);
-
-                Int32 columnCount = 0;
-                T yearOneData = default(T);
-                T yearTwoData = default(T);
-                T yearThreeData = default(T);
-                T yearFourData = default(T);
-                T yearFiveData = default(T);
-                T yearSixData = default(T);
-                T quarterOneData = default(T);
-                T quarterTwoData = default(T);
-                T quarterThreeData = default(T);
-                T quarterFourData = default(T);
-                T quarterFiveData = default(T);
-                T quarterSixData = default(T);
-
-                #region Annual
-                #region Year One
-                if (++columnCount > period.NetColumnCount)
-                    goto QUARTERLY_INFO;
-                yearOneData = GetPeriodData<T>(data, dataDesc, period.YearOne.ToString(), "A");
-                if (yearOneData != null && updatePeriodRecord)
-                    period.YearOneIsHistorical = ConvertAmountTypeToBoolean(yearOneData.GetType().GetProperty("AmountType").GetValue(yearOneData, null).ToString());
-                #endregion
-
-                #region Year Two
-                if (++columnCount > period.NetColumnCount)
-                    goto QUARTERLY_INFO;
-                yearTwoData = GetPeriodData<T>(data, dataDesc, period.YearTwo.ToString(), "A");
-                if (yearTwoData != null && updatePeriodRecord)
-                    period.YearTwoIsHistorical = ConvertAmountTypeToBoolean(yearTwoData.GetType().GetProperty("AmountType").GetValue(yearTwoData, null).ToString());
-                #endregion
-
-                #region Year Three
-                if (++columnCount > period.NetColumnCount)
-                    goto QUARTERLY_INFO;
-                yearThreeData = GetPeriodData<T>(data, dataDesc, period.YearThree.ToString(), "A");
-                if (yearThreeData != null && updatePeriodRecord)
-                    period.YearThreeIsHistorical = ConvertAmountTypeToBoolean(yearThreeData.GetType().GetProperty("AmountType").GetValue(yearThreeData, null).ToString());
-                #endregion
-
-                #region Year Four
-                if (++columnCount > period.NetColumnCount)
-                    goto QUARTERLY_INFO;
-                yearFourData = GetPeriodData<T>(data, dataDesc, period.YearFour.ToString(), "A");
-                if (yearFourData != null && updatePeriodRecord)
-                    period.YearFourIsHistorical = ConvertAmountTypeToBoolean(yearFourData.GetType().GetProperty("AmountType").GetValue(yearFourData, null).ToString());
-                #endregion
-
-                #region Year Five
-                if (++columnCount > period.NetColumnCount)
-                    goto QUARTERLY_INFO;
-                yearFiveData = GetPeriodData<T>(data, dataDesc, period.YearFive.ToString(), "A");
-                if (yearFiveData != null && updatePeriodRecord)
-                    period.YearFiveIsHistorical = ConvertAmountTypeToBoolean(yearFiveData.GetType().GetProperty("AmountType").GetValue(yearFiveData, null).ToString());
-                #endregion
-
-                #region Year Six
-                if (++columnCount > period.NetColumnCount)
-                    goto QUARTERLY_INFO;
-                yearSixData = GetPeriodData<T>(data, dataDesc, period.YearSix.ToString(), "A");
-                if (yearSixData != null && updatePeriodRecord)
-                    period.YearSixIsHistorical = ConvertAmountTypeToBoolean(yearSixData.GetType().GetProperty("AmountType").GetValue(yearSixData, null).ToString());
-                #endregion
-                #endregion
-
-            QUARTERLY_INFO:
-                if (!(period.IsQuarterImplemented))
-                    goto GROUPING;
-                columnCount = 0;
-
-                #region Quarterly
-                #region Quarter One
-                if (++columnCount > period.NetColumnCount)
-                    goto GROUPING;
-                quarterOneData = GetPeriodData<T>(data, dataDesc, period.QuarterOneYear.ToString(), "Q" + period.QuarterOneQuarter.ToString());
-                if (quarterOneData != null && updatePeriodRecord)
-                    period.QuarterOneIsHistorical = ConvertAmountTypeToBoolean(quarterOneData.GetType().GetProperty("AmountType").GetValue(quarterOneData, null).ToString());
-                #endregion
-
-                #region Quarter Two
-                if (++columnCount > period.NetColumnCount)
-                    goto GROUPING;
-                quarterTwoData = GetPeriodData<T>(data, dataDesc, period.QuarterTwoYear.ToString(), "Q" + period.QuarterTwoQuarter.ToString());
-                if (quarterTwoData != null && updatePeriodRecord)
-                    period.QuarterTwoIsHistorical = ConvertAmountTypeToBoolean(quarterTwoData.GetType().GetProperty("AmountType").GetValue(quarterTwoData, null).ToString());
-                #endregion
-
-                #region Quarter Three
-                if (++columnCount > period.NetColumnCount)
-                    goto GROUPING;
-                quarterThreeData = GetPeriodData<T>(data, dataDesc, period.QuarterThreeYear.ToString(), "Q" + period.QuarterThreeQuarter.ToString());
-                if (quarterThreeData != null && updatePeriodRecord)
-                    period.QuarterThreeIsHistorical = ConvertAmountTypeToBoolean(quarterThreeData.GetType().GetProperty("AmountType").GetValue(quarterThreeData, null).ToString());
-                #endregion
-
-                #region Quarter Four
-                if (++columnCount > period.NetColumnCount)
-                    goto GROUPING;
-                quarterFourData = GetPeriodData<T>(data, dataDesc, period.QuarterFourYear.ToString(), "Q" + period.QuarterFourQuarter.ToString());
-                if (quarterFourData != null && updatePeriodRecord)
-                    period.QuarterFourIsHistorical = ConvertAmountTypeToBoolean(quarterFourData.GetType().GetProperty("AmountType").GetValue(quarterFourData, null).ToString());
-                #endregion
-
-                #region Quarter Five
-                if (++columnCount > period.NetColumnCount)
-                    goto GROUPING;
-                quarterFiveData = GetPeriodData<T>(data, dataDesc, period.QuarterFiveYear.ToString(), "Q" + period.QuarterFiveQuarter.ToString());
-                if (quarterFiveData != null && updatePeriodRecord)
-                    period.QuarterFiveIsHistorical = ConvertAmountTypeToBoolean(quarterFiveData.GetType().GetProperty("AmountType").GetValue(quarterFiveData, null).ToString());
-                #endregion
-
-                #region Quarter Six
-                if (++columnCount > period.NetColumnCount)
-                    goto GROUPING;
-                quarterSixData = GetPeriodData<T>(data, dataDesc, period.QuarterSixYear.ToString(), "Q" + period.QuarterSixQuarter.ToString());
-                if (quarterSixData != null && updatePeriodRecord)
-                    period.QuarterSixIsHistorical = ConvertAmountTypeToBoolean(quarterSixData.GetType().GetProperty("AmountType").GetValue(quarterSixData, null).ToString());
-                #endregion
-                #endregion
-
-            GROUPING:
-
-                #region Grouping
-                if (subGroups == null)
-                    goto RECORD_ENTRY;
-
-                foreach (PeriodColumnGroupingDetail item in subGroups)
+                foreach (String dataDesc in distinctPeriodDataDescriptors)
                 {
-                    PeriodColumnDisplayData displayData = new PeriodColumnDisplayData()
+                    T defaultRecord = data.Where(record => ((String)record.GetType().GetProperty("Description").GetValue(record, null)) == dataDesc).FirstOrDefault();
+
+                    String groupDescription = null;
+                    if (propertyInfo.Any(record => record.Name == "GroupDescription"))
+                        groupDescription = (String)defaultRecord.GetType().GetProperty("GroupDescription").GetValue(defaultRecord, null);
+
+                    Int32? dataId = null;
+                    if (propertyInfo.Any(record => record.Name == "DataId"))
+                        dataId = (Int32?)defaultRecord.GetType().GetProperty("DataId").GetValue(defaultRecord, null);
+
+                    Boolean? dataBold = false;
+                    if (propertyInfo.Any(record => record.Name == "BoldFont"))
+                        dataBold = ((String)defaultRecord.GetType().GetProperty("BoldFont").GetValue(defaultRecord, null)).Trim().ToUpper() == "Y";
+
+                    Boolean? dataPercentage = false;
+                    if (propertyInfo.Any(record => record.Name == "IsPercentage"))
+                        dataPercentage = ((String)defaultRecord.GetType().GetProperty("IsPercentage").GetValue(defaultRecord, null)).Trim().ToUpper() == "Y";
+
+                    Int32? dataDecimal = null;
+                    if (propertyInfo.Any(record => record.Name == "Decimals"))
+                        dataDecimal = (Int32?)defaultRecord.GetType().GetProperty("Decimals").GetValue(defaultRecord, null);
+
+                    String dataFirstAdditionalInfo = null;
+                    if (additionalFirstDescPropertyName != null)
                     {
-                        DATA_DESC = dataDesc,
-                        SUB_DATA_DESC = item.GroupDisplayName
-                    };
-
-                    int countDisplayColumns = 0;
-
-                    if (++countDisplayColumns > period.NetColumnCount)
-                        goto GROUPING_QUARTER_INFO;
-                    displayData.YEAR_ONE = GetGroupedData<T>(yearOneData, item);
-
-                    if (++countDisplayColumns > period.NetColumnCount)
-                        goto GROUPING_QUARTER_INFO;
-                    displayData.YEAR_TWO = GetGroupedData<T>(yearTwoData, item);
-
-                    if (++countDisplayColumns > period.NetColumnCount)
-                        goto GROUPING_QUARTER_INFO;
-                    displayData.YEAR_THREE = GetGroupedData<T>(yearThreeData, item);
-
-                    if (++countDisplayColumns > period.NetColumnCount)
-                        goto GROUPING_QUARTER_INFO;
-                    displayData.YEAR_FOUR = GetGroupedData<T>(yearFourData, item);
-
-                    if (++countDisplayColumns > period.NetColumnCount)
-                        goto GROUPING_QUARTER_INFO;
-                    displayData.YEAR_FIVE = GetGroupedData<T>(yearFiveData, item);
-
-                    if (++countDisplayColumns > period.NetColumnCount)
-                        goto GROUPING_QUARTER_INFO;
-                    displayData.YEAR_SIX = GetGroupedData<T>(yearSixData, item);
-
-                GROUPING_QUARTER_INFO:
-                    if (period.IsQuarterImplemented)
-                    {
-                        countDisplayColumns = 0;
-
-                        if (++countDisplayColumns > period.NetColumnCount)
-                            goto GROUPING_RECORD_ENTRY;
-                        displayData.QUARTER_ONE = GetGroupedData<T>(quarterOneData, item);
-
-                        if (++countDisplayColumns > period.NetColumnCount)
-                            goto GROUPING_RECORD_ENTRY;
-                        displayData.QUARTER_TWO = GetGroupedData<T>(quarterTwoData, item);
-
-                        if (++countDisplayColumns > period.NetColumnCount)
-                            goto GROUPING_RECORD_ENTRY;
-                        displayData.QUARTER_THREE = GetGroupedData<T>(quarterThreeData, item);
-
-                        if (++countDisplayColumns > period.NetColumnCount)
-                            goto GROUPING_RECORD_ENTRY;
-                        displayData.QUARTER_FOUR = GetGroupedData<T>(quarterFourData, item);
-
-                        if (++countDisplayColumns > period.NetColumnCount)
-                            goto GROUPING_RECORD_ENTRY;
-                        displayData.QUARTER_FIVE = GetGroupedData<T>(quarterFiveData, item);
-
-                        if (++countDisplayColumns > period.NetColumnCount)
-                            goto GROUPING_RECORD_ENTRY;
-                        displayData.QUARTER_SIX = GetGroupedData<T>(quarterSixData, item);
+                        if (propertyInfo.Any(record => record.Name == additionalFirstDescPropertyName))
+                            dataFirstAdditionalInfo = (String)defaultRecord.GetType().GetProperty(additionalFirstDescPropertyName).GetValue(defaultRecord, null);
                     }
 
-                GROUPING_RECORD_ENTRY:
-                    result.Add(displayData);
-                }
+                    String dataSecondAdditionalInfo = null;
+                    if (additionalSecondDescPropertyName != null)
+                    {
+                        if (propertyInfo.Any(record => record.Name == additionalSecondDescPropertyName))
+                            dataSecondAdditionalInfo = (String)defaultRecord.GetType().GetProperty(additionalSecondDescPropertyName).GetValue(defaultRecord, null);
+                    }
 
-                continue;
-                #endregion
+                    Int32 columnCount = 0;
+                    T yearOneData = default(T);
+                    T yearTwoData = default(T);
+                    T yearThreeData = default(T);
+                    T yearFourData = default(T);
+                    T yearFiveData = default(T);
+                    T yearSixData = default(T);
+                    T yearSevenData = default(T);
+                    T quarterOneData = default(T);
+                    T quarterTwoData = default(T);
+                    T quarterThreeData = default(T);
+                    T quarterFourData = default(T);
+                    T quarterFiveData = default(T);
+                    T quarterSixData = default(T);
+                    T quarterSevenData = default(T);
 
-            RECORD_ENTRY:
-                result.Add(new PeriodColumnDisplayData()
-                {
-                    DATA_ID = dataId,
-                    DATA_BOLD = dataBold,
-                    DATA_PERCENTAGE = dataPercentage,
-                    DATA_DECIMALS = dataDecimal,
-                    SUB_DATA_DESC = groupDescription,
-                    YEAR_ONE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearOneData, "RootSource"),
-                    YEAR_TWO_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearTwoData, "RootSource"),
-                    YEAR_THREE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearThreeData, "RootSource"),
-                    YEAR_FOUR_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearFourData, "RootSource"),
-                    YEAR_FIVE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearFiveData, "RootSource"),
-                    YEAR_SIX_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearSixData, "RootSource"),
-                    QUARTER_ONE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterOneData, "RootSource"),
-                    QUARTER_TWO_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterTwoData, "RootSource"),
-                    QUARTER_THREE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterThreeData, "RootSource"),
-                    QUARTER_FOUR_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterFourData, "RootSource"),
-                    QUARTER_FIVE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterFiveData, "RootSource"),
-                    QUARTER_SIX_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterSixData, "RootSource"),
+                    #region Annual
+                    #region Year One
+                    if (++columnCount > period.NetColumnCount)
+                        goto QUARTERLY_INFO;
+                    yearOneData = GetPeriodData<T>(data, dataDesc, period.YearOne.ToString(), "A", groupDescription, uniqueByGroupDesc);
+                    if (yearOneData != null && updatePeriodRecord)
+                        period.YearOneIsHistorical = ConvertAmountTypeToBoolean(yearOneData.GetType().GetProperty("AmountType").GetValue(yearOneData, null).ToString());
+                    #endregion
 
-                    YEAR_ONE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearOneData, "RootSourceDate"),
-                    YEAR_TWO_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearTwoData, "RootSourceDate"),
-                    YEAR_THREE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearThreeData, "RootSourceDate"),
-                    YEAR_FOUR_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearFourData, "RootSourceDate"),
-                    YEAR_FIVE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearFiveData, "RootSourceDate"),
-                    YEAR_SIX_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearSixData, "RootSourceDate"),
-                    QUARTER_ONE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterOneData, "RootSourceDate"),
-                    QUARTER_TWO_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterTwoData, "RootSourceDate"),
-                    QUARTER_THREE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterThreeData, "RootSourceDate"),
-                    QUARTER_FOUR_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterFourData, "RootSourceDate"),
-                    QUARTER_FIVE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterFiveData, "RootSourceDate"),
-                    QUARTER_SIX_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterSixData, "RootSourceDate"),
+                    #region Year Two
+                    if (++columnCount > period.NetColumnCount)
+                        goto QUARTERLY_INFO;
+                    yearTwoData = GetPeriodData<T>(data, dataDesc, period.YearTwo.ToString(), "A", groupDescription, uniqueByGroupDesc);
+                    if (yearTwoData != null && updatePeriodRecord)
+                        period.YearTwoIsHistorical = ConvertAmountTypeToBoolean(yearTwoData.GetType().GetProperty("AmountType").GetValue(yearTwoData, null).ToString());
+                    #endregion
 
-                    //DATA_ROOT_SOURCE = dataRootSource,
-                    //DATA_ROOT_SOURCE_DATE = dataRootSourceDate,
-                    DATA_DESC = dataDesc,
-                    YEAR_ONE = yearOneData == null ? null : GetFormattedValue(yearOneData.GetType().GetProperty("Amount").GetValue(yearOneData, null), dataDecimal, dataPercentage),
-                    YEAR_TWO = yearTwoData == null ? null : GetFormattedValue(yearTwoData.GetType().GetProperty("Amount").GetValue(yearTwoData, null), dataDecimal, dataPercentage),
-                    YEAR_THREE = yearThreeData == null ? null : GetFormattedValue(yearThreeData.GetType().GetProperty("Amount").GetValue(yearThreeData, null), dataDecimal, dataPercentage),
-                    YEAR_FOUR = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType().GetProperty("Amount").GetValue(yearFourData, null), dataDecimal, dataPercentage),
-                    YEAR_FIVE = yearFiveData == null ? null : GetFormattedValue(yearFiveData.GetType().GetProperty("Amount").GetValue(yearFiveData, null), dataDecimal, dataPercentage),
-                    YEAR_SIX = yearSixData == null ? null : GetFormattedValue(yearSixData.GetType().GetProperty("Amount").GetValue(yearSixData, null), dataDecimal, dataPercentage),
-                    QUARTER_ONE = quarterOneData == null ? null : GetFormattedValue(quarterOneData.GetType().GetProperty("Amount").GetValue(quarterOneData, null), dataDecimal, dataPercentage),
-                    QUARTER_TWO = quarterTwoData == null ? null : GetFormattedValue(quarterTwoData.GetType().GetProperty("Amount").GetValue(quarterTwoData, null), dataDecimal, dataPercentage),
-                    QUARTER_THREE = quarterThreeData == null ? null : GetFormattedValue(quarterThreeData.GetType().GetProperty("Amount").GetValue(quarterThreeData, null), dataDecimal, dataPercentage),
-                    QUARTER_FOUR = quarterFourData == null ? null : GetFormattedValue(quarterFourData.GetType().GetProperty("Amount").GetValue(quarterFourData, null), dataDecimal, dataPercentage),
-                    QUARTER_FIVE = quarterFiveData == null ? null : GetFormattedValue(quarterFiveData.GetType().GetProperty("Amount").GetValue(quarterFiveData, null), dataDecimal, dataPercentage),
-                    QUARTER_SIX = quarterSixData == null ? null : GetFormattedValue(quarterSixData.GetType().GetProperty("Amount").GetValue(quarterSixData, null), dataDecimal, dataPercentage),
-                });
+                    #region Year Three
+                    if (++columnCount > period.NetColumnCount)
+                        goto QUARTERLY_INFO;
+                    yearThreeData = GetPeriodData<T>(data, dataDesc, period.YearThree.ToString(), "A", groupDescription, uniqueByGroupDesc);
+                    if (yearThreeData != null && updatePeriodRecord)
+                        period.YearThreeIsHistorical = ConvertAmountTypeToBoolean(yearThreeData.GetType().GetProperty("AmountType").GetValue(yearThreeData, null).ToString());
+                    #endregion
+
+                    #region Year Four
+                    if (++columnCount > period.NetColumnCount)
+                        goto QUARTERLY_INFO;
+                    yearFourData = GetPeriodData<T>(data, dataDesc, period.YearFour.ToString(), "A", groupDescription, uniqueByGroupDesc);
+                    if (yearFourData != null && updatePeriodRecord)
+                        period.YearFourIsHistorical = ConvertAmountTypeToBoolean(yearFourData.GetType().GetProperty("AmountType").GetValue(yearFourData, null).ToString());
+                    #endregion
+
+                    #region Year Five
+                    if (++columnCount > period.NetColumnCount)
+                        goto QUARTERLY_INFO;
+                    yearFiveData = GetPeriodData<T>(data, dataDesc, period.YearFive.ToString(), "A", groupDescription, uniqueByGroupDesc);
+                    if (yearFiveData != null && updatePeriodRecord)
+                        period.YearFiveIsHistorical = ConvertAmountTypeToBoolean(yearFiveData.GetType().GetProperty("AmountType").GetValue(yearFiveData, null).ToString());
+                    #endregion
+
+                    #region Year Six
+                    if (++columnCount > period.NetColumnCount)
+                        goto QUARTERLY_INFO;
+                    yearSixData = GetPeriodData<T>(data, dataDesc, period.YearSix.ToString(), "A", groupDescription, uniqueByGroupDesc);
+                    if (yearSixData != null && updatePeriodRecord)
+                        period.YearSixIsHistorical = ConvertAmountTypeToBoolean(yearSixData.GetType().GetProperty("AmountType").GetValue(yearSixData, null).ToString());
+                    #endregion
+
+                    #region Year Seven
+                    if (++columnCount > period.NetColumnCount)
+                        goto QUARTERLY_INFO;
+                    yearSevenData = GetPeriodData<T>(data, dataDesc, period.YearSeven.ToString(), "A", groupDescription, uniqueByGroupDesc);
+                    if (yearSevenData != null && updatePeriodRecord)
+                        period.YearSevenIsHistorical = ConvertAmountTypeToBoolean(yearSevenData.GetType().GetProperty("AmountType").GetValue(yearSevenData, null).ToString());
+                    #endregion
+                    #endregion
+
+                QUARTERLY_INFO:
+                    if (!(period.IsQuarterImplemented))
+                        goto GROUPING;
+                    columnCount = 0;
+
+                    #region Quarterly
+                    #region Quarter One
+                    if (++columnCount > period.NetColumnCount)
+                        goto GROUPING;
+                    quarterOneData = GetPeriodData<T>(data, dataDesc, period.QuarterOneYear.ToString(), "Q" + period.QuarterOneQuarter.ToString()
+                        , groupDescription, uniqueByGroupDesc);
+                    if (quarterOneData != null && updatePeriodRecord)
+                        period.QuarterOneIsHistorical = ConvertAmountTypeToBoolean(quarterOneData.GetType().GetProperty("AmountType").GetValue(quarterOneData, null).ToString());
+                    #endregion
+
+                    #region Quarter Two
+                    if (++columnCount > period.NetColumnCount)
+                        goto GROUPING;
+                    quarterTwoData = GetPeriodData<T>(data, dataDesc, period.QuarterTwoYear.ToString(), "Q" + period.QuarterTwoQuarter.ToString()
+                        , groupDescription, uniqueByGroupDesc);
+                    if (quarterTwoData != null && updatePeriodRecord)
+                        period.QuarterTwoIsHistorical = ConvertAmountTypeToBoolean(quarterTwoData.GetType().GetProperty("AmountType").GetValue(quarterTwoData, null).ToString());
+                    #endregion
+
+                    #region Quarter Three
+                    if (++columnCount > period.NetColumnCount)
+                        goto GROUPING;
+                    quarterThreeData = GetPeriodData<T>(data, dataDesc, period.QuarterThreeYear.ToString(), "Q" + period.QuarterThreeQuarter.ToString()
+                        , groupDescription, uniqueByGroupDesc);
+                    if (quarterThreeData != null && updatePeriodRecord)
+                        period.QuarterThreeIsHistorical = ConvertAmountTypeToBoolean(quarterThreeData.GetType().GetProperty("AmountType").GetValue(quarterThreeData, null).ToString());
+                    #endregion
+
+                    #region Quarter Four
+                    if (++columnCount > period.NetColumnCount)
+                        goto GROUPING;
+                    quarterFourData = GetPeriodData<T>(data, dataDesc, period.QuarterFourYear.ToString(), "Q" + period.QuarterFourQuarter.ToString()
+                        , groupDescription, uniqueByGroupDesc);
+                    if (quarterFourData != null && updatePeriodRecord)
+                        period.QuarterFourIsHistorical = ConvertAmountTypeToBoolean(quarterFourData.GetType().GetProperty("AmountType").GetValue(quarterFourData, null).ToString());
+                    #endregion
+
+                    #region Quarter Five
+                    if (++columnCount > period.NetColumnCount)
+                        goto GROUPING;
+                    quarterFiveData = GetPeriodData<T>(data, dataDesc, period.QuarterFiveYear.ToString(), "Q" + period.QuarterFiveQuarter.ToString()
+                        , groupDescription, uniqueByGroupDesc);
+                    if (quarterFiveData != null && updatePeriodRecord)
+                        period.QuarterFiveIsHistorical = ConvertAmountTypeToBoolean(quarterFiveData.GetType().GetProperty("AmountType").GetValue(quarterFiveData, null).ToString());
+                    #endregion
+
+                    #region Quarter Six
+                    if (++columnCount > period.NetColumnCount)
+                        goto GROUPING;
+                    quarterSixData = GetPeriodData<T>(data, dataDesc, period.QuarterSixYear.ToString(), "Q" + period.QuarterSixQuarter.ToString()
+                        , groupDescription, uniqueByGroupDesc);
+                    if (quarterSixData != null && updatePeriodRecord)
+                        period.QuarterSixIsHistorical = ConvertAmountTypeToBoolean(quarterSixData.GetType().GetProperty("AmountType").GetValue(quarterSixData, null).ToString());
+                    #endregion
+
+                    #region Quarter Six
+                    if (++columnCount > period.NetColumnCount)
+                        goto GROUPING;
+                    quarterSevenData = GetPeriodData<T>(data, dataDesc, period.QuarterSevenYear.ToString(), "Q" + period.QuarterSevenQuarter.ToString()
+                        , groupDescription, uniqueByGroupDesc);
+                    if (quarterSevenData != null && updatePeriodRecord)
+                        period.QuarterSevenIsHistorical = ConvertAmountTypeToBoolean(quarterSevenData.GetType().GetProperty("AmountType").GetValue(quarterSevenData, null).ToString());
+                    #endregion
+                    #endregion
+
+                GROUPING:
+
+                    #region Grouping
+                    if (subGroups == null)
+                        goto RECORD_ENTRY;
+
+                    foreach (PeriodColumnGroupingDetail item in subGroups)
+                    {
+                        PeriodColumnDisplayData displayData = new PeriodColumnDisplayData()
+                        {
+                            DATA_DESC = dataDesc,
+                            ADDITIONAL_DESC_FIRST = dataFirstAdditionalInfo,
+                            ADDITIONAL_DESC_SECOND = dataSecondAdditionalInfo,
+                            SUB_DATA_DESC = item.GroupDisplayName
+                        };
+
+                        int countDisplayColumns = 0;
+
+                        if (++countDisplayColumns > period.NetColumnCount)
+                            goto GROUPING_QUARTER_INFO;
+                        displayData.YEAR_ONE = GetGroupedData<T>(yearOneData, item);
+
+                        if (++countDisplayColumns > period.NetColumnCount)
+                            goto GROUPING_QUARTER_INFO;
+                        displayData.YEAR_TWO = GetGroupedData<T>(yearTwoData, item);
+
+                        if (++countDisplayColumns > period.NetColumnCount)
+                            goto GROUPING_QUARTER_INFO;
+                        displayData.YEAR_THREE = GetGroupedData<T>(yearThreeData, item);
+
+                        if (++countDisplayColumns > period.NetColumnCount)
+                            goto GROUPING_QUARTER_INFO;
+                        displayData.YEAR_FOUR = GetGroupedData<T>(yearFourData, item);
+
+                        if (++countDisplayColumns > period.NetColumnCount)
+                            goto GROUPING_QUARTER_INFO;
+                        displayData.YEAR_FIVE = GetGroupedData<T>(yearFiveData, item);
+
+                        if (++countDisplayColumns > period.NetColumnCount)
+                            goto GROUPING_QUARTER_INFO;
+                        displayData.YEAR_SIX = GetGroupedData<T>(yearSixData, item);
+
+                        if (++countDisplayColumns > period.NetColumnCount)
+                            goto GROUPING_QUARTER_INFO;
+                        displayData.YEAR_SEVEN = GetGroupedData<T>(yearSevenData, item);
+
+                    GROUPING_QUARTER_INFO:
+                        if (period.IsQuarterImplemented)
+                        {
+                            countDisplayColumns = 0;
+
+                            if (++countDisplayColumns > period.NetColumnCount)
+                                goto GROUPING_RECORD_ENTRY;
+                            displayData.QUARTER_ONE = GetGroupedData<T>(quarterOneData, item);
+
+                            if (++countDisplayColumns > period.NetColumnCount)
+                                goto GROUPING_RECORD_ENTRY;
+                            displayData.QUARTER_TWO = GetGroupedData<T>(quarterTwoData, item);
+
+                            if (++countDisplayColumns > period.NetColumnCount)
+                                goto GROUPING_RECORD_ENTRY;
+                            displayData.QUARTER_THREE = GetGroupedData<T>(quarterThreeData, item);
+
+                            if (++countDisplayColumns > period.NetColumnCount)
+                                goto GROUPING_RECORD_ENTRY;
+                            displayData.QUARTER_FOUR = GetGroupedData<T>(quarterFourData, item);
+
+                            if (++countDisplayColumns > period.NetColumnCount)
+                                goto GROUPING_RECORD_ENTRY;
+                            displayData.QUARTER_FIVE = GetGroupedData<T>(quarterFiveData, item);
+
+                            if (++countDisplayColumns > period.NetColumnCount)
+                                goto GROUPING_RECORD_ENTRY;
+                            displayData.QUARTER_SIX = GetGroupedData<T>(quarterSixData, item);
+
+                            if (++countDisplayColumns > period.NetColumnCount)
+                                goto GROUPING_RECORD_ENTRY;
+                            displayData.QUARTER_SEVEN = GetGroupedData<T>(quarterSevenData, item);
+                        }
+
+                    GROUPING_RECORD_ENTRY:
+                        result.Add(displayData);
+                    }
+
+                    continue;
+                    #endregion
+
+                RECORD_ENTRY:
+                    result.Add(new PeriodColumnDisplayData()
+                    {
+                        DATA_ID = dataId,
+                        DATA_BOLD = dataBold,
+                        DATA_PERCENTAGE = dataPercentage,
+                        DATA_DECIMALS = dataDecimal,
+                        SUB_DATA_DESC = groupDescription,
+                        YEAR_ONE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearOneData, "RootSource"),
+                        YEAR_TWO_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearTwoData, "RootSource"),
+                        YEAR_THREE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearThreeData, "RootSource"),
+                        YEAR_FOUR_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearFourData, "RootSource"),
+                        YEAR_FIVE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearFiveData, "RootSource"),
+                        YEAR_SIX_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearSixData, "RootSource"),
+                        QUARTER_ONE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterOneData, "RootSource"),
+                        QUARTER_TWO_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterTwoData, "RootSource"),
+                        QUARTER_THREE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterThreeData, "RootSource"),
+                        QUARTER_FOUR_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterFourData, "RootSource"),
+                        QUARTER_FIVE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterFiveData, "RootSource"),
+                        QUARTER_SIX_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterSixData, "RootSource"),
+
+                        YEAR_ONE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearOneData, "RootSourceDate"),
+                        YEAR_TWO_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearTwoData, "RootSourceDate"),
+                        YEAR_THREE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearThreeData, "RootSourceDate"),
+                        YEAR_FOUR_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearFourData, "RootSourceDate"),
+                        YEAR_FIVE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearFiveData, "RootSourceDate"),
+                        YEAR_SIX_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearSixData, "RootSourceDate"),
+                        QUARTER_ONE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterOneData, "RootSourceDate"),
+                        QUARTER_TWO_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterTwoData, "RootSourceDate"),
+                        QUARTER_THREE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterThreeData, "RootSourceDate"),
+                        QUARTER_FOUR_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterFourData, "RootSourceDate"),
+                        QUARTER_FIVE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterFiveData, "RootSourceDate"),
+                        QUARTER_SIX_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterSixData, "RootSourceDate"),
+
+                        //DATA_ROOT_SOURCE = dataRootSource,
+                        //DATA_ROOT_SOURCE_DATE = dataRootSourceDate,
+                        DATA_DESC = dataDesc,
+                        YEAR_ONE = yearOneData == null ? null : GetFormattedValue(yearOneData.GetType().GetProperty("Amount").GetValue(yearOneData, null), dataDecimal, dataPercentage),
+                        YEAR_TWO = yearTwoData == null ? null : GetFormattedValue(yearTwoData.GetType().GetProperty("Amount").GetValue(yearTwoData, null), dataDecimal, dataPercentage),
+                        YEAR_THREE = yearThreeData == null ? null : GetFormattedValue(yearThreeData.GetType().GetProperty("Amount").GetValue(yearThreeData, null), dataDecimal, dataPercentage),
+                        YEAR_FOUR = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType().GetProperty("Amount").GetValue(yearFourData, null), dataDecimal, dataPercentage),
+                        YEAR_FIVE = yearFiveData == null ? null : GetFormattedValue(yearFiveData.GetType().GetProperty("Amount").GetValue(yearFiveData, null), dataDecimal, dataPercentage),
+                        YEAR_SIX = yearSixData == null ? null : GetFormattedValue(yearSixData.GetType().GetProperty("Amount").GetValue(yearSixData, null), dataDecimal, dataPercentage),
+                        QUARTER_ONE = quarterOneData == null ? null : GetFormattedValue(quarterOneData.GetType().GetProperty("Amount").GetValue(quarterOneData, null), dataDecimal, dataPercentage),
+                        QUARTER_TWO = quarterTwoData == null ? null : GetFormattedValue(quarterTwoData.GetType().GetProperty("Amount").GetValue(quarterTwoData, null), dataDecimal, dataPercentage),
+                        QUARTER_THREE = quarterThreeData == null ? null : GetFormattedValue(quarterThreeData.GetType().GetProperty("Amount").GetValue(quarterThreeData, null), dataDecimal, dataPercentage),
+                        QUARTER_FOUR = quarterFourData == null ? null : GetFormattedValue(quarterFourData.GetType().GetProperty("Amount").GetValue(quarterFourData, null), dataDecimal, dataPercentage),
+                        QUARTER_FIVE = quarterFiveData == null ? null : GetFormattedValue(quarterFiveData.GetType().GetProperty("Amount").GetValue(quarterFiveData, null), dataDecimal, dataPercentage),
+                        QUARTER_SIX = quarterSixData == null ? null : GetFormattedValue(quarterSixData.GetType().GetProperty("Amount").GetValue(quarterSixData, null), dataDecimal, dataPercentage),
+                    });
+                } 
             }
 
         FINISH:
@@ -556,24 +638,25 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="gridView">Gridview for which column headers is to be updated</param>
         /// <param name="e">PeriodColumnUpdateEventArg</param>
         /// <param name="isQuarterImplemented">Quarter data display implemented in view : [Default] true</param>
-        public static void UpdateColumnInformation(RadGridView gridView, PeriodColumnUpdateEventArg e, bool isQuarterImplemented = true)
+        public static void UpdateColumnInformation(RadGridView gridView, PeriodColumnUpdateEventArg e, bool isQuarterImplemented = true
+            , Int32 navigatingColumnStartIndex = 2)
         {
             for (int i = 0; i < e.PeriodColumnHeader.Count; i++)
             {
                 //prevent exceeding gridview column count
-                if (i + 2 >= gridView.Columns.Count)
+                if (i + navigatingColumnStartIndex >= gridView.Columns.Count)
                     return;
 
                 //Description and left navigation columns of period column gadgets ignored
-                gridView.Columns[i + 2].Header = e.PeriodColumnHeader[i];
+                gridView.Columns[i + navigatingColumnStartIndex].Header = e.PeriodColumnHeader[i];
 
                 //update column visibility if quarterly data display is implemented
                 if (isQuarterImplemented)
                 {
                     bool columnVisibility = (i < (e.PeriodColumnHeader.Count / 2)) ? e.PeriodIsYearly : !(e.PeriodIsYearly);
 
-                    if (gridView.Columns[i + 2].IsVisible != columnVisibility)
-                        gridView.Columns[i + 2].IsVisible = columnVisibility;
+                    if (gridView.Columns[i + navigatingColumnStartIndex].IsVisible != columnVisibility)
+                        gridView.Columns[i + navigatingColumnStartIndex].IsVisible = columnVisibility;
                 }
             }
         }
@@ -641,14 +724,20 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="periodYear">PeriodYear column value</param>
         /// <param name="periodType">PeriodType column value</param>
         /// <returns>Generic Type record matching criterion or null</returns>
-        private static T GetPeriodData<T>(List<T> data, string Description, string periodYear, string periodType)
+        private static T GetPeriodData<T>(List<T> data, string description, string periodYear, string periodType,String groupDescription, bool uniqueByGroupDesc = false)
         {
-            T yearData = data
-                .Where(record =>
-                    record.GetType().GetProperty("Description").GetValue(record, null).ToString().ToUpper().Trim() == Description.ToString().ToUpper().Trim() &&
+            T yearData = uniqueByGroupDesc
+                ? data.Where(record =>
+                    record.GetType().GetProperty("GroupDescription").GetValue(record, null).ToString().ToUpper().Trim() == groupDescription.ToString().ToUpper().Trim() &&
+                    record.GetType().GetProperty("Description").GetValue(record, null).ToString().ToUpper().Trim() == description.ToString().ToUpper().Trim() &&
                     record.GetType().GetProperty("PeriodYear").GetValue(record, null).ToString().ToUpper().Trim() == periodYear.ToString().ToUpper().Trim() &&
                     record.GetType().GetProperty("PeriodType").GetValue(record, null).ToString().ToUpper().Trim() == periodType.ToString().ToUpper().Trim())
-                .FirstOrDefault();
+                    .FirstOrDefault()
+                : data.Where(record =>
+                    record.GetType().GetProperty("Description").GetValue(record, null).ToString().ToUpper().Trim() == description.ToString().ToUpper().Trim() &&
+                    record.GetType().GetProperty("PeriodYear").GetValue(record, null).ToString().ToUpper().Trim() == periodYear.ToString().ToUpper().Trim() &&
+                    record.GetType().GetProperty("PeriodType").GetValue(record, null).ToString().ToUpper().Trim() == periodType.ToString().ToUpper().Trim())
+                    .FirstOrDefault();
             return yearData;
         }
 

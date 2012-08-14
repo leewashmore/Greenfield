@@ -100,8 +100,6 @@
                                          ShowGroupPanel="False" 
                                          UseLayoutRounding="True" 
                                          ShowGroupFooters="True"
-                                         FontSize="7" 
-                                         FontFamily="Arial" 
                                          ShowColumnFooters="False" 
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
@@ -112,24 +110,25 @@
                                          EnableRowVirtualization="False">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" DataMemberBinding="{Binding Security}" 
-                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" MinWidth="150"/>
+                                                        Width="Auto" HeaderTextAlignment="Left" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                        MinWidth="150" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcPortfolioShare" Header="Portfolio %" IsFilterable="False" DataMemberBinding="{Binding PortfolioShare, StringFormat=\{0:n2\}%}" 
                                                         Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        FooterTextAlignment="Right" TextAlignment="Right">
+                                                        FooterTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <telerik:SumFunction SourceField="PortfolioShare" ResultFormatString="{}{0:n2}%" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgcBenchmarkShare" Header="Benchmark %" IsFilterable="False" DataMemberBinding="{Binding BenchmarkShare, StringFormat=\{0:n2\}%}" 
                                                         Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        FooterTextAlignment="Right" TextAlignment="Right">
+                                                        FooterTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <telerik:SumFunction SourceField="BenchmarkShare" ResultFormatString="{}{0:n2}%" />
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn x:Name="dgcActivePosition" Header="Active Position" IsFilterable="False" DataMemberBinding="{Binding ActivePosition, StringFormat=\{0:n2\}%}" 
                                                         Width="*" HeaderTextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        FooterTextAlignment="Right" TextAlignment="Right">
+                                                        FooterTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
                                     <telerik:SumFunction SourceField="ActivePosition" ResultFormatString="{}{0:n2}%"/>
                                 </telerik:GridViewDataColumn.AggregateFunctions>

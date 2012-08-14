@@ -24,7 +24,7 @@ namespace GreenField.Gadgets.Helpers
                 RelativePerformanceSecurityData relativePerformanceSecurityData = item as RelativePerformanceSecurityData ;
                 if (relativePerformanceSecurityData.SecurityMarketValue > 0)
                     return PositionHeld;
-                else if (relativePerformanceSecurityData.SecurityMarketValue < 0)
+                else if (relativePerformanceSecurityData.SecurityMarketValue < 0 || relativePerformanceSecurityData.SecurityMarketValue == 0)
                     return PositionNotHeld;
             }
             return null;

@@ -30,8 +30,8 @@
                         <Setter Property="HorizontalContentAlignment" Value="Right"/>
                         <Setter Property="Background" Value="Transparent"/>
                         <Setter Property="Foreground" Value="Black"/>
-                        <Setter Property="FontSize" Value="7"/>
-                        <Setter Property="Height" Value="12"/>
+                        <Setter Property="FontSize" Value="12"/>
+                        <Setter Property="Height" Value="18"/>
                     </Style>
 
                     <!--GridViewHeaderCellStyle for dynamically created columns -->
@@ -46,19 +46,19 @@
                         <Setter Property="Template" Value="{StaticResource GridViewHeaderCellTemplate}"/>
                         <Setter Property="Background" Value="#e4e5e5" />
                         <Setter Property="Foreground" Value="Black"/>
-                        <Setter Property="Height" Value="12"/>
-                        <Setter Property="FontSize" Value="7"/>
+                        <Setter Property="Height" Value="18"/>
+                        <Setter Property="FontSize" Value="12"/>
                         <Setter Property="FontFamily" Value="Arial"/>
                         <Setter Property="HorizontalContentAlignment" Value="Right"/>
                     </Style>
 
                     <!--GridViewCellStyle-->
                     <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
-                        <Setter Property="Height" Value="15"/>
+                        <Setter Property="Height" Value="18"/>
                         <Setter Property="FontFamily" Value="Arial"/>
                         <Setter Property="HorizontalContentAlignment" Value="Right"/>
                         <Setter Property="HorizontalAlignment" Value="Right"/>
-                        <Setter Property="FontSize" Value="7"/>
+                        <Setter Property="FontSize" Value="12"/>
                     </Style>                   
                     
                 </ResourceDictionary>
@@ -108,9 +108,6 @@
                                      CanUserSelect="True" 
                                      CanUserReorderColumns="False" 
                                      CanUserInsertRows="False" 
-                                     
-                                     RowHeight="15"
-                                     FontSize="7"
                                      SelectionMode="Single"
                                      CanUserDeleteRows="False" 
                                      IsReadOnly="True" 
@@ -134,7 +131,7 @@
                             <!--CountryID Column-->
                             <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     Width="auto" HeaderTextAlignment="Left" TextAlignment="Left" 
-                                                        FooterCellStyle="{Binding GridViewCustomFooterCellStyle}">
+                                                        FooterCellStyle="{Binding GridViewCustomFooterCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" >
                                 <telerik:GridViewDataColumn.CellTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding CountryId}" Foreground="Black"/>

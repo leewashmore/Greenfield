@@ -58,11 +58,17 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private string CurrencyNameField;
         
+        private string IndustryAnalystField;
+        
         private string IndustryCodeField;
         
         private string IndustryNameField;
         
+        private string IssueNameField;
+        
         private string IssuerIdField;
+        
+        private string PrimaryAnalystField;
         
         private string RegionCodeField;
         
@@ -71,6 +77,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         private string SectorNameField;
         
         private System.Nullable<int> SecurityIdField;
+        
+        private string SubIndustryNameField;
+        
+        private string TickerField;
+        
+        private string TradingCurrencyField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string CountryCode {
@@ -125,6 +137,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IndustryAnalyst {
+            get {
+                return this.IndustryAnalystField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IndustryAnalystField, value) != true)) {
+                    this.IndustryAnalystField = value;
+                    this.RaisePropertyChanged("IndustryAnalyst");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string IndustryCode {
             get {
                 return this.IndustryCodeField;
@@ -151,6 +176,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IssueName {
+            get {
+                return this.IssueNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssueNameField, value) != true)) {
+                    this.IssueNameField = value;
+                    this.RaisePropertyChanged("IssueName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string IssuerId {
             get {
                 return this.IssuerIdField;
@@ -159,6 +197,19 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 if ((object.ReferenceEquals(this.IssuerIdField, value) != true)) {
                     this.IssuerIdField = value;
                     this.RaisePropertyChanged("IssuerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PrimaryAnalyst {
+            get {
+                return this.PrimaryAnalystField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PrimaryAnalystField, value) != true)) {
+                    this.PrimaryAnalystField = value;
+                    this.RaisePropertyChanged("PrimaryAnalyst");
                 }
             }
         }
@@ -211,6 +262,45 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 if ((this.SecurityIdField.Equals(value) != true)) {
                     this.SecurityIdField = value;
                     this.RaisePropertyChanged("SecurityId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SubIndustryName {
+            get {
+                return this.SubIndustryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SubIndustryNameField, value) != true)) {
+                    this.SubIndustryNameField = value;
+                    this.RaisePropertyChanged("SubIndustryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Ticker {
+            get {
+                return this.TickerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TickerField, value) != true)) {
+                    this.TickerField = value;
+                    this.RaisePropertyChanged("Ticker");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TradingCurrency {
+            get {
+                return this.TradingCurrencyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TradingCurrencyField, value) != true)) {
+                    this.TradingCurrencyField = value;
+                    this.RaisePropertyChanged("TradingCurrency");
                 }
             }
         }
@@ -1482,6 +1572,13 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> EndRetrieveConsensusEstimateDetailedData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinstatData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveFinstatDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinstatDataServiceFaultFaul" +
+            "t", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveFinstatData(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, string yearRange, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.FinstatDetailData> EndRetrieveFinstatData(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveBasicData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveBasicDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveBasicDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveBasicData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
@@ -1644,6 +1741,25 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveFinstatDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveFinstatDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.FinstatDetailData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.FinstatDetailData>)(this.results[0]));
             }
         }
     }
@@ -1885,6 +2001,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveConsensusEstimateDetailedDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveFinstatDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveFinstatDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveFinstatDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRetrieveBasicDataDelegate;
         
         private EndOperationDelegate onEndRetrieveBasicDataDelegate;
@@ -2011,6 +2133,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         public event System.EventHandler<RetrieveFinancialStatementCompletedEventArgs> RetrieveFinancialStatementCompleted;
         
         public event System.EventHandler<RetrieveConsensusEstimateDetailedDataCompletedEventArgs> RetrieveConsensusEstimateDetailedDataCompleted;
+        
+        public event System.EventHandler<RetrieveFinstatDataCompletedEventArgs> RetrieveFinstatDataCompleted;
         
         public event System.EventHandler<RetrieveBasicDataCompletedEventArgs> RetrieveBasicDataCompleted;
         
@@ -2234,6 +2358,62 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                         issuerId,
                         periodType,
                         currency}, this.onEndRetrieveConsensusEstimateDetailedDataDelegate, this.onRetrieveConsensusEstimateDetailedDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveFinstatData(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, string yearRange, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveFinstatData(issuerId, securityId, dataSource, fiscalType, currency, yearRange, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.FinstatDetailData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveFinstatData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveFinstatData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveFinstatData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string issuerId = ((string)(inValues[0]));
+            string securityId = ((string)(inValues[1]));
+            GreenField.DataContracts.FinancialStatementDataSource dataSource = ((GreenField.DataContracts.FinancialStatementDataSource)(inValues[2]));
+            GreenField.DataContracts.FinancialStatementFiscalType fiscalType = ((GreenField.DataContracts.FinancialStatementFiscalType)(inValues[3]));
+            string currency = ((string)(inValues[4]));
+            string yearRange = ((string)(inValues[5]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveFinstatData(issuerId, securityId, dataSource, fiscalType, currency, yearRange, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveFinstatData(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.FinstatDetailData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveFinstatData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveFinstatDataCompleted(object state) {
+            if ((this.RetrieveFinstatDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveFinstatDataCompleted(this, new RetrieveFinstatDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveFinstatDataAsync(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, string yearRange) {
+            this.RetrieveFinstatDataAsync(issuerId, securityId, dataSource, fiscalType, currency, yearRange, null);
+        }
+        
+        public void RetrieveFinstatDataAsync(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, string yearRange, object userState) {
+            if ((this.onBeginRetrieveFinstatDataDelegate == null)) {
+                this.onBeginRetrieveFinstatDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveFinstatData);
+            }
+            if ((this.onEndRetrieveFinstatDataDelegate == null)) {
+                this.onEndRetrieveFinstatDataDelegate = new EndOperationDelegate(this.OnEndRetrieveFinstatData);
+            }
+            if ((this.onRetrieveFinstatDataCompletedDelegate == null)) {
+                this.onRetrieveFinstatDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveFinstatDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveFinstatDataDelegate, new object[] {
+                        issuerId,
+                        securityId,
+                        dataSource,
+                        fiscalType,
+                        currency,
+                        yearRange}, this.onEndRetrieveFinstatDataDelegate, this.onRetrieveFinstatDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2896,6 +3076,24 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> EndRetrieveConsensusEstimateDetailedData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail>)(base.EndInvoke("RetrieveConsensusEstimateDetailedData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveFinstatData(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, string yearRange, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[6];
+                _args[0] = issuerId;
+                _args[1] = securityId;
+                _args[2] = dataSource;
+                _args[3] = fiscalType;
+                _args[4] = currency;
+                _args[5] = yearRange;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveFinstatData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.FinstatDetailData> EndRetrieveFinstatData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.FinstatDetailData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.FinstatDetailData>)(base.EndInvoke("RetrieveFinstatData", _args, result)));
                 return _result;
             }
             

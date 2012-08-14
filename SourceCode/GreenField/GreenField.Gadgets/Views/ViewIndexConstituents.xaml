@@ -28,10 +28,10 @@
         <Grid Grid.Row="0">
             <!--header for the gadget-->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock Text="{Binding BenchmarkId}" FontWeight="Bold"/>
-                <TextBlock Text=" (" FontWeight="Bold"/>
-                <TextBlock Text="{Binding EffectiveDate, StringFormat='MMMM dd, yyyy'}" FontWeight="Bold"/>
-                <TextBlock Text=") Constituents" FontWeight="Bold"/>
+                    <TextBlock Text="{Binding BenchmarkId}" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text=" (" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text="{Binding EffectiveDate, StringFormat='MMMM dd, yyyy'}" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Text=") Constituents" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
             </StackPanel>
             <!--button to export the grid to excel-->
             <Button Command="{Binding ExportExcelCommand}" HorizontalAlignment="Right" Height="20" Width="20"

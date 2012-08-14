@@ -967,69 +967,6 @@ namespace GreenField.DAL
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
-        /// <param name="sECURITY_ID">No Metadata Documentation available.</param>
-        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
-        /// <param name="fISCAL_TYPE">No Metadata Documentation available.</param>
-        /// <param name="cURRENCY">No Metadata Documentation available.</param>
-        public ObjectResult<FinstatData> GetFinstatDetail(global::System.String iSSUER_ID, global::System.String sECURITY_ID, global::System.String dATA_SOURCE, global::System.String fISCAL_TYPE, global::System.String cURRENCY)
-        {
-            ObjectParameter iSSUER_IDParameter;
-            if (iSSUER_ID != null)
-            {
-                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
-            }
-            else
-            {
-                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
-            }
-    
-            ObjectParameter sECURITY_IDParameter;
-            if (sECURITY_ID != null)
-            {
-                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", sECURITY_ID);
-            }
-            else
-            {
-                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", typeof(global::System.String));
-            }
-    
-            ObjectParameter dATA_SOURCEParameter;
-            if (dATA_SOURCE != null)
-            {
-                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
-            }
-            else
-            {
-                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
-            }
-    
-            ObjectParameter fISCAL_TYPEParameter;
-            if (fISCAL_TYPE != null)
-            {
-                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", fISCAL_TYPE);
-            }
-            else
-            {
-                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
-            }
-    
-            ObjectParameter cURRENCYParameter;
-            if (cURRENCY != null)
-            {
-                cURRENCYParameter = new ObjectParameter("CURRENCY", cURRENCY);
-            }
-            else
-            {
-                cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<FinstatData>("GetFinstatDetail", iSSUER_IDParameter, sECURITY_IDParameter, dATA_SOURCEParameter, fISCAL_TYPEParameter, cURRENCYParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
         /// <param name="eSTIMATE_TYPE">No Metadata Documentation available.</param>
         /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
         /// <param name="cURRENCY">No Metadata Documentation available.</param>
@@ -1081,6 +1018,69 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        /// <param name="issuerID">No Metadata Documentation available.</param>
+        /// <param name="securityId">No Metadata Documentation available.</param>
+        /// <param name="dataSource">No Metadata Documentation available.</param>
+        /// <param name="fiscalType">No Metadata Documentation available.</param>
+        /// <param name="currency">No Metadata Documentation available.</param>
+        public ObjectResult<FinstatDetail> GetFinstatDetail(global::System.String issuerID, global::System.String securityId, global::System.String dataSource, global::System.String fiscalType, global::System.String currency)
+        {
+            ObjectParameter issuerIDParameter;
+            if (issuerID != null)
+            {
+                issuerIDParameter = new ObjectParameter("issuerID", issuerID);
+            }
+            else
+            {
+                issuerIDParameter = new ObjectParameter("issuerID", typeof(global::System.String));
+            }
+    
+            ObjectParameter securityIdParameter;
+            if (securityId != null)
+            {
+                securityIdParameter = new ObjectParameter("securityId", securityId);
+            }
+            else
+            {
+                securityIdParameter = new ObjectParameter("securityId", typeof(global::System.String));
+            }
+    
+            ObjectParameter dataSourceParameter;
+            if (dataSource != null)
+            {
+                dataSourceParameter = new ObjectParameter("dataSource", dataSource);
+            }
+            else
+            {
+                dataSourceParameter = new ObjectParameter("dataSource", typeof(global::System.String));
+            }
+    
+            ObjectParameter fiscalTypeParameter;
+            if (fiscalType != null)
+            {
+                fiscalTypeParameter = new ObjectParameter("fiscalType", fiscalType);
+            }
+            else
+            {
+                fiscalTypeParameter = new ObjectParameter("fiscalType", typeof(global::System.String));
+            }
+    
+            ObjectParameter currencyParameter;
+            if (currency != null)
+            {
+                currencyParameter = new ObjectParameter("currency", currency);
+            }
+            else
+            {
+                currencyParameter = new ObjectParameter("currency", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FinstatDetail>("GetFinstatDetail", issuerIDParameter, securityIdParameter, dataSourceParameter, fiscalTypeParameter, currencyParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         /// <param name="securityId">No Metadata Documentation available.</param>
         /// <param name="issuerId">No Metadata Documentation available.</param>
         /// <param name="chartTitle">No Metadata Documentation available.</param>
@@ -1117,6 +1117,121 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<GetEV_EBITDAData_Result>("Get_EV_EBITDA", securityIdParameter, issuerIdParameter, chartTitleParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="issuerID">No Metadata Documentation available.</param>
+        /// <param name="securityId">No Metadata Documentation available.</param>
+        /// <param name="dataSource">No Metadata Documentation available.</param>
+        /// <param name="fiscalType">No Metadata Documentation available.</param>
+        /// <param name="currency">No Metadata Documentation available.</param>
+        public ObjectResult<FinstatEconomicMarketData> GetFinstatEconomicMarketData(global::System.String issuerID, global::System.String securityId, global::System.String dataSource, global::System.String fiscalType, global::System.String currency)
+        {
+            ObjectParameter issuerIDParameter;
+            if (issuerID != null)
+            {
+                issuerIDParameter = new ObjectParameter("issuerID", issuerID);
+            }
+            else
+            {
+                issuerIDParameter = new ObjectParameter("issuerID", typeof(global::System.String));
+            }
+    
+            ObjectParameter securityIdParameter;
+            if (securityId != null)
+            {
+                securityIdParameter = new ObjectParameter("securityId", securityId);
+            }
+            else
+            {
+                securityIdParameter = new ObjectParameter("securityId", typeof(global::System.String));
+            }
+    
+            ObjectParameter dataSourceParameter;
+            if (dataSource != null)
+            {
+                dataSourceParameter = new ObjectParameter("dataSource", dataSource);
+            }
+            else
+            {
+                dataSourceParameter = new ObjectParameter("dataSource", typeof(global::System.String));
+            }
+    
+            ObjectParameter fiscalTypeParameter;
+            if (fiscalType != null)
+            {
+                fiscalTypeParameter = new ObjectParameter("fiscalType", fiscalType);
+            }
+            else
+            {
+                fiscalTypeParameter = new ObjectParameter("fiscalType", typeof(global::System.String));
+            }
+    
+            ObjectParameter currencyParameter;
+            if (currency != null)
+            {
+                currencyParameter = new ObjectParameter("currency", currency);
+            }
+            else
+            {
+                currencyParameter = new ObjectParameter("currency", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FinstatEconomicMarketData>("GetFinstatEconomicMarketData", issuerIDParameter, securityIdParameter, dataSourceParameter, fiscalTypeParameter, currencyParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="issuerID">No Metadata Documentation available.</param>
+        /// <param name="securityId">No Metadata Documentation available.</param>
+        /// <param name="dataSource">No Metadata Documentation available.</param>
+        /// <param name="fiscalType">No Metadata Documentation available.</param>
+        public ObjectResult<FinstatRelativeAnalysisData> GetFinstatRelativeAnalysisData(global::System.String issuerID, global::System.String securityId, global::System.String dataSource, global::System.String fiscalType)
+        {
+            ObjectParameter issuerIDParameter;
+            if (issuerID != null)
+            {
+                issuerIDParameter = new ObjectParameter("issuerID", issuerID);
+            }
+            else
+            {
+                issuerIDParameter = new ObjectParameter("issuerID", typeof(global::System.String));
+            }
+    
+            ObjectParameter securityIdParameter;
+            if (securityId != null)
+            {
+                securityIdParameter = new ObjectParameter("securityId", securityId);
+            }
+            else
+            {
+                securityIdParameter = new ObjectParameter("securityId", typeof(global::System.String));
+            }
+    
+            ObjectParameter dataSourceParameter;
+            if (dataSource != null)
+            {
+                dataSourceParameter = new ObjectParameter("dataSource", dataSource);
+            }
+            else
+            {
+                dataSourceParameter = new ObjectParameter("dataSource", typeof(global::System.String));
+            }
+    
+            ObjectParameter fiscalTypeParameter;
+            if (fiscalType != null)
+            {
+                fiscalTypeParameter = new ObjectParameter("fiscalType", fiscalType);
+            }
+            else
+            {
+                fiscalTypeParameter = new ObjectParameter("fiscalType", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FinstatRelativeAnalysisData>("GetFinstatRelativeAnalysisData", issuerIDParameter, securityIdParameter, dataSourceParameter, fiscalTypeParameter);
         }
     
         /// <summary>
@@ -6817,19 +6932,19 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="FinstatData")]
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="FinstatDetail")]
     [DataContractAttribute(IsReference=true)]
     [Serializable()]
-    public partial class FinstatData : ComplexObject
+    public partial class FinstatDetail : ComplexObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new FinstatData object.
+        /// Create a new FinstatDetail object.
         /// </summary>
         /// <param name="dATA_SOURCE">Initial value of the DATA_SOURCE property.</param>
         /// <param name="rOOT_SOURCE">Initial value of the ROOT_SOURCE property.</param>
-        /// <param name="eSTIMATE_ID">Initial value of the ESTIMATE_ID property.</param>
+        /// <param name="rOOT_SOURCE_DATE">Initial value of the ROOT_SOURCE_DATE property.</param>
         /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
         /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
         /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
@@ -6841,24 +6956,24 @@ namespace GreenField.DAL
         /// <param name="sORT_ORDER">Initial value of the SORT_ORDER property.</param>
         /// <param name="hARMONIC">Initial value of the HARMONIC property.</param>
         /// <param name="dATA_DESC">Initial value of the DATA_DESC property.</param>
-        public static FinstatData CreateFinstatData(global::System.String dATA_SOURCE, global::System.String rOOT_SOURCE, global::System.Int32 eSTIMATE_ID, global::System.Int32 pERIOD_YEAR, global::System.Int32 dATA_ID, global::System.Decimal aMOUNT, global::System.Int32 mULTIPLIER, global::System.Int32 dECIMALS, global::System.String pERCENTAGE, global::System.String bOLD_FONT, global::System.String gROUP_NAME, global::System.String sORT_ORDER, global::System.String hARMONIC, global::System.String dATA_DESC)
+        public static FinstatDetail CreateFinstatDetail(global::System.String dATA_SOURCE, global::System.String rOOT_SOURCE, global::System.DateTime rOOT_SOURCE_DATE, global::System.Int32 pERIOD_YEAR, global::System.Int32 dATA_ID, global::System.Decimal aMOUNT, global::System.Decimal mULTIPLIER, global::System.Int32 dECIMALS, global::System.String pERCENTAGE, global::System.String bOLD_FONT, global::System.String gROUP_NAME, global::System.Int32 sORT_ORDER, global::System.String hARMONIC, global::System.String dATA_DESC)
         {
-            FinstatData finstatData = new FinstatData();
-            finstatData.DATA_SOURCE = dATA_SOURCE;
-            finstatData.ROOT_SOURCE = rOOT_SOURCE;
-            finstatData.ESTIMATE_ID = eSTIMATE_ID;
-            finstatData.PERIOD_YEAR = pERIOD_YEAR;
-            finstatData.DATA_ID = dATA_ID;
-            finstatData.AMOUNT = aMOUNT;
-            finstatData.MULTIPLIER = mULTIPLIER;
-            finstatData.DECIMALS = dECIMALS;
-            finstatData.PERCENTAGE = pERCENTAGE;
-            finstatData.BOLD_FONT = bOLD_FONT;
-            finstatData.GROUP_NAME = gROUP_NAME;
-            finstatData.SORT_ORDER = sORT_ORDER;
-            finstatData.HARMONIC = hARMONIC;
-            finstatData.DATA_DESC = dATA_DESC;
-            return finstatData;
+            FinstatDetail finstatDetail = new FinstatDetail();
+            finstatDetail.DATA_SOURCE = dATA_SOURCE;
+            finstatDetail.ROOT_SOURCE = rOOT_SOURCE;
+            finstatDetail.ROOT_SOURCE_DATE = rOOT_SOURCE_DATE;
+            finstatDetail.PERIOD_YEAR = pERIOD_YEAR;
+            finstatDetail.DATA_ID = dATA_ID;
+            finstatDetail.AMOUNT = aMOUNT;
+            finstatDetail.MULTIPLIER = mULTIPLIER;
+            finstatDetail.DECIMALS = dECIMALS;
+            finstatDetail.PERCENTAGE = pERCENTAGE;
+            finstatDetail.BOLD_FONT = bOLD_FONT;
+            finstatDetail.GROUP_NAME = gROUP_NAME;
+            finstatDetail.SORT_ORDER = sORT_ORDER;
+            finstatDetail.HARMONIC = hARMONIC;
+            finstatDetail.DATA_DESC = dATA_DESC;
+            return finstatDetail;
         }
 
         #endregion
@@ -6917,7 +7032,31 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 ESTIMATE_ID
+        public global::System.DateTime ROOT_SOURCE_DATE
+        {
+            get
+            {
+                return _ROOT_SOURCE_DATE;
+            }
+            set
+            {
+                OnROOT_SOURCE_DATEChanging(value);
+                ReportPropertyChanging("ROOT_SOURCE_DATE");
+                _ROOT_SOURCE_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ROOT_SOURCE_DATE");
+                OnROOT_SOURCE_DATEChanged();
+            }
+        }
+        private global::System.DateTime _ROOT_SOURCE_DATE;
+        partial void OnROOT_SOURCE_DATEChanging(global::System.DateTime value);
+        partial void OnROOT_SOURCE_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ESTIMATE_ID
         {
             get
             {
@@ -6932,8 +7071,8 @@ namespace GreenField.DAL
                 OnESTIMATE_IDChanged();
             }
         }
-        private global::System.Int32 _ESTIMATE_ID;
-        partial void OnESTIMATE_IDChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _ESTIMATE_ID;
+        partial void OnESTIMATE_IDChanging(Nullable<global::System.Int32> value);
         partial void OnESTIMATE_IDChanged();
     
         /// <summary>
@@ -7013,7 +7152,7 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 MULTIPLIER
+        public global::System.Decimal MULTIPLIER
         {
             get
             {
@@ -7028,8 +7167,8 @@ namespace GreenField.DAL
                 OnMULTIPLIERChanged();
             }
         }
-        private global::System.Int32 _MULTIPLIER;
-        partial void OnMULTIPLIERChanging(global::System.Int32 value);
+        private global::System.Decimal _MULTIPLIER;
+        partial void OnMULTIPLIERChanging(global::System.Decimal value);
         partial void OnMULTIPLIERChanged();
     
         /// <summary>
@@ -7133,7 +7272,7 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String SORT_ORDER
+        public global::System.Int32 SORT_ORDER
         {
             get
             {
@@ -7143,13 +7282,13 @@ namespace GreenField.DAL
             {
                 OnSORT_ORDERChanging(value);
                 ReportPropertyChanging("SORT_ORDER");
-                _SORT_ORDER = StructuralObject.SetValidValue(value, false);
+                _SORT_ORDER = StructuralObject.SetValidValue(value);
                 ReportPropertyChanged("SORT_ORDER");
                 OnSORT_ORDERChanged();
             }
         }
-        private global::System.String _SORT_ORDER;
-        partial void OnSORT_ORDERChanging(global::System.String value);
+        private global::System.Int32 _SORT_ORDER;
+        partial void OnSORT_ORDERChanging(global::System.Int32 value);
         partial void OnSORT_ORDERChanged();
     
         /// <summary>
@@ -7199,6 +7338,394 @@ namespace GreenField.DAL
         private global::System.String _DATA_DESC;
         partial void OnDATA_DESCChanging(global::System.String value);
         partial void OnDATA_DESCChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="FinstatEconomicMarketData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class FinstatEconomicMarketData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FinstatEconomicMarketData object.
+        /// </summary>
+        /// <param name="fX_RATE">Initial value of the FX_RATE property.</param>
+        /// <param name="aVG12MonthRATE">Initial value of the AVG12MonthRATE property.</param>
+        /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
+        /// <param name="fIELD">Initial value of the FIELD property.</param>
+        /// <param name="yEAR1">Initial value of the YEAR1 property.</param>
+        /// <param name="vALUE">Initial value of the VALUE property.</param>
+        public static FinstatEconomicMarketData CreateFinstatEconomicMarketData(global::System.Decimal fX_RATE, global::System.Decimal aVG12MonthRATE, global::System.String pERIOD_YEAR, global::System.String fIELD, global::System.Int32 yEAR1, global::System.Decimal vALUE)
+        {
+            FinstatEconomicMarketData finstatEconomicMarketData = new FinstatEconomicMarketData();
+            finstatEconomicMarketData.FX_RATE = fX_RATE;
+            finstatEconomicMarketData.AVG12MonthRATE = aVG12MonthRATE;
+            finstatEconomicMarketData.PERIOD_YEAR = pERIOD_YEAR;
+            finstatEconomicMarketData.FIELD = fIELD;
+            finstatEconomicMarketData.YEAR1 = yEAR1;
+            finstatEconomicMarketData.VALUE = vALUE;
+            return finstatEconomicMarketData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal FX_RATE
+        {
+            get
+            {
+                return _FX_RATE;
+            }
+            set
+            {
+                OnFX_RATEChanging(value);
+                ReportPropertyChanging("FX_RATE");
+                _FX_RATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FX_RATE");
+                OnFX_RATEChanged();
+            }
+        }
+        private global::System.Decimal _FX_RATE;
+        partial void OnFX_RATEChanging(global::System.Decimal value);
+        partial void OnFX_RATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AVG12MonthRATE
+        {
+            get
+            {
+                return _AVG12MonthRATE;
+            }
+            set
+            {
+                OnAVG12MonthRATEChanging(value);
+                ReportPropertyChanging("AVG12MonthRATE");
+                _AVG12MonthRATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AVG12MonthRATE");
+                OnAVG12MonthRATEChanged();
+            }
+        }
+        private global::System.Decimal _AVG12MonthRATE;
+        partial void OnAVG12MonthRATEChanging(global::System.Decimal value);
+        partial void OnAVG12MonthRATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PERIOD_YEAR
+        {
+            get
+            {
+                return _PERIOD_YEAR;
+            }
+            set
+            {
+                OnPERIOD_YEARChanging(value);
+                ReportPropertyChanging("PERIOD_YEAR");
+                _PERIOD_YEAR = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("PERIOD_YEAR");
+                OnPERIOD_YEARChanged();
+            }
+        }
+        private global::System.String _PERIOD_YEAR;
+        partial void OnPERIOD_YEARChanging(global::System.String value);
+        partial void OnPERIOD_YEARChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FIELD
+        {
+            get
+            {
+                return _FIELD;
+            }
+            set
+            {
+                OnFIELDChanging(value);
+                ReportPropertyChanging("FIELD");
+                _FIELD = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("FIELD");
+                OnFIELDChanged();
+            }
+        }
+        private global::System.String _FIELD;
+        partial void OnFIELDChanging(global::System.String value);
+        partial void OnFIELDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 YEAR1
+        {
+            get
+            {
+                return _YEAR1;
+            }
+            set
+            {
+                OnYEAR1Changing(value);
+                ReportPropertyChanging("YEAR1");
+                _YEAR1 = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("YEAR1");
+                OnYEAR1Changed();
+            }
+        }
+        private global::System.Int32 _YEAR1;
+        partial void OnYEAR1Changing(global::System.Int32 value);
+        partial void OnYEAR1Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal VALUE
+        {
+            get
+            {
+                return _VALUE;
+            }
+            set
+            {
+                OnVALUEChanging(value);
+                ReportPropertyChanging("VALUE");
+                _VALUE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("VALUE");
+                OnVALUEChanged();
+            }
+        }
+        private global::System.Decimal _VALUE;
+        partial void OnVALUEChanging(global::System.Decimal value);
+        partial void OnVALUEChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="FinstatRelativeAnalysisData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class FinstatRelativeAnalysisData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FinstatRelativeAnalysisData object.
+        /// </summary>
+        /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
+        /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
+        /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
+        /// <param name="dECIMALS">Initial value of the DECIMALS property.</param>
+        /// <param name="mULTIPLIER">Initial value of the MULTIPLIER property.</param>
+        /// <param name="pERCENTAGE">Initial value of the PERCENTAGE property.</param>
+        /// <param name="vALUE">Initial value of the VALUE property.</param>
+        public static FinstatRelativeAnalysisData CreateFinstatRelativeAnalysisData(global::System.Int32 dATA_ID, global::System.Int32 pERIOD_YEAR, global::System.Decimal aMOUNT, global::System.Int32 dECIMALS, global::System.Decimal mULTIPLIER, global::System.String pERCENTAGE, global::System.String vALUE)
+        {
+            FinstatRelativeAnalysisData finstatRelativeAnalysisData = new FinstatRelativeAnalysisData();
+            finstatRelativeAnalysisData.DATA_ID = dATA_ID;
+            finstatRelativeAnalysisData.PERIOD_YEAR = pERIOD_YEAR;
+            finstatRelativeAnalysisData.AMOUNT = aMOUNT;
+            finstatRelativeAnalysisData.DECIMALS = dECIMALS;
+            finstatRelativeAnalysisData.MULTIPLIER = mULTIPLIER;
+            finstatRelativeAnalysisData.PERCENTAGE = pERCENTAGE;
+            finstatRelativeAnalysisData.VALUE = vALUE;
+            return finstatRelativeAnalysisData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DATA_ID
+        {
+            get
+            {
+                return _DATA_ID;
+            }
+            set
+            {
+                OnDATA_IDChanging(value);
+                ReportPropertyChanging("DATA_ID");
+                _DATA_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DATA_ID");
+                OnDATA_IDChanged();
+            }
+        }
+        private global::System.Int32 _DATA_ID;
+        partial void OnDATA_IDChanging(global::System.Int32 value);
+        partial void OnDATA_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PERIOD_YEAR
+        {
+            get
+            {
+                return _PERIOD_YEAR;
+            }
+            set
+            {
+                OnPERIOD_YEARChanging(value);
+                ReportPropertyChanging("PERIOD_YEAR");
+                _PERIOD_YEAR = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PERIOD_YEAR");
+                OnPERIOD_YEARChanged();
+            }
+        }
+        private global::System.Int32 _PERIOD_YEAR;
+        partial void OnPERIOD_YEARChanging(global::System.Int32 value);
+        partial void OnPERIOD_YEARChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AMOUNT
+        {
+            get
+            {
+                return _AMOUNT;
+            }
+            set
+            {
+                OnAMOUNTChanging(value);
+                ReportPropertyChanging("AMOUNT");
+                _AMOUNT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AMOUNT");
+                OnAMOUNTChanged();
+            }
+        }
+        private global::System.Decimal _AMOUNT;
+        partial void OnAMOUNTChanging(global::System.Decimal value);
+        partial void OnAMOUNTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DECIMALS
+        {
+            get
+            {
+                return _DECIMALS;
+            }
+            set
+            {
+                OnDECIMALSChanging(value);
+                ReportPropertyChanging("DECIMALS");
+                _DECIMALS = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DECIMALS");
+                OnDECIMALSChanged();
+            }
+        }
+        private global::System.Int32 _DECIMALS;
+        partial void OnDECIMALSChanging(global::System.Int32 value);
+        partial void OnDECIMALSChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal MULTIPLIER
+        {
+            get
+            {
+                return _MULTIPLIER;
+            }
+            set
+            {
+                OnMULTIPLIERChanging(value);
+                ReportPropertyChanging("MULTIPLIER");
+                _MULTIPLIER = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("MULTIPLIER");
+                OnMULTIPLIERChanged();
+            }
+        }
+        private global::System.Decimal _MULTIPLIER;
+        partial void OnMULTIPLIERChanging(global::System.Decimal value);
+        partial void OnMULTIPLIERChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PERCENTAGE
+        {
+            get
+            {
+                return _PERCENTAGE;
+            }
+            set
+            {
+                OnPERCENTAGEChanging(value);
+                ReportPropertyChanging("PERCENTAGE");
+                _PERCENTAGE = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("PERCENTAGE");
+                OnPERCENTAGEChanged();
+            }
+        }
+        private global::System.String _PERCENTAGE;
+        partial void OnPERCENTAGEChanging(global::System.String value);
+        partial void OnPERCENTAGEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String VALUE
+        {
+            get
+            {
+                return _VALUE;
+            }
+            set
+            {
+                OnVALUEChanging(value);
+                ReportPropertyChanging("VALUE");
+                _VALUE = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("VALUE");
+                OnVALUEChanged();
+            }
+        }
+        private global::System.String _VALUE;
+        partial void OnVALUEChanging(global::System.String value);
+        partial void OnVALUEChanged();
 
         #endregion
     }

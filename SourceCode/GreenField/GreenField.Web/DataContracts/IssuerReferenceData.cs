@@ -42,7 +42,23 @@ namespace GreenField.Web.DataContracts
         [DataMember]
         public int? SecurityId { get; set; }
 
+        [DataMember]
+        public String IssueName { get; set; }
+
+        [DataMember]
+        public String SubIndustryName { get; set; }
+
+        [DataMember]
+        public String Ticker { get; set; }
+
+        [DataMember]
+        public String TradingCurrency { get; set; }
+
+        [DataMember]
+        public String PrimaryAnalyst { get; set; }
+
+        [DataMember]
+        public String IndustryAnalyst { get; set; }
+
     }
-
-
 }
