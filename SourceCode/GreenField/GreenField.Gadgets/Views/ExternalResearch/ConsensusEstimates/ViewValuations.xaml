@@ -75,7 +75,7 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Gadget Controls" FontWeight="Bold" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Gadget Controls" FontWeight="Bold" Style="{StaticResource TextBlockStyle}" VerticalAlignment="Center"/>
                             <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
 
                             <telerik:RadButton Grid.Column="2" Click="btnExportExcel_Click" HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="False"
@@ -98,7 +98,7 @@
                             <!--Period Type Selector-->
                             <TextBlock Grid.Row="0" Grid.Column="0" Text="Period Type" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
                             <telerik:RadComboBox Grid.Row="0" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding PeriodTypeInfo}"
-                                                 VerticalContentAlignment="Center" SelectedItem="{Binding SelectedPeriodType, Mode=TwoWay}" 
+                                                 VerticalContentAlignment="Center" SelectedItem="{Binding SelectedPeriodType, Mode=TwoWay}" Style="{StaticResource RadComboBoxStyle}"
                                                  Margin="2,2,2,0" FontFamily="Arial" FontSize="7">
                                 <telerik:RadComboBox.ItemTemplate>
                                     <DataTemplate>
@@ -110,7 +110,7 @@
                             <!--Currency Selector-->
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Currency" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
                             <telerik:RadComboBox Grid.Row="1" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding CurrencyInfo}"
-                                                 VerticalContentAlignment="Center" SelectedValue="{Binding SelectedCurrency, Mode=TwoWay}"
+                                                 VerticalContentAlignment="Center" SelectedValue="{Binding SelectedCurrency, Mode=TwoWay}" Style="{StaticResource RadComboBoxStyle}"
                                                  Margin="2,2,2,0" FontFamily="Arial" FontSize="7"/>
                         </Grid>
                     </telerik:RadExpander.Content>
@@ -127,7 +127,6 @@
                                  CanUserSelect="False" 
                                  CanUserReorderColumns="False" 
                                  CanUserInsertRows="False" 
-                                 
                                  CanUserDeleteRows="False"
                                  IsReadOnly="True" 
                                  CanUserSortColumns="False" 
@@ -151,35 +150,35 @@
                             <telerik:GridViewDataColumn x:Name="dgcLeftClick" HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}" 
                                                         IsSortable="False" IsFilterable="False"/>
                             <!--<telerik:GridViewDataColumn x:Name="dgvcYearOne" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" IsVisible="False"  Width="*"/>-->
-                            <telerik:GridViewDataColumn x:Name="dgvcYearTwo" HeaderTextAlignment="Right" TextAlignment="Right" 
+                            <telerik:GridViewDataColumn x:Name="dgvcYearTwo" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding YEAR_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*"/>
-                            <telerik:GridViewDataColumn x:Name="dgvcYearThree" HeaderTextAlignment="Right" TextAlignment="Right" 
+                            <telerik:GridViewDataColumn x:Name="dgvcYearThree" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding YEAR_TWO, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*"/>
-                            <telerik:GridViewDataColumn x:Name="dgvcYearFour" HeaderTextAlignment="Right" TextAlignment="Right" 
+                            <telerik:GridViewDataColumn x:Name="dgvcYearFour" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding YEAR_THREE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*"/>
-                            <telerik:GridViewDataColumn x:Name="dgvcYearFive" HeaderTextAlignment="Right" TextAlignment="Right" 
+                            <telerik:GridViewDataColumn x:Name="dgvcYearFive" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding YEAR_FOUR, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*"/>
-                            <telerik:GridViewDataColumn x:Name="dgvcYearSix" HeaderTextAlignment="Right" TextAlignment="Right" 
+                            <telerik:GridViewDataColumn x:Name="dgvcYearSix" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding YEAR_FIVE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*"/>
                             <!--<telerik:GridViewDataColumn x:Name="dgvcQuarterOne" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding QUARTER_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="*"/>-->
-                            <telerik:GridViewDataColumn x:Name="dgvcQuarterTwo" HeaderTextAlignment="Right" TextAlignment="Right" 
+                            <telerik:GridViewDataColumn x:Name="dgvcQuarterTwo" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding QUARTER_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*"/>
-                            <telerik:GridViewDataColumn x:Name="dgvcQuarterThree" HeaderTextAlignment="Right" TextAlignment="Right" 
+                            <telerik:GridViewDataColumn x:Name="dgvcQuarterThree" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding QUARTER_TWO, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*"/>
-                            <telerik:GridViewDataColumn x:Name="dgvcQuarterFour" HeaderTextAlignment="Right" TextAlignment="Right" 
+                            <telerik:GridViewDataColumn x:Name="dgvcQuarterFour" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding QUARTER_THREE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*"/>
-                            <telerik:GridViewDataColumn x:Name="dgvcQuarterFive" HeaderTextAlignment="Right" TextAlignment="Right" 
+                            <telerik:GridViewDataColumn x:Name="dgvcQuarterFive" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding QUARTER_FOUR, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*"/>
-                            <telerik:GridViewDataColumn x:Name="dgvcQuarterSix" HeaderTextAlignment="Right" TextAlignment="Right" 
+                            <telerik:GridViewDataColumn x:Name="dgvcQuarterSix" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding QUARTER_FIVE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*"/>
                             <telerik:GridViewDataColumn x:Name="dgcRightClick" HeaderCellStyle="{StaticResource GridViewHeaderCellRightButtonStyle}" 

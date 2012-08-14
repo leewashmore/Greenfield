@@ -195,8 +195,8 @@
                 <Grid Visibility="{Binding SecuritySelectorVisibility}" Margin="5,0,0,0" Grid.Column="0">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Security" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                   Width="Auto" Foreground="Black" FontSize="12" 
-                                   FontFamily="Arial" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                                   Width="Auto" Foreground="Black" 
+                                   FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadComboBox x:Name="cbsecuritySelector"
                                          ItemsSource="{Binding SecuritySelectorInfo}"
                                          SelectedItem="{Binding SelectedSecurityInfo, Mode=TwoWay}"
@@ -212,7 +212,7 @@
                                          HorizontalAlignment="Left"
                                          OpenDropDownOnFocus="True"
                                          StaysOpenOnEdit="True"
-                                             Style="{StaticResource RadComboBoxStyle}"
+                                         Style="{StaticResource RadComboBoxStyle}"
                                          TextOptions.TextHintingMode="Fixed"
                                          IsTextSearchEnabled="False">
                             <telerik:RadComboBox.ItemsPanel>
@@ -238,18 +238,16 @@
                 <Grid Margin="5,0,0,0" Visibility="{Binding PortfolioSelectorVisibility}" Grid.Column="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Portfolio" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
-                                   FontSize="12" FontFamily="Arial" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                                   FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
 
                         <telerik:RadComboBox x:Name="cbPortfolioSelector"
                                          ItemsSource="{Binding PortfolioSelectorInfo}"
                                          SelectedItem="{Binding SelectedPortfolioInfo, Mode=TwoWay}"
                                          Text="{Binding PortfolioSearchText, Mode=TwoWay}"
-                                         FontFamily="Arial"
                                          DisplayMemberPath="PortfolioId"
                                          EmptyText="Search Portfolio..."                                     
                                          telerik:TextSearch.TextPath="PortfolioId"
                                          Width="auto" 
-                                         Height="25"
                                          Margin="5,0,0,0"
                                          IsEditable="True"
                                          Style="{StaticResource RadComboBoxStyle}"
@@ -275,7 +273,7 @@
                 <Grid Margin="5,0,0,0" Visibility="{Binding EffectiveDateSelectorVisibility}" Grid.Column="2">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Effective Date" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
-                                   FontSize="12" FontFamily="Arial" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                                  FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadDatePicker x:Name="dpEffectiveDateSelector"
                                            SelectedValue="{Binding SelectedEffectiveDateInfo, Mode=TwoWay}"
                                                FontSize="12"
@@ -289,17 +287,17 @@
                 <!--Period Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding PeriodSelectorVisibility}" Grid.Column="3">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
-                        <TextBlock Text="Period" HorizontalAlignment="Left" VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"
-                                   Width="Auto" Foreground="Black" FontSize="12" FontFamily="Arial" FontWeight="Bold"/>
+                        <TextBlock Text="Period" HorizontalAlignment="Left" VerticalAlignment="Center"  
+                                   Style="{StaticResource TextBlockStyle}"
+                                   Width="Auto" Foreground="Black" FontWeight="Bold"/>
                         <telerik:RadComboBox x:Name="cbPeriodSelector"
                                          EmptyText="Select Period..." 
                                          ItemsSource="{Binding PeriodTypeInfo}"
                                          SelectedValue="{Binding SelectedPeriodType,Mode=TwoWay}"    
-                                         Width="auto"                                          
-                                         FontFamily="Arial"                                        
+                                         Width="auto"                                                                              
                                          Margin="5,0,0,0"
                                          IsEditable="True"
-                                             Style="{StaticResource RadComboBoxStyle}"
+                                         Style="{StaticResource RadComboBoxStyle}"
                                          CanAutocompleteSelectItems="True" 
                                          CanKeyboardNavigationSelectItems="False" 
                                          HorizontalAlignment="Left"
@@ -320,16 +318,16 @@
                 <Grid Margin="5,0,0,0" Visibility="{Binding FilterTypeVisibility}" Grid.Column="4">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <TextBlock Text="Filter" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" 
-                                   Foreground="Black" FontSize="12" FontFamily="Arial" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                                   Foreground="Black" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadComboBox x:Name="cbFilterSelector"
                                          EmptyText="Select Filter..." 
                                          ItemsSource="{Binding FilterTypeInfo}"
-                                         SelectedValue="{Binding SelectedFilterType, Mode=TwoWay}"                                             
+                                         SelectedValue="{Binding SelectedFilterType, Mode=TwoWay}"                                 
                                          FontFamily="Arial"
                                          Width="auto" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"
-                                             Style="{StaticResource RadComboBoxStyle}"
+                                         Style="{StaticResource RadComboBoxStyle}"
                                          CanAutocompleteSelectItems="True" 
                                          CanKeyboardNavigationSelectItems="False" 
                                          HorizontalAlignment="Left"
@@ -353,7 +351,7 @@
                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" telerik:StyleManager.Theme="Metro">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                             <TextBlock Text="Value" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
-                                        Style="{StaticResource TextBlockStyle}" FontFamily="Arial" FontWeight="Bold"/>
+                                        Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                             <telerik:RadComboBox x:Name="cbValueSelector"
                                          EmptyText="Select Value..." 
                                          ItemsSource="{Binding FilterSelectorInfo}"
@@ -363,7 +361,7 @@
                                          Width="auto" 
                                          Margin="5,0,0,0"
                                          IsEditable="True"
-                                                 Style="{StaticResource RadComboBoxStyle}"
+                                         Style="{StaticResource RadComboBoxStyle}"
                                          CanAutocompleteSelectItems="True" 
                                          CanKeyboardNavigationSelectItems="False" 
                                          HorizontalAlignment="Left"
@@ -462,8 +460,8 @@
                     </telerik:RadBusyIndicator>
                 </Grid>
                 <Grid Margin="5,0,0,0" Visibility="{Binding MktCapExCashSelectorVisibility}" Grid.Column="9">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-                        <CheckBox Content="Cash/No Cash" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  HorizontalAlignment="Center"
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                        <CheckBox Content="Cash/No Cash" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"  HorizontalAlignment="Center" FontWeight="Bold"
                                   VerticalAlignment="Center" Style="{StaticResource CheckBoxStyle}"
                                   IsChecked="{Binding IsExCashSecurity , Mode=TwoWay}" Grid.Row="0" Name="chkExCashSecurity" ToolTipService.ToolTip="Check to Exclude Cash" />
                     </StackPanel>
@@ -516,7 +514,7 @@
                     </StackPanel>
                 </Grid>
                 <Grid Margin="5,0,0,0" Visibility="{Binding LookThruSelectorVisibility}" Grid.Column="13">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
                         <CheckBox Content="LookThru" FontWeight="Bold" HorizontalContentAlignment="Center" 
                                   VerticalContentAlignment="Center" HorizontalAlignment="Center" VerticalAlignment="Center"  Style="{StaticResource CheckBoxStyle}"
                           IsChecked="{Binding IsLookThruEnabled , Mode=TwoWay}" Grid.Row="0" Name="chkLookThruEnabled" ToolTipService.ToolTip="Check to Enable LookThru" />
@@ -533,7 +531,7 @@
                                          SelectedValue="{Binding SelectedNodeName,Mode=TwoWay}"    
                                          Width="auto"                                          
                                          FontFamily="Arial"  
-                                             Style="{StaticResource RadComboBoxStyle}"
+                                         Style="{StaticResource RadComboBoxStyle}"
                                          Margin="5,0,0,0"
                                          IsEditable="True"
                                          CanAutocompleteSelectItems="True" 

@@ -2,7 +2,7 @@ set noexec off
 
 --declare  current and required version
 --also do it an the end of the script
-declare @RequiredDBVersion as nvarchar(100) = '00049'
+declare @RequiredDBVersion as nvarchar(100) = '00048'
 declare @CurrentScriptVersion as nvarchar(100) = '00050'
 
 --if current version already in DB, just skip
