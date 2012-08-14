@@ -190,6 +190,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.RiskIndexExposuresData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.SectorBreakdownData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.SectorSelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.SecurityInformation.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.SecurityOverviewData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.Session.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.TargetPriceCEData.datasource" />
@@ -317,6 +318,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MeetingServiceReference\MeetingService7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingServiceReference\MeetingService8.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations.wsdl" />

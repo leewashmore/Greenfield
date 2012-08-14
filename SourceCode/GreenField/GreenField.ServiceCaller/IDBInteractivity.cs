@@ -258,6 +258,7 @@ namespace GreenField.ServiceCaller
 
         void GetFileInfo(long presentationID, Action<List<AttachedFileInfo>> callback);
 
+        void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, Action<SecurityInformation> callback);
 
         #endregion
 
