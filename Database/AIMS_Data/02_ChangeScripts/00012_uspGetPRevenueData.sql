@@ -27,14 +27,7 @@ CREATE PROCEDURE [dbo].[Get_PRevenue](@securityId varchar(20),@issuerId varchar(
 AS
 BEGIN
 	SET NOCOUNT ON;
-	declare @ISSUER_ID varchar(20)
-declare @SECURITY_ID varchar(20)
-set @ISSUER_ID = '25199390'
-set @SECURITY_ID = '157240'
-
-		select @ISSUER_ID = convert(varchar(20),ISSUER_ID) from GF_SECURITY_BASEVIEW
-		where SECURITY_ID = convert(varchar(20),@SECURITY_ID)
-		print 'ISSUER_ID = '+ @ISSUER_ID
+	
 
 -- Extract Price, Shares, FX Rates and Financial Data needed for the charts
 Select a.SECURITY_ID, a.PRICE_DATE
@@ -46,10 +39,7 @@ from PRICES a
 		inner join GF_SECURITY_BASEVIEW sb			on sb.SECURITY_ID = a.SECURITY_ID
 		inner join FX_RATES fx						on fx.CURRENCY = sb.TRADING_CURRENCY and fx.FX_DATE = a.PRICE_DATE
 		inner join ISSUER_SHARES b					on b.SHARES_DATE = fx.FX_DATE and b.ISSUER_ID = sb.ISSUER_ID
-where sb.SECURITY_ID = @SECURITY_ID
-
-		select *,CONVERT(date,price_date)AS Converted_Price_date from #SupportData
-		order by SECURITY_ID, PRICE_DATE, CURRENCY
+where sb.SECURITY_ID = @securityId
 
 -- Financial Data
 -- *Extract quarter values from Primary Analyst source first
@@ -57,7 +47,7 @@ where sb.SECURITY_ID = @SECURITY_ID
 Select * 
 into #PrimaryFinancials
 from PERIOD_FINANCIALS 
-where (@ISSUER_ID is null or ISSUER_ID = '8233223')
+where (@issuerId is null or ISSUER_ID = @issuerId)
 		and PERIOD_END_DATE > dateadd (year, -10, getdate())
 		and PERIOD_END_DATE < dateadd (year, 6, getdate())
 		-- and DATA_SOURCE = 'PRIMARY' -- currently no data for Primary analyst
@@ -67,20 +57,19 @@ where (@ISSUER_ID is null or ISSUER_ID = '8233223')
 order by ISSUER_ID, DATA_ID, PERIOD_YEAR
 
 -- *next pull quarter estimated values for periods after the oldest PeriodEndDate in the select above
-select max(PERIOD_END_DATE)AS MAX_PERIOD_END_DATE from #PrimaryFinancials
-
 Select * 
 into #ConsensusFinancials
 from CURRENT_CONSENSUS_ESTIMATES cce
-where (@ISSUER_ID is null or ISSUER_ID = @ISSUER_ID)
+where (@issuerId is null or ISSUER_ID = @issuerId)
 		and PERIOD_END_DATE > (select max(PERIOD_END_DATE) as PERIOD_END_DATE from #PrimaryFinancials)
 		and DATA_SOURCE = 'REUTERS' 
 		and FISCAL_TYPE = 'FISCAL'
 		and Currency = 'USD'
 		and PERIOD_TYPE in ('Q1','Q2','Q3','Q4')
 order by ISSUER_ID, estimate_id, PERIOD_YEAR
-
-   --Joining tables depending upon the chart title     
+ 
+   --Joining tables depending upon the chart title
+     
   IF(@chartTitle = 'P/E')
 			BEGIN
 				DECLARE @Earnings varchar(10),@nEstID Integer
@@ -128,7 +117,9 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 							where ESTIMATE_ID = @nEstID
 								and z.PERIOD_YEAR is null -- Only where we don't find a matching ACTUAL
 							) 
-						) z									 
+						) z	
+						
+					--JOIN REVENUEVALUES TO SUPPORTDATA ON PERIODENDDATES
 					
 					SELECT  a.*, b.USDPrice, b.SHARES_OUTSTANDING ,b.PRICE_DATE
 					INTO #RevenueSupportP_E
@@ -167,7 +158,7 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 									and a.PERIOD_YEAR = b.PERIOD_YEAR
 									and a.PERIOD_TYPE + ' ' + CAST(a.PERIOD_YEAR AS VARCHAR(4)) = b.PeriodLabel
 						) p_ce
-							
+						
 					--Join RevenueValues to SupportData on PeriodEndDates		
 					SELECT  a.*, b.USDPrice, b.SHARES_OUTSTANDING 
 					INTO #RevenueSupportP_CE
@@ -246,7 +237,7 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 					--Dropping above tables
 					DROP TABLE #RevenueValuesP_BV
 					DROP TABLE #RevenueSupportP_BV		
-			END
+			END	
 			
 	ELSE IF(@chartTitle = 'FCF Yield')
 			BEGIN
@@ -254,13 +245,11 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 				  INTO #RevenueValuesFCFYield
 				  FROM (
 							SELECT PERIOD_TYPE + ' ' + CAST(PERIOD_YEAR AS VARCHAR(4)) as PeriodLabel
-							, PERIOD_END_DATE, sum(Amount) as FCF, PERIOD_TYPE, PERIOD_YEAR 
+							, PERIOD_END_DATE, sum(Amount) as Amount, PERIOD_TYPE, PERIOD_YEAR 
 							FROM #PrimaryFinancials 
 							WHERE DATA_ID = 44 or DATA_ID = 24
 							group by PERIOD_TYPE, PERIOD_YEAR, PERIOD_END_DATE
 							) fcfYield
-	
-
 							
 					--Join RevenueValues to SupportData on PeriodEndDates	
 						
@@ -268,12 +257,12 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 					INTO #RevenueSupportFCFYield
 					FROM #RevenueValuesFCFYield a
 					left join #SupportData b ON a.PERIOD_END_DATE = b.PRICE_DATE 
-					--ORDER BY PERIOD_YEAR ,PERIOD_TYPE
+					ORDER BY PERIOD_YEAR ,PERIOD_TYPE
 					
 
 					--SELECTING CALCULATED DATA
 					
-					--SELECT * FROM #RevenueSupportFCFYield
+					SELECT * FROM #RevenueSupportFCFYield
 					
 					--Dropping above tables
 					DROP TABLE #RevenueValuesFCFYield
@@ -382,7 +371,6 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 	drop table #ConsensusFinancials	
 
 END
-
 GO
 --indicate thet current script is executed
 declare @CurrentScriptVersion as nvarchar(100) = '00012'
