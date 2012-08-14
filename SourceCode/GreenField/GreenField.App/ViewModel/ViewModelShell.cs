@@ -1098,7 +1098,8 @@ namespace GreenField.App.ViewModel
             set
             {
                 _commodityIDs = value;
-                CommodityID = value.LastOrDefault();
+                if(String.IsNullOrEmpty(SelCommodityId))
+                    SelCommodityId = value.LastOrDefault();
                 RaisePropertyChanged(() => this.CommodityIDs);
             }
 
@@ -1133,9 +1134,7 @@ namespace GreenField.App.ViewModel
                             if (item.CommodityId.ToUpper() == value.ToUpper())
                                 _selectorPayload.CommoditySelectedVal = value;
                         }
-                    }
-                if(String.IsNullOrEmpty(value))
-                    SelCommodityId = CommodityIDs.LastOrDefault();
+                    }                
                 RaisePropertyChanged(() => this.SelCommodityId);
                 _eventAggregator.GetEvent<CommoditySelectionSetEvent>().Publish(_selectorPayload.CommoditySelectedVal);
             }
