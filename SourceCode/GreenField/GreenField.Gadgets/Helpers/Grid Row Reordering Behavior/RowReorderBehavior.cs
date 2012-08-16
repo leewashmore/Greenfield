@@ -518,7 +518,7 @@ namespace GreenField.Gadgets.Helpers
             {
                 if (gridView != null)
                 {
-                    if ((gridView.Items[gridView.Items.Count - 1] as MarketPerformanceSnapshotData).MarketSnapshotPreferenceInfo.EntityName == null)
+                    if ((gridView.Items[gridView.Items.Count - 1] as MarketSnapshotPerformanceData).MarketSnapshotPreferenceInfo.EntityName == null)
                     {
                         ContentControl destinationCue = new ContentControl();
                         destinationCue.Content = "No Content in Group";

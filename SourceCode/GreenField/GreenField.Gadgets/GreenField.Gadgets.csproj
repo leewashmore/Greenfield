@@ -127,6 +127,7 @@
     <Compile Include="Helpers\ChildExportOptions.xaml.cs">
       <DependentUpon>ChildExportOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Converters\EntityDisplayConverter.cs" />
     <Compile Include="Helpers\Converters\GroupAggregationToVisibilityConverter.cs" />
     <Compile Include="Helpers\Converters\ReportedCurrencyConverter.cs" />
     <Compile Include="Helpers\DataContextProxy.cs" />

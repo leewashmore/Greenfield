@@ -7,7 +7,7 @@ using GreenField.DAL;
 namespace GreenField.Web.DataContracts
 {
     [DataContract]
-    public class PopulatedMarketPerformanceSnapshotData
+    public class PopulatedMarketSnapshotPerformanceData
     {
         /// <summary>
         /// Stores the snapshot selection data with reference to the snapshot credentials
@@ -19,6 +19,6 @@ namespace GreenField.Web.DataContracts
         /// Stores the performance data for the snapshot selection data
         /// </summary>
         [DataMember]
-        public List<MarketPerformanceSnapshotData> MarketPerformanceSnapshotInfo { get; set; }
+        public List<MarketSnapshotPerformanceData> MarketPerformanceSnapshotInfo { get; set; }
     }
 }

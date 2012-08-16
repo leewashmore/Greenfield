@@ -4,7 +4,9 @@
            xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"  FontSize="7" FontFamily="Arial"
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
            Title="Insert Entity" xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" d:DesignHeight="0" d:DesignWidth="400">
-
+    <controls:ChildWindow.Resources>        
+        <helpers:EntityDisplayConverter x:Key="EntityDisplayConverter"/>
+    </controls:ChildWindow.Resources>
     <Grid x:Name="LayoutRoot" Margin="0" Background="Transparent">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -56,9 +58,9 @@
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding LongName}"/>
-                                <TextBlock Text="{Binding ShortName, StringFormat=' (\{0\}, '}"/>
-                                <TextBlock Text="{Binding SecurityType, StringFormat='\{0\}:'}"/>
-                                <TextBlock Text="{Binding InstrumentID, StringFormat='\{0\})'}"/>
+                                <TextBlock Text="{Binding ShortName, StringFormat=' (\{0\}, ', Converter={StaticResource EntityDisplayConverter}}"/>
+                                <TextBlock Text="{Binding SecurityType, StringFormat='\{0\}:', Converter={StaticResource EntityDisplayConverter}}"/>
+                                <TextBlock Text="{Binding InstrumentID, StringFormat='\{0\})', Converter={StaticResource EntityDisplayConverter}}"/>
                             </StackPanel>
                         </DataTemplate>
                     </telerik:RadComboBox.ItemTemplate>

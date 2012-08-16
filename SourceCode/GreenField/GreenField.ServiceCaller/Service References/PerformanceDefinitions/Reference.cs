@@ -280,8 +280,8 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MarketPerformanceSnapshotData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
-    public partial class MarketPerformanceSnapshotData : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="MarketSnapshotPerformanceData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class MarketSnapshotPerformanceData : object, System.ComponentModel.INotifyPropertyChanged {
         
         private System.Nullable<decimal> DateToDateReturnField;
         
@@ -430,15 +430,15 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PopulatedMarketPerformanceSnapshotData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
-    public partial class PopulatedMarketPerformanceSnapshotData : object, System.ComponentModel.INotifyPropertyChanged {
+    [System.Runtime.Serialization.DataContractAttribute(Name="PopulatedMarketSnapshotPerformanceData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class PopulatedMarketSnapshotPerformanceData : object, System.ComponentModel.INotifyPropertyChanged {
         
-        private System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData> MarketPerformanceSnapshotInfoField;
+        private System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPerformanceData> MarketPerformanceSnapshotInfoField;
         
         private GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotSelectionData MarketSnapshotSelectionInfoField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData> MarketPerformanceSnapshotInfo {
+        public System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPerformanceData> MarketPerformanceSnapshotInfo {
             get {
                 return this.MarketPerformanceSnapshotInfoField;
             }
@@ -527,13 +527,13 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         
         System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> EndRetrieveMarketSnapshotPreference(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotData", ReplyAction="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotDataRes" +
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPerformanceData", ReplyAction="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPerformanceDataRes" +
             "ponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault), Action="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotDataSer" +
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault), Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPerformanceDataSer" +
             "viceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveMarketPerformanceSnapshotData(System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveMarketSnapshotPerformanceData(System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData> EndRetrieveMarketPerformanceSnapshotData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPerformanceData> EndRetrieveMarketSnapshotPerformanceData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/PerformanceOperations/SaveMarketSnapshotPreference", ReplyAction="http://tempuri.org/PerformanceOperations/SaveMarketSnapshotPreferenceResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault), Action="http://tempuri.org/PerformanceOperations/SaveMarketSnapshotPreferenceServiceFault" +
@@ -547,7 +547,7 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             "ltFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginSaveAsMarketSnapshotPreference(string updateXML, System.AsyncCallback callback, object asyncState);
         
-        GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData EndSaveAsMarketSnapshotPreference(System.IAsyncResult result);
+        GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketSnapshotPerformanceData EndSaveAsMarketSnapshotPreference(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreference", ReplyAction="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreferenceResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.PerformanceDefinitions.ServiceFault), Action="http://tempuri.org/PerformanceOperations/RemoveMarketSnapshotPreferenceServiceFau" +
@@ -768,19 +768,19 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RetrieveMarketPerformanceSnapshotDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class RetrieveMarketSnapshotPerformanceDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public RetrieveMarketPerformanceSnapshotDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public RetrieveMarketSnapshotPerformanceDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData> Result {
+        public System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPerformanceData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPerformanceData>)(this.results[0]));
             }
         }
     }
@@ -815,10 +815,10 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
             this.results = results;
         }
         
-        public GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData Result {
+        public GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketSnapshotPerformanceData Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData)(this.results[0]));
+                return ((GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketSnapshotPerformanceData)(this.results[0]));
             }
         }
     }
@@ -1059,11 +1059,11 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveMarketSnapshotPreferenceCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRetrieveMarketPerformanceSnapshotDataDelegate;
+        private BeginOperationDelegate onBeginRetrieveMarketSnapshotPerformanceDataDelegate;
         
-        private EndOperationDelegate onEndRetrieveMarketPerformanceSnapshotDataDelegate;
+        private EndOperationDelegate onEndRetrieveMarketSnapshotPerformanceDataDelegate;
         
-        private System.Threading.SendOrPostCallback onRetrieveMarketPerformanceSnapshotDataCompletedDelegate;
+        private System.Threading.SendOrPostCallback onRetrieveMarketSnapshotPerformanceDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginSaveMarketSnapshotPreferenceDelegate;
         
@@ -1204,7 +1204,7 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         
         public event System.EventHandler<RetrieveMarketSnapshotPreferenceCompletedEventArgs> RetrieveMarketSnapshotPreferenceCompleted;
         
-        public event System.EventHandler<RetrieveMarketPerformanceSnapshotDataCompletedEventArgs> RetrieveMarketPerformanceSnapshotDataCompleted;
+        public event System.EventHandler<RetrieveMarketSnapshotPerformanceDataCompletedEventArgs> RetrieveMarketSnapshotPerformanceDataCompleted;
         
         public event System.EventHandler<SaveMarketSnapshotPreferenceCompletedEventArgs> SaveMarketSnapshotPreferenceCompleted;
         
@@ -1565,49 +1565,49 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginRetrieveMarketPerformanceSnapshotData(System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveMarketPerformanceSnapshotData(marketSnapshotPreference, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.BeginRetrieveMarketSnapshotPerformanceData(System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveMarketSnapshotPerformanceData(marketSnapshotPreference, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData> GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.EndRetrieveMarketPerformanceSnapshotData(System.IAsyncResult result) {
-            return base.Channel.EndRetrieveMarketPerformanceSnapshotData(result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPerformanceData> GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.EndRetrieveMarketSnapshotPerformanceData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveMarketSnapshotPerformanceData(result);
         }
         
-        private System.IAsyncResult OnBeginRetrieveMarketPerformanceSnapshotData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult OnBeginRetrieveMarketSnapshotPerformanceData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference = ((System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference>)(inValues[0]));
-            return ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).BeginRetrieveMarketPerformanceSnapshotData(marketSnapshotPreference, callback, asyncState);
+            return ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).BeginRetrieveMarketSnapshotPerformanceData(marketSnapshotPreference, callback, asyncState);
         }
         
-        private object[] OnEndRetrieveMarketPerformanceSnapshotData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData> retVal = ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).EndRetrieveMarketPerformanceSnapshotData(result);
+        private object[] OnEndRetrieveMarketSnapshotPerformanceData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPerformanceData> retVal = ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).EndRetrieveMarketSnapshotPerformanceData(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnRetrieveMarketPerformanceSnapshotDataCompleted(object state) {
-            if ((this.RetrieveMarketPerformanceSnapshotDataCompleted != null)) {
+        private void OnRetrieveMarketSnapshotPerformanceDataCompleted(object state) {
+            if ((this.RetrieveMarketSnapshotPerformanceDataCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RetrieveMarketPerformanceSnapshotDataCompleted(this, new RetrieveMarketPerformanceSnapshotDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.RetrieveMarketSnapshotPerformanceDataCompleted(this, new RetrieveMarketSnapshotPerformanceDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RetrieveMarketPerformanceSnapshotDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference) {
-            this.RetrieveMarketPerformanceSnapshotDataAsync(marketSnapshotPreference, null);
+        public void RetrieveMarketSnapshotPerformanceDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference) {
+            this.RetrieveMarketSnapshotPerformanceDataAsync(marketSnapshotPreference, null);
         }
         
-        public void RetrieveMarketPerformanceSnapshotDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference, object userState) {
-            if ((this.onBeginRetrieveMarketPerformanceSnapshotDataDelegate == null)) {
-                this.onBeginRetrieveMarketPerformanceSnapshotDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveMarketPerformanceSnapshotData);
+        public void RetrieveMarketSnapshotPerformanceDataAsync(System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference, object userState) {
+            if ((this.onBeginRetrieveMarketSnapshotPerformanceDataDelegate == null)) {
+                this.onBeginRetrieveMarketSnapshotPerformanceDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveMarketSnapshotPerformanceData);
             }
-            if ((this.onEndRetrieveMarketPerformanceSnapshotDataDelegate == null)) {
-                this.onEndRetrieveMarketPerformanceSnapshotDataDelegate = new EndOperationDelegate(this.OnEndRetrieveMarketPerformanceSnapshotData);
+            if ((this.onEndRetrieveMarketSnapshotPerformanceDataDelegate == null)) {
+                this.onEndRetrieveMarketSnapshotPerformanceDataDelegate = new EndOperationDelegate(this.OnEndRetrieveMarketSnapshotPerformanceData);
             }
-            if ((this.onRetrieveMarketPerformanceSnapshotDataCompletedDelegate == null)) {
-                this.onRetrieveMarketPerformanceSnapshotDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveMarketPerformanceSnapshotDataCompleted);
+            if ((this.onRetrieveMarketSnapshotPerformanceDataCompletedDelegate == null)) {
+                this.onRetrieveMarketSnapshotPerformanceDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveMarketSnapshotPerformanceDataCompleted);
             }
-            base.InvokeAsync(this.onBeginRetrieveMarketPerformanceSnapshotDataDelegate, new object[] {
-                        marketSnapshotPreference}, this.onEndRetrieveMarketPerformanceSnapshotDataDelegate, this.onRetrieveMarketPerformanceSnapshotDataCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginRetrieveMarketSnapshotPerformanceDataDelegate, new object[] {
+                        marketSnapshotPreference}, this.onEndRetrieveMarketSnapshotPerformanceDataDelegate, this.onRetrieveMarketSnapshotPerformanceDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1662,7 +1662,7 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.EndSaveAsMarketSnapshotPreference(System.IAsyncResult result) {
+        GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketSnapshotPerformanceData GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations.EndSaveAsMarketSnapshotPreference(System.IAsyncResult result) {
             return base.Channel.EndSaveAsMarketSnapshotPreference(result);
         }
         
@@ -1672,7 +1672,7 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
         }
         
         private object[] OnEndSaveAsMarketSnapshotPreference(System.IAsyncResult result) {
-            GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData retVal = ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).EndSaveAsMarketSnapshotPreference(result);
+            GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketSnapshotPerformanceData retVal = ((GreenField.ServiceCaller.PerformanceDefinitions.PerformanceOperations)(this)).EndSaveAsMarketSnapshotPreference(result);
             return new object[] {
                     retVal};
         }
@@ -2393,16 +2393,16 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveMarketPerformanceSnapshotData(System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveMarketSnapshotPerformanceData(System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference> marketSnapshotPreference, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = marketSnapshotPreference;
-                System.IAsyncResult _result = base.BeginInvoke("RetrieveMarketPerformanceSnapshotData", _args, callback, asyncState);
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveMarketSnapshotPerformanceData", _args, callback, asyncState);
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData> EndRetrieveMarketPerformanceSnapshotData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPerformanceData> EndRetrieveMarketSnapshotPerformanceData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData>)(base.EndInvoke("RetrieveMarketPerformanceSnapshotData", _args, result)));
+                System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPerformanceData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPerformanceData>)(base.EndInvoke("RetrieveMarketSnapshotPerformanceData", _args, result)));
                 return _result;
             }
             
@@ -2426,9 +2426,9 @@ namespace GreenField.ServiceCaller.PerformanceDefinitions {
                 return _result;
             }
             
-            public GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData EndSaveAsMarketSnapshotPreference(System.IAsyncResult result) {
+            public GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketSnapshotPerformanceData EndSaveAsMarketSnapshotPreference(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData _result = ((GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData)(base.EndInvoke("SaveAsMarketSnapshotPreference", _args, result)));
+                GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketSnapshotPerformanceData _result = ((GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketSnapshotPerformanceData)(base.EndInvoke("SaveAsMarketSnapshotPreference", _args, result)));
                 return _result;
             }
             

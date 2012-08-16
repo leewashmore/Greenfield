@@ -69,13 +69,13 @@
   <wsdl:message name="PerformanceOperations_RetrieveMarketSnapshotPreference_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
   </wsdl:message>
-  <wsdl:message name="PerformanceOperations_RetrieveMarketPerformanceSnapshotData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveMarketPerformanceSnapshotData" />
+  <wsdl:message name="PerformanceOperations_RetrieveMarketSnapshotPerformanceData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotPerformanceData" />
   </wsdl:message>
-  <wsdl:message name="PerformanceOperations_RetrieveMarketPerformanceSnapshotData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveMarketPerformanceSnapshotDataResponse" />
+  <wsdl:message name="PerformanceOperations_RetrieveMarketSnapshotPerformanceData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveMarketSnapshotPerformanceDataResponse" />
   </wsdl:message>
-  <wsdl:message name="PerformanceOperations_RetrieveMarketPerformanceSnapshotData_ServiceFaultFault_FaultMessage">
+  <wsdl:message name="PerformanceOperations_RetrieveMarketSnapshotPerformanceData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="PerformanceOperations_SaveMarketSnapshotPreference_InputMessage">
@@ -220,10 +220,10 @@
       <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPreferenceResponse" message="tns:PerformanceOperations_RetrieveMarketSnapshotPreference_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveMarketSnapshotPreference_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RetrieveMarketPerformanceSnapshotData">
-      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotData" message="tns:PerformanceOperations_RetrieveMarketPerformanceSnapshotData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotDataResponse" message="tns:PerformanceOperations_RetrieveMarketPerformanceSnapshotData_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveMarketPerformanceSnapshotData_ServiceFaultFault_FaultMessage" />
+    <wsdl:operation name="RetrieveMarketSnapshotPerformanceData">
+      <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPerformanceData" message="tns:PerformanceOperations_RetrieveMarketSnapshotPerformanceData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPerformanceDataResponse" message="tns:PerformanceOperations_RetrieveMarketSnapshotPerformanceData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPerformanceDataServiceFaultFault" name="ServiceFaultFault" message="tns:PerformanceOperations_RetrieveMarketSnapshotPerformanceData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SaveMarketSnapshotPreference">
       <wsdl:input wsaw:Action="http://tempuri.org/PerformanceOperations/SaveMarketSnapshotPreference" message="tns:PerformanceOperations_SaveMarketSnapshotPreference_InputMessage" />
@@ -366,8 +366,8 @@
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="RetrieveMarketPerformanceSnapshotData">
-      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveMarketPerformanceSnapshotData" style="document" />
+    <wsdl:operation name="RetrieveMarketSnapshotPerformanceData">
+      <soap:operation soapAction="http://tempuri.org/PerformanceOperations/RetrieveMarketSnapshotPerformanceData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

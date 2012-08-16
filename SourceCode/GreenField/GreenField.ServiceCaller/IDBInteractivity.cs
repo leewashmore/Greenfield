@@ -77,7 +77,7 @@ namespace GreenField.ServiceCaller
 
         void RetrieveMarketSnapshotPreference(int snapshotPreferenceId, Action<List<MarketSnapshotPreference>> callback);
 
-        void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback);
+        void RetrieveMarketSnapshotPerformanceData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketSnapshotPerformanceData>> callback);
 
         //void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback);
 
@@ -107,7 +107,7 @@ namespace GreenField.ServiceCaller
         /// <param name="snapshotName">Snapshot name</param>
         /// <param name="snapshotPreference">Snapshot preference details</param>
         /// <param name="callback">Callback Method that takes List of MarketSnapshotSelectionData as it's argument</param>
-        void SaveAsMarketSnapshotPreference(string updateXML, Action<PopulatedMarketPerformanceSnapshotData> callback);
+        void SaveAsMarketSnapshotPreference(string updateXML, Action<PopulatedMarketSnapshotPerformanceData> callback);
 
         void RemoveMarketSnapshotPreference(string userName, string snapshotName, Action<bool?> callback);
 

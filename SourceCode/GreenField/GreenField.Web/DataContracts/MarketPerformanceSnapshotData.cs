@@ -8,7 +8,7 @@ using GreenField.DAL;
 namespace GreenField.Web.DataContracts
 {
     [DataContract]
-    public class MarketPerformanceSnapshotData
+    public class MarketSnapshotPerformanceData
     {
         [DataMember]
         public MarketSnapshotPreference MarketSnapshotPreferenceInfo { get; set; }

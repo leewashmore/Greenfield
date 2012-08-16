@@ -339,7 +339,7 @@
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketPerformanceSnapshotData.datasource">
+    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPerformanceData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotPreference.datasource">
@@ -348,7 +348,7 @@
     <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.MarketSnapshotSelectionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketPerformanceSnapshotData.datasource">
+    <None Include="Service References\PerformanceDefinitions\GreenField.ServiceCaller.PerformanceDefinitions.PopulatedMarketSnapshotPerformanceData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\PerformanceDefinitions\PerformanceOperations.wsdl" />

@@ -969,14 +969,14 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="marketSnapshotPreference"></param>
         /// <param name="callback"></param>
-        public void RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketPerformanceSnapshotData>> callback)
+        public void RetrieveMarketSnapshotPerformanceData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketSnapshotPerformanceData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             PerformanceOperationsClient client = new PerformanceOperationsClient();
-            client.RetrieveMarketPerformanceSnapshotDataAsync(marketSnapshotPreference);
-            client.RetrieveMarketPerformanceSnapshotDataCompleted += (se, e) =>
+            client.RetrieveMarketSnapshotPerformanceDataAsync(marketSnapshotPreference);
+            client.RetrieveMarketSnapshotPerformanceDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
                 {
@@ -1202,7 +1202,7 @@ namespace GreenField.ServiceCaller
         /// </summary>
         /// <param name="marketSnapshotPreference"></param>
         /// <param name="callback"></param>
-        public void SaveAsMarketSnapshotPreference(string updateXML, Action<PopulatedMarketPerformanceSnapshotData> callback)
+        public void SaveAsMarketSnapshotPreference(string updateXML, Action<PopulatedMarketSnapshotPerformanceData> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");

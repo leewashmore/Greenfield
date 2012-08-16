@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:59430/Services/PerformanceOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
-  <xs:complexType name="ArrayOfMarketPerformanceSnapshotData">
+  <xs:complexType name="ArrayOfMarketSnapshotPerformanceData">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketPerformanceSnapshotData" nillable="true" type="tns:MarketPerformanceSnapshotData" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MarketSnapshotPerformanceData" nillable="true" type="tns:MarketSnapshotPerformanceData" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfMarketPerformanceSnapshotData" nillable="true" type="tns:ArrayOfMarketPerformanceSnapshotData" />
-  <xs:complexType name="MarketPerformanceSnapshotData">
+  <xs:element name="ArrayOfMarketSnapshotPerformanceData" nillable="true" type="tns:ArrayOfMarketSnapshotPerformanceData" />
+  <xs:complexType name="MarketSnapshotPerformanceData">
     <xs:sequence>
       <xs:element minOccurs="0" name="DateToDateReturn" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="LastYearReturn" nillable="true" type="xs:decimal" />
@@ -20,12 +20,12 @@
       <xs:element minOccurs="0" name="YearToDateReturn" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="MarketPerformanceSnapshotData" nillable="true" type="tns:MarketPerformanceSnapshotData" />
-  <xs:complexType name="PopulatedMarketPerformanceSnapshotData">
+  <xs:element name="MarketSnapshotPerformanceData" nillable="true" type="tns:MarketSnapshotPerformanceData" />
+  <xs:complexType name="PopulatedMarketSnapshotPerformanceData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="MarketPerformanceSnapshotInfo" nillable="true" type="tns:ArrayOfMarketPerformanceSnapshotData" />
+      <xs:element minOccurs="0" name="MarketPerformanceSnapshotInfo" nillable="true" type="tns:ArrayOfMarketSnapshotPerformanceData" />
       <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="MarketSnapshotSelectionInfo" nillable="true" type="q2:MarketSnapshotSelectionData" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="PopulatedMarketPerformanceSnapshotData" nillable="true" type="tns:PopulatedMarketPerformanceSnapshotData" />
+  <xs:element name="PopulatedMarketSnapshotPerformanceData" nillable="true" type="tns:PopulatedMarketSnapshotPerformanceData" />
 </xs:schema>

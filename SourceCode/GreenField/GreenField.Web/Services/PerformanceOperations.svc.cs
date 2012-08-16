@@ -492,6 +492,13 @@ namespace GreenField.Web.Services
         #endregion
 
         #region Market Performance Snapshot Operation Contracts
+        /// <summary>
+        /// Retrieve Benchmark Filter Selection Data for the prefered filterType
+        /// </summary>
+        /// <param name="benchmarkCode">Benchmark Code</param>
+        /// <param name="benchmarkName">Benchmark Name</param>
+        /// <param name="filterType">Filter type: Country / Sector / null</param>
+        /// <returns>List of BenchmarkFilterSelectionData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<BenchmarkFilterSelectionData> RetrieveBenchmarkFilterSelectionData(String benchmarkCode, String benchmarkName, String filterType)
@@ -679,11 +686,11 @@ namespace GreenField.Web.Services
         /// <returns>list of entity data for market performance snapshot</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<MarketPerformanceSnapshotData> RetrieveMarketPerformanceSnapshotData(List<MarketSnapshotPreference> marketSnapshotPreference)
+        public List<MarketSnapshotPerformanceData> RetrieveMarketSnapshotPerformanceData(List<MarketSnapshotPreference> marketSnapshotPreference)
         {
             try
             {
-                List<MarketPerformanceSnapshotData> result = new List<MarketPerformanceSnapshotData>();
+                List<MarketSnapshotPerformanceData> result = new List<MarketSnapshotPerformanceData>();
                 DimensionEntitiesService.Entities entity = DimensionEntity;
 
                 if (marketSnapshotPreference == null)
@@ -691,7 +698,7 @@ namespace GreenField.Web.Services
 
                 foreach (MarketSnapshotPreference preference in marketSnapshotPreference)
                 {
-                    MarketPerformanceSnapshotData entityPerformanceData = new MarketPerformanceSnapshotData();
+                    MarketSnapshotPerformanceData entityPerformanceData = new MarketSnapshotPerformanceData();
                     if (preference.EntityType == "BENCHMARK")
                     {
                         entityPerformanceData = MarketPerformanceSnapshotDataCalculations.GetBenchmarkPerformanceData(entity, preference);
@@ -1045,18 +1052,56 @@ namespace GreenField.Web.Services
             }
         }
 
-        /// <summary>
-        ///  save new user preference in market performance snapshot gadget
-        /// </summary>
-        /// <param name="marketSnapshotPreference"></param>
+        ///// <summary>
+        /////  save new user preference in market performance snapshot gadget
+        ///// </summary>
+        ///// <param name="marketSnapshotPreference"></param>
+        //[OperationContract]
+        //[FaultContract(typeof(ServiceFault))]
+        //public PopulatedMarketPerformanceSnapshotData SaveAsMarketSnapshotPreference(string updateXML)
+        //{
+        //    ResearchEntities entity = new ResearchEntities();
+        //    try
+        //    {
+        //        PopulatedMarketPerformanceSnapshotData result = new PopulatedMarketPerformanceSnapshotData();
+
+        //        int? status = entity.UpdateMarketPerformanceSnapshot(updateXML).FirstOrDefault();
+
+        //        if (status <= -10)
+        //            throw new NotImplementedException("Error[" + status.ToString() + "]: Snapshot Creation Failed");
+
+        //        tblMarketSnapshotPreference snapshotRecord = entity.tblMarketSnapshotPreferences.Where(record => record.SnapshotPreferenceId == status).FirstOrDefault();
+
+        //        if (snapshotRecord == null)
+        //            return null;
+
+        //        MarketSnapshotSelectionData marketSnapshotSelectionData = new MarketSnapshotSelectionData() { SnapshotName = snapshotRecord.SnapshotName, SnapshotPreferenceId = snapshotRecord.SnapshotPreferenceId };
+
+        //        List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(Convert.ToInt32(status));
+        //        List<MarketPerformanceSnapshotData> marketPerformanceSnapshotData = RetrieveMarketPerformanceSnapshotData(marketSnapshotPreference);
+
+        //        result.MarketSnapshotSelectionInfo = marketSnapshotSelectionData;
+        //        result.MarketPerformanceSnapshotInfo = marketPerformanceSnapshotData.OrderBy(record => record.MarketSnapshotPreferenceInfo.GroupPreferenceID)
+        //                                                .ThenBy(record => record.MarketSnapshotPreferenceInfo.EntityOrder)
+        //                                                .ToList();
+        //        return result;
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionTrace.LogException(ex);
+        //        string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+        //        throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+        //    }
+        //}
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public PopulatedMarketPerformanceSnapshotData SaveAsMarketSnapshotPreference(string updateXML)
+        public PopulatedMarketSnapshotPerformanceData SaveAsMarketSnapshotPreference(string updateXML)
         {
             ResearchEntities entity = new ResearchEntities();
             try
             {
-                PopulatedMarketPerformanceSnapshotData result = new PopulatedMarketPerformanceSnapshotData();
+                PopulatedMarketSnapshotPerformanceData result = new PopulatedMarketSnapshotPerformanceData();
 
                 int? status = entity.UpdateMarketPerformanceSnapshot(updateXML).FirstOrDefault();
 
@@ -1071,7 +1116,7 @@ namespace GreenField.Web.Services
                 MarketSnapshotSelectionData marketSnapshotSelectionData = new MarketSnapshotSelectionData() { SnapshotName = snapshotRecord.SnapshotName, SnapshotPreferenceId = snapshotRecord.SnapshotPreferenceId };
 
                 List<MarketSnapshotPreference> marketSnapshotPreference = RetrieveMarketSnapshotPreference(Convert.ToInt32(status));
-                List<MarketPerformanceSnapshotData> marketPerformanceSnapshotData = RetrieveMarketPerformanceSnapshotData(marketSnapshotPreference);
+                List<MarketSnapshotPerformanceData> marketPerformanceSnapshotData = RetrieveMarketSnapshotPerformanceData(marketSnapshotPreference);
 
                 result.MarketSnapshotSelectionInfo = marketSnapshotSelectionData;
                 result.MarketPerformanceSnapshotInfo = marketPerformanceSnapshotData.OrderBy(record => record.MarketSnapshotPreferenceInfo.GroupPreferenceID)
