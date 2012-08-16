@@ -26,30 +26,48 @@ namespace GreenField.Gadgets.Helpers
         /// Method to catch Click Event of Export to Excel
         /// </summary>
         /// <param name="dgGeneric">DataGrid to be Exported</param>
-        public static void ExportGridExcel(RadGridView dgGeneric)
+        public static void ExportGridExcel(RadGridView dgGeneric, Action<bool> callback = null)
         {
-            string extension = "";
-            ExportFormat format = ExportFormat.Html;
-            extension = "xls";
-            format = ExportFormat.Html;
-
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.DefaultExt = extension;
-            dialog.Filter = String.Format("{1} files (*.{0})|*.{0}|All files (*.*)|*.*", extension, "Excel");
-            dialog.FilterIndex = 1;
-
-            if (dialog.ShowDialog() == true)
+            try
             {
-                using (Stream stream = dialog.OpenFile())
+                string extension = "";
+                ExportFormat format = ExportFormat.Html;
+                extension = "xls";
+                format = ExportFormat.Html;
+
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.DefaultExt = extension;
+                dialog.Filter = String.Format("{1} files (*.{0})|*.{0}|All files (*.*)|*.*", extension, "Excel");
+                dialog.FilterIndex = 1;
+
+                if (dialog.ShowDialog() == true)
                 {
-                    GridViewExportOptions exportOptions = new GridViewExportOptions();
-                    exportOptions.Format = format;
-                    exportOptions.ShowColumnFooters = true;
-                    exportOptions.ShowColumnHeaders = true;
-                    exportOptions.ShowGroupFooters = true;
-                    dgGeneric.Export(stream, exportOptions);
+                    using (Stream stream = dialog.OpenFile())
+                    {
+                        GridViewExportOptions exportOptions = new GridViewExportOptions();
+                        exportOptions.Format = format;
+                        exportOptions.ShowColumnFooters = true;
+                        exportOptions.ShowColumnHeaders = true;
+                        exportOptions.ShowGroupFooters = true;
+                        dgGeneric.Export(stream, exportOptions);
+                    }
+                }
+
+                if (callback != null)
+                {
+                    callback(true);
                 }
             }
+            catch (Exception)
+            {                
+                throw;
+                if (callback != null)
+                {
+                    callback(false);
+                }
+            }
+
+
         }
     }
 }

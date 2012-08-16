@@ -157,7 +157,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (_financialStatementInfo != value)
                 {
-                    _financialStatementInfo = value;
+                    _financialStatementInfo = value;                    
                     SetFinancialStatementDisplayInfo();
                 }
             }
@@ -550,7 +550,7 @@ namespace GreenField.Gadgets.ViewModels
             if (IssuerReferenceInfo != null)
             {
                 BusyIndicatorNotification(true, "Retrieving Financial Statement Data for the selected security");
-                FinancialStatementInfo = new List<FinancialStatementData>();
+                //FinancialStatementInfo = new List<FinancialStatementData>();
                 _dbInteractivity.RetrieveFinancialStatementData(IssuerReferenceInfo.IssuerId, SelectedDataSource, SelectedPeriodType, SelectedFiscalType,
                             _financialStatementType, SelectedCurrency, RetrieveFinancialStatementDataCallbackMethod);
             }
@@ -571,7 +571,7 @@ namespace GreenField.Gadgets.ViewModels
             }
 
             PeriodRecord = periodRecord;
-            PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);
+            PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord);            
 
             BusyIndicatorNotification();
         }

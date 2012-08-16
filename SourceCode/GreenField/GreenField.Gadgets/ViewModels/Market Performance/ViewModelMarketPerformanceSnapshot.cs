@@ -2146,11 +2146,6 @@ namespace GreenField.Gadgets.ViewModels
             //}
             //Prompt.ShowDialog(A);
         }
-
-
-
-
-
     }
 
     
