@@ -26,7 +26,7 @@ namespace GreenField.Gadgets.Helpers
         /// Method to catch Click Event of Export to Excel
         /// </summary>
         /// <param name="dgGeneric">DataGrid to be Exported</param>
-        public static void ExportGridExcel(RadGridView dgGeneric, Action<bool> callback = null)
+        public static void ExportGridExcel(RadGridView dgGeneric)
         {
             try
             {
@@ -53,18 +53,11 @@ namespace GreenField.Gadgets.Helpers
                     }
                 }
 
-                if (callback != null)
-                {
-                    callback(true);
-                }
+                
             }
             catch (Exception)
             {                
-                throw;
-                if (callback != null)
-                {
-                    callback(false);
-                }
+                throw;                
             }
 
 
