@@ -224,22 +224,21 @@
             <Grid x:Name="grdRadGridView" >
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                        <telerik:RadGridView Name="dgUnrealizedGainLoss" AutoGenerateColumns="False"
-                                 ItemsSource="{Binding PlottedSeries, Mode=TwoWay}"
-                                 CanUserDeleteRows="False" IsReadOnly="True" 
+                        <telerik:RadGridView Name="dgUnrealizedGainLoss"
+                                             AutoGenerateColumns="False"
+                                             ItemsSource="{Binding PlottedSeries, Mode=TwoWay}"
+                                             CanUserDeleteRows="False" IsReadOnly="True"
                                              ElementExporting="dgUnrealizedGainLoss_ElementExporting"
-                                 CanUserSortColumns="True" ScrollMode="Deferred" 
-                                 RowIndicatorVisibility="Collapsed" 
+                                             CanUserSortColumns="True" ScrollMode="Deferred" 
+                                             RowIndicatorVisibility="Collapsed" 
                                              ShowGroupPanel="False"
                                              AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                              RowStyle="{StaticResource GridViewRowStyle}"
-                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                             HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                              AlternationCount="2"
-                                             GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}"
-                                 
-                                             Visibility="Visible" 
-                                             FontSize="7"
-                                             RowLoaded="dgUnrealizedGainLoss_RowLoaded"
+                                             GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}"                                 
+                                             Visibility="Visible"
+                                             GridLinesVisibility="None"
                                              GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                              EnableRowVirtualization="False">
                             <telerik:RadGridView.Columns>

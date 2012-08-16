@@ -101,7 +101,7 @@
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                         RowLoaded="dgSectorBreakdown_Rowloaded"
+                                         GridLinesVisibility="None"
                                          ElementExporting="dgSectorBreakdown_ElementExporting" EnableRowVirtualization="False">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcSecurity" Header="Security" IsFilterable="False" DataMemberBinding="{Binding Security}" 

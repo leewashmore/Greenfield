@@ -21,16 +21,16 @@
             <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                 <telerik:RadGridView Name="dgAssetAllocation" AutoGenerateColumns="False" ItemsSource="{Binding AssetAllocationData}" 
-                                     CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
+                                     CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False"
                                      CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
-                                     RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                     FontFamily="Arial" FontSize="7" GroupPanelBackground="#e4e5e5"                                         
+                                     RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"                                                                            
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                     GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
+                                     GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                      RowStyle="{StaticResource GridViewRowStyle}"
-                                     GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                     EnableRowVirtualization="False"
-                                     RowLoaded="dgAssetAllocation_RowLoaded">
+                                     EnableRowVirtualization="False">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgcCountry" Header="Country" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" TextAlignment="Left" 
                                                 DataMemberBinding="{Binding Country}" Width="*" HeaderTextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>

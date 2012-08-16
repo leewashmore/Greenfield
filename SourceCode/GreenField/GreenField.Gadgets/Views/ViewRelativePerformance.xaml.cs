@@ -289,13 +289,13 @@ namespace GreenField.Gadgets.Views
                     Text = aggregateSectorActiviePosition.ToString(),
                     Tag = sectorData.SectorId,
                     TextAlignment = TextAlignment.Right,
-                    FontSize = 8
+                    FontSize = 9
                 };
                 TextBlock footerText = new TextBlock() { 
                     Text = aggregateSectorAlpha.ToString(), 
                     Tag = sectorData.SectorId, 
                     TextAlignment = TextAlignment.Right,
-                    FontSize = 7
+                    FontSize = 9
                 };
                 
 
@@ -356,7 +356,7 @@ namespace GreenField.Gadgets.Views
                         IsReadOnly = true,
                         Background = new SolidColorBrush(Color.FromArgb(255, 203, 212, 241)),
                         Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0)),
-                        FontSize = 7,
+                        FontSize = 9,
                         Margin = new Thickness(2)
                     };
 
@@ -373,7 +373,7 @@ namespace GreenField.Gadgets.Views
                         {
                             Text = securityName.SecurityName
                                 + " (" + securityName.SecurityAlpha + ")",
-                            FontSize = 7
+                            FontSize = 9
                         };
                         txtSecurityName.SetValue(Grid.ColumnProperty, sectorNum);
                         txtSecurityName.SetValue(Grid.RowProperty, securityNum);
@@ -665,7 +665,7 @@ namespace GreenField.Gadgets.Views
                     value = " ";
                 span.Text = value;
                 span.FontFamily = new System.Windows.Media.FontFamily("Arial");
-                span.FontSize = 7;
+                span.FontSize = 12;
                 paragraph.Inlines.Add(span);
             }
         }
@@ -719,7 +719,7 @@ namespace GreenField.Gadgets.Views
             grid.AutoExpandGroups = true;
             grid.AutoGenerateColumns = false;
             grid.FontFamily = new FontFamily("Arial");
-            grid.FontSize = 7;
+            grid.FontSize = 12;
 
 
             foreach (GridViewDataColumn column in dgRelativePerformance.Columns.OfType<GridViewDataColumn>())

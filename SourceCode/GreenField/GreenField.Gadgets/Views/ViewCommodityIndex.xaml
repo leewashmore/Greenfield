@@ -50,18 +50,14 @@
                                      ScrollMode="Deferred"
                                      RowIndicatorVisibility="Collapsed" 
                                      ShowGroupPanel="False" 
-                                     UseLayoutRounding="True"
-                                     FontFamily="Arial" 
-                                     FontSize="7" 
+                                     UseLayoutRounding="True"                                     
                                      GroupPanelBackground="#e4e5e5"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
-                                     RowStyle="{StaticResource GridViewRowStyle}"
-                                     RowLoaded="dgCommodity_RowLoaded"
+                                     RowStyle="{StaticResource GridViewRowStyle}"                                    
                                      AlternationCount="2"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                     AlternateRowStyle ="{StaticResource GridViewAlternateRowStyle}"
-                                     >
+                                     AlternateRowStyle ="{StaticResource GridViewAlternateRowStyle}">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn 
                             x:Name="dgcCommodityID" 

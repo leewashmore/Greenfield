@@ -99,7 +99,8 @@
                                          MinColumnWidth="70"
                                          RowLoaded="dgPortfolioDetails_RowLoaded" 
                                          EnableRowVirtualization="True"
-                                         EnableColumnVirtualization="True">
+                                         EnableColumnVirtualization="True"
+                                         GridLinesVisibility="None">
                         <telerik:RadGridView.Columns >
                             <telerik:GridViewDataColumn Header="Security Id" UniqueName="SecurityId" DataMemberBinding="{Binding Ticker}" IsGroupable="False"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 

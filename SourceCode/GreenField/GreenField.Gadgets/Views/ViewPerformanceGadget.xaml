@@ -82,13 +82,13 @@
                                  CanUserSortColumns="True" ScrollMode="Deferred" 
                                  RowIndicatorVisibility="Collapsed" ShowGroupPanel="False"
                                  Visibility="Visible" 
-                                 ElementExporting ="dgPerformanceGraph_ElementExporting"
-                                 RowLoaded="dgPerformanceGadget_RowLoaded"
+                                 ElementExporting ="dgPerformanceGraph_ElementExporting"                                 
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                  RowStyle="{StaticResource GridViewRowStyle}"
                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}"                                        
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                 GridLinesVisibility="None"
                                  AlternationCount="2"
                                  EnableRowVirtualization="false">
                                 <telerik:RadGridView.Columns>
@@ -97,32 +97,37 @@
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     Width="*" 
                                                     HeaderTextAlignment="Left"
-                                                    TextAlignment="Left">
+                                                    TextAlignment="Left"
+                                                    CellStyle="{StaticResource GridViewCellStyle}">
                                     </telerik:GridViewDataColumn>
                                     <telerik:GridViewDataColumn Header="Benchmark ID" 
                                                     DataMemberBinding="{Binding BenchmarkID}"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
                                                     Width="Auto"    
                                                     HeaderTextAlignment="Left"
                                                     TextAlignment="Left">
                                     </telerik:GridViewDataColumn>
                                     <telerik:GridViewDataColumn Header="Portfolio Performance"                                                     
                                                  DataMemberBinding="{Binding PortfolioPerformance}"          
-                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
+                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                  Width="Auto"   
                                                  HeaderTextAlignment="Right"                                                   
                                                  DataFormatString="{}{0:n3}"
                                                  TextAlignment="Right"/>
                                     <telerik:GridViewDataColumn Header="Benchmark Performance"                                                     
                                                  DataMemberBinding="{Binding BenchmarkPerformance}"          
-                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"                                                    
+                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                  Width="Auto"                                                   
                                                  DataFormatString="{}{0:n3}"
                                                  HeaderTextAlignment="Right"                                                    
                                                  TextAlignment="Right"/>
                                     <telerik:GridViewDataColumn Header="Effective Date" 
                                                 DataMemberBinding="{Binding EffectiveDate}"                                                
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
                                                 Width="Auto"                                                 
                                                 HeaderTextAlignment="Left"
                                                 TextAlignment="Left"/>                                    

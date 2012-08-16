@@ -81,7 +81,7 @@ namespace GreenField.DashboardModule.Views
             {
 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PERFORMANCE_GRID, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-                RestoredHeight = 100,
+                RestoredHeight = 150,
                 Content = new ViewPerformanceGrid(new ViewModelPerformanceGrid(param))
             });
         }

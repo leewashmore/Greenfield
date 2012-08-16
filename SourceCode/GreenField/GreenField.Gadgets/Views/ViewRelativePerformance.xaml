@@ -12,28 +12,6 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
                 <ResourceDictionary>
-
-                    <!--GridViewFooterCellStyle-->
-                    <ControlTemplate x:Key="GridViewFooterCellTemplate" TargetType="telerik:GridViewFooterCell">
-                        <Border x:Name="PART_FooterCellBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" MouseLeftButtonDown="FooterCellBorder_MouseLeftButtonDown" >
-                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
-                                  Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                        </Border>
-                    </ControlTemplate>
-                    <SolidColorBrush x:Key="ControlOuterBorder" Color="#FF848484"/>
-                    <Style x:Key="GridViewCustomFooterCellStyle" TargetType="telerik:GridViewFooterCell">
-                        <Setter Property="Template" Value="{StaticResource GridViewFooterCellTemplate}"/>
-                        <Setter Property="BorderBrush" Value="{StaticResource ControlOuterBorder}"/>
-                        <Setter Property="BorderThickness" Value="0,0,1,0"/>
-                        <Setter Property="Padding" Value="5,0,3,0"/>
-                        <Setter Property="VerticalContentAlignment" Value="Center"/>
-                        <Setter Property="HorizontalContentAlignment" Value="Right"/>
-                        <Setter Property="Background" Value="Transparent"/>
-                        <Setter Property="Foreground" Value="Black"/>
-                        <Setter Property="FontSize" Value="12"/>
-                        <Setter Property="Height" Value="18"/>
-                    </Style>
-
                     <!--GridViewHeaderCellStyle for dynamically created columns -->
                     <ControlTemplate x:Key="GridViewHeaderCellTemplate" TargetType="telerik:GridViewHeaderCell">
                         <!--<Border MouseLeftButtonDown="CustomHeaderCellBorder_MouseLeftButtonDown">-->
@@ -121,7 +99,7 @@
                                      AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                      SelectionUnit="Cell" 
                                      ElementExporting="dgRelativePerformance_ElementExporting"
-                                     RowLoaded="dgRelativePerformance_RowLoaded" 
+                                     GridLinesVisibility="None"
                                      SelectedCellsChanged="dgRelativePerformance_SelectedCellsChanged"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      RowStyle="{StaticResource GridViewRowStyle}"
@@ -138,7 +116,7 @@
                                     </DataTemplate>
                                 </telerik:GridViewDataColumn.CellTemplate>
                                 <telerik:GridViewDataColumn.Footer>
-                                    <TextBlock Text="Total" FontSize="7" Height="12"/>
+                                    <TextBlock Text="Total" FontSize="9" Height="12"/>
                                 </telerik:GridViewDataColumn.Footer>
                             </telerik:GridViewDataColumn>
 

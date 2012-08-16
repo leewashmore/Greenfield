@@ -102,10 +102,10 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!--Financial Ratio Selector-->
-                                <TextBlock Text="Financial Ratio" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
+                                <TextBlock Text="Financial Ratio" Style="{StaticResource TextBlockStyle}" Margin="2,2,0,0" VerticalAlignment="Center" />
                                 <telerik:RadComboBox Grid.Row="0" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding FinancialRatioInfo}"
                                                  VerticalContentAlignment="Center" SelectedItem="{Binding SelectedFinancialRatio, Mode=TwoWay}"
-                                                 Margin="2,2,2,0" FontFamily="Arial" FontSize="7" x:Name="cbFinancialRatio">
+                                                 Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}" x:Name="cbFinancialRatio">
                                     <telerik:RadComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
@@ -114,10 +114,10 @@
                                 </telerik:RadComboBox>
 
                                 <!--Valuation Ratio Selector-->
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Valuation Ratio" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Valuation Ratio" Style="{StaticResource TextBlockStyle}" Margin="2,2,0,0" VerticalAlignment="Center" />
                                 <telerik:RadComboBox Grid.Row="1" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding ValuationRatioInfo}"
                                                  VerticalContentAlignment="Center" SelectedItem="{Binding SelectedValuationRatio, Mode=TwoWay}" 
-                                                 Margin="2,2,2,0" FontFamily="Arial" FontSize="7" x:Name="cbValuationRatio">
+                                                 Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}" x:Name="cbValuationRatio">
                                     <telerik:RadComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
@@ -126,10 +126,10 @@
                                 </telerik:RadComboBox>
 
                                 <!--Context Selector-->
-                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Context" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Context" Style="{StaticResource TextBlockStyle}" Margin="2,2,0,0" VerticalAlignment="Center" />
                                 <telerik:RadComboBox Grid.Row="2" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding ContextInfo}"
                                                  VerticalContentAlignment="Center" SelectedItem="{Binding SelectedContext, Mode=TwoWay}"
-                                                 Margin="2,2,2,0" FontFamily="Arial" FontSize="7">
+                                                 Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}">
                                     <telerik:RadComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
@@ -138,10 +138,10 @@
                                 </telerik:RadComboBox>
 
                                 <!--Period Selector-->
-                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Period" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Period" Style="{StaticResource TextBlockStyle}" Margin="2,2,0,0" VerticalAlignment="Center" />
                                 <telerik:RadComboBox Grid.Row="3" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding PeriodInfo}"
                                                  VerticalContentAlignment="Center" SelectedValue="{Binding SelectedPeriod, Mode=TwoWay}"
-                                                 Margin="2,2,2,0" FontFamily="Arial" FontSize="7">
+                                                 Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}">
                                     <telerik:RadComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
@@ -246,16 +246,16 @@
                                      CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
                                      CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
                                      RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                     FontFamily="Arial" FontSize="7" GroupPanelBackground="#e4e5e5" CanUserResizeColumns="False"                                     
+                                     CanUserResizeColumns="False"                                     
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" AlternationCount="2" AlternateRowBackground="#D8D5D4"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" Visibility="Collapsed"
                                      RowStyle="{StaticResource GridViewRowStyle}" ElementExporting="dgScatterGraph_ElementExporting"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                     RowLoaded="dgScatterGraph_RowLoaded">
+                                     GridLinesVisibility="None">
                                 <telerik:RadGridView.Columns>
-                                    <telerik:GridViewDataColumn x:Name="dgvcIssueName" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding ISSUE_NAME}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="*"/>
-                                    <telerik:GridViewDataColumn x:Name="dgvcValuationRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding VALUATION, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
-                                    <telerik:GridViewDataColumn x:Name="dgvcFinancialRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding FINANCIAL, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcIssueName" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding ISSUE_NAME}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="*"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcValuationRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding VALUATION, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcFinancialRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding FINANCIAL, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
                                 </telerik:RadGridView.Columns>
                             </telerik:RadGridView>
 

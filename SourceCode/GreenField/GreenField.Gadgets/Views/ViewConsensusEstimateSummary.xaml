@@ -30,8 +30,7 @@
                                          ItemsSource="{Binding ConsensusSummaryInfo}"
                                          CanUserSelect="False" 
                                          CanUserReorderColumns="False" 
-                                         CanUserInsertRows="False" 
-                                         telerik:StyleManager.Theme="Metro"
+                                         CanUserInsertRows="False"                                         
                                          CanUserDeleteRows="False" 
                                          IsReadOnly="True" 
                                          CanUserSortColumns="False" 
@@ -39,17 +38,15 @@
                                          RowIndicatorVisibility="Collapsed" 
                                          ShowGroupPanel="False" 
                                          UseLayoutRounding="True" 
-                                         ShowGroupFooters="False"
-                                         FontSize="7" 
-                                         AlternateRowBackground="#d8d5d4"
-                                         AlternationCount="2"
-                                         FontFamily="Arial" 
+                                         ShowGroupFooters="False"                                         
+                                         AlternationCount="2"                                         
                                          ShowColumnFooters="False" 
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                         AutoExpandGroups="True">
+                                         AutoExpandGroups="True"
+                                     GridLinesVisibility="None">
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn x:Name="dgcNetIncome"                                                    
                                                     IsFilterable="False" 
@@ -57,7 +54,8 @@
                                                     Width="*"
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" />                        
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>                        
                         <telerik:GridViewDataColumn x:Name="dgcYear1"                                                     
                                                     DataMemberBinding="{Binding YEAR1}" 
                                                     Width="Auto"

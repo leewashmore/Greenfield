@@ -116,7 +116,7 @@
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          ColumnWidth="*"
                                          AlternationCount="2"
-                                         RowLoaded="dgChartExtension_RowLoaded" EnableRowVirtualization="false">
+                                         GridLinesVisibility="None" EnableRowVirtualization="false">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Ticker" DataMemberBinding="{Binding Ticker}" DataFormatString="{}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"

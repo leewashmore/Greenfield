@@ -29,111 +29,111 @@
             <ColumnDefinition Width="0.2*"/>
         </Grid.ColumnDefinitions>
         <Border x:Name="EconomicBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="0">
-            <TextBlock Text="Macro Economic Data" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontFamily="Arial" FontSize="7"  FontWeight="Bold" Height="15" />
+            <TextBlock Text="Macro Economic Data" Margin="5,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" Style="{StaticResource TextBlockStyle}"  FontWeight="Bold" Height="15" />
         </Border>
         <Border x:Name="FirstYrBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="1">
             <TextBlock Text="" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                       Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
+                       Foreground="White" Style="{StaticResource TextBlockStyle}"  Height="15"/>
         </Border>
         <Border x:Name="SecondYrBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="2">
             <TextBlock  Text="" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
+                    Foreground="White" Style="{StaticResource TextBlockStyle}"  Height="15"/>
         </Border>
         <Border x:Name="ThirdYrBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="3">
             <TextBlock Text="" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                       Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
+                       Foreground="White" Style="{StaticResource TextBlockStyle}"  Height="15"/>
         </Border>
         <Border x:Name="ForthYrBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="4">
             <TextBlock  Text="" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
+                    Foreground="White" Style="{StaticResource TextBlockStyle}"  Height="15"/>
         </Border>
         <Border x:Name="FifthYrBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="5">
             <TextBlock Text="" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                       Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
+                       Foreground="White" Style="{StaticResource TextBlockStyle}"  Height="15"/>
         </Border>
         <Border x:Name="SixthYrBorder" Background="#9F1D21" Grid.Row="0" Grid.Column="6">
             <TextBlock  Text="" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Left" VerticalAlignment="Center"
-                    Foreground="White" FontFamily="Arial" FontSize="7"  Height="15"/>
+                    Foreground="White" Style="{StaticResource TextBlockStyle}"  Height="15"/>
         </Border>
         <!-- FX Rate (Year End)-->
-        <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,5,0,0" Text="FX Rate (Year End)" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="1" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Margin="0,5,0,0" Text="FX Rate (Year End)" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="1" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="1" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="1" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="1" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
 
         <!-- FX Rate (Average)-->
-        <TextBlock Grid.Row="2" Grid.Column="0" Margin="0,5,0,0" Text="FX Rate (Average)" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="2" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Margin="0,5,0,0" Text="FX Rate (Average)" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="2" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="2" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="2" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="2" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
 
         <!--Real GDP Growth Rate (% Change) -->
-        <TextBlock Grid.Row="3" Grid.Column="0" Margin="0,5,0,0" Text="Real GDP Growth Rate (% Change)" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="3" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="3" Grid.Column="0" Margin="0,5,0,0" Text="Real GDP Growth Rate (% Change)" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="3" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="3" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="3" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="3" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="3" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="3" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
 
         <!--Inflation (% Year End) -->
-        <TextBlock Grid.Row="4" Grid.Column="0" Margin="0,5,0,0" Text="Inflation (% Year End)" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="4" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="4" Grid.Column="0" Margin="0,5,0,0" Text="Inflation (% Year End)" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="4" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="4" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="4" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="4" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="4" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
 
         <!--Current account as % of GDP -->
-        <TextBlock Grid.Row="5" Grid.Column="0" Margin="0,5,0,0" Text="Current account as % of GDP" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="5" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="5" Grid.Column="0" Margin="0,5,0,0" Text="Current account as % of GDP" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="5" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="5" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="5" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="5" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="5" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="5" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
 
         <!--Short-term interest rate -->
-        <TextBlock Grid.Row="6" Grid.Column="0" Margin="0,5,0,0" Text="Short-term interest rate" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="6" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="6" Grid.Column="0" Margin="0,5,0,0" Text="Short-term interest rate" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="6" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="6" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="6" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="6" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="6" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="6" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
         
         <!--Government surplus/deficit as % of GDP -->
-        <TextBlock Grid.Row="7" Grid.Column="0" Margin="0,5,0,0" Text="Government surplus/deficit as % of GDP" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="7" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="7" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="7" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="7" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="7" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="7" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="7" Grid.Column="0" Margin="0,5,0,0" Text="Government surplus/deficit as % of GDP" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="7" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="7" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="7" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="7" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="7" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="7" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
 
         <!--Gross fixed capital investment as % of GDP -->
-        <TextBlock Grid.Row="8" Grid.Column="0" Margin="0,5,0,0" Text="Gross fixed capital investment as % of GDP" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="8" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="8" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="8" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="8" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="8" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="8" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="8" Grid.Column="0" Margin="0,5,0,0" Text="Gross fixed capital investment as % of GDP" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="8" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="8" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="8" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="8" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="8" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="8" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
 
         <!--Gross Savings as % of GDP -->
-        <TextBlock Grid.Row="9" Grid.Column="0" Margin="0,5,0,0" Text="Gross Savings as % of GDP" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="9" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="9" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="9" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="9" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="9" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
-        <TextBlock Grid.Row="9" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize="7"  Height="15"/>
+        <TextBlock Grid.Row="9" Grid.Column="0" Margin="0,5,0,0" Text="Gross Savings as % of GDP" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="9" Grid.Column="1" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="9" Grid.Column="2" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="9" Grid.Column="3" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="9" Grid.Column="4" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="9" Grid.Column="5" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
+        <TextBlock Grid.Row="9" Grid.Column="6" Margin="0,5,0,0" Text="{Binding AAA, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  Height="15"/>
     </Grid>
 </UserControl>

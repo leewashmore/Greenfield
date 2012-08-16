@@ -86,14 +86,11 @@
                                      CanUserSortColumns="False" 
                                      ScrollMode="RealTime"
                                      RowIndicatorVisibility="Collapsed" 
-                                     ShowGroupPanel="False" UseLayoutRounding="True"
-                                     FontFamily="Arial" FontSize="7" 
-                                      GroupPanelBackground="#e4e5e5"
+                                     ShowGroupPanel="False" UseLayoutRounding="True"                                     
                                       HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                       GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                       RowStyle="{StaticResource GridViewRowStyle}"
-                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                      RowLoaded="dgMacroDBKeyReport_RowLoaded"
+                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"                                      
                                       AutoExpandGroups="True"
                                       AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                       AlternationCount="2"
@@ -108,7 +105,8 @@
                                                     Width="*"
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" />
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcLeftClick" 
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcYear1" 

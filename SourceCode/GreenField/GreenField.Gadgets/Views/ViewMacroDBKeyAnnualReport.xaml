@@ -85,11 +85,9 @@
                                          RowIndicatorVisibility="Collapsed" 
                                          ShowGroupPanel="False" 
                                          UseLayoutRounding="True" 
-                                         ShowGroupFooters="False"
-                                         FontSize="7" 
+                                         ShowGroupFooters="False"                                         
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                         AlternationCount="2"
-                                         FontFamily="Arial" 
+                                         AlternationCount="2"                                        
                                          ShowColumnFooters="False" 
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
@@ -109,7 +107,8 @@
                                                     Width="*"
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" />
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcLeftClick" 
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcYear1" 

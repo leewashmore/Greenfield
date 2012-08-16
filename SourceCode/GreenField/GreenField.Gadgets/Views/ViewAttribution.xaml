@@ -37,12 +37,13 @@
                                   RowIndicatorVisibility="Collapsed" 
                                   ShowGroupPanel="False" 
                                   telerik:StyleManager.Theme="Metro"
-                                  UseLayoutRounding="True"
-                                  FontSize="7"
-                                  FontFamily="Arial"
-                                  RowStyle="{StaticResource GridViewRowStyle}"
-                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"                                     
+                                  UseLayoutRounding="True"                                  
                                   AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                  GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
+                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
+                                  RowStyle="{StaticResource GridViewRowStyle}"
                                   AlternationCount="2">
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn Header="ID" 

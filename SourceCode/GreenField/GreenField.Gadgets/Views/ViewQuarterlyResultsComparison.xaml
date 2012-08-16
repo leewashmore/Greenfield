@@ -76,17 +76,16 @@
                                              ScrollMode="Deferred" 
                                              ElementExporting="dgQuarterlyResults_ElementExporting"
                                              RowIndicatorVisibility="Collapsed"  
-                                             ShowGroupPanel="False"
-                                             
-                                             Visibility="Visible" 
-                                             FontSize="7"
+                                             ShowGroupPanel="False"                                             
+                                             Visibility="Visible"                                              
                                              ItemsSource="{Binding QuarterlyResultsInfo}"
                                              HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                              GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                              RowStyle="{StaticResource GridViewRowStyle}"
                                              GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                              AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                             AlternationCount="2">
+                                             AlternationCount="2"
+                                             GridLinesVisibility="None">
                             <telerik:RadGridView.Columns>
                                 <telerik:GridViewDataColumn x:Name="dgcIssuerName"                                                    
                                                     IsFilterable="False" 
@@ -94,7 +93,8 @@
                                                     Width="*"
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"
-                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" />
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcRegion"                                                     
                                                     DataMemberBinding="{Binding Region}" 
                                                     Width="Auto"
