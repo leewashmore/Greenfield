@@ -43,29 +43,36 @@
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Margin="0,0,2,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Field" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                        <telerik:RadComboBox x:Name="cmbField" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
+                        <TextBlock Grid.Column="0" Text="Field" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
+                        <telerik:RadComboBox x:Name="cmbField" Grid.Column="1" Margin="2,0,0,0" VerticalAlignment="Top" 
                                      HorizontalAlignment="Stretch" ItemsSource="{Binding FieldValues}"
-                                             SelectedValue="{Binding FieldValue,Mode=TwoWay}" />
+                                             SelectedValue="{Binding FieldValue,Mode=TwoWay}" Style="{StaticResource RadComboBoxStyle}" />
                     </Grid>
                     <Grid Grid.Row="1" Margin="0,2,2,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60"/>
+                            <ColumnDefinition Width="30"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Year" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                        <telerik:RadComboBox Name="cmbYear" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" ItemsSource="{Binding YearValues}" 
-                                            SelectedValue="{Binding YearValue,Mode=TwoWay}">
+                        <TextBlock Grid.Column="0" Text="Year" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource TextBlockStyle}"/>
+                        <telerik:RadComboBox Name="cmbYear" Grid.Column="1" Margin="2,0,0,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" ItemsSource="{Binding YearValues}" 
+                                            SelectedValue="{Binding YearValue,Mode=TwoWay}" Style="{StaticResource RadComboBoxStyle}">
                         </telerik:RadComboBox>
                     </Grid>                   
                 </Grid>
             </telerik:RadExpander.Content>
         </telerik:RadExpander>
         <Grid Grid.Column="1">
-            <Grid x:Name="grdRadGridView" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock  Grid.Row="0" Text="{Binding GridHeaderValue}" Style="{StaticResource TextBlockStyle}"  HorizontalAlignment="Center" />
+            
+            <Grid x:Name="grdRadGridView" Grid.Row="1" >
                 <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                         <telerik:RadGridView Name="dgQuarterlyComparison"
@@ -97,14 +104,14 @@
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcRegion"                                                     
                                                     DataMemberBinding="{Binding Region}" 
-                                                    Width="Auto"
+                                                    Width="*"
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"                                                   
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcCountry"                                                     
                                                     DataMemberBinding="{Binding Country}" 
-                                                     Width="Auto"
+                                                     Width="*"
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -112,7 +119,7 @@
 
                                 <telerik:GridViewDataColumn x:Name="dgcSector"                                                     
                                                     DataMemberBinding="{Binding Sector}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -120,7 +127,7 @@
 
                                 <telerik:GridViewDataColumn x:Name="dgcIndustry"                                                 
                                                     DataMemberBinding="{Binding Industry}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -128,21 +135,21 @@
 
                                 <telerik:GridViewDataColumn x:Name="dgcCurrency"                                                    
                                                     DataMemberBinding="{Binding Currency}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcLastUpdate"                                                    
                                                     DataMemberBinding="{Binding LastUpdate}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcQ1"                                                    
                                                     DataMemberBinding="{Binding Q1}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -150,21 +157,21 @@
 
                                 <telerik:GridViewDataColumn x:Name="dgcQ2"                                                    
                                                     DataMemberBinding="{Binding Q2}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcQ3"                                                    
                                                     DataMemberBinding="{Binding Q3}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcQ4"                                                    
                                                     DataMemberBinding="{Binding Q4}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -172,7 +179,7 @@
 
                                 <telerik:GridViewDataColumn x:Name="dgcAnnual"                                                    
                                                     DataMemberBinding="{Binding Annual}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -180,7 +187,7 @@
 
                                 <telerik:GridViewDataColumn x:Name="dgcQuarterlySum"                                                    
                                                     DataMemberBinding="{Binding QuarterlySum}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -188,7 +195,7 @@
 
                                 <telerik:GridViewDataColumn x:Name="dgcQuarterlySumPer"                                                    
                                                     DataMemberBinding="{Binding QuarterlySumPercentage}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     DataFormatString="{}{0:n2}%"                                                            
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
@@ -196,14 +203,14 @@
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcConsensus"                                                    
                                                     DataMemberBinding="{Binding Consensus}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcConsensusPer"                                                    
                                                     DataMemberBinding="{Binding ConsensusPercentage}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     DataFormatString="{}{0:n2}%"
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
@@ -211,28 +218,28 @@
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcHigh"                                                    
                                                     DataMemberBinding="{Binding High}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcLow"                                                    
                                                     DataMemberBinding="{Binding Low}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcBrokers"                                                    
                                                     DataMemberBinding="{Binding Brokers}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcConsensusUpdate"                                                    
                                                     DataMemberBinding="{Binding ConsensusUpdate}" 
-                                                    Width="Auto" 
+                                                    Width="*" 
                                                     HeaderTextAlignment="Left" 
                                                     TextAlignment="Left"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"

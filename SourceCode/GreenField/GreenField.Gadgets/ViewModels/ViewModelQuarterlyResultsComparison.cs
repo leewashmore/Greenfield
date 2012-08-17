@@ -69,6 +69,25 @@ namespace GreenField.Gadgets.ViewModels
           //  get { return new List<int> { 2002,2003,2004}; }
         }
 
+
+        private String gridHeaderValue = "Net Income" + ">" + DateTime.Now.Year.ToString();
+        public String GridHeaderValue
+        {
+            get
+            {
+                return gridHeaderValue;
+            }
+
+            set
+            {
+                if (gridHeaderValue != value)
+                {
+                    gridHeaderValue = value;
+                    RaisePropertyChanged(() => this.GridHeaderValue);
+                }
+            }
+        }
+
       /// <summary>
       /// Selected Year Value
       /// </summary>
@@ -85,6 +104,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (yearValue != value)
                 {
                     yearValue = value;
+                    GridHeaderValue = FieldValue + ">" + value.ToString();
                     if (FieldValue != null && IsActive)
                         if (null != quarterlyResultsComoarisonDataLoadedEvent)
                             quarterlyResultsComoarisonDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
@@ -110,6 +130,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (fieldValue != value)
                 {
                     fieldValue = value;
+                    GridHeaderValue = value + ">" + YearValue.ToString();
                     if(YearValue != 0 && IsActive)
                         if (null != quarterlyResultsComoarisonDataLoadedEvent)
                             quarterlyResultsComoarisonDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });

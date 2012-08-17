@@ -231,10 +231,10 @@
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
-    <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml.cs">
+    <Compile Include="Views\Documents\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml.cs">
       <DependentUpon>ViewEstimates.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewTargetPrice.xaml.cs">
+    <Compile Include="Views\Documents\ExternalResearch\ConsensusEstimates\ViewTargetPrice.xaml.cs">
       <DependentUpon>ViewTargetPrice.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ICPresentations\ChildAcceptRequestPresentations.xaml.cs">
@@ -267,7 +267,7 @@
     <Compile Include="Views\ViewCOASpecific.xaml.cs">
       <DependentUpon>ViewCOASpecific.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewValuations.xaml.cs">
+    <Compile Include="Views\Documents\ExternalResearch\ConsensusEstimates\ViewValuations.xaml.cs">
       <DependentUpon>ViewValuations.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewConsensusEstimateSummary.xaml.cs">
@@ -427,11 +427,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml">
+    <Page Include="Views\Documents\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewTargetPrice.xaml">
+    <Page Include="Views\Documents\ExternalResearch\ConsensusEstimates\ViewTargetPrice.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -475,7 +475,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewValuations.xaml">
+    <Page Include="Views\Documents\ExternalResearch\ConsensusEstimates\ViewValuations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
