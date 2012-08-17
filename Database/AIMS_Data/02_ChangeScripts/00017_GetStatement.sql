@@ -19,7 +19,7 @@ end
 
 GO
 
-Create PROCEDURE [dbo].[Get_Statement](
+Alter PROCEDURE [dbo].[Get_Statement](
 	@ISSUER_ID			varchar(20),				-- The company identifier		
 	@DATA_SOURCE		varchar(10)  = 'REUTERS',	-- REUTERS, PRIMARY, INDUSTRY
 	@PERIOD_TYPE		char(2)      = 'A',			-- A, Q
