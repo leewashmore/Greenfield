@@ -60,17 +60,18 @@
                 </Grid>
 
                 <!--grid containing benchmark data-->
-                <telerik:RadGridView Name="radGridSnapshot" IsReadOnly="true" AlternationCount="2" AlternateRowBackground="#d8d5d4"
+                <telerik:RadGridView Name="radGridSnapshot" IsReadOnly="true" AlternationCount="2"
                                  ShowGroupPanel="False" Grid.Row="1" CanUserFreezeColumns="False" RowIndicatorVisibility="Collapsed"
                                  AutoGenerateColumns="False" CanUserDeleteRows="True" SelectionMode="Single" CanUserInsertRows="true"                                  
-                                 AutoExpandGroups="True" FontSize="7" FontFamily="Arial" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                 AutoExpandGroups="True" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                  telerikDragDrop:RadDragAndDropManager.AllowDrop="True" telerikDragDrop:RadDragAndDropManager.AllowDrag="True"
                                  ItemsSource="{Binding MarketSnapshotPerformanceInfo}" IsFilteringAllowed="False" HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  SelectedItem="{Binding SelectedMarketSnapshotPerformanceInfo, Mode=TwoWay}" CanUserReorderColumns="False" CanUserResizeColumns="False"
                                      RowLoaded="radGridSnapshot_RowLoaded" ElementExporting="radGridSnapshot_ElementExporting"                                  
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" EnableRowVirtualization="False">
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" EnableRowVirtualization="False"
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}">
                     <!--context menu on the grid-->
                     <telerik:RadContextMenu.ContextMenu>
                         <telerik:RadContextMenu x:Name="cmSnapshot" telerik:StyleManager.Theme="Metro" Opened="RadContextMenu_Opened" FontSize="7" FontFamily="Arial">
