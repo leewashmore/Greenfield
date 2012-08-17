@@ -16,6 +16,7 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.DataContracts;
+using GreenField.DataContracts.DataContracts;
 
 
 namespace GreenField.Common
@@ -104,6 +105,12 @@ namespace GreenField.Common
     public class RetrieveHeatMapDataCompleteEventArgs : EventArgs
     {
         public List<HeatMapData> HeatMapInfo { get; set; }
+    }
+
+    public delegate void RetrieveConsensusEstimatesSummaryCompleteEventHandler(RetrieveConsensusSummaryCompletedEventsArgs e);
+     public class RetrieveConsensusSummaryCompletedEventsArgs : EventArgs
+    {
+        public List<ConsensusEstimatesSummaryData> ConsensusInfo { get; set; }
     }
 
     public delegate void RetrieveHeatMapSelectedCountryEventHandler(RetrieveHeatMapSelectedCountryCompletedEventArgs e);

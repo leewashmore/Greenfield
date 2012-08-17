@@ -29,14 +29,17 @@ namespace GreenField.Gadgets.Views
             this.DataContextConsensusEstimatesSummary = dataContextSource;
             dataContextSource.consensusEstimatesSummaryDataLoadedEvent +=
             new DataRetrievalProgressIndicatorEventHandler(dataContextSource_consensusEstimatesSummaryDataLoadedEvent);
+            dataContextSource.RetrieveConsensusEstimatesSummaryDataCompletedEvent += new RetrieveConsensusEstimatesSummaryCompleteEventHandler(dataContextSource_RetrieveConsensusEstimatesSummaryDataCompletedEvent);
             int currentYear = DateTime.Today.Year;
-            this.dgConsensusEstimatesSummary.Columns[0].Header = "Net Income in Currency in #2 (Millions)";
+            this.dgConsensusEstimatesSummary.Columns[0].Header = "Net Income (Millions)";
             this.dgConsensusEstimatesSummary.Columns[1].Header = (currentYear - 1).ToString();
             this.dgConsensusEstimatesSummary.Columns[2].Header = (currentYear).ToString();
             this.dgConsensusEstimatesSummary.Columns[3].Header = (currentYear + 1).ToString();
             this.dgConsensusEstimatesSummary.Columns[4].Header = (currentYear + 2).ToString();
             this.dgConsensusEstimatesSummary.Columns[5].Header = (currentYear + 3).ToString();
         }
+
+        
         #endregion
 
         #region Properties
@@ -81,6 +84,28 @@ namespace GreenField.Gadgets.Views
             {             
                 this.busyIndicatorGrid.IsBusy = false;
             }
+
+           
+        }
+
+        void dataContextSource_RetrieveConsensusestimatesSummaryDataCompletedEvent(DataRetrievalProgressIndicatorEventArgs e)
+        {
+            if (e.ShowBusy)
+            {
+                this.busyIndicatorGrid.IsBusy = true;
+            }
+            else
+            {
+                this.busyIndicatorGrid.IsBusy = false;
+            }
+
+           
+        }
+
+        void dataContextSource_RetrieveConsensusEstimatesSummaryDataCompletedEvent(RetrieveConsensusSummaryCompletedEventsArgs e)
+        {
+            if(e.ConsensusInfo != null)
+            this.dgConsensusEstimatesSummary.Columns[0].Header = "Net Income in " + e.ConsensusInfo[0].currency + " (Millions)";
         }
         #endregion
 
