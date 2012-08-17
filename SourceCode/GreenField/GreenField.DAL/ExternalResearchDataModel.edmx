@@ -566,6 +566,10 @@
           <Parameter Name="cIssuerID" Type="varchar" Mode="In" />
           <Parameter Name="cSecurityID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="usp_GetQuarterlyResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DataId" Type="int" Mode="In" />
+          <Parameter Name="PeriodYear" Type="int" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
 
 		<!-- CSDL content -->

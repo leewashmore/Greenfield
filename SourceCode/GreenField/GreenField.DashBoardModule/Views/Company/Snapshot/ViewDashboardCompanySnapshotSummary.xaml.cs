@@ -179,7 +179,7 @@ namespace GreenField.DashboardModule.Views
 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.INTERNAL_RESEARCH_CONSESUS_ESTIMATE_SUMMARY,
                     Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-                RestoredHeight = 300,
+                RestoredHeight = 220,
                 Content = new ViewConsensusEstimateSummary(new ViewModelConsensusEstimateSummary(param))
             });
 

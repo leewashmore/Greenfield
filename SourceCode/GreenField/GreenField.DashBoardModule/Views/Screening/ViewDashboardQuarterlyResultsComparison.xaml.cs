@@ -44,6 +44,7 @@ namespace GreenField.DashBoardModule.Views.Screening
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
             this.tbHeader.Text = GadgetNames.QUARTERLY_RESULTS_COMPARISON;
+            
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -60,6 +61,7 @@ namespace GreenField.DashBoardModule.Views.Screening
             };
 
             this.cctrDashboardContent.Content = new ViewQuarterlyResultsComparison(new ViewModelQuarterlyResultsComparison(param));
+            
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
