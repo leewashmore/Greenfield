@@ -28,5 +28,10 @@ namespace GreenField.DataContracts.DataContracts
 
         [DataMember]
         public String YEAR5 { get; set; }
+
+        [DataMember]
+        public String currency { get; set; }
+
+
     }
 }

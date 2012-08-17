@@ -119,6 +119,8 @@ namespace GreenField.Gadgets.ViewModels
         /// Event for the notification of Data Load Completion
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler consensusEstimatesSummaryDataLoadedEvent;
+
+        public event RetrieveConsensusEstimatesSummaryCompleteEventHandler RetrieveConsensusEstimatesSummaryDataCompletedEvent;
         #endregion
 
         #region Event Handlers
@@ -173,6 +175,8 @@ namespace GreenField.Gadgets.ViewModels
                     ConsensusSummaryInfo = result;
                     if (null != consensusEstimatesSummaryDataLoadedEvent)
                         consensusEstimatesSummaryDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                    RetrieveConsensusEstimatesSummaryDataCompletedEvent(new RetrieveConsensusSummaryCompletedEventsArgs { ConsensusInfo  = result});
+                   
                 }
                 else
                 {

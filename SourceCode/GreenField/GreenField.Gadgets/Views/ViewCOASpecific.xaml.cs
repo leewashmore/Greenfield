@@ -46,6 +46,7 @@ namespace GreenField.Gadgets.Views
             this.itemDel.Visibility = Visibility.Collapsed;
             this.txtGadgetName.Visibility = Visibility.Collapsed;
             this.cbGadgetName.Visibility = Visibility.Collapsed;
+            ApplyChartStyles();
 
         }       
 
@@ -200,6 +201,25 @@ namespace GreenField.Gadgets.Views
                 this.busyIndicatorGrid.IsBusy = false;
             }
         }
+
+        #region Styling
+
+        /// <summary>
+        /// Formatting the chart
+        /// </summary>
+        private void ApplyChartStyles()
+        {
+            this.chCOASpecific.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chCOASpecific.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chCOASpecific.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chCOASpecific.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            this.chCOASpecific.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;
+            //this.chCOASpecific.DefaultView.ChartLegend.Header = string.Empty;
+            //this.chCOASpecific.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+           // this.chCOASpecific.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
+            
+        }
+        #endregion
 
 
 

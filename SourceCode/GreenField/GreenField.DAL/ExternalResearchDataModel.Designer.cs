@@ -5970,6 +5970,20 @@ namespace GreenField.DAL
     [Serializable()]
     public partial class ConsensusEstimatesSummaryData : ComplexObject
     {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ConsensusEstimatesSummaryData object.
+        /// </summary>
+        /// <param name="currency">Initial value of the currency property.</param>
+        public static ConsensusEstimatesSummaryData CreateConsensusEstimatesSummaryData(global::System.String currency)
+        {
+            ConsensusEstimatesSummaryData consensusEstimatesSummaryData = new ConsensusEstimatesSummaryData();
+            consensusEstimatesSummaryData.currency = currency;
+            return consensusEstimatesSummaryData;
+        }
+
+        #endregion
         #region Primitive Properties
     
         /// <summary>
@@ -6115,6 +6129,30 @@ namespace GreenField.DAL
         private global::System.String _YEAR5;
         partial void OnYEAR5Changing(global::System.String value);
         partial void OnYEAR5Changed();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String currency
+        {
+            get
+            {
+                return _currency;
+            }
+            set
+            {
+                OncurrencyChanging(value);
+                ReportPropertyChanging("currency");
+                _currency = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("currency");
+                OncurrencyChanged();
+            }
+        }
+        private global::System.String _currency;
+        partial void OncurrencyChanging(global::System.String value);
+        partial void OncurrencyChanged();
 
         #endregion
     }
