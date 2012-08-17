@@ -444,22 +444,6 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-        ///// <summary>
-        ///// Show/Hide Add to Chart Control
-        ///// </summary>
-        //private string _addToChartVisibility = "Collapsed";
-        //public string AddToChartVisibility
-        //{
-        //    get
-        //    {
-        //        return _addToChartVisibility;
-        //    }
-        //    set
-        //    {
-        //        _addToChartVisibility = value;
-        //        this.RaisePropertyChanged(() => this.AddToChartVisibility);
-        //    }
-        //}
 
         #region ICommand
         /// <summary>
@@ -506,7 +490,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    COASpecificInfo = result;
+                        COASpecificInfo = result;
                     if (null != coaSpecificDataLoadedEvent)
                         coaSpecificDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }
