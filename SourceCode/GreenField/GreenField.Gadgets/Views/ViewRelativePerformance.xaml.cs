@@ -588,15 +588,18 @@ namespace GreenField.Gadgets.Views
                     string value = null;
                     if (j == 0)
                     {
-                        value = ((columns[j].GetValueForItem(items[i])) as RelativePerformanceData).CountryId.ToString();
+                        value = columns[j].GetValueForItem(items[i]) != null ?
+                            ((columns[j].GetValueForItem(items[i])) as RelativePerformanceData).CountryId.ToString() : null;
                     }
                     else if (j == columns.Count - 1)
                     {
-                        value = ((columns[j].GetValueForItem(items[i])) as RelativePerformanceData).AggregateCountryAlpha.ToString();
+                        value = columns[0].GetValueForItem(items[i]) != null ?
+                            ((columns[0].GetValueForItem(items[i])) as RelativePerformanceData).AggregateCountryAlpha.ToString() : null;
                     }
 
                     else
-                        value = ((columns[j].GetValueForItem(items[i])) as RelativePerformanceCountrySpecificData).Alpha.ToString();
+                        value = columns[j].GetValueForItem(items[i]) != null ?
+                            ((columns[j].GetValueForItem(items[i])) as RelativePerformanceCountrySpecificData).Alpha.ToString() : null;
 
                     AddCellValue(cell, value != null ? value.ToString() : string.Empty);
 

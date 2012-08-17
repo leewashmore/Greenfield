@@ -119,6 +119,7 @@
                                      SelectionUnit="Cell" 
                                      ElementExporting="dgRelativePerformance_ElementExporting"
                                      GridLinesVisibility="None"
+                                     RowLoaded="dgRelativePerformance_RowLoaded"
                                      SelectedCellsChanged="dgRelativePerformance_SelectedCellsChanged"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      RowStyle="{StaticResource GridViewRowStyle}"
