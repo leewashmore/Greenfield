@@ -106,32 +106,11 @@
     <Reference Include="Telerik.Windows.Data">
       <HintPath>..\Lib\Telerik.Windows.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Telerik.Windows.Themes.Expression_Dark">
-      <HintPath>..\Lib\Telerik.Windows.Themes.Expression_Dark.dll</HintPath>
-    </Reference>
     <Reference Include="Telerik.Windows.Themes.Metro">
       <HintPath>..\Lib\Telerik.Windows.Themes.Metro.dll</HintPath>
     </Reference>
     <Reference Include="Telerik.Windows.Themes.Office_Black">
       <HintPath>..\Lib\Telerik.Windows.Themes.Office_Black.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Themes.Office_Blue">
-      <HintPath>..\Lib\Telerik.Windows.Themes.Office_Blue.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Themes.Office_Silver">
-      <HintPath>..\Lib\Telerik.Windows.Themes.Office_Silver.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Themes.Summer">
-      <HintPath>..\Lib\Telerik.Windows.Themes.Summer.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Themes.Transparent">
-      <HintPath>..\Lib\Telerik.Windows.Themes.Transparent.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Themes.Vista">
-      <HintPath>..\Lib\Telerik.Windows.Themes.Vista.dll</HintPath>
-    </Reference>
-    <Reference Include="Telerik.Windows.Themes.Windows7">
-      <HintPath>..\Lib\Telerik.Windows.Themes.Windows7.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

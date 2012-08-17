@@ -665,7 +665,7 @@ namespace GreenField.Gadgets.Views
                     value = " ";
                 span.Text = value;
                 span.FontFamily = new System.Windows.Media.FontFamily("Arial");
-                span.FontSize = 12;
+                span.FontSize = 9;
                 paragraph.Inlines.Add(span);
             }
         }
@@ -719,7 +719,7 @@ namespace GreenField.Gadgets.Views
             grid.AutoExpandGroups = true;
             grid.AutoGenerateColumns = false;
             grid.FontFamily = new FontFamily("Arial");
-            grid.FontSize = 12;
+            grid.FontSize = 9;
 
 
             foreach (GridViewDataColumn column in dgRelativePerformance.Columns.OfType<GridViewDataColumn>())

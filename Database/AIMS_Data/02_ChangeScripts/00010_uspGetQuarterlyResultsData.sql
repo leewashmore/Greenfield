@@ -78,6 +78,7 @@ PIVOT
  IN (Q1, Q2, Q3, Q4,A)
 ) AS P
 WHERE PERIOD_YEAR = @PeriodYear AND Data_Id = @DataId) aa ON bb.ISSUER_ID = aa.ISSUER_ID
+AND aa.A <> 0
 
 UPDATE @TEMP_QUARTERLY_RESULT
 SET LastUpdate = bb.LastPrimaryModelLoad

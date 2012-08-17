@@ -179,10 +179,10 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!--Data Source Selector-->
-                            <TextBlock  Grid.Row="2" Grid.Column="0" Text="Data Source" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
+                            <TextBlock  Grid.Row="2" Grid.Column="0" Text="Data Source" Style="{StaticResource TextBlockStyle}" Margin="2,2,0,0" VerticalAlignment="Center" />
                                 <telerik:RadComboBox Grid.Row="2" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding DataSourceInfo}"
                                                  VerticalContentAlignment="Center" SelectedItem="{Binding SelectedDataSource, Mode=TwoWay}"
-                                                 Margin="2,2,2,0" FontFamily="Arial" FontSize="7">
+                                                 Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}">
                                     <telerik:RadComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
