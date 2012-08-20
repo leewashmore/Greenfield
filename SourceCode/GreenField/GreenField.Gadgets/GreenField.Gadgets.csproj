@@ -231,6 +231,7 @@
     <Compile Include="ViewModels\ViewModelTopHoldings.cs" />
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
+    <Compile Include="ViewModels\ViewModelValuationQualityGrowth.cs" />
     <Compile Include="Views\Documents\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml.cs">
       <DependentUpon>ViewEstimates.xaml</DependentUpon>
     </Compile>
@@ -416,6 +417,9 @@
     </Compile>
     <Compile Include="Views\ViewUnrealizedGainLoss.xaml.cs">
       <DependentUpon>ViewUnrealizedGainLoss.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewValuationQualityGrowth.xaml.cs">
+      <DependentUpon>ViewValuationQualityGrowth.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -672,6 +676,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewUnrealizedGainLoss.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewValuationQualityGrowth.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

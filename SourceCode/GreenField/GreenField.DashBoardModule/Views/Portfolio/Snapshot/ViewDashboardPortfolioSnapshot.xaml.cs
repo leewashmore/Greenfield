@@ -85,12 +85,7 @@ namespace GreenField.DashboardModule.Views
                 RestoredHeight = 320
             });
 
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
-                 
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-                Content = null
-            });
+     
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
@@ -116,10 +111,17 @@ namespace GreenField.DashboardModule.Views
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                  
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_VALUATION_QUALITY_GROWTH_MEASURES, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
+                Content = new ViewValuationQualityGrowth(new ViewModelValuationQualityGrowth(param))
+            });
+
+
+            this.rtvDashboard.Items.Add(new RadTileViewItem
+            {
+
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.HOLDINGS_MARKET_CAPITALIZATION, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 Content = new ViewMarketCapitalization(new ViewModelMarketCapitalization(param))
             });
-
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
