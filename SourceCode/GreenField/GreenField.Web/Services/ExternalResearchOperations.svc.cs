@@ -91,11 +91,11 @@ namespace GreenField.Web.Services
                 String industryName = securityDetails.GICS_SUB_INDUSTRY_NAME;
                 int? securityID = securityDetails.SECURITY_ID;
                 String issueName = securityDetails.ISSUE_NAME;
-               String subIndustryName = securityDetails.GICS_SUB_INDUSTRY_NAME;
-               String ticker = securityDetails.TICKER;
-               String currency = securityDetails.TRADING_CURRENCY;
-               String primaryAnalyst = securityDetails.ASHMOREEMM_PRIMARY_ANALYST;
-               String industryAnalyst = securityDetails.ASHMOREEMM_INDUSTRY_ANALYST;
+                String subIndustryName = securityDetails.GICS_SUB_INDUSTRY_NAME;
+                String ticker = securityDetails.TICKER;
+                String currency = securityDetails.TRADING_CURRENCY;
+                String primaryAnalyst = securityDetails.ASHMOREEMM_PRIMARY_ANALYST;
+                String industryAnalyst = securityDetails.ASHMOREEMM_INDUSTRY_ANALYST;
 
                 String currencyCode = null;
                 String currencyName = null;
@@ -158,7 +158,7 @@ namespace GreenField.Web.Services
 
                 List<FinancialStatementData> result = null;
 
-               result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency).ToList();
+                result = entity.Get_Statement(issuerID, _dataSource, _periodType, _fiscalType, _statementType, currency).ToList();
 
                 return result;
             }
@@ -215,40 +215,40 @@ namespace GreenField.Web.Services
                 {
                     //if (requiredDescriptors.Contains(data[i].ESTIMATE_DESC))
                     //{
-                        ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
-                        temp.IssuerId = data[i].ISSUER_ID;
-                        temp.EstimateId = data[i].ESTIMATE_ID;
-                        temp.Description = data[i].ESTIMATE_DESC;
-                        temp.Period = data[i].Period;
-                        temp.AmountType = data[i].AMOUNT_TYPE;
-                        temp.PeriodYear = data[i].PERIOD_YEAR;
-                        temp.PeriodType = data[i].PERIOD_TYPE;
-                        temp.Amount = data[i].AMOUNT;
-                        temp.AshmoreEmmAmount = data[i].ASHMOREEMM_AMOUNT;
-                        temp.NumberOfEstimates = data[i].NUMBER_OF_ESTIMATES;
-                        temp.High = data[i].HIGH;
-                        temp.Low = data[i].LOW;
-                        temp.StandardDeviation = data[i].STANDARD_DEVIATION;
-                        temp.SourceCurrency = data[i].SOURCE_CURRENCY;
-                        temp.DataSource = data[i].DATA_SOURCE;
-                        temp.DataSourceDate = data[i].DATA_SOURCE_DATE;
-                        temp.Actual = data[i].ACTUAL;
-                        temp.ConsensusMedian = data[i].AMOUNT;
-                        temp.YOYGrowth = data[i].AMOUNT;
-                        temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
-                        if (i != data.Count - 1)
+                    ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
+                    temp.IssuerId = data[i].ISSUER_ID;
+                    temp.EstimateId = data[i].ESTIMATE_ID;
+                    temp.Description = data[i].ESTIMATE_DESC;
+                    temp.Period = data[i].Period;
+                    temp.AmountType = data[i].AMOUNT_TYPE;
+                    temp.PeriodYear = data[i].PERIOD_YEAR;
+                    temp.PeriodType = data[i].PERIOD_TYPE;
+                    temp.Amount = data[i].AMOUNT;
+                    temp.AshmoreEmmAmount = data[i].ASHMOREEMM_AMOUNT;
+                    temp.NumberOfEstimates = data[i].NUMBER_OF_ESTIMATES;
+                    temp.High = data[i].HIGH;
+                    temp.Low = data[i].LOW;
+                    temp.StandardDeviation = data[i].STANDARD_DEVIATION;
+                    temp.SourceCurrency = data[i].SOURCE_CURRENCY;
+                    temp.DataSource = data[i].DATA_SOURCE;
+                    temp.DataSourceDate = data[i].DATA_SOURCE_DATE;
+                    temp.Actual = data[i].ACTUAL;
+                    temp.ConsensusMedian = data[i].AMOUNT;
+                    temp.YOYGrowth = data[i].AMOUNT;
+                    temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
+                    if (i != data.Count - 1)
+                    {
+                        if (data[i].ESTIMATE_DESC == data[i + 1].ESTIMATE_DESC &&
+                            data[i].PERIOD_YEAR == data[i + 1].PERIOD_YEAR + 1)
                         {
-                            if (data[i].ESTIMATE_DESC == data[i + 1].ESTIMATE_DESC &&
-                                data[i].PERIOD_YEAR == data[i + 1].PERIOD_YEAR + 1)
-                            {
-                                if(data[i+1].AMOUNT != 0)
+                            if (data[i + 1].AMOUNT != 0)
                                 temp.YOYGrowth = (temp.YOYGrowth / data[i + 1].AMOUNT) - 1;
-                            }
                         }
+                    }
 
-                        result.Add(temp);
-                   // }                 
-                }          
+                    result.Add(temp);
+                    // }                 
+                }
                 return result;
             }
             catch (Exception ex)
@@ -270,7 +270,7 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<FinstatDetailData> RetrieveFinstatData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, String currency,string yearRange)
+        public List<FinstatDetailData> RetrieveFinstatData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, String currency, string yearRange)
         {
             string _dataSource = EnumUtils.ToString(dataSource);
             string _fiscalType = EnumUtils.ToString(fiscalType);
@@ -281,11 +281,12 @@ namespace GreenField.Web.Services
             List<FinstatDetail> data = new List<FinstatDetail>();
             List<FinstatDetailData> result = new List<FinstatDetailData>();
 
-            data = entity.GetFinstatDetail(issuerId,securityId,_dataSource,_fiscalType,currency).ToList();
+            data = entity.GetFinstatDetail(issuerId, securityId, _dataSource, _fiscalType, currency).ToList();
 
             if (data == null || data.Count() == 0)
                 return result;
 
+            
             #region Preparing display data for group names
             for (int i = 0; i < data.Count(); i++)
             {
@@ -329,11 +330,11 @@ namespace GreenField.Web.Services
                         temp.HarmonicFirst = 1 / (year4 + year5 + year6);
                 }
                 result.Add(temp);
-            } 
+            }
             #endregion
 
             #region Economic & Market Data
-            List<FinstatEconomicMarketData> economicData = entity.GetFinstatEconomicMarketData(issuerId,securityId,_dataSource,_fiscalType,currency).ToList();
+            List<FinstatEconomicMarketData> economicData = entity.GetFinstatEconomicMarketData(issuerId, securityId, _dataSource, _fiscalType, currency).ToList();
 
             //Preparing Exchange Rates
             List<string> distinctYears = economicData.Select(a => a.PERIOD_YEAR).Distinct().ToList();
@@ -367,14 +368,14 @@ namespace GreenField.Web.Services
                 tempData.PeriodYear = item.YEAR1;
                 tempData.AmountType = "A";
                 tempData.PeriodType = "A";
-                tempData.Amount = Math.Round(((item.VALUE) * 100),1);
+                tempData.Amount = Math.Round(((item.VALUE) * 100), 1);
                 result.Add(tempData);
             }
             #endregion
 
             #region Relative Analysis Data
             List<FinstatRelativeAnalysisData> relativeData = entity.GetFinstatRelativeAnalysisData(issuerId, securityId, _dataSource, _fiscalType).ToList();
-            
+
             #region direct data
             foreach (FinstatRelativeAnalysisData item in relativeData)
             {
@@ -408,7 +409,7 @@ namespace GreenField.Web.Services
                                                item.DATA_ID == 164 ? "Industry P/BV" : item.DATA_ID == 133 ? "Industry ROE" : "";
                 }
                 result.Add(tempData);
-            } 
+            }
             #endregion
 
             //remaining data
@@ -427,8 +428,8 @@ namespace GreenField.Web.Services
                     case 166:
                         record.Description = "Relative Country P/E";
                         decimal countryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 166).Select(a => a.AMOUNT));
-                        if(countryPE != 0)
-                        record.Amount = Math.Round((item.AMOUNT / countryPE),2);
+                        if (countryPE != 0)
+                            record.Amount = Math.Round((item.AMOUNT / countryPE), 2);
                         break;
                     case 164:
                         record.Description = "Relative Country P/BV";
@@ -477,11 +478,13 @@ namespace GreenField.Web.Services
                     default:
                         break;
                 }
-            }       
-            
+            }
+
             #endregion
 
             return result;
+
+           
         }
 
         /// <summary>
@@ -656,7 +659,6 @@ namespace GreenField.Web.Services
 
                 for (int i = 0; i < data.Count; i++)
                 {
-
                     if (dataDesc.Contains(data[i].ESTIMATE_ID))
                     {
                         ConsensusEstimateMedian temp = new ConsensusEstimateMedian();
@@ -677,7 +679,6 @@ namespace GreenField.Web.Services
                         temp.DataSource = data[i].DATA_SOURCE;
                         temp.DataSourceDate = data[i].DATA_SOURCE_DATE;
                         temp.Actual = data[i].ACTUAL;
-
                         temp.YOYGrowth = data[i].AMOUNT;
                         temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
                         if (i != data.Count - 1)
@@ -695,10 +696,14 @@ namespace GreenField.Web.Services
                                 temp.YOYGrowth = 0;
                             }
                         }
-
                         result.Add(temp);
                     }
                 }
+                if (result != null)
+                    result = ConsensusEstimateCalculations.CalculateEPSValues(result, periodType);
+
+                if (result != null)
+                    result = ConsensusEstimateCalculations.CalculateNetIncomeValues(result, periodType);
 
                 return result;
             }
@@ -738,7 +743,7 @@ namespace GreenField.Web.Services
                 {
                     if (dataDesc.Contains(data[i].ESTIMATE_ID))
                     {
-                        
+
                         ConsensusEstimatesValuations temp = new ConsensusEstimatesValuations();
                         temp.IssuerId = data[i].ISSUER_ID;
                         temp.EstimateId = data[i].ESTIMATE_ID;
@@ -961,7 +966,7 @@ namespace GreenField.Web.Services
                     {
                         IEqualityComparer<GetPRevenueData_Result> comparer = new HistoricalValuationCompararer();
                         resultDB = resultDB.Distinct(comparer).ToList();
-                    }               
+                    }
                     for (int _index = 0; _index < resultDB.Count; _index++)
                     {
                         PRevenueData data = new PRevenueData();
@@ -973,7 +978,7 @@ namespace GreenField.Web.Services
                         if ((resultDB[_index].USDPrice == null || resultDB[_index].USDPrice == 0) || (resultDB[_index].Shares_Outstanding == null || resultDB[_index].Shares_Outstanding == 0))
                         {
                             data.PRevenueVal = null;
-                        }                        
+                        }
                         else
                         {
                             //Sum of Amount if 4 quarters exist
@@ -995,12 +1000,12 @@ namespace GreenField.Web.Services
                                     data.PRevenueVal = sumAmount / (resultDB[_index].USDPrice * resultDB[_index].Shares_Outstanding);
                                 else
                                     data.PRevenueVal = (resultDB[_index].USDPrice * resultDB[_index].Shares_Outstanding) / sumAmount;
-                            }                           
-                            
+                            }
+
                         }
                         result.Add(data);
                     }//end for loop
-                   
+
                 }//end - if
 
                 result = HistoricalValuationCalculations.CalculateAvg(result);
@@ -1093,16 +1098,16 @@ namespace GreenField.Web.Services
             try
             {
                 string _dataSource = EnumUtils.ToString(cSource);
-                string _fiscalType = EnumUtils.ToString(cFiscalType);                
+                string _fiscalType = EnumUtils.ToString(cFiscalType);
                 List<GreenField.DAL.COASpecificData> result = new List<GreenField.DAL.COASpecificData>();
-                 List<GreenField.DataContracts.COASpecificData> mainResult = new List<GreenField.DataContracts.COASpecificData>();
-                
+                List<GreenField.DataContracts.COASpecificData> mainResult = new List<GreenField.DataContracts.COASpecificData>();
+
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 ExternalResearchEntities research = new ExternalResearchEntities();
                 result = research.GetDataForPeriodGadgets(_dataSource, _fiscalType, cCurrency, issuerId, securityId.ToString()).ToList();
                 foreach (GreenField.DAL.COASpecificData item in result)
                 {
-                    GreenField.DataContracts.COASpecificData  entry = new GreenField.DataContracts.COASpecificData();
+                    GreenField.DataContracts.COASpecificData entry = new GreenField.DataContracts.COASpecificData();
                     entry.Amount = item.Amount;
                     entry.AmountType = item.AmountType;
                     entry.DataSource = item.DataSource;

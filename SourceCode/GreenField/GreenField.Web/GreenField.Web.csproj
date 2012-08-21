@@ -104,6 +104,7 @@
     <Compile Include="DataContracts\PopulatedMarketPerformanceSnapshotData.cs" />
     <Compile Include="Helpers\AssetAllocationCalculations.cs" />
     <Compile Include="Helpers\CheckServiceAvailability.cs" />
+    <Compile Include="Helpers\ConsensusEstimateCalculations.cs" />
     <Compile Include="Helpers\EnumUtils.cs" />
     <Compile Include="Helpers\ExceptionTrace.cs" />
     <Compile Include="Helpers\FrequencyCalculator.cs" />
