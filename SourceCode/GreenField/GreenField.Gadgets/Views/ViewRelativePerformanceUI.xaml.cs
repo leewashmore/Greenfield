@@ -89,56 +89,64 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            offsetY = 0d;
-            totalHeight = 0d;
-
-            grid = new RadGridView();
-            grid.DataContext = dgRelativePerformanceUI.DataContext;
-            grid.ItemsSource = dgRelativePerformanceUI.ItemsSource;
-            grid.RowIndicatorVisibility = Visibility.Collapsed;
-            grid.ShowGroupPanel = false;
-            grid.CanUserFreezeColumns = false;
-            grid.IsFilteringAllowed = false;
-            grid.AutoExpandGroups = true;
-            grid.AutoGenerateColumns = false;
-
-            foreach (GridViewDataColumn column in dgRelativePerformanceUI.Columns.OfType<GridViewDataColumn>())
+            Dispatcher.BeginInvoke((Action)(() =>
             {
-                GridViewDataColumn newColumn = new GridViewDataColumn();
-                newColumn.DataMemberBinding = new System.Windows.Data.Binding(column.UniqueName);
-                grid.Columns.Add(newColumn);
-            }
+                RichTextBox.Document = PDFExporter.CreateDocument(dgRelativePerformanceUI);
+            }));
 
-            foreach (GridViewDataColumn column in grid.Columns.OfType<GridViewDataColumn>())
-            {
-                GridViewDataColumn currentColumn = column;
+            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
 
-                GridViewDataColumn originalColumn = (from c in dgRelativePerformanceUI.Columns.OfType<GridViewDataColumn>()
-                                                     where c.UniqueName == currentColumn.UniqueName
-                                                     select c).FirstOrDefault();
-                if (originalColumn != null)
-                {
-                    column.Width = originalColumn.ActualWidth;
-                    column.DisplayIndex = originalColumn.DisplayIndex;
-                }
-            }
 
-            StyleManager.SetTheme(grid, StyleManager.GetTheme(dgRelativePerformanceUI));
+            //offsetY = 0d;
+            //totalHeight = 0d;
 
-            grid.SortDescriptors.AddRange(dgRelativePerformanceUI.SortDescriptors);
-            grid.GroupDescriptors.AddRange(dgRelativePerformanceUI.GroupDescriptors);
-            grid.FilterDescriptors.AddRange(dgRelativePerformanceUI.FilterDescriptors);
+            //grid = new RadGridView();
+            //grid.DataContext = dgRelativePerformanceUI.DataContext;
+            //grid.ItemsSource = dgRelativePerformanceUI.ItemsSource;
+            //grid.RowIndicatorVisibility = Visibility.Collapsed;
+            //grid.ShowGroupPanel = false;
+            //grid.CanUserFreezeColumns = false;
+            //grid.IsFilteringAllowed = false;
+            //grid.AutoExpandGroups = true;
+            //grid.AutoGenerateColumns = false;
 
-            ScrollViewer.SetHorizontalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
-            ScrollViewer.SetVerticalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
+            //foreach (GridViewDataColumn column in dgRelativePerformanceUI.Columns.OfType<GridViewDataColumn>())
+            //{
+            //    GridViewDataColumn newColumn = new GridViewDataColumn();
+            //    newColumn.DataMemberBinding = new System.Windows.Data.Binding(column.UniqueName);
+            //    grid.Columns.Add(newColumn);
+            //}
 
-            PrintDocument doc = new PrintDocument();
+            //foreach (GridViewDataColumn column in grid.Columns.OfType<GridViewDataColumn>())
+            //{
+            //    GridViewDataColumn currentColumn = column;
 
-            canvas = new Canvas();
-            canvas.Children.Add(grid);
+            //    GridViewDataColumn originalColumn = (from c in dgRelativePerformanceUI.Columns.OfType<GridViewDataColumn>()
+            //                                         where c.UniqueName == currentColumn.UniqueName
+            //                                         select c).FirstOrDefault();
+            //    if (originalColumn != null)
+            //    {
+            //        column.Width = originalColumn.ActualWidth;
+            //        column.DisplayIndex = originalColumn.DisplayIndex;
+            //    }
+            //}
 
-            doc.PrintPage += this.doc_PrintPage;
-            doc.Print("RadGridView print");
+            //StyleManager.SetTheme(grid, StyleManager.GetTheme(dgRelativePerformanceUI));
+
+            //grid.SortDescriptors.AddRange(dgRelativePerformanceUI.SortDescriptors);
+            //grid.GroupDescriptors.AddRange(dgRelativePerformanceUI.GroupDescriptors);
+            //grid.FilterDescriptors.AddRange(dgRelativePerformanceUI.FilterDescriptors);
+
+            //ScrollViewer.SetHorizontalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
+            //ScrollViewer.SetVerticalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
+
+            //PrintDocument doc = new PrintDocument();
+
+            //canvas = new Canvas();
+            //canvas.Children.Add(grid);
+
+            //doc.PrintPage += this.doc_PrintPage;
+            //doc.Print("RadGridView print");
         }
 
         /// <summary>

@@ -20,6 +20,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
 
         <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0">
@@ -95,5 +96,7 @@
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
         </telerik:RadBusyIndicator>
+
+        <telerik:RadRichTextBox x:Name="RichTextBox" Width="0" Grid.Row="2"/>
     </Grid>
 </helpers:ViewBaseUserControl>

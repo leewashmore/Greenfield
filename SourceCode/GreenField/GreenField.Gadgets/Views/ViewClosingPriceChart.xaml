@@ -297,7 +297,6 @@
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          AlternationCount="2"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
-                                         RowLoaded="dgPricing_RowLoaded"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
                         <telerik:RadGridView.SortDescriptors>
                             <telerik:SortDescriptor Member="FromDate"

@@ -97,7 +97,6 @@
                                          ScrollMode="Deferred"
                                          AlternationCount="2"
                                          MinColumnWidth="70"
-                                         RowLoaded="dgPortfolioDetails_RowLoaded" 
                                          EnableRowVirtualization="True"
                                          EnableColumnVirtualization="True"
                                          GridLinesVisibility="None">

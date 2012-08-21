@@ -119,11 +119,6 @@ namespace GreenField.Gadgets.Views
             RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 12 });
         }
 
-        private void dgConsensusEstimate_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            GroupedGridRowLoadedHandler.Implement(e);
-        }
-
         /// <summary>
         /// Export to Excel Button Click
         /// </summary>

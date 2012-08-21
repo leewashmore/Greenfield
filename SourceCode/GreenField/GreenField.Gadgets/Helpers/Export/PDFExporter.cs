@@ -64,7 +64,7 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="grid"></param>
         /// <returns></returns>
-        private static RadDocument CreateDocument(RadGridView grid)
+        public static RadDocument CreateDocument(RadGridView grid)
         {
             List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
                                                      orderby c.DisplayIndex

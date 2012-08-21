@@ -423,20 +423,7 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-
-        #region ApplyingGroupStyle
-
-        /// <summary>
-        /// Row loaded Event of DataGrid, Applying styles to Grid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgPortfolioDetails_RowLoaded(object sender, RowLoadedEventArgs e)
-        {
-            //GroupedGridRowLoadedHandler.Implement(e);
-        }
-
-        #endregion
+                
 
         #region GroupingHelperMethods
 

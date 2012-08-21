@@ -39,113 +39,113 @@
             </Grid.ColumnDefinitions>
 
             <Border x:Name="BlankBorder" Background="#e4e5e5" Grid.Row="0" Grid.Column="0">
-                <TextBlock Foreground="Black" Text="Target Price/Consensus Recommendation" FontFamily="Arial" FontSize = "12"  FontWeight="Bold"  VerticalAlignment="Center" />
+                <TextBlock Foreground="Black" Text="Target Price/Consensus Recommendation" Style="{StaticResource TextBlockStyle}"  FontWeight="Bold"  VerticalAlignment="Center" />
             </Border>
             <Border x:Name="BlankBorder2" Background="#e4e5e5" Grid.Row="0" Grid.Column="1">
                 <TextBlock Text="" FontWeight="Bold" FontStyle="Italic" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                Foreground="Black" FontFamily="Arial" FontSize = "12" />
+                Foreground="Black"  Style="{StaticResource TextBlockStyle}" />
             </Border>
 
             <!--Ticker-->
             <TextBlock Grid.Row="1" Grid.Column="0" Margin="2,0,0,0" Text="Ticker" FontWeight="Bold" HorizontalAlignment="Left" 
-                       VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                       VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             <TextBlock Grid.Row="1" Grid.Column="1" Margin="2,0,0,0" 
                        Text="{Binding TargetPriceData.Ticker, StringFormat=\{0:n0\}}" 
-                       HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                       HorizontalAlignment="Right" VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"   />
 
 
             <!--CurrentPrice-->
             <Border x:Name="CurrentPriceBorder"  Background="#f3f6fc" Grid.Row="2" Grid.Column="0">
                 <TextBlock  Margin="2,0,0,0" Text="{Binding CurrentPriceText}" FontWeight="Bold" HorizontalAlignment="Left" 
-                            VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                            VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"  />
             </Border>
             <Border x:Name="CurrentPriceDataBorder" Background="#f3f6fc" Grid.Row="2" Grid.Column="1">
                 <TextBlock Grid.Row="2" Grid.Column="1" Margin="2,0,0,0" 
                            Text="{Binding TargetPriceData.CurrentPrice, StringFormat=\{0:n0\}}" HorizontalAlignment="Right" 
-                           VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                           VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"  />
             </Border>
 
             <!--MedianTargetPrice-->
             <Border Grid.Row="3" Grid.Column="0" >
                 <TextBlock Text="Median Target Price" Margin="2,0,0,0" FontWeight="Bold" HorizontalAlignment="Left" 
-                           VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                           VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
             <Border  Grid.Row="3" Grid.Column="1">
                 <TextBlock Margin="2,0,0,0" 
                            Text="{Binding TargetPriceData.MedianTargetPrice}" 
-                           HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                           HorizontalAlignment="Right" VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
             <!--Last Update-->
             <Border Background="#f3f6fc" Grid.Row="4" Grid.Column="0">
                 <TextBlock Text="Last Update"  Margin="2,0,0,0" 
-                           FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                           FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
             <Border Background="#f3f6fc" Grid.Row="4" Grid.Column="1">
                 <TextBlock  Margin="2,0,0,0" 
                        Text="{Binding TargetPriceData.LastUpdate,StringFormat=d}"  
-                       HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                       HorizontalAlignment="Right" VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"  />
             </Border>
 
             <!--# of Estimates-->
             <Border Grid.Row="5" Grid.Column="0" >
                 <TextBlock Text="# of Estimates " Margin="2,0,0,0" FontWeight="Bold" HorizontalAlignment="Left" 
                            VerticalAlignment="Center" 
-                           FontFamily="Arial" FontSize = "12"   />
+                            Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
             <Border  Grid.Row="5" Grid.Column="1">
                 <TextBlock  Margin="2,0,0,0" 
                             Text="{Binding TargetPriceData.NoOfEstimates}" 
-                            HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                            HorizontalAlignment="Right" VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
             <!--High-->
             <Border Grid.Row="6" Grid.Column="0" Background="#f3f6fc" >
                 <TextBlock Text="High " Margin="2,0,0,0" FontWeight="Bold" HorizontalAlignment="Left" 
-                           VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                           VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
             <Border Background="#f3f6fc" Grid.Row="6" Grid.Column="1">
                 <TextBlock  Margin="2,0,0,0" 
                        Text="{Binding TargetPriceData.High}" 
-                       HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                       HorizontalAlignment="Right" VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
             <!--Low-->
             <Border Grid.Row="7" Grid.Column="0"   >
                 <TextBlock Text="Low" FontWeight="Bold" Margin="2,0,0,0" HorizontalAlignment="Left" 
-                           VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                           VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <Border  Grid.Row="7" Grid.Column="1">
                 <TextBlock  Margin="2,0,0,0" 
                             Text="{Binding TargetPriceData.Low}" 
-                            HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                            HorizontalAlignment="Right" VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"  />
             </Border>
 
             <!--Standard Deviation-->
             <Border Grid.Row="8" Grid.Column="0" Margin="2,0,0,0" Background="#f3f6fc">
                 <TextBlock Text="Standard Deviation" FontWeight="Bold" HorizontalAlignment="Left" VerticalAlignment="Center" 
-                           FontFamily="Arial" FontSize = "12"   />
+                            Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <Border Background="#f3f6fc" Grid.Row="8" Grid.Column="1">
                 <TextBlock Grid.Row="8" Grid.Column="1" Margin="2,0,0,0" 
                        Text="{Binding TargetPriceData.StandardDeviation}" 
-                       HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                       HorizontalAlignment="Right" VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
             <!--Consensus Recommendation-->
             <Border Grid.Row="9" Grid.Column="0"  >
                 <TextBlock Text="Consensus Recommendation" Margin="2,0,0,0" FontWeight="Bold" HorizontalAlignment="Left" 
-                           VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                           VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
             <Border  Grid.Row="9" Grid.Column="1">
                 <TextBlock Margin="2,0,0,0" 
                            Text="{Binding TargetPriceData.ConsensusRecommendation}" 
-                           HorizontalAlignment="Right" VerticalAlignment="Center" FontFamily="Arial" FontSize = "12"   />
+                           HorizontalAlignment="Right" VerticalAlignment="Center"  Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
         </Grid>

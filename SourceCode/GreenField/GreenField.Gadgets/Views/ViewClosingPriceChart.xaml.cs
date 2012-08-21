@@ -106,16 +106,7 @@ namespace GreenField.Gadgets.Views
             this.cmbTime.SelectedValue = "1-Year";
         }
 
-        /// <summary>
-        /// Applying styles to DataGrid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgPricing_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            GroupedGridRowLoadedHandler.Implement(e);
-        }
-
+        
         /// <summary>
         /// Frequency Interval Changed Event
         /// </summary>
