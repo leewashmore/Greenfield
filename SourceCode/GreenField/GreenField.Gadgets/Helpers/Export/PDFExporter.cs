@@ -60,6 +60,18 @@ namespace GreenField.Gadgets.Helpers
         }
 
         /// <summary>
+        /// Printing the Grid
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="fontSize"></param>
+        /// <returns></returns>
+        public static RadDocument Print(RadGridView grid, int fontSize = 8)
+        {
+            fontSizePDF = fontSize;
+            return CreateDocument(grid);
+        }
+
+        /// <summary>
         /// Helper Function for PDF
         /// </summary>
         /// <param name="grid"></param>

@@ -24,7 +24,7 @@ namespace GreenField.Gadgets.Views
     public partial class ViewRelativePerformanceUI : ViewBaseUserControl
     {
         #region PrivateVariables
-        
+
         #endregion
 
         #region PropertyDeclaration
@@ -91,7 +91,7 @@ namespace GreenField.Gadgets.Views
         {
             Dispatcher.BeginInvoke((Action)(() =>
             {
-                RichTextBox.Document = PDFExporter.CreateDocument(dgRelativePerformanceUI);
+                RichTextBox.Document = PDFExporter.Print(dgRelativePerformanceUI, 10);
             }));
 
             RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);

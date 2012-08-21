@@ -189,7 +189,7 @@
         </Grid>
 
         <Grid Grid.Row="3">
-            <telerik:RadRichTextBox x:Name="RichTextBox">
+            <telerik:RadRichTextBox x:Name="RichTextBox" Width="0">
                 <!--For Printing the grid-->
             </telerik:RadRichTextBox>
         </Grid>
