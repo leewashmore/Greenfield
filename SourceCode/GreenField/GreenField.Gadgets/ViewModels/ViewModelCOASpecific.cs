@@ -106,7 +106,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive = true;
+        private bool _isActive;
         public bool IsActive
         {
             get
@@ -200,6 +200,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _entitySelectionInfo = value;
+                if (IsActive)
                 RaisePropertyChanged(() => this.EntitySelectionInfo);
             }
         }
