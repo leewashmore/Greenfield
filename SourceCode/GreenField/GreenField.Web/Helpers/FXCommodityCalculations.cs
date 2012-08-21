@@ -23,11 +23,11 @@ namespace GreenField.Web.Helpers
 
             DateTime CurrentDate = System.DateTime.Now;
             DateTime Date1DayBack = GetPreviousDate(CurrentDate);
-            DateTime DateLastYearEnd = CurrentDate.AddYears(-1).AddMonths(-(CurrentDate.Month) + 12).AddDays(-(CurrentDate.Day) + 31);//Convert.ToDateTime("12/31/" + CurrentDate.AddYears(-1).Year);
+            DateTime DateLastYearEnd = CurrentDate.AddYears(-1).AddMonths(-(CurrentDate.Month) + 12).AddDays(-(CurrentDate.Day) + 31);
             DateLastYearEnd = CheckBusinessDay(DateLastYearEnd);
-            DateTime Date12MonthsAgo = CurrentDate.AddYears(-1);//Convert.ToDateTime(CurrentDate.Month + "/" + CurrentDate.Day + "/" + CurrentDate.AddYears(-1).Year);
+            DateTime Date12MonthsAgo = CurrentDate.AddYears(-1);
             Date12MonthsAgo = CheckBusinessDay(Date12MonthsAgo);
-            DateTime Date36MonthsAgo = CurrentDate.AddYears(-3); //Convert.ToDateTime(CurrentDate.Month + "/" + CurrentDate.Day + "/" + CurrentDate.AddYears(-3).Year);
+            DateTime Date36MonthsAgo = CurrentDate.AddYears(-3);
             Date36MonthsAgo = CheckBusinessDay(Date36MonthsAgo);
 
             FXCommodityData result = new FXCommodityData();
@@ -47,7 +47,6 @@ namespace GreenField.Web.Helpers
                     GP36MonthsAgo = item.DailyClosingPrice;
 
                 result.CommodityId = item.CommodityId;
-                //result.InstrumentId = item.InstrumentId;
             }
 
             if (GPToday != null && GPLastYearEnd != null)
@@ -77,7 +76,6 @@ namespace GreenField.Web.Helpers
                     }
                     else if (date.Day > 1)
                     {
-                        //date = Convert.ToDateTime(date.Month + "/" + (date.Day - 1) + "/" + date.Year);
                         date = date.AddDays(-1);
                     }
                     break;
@@ -88,8 +86,6 @@ namespace GreenField.Web.Helpers
                     }
                     else if (date.Day > 2)
                     {
-                        //Int32 NoOfMonth = DateTime.DaysInMonth(2012, 3);
-                        //date = Convert.ToDateTime(date.Month + "/" + (date.Day - 2) + "/" + date.Year);
                         date = date.AddDays(-2);
                     }
                     break;
@@ -103,36 +99,26 @@ namespace GreenField.Web.Helpers
         /// <returns></returns>
         private static DateTime GetPreviousDate(DateTime date)
         {
-            int day = date.Day;
-            int month = date.Month;
-            int year = date.Year;
             if (date.Day == 1)
             {
                 if (date.Month == 1)
-                {
-                    //year = date.Year - 1;
+                {                   
                     date = date.AddYears(-1);
-                    //month = 12;
                     date = date.AddMonths(-(date.Month) + 12);
-                    //day = DateTime.DaysInMonth(date.Year, month);
-                    date = date.AddDays(-(date.Day) + DateTime.DaysInMonth(date.Year, month));                   
+                    date = date.AddDays(-(date.Day) + DateTime.DaysInMonth(date.Year, date.Month));                   
 
                 }
                 else if (date.Month > 1)
                 {
-                    //month = date.Month - 1;
                     date = date.AddMonths(-1);
-                    //day = DateTime.DaysInMonth(date.Year, month);
-                    date = date.AddDays(-(date.Day) + DateTime.DaysInMonth(date.Year, month));
+                    date = date.AddDays(-(date.Day) + DateTime.DaysInMonth(date.Year, date.Month));
                     
                 }
             }
             else if (date.Day > 1)
             {
-                //day = date.Day - 1;
                 date = date.AddDays(-1);
             }
-            //date = Convert.ToDateTime(month + "/" + day + "/" + date.Year);
             date = CheckBusinessDay(date);
             return date;
         }
