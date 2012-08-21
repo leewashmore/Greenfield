@@ -137,19 +137,22 @@
                                                     DataMemberBinding="{Binding Currency}" 
                                                     Width="*" 
                                                     HeaderTextAlignment="Left" 
-                                                    TextAlignment="Left"                                                    
+                                                    TextAlignment="Left" 
+                                                    IsFilterable="False" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcLastUpdate"                                                    
                                                     DataMemberBinding="{Binding LastUpdate}" 
                                                     Width="*" 
                                                     HeaderTextAlignment="Left" 
+                                                    IsFilterable="False" 
                                                     TextAlignment="Left"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcQ1"                                                    
                                                     DataMemberBinding="{Binding Q1}" 
                                                     Width="*" 
+                                                    IsFilterable="False" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -158,6 +161,7 @@
                                 <telerik:GridViewDataColumn x:Name="dgcQ2"                                                    
                                                     DataMemberBinding="{Binding Q2}" 
                                                     Width="*" 
+                                                    IsFilterable="False" 
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -166,6 +170,7 @@
                                                     DataMemberBinding="{Binding Q3}" 
                                                     Width="*" 
                                                     HeaderTextAlignment="Right" 
+                                                    IsFilterable="False" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -181,7 +186,8 @@
                                                     DataMemberBinding="{Binding Annual}" 
                                                     Width="*" 
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"                                                    
+                                                    TextAlignment="Right" 
+                                                    IsFilterable="False" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
 
@@ -189,7 +195,8 @@
                                                     DataMemberBinding="{Binding QuarterlySum}" 
                                                     Width="*" 
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"                                                    
+                                                    TextAlignment="Right"     
+                                                    IsFilterable="False" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
 
@@ -198,14 +205,16 @@
                                                     Width="*" 
                                                     DataFormatString="{}{0:n2}%"                                                            
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"                                                    
+                                                    TextAlignment="Right"   
+                                                    IsFilterable="False" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcConsensus"                                                    
                                                     DataMemberBinding="{Binding Consensus}" 
                                                     Width="*" 
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"                                                    
+                                                    TextAlignment="Right"   
+                                                    IsFilterable="False" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcConsensusPer"                                                    
@@ -213,6 +222,7 @@
                                                     Width="*" 
                                                     DataFormatString="{}{0:n2}%"
                                                     HeaderTextAlignment="Right" 
+                                                    IsFilterable="False" 
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -220,31 +230,34 @@
                                                     DataMemberBinding="{Binding High}" 
                                                     Width="*" 
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"                                                    
+                                                    TextAlignment="Right"     
+                                                     IsFilterable="False" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcLow"                                                    
                                                     DataMemberBinding="{Binding Low}" 
                                                     Width="*" 
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"                                                    
+                                                    TextAlignment="Right"       
+                                                    IsFilterable="False" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcBrokers"                                                    
                                                     DataMemberBinding="{Binding Brokers}" 
                                                     Width="*" 
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"                                                    
+                                                    TextAlignment="Right"      
+                                                    IsFilterable="False" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                                 <telerik:GridViewDataColumn x:Name="dgcConsensusUpdate"                                                    
                                                     DataMemberBinding="{Binding ConsensusUpdate}" 
                                                     Width="*" 
                                                     HeaderTextAlignment="Left" 
-                                                    TextAlignment="Left"                                                    
+                                                    TextAlignment="Left"       
+                                                    IsFilterable="False" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
-
                             </telerik:RadGridView.Columns>
                         </telerik:RadGridView>
                     </Border>

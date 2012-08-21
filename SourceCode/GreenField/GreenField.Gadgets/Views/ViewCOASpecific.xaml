@@ -339,6 +339,11 @@
                                 <telerik:RadGridView.GroupDescriptors>
                                     <telerik:GroupDescriptor Member="SUB_DATA_DESC"/>
                                 </telerik:RadGridView.GroupDescriptors>
+                                <telerik:RadGridView.SortDescriptors>
+                                    <telerik:SortDescriptor Member="SORT_ORDER"
+                                                SortDirection="Ascending" />
+                                </telerik:RadGridView.SortDescriptors>
+
                             </telerik:RadGridView>
                         </Border>
                     </telerik:RadBusyIndicator>

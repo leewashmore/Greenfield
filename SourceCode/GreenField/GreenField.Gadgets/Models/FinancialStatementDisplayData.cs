@@ -70,6 +70,12 @@ namespace GreenField.Gadgets.Models
         /// </summary>
         public String ADDITIONAL_DESC_SECOND { get; set; }
 
+
+        /// <summary>
+        /// Data Description
+        /// </summary>
+        public Int32 SORT_ORDER { get; set; }
+
         /// <summary>
         /// Data Description
         /// </summary>

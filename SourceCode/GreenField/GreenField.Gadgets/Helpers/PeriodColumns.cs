@@ -328,6 +328,10 @@ namespace GreenField.Gadgets.Helpers
                     if (propertyInfo.Any(record => record.Name == "Decimals"))
                         dataDecimal = (Int32?)defaultRecord.GetType().GetProperty("Decimals").GetValue(defaultRecord, null);
 
+                    Int32 sortOrder = 0;
+                    if (propertyInfo.Any(record => record.Name == "SortOrder"))
+                        sortOrder = (Int32)defaultRecord.GetType().GetProperty("SortOrder").GetValue(defaultRecord, null);
+
                     String dataFirstAdditionalInfo = null;
                     if (additionalFirstDescPropertyName != null)
                     {
@@ -581,6 +585,7 @@ namespace GreenField.Gadgets.Helpers
                         DATA_PERCENTAGE = dataPercentage,
                         DATA_DECIMALS = dataDecimal,
                         SUB_DATA_DESC = groupDescription,
+                        SORT_ORDER = sortOrder,
                         YEAR_ONE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearOneData, "RootSource"),
                         YEAR_TWO_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearTwoData, "RootSource"),
                         YEAR_THREE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearThreeData, "RootSource"),
