@@ -24,7 +24,7 @@
     <telerik:RadBusyIndicator x:Name="chartBusyIndicator" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
 
-        <Grid x:Name="LayoutRoot" Background="White">
+        <Grid x:Name="LayoutRoot" Background="{StaticResource GridView_GridLinesItemBorder}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
@@ -108,7 +108,7 @@
                             <telerik:SeriesMapping LegendLabel="PRevenue">
 
                                 <telerik:SeriesMapping.SeriesDefinition>
-                                    <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False" SeriesStyle="{StaticResource DottedSeriesStyle}"
+                                    <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
                                                                       ItemToolTipFormat="PRevenue : #Y{n6} "/>
@@ -153,7 +153,7 @@
                 <!--grid containing data for the gadget-->
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     <telerik:RadGridView Name="dgPRevenue" 
-                                         Background="White"
+                                         Background="{StaticResource GridView_GridLinesItemBorder}"
                                          AutoGenerateColumns="False" 
                                          AlternationCount="2"                                         
                                          ItemsSource="{Binding PRevenuePlottedData}"                                          
@@ -170,11 +170,13 @@
                                          UseLayoutRounding="True" 
                                          ShowGroupFooters="false"                                         
                                          ShowColumnFooters="False" 
+                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                         GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                        GridLinesVisibility="None"
+                                         GridLinesVisibility="None"
                                          ElementExporting="ElementExportingEvent"
                                          Visibility="Collapsed">
                         <telerik:RadGridView.Columns>

@@ -20,8 +20,8 @@
     <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" 
                                               DisplayAfter="0" IsBusy="{Binding IsBusyIndicatorStatus}">
 
-           
-            <Grid x:Name="LayoutRoot" Background="White" Visibility = "{Binding CommodityGridVisibility,Mode=TwoWay}">
+
+        <Grid x:Name="LayoutRoot" Background="{StaticResource GridView_GridLinesItemBorder}" Visibility = "{Binding CommodityGridVisibility,Mode=TwoWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
