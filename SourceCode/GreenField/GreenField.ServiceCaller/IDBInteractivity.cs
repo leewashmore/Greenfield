@@ -206,7 +206,7 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-        void RetrieveFinstatDetailData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, String currency, string yearRange, Action<List<FinstatDetailData>> callback);
+        void RetrieveFinstatDetailData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, String currency, Int32 yearRange, Action<List<FinstatDetailData>> callback);
 
         void RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimateDetail>> callback);
 

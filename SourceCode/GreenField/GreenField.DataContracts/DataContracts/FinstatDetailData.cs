@@ -26,16 +26,13 @@ namespace GreenField.DataContracts
         public int DataId{ get; set; }
 
         [DataMember]
-        public decimal Amount { get; set; }
-
-        [DataMember]
-        public decimal Multiplier { get; set; }
+        public Object Amount { get; set; }
 
         [DataMember]
         public int Decimals{ get; set; }
 
         [DataMember]
-        public string Percentage { get; set; }
+        public string IsPercentage { get; set; }
 
         [DataMember]
         public string BoldFont { get; set; }

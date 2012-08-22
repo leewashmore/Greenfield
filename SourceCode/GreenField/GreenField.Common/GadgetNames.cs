@@ -57,7 +57,7 @@ namespace GreenField.Common
         public static string EXTERNAL_RESEARCH_CASH_FLOW = "Cash Flow Statement";
         #endregion
         #region Financials Statistics
-        public static string INTERNAL_RESEARCH_FINSTAT_REPORT = "Finstat Report Internal Research 4.2";
+        public static string INTERNAL_RESEARCH_FINSTAT_REPORT = "Finstat Report";
         #endregion
         #endregion
 

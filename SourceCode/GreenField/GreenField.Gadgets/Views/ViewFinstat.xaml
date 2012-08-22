@@ -20,8 +20,8 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
     <telerik:RadBusyIndicator x:Name="gridBusyIndicator"                                  
-                                  BusyContent="{Binding BusyIndicatorContent}"                                                        
-                                  IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+                                  BusyContent="{Binding BusyIndicatorContent}"                                                      
+                                  IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid>
                 <Grid.ColumnDefinitions>
@@ -39,14 +39,15 @@
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
-                                <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Gadget Controls" FontWeight="Bold" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Gadget Controls" FontWeight="Bold" VerticalAlignment="Center" 
+                                           Style="{StaticResource TextBlockStyle}"/>
                                 <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
 
-                                <!--<telerik:RadButton Grid.Column="2"  HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="False"
-                                               Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export">
+                                <telerik:RadButton Grid.Column="2"  HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="False"
+                                               Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export" Click="btnExportExcel_Click">
                                     <Image Source="../Images/ExportExcel.png"/>
-                                </telerik:RadButton>-->
-                                <!--Click="btnExportExcel_Click"-->
+                                </telerik:RadButton>
+                                <!---->
                             </Grid>
                         </telerik:RadExpander.Header>
                         <telerik:RadExpander.Content>
@@ -63,40 +64,43 @@
                                 </Grid.ColumnDefinitions>
 
                                 <!--Data Source Selector-->
-                                <TextBlock Text="Data Source" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
-                                <telerik:RadComboBox Grid.Row="0" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding DataSourceInfo}"
+                                <TextBlock Text="Data Source" Margin="2,2,0,0" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                                <telerik:RadComboBox Grid.Row="0" Grid.Column="1" ItemsSource="{Binding DataSourceInfo}"
                                                  VerticalContentAlignment="Center" SelectedItem="{Binding SelectedDataSource, Mode=TwoWay}"
-                                                 Margin="2,2,2,0" FontFamily="Arial" FontSize="7">
+                                                 Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}">
                                     <telerik:RadComboBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" Style="{StaticResource TextBlockStyle}"/>
                                         </DataTemplate>
                                     </telerik:RadComboBox.ItemTemplate>
                                 </telerik:RadComboBox>
                                
                                 <!--Fiscal Type Selector-->
-                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Fiscal Type" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
-                                <telerik:RadComboBox Grid.Row="1" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding FiscalTypeInfo}"
+                                <TextBlock Grid.Row="1" Grid.Column="0" Text="Fiscal Type" Margin="2,2,0,0" 
+                                           VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                                <telerik:RadComboBox Grid.Row="1" Grid.Column="1" ItemsSource="{Binding FiscalTypeInfo}"
                                                  VerticalContentAlignment="Center" SelectedItem="{Binding SelectedFiscalType, Mode=TwoWay}"
-                                                 Margin="2,2,2,0" FontFamily="Arial" FontSize="7">
+                                                 Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}">
                                     <telerik:RadComboBox.ItemTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" />
+                                            <TextBlock Text="{Binding Converter={StaticResource EnumDisplayConverter}}" Style="{StaticResource TextBlockStyle}"/>
                                         </DataTemplate>
                                     </telerik:RadComboBox.ItemTemplate>
                                 </telerik:RadComboBox>
 
                                 <!--Currency Selector-->
-                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Currency" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
-                                <telerik:RadComboBox Grid.Row="2" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding CurrencyInfo}"
+                                <TextBlock Grid.Row="2" Grid.Column="0" Text="Currency" Margin="2,2,0,0" VerticalAlignment="Center" 
+                                           Style="{StaticResource TextBlockStyle}"/>
+                                <telerik:RadComboBox Grid.Row="2" Grid.Column="1" ItemsSource="{Binding CurrencyInfo}"
                                                  VerticalContentAlignment="Center" SelectedValue="{Binding SelectedCurrency, Mode=TwoWay}"
-                                                 Margin="2,2,2,0" FontFamily="Arial" FontSize="7"/>
+                                                 Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}"/>
 
                                 <!--Year Range Selector-->
-                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Year Range" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
-                                <telerik:RadComboBox Grid.Row="3" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="2008-2014"
-                                                 VerticalContentAlignment="Center" 
-                                                 Margin="2,2,2,0" FontFamily="Arial" FontSize="7"/>
+                                <TextBlock Grid.Row="3" Grid.Column="0" Text="Year Range" Margin="2,2,0,0" VerticalAlignment="Center" 
+                                           Style="{StaticResource TextBlockStyle}"/>
+                                <telerik:RadComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding StartYearRange}"
+                                                 VerticalContentAlignment="Center" SelectedValue="{Binding SelectedYearRange,Mode=TwoWay}"
+                                                 Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}"/>
                             </Grid>
                         </telerik:RadExpander.Content>
                     </telerik:RadExpander>
@@ -109,14 +113,16 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <!--security name/ticker-->
-                <TextBlock Grid.Row="0" FontSize="13" x:Name="txtIssueName" TextAlignment="Center" FontWeight="Bold" Text="{Binding IssueName}"/>
+                    <TextBlock Grid.Row="0" x:Name="txtIssueName" TextAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                           HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Text="{Binding IssueName}"/>
                
                 <!-- security details -->
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
 
                     <Grid Grid.Column="0">
                         <Grid.ColumnDefinitions>
@@ -130,14 +136,14 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Country :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtCountry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Country}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Sector :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtSector" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Sector}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Industry}"/>
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Sub-Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtSubIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding SubIndustry}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Country :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtCountry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Country}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Sector :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtSector" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Sector}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Industry}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Sub-Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtSubIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding SubIndustry}" Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
 
                     <Grid Grid.Column="1">
@@ -152,16 +158,25 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Ticker :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtTicker" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Ticker}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Currency :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtCurrency" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Currency}"/>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Primary Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtPrimaryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PrimaryAnalyst}"/>
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="IndustryAnalyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtIndustryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding IndustryAnalyst}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Ticker :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtTicker" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Ticker}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Currency :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtCurrency" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Currency}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Primary Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtPrimaryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PrimaryAnalyst}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="IndustryAnalyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtIndustryAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding IndustryAnalyst}" Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
-                </Grid>
+
+                        <Grid Grid.Column="2">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>                               
+                            </Grid.RowDefinitions>
+                            <Image Source="../Images/AshmoreEMMLogo.png" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+                            <TextBlock Grid.Row="1" Text="{Binding ReportRunDate}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>                            
+                        </Grid>
+                        </Grid>
                     
                     <!--grid containing data-->
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" Grid.Row="2">
@@ -180,24 +195,20 @@
                                  ScrollMode="Deferred"
                                  CanUserResizeColumns="False"                                     
                                  AlternationCount="2" 
-                                 AlternateRowBackground="#D8D5D4"       
-                                 RowHeight="15" 
                                  ItemsSource="{Binding FinstatDetailDisplayInfo}"
-                                 FontSize="7" 
                                  RowLoaded="dgFinstat_RowLoaded"
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                  GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
-                                 RowStyle="{StaticResource GridViewRowStyle}">
+                                 RowStyle="{StaticResource GridViewRowStyle}" ElementExporting="dgFinstat_ElementExporting"
+                                 AutoExpandGroups="True" EnableColumnVirtualization="False" EnableRowVirtualization="False">
                             <!--ElementExporting="dgConsensusEstimate_ElementExporting"-->
                             <telerik:RadGridView.Columns>
-                                <!--<telerik:GridViewDataColumn x:Name="dgvcDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>-->
                                 <telerik:GridViewDataColumn x:Name="dgvcSubDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" 
                                                         DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" 
                                                         IsFilterable="False" Width="Auto"/>
-                                <!--<telerik:GridViewDataColumn x:Name="dgvcYearOne" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" IsVisible="False"  Width="*"/>-->
                                 <telerik:GridViewDataColumn x:Name="dgvcYearTwo" HeaderTextAlignment="Right" TextAlignment="Right" 
                                                         DataMemberBinding="{Binding YEAR_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -219,10 +230,10 @@
                                 <telerik:GridViewDataColumn x:Name="dgvcYearEight" HeaderTextAlignment="Right" TextAlignment="Right" 
                                                         DataMemberBinding="{Binding YEAR_SEVEN, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
-                                <telerik:GridViewDataColumn x:Name="dgvcHarmonicFirst" HeaderTextAlignment="Right" TextAlignment="Right" Header="Harmonic Average year 1"
+                                <telerik:GridViewDataColumn x:Name="dgvcHarmonicFirst" HeaderTextAlignment="Right" TextAlignment="Right" 
                                                         DataMemberBinding="{Binding ADDITIONAL_DESC_FIRST, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
-                                <telerik:GridViewDataColumn x:Name="dgvcHarmonicSecond" HeaderTextAlignment="Right" TextAlignment="Right" Header="Harmonic Average year 2"
+                                <telerik:GridViewDataColumn x:Name="dgvcHarmonicSecond" HeaderTextAlignment="Right" TextAlignment="Right"
                                                         DataMemberBinding="{Binding ADDITIONAL_DESC_SECOND, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         IsSortable="False" IsFilterable="False" Width="*" CellStyle="{StaticResource GridViewCellStyle}"/>
                             </telerik:RadGridView.Columns>

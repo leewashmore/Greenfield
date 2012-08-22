@@ -37,7 +37,6 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
         private EntitySelectionData _entitySelectionData;
 
-
         #endregion
 
         #region Constructor
@@ -366,13 +365,38 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (_isActive != value)
                 {
-                    _isActive = value;                   
+                    _isActive = value;
+                    if (_entitySelectionData != null && IsActive)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Issuer Details based on selected security");
+                        _dbInteractivity.RetrieveIssuerReferenceData(_entitySelectionData, RetrieveIssuerReferenceDataCallbackMethod);
+                    }
                 }
             }
         }
 
-        private string _selectedyearRange = "2008 - 2014";
-        public string SelectedYearRange
+        #region Year Range Start Selection
+
+        private List<Int32> _startYearRange = new List<Int32>() { (Convert.ToInt32(DateTime.Today.AddYears(-4).Year)) };
+        public List<Int32> StartYearRange
+        {
+            get
+            {
+                return _startYearRange;                
+            }
+            set
+            {
+                if (_startYearRange != value)
+                {
+                    _startYearRange = value;
+                    RaisePropertyChanged(() => StartYearRange);
+                }
+            }
+        }
+
+
+        private Int32 _selectedyearRange = Convert.ToInt32(DateTime.Now.AddYears(-4).Year);
+        public Int32 SelectedYearRange
         {
             get { return _selectedyearRange; }
             set
@@ -381,10 +405,19 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _selectedyearRange = value;
                     RaisePropertyChanged(() => SelectedYearRange);
+                    Iterator = value - DateTime.Today.Year + 4;
+                    SetFinstatDetailDisplayInfo();
                 }
             }
+        } 
+        #endregion
+
+        private string _reportRunDate = DateTime.Now.Date.ToShortDateString();
+        public string ReportRunDate
+        {
+            get { return _reportRunDate; }
+            set { _reportRunDate = value; }
         }
-        
 
         #region Data Source
         /// <summary>
@@ -496,7 +529,7 @@ namespace GreenField.Gadgets.ViewModels
                     CurrencyInfo = new ObservableCollection<String> { "USD" };
                     if (IssuerReferenceInfo.CurrencyCode != "USD")
                         CurrencyInfo.Add(IssuerReferenceInfo.CurrencyCode);
-                    SelectedCurrency = CurrencyInfo[0];
+                    SelectedCurrency = "USD";
                 }
             }
         }
@@ -548,22 +581,21 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                   IssuerReferenceInfo = result;
-                   IssueName = result.IssueName;
-                   Ticker = result.Ticker;
-                   Country = result.CountryName;
-                   Sector = result.SectorName;
-                   Industry = result.IndustryName;
-                   SubIndustry = result.SubIndustryName;
-                   Currency = result.TradingCurrency;
-                   PrimaryAnalyst = result.PrimaryAnalyst;
-                   IndustryAnalyst = result.IndustryAnalyst;                    
+                    IssuerReferenceInfo = result;
+                    IssueName = result.IssueName;
+                    Ticker = result.Ticker;
+                    Country = result.CountryName;
+                    Sector = result.SectorName;
+                    Industry = result.IndustryName;
+                    SubIndustry = result.SubIndustryName;
+                    Currency = result.TradingCurrency;
+                    PrimaryAnalyst = result.PrimaryAnalyst;
+                    IndustryAnalyst = result.IndustryAnalyst;
                 }
                 else
                 {
                     Prompt.ShowDialog("No Issuer linked to the entity " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + " : " + _entitySelectionData.InstrumentID + ")");
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
                 }
 
             }
@@ -571,6 +603,9 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
                 BusyIndicatorNotification();
             }
             Logging.LogEndMethod(_logger, methodNamespace);
@@ -584,7 +619,8 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    FinstatDetailInfo = result;
+                    FinstatDetailInfo = new List<FinstatDetailData>(result);
+                    StartYearRange = new List<Int32>(FinstatDetailInfo.Select(a => a.PeriodYear).Distinct().ToList());
                 }
                 else
                 {
@@ -606,12 +642,14 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrieveFinstatData()
         {
             if (IssuerReferenceInfo != null && IsActive)
+            {
                 _dbInteractivity.RetrieveFinstatDetailData(IssuerReferenceInfo.IssuerId,
                                                             (IssuerReferenceInfo.SecurityId).ToString(),
-                                                            SelectedDataSource,SelectedFiscalType,
-                                                            SelectedCurrency,SelectedYearRange,
+                                                            SelectedDataSource, SelectedFiscalType,
+                                                            SelectedCurrency, SelectedYearRange,
                                                             RetrieveFinstatDetailDataCallbackMethod);
-            BusyIndicatorNotification(true, "Retrieving Data based on selected security");
+                BusyIndicatorNotification(true, "Retrieving Data based on selected security");
+            }
         }
 
         public void SetFinstatDetailDisplayInfo()

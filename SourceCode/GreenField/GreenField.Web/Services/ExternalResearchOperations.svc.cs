@@ -267,14 +267,14 @@ namespace GreenField.Web.Services
         /// <param name="dataSource"></param>
         /// <param name="fiscalType"></param>
         /// <param name="currency"></param>
+        /// <param name="yearRange"></param>
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<FinstatDetailData> RetrieveFinstatData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, String currency, string yearRange)
+        public List<FinstatDetailData> RetrieveFinstatData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, String currency, Int32 yearRangeStart)
         {
             string _dataSource = EnumUtils.ToString(dataSource);
             string _fiscalType = EnumUtils.ToString(fiscalType);
-            int yearRangeStart = Convert.ToInt32(yearRange.Substring(0, 4));
 
             ExternalResearchEntities entity = new ExternalResearchEntities();
 
@@ -286,48 +286,90 @@ namespace GreenField.Web.Services
             if (data == null || data.Count() == 0)
                 return result;
 
-            
+            #region DataSource group
+            List<int> distinctPeriodYear = data.Select(a => a.PERIOD_YEAR).Distinct().ToList();
+            List<FinstatDetail> distinctRootSource = data.Where(a => a.ROOT_SOURCE != null).OrderBy(a => a.PERIOD_YEAR).ThenBy(a => a.DATA_SOURCE).ToList();
+
+
+            foreach (int item in distinctPeriodYear)
+            {
+                FinstatDetailData temp = new FinstatDetailData();
+                temp.GroupDescription = "Data Source";
+                temp.Description = "Source";
+                temp.PeriodType = "A";
+                temp.Amount = _dataSource;
+                temp.RootSource = _dataSource;
+                temp.RootSourceDate = DateTime.Now;
+                temp.PeriodYear = item;
+                temp.AmountType = "A";
+                temp.BoldFont = "N";
+                temp.IsPercentage = "N";
+                result.Add(temp);
+
+                FinstatDetailData tempData = new FinstatDetailData();
+                tempData.GroupDescription = "Data Source";
+                tempData.Description = "Root Source";
+                tempData.PeriodType = "A";
+                List<string> isRootSourceMixed = distinctRootSource.Where(a => a.PERIOD_YEAR == item).Select(a => a.ROOT_SOURCE).Distinct().ToList();
+                tempData.Amount = (isRootSourceMixed.Count > 1) ? "MIXED" : _dataSource;
+                tempData.RootSource = _dataSource;
+                tempData.RootSourceDate = DateTime.Now;
+                tempData.PeriodYear = item;
+                tempData.AmountType = "A";
+                tempData.BoldFont = "N";
+                tempData.IsPercentage = "N";
+                result.Add(tempData);
+            }
+
+            #endregion
+
             #region Preparing display data for group names
             for (int i = 0; i < data.Count(); i++)
             {
                 FinstatDetailData temp = new FinstatDetailData();
-                temp.Amount = data[i].AMOUNT;
+                temp.Amount = Convert.ToDecimal(data[i].AMOUNT * data[i].MULTIPLIER);
                 temp.BoldFont = data[i].BOLD_FONT;
                 temp.Description = data[i].DATA_DESC;
                 temp.Decimals = data[i].DECIMALS;
                 temp.GroupDescription = data[i].GROUP_NAME;
                 temp.Harmonic = data[i].HARMONIC;
-                temp.Multiplier = data[i].MULTIPLIER;
-                temp.Percentage = data[i].PERCENTAGE;
+                temp.IsPercentage = data[i].PERCENTAGE;
                 temp.PeriodYear = data[i].PERIOD_YEAR;
                 temp.SortOrder = data[i].SORT_ORDER;
                 temp.AmountType = "A";
                 temp.PeriodType = "A";
+                temp.RootSource = data[i].ROOT_SOURCE;
+                temp.RootSourceDate = data[i].ROOT_SOURCE_DATE;
                 if (data[i].HARMONIC == "Y")
                 {
                     decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;
-                    List<FinstatDetail> availablePeriodYear = data.Where(a => a.GROUP_NAME == data[i].GROUP_NAME && a.DATA_DESC == data[i].DATA_DESC)
-                                                        .ToList();
-                    foreach (FinstatDetail item in availablePeriodYear)
-                    {
-                        if (item.PERIOD_YEAR == (yearRangeStart + 1))
-                            year1 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
-                        else if (item.PERIOD_YEAR == (yearRangeStart + 2))
-                            year2 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
-                        else if (item.PERIOD_YEAR == (yearRangeStart + 3))
-                            year3 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
-                        else if (item.PERIOD_YEAR == (yearRangeStart + 4))
-                            year4 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
-                        else if (item.PERIOD_YEAR == (yearRangeStart + 5))
-                            year5 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
-                        else if (item.PERIOD_YEAR == (yearRangeStart + 6))
-                            year6 = item.AMOUNT == 0 ? 0 : 1 / 3 * (1 / item.AMOUNT);
-                    }
+                   
+                    decimal year1Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 3
+                                                                            && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
+                    year1 = year1Value == 0 ? 0 : 1 / 3 * (1 / year1Value);
 
-                    if (year1 != 0 && year2 != 0 && year3 != 0)
-                        temp.HarmonicFirst = 1 / (year1 + year2 + year3);
-                    if (year4 != 0 && year5 != 0 && year6 != 0)
-                        temp.HarmonicFirst = 1 / (year4 + year5 + year6);
+                    decimal year2Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 2
+                                                                            && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
+                    year2 = year2Value == 0 ? 0 : 1 / 3 * (1 / year2Value);
+
+                    decimal year3Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 1
+                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
+                    year3 = year3Value == 0 ? 0 : 1 / 3 * (1 / year3Value);
+
+                    decimal year4Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR
+                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
+                    year4 = year4Value == 0 ? 0 : 1 / 3 * (1 / year4Value);
+                    decimal year5Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR +1
+                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
+                    year5 = year5Value == 0 ? 0 : 1 / 3 * (1 / year5Value);
+                    decimal year6Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 2
+                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
+                    year6 = year6Value == 0 ? 0 : 1 / 3 * (1 / year6Value);
+
+                    if (year1 != 0 && year2 != 0 && year3 != 0 && year1 != null && year2 != null && year3 != null)
+                        temp.HarmonicFirst = Convert.ToDecimal((1 / (year1 + year2 + year3)) * data[i].MULTIPLIER);
+                    if (year4 != 0 && year5 != 0 && year6 != 0 && year4 != null && year5 != null && year6 != null)
+                        temp.HarmonicSecond = Convert.ToDecimal((1 / (year4 + year5 + year6)) * data[i].MULTIPLIER);
                 }
                 result.Add(temp);
             }
@@ -346,6 +388,10 @@ namespace GreenField.Web.Services
                 tempData.PeriodYear = Convert.ToInt32(item);
                 tempData.AmountType = "A";
                 tempData.PeriodType = "A";
+                tempData.BoldFont = "N";
+                tempData.IsPercentage = "N";
+                tempData.RootSource =_dataSource;
+                tempData.RootSourceDate = DateTime.Now;
                 tempData.Amount = Convert.ToDecimal(economicData.Where(a => a.PERIOD_YEAR == item).Select(a => a.FX_RATE).FirstOrDefault());
                 result.Add(tempData);
 
@@ -355,6 +401,10 @@ namespace GreenField.Web.Services
                 temp.PeriodYear = Convert.ToInt32(item);
                 temp.AmountType = "A";
                 temp.PeriodType = "A";
+                temp.BoldFont = "N";
+                temp.IsPercentage = "N";
+                temp.RootSource = _dataSource;
+                temp.RootSourceDate = DateTime.Now;
                 temp.Amount = Convert.ToDecimal(economicData.Where(a => a.PERIOD_YEAR == item).Select(a => a.AVG12MonthRATE).FirstOrDefault());
                 result.Add(temp);
             }
@@ -368,6 +418,10 @@ namespace GreenField.Web.Services
                 tempData.PeriodYear = item.YEAR1;
                 tempData.AmountType = "A";
                 tempData.PeriodType = "A";
+                tempData.BoldFont = "N";
+                tempData.IsPercentage = "Y";
+                tempData.RootSource = _dataSource;
+                tempData.RootSourceDate = DateTime.Now;
                 tempData.Amount = Math.Round(((item.VALUE) * 100), 1);
                 result.Add(tempData);
             }
@@ -382,29 +436,35 @@ namespace GreenField.Web.Services
                 FinstatDetailData tempData = new FinstatDetailData();
                 tempData.GroupDescription = "Relative Analysis (in USD)";
                 tempData.PeriodYear = item.PERIOD_YEAR;
-                tempData.Amount = item.AMOUNT;
+                tempData.Amount = Convert.ToDecimal(item.AMOUNT * item.MULTIPLIER);
                 tempData.AmountType = "A";
                 tempData.PeriodType = "A";
+                tempData.RootSource = _dataSource;
+                tempData.RootSourceDate = DateTime.Now;
                 tempData.Decimals = item.DECIMALS;
-                tempData.Multiplier = item.MULTIPLIER;
-                tempData.Percentage = item.PERCENTAGE;
+                //tempData.Multiplier = item.MULTIPLIER;
+                tempData.IsPercentage = item.PERCENTAGE;
                 if (item.VALUE == "step1")
                 {
+                    tempData.BoldFont = "Y";
                     tempData.Description = item.DATA_ID == 44 ? "Net Income" :
                                                item.DATA_ID == 166 ? "P/E" : item.DATA_ID == 164 ? "P/BV" : item.DATA_ID == 133 ? "ROE" : "";
                 }
                 else if (item.VALUE == "step2")
                 {
+                    tempData.BoldFont = "N";
                     tempData.Description = item.DATA_ID == 11 ? "Consensus Net Income" :
                                                item.DATA_ID == 166 ? "Consensus P/E" : item.DATA_ID == 164 ? "Consensus P/BV" : item.DATA_ID == 19 ? "Consensus ROE" : "";
                 }
                 else if (item.VALUE == "step3")
                 {
+                    tempData.BoldFont = "N";
                     tempData.Description = item.DATA_ID == 166 ? "Country P/E" :
                                                item.DATA_ID == 164 ? "Country P/BV" : item.DATA_ID == 133 ? "Country ROE" : "";
                 }
                 else if (item.VALUE == "step5")
                 {
+                    tempData.BoldFont = "N";
                     tempData.Description = item.DATA_ID == 166 ? "Industry P/E" :
                                                item.DATA_ID == 164 ? "Industry P/BV" : item.DATA_ID == 133 ? "Industry ROE" : "";
                 }
@@ -422,6 +482,10 @@ namespace GreenField.Web.Services
                 record.GroupDescription = "Relative Analysis (in USD)";
                 record.AmountType = "A";
                 record.PeriodType = "A";
+                record.RootSource = _dataSource;
+                record.RootSourceDate = DateTime.Now;
+                record.BoldFont = "N";
+                record.IsPercentage = "N";
                 record.PeriodYear = item.PERIOD_YEAR;
                 switch (item.DATA_ID)
                 {
@@ -455,6 +519,10 @@ namespace GreenField.Web.Services
                 record.PeriodYear = item.PERIOD_YEAR;
                 record.AmountType = "A";
                 record.PeriodType = "A";
+                record.BoldFont = "N";
+                record.IsPercentage = "N";
+                record.RootSource = _dataSource;
+                record.RootSourceDate = DateTime.Now;
                 switch (item.DATA_ID)
                 {
                     case 166:

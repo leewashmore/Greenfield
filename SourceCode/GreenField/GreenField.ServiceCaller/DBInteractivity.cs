@@ -2909,8 +2909,8 @@ namespace GreenField.ServiceCaller
 
         }
 
-        public void RetrieveFinstatDetailData(string issuerId, string securityId, FinancialStatementDataSource dataSource, 
-                                                    FinancialStatementFiscalType fiscalType, String currency, string yearRange, Action<List<FinstatDetailData>> callback)
+        public void RetrieveFinstatDetailData(string issuerId, string securityId, FinancialStatementDataSource dataSource,
+                                                    FinancialStatementFiscalType fiscalType, String currency, Int32 yearRange, Action<List<FinstatDetailData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");

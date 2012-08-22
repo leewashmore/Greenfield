@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Models;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
@@ -51,28 +52,45 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             DataContextFinstat = dataContextSource;
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 4, netColumnCount: 7, isQuarterImplemented: false);
+            List<string> periodColumnHeader = PeriodColumns.SetColumnHeaders(periodRecord, displayPeriodType: false);
             PeriodColumns.UpdateColumnInformation(this.dgFinstat, new PeriodColumnUpdateEventArg()
             {
                 PeriodRecord = periodRecord,
-                PeriodColumnNamespace = typeof(ViewModelFinstat).FullName,                
-                PeriodColumnHeader = PeriodColumns.SetColumnHeaders(periodRecord, displayPeriodType: false),
+                PeriodColumnNamespace = typeof(ViewModelFinstat).FullName,
+                PeriodColumnHeader = periodColumnHeader,
                 PeriodIsYearly = true
             }, isQuarterImplemented: false, navigatingColumnStartIndex: 1);
+            dgFinstat.Columns[8].Header = "Harmonic Avg " + periodColumnHeader[1] + "-" + periodColumnHeader[3];
+            dgFinstat.Columns[9].Header = "Harmonic Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
 
             PeriodColumns.PeriodColumnUpdate += (e) =>
             {
-                if (e.PeriodColumnNamespace == typeof(ViewModelConsensusEstimatesDetails).FullName)
+                if (e.PeriodColumnNamespace == this.DataContext.GetType().FullName)
                 {
                     PeriodColumns.UpdateColumnInformation(this.dgFinstat, e, false, 1);
-                    //this.btnExportExcel.IsEnabled = true;
+                    dgFinstat.Columns[8].Header = "Harmonic Avg " + e.PeriodColumnHeader[1] + "-" + e.PeriodColumnHeader[3];
+                    dgFinstat.Columns[9].Header = "Harmonic Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
+                    this.btnExportExcel.IsEnabled = true;
                 }
             };
+
+           
         } 
         #endregion
 
         private void dgFinstat_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
             GroupedGridRowLoadedHandler.Implement(e);
+        }
+
+        private void dgFinstat_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
+        }
+
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            ExportExcel.ExportGridExcel(dgFinstat);
         }
 
         #region Dispose Method

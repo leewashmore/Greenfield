@@ -1575,7 +1575,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinstatData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveFinstatDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinstatDataServiceFaultFaul" +
             "t", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveFinstatData(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, string yearRange, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveFinstatData(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, int yearRangeStart, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.FinstatDetailData> EndRetrieveFinstatData(System.IAsyncResult result);
         
@@ -2361,8 +2361,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveFinstatData(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, string yearRange, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveFinstatData(issuerId, securityId, dataSource, fiscalType, currency, yearRange, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveFinstatData(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, int yearRangeStart, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveFinstatData(issuerId, securityId, dataSource, fiscalType, currency, yearRangeStart, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -2376,8 +2376,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             GreenField.DataContracts.FinancialStatementDataSource dataSource = ((GreenField.DataContracts.FinancialStatementDataSource)(inValues[2]));
             GreenField.DataContracts.FinancialStatementFiscalType fiscalType = ((GreenField.DataContracts.FinancialStatementFiscalType)(inValues[3]));
             string currency = ((string)(inValues[4]));
-            string yearRange = ((string)(inValues[5]));
-            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveFinstatData(issuerId, securityId, dataSource, fiscalType, currency, yearRange, callback, asyncState);
+            int yearRangeStart = ((int)(inValues[5]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveFinstatData(issuerId, securityId, dataSource, fiscalType, currency, yearRangeStart, callback, asyncState);
         }
         
         private object[] OnEndRetrieveFinstatData(System.IAsyncResult result) {
@@ -2393,11 +2393,11 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             }
         }
         
-        public void RetrieveFinstatDataAsync(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, string yearRange) {
-            this.RetrieveFinstatDataAsync(issuerId, securityId, dataSource, fiscalType, currency, yearRange, null);
+        public void RetrieveFinstatDataAsync(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, int yearRangeStart) {
+            this.RetrieveFinstatDataAsync(issuerId, securityId, dataSource, fiscalType, currency, yearRangeStart, null);
         }
         
-        public void RetrieveFinstatDataAsync(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, string yearRange, object userState) {
+        public void RetrieveFinstatDataAsync(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, int yearRangeStart, object userState) {
             if ((this.onBeginRetrieveFinstatDataDelegate == null)) {
                 this.onBeginRetrieveFinstatDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveFinstatData);
             }
@@ -2413,7 +2413,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                         dataSource,
                         fiscalType,
                         currency,
-                        yearRange}, this.onEndRetrieveFinstatDataDelegate, this.onRetrieveFinstatDataCompletedDelegate, userState);
+                        yearRangeStart}, this.onEndRetrieveFinstatDataDelegate, this.onRetrieveFinstatDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3079,14 +3079,14 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveFinstatData(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, string yearRange, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveFinstatData(string issuerId, string securityId, GreenField.DataContracts.FinancialStatementDataSource dataSource, GreenField.DataContracts.FinancialStatementFiscalType fiscalType, string currency, int yearRangeStart, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[6];
                 _args[0] = issuerId;
                 _args[1] = securityId;
                 _args[2] = dataSource;
                 _args[3] = fiscalType;
                 _args[4] = currency;
-                _args[5] = yearRange;
+                _args[5] = yearRangeStart;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveFinstatData", _args, callback, asyncState);
                 return _result;
             }

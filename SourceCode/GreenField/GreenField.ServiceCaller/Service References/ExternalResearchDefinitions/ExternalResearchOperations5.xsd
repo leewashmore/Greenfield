@@ -94,8 +94,7 @@
       <xs:element minOccurs="0" name="Harmonic" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="HarmonicFirst" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="HarmonicSecond" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Multiplier" type="xs:decimal" />
-      <xs:element minOccurs="0" name="Percentage" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsPercentage" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
       <xs:element minOccurs="0" name="RootSource" nillable="true" type="xs:string" />
