@@ -11,41 +11,51 @@
     xmlns:converter="clr-namespace:GreenField.Gadgets.Helpers.Converters"
     mc:Ignorable="d">
 
+    <System:Double x:Key="DefaultControlHeaderFontSize">9</System:Double>
+    <System:Double x:Key="DefaultControlFontSize">9</System:Double>
+    <System:Double x:Key="DefaultControlMinHeight">18</System:Double>
+    <System:Double x:Key="DefaultGridViewCellHeight">18</System:Double>
+    <System:Double x:Key="DefaultGridViewRowHeight">18</System:Double>
+    <GridLength x:Key="DefaultGridViewRowHeightGridLength">18</GridLength>
+    <System:Double x:Key="DefaultGridViewHeaderRowHeight">18</System:Double>
+    <System:Double x:Key="DefaultGridViewHeaderRowMaxHeight">18</System:Double>
+    <System:Double x:Key="DefaultGridViewPanelHeight">10</System:Double>
+    <System:String x:Key="DefaultControlFontFamily">Arial</System:String>
+    <FontWeight x:Key="DefaultControlFontWeight">Normal</FontWeight>
+    <SolidColorBrush x:Key="DefaultGridRowBackground">#f3f6fc</SolidColorBrush>
+    <SolidColorBrush x:Key="DefaultGridHeaderBackground">#e4e5e5</SolidColorBrush>
+    <Color x:Key="DefaultGridHeaderBackgroundColor">#e4e5e5</Color>
+    <SolidColorBrush x:Key="DefaultControlForeground">Black</SolidColorBrush>
+    <Color x:Key="DefaultControlForegroundColor">Black</Color>
+
+
     <!--Grid Styles-->
     <!--###########-->
     <SolidColorBrush x:Key="ControlOuterBorder" Color="Transparent"/>
     <SolidColorBrush x:Key="ControlInnerBorder" Color="Transparent"/>
-    <SolidColorBrush x:Key="GridView_GroupRowIndicator" Color="Black"/>
-    <SolidColorBrush x:Key="GridView_RowIndicatorCellBackground" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="GridView_GroupRowIndicator" Color="{StaticResource DefaultControlForegroundColor}"/>
+    <SolidColorBrush x:Key="GridView_RowIndicatorCellBackground" Color="{StaticResource DefaultGridHeaderBackgroundColor}"/>
     <telerik:Office_BlackTheme x:Key="Theme"/>
     <telerik:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <converter:GroupAggregationToVisibilityConverter x:Key="GroupAggregationToVisibilityConverter"/>
-    <!--<LinearGradientBrush x:Key="GridView_GroupExpanderGridBackground" StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="DarkGray" Offset="1"/>
-                        <GradientStop Color="White" Offset="0.5"/>
-                    </LinearGradientBrush>-->
     <SolidColorBrush x:Key="GridView_GroupExpanderGridBackground" Color="DarkGray"/>
     <DataTemplate x:Key="GroupHeaderTemplate">
-        <TextBlock Text="{Binding Header}" Foreground="Black" FontFamily="Arial" 
-                   FontSize="9" FontWeight="Bold" Margin="5,0,5,0"/>
+        <TextBlock Text="{Binding Header}" Foreground="{StaticResource DefaultControlForeground}" FontFamily="{StaticResource DefaultControlFontFamily}" 
+                   FontSize="{StaticResource DefaultControlFontSize}" FontWeight="Bold" Margin="5,0,5,0"/>
     </DataTemplate>
-    <!--<LinearGradientBrush x:Key="GridView_GroupRowBackground" StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Color="#DAAE9E" Offset="0.95"/>
-                        <GradientStop Color="#A7362C" Offset="0.025"/>
-                    </LinearGradientBrush>-->
-    <SolidColorBrush x:Key="GridView_GroupRowBackground" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="GridView_GroupRowBackground" Color="{StaticResource DefaultGridHeaderBackgroundColor}"/>
     <SolidColorBrush x:Key="GridView_GridLinesItemBorder" Color="White"/>
     <SolidColorBrush x:Key="GridView_IndentCellBackground" Color="White"/>
 
 
     <!--GridViewHeaderCellStyle-->
     <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellStyleOld">
-        <Setter Property="Background" Value="#e4e5e5" />
-        <Setter Property="BorderBrush" Value="#e4e5e5" />
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="FontSize" Value="9"/>
-        <Setter Property="MinHeight" Value="18"/>
-        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}" />
+        <Setter Property="BorderBrush" Value="{StaticResource DefaultGridHeaderBackground}" />
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForeground}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -53,66 +63,59 @@
         <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
 
-    <!--<Style TargetType="telerik:GridViewGroupRow" x:Name="GridViewGroupRowStyle">
-        <Setter Property="Background" Value="#e4e5e5"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="7"/>
-        <Setter Property="FontWeight" Value="Bold"/>
-    </Style>-->
-
     <!--GridViewCellStyle-->
     <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyle">
-        <Setter Property="Height" Value="18"/>
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewCellHeight}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
     </Style>
 
     <!--GridViewGroupPanelStyle-->
     <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyle">
-        <Setter Property="Height" Value="10"/>
-        <Setter Property="FontSize" Value="9"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="Background" Value="#e4e5e5"/>
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewPanelHeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForeground}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}"/>
     </Style>
 
 
 
     <!--GroupPanelItemStyle-->
     <Style TargetType="telerik:GridViewGroupPanelItem" x:Name="GridViewGroupPanelItemStyle">
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="Background" Value="#e4e5e5"/>
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="9"/>
-        <Setter Property="MinHeight" Value="18"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForeground}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
     </Style>
 
     <!--GridViewRowStyle-->
     <Style TargetType="telerik:GridViewRow" x:Name="GridViewRowStyle">
-        <Setter Property="Height" Value="18"/>
+        <Setter Property="Height" Value="{StaticResource DefaultControlForeground}"/>
     </Style>
 
     <!--GridViewRowStyle-->
     <Style TargetType="telerik:GridViewRow" x:Name="GridViewAlternateRowStyle">
-        <Setter Property="Height" Value="18"/>
-        <Setter Property="Background" Value="#f3f6fc"/>
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewRowHeight}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultGridRowBackground}"/>
     </Style>
 
     <!--GridViewHeaderRowStyle-->
     <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
-        <Setter Property="Height" Value="18"/>
-        <Setter Property="Background" Value="#e4e5e5"/>
-        <Setter Property="MaxHeight" Value="18"/>
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewHeaderRowHeight}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}"/>
+        <Setter Property="MaxHeight" Value="{StaticResource DefaultGridViewHeaderRowMaxHeight}"/>
         <Setter Property="IndentLevel" Value="0"/>
     </Style>
 
 
     <!--GridViewGroupPanelStyle-->
     <Style TargetType="telerik:GridViewGroupPanel" x:Name="GridViewGroupPanelStyles">
-        <Setter Property="Height" Value="10"/>
-        <Setter Property="FontSize" Value="7"/>
-        <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="Background" Value="#e4e5e5"/>
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewPanelHeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForeground}"/>
+        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}"/>
     </Style>
 
     <!--ToggleButtonStyling-->
@@ -220,7 +223,7 @@
                                                               Foreground="Black"
                                                               ItemsSource="{TemplateBinding AggregateResults}"
                                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                                              Margin="5,0" FontFamily="Arial" FontSize="9" FontWeight="Bold"
+                                                              Margin="5,0" FontFamily="{StaticResource DefaultControlFontFamily}" FontSize="{StaticResource DefaultControlFontSize}" FontWeight="Bold"
                                                               Visibility="Collapsed">
                                 <telerik:AggregateResultsList.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -257,7 +260,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <telerik:GridViewGroupFooterRow x:Name="Footer" Foreground="Black" FontFamily="Arial" FontSize="9" FontWeight="Bold" telerik:StyleManager.Theme="{StaticResource Theme}" Background="{x:Null}" BorderThickness="0,0,0,1"/>
+                    <telerik:GridViewGroupFooterRow x:Name="Footer" Foreground="Black" FontFamily="{StaticResource DefaultControlFontFamily}" FontSize="{StaticResource DefaultControlFontSize}" FontWeight="Bold" telerik:StyleManager.Theme="{StaticResource Theme}" Background="{x:Null}" BorderThickness="0,0,0,1"/>
                     <telerik:GridViewVirtualizingPanel x:Name="PART_GridViewVirtualizingPanel" Background="White" Visibility="Collapsed" VerticalAlignment="Bottom" Grid.Row="1"/>
                 </Grid>
             </Border>
@@ -275,12 +278,12 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Right"/>
         <Setter Property="Padding" Value="10,0,0,0"/>
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
-   
+
     <!--GridViewGroupFooterIndentCellStyle-->
     <Style TargetType="telerik:GridViewGroupFooterIndentCell">
         <Setter Property="Template">
@@ -310,7 +313,7 @@
 
     <!--Chart Legend Style-->
     <!--<Style x:Key="ChartLegendStyle" TargetType="telerik:ChartLegend">
-        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontSize}"/>
         <Setter Property="FontSize" Value="8"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="LegendItemMarkerShape" Value="SquareRounded"/>
@@ -320,7 +323,7 @@
 
     <!--Chart Legend Style-->
     <!--<Style x:Key="ChartLegendItemStyle" TargetType="telerik:ChartLegendItem">
-        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontSize}"/>
         <Setter Property="FontSize" Value="8"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
@@ -363,7 +366,7 @@
                 Value="Center" />
         <Setter Property="Height" Value="9"/>
         <Setter Property="Width" Value="9"/>
-        <Setter Property="FontFamily" Value="Verdana"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
         <Setter Property="FontWeight" Value="Thin"/>
         <Setter Property="VerticalAlignment"
                 Value="Center" />
@@ -379,7 +382,7 @@
                     <Border Style="{TemplateBinding BorderStyle}">
                         <Border Style="{TemplateBinding InnerBorderStyle}">
                             <ContentControl Margin="0.1,0.1,0.1,0.1"
-                                            FontFamily="Arial"
+                                            FontFamily="{StaticResource DefaultControlFontFamily}"
                                             FontSize="7"
                                             Foreground="{TemplateBinding Foreground}"
                                             Content="{TemplateBinding Content}" />
@@ -682,8 +685,8 @@
     <!--BorderLess GridHeaderCellStyle-->
 
 
-    <SolidColorBrush x:Key="GridView_HeaderInnerBorder" Color="#e4e5e5"/>
-    <SolidColorBrush x:Key="GridView_HeaderOuterBorder_Over" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="GridView_HeaderInnerBorder" Color="{StaticResource DefaultGridHeaderBackgroundColor}"/>
+    <SolidColorBrush x:Key="GridView_HeaderOuterBorder_Over" Color="{StaticResource DefaultGridHeaderBackgroundColor}"/>
     <SolidColorBrush x:Key="GridView_HeaderInnerBorder_Over" Color="White"/>
     <LinearGradientBrush x:Key="GridView_HeaderBackground_Over" EndPoint="0.5,1" StartPoint="0.5,0">
         <GradientStop Color="#FFFFFBA3" Offset="1"/>
@@ -815,10 +818,10 @@
         </Grid>
     </ControlTemplate>
     <LinearGradientBrush x:Key="GridView_HeaderBackground" EndPoint="0.5,1" StartPoint="0.5,0">
-        <GradientStop Color="#e4e5e5" Offset="1"/>
-        <GradientStop Color="#e4e5e5"/>
-        <GradientStop Color="#e4e5e5" Offset="0.42"/>
-        <GradientStop Color="#e4e5e5" Offset="0.43"/>
+        <GradientStop Color="{StaticResource DefaultGridHeaderBackgroundColor}" Offset="1"/>
+        <GradientStop Color="{StaticResource DefaultGridHeaderBackgroundColor}"/>
+        <GradientStop Color="{StaticResource DefaultGridHeaderBackgroundColor}" Offset="0.42"/>
+        <GradientStop Color="{StaticResource DefaultGridHeaderBackgroundColor}" Offset="0.43"/>
     </LinearGradientBrush>
     <SolidColorBrush x:Key="GridView_HeaderForeground" Color="Black"/>
     <Style TargetType="telerik:GridViewHeaderCell" x:Name="GridViewHeaderCellStyle">
@@ -826,13 +829,11 @@
         <Setter Property="Background" Value="{StaticResource GridView_HeaderBackground}"/>
         <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderOuterBorder}"/>
         <Setter Property="BorderThickness" Value="0,0,1,1"/>
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
         <Setter Property="FontWeight" Value="Bold"/>
-
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="Padding" Value="5,0,3,0"/>
@@ -845,49 +846,119 @@
     <!--#####################################################################################################################-->
     <!--#####################################################################################################################-->
 
-    <!--BorderLess GridHeaderCellStyleEND-->
+
 
     <!--TextBlock Style-->
     <Style TargetType="TextBlock" x:Name="TextBlockStyle">
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="9"/>
-        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
     </Style>
-    
+
+    <!--TextBox Style-->
+    <Style TargetType="TextBox" x:Name="TextBoxStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+    </Style>
+
+    <!--ItemsControl Style-->
+    <Style TargetType="ItemsControl" x:Name="ItemsControlStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
+    <!--HyperlinkButton Style-->
+    <Style TargetType="HyperlinkButton" x:Name="HyperlinkButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
     <!--RadComboBox Style-->
     <Style TargetType="telerik:RadComboBox" x:Name="RadComboBoxStyle">
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
     </Style>
-    
+
+    <!--RadComboBox Style-->
+    <Style TargetType="telerik:RadComboBoxItem" x:Name="RadComboBoxItemStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
     <!--CheckBox Style-->
     <Style TargetType="CheckBox" x:Name="CheckBoxStyle">
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
     </Style>
-    
+
     <!--ComboBoxStyle-->
     <Style TargetType="ComboBox" x:Name="ComboBoxStyle">
-        <Setter Property="FontFamily" Value="Arial"/>
-        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
     </Style>
-    <!--DOTTED LINE -->
-    <Style x:Name="DottedSeriesStyle" TargetType="telerik:SelfDrawingSeries">
-        <Setter Property="BorderLineStyle">
-            <Setter.Value>
-                <Style TargetType="Path">
-                    <Setter Property="StrokeDashArray" Value="3"/>
-                    <Setter Property="Stroke" Value="#0000ff" />
-                    <Setter Property="StrokeThickness" Value="2" />
-                </Style>
-            </Setter.Value>
-        </Setter>
+
+    <!--RadButtonStyle-->
+    <Style TargetType="telerik:RadButton" x:Name="RadButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style TargetType="telerik:RadNumericUpDown" x:Name="RadNumericUpDownStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+    </Style>
+
+    <!--RadDatePicker-->
+    <Style TargetType="telerik:RadDatePicker" x:Name="RadDatePickerStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
+    <!--RadCalendar-->
+    <Style TargetType="telerik:RadCalendar" x:Name="RadCalendarStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
     </Style>
 
 </ResourceDictionary>
