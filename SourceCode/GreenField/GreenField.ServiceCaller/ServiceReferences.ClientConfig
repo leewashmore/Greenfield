@@ -59,7 +59,11 @@
     <binding name="BasicHttpBinding_MeetingService" maxBufferSize="2147483647"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
-    </binding>   
+    </binding>
+    <binding name="BasicHttpBinding_MeetingService1" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
    </basicHttpBinding>
   </bindings>
 
@@ -95,8 +99,8 @@
     contract="ExternalResearchDefinitions.ExternalResearchOperations"
     name="ExternalResearchOperations" />
    <endpoint address="http://localhost:59430/Services/MeetingService.svc"
-    binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_MeetingService"
-    contract="MeetingServiceReference.MeetingService" name="BasicHttpBinding_MeetingService" />  
+    binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_MeetingService1"
+    contract="MeetingServiceReference.MeetingService" name="BasicHttpBinding_MeetingService" />
   </client>
 	</system.serviceModel>
 </configuration>

@@ -722,7 +722,7 @@ namespace GreenField.Web.Services
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
                 data = entity.GetConsensusEstimateData(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
-                List<int> dataDesc = new List<int>() { 17, 7, 11, 13, 12, 8, 9, 5, 18, 19 };
+                List<int> dataDesc = new List<int>() { 17, 7, 11, 8,  18, 19 };
                 data = data.OrderBy(record => record.ESTIMATE_DESC).ThenByDescending(record => record.PERIOD_YEAR).ToList();
 
                 for (int i = 0; i < data.Count; i++)
@@ -767,11 +767,11 @@ namespace GreenField.Web.Services
                         result.Add(temp);
                     }
                 }
-                if (result != null)
-                    result = ConsensusEstimateCalculations.CalculateEPSValues(result, periodType);
+                //if (result != null)
+                //    result = ConsensusEstimateCalculations.CalculateEPSValues(result, periodType);
 
-                if (result != null)
-                    result = ConsensusEstimateCalculations.CalculateNetIncomeValues(result, periodType);
+                //if (result != null)
+                //    result = ConsensusEstimateCalculations.CalculateNetIncomeValues(result, periodType);
 
                 return result;
             }
@@ -811,7 +811,6 @@ namespace GreenField.Web.Services
                 {
                     if (dataDesc.Contains(data[i].ESTIMATE_ID))
                     {
-
                         ConsensusEstimatesValuations temp = new ConsensusEstimatesValuations();
                         temp.IssuerId = data[i].ISSUER_ID;
                         temp.EstimateId = data[i].ESTIMATE_ID;

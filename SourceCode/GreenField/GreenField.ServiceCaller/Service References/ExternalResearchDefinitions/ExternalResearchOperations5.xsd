@@ -82,7 +82,7 @@
   <xs:element name="ArrayOfFinstatDetailData" nillable="true" type="tns:ArrayOfFinstatDetailData" />
   <xs:complexType name="FinstatDetailData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Amount" nillable="true" type="xs:anyType" />
       <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="BoldFont" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DataId" type="xs:int" />
