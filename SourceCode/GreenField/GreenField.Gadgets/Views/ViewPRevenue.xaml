@@ -108,7 +108,7 @@
                             <telerik:SeriesMapping LegendLabel="PRevenue">
 
                                 <telerik:SeriesMapping.SeriesDefinition>
-                                    <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
+                                    <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False" SeriesStyle="{StaticResource DottedSeriesStyle}"
                                                                       EmptyPointBehavior="Gap" ShowItemToolTips="True"
                                                                       LegendDisplayMode="SeriesLabel" 
                                                                       ItemToolTipFormat="PRevenue : #Y{n6} "/>

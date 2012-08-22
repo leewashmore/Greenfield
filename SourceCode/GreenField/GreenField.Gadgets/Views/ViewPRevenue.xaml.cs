@@ -76,6 +76,7 @@ namespace GreenField.Gadgets.Views
             this.DataContextPRevenue = dataContextSource;
             dataContextSource.ChartArea = this.chPRevenue.DefaultView.ChartArea;
             this.ApplyChartStyles();
+            
         }
         private void dgPRevenue_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
@@ -83,6 +84,7 @@ namespace GreenField.Gadgets.Views
         }
         private void chPRevenue_Loaded(object sender, RoutedEventArgs e)
         {
+            
             if (chPRevenue.DefaultView.ChartLegend.Items.Count != 0)
             {
                 ChartLegendItem var = this.chPRevenue.DefaultView.ChartLegend.Items[0];

@@ -877,5 +877,17 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
     </Style>
-    
+    <!--DOTTED LINE -->
+    <Style x:Name="DottedSeriesStyle" TargetType="telerik:SelfDrawingSeries">
+        <Setter Property="BorderLineStyle">
+            <Setter.Value>
+                <Style TargetType="Path">
+                    <Setter Property="StrokeDashArray" Value="3"/>
+                    <Setter Property="Stroke" Value="#0000ff" />
+                    <Setter Property="StrokeThickness" Value="2" />
+                </Style>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>
