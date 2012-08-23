@@ -65,7 +65,7 @@ namespace GreenField.Common
         #region Estimates Consensus
         public static string EXTERNAL_RESEARCH_CONSENSUS_OVERVIEW = "Consensus Overview External Research 4.1.5.1";
         public static string EXTERNAL_RESEARCH_CONSENSUS_RECOMMENDATION = "Consensus Recommendation External Research 4.1.5.2";
-        public static string EXTERNAL_RESEARCH_CONSENSUS_TARGET_PRICE = "Consensus Target Price Research 4.1.5.3";
+        public static string EXTERNAL_RESEARCH_CONSENSUS_TARGET_PRICE = "Consensus Target Price";
         public static string EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES = "Consensus Median Estimates External Research 4.1.5.4";
         public static string EXTERNAL_RESEARCH_CONSENSUS_VALUATIONS = "Consensus Valuations External Research 4.1.5.5";
         #endregion

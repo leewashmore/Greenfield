@@ -28,7 +28,6 @@
     <SolidColorBrush x:Key="DefaultControlForeground">Black</SolidColorBrush>
     <Color x:Key="DefaultControlForegroundColor">Black</Color>
 
-
     <!--Grid Styles-->
     <!--###########-->
     <SolidColorBrush x:Key="ControlOuterBorder" Color="Transparent"/>
@@ -92,7 +91,7 @@
 
     <!--GridViewRowStyle-->
     <Style TargetType="telerik:GridViewRow" x:Name="GridViewRowStyle">
-        <Setter Property="Height" Value="{StaticResource DefaultControlForeground}"/>
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewRowHeight}"/>
     </Style>
 
     <!--GridViewRowStyle-->

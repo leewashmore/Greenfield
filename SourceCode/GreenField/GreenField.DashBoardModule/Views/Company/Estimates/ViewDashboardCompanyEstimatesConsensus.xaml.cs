@@ -59,21 +59,7 @@ namespace GreenField.DashboardModule.Views
                 EventAggregator = _eventAggregator,
                 LoggerFacade = _logger
             };
-
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
-
-                Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_OVERVIEW,
-                Content = null
-            });
-
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
-
-                Header = GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_RECOMMENDATION,
-                Content = null
-            });
-
+                        
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
 

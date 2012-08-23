@@ -137,6 +137,8 @@
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"       
                                  RowHeight="15" 
                                  EnableColumnVirtualization="False"
+                                 GridLinesVisibility="None"
+                                 AutoExpandGroups="True"
                                  EnableRowVirtualization="False"
                                  ItemsSource="{Binding ConsensusEstimateDetailDisplayInfo}"
                                  ElementExporting="dgConsensusEstimateValuations_ElementExporting"

@@ -129,17 +129,18 @@
                                  ScrollMode="Deferred"
                                  CanUserResizeColumns="False"                                     
                                  AlternationCount="2" 
-                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"   
+                                 RowStyle="{StaticResource GridViewRowStyle}" 
                                  RowHeight="15" 
                                  EnableColumnVirtualization="False"
                                  EnableRowVirtualization="False"
                                  ItemsSource="{Binding ConsensusEstimateDetailDisplayInfo}"
+                                 ElementExporting="dgConsensusEstimate_ElementExporting"
+                                 GridLinesVisibility="None"
+                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}" AutoExpandGroups="True"
                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
 	                             GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
-                                 ElementExporting="dgConsensusEstimate_ElementExporting"
                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                 RowStyle="{StaticResource GridViewRowStyle}">
+                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}">
                         <telerik:RadGridView.Columns>
                             <!--<telerik:GridViewDataColumn x:Name="dgvcDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>-->
                             <telerik:GridViewDataColumn x:Name="dgvcSubDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"

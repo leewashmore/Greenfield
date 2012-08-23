@@ -57,13 +57,16 @@ namespace GreenField.DataContracts
         public DateTime DataSourceDate { get; set; }
 
         [DataMember]
-        public decimal? Actual { get; set; }
+        public string Actual { get; set; }
 
         [DataMember]
         public decimal YOYGrowth { get; set; }
 
         [DataMember]
         public decimal? Variance { get; set; }
+
+        [DataMember]
+        public int SortOrder { get; set; }
 
     }
 }

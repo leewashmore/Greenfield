@@ -65,5 +65,8 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public decimal? Variance { get; set; }
+
+        [DataMember]
+        public int SortOrder { get; set; }
     }
 }

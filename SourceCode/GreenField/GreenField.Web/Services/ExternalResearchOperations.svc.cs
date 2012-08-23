@@ -170,13 +170,13 @@ namespace GreenField.Web.Services
             }
         }
 
-       /// <summary>
+        /// <summary>
         /// Get data for Consensus Estimate Detailed gadget
-       /// </summary>
-       /// <param name="issuerId"></param>
-       /// <param name="periodType"></param>
-       /// <param name="currency"></param>
-       /// <returns></returns>
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="periodType"></param>
+        /// <param name="currency"></param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<ConsensusEstimateDetail> RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency)
@@ -342,7 +342,7 @@ namespace GreenField.Web.Services
                 if (data[i].HARMONIC == "Y")
                 {
                     decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;
-                   
+
                     decimal year1Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 3
                                                                             && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
                     year1 = year1Value == 0 ? 0 : 1 / 3 * (1 / year1Value);
@@ -358,7 +358,7 @@ namespace GreenField.Web.Services
                     decimal year4Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR
                                                                            && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
                     year4 = year4Value == 0 ? 0 : 1 / 3 * (1 / year4Value);
-                    decimal year5Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR +1
+                    decimal year5Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 1
                                                                            && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
                     year5 = year5Value == 0 ? 0 : 1 / 3 * (1 / year5Value);
                     decimal year6Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 2
@@ -389,7 +389,7 @@ namespace GreenField.Web.Services
                 tempData.PeriodType = "A";
                 tempData.BoldFont = "N";
                 tempData.IsPercentage = "N";
-                tempData.RootSource =_dataSource;
+                tempData.RootSource = _dataSource;
                 tempData.RootSourceDate = DateTime.Now;
                 tempData.Amount = Convert.ToDecimal(economicData.Where(a => a.PERIOD_YEAR == item).Select(a => a.FX_RATE).FirstOrDefault());
                 result.Add(tempData);
@@ -551,7 +551,7 @@ namespace GreenField.Web.Services
 
             return result;
 
-           
+
         }
 
         /// <summary>
@@ -722,7 +722,13 @@ namespace GreenField.Web.Services
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
                 data = entity.GetConsensusEstimateData(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
-                List<int> dataDesc = new List<int>() { 17, 7, 11, 8,  18, 19 };
+                List<int> dataDesc = new List<int>() { 17, 7, 11, 8, 18, 19 };
+
+                if (data == null)
+                    return new List<ConsensusEstimateMedian>();
+                if (data.Count == 0)
+                    return new List<ConsensusEstimateMedian>();
+
                 data = data.OrderBy(record => record.ESTIMATE_DESC).ThenByDescending(record => record.PERIOD_YEAR).ToList();
 
                 for (int i = 0; i < data.Count; i++)
@@ -730,6 +736,20 @@ namespace GreenField.Web.Services
                     if (dataDesc.Contains(data[i].ESTIMATE_ID))
                     {
                         ConsensusEstimateMedian temp = new ConsensusEstimateMedian();
+
+                        if (data[i].ESTIMATE_ID == 17)
+                            temp.SortOrder = 1;
+                        else if (data[i].ESTIMATE_ID == 7)
+                            temp.SortOrder = 2;
+                        else if (data[i].ESTIMATE_ID == 11)
+                            temp.SortOrder = 3;
+                        else if (data[i].ESTIMATE_ID == 8)
+                            temp.SortOrder = 4;
+                        else if (data[i].ESTIMATE_ID == 18)
+                            temp.SortOrder = 5;
+                        else if (data[i].ESTIMATE_ID == 19)
+                            temp.SortOrder = 6;
+
                         temp.IssuerId = data[i].ISSUER_ID;
                         temp.EstimateId = data[i].ESTIMATE_ID;
                         temp.Description = data[i].ESTIMATE_DESC;
@@ -746,7 +766,12 @@ namespace GreenField.Web.Services
                         temp.SourceCurrency = data[i].SOURCE_CURRENCY;
                         temp.DataSource = data[i].DATA_SOURCE;
                         temp.DataSourceDate = data[i].DATA_SOURCE_DATE;
-                        temp.Actual = data[i].ACTUAL;
+
+                        if (data[i].ESTIMATE_ID == 18 || data[i].ESTIMATE_ID == 19)
+                            temp.Actual = Convert.ToString(Math.Round(Convert.ToDecimal(data[i].ACTUAL), 2)) + "%";
+                        else
+                            temp.Actual = Convert.ToString(Math.Round(Convert.ToDecimal(data[i].ACTUAL), 2));
+
                         temp.YOYGrowth = data[i].AMOUNT;
                         temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
                         if (i != data.Count - 1)
@@ -773,7 +798,7 @@ namespace GreenField.Web.Services
                 //if (result != null)
                 //    result = ConsensusEstimateCalculations.CalculateNetIncomeValues(result, periodType);
 
-                return result;
+                return result.OrderBy(a => a.SortOrder).ToList();
             }
             catch (Exception ex)
             {
@@ -805,6 +830,12 @@ namespace GreenField.Web.Services
 
                 data = entity.GetConsensusEstimatesValuation(issuerId, "REUTERS", _periodType, "FISCAL", currency, null, null).ToList();
                 List<int> dataDesc = new List<int>() { 166, 170, 171, 164, 192, 172 };
+
+                if (data == null)
+                    return new List<ConsensusEstimatesValuations>();
+                if (data.Count == 0)
+                    return new List<ConsensusEstimatesValuations>();
+
                 data = data.OrderBy(record => record.ESTIMATE_DESC).ThenByDescending(record => record.PERIOD_YEAR).ToList();
 
                 for (int i = 0; i < data.Count; i++)
@@ -812,6 +843,20 @@ namespace GreenField.Web.Services
                     if (dataDesc.Contains(data[i].ESTIMATE_ID))
                     {
                         ConsensusEstimatesValuations temp = new ConsensusEstimatesValuations();
+
+                        if (data[i].ESTIMATE_ID == 170)
+                            temp.SortOrder = 1;
+                        else if (data[i].ESTIMATE_ID == 171)
+                            temp.SortOrder = 2;
+                        else if (data[i].ESTIMATE_ID == 166)
+                            temp.SortOrder = 3;
+                        else if (data[i].ESTIMATE_ID == 172)
+                            temp.SortOrder = 4;
+                        else if (data[i].ESTIMATE_ID == 164)
+                            temp.SortOrder = 5;
+                        else if (data[i].ESTIMATE_ID == 192)
+                            temp.SortOrder = 6;
+
                         temp.IssuerId = data[i].ISSUER_ID;
                         temp.EstimateId = data[i].ESTIMATE_ID;
                         temp.Description = data[i].ESTIMATE_DESC;
@@ -853,7 +898,7 @@ namespace GreenField.Web.Services
 
                 }
 
-                return result;
+                return result.OrderBy(a => a.SortOrder).ToList();
             }
             catch (Exception ex)
             {
