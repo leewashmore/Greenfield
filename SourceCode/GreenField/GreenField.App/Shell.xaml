@@ -63,7 +63,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" Background="#dbddda"                                 
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" Style="{StaticResource BusyIndicatorStyle}"                                
                               BusyContent="{Binding BusyIndicatorContent}"
                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
         <Grid x:Name="LayoutRoot">
@@ -98,7 +98,7 @@
                 </Grid.ColumnDefinitions>
 
 
-                <telerik:RadExpander Grid.Column="0" VerticalAlignment="Stretch" Header="AIMS Menu" HorizontalAlignment="Left" 
+                <telerik:RadExpander Grid.Column="0" VerticalAlignment="Stretch" Header="AIMS Menu" HorizontalAlignment="Left" FontFamily="Arial" FontSize="10"
                                      x:Name="menuExpander" ExpandDirection="Right" Background="#dbddda">
                     <telerik:RadExpander.Content>
                         <Grid>

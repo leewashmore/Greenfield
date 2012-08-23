@@ -222,7 +222,7 @@
 
         <Grid Grid.Column="1">
             <Grid x:Name="grdRadGridView" >
-                <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+                <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" Style="{StaticResource BusyIndicatorStyle}" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                         <telerik:RadGridView Name="dgUnrealizedGainLoss"
                                              AutoGenerateColumns="False"
@@ -266,7 +266,7 @@
                 </telerik:RadBusyIndicator>
             </Grid>
             <Grid x:Name="grdRadChart">
-                <telerik:RadBusyIndicator x:Name="busyIndicatorChart" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+                <telerik:RadBusyIndicator x:Name="busyIndicatorChart" Style="{StaticResource BusyIndicatorStyle}" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                         <telerik:RadChart x:Name="chUnrealizedGainLoss" Visibility="Visible" telerik:StyleManager.Theme="Metro"
                                       ItemsSource="{Binding PlottedSeries, Mode=TwoWay}">

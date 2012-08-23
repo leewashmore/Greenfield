@@ -70,7 +70,7 @@
         </telerik:RadButton>-->
         <Grid Grid.Row="1">
             <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
-                                           DisplayAfter="0">
+                                           DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     <telerik:RadGridView Name="dgMacroDBKeyReport" 
                                          AutoGenerateColumns="True"                                                                                    

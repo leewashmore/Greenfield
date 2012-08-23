@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
 
         <Grid x:Name="LayoutRoot" Background="{StaticResource GridView_GridLinesItemBorder}" Visibility="{Binding BasicDataGadgetVisibility, Mode=TwoWay}">
             <Grid.RowDefinitions>

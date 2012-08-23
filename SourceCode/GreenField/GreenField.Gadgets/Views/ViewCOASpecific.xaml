@@ -300,7 +300,7 @@
             <!--Grid-->
             <Grid Grid.Column="1">
                 <Grid x:Name="grdRadGridView" >
-                    <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" FontFamily="Arial" FontSize="7">
+                    <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                             <telerik:RadGridView Name="dgCOASpecific" 
                                                  AutoGenerateColumns="False"
@@ -362,7 +362,8 @@
                     </Grid>
 
                     <Grid Grid.Row="1">
-                        <telerik:RadBusyIndicator x:Name="busyIndicatorChart" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+                        <telerik:RadBusyIndicator x:Name="busyIndicatorChart" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0"
+                                                  Style="{StaticResource BusyIndicatorStyle}">
                             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                                 <telerik:RadChart x:Name="chCOASpecific" Visibility="Visible" telerik:StyleManager.Theme="Metro"
                                       ItemsSource="{Binding COASpecificFilteredInfo}">

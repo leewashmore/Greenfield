@@ -19,7 +19,7 @@
         
     </helpers:ViewBaseUserControl.Resources>
     <Grid x:Name="LayoutRoot" Background="White">
-        <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+        <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" Style="{StaticResource BusyIndicatorStyle}" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
             <!--Radgrid view-->
             <telerik:RadGridView Name="dgRelativePerformance" 
                                  AutoGenerateColumns="False" 

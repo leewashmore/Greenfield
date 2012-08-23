@@ -27,7 +27,8 @@
                                        Margin="0,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
             <Image Source="../Images/ExportExcel.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         </telerik:RadButton>
-        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Grid.Row="1">
+        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Grid.Row="1"
+                                  Style="{StaticResource BusyIndicatorStyle}">
             <telerik:RadGridView  Name="dgPerformance"  AutoGenerateColumns="False" 
                                      ItemsSource="{Binding PerformanceInfo}" CanUserSelect="True" CanUserReorderColumns="False" 
                                      SelectionMode ="Single" SelectionUnit="FullRow" CanUserInsertRows="False" 

@@ -73,7 +73,7 @@
             <TextBlock  Grid.Row="0" Text="{Binding GridHeaderValue}" Style="{StaticResource TextBlockStyle}"  HorizontalAlignment="Center" />
             
             <Grid x:Name="grdRadGridView" Grid.Row="1" >
-                <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+                <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}" Style="{StaticResource BusyIndicatorStyle}">
                     <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                         <telerik:RadGridView Name="dgQuarterlyComparison"
                                              AutoGenerateColumns="False"                                 

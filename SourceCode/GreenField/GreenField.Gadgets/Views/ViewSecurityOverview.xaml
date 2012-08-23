@@ -14,7 +14,7 @@
         </ResourceDictionary>        
     </UserControl.Resources>
     <Grid x:Name="LayoutRoot">
-        <telerik:RadBusyIndicator x:Name="gridBusyIndicator"                                  
+        <telerik:RadBusyIndicator x:Name="gridBusyIndicator"   Style="{StaticResource BusyIndicatorStyle}"                               
                                   BusyContent="{Binding BusyIndicatorContent}"                                                        
                                   IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
             <Grid>

@@ -78,9 +78,11 @@
         <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}"/>
     </Style>
 
+    <!--BusyIndicatorStyle-->
     <Style TargetType="telerik:RadBusyIndicator" x:Key="BusyIndicatorStyle">
         <Setter Property="FontSize" Value="9"/>
         <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontWeight" Value="Bold"/>
     </Style>
 
         <!--GroupPanelItemStyle-->

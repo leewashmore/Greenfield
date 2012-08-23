@@ -62,8 +62,15 @@
         <Setter Property="FontWeight" Value="{StaticResource DefaultSecondLevelMenuFontWeight}"/>
         <Setter Property="FontSize" Value="{StaticResource DefaultSecondLevelMenuFontSize}"/>
     </Style>
-    
-    
+
+    <!--BusyIndicatorStyle-->
+    <Style TargetType="telerik:RadBusyIndicator" x:Key="BusyIndicatorStyle">
+        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+
     <!--################################-->
 
 

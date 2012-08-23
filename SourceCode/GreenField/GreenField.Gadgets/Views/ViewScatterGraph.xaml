@@ -23,7 +23,7 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="chartBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0"
+    <telerik:RadBusyIndicator x:Name="chartBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}"
                               IsBusy="{Binding BusyIndicatorIsBusy}" BusyContent="{Binding BusyIndicatorContent}">
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>

@@ -16,8 +16,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>        
     </helpers:ViewBaseUserControl.Resources>
-    
-    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" 
+
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding IsBusyIndicatorStatus}">
 
 

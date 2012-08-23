@@ -40,7 +40,7 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="biSnapshot" BusyContent="{Binding BusyIndicatorContent}" FontSize="7" FontFamily="Arial"
+    <telerik:RadBusyIndicator   Style="{StaticResource BusyIndicatorStyle}" x:Name="biSnapshot" BusyContent="{Binding BusyIndicatorContent}" 
                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
         <Grid x:Name="LayoutRoot">
             <Grid>
