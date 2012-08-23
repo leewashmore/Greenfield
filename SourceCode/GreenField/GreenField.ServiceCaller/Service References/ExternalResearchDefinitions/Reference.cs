@@ -1572,6 +1572,15 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> EndRetrieveConsensusEstimateDetailedData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimateDetailedBr" +
+            "okerData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimateDetailedBr" +
+            "okerDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimateDetailedBr" +
+            "okerDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveConsensusEstimateDetailedBrokerData(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> EndRetrieveConsensusEstimateDetailedBrokerData(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinstatData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveFinstatDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveFinstatDataServiceFaultFaul" +
             "t", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
@@ -1733,6 +1742,25 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         private object[] results;
         
         public RetrieveConsensusEstimateDetailedDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveConsensusEstimateDetailedBrokerDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveConsensusEstimateDetailedBrokerDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -2001,6 +2029,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveConsensusEstimateDetailedDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveConsensusEstimateDetailedBrokerDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveConsensusEstimateDetailedBrokerDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveConsensusEstimateDetailedBrokerDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRetrieveFinstatDataDelegate;
         
         private EndOperationDelegate onEndRetrieveFinstatDataDelegate;
@@ -2133,6 +2167,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         public event System.EventHandler<RetrieveFinancialStatementCompletedEventArgs> RetrieveFinancialStatementCompleted;
         
         public event System.EventHandler<RetrieveConsensusEstimateDetailedDataCompletedEventArgs> RetrieveConsensusEstimateDetailedDataCompleted;
+        
+        public event System.EventHandler<RetrieveConsensusEstimateDetailedBrokerDataCompletedEventArgs> RetrieveConsensusEstimateDetailedBrokerDataCompleted;
         
         public event System.EventHandler<RetrieveFinstatDataCompletedEventArgs> RetrieveFinstatDataCompleted;
         
@@ -2358,6 +2394,56 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                         issuerId,
                         periodType,
                         currency}, this.onEndRetrieveConsensusEstimateDetailedDataDelegate, this.onRetrieveConsensusEstimateDetailedDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveConsensusEstimateDetailedBrokerData(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveConsensusEstimateDetailedBrokerData(issuerId, periodType, currency, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveConsensusEstimateDetailedBrokerData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveConsensusEstimateDetailedBrokerData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveConsensusEstimateDetailedBrokerData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string issuerId = ((string)(inValues[0]));
+            GreenField.DataContracts.FinancialStatementPeriodType periodType = ((GreenField.DataContracts.FinancialStatementPeriodType)(inValues[1]));
+            string currency = ((string)(inValues[2]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveConsensusEstimateDetailedBrokerData(issuerId, periodType, currency, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveConsensusEstimateDetailedBrokerData(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveConsensusEstimateDetailedBrokerData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveConsensusEstimateDetailedBrokerDataCompleted(object state) {
+            if ((this.RetrieveConsensusEstimateDetailedBrokerDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveConsensusEstimateDetailedBrokerDataCompleted(this, new RetrieveConsensusEstimateDetailedBrokerDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveConsensusEstimateDetailedBrokerDataAsync(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency) {
+            this.RetrieveConsensusEstimateDetailedBrokerDataAsync(issuerId, periodType, currency, null);
+        }
+        
+        public void RetrieveConsensusEstimateDetailedBrokerDataAsync(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, object userState) {
+            if ((this.onBeginRetrieveConsensusEstimateDetailedBrokerDataDelegate == null)) {
+                this.onBeginRetrieveConsensusEstimateDetailedBrokerDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveConsensusEstimateDetailedBrokerData);
+            }
+            if ((this.onEndRetrieveConsensusEstimateDetailedBrokerDataDelegate == null)) {
+                this.onEndRetrieveConsensusEstimateDetailedBrokerDataDelegate = new EndOperationDelegate(this.OnEndRetrieveConsensusEstimateDetailedBrokerData);
+            }
+            if ((this.onRetrieveConsensusEstimateDetailedBrokerDataCompletedDelegate == null)) {
+                this.onRetrieveConsensusEstimateDetailedBrokerDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveConsensusEstimateDetailedBrokerDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveConsensusEstimateDetailedBrokerDataDelegate, new object[] {
+                        issuerId,
+                        periodType,
+                        currency}, this.onEndRetrieveConsensusEstimateDetailedBrokerDataDelegate, this.onRetrieveConsensusEstimateDetailedBrokerDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3076,6 +3162,21 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> EndRetrieveConsensusEstimateDetailedData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail>)(base.EndInvoke("RetrieveConsensusEstimateDetailedData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveConsensusEstimateDetailedBrokerData(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = issuerId;
+                _args[1] = periodType;
+                _args[2] = currency;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveConsensusEstimateDetailedBrokerData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> EndRetrieveConsensusEstimateDetailedBrokerData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail>)(base.EndInvoke("RetrieveConsensusEstimateDetailedBrokerData", _args, result)));
                 return _result;
             }
             

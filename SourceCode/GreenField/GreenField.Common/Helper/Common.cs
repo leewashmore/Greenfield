@@ -168,6 +168,10 @@ namespace GreenField.Common
         public List<GreenField.DataContracts.FXCommodityData> CommodityInfo { get; set; }
     }
 
+    public class ChangedCurrencyInEstimateDetail
+    {
+        public string CurrencyName { get; set; }
+    }
 
 #region IC PRESENTATION
 

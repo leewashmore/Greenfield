@@ -52,7 +52,6 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <!--<TextBlock Text="elloz" TextAlignment="Center"/>-->
             <Grid>
                 <telerik:RadExpander Grid.Column="0" x:Name="radExpanderContainers" ExpandDirection="Right" IsExpanded="False" telerik:AnimationManager.IsAnimationEnabled="False"
                              telerik:StyleManager.Theme="Metro" VerticalContentAlignment="Stretch" HorizontalAlignment="Left">
@@ -67,9 +66,10 @@
                             <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
 
                             <telerik:RadButton Grid.Column="2"  HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="False"
-                                               Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export">
+                                               Name="btnExportExcel" VerticalAlignment="Center" ToolTipService.ToolTip="Export"
+                                                Click="btnExportExcel_Click">
                                 <Image Source="../Images/ExportExcel.png"/>
-                            </telerik:RadButton> <!--Click="btnExportExcel_Click"-->
+                            </telerik:RadButton> 
                         </Grid>
                     </telerik:RadExpander.Header>
                     <telerik:RadExpander.Content>
@@ -111,6 +111,7 @@
                                  AutoGenerateColumns="False"
                                  ShowColumnFooters="False"
                                  ShowGroupPanel="False"
+                                 telerik:StyleManager.Theme="Metro"
                                  RowIndicatorVisibility="Collapsed"
                                  CanUserSelect="False" 
                                  CanUserReorderColumns="False" 
@@ -121,15 +122,17 @@
                                  ScrollMode="Deferred"
                                  CanUserResizeColumns="False"                                     
                                  AlternationCount="2"                                  
-                                 RowHeight="15" 
-                                 GridLinesVisibility="None"
                                  ItemsSource="{Binding ConsensusEstimateDetailDisplayInfo}"
-                                 FontSize="7" ElementExporting="dgConsensusEstimate_ElementExporting"
+                                 ElementExporting="dgConsensusEstimate_ElementExporting"
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                 RowStyle="{StaticResource GridViewRowStyle}">
+                                 RowStyle="{StaticResource GridViewRowStyle}" 
+                                 EnableColumnVirtualization="False" 
+                                 EnableRowVirtualization="False"
+                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}">
                         <telerik:RadGridView.Columns>
                             <!--<telerik:GridViewDataColumn x:Name="dgvcDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>-->
-                            <telerik:GridViewDataColumn x:Name="dgvcSubDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" 
+                            <telerik:GridViewDataColumn x:Name="dgvcSubDataType" HeaderTextAlignment="Left" TextAlignment="Left" 
                                                         DataMemberBinding="{Binding SUB_DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" 
                                                         IsFilterable="False" Width="Auto" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcLeftClick" HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}" 

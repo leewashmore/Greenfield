@@ -171,7 +171,7 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-        /// Get data for Consensus Estimate Detailed gadget
+       /// Get data for Consensus Estimate Detailed gadget
         /// </summary>
         /// <param name="issuerId"></param>
         /// <param name="periodType"></param>
@@ -186,7 +186,7 @@ namespace GreenField.Web.Services
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
 
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-
+               
                 List<ConsensusEstimateDetailData> data = new List<ConsensusEstimateDetailData>();
                 List<ConsensusEstimateDetail> result = new List<ConsensusEstimateDetail>();
 
@@ -196,24 +196,9 @@ namespace GreenField.Web.Services
                     return result;
 
                 data = data.OrderBy(record => record.ESTIMATE_DESC).ThenByDescending(record => record.PERIOD_YEAR).ToList();
-                List<string> dataDescriptors = data.Select(r => r.ESTIMATE_DESC).Distinct().ToList();
-
-                List<BrokerDetail> brokerDetailsList = new List<BrokerDetail>();
-                foreach (string item in dataDescriptors)
-                {
-                    List<BrokerDetail> temp = new List<BrokerDetail>();
-                    temp = entity.GetBrokerDetail(issuerId, item, _periodType, "CNY").ToList();
-                    if (temp != null)
-                        foreach (BrokerDetail value in temp)
-                        {
-                            brokerDetailsList.Add(value);
-                        }
-                }
 
                 for (int i = 0; i < data.Count; i++)
                 {
-                    //if (requiredDescriptors.Contains(data[i].ESTIMATE_DESC))
-                    //{
                     ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
                     temp.IssuerId = data[i].ISSUER_ID;
                     temp.EstimateId = data[i].ESTIMATE_ID;
@@ -244,9 +229,7 @@ namespace GreenField.Web.Services
                                 temp.YOYGrowth = (temp.YOYGrowth / data[i + 1].AMOUNT) - 1;
                         }
                     }
-
-                    result.Add(temp);
-                    // }                 
+                  result.Add(temp);
                 }
                 return result;
             }
@@ -257,6 +240,96 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+        /// <summary>
+        /// Get data for Broker Details In Consensus Detail gadget
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="periodType"></param>
+        /// <param name="currency"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<ConsensusEstimateDetail> RetrieveConsensusEstimateDetailedBrokerData(string issuerId, FinancialStatementPeriodType periodType, String currency)
+        {
+            try
+            {
+                string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
+
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                entity.CommandTimeout = 100;
+
+                List<BrokerDetailData> data = new List<BrokerDetailData>();
+                List<ConsensusEstimateDetail> result = new List<ConsensusEstimateDetail>();
+
+                data = entity.GetBrokerDetail(issuerId, null, _periodType, currency).ToList();
+
+                if (data == null)
+                    return result;
+
+                List<BrokerDetailData> requiredBrokerDetailsList = new List<BrokerDetailData>();
+
+                foreach (BrokerDetailData item in data)
+                {
+                    switch (item.EstimateType)
+                    {
+                        case "EPS":
+                            item.EstimateType = "Earnings Per Share (Pre Exceptional)";
+                            item.fPeriodEnd = item.fPeriodEnd.Substring(0, 4);
+                            requiredBrokerDetailsList.Add(item);
+                            break;
+                        case "EBITDA":
+                            item.fPeriodEnd = item.fPeriodEnd.Substring(0, 4);
+                            requiredBrokerDetailsList.Add(item);
+                            break;
+                        case "NTP":
+                            item.EstimateType = "Net Income (Pre Exceptional)";
+                            item.fPeriodEnd = item.fPeriodEnd.Substring(0, 4);
+                            requiredBrokerDetailsList.Add(item);
+                            break;
+                        case "ROE":
+                            item.EstimateType = "Return on Equity";
+                            item.fPeriodEnd = item.fPeriodEnd.Substring(0, 4);
+                            requiredBrokerDetailsList.Add(item);
+                            break;
+                        case "ROA":
+                            item.EstimateType = "Return on Assets";
+                            item.fPeriodEnd = item.fPeriodEnd.Substring(0, 4);
+                            requiredBrokerDetailsList.Add(item);
+                            break;
+                        case "REVENUE":
+                            item.EstimateType = "Revenue";
+                            item.fPeriodEnd = item.fPeriodEnd.Substring(0, 4);
+                            requiredBrokerDetailsList.Add(item);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                for (int i = 0; i < requiredBrokerDetailsList.Count; i++)
+                {
+                    ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
+                    temp.Description = requiredBrokerDetailsList[i].EstimateType;
+                    temp.GroupDescription = requiredBrokerDetailsList[i].broker_name;
+                    temp.AmountType = "A";
+                    temp.PeriodYear = Convert.ToInt32(requiredBrokerDetailsList[i].fPeriodEnd);
+                    temp.PeriodType = _periodType;
+                    temp.Amount = Convert.ToDecimal(requiredBrokerDetailsList[i].Amount);
+                    temp.SourceCurrency = requiredBrokerDetailsList[i].Reported_Currency;
+                    temp.DataSourceDate = requiredBrokerDetailsList[i].Last_Update_Date;
+                   result.Add(temp);
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
 
         /// <summary>
         /// Get data for Finstat Gadget

@@ -66,5 +66,20 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public decimal ConsensusMedian{ get; set; }
+
+        [DataMember]
+        public string BrokerName { get; set; }
+
+        [DataMember]
+        public object BrokerPrice { get; set; }
+
+        [DataMember]
+        public DateTime LastUpdateDate { get; set; }
+
+        [DataMember]
+        public string ReportedCurrency { get; set; }
+
+        [DataMember]
+        public string GroupDescription { get; set; }
     }
 }

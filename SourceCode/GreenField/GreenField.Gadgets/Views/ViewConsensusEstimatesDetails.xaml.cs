@@ -14,11 +14,17 @@ using GreenField.Gadgets.Helpers;
 using GreenField.DataContracts;
 using GreenField.Common;
 using GreenField.Gadgets.Models;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewConsensusEstimatesDetails : ViewBaseUserControl
     {
+        private IEventAggregator _eventAggregator;
+        private ILoggerFacade _logger;
+
         #region Properties
         /// <summary>
         /// property to set data context
@@ -44,6 +50,7 @@ namespace GreenField.Gadgets.Views
                     DataContextConsensusEstimatesDetails.IsActive = _isActive;
             }
         }
+
         #endregion
 
         public ViewConsensusEstimatesDetails(ViewModelConsensusEstimatesDetails dataContextSource)
@@ -51,6 +58,10 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             DataContextConsensusEstimatesDetails = dataContextSource;
+            _eventAggregator = (this.DataContext as ViewModelConsensusEstimatesDetails)._eventAggregator;
+            _logger = (this.DataContext as ViewModelConsensusEstimatesDetails)._logger;
+
+            _eventAggregator.GetEvent<ConsensusEstimateDetailCurrencyChangeEvent>().Subscribe(HandleConsensusEstimateDetailCurrencyChangeEvent);
 
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
             PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimate, new PeriodColumnUpdateEventArg()
@@ -59,6 +70,8 @@ namespace GreenField.Gadgets.Views
                 PeriodColumnHeader = PeriodColumns.SetColumnHeaders(periodRecord, displayPeriodType: false),
                 PeriodIsYearly = true
             });
+
+            dgConsensusEstimate.Columns[0].Header = "Median Estimates in " + dataContextSource.SelectedCurrency.ToString() + "(Millions)";
 
             PeriodColumns.PeriodColumnUpdate += (e) =>
             {
@@ -91,12 +104,38 @@ namespace GreenField.Gadgets.Views
         public override void Dispose()
         {
             (this.DataContext as ViewModelConsensusEstimatesDetails).Dispose();
+            this.DataContextConsensusEstimatesDetails = null;
+            _eventAggregator.GetEvent<ConsensusEstimateDetailCurrencyChangeEvent>().Unsubscribe(HandleConsensusEstimateDetailCurrencyChangeEvent);
             this.DataContext = null;
         }
 
-        private void dgConsensusEstimate_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        /// <summary>
+        /// Event Handler to subscribed event 'RelativePerformanceGridClickEvent'
+        /// </summary>
+        /// <param name="relativePerformanceGridCellData">RelativePerformanceGridCellData</param>
+        public void HandleConsensusEstimateDetailCurrencyChangeEvent(ChangedCurrencyInEstimateDetail currency)
         {
-            RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 12 });
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (currency.CurrencyName != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, currency, 1);
+                        dgConsensusEstimate.Columns[0].Header = "Median Estimates in " + currency.CurrencyName.ToString() + "(Millions)";
+                }
+                else
+                {
+                    dgConsensusEstimate.Columns[0].Header = "Median Estimates in USD(Millions)";
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         private void dgConsensusEstimate_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
@@ -104,20 +143,16 @@ namespace GreenField.Gadgets.Views
             GroupedGridRowLoadedHandler.Implement(e);
         }
 
+        private void dgConsensusEstimate_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
+            RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 12 });
+        }
+
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            
-            RadExportOptionsInfo.Add(new RadExportOptions()
-            {
-                ElementName = "Consensus Estimate Details",
-                Element = this.dgConsensusEstimate
-                ,
-                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-            });
-
-            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_DETAIL);
-            childExportOptions.Show();
+            ExportExcel.ExportGridExcel(dgConsensusEstimate);
         }
+
     }
 }

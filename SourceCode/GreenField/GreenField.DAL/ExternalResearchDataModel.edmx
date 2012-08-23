@@ -658,12 +658,6 @@
             <Parameter Name="cIssuerID" Mode="In" Type="String" />
             <Parameter Name="cSecurityID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetBrokerDetail" ReturnType="Collection(ExternalResearchModel.BrokerDetail)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="ESTIMATE_TYPE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="GetFinstatDetail" ReturnType="Collection(ExternalResearchModel.FinstatDetail)">
             <Parameter Name="issuerID" Mode="In" Type="String" />
             <Parameter Name="securityId" Mode="In" Type="String" />
@@ -691,6 +685,12 @@
           </FunctionImport>
           <EntitySet Name="External_Country_Master" EntityType="ExternalResearchModel.External_Country_Master" />
           <FunctionImport Name="GetMarketCap" ReturnType="Collection(Decimal)" />
+          <FunctionImport Name="GetBrokerDetail" ReturnType="Collection(ExternalResearchModel.BrokerDetailData)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ESTIMATE_TYPE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
+          </FunctionImport>
 
 				</EntityContainer>
 
@@ -1086,15 +1086,6 @@
 					<Property Type="Decimal" Name="USDPrice" Nullable="true" />
 					<Property Type="Decimal" Name="Shares_Outstanding" Nullable="true" />
 				</ComplexType>
-				<ComplexType Name="BrokerDetail">
-          <Property Type="String" Name="broker_name" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="EstimateType" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="fPeriodEnd" Nullable="true" MaxLength="6" />
-          <Property Type="Single" Name="Amount" Nullable="true" />
-          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Last_Update_Date" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Reported_Currency" Nullable="true" MaxLength="3" />
-        </ComplexType>
         <ComplexType Name="FinstatDetail">
           <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
@@ -1145,6 +1136,15 @@
           <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_NAME" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="20" FixedLength="false" Unicode="false" />
         </EntityType>
+        <ComplexType Name="BrokerDetailData">
+          <Property Type="String" Name="broker_name" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="EstimateType" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="fPeriodEnd" Nullable="true" MaxLength="6" />
+          <Property Type="Single" Name="Amount" Nullable="true" />
+          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="Last_Update_Date" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Reported_Currency" Nullable="true" MaxLength="3" />
+        </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -1475,19 +1475,6 @@
 							</ComplexTypeMapping>
 						</ResultMapping>
 					</FunctionImportMapping>
-					<FunctionImportMapping FunctionImportName="GetBrokerDetail" FunctionName="ExternalResearchModel.Store.Broker_Detail">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
-                <ScalarProperty Name="broker_name" ColumnName="broker_name" />
-                <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
-                <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Last_Update_Date" ColumnName="Last_Update_Date" />
-                <ScalarProperty Name="Reported_Currency" ColumnName="Reported_Currency" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           
            <FunctionImportMapping FunctionImportName="GetMarketCap" FunctionName="ExternalResearchModel.Store.GetMarketCap" />
           <EntitySetMapping Name="External_Country_Master">
@@ -1548,6 +1535,19 @@
                 <ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
                 <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
                 <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBrokerDetail" FunctionName="ExternalResearchModel.Store.Broker_Detail">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetailData">
+                <ScalarProperty Name="broker_name" ColumnName="broker_name" />
+                <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
+                <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="Last_Update_Date" ColumnName="Last_Update_Date" />
+                <ScalarProperty Name="Reported_Currency" ColumnName="Reported_Currency" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

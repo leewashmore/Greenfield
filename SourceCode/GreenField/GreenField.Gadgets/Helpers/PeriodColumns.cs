@@ -306,7 +306,10 @@ namespace GreenField.Gadgets.Helpers
 
                 foreach (String dataDesc in distinctPeriodDataDescriptors)
                 {
-                    T defaultRecord = data.Where(record => ((String)record.GetType().GetProperty("Description").GetValue(record, null)) == dataDesc).FirstOrDefault();
+                    T defaultRecord = uniqueByGroupDesc
+                    ? data.Where(record => ((String)record.GetType().GetProperty("Description").GetValue(record, null)) == dataDesc
+                        && ((String)record.GetType().GetProperty("GroupDescription").GetValue(record, null)) == gDesc).FirstOrDefault()
+                    : data.Where(record => ((String)record.GetType().GetProperty("Description").GetValue(record, null)) == dataDesc).FirstOrDefault();
 
                     String groupDescription = null;
                     if (propertyInfo.Any(record => record.Name == "GroupDescription"))

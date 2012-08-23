@@ -966,58 +966,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
-        /// <param name="eSTIMATE_TYPE">No Metadata Documentation available.</param>
-        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
-        /// <param name="cURRENCY">No Metadata Documentation available.</param>
-        public ObjectResult<BrokerDetail> GetBrokerDetail(global::System.String iSSUER_ID, global::System.String eSTIMATE_TYPE, global::System.String pERIOD_TYPE, global::System.String cURRENCY)
-        {
-            ObjectParameter iSSUER_IDParameter;
-            if (iSSUER_ID != null)
-            {
-                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
-            }
-            else
-            {
-                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
-            }
-    
-            ObjectParameter eSTIMATE_TYPEParameter;
-            if (eSTIMATE_TYPE != null)
-            {
-                eSTIMATE_TYPEParameter = new ObjectParameter("ESTIMATE_TYPE", eSTIMATE_TYPE);
-            }
-            else
-            {
-                eSTIMATE_TYPEParameter = new ObjectParameter("ESTIMATE_TYPE", typeof(global::System.String));
-            }
-    
-            ObjectParameter pERIOD_TYPEParameter;
-            if (pERIOD_TYPE != null)
-            {
-                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
-            }
-            else
-            {
-                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
-            }
-    
-            ObjectParameter cURRENCYParameter;
-            if (cURRENCY != null)
-            {
-                cURRENCYParameter = new ObjectParameter("CURRENCY", cURRENCY);
-            }
-            else
-            {
-                cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<BrokerDetail>("GetBrokerDetail", iSSUER_IDParameter, eSTIMATE_TYPEParameter, pERIOD_TYPEParameter, cURRENCYParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="issuerID">No Metadata Documentation available.</param>
         /// <param name="securityId">No Metadata Documentation available.</param>
         /// <param name="dataSource">No Metadata Documentation available.</param>
@@ -1240,6 +1188,58 @@ namespace GreenField.DAL
         public ObjectResult<Nullable<global::System.Decimal>> GetMarketCap()
         {
             return base.ExecuteFunction<Nullable<global::System.Decimal>>("GetMarketCap");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="eSTIMATE_TYPE">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
+        /// <param name="cURRENCY">No Metadata Documentation available.</param>
+        public ObjectResult<BrokerDetailData> GetBrokerDetail(global::System.String iSSUER_ID, global::System.String eSTIMATE_TYPE, global::System.String pERIOD_TYPE, global::System.String cURRENCY)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter eSTIMATE_TYPEParameter;
+            if (eSTIMATE_TYPE != null)
+            {
+                eSTIMATE_TYPEParameter = new ObjectParameter("ESTIMATE_TYPE", eSTIMATE_TYPE);
+            }
+            else
+            {
+                eSTIMATE_TYPEParameter = new ObjectParameter("ESTIMATE_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter pERIOD_TYPEParameter;
+            if (pERIOD_TYPE != null)
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
+            }
+            else
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter cURRENCYParameter;
+            if (cURRENCY != null)
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", cURRENCY);
+            }
+            else
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<BrokerDetailData>("GetBrokerDetail", iSSUER_IDParameter, eSTIMATE_TYPEParameter, pERIOD_TYPEParameter, cURRENCYParameter);
         }
 
         #endregion
@@ -4481,26 +4481,26 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="BrokerDetail")]
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="BrokerDetailData")]
     [DataContractAttribute(IsReference=true)]
     [Serializable()]
-    public partial class BrokerDetail : ComplexObject
+    public partial class BrokerDetailData : ComplexObject
     {
         #region Factory Method
     
         /// <summary>
-        /// Create a new BrokerDetail object.
+        /// Create a new BrokerDetailData object.
         /// </summary>
         /// <param name="estimateType">Initial value of the EstimateType property.</param>
         /// <param name="startDate">Initial value of the StartDate property.</param>
         /// <param name="last_Update_Date">Initial value of the Last_Update_Date property.</param>
-        public static BrokerDetail CreateBrokerDetail(global::System.String estimateType, global::System.DateTime startDate, global::System.DateTime last_Update_Date)
+        public static BrokerDetailData CreateBrokerDetailData(global::System.String estimateType, global::System.DateTime startDate, global::System.DateTime last_Update_Date)
         {
-            BrokerDetail brokerDetail = new BrokerDetail();
-            brokerDetail.EstimateType = estimateType;
-            brokerDetail.StartDate = startDate;
-            brokerDetail.Last_Update_Date = last_Update_Date;
-            return brokerDetail;
+            BrokerDetailData brokerDetailData = new BrokerDetailData();
+            brokerDetailData.EstimateType = estimateType;
+            brokerDetailData.StartDate = startDate;
+            brokerDetailData.Last_Update_Date = last_Update_Date;
+            return brokerDetailData;
         }
 
         #endregion
