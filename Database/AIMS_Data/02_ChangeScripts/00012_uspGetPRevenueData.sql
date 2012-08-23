@@ -19,11 +19,7 @@ end
 
 GO
 
-IF OBJECT_ID ('[dbo].[Get_PRevenue]') IS NOT NULL
-	DROP PROCEDURE [dbo].[Get_PRevenue]
-GO
-
-CREATE PROCEDURE [dbo].[Get_PRevenue](@securityId varchar(20),@issuerId varchar(20),@chartTitle varchar(20))	
+ALTER PROCEDURE [dbo].[Get_PRevenue](@securityId varchar(20),@issuerId varchar(20),@chartTitle varchar(20))	
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -41,6 +37,7 @@ from PRICES a
 		inner join ISSUER_SHARES b					on b.SHARES_DATE = fx.FX_DATE and b.ISSUER_ID = sb.ISSUER_ID
 where sb.SECURITY_ID = @securityId
 
+
 -- Financial Data
 -- *Extract quarter values from Primary Analyst source first
 
@@ -50,7 +47,7 @@ from PERIOD_FINANCIALS
 where (@issuerId is null or ISSUER_ID = @issuerId)
 		and PERIOD_END_DATE > dateadd (year, -10, getdate())
 		and PERIOD_END_DATE < dateadd (year, 6, getdate())
-		-- and DATA_SOURCE = 'PRIMARY' -- currently no data for Primary analyst
+		and DATA_SOURCE = 'PRIMARY' 
 		and FISCAL_TYPE = 'FISCAL'
 		and Currency = 'USD'
 		and PERIOD_TYPE in ('Q1','Q2','Q3','Q4')
@@ -67,7 +64,7 @@ where (@issuerId is null or ISSUER_ID = @issuerId)
 		and Currency = 'USD'
 		and PERIOD_TYPE in ('Q1','Q2','Q3','Q4')
 order by ISSUER_ID, estimate_id, PERIOD_YEAR
- 
+
    --Joining tables depending upon the chart title
      
   IF(@chartTitle = 'P/E')
@@ -187,7 +184,7 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 					ON t.XRef = sb.XREF
 					WHERE sb.SECURITY_ID = @securityId
 					
-					print 'ReutersChares	' +Convert(varchar(25),@ReutersShares)
+					--print 'ReutersChares	' +Convert(varchar(25),@ReutersShares)
 					
 					
 					--JOIN ABOVE TWO EXTRACTS ORDERED BY PERIOD END DATES INTO “REVENUEVALUES”
@@ -371,7 +368,6 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 	drop table #ConsensusFinancials	
 
 END
-GO
 --indicate thet current script is executed
 declare @CurrentScriptVersion as nvarchar(100) = '00012'
 insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())

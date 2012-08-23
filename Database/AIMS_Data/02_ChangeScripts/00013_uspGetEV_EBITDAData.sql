@@ -16,14 +16,8 @@ begin
 	RAISERROR(N'DB version is "%s", required "%s".', 16, 1, @DBCurrentVersion, @RequiredDBVersion)
 	set noexec on
 end
-
 GO
-
-IF OBJECT_ID ('[dbo].[Get_EV_EBITDA]') IS NOT NULL
-	DROP PROCEDURE [dbo].[Get_EV_EBITDA]
-GO
-
-CREATE PROCEDURE [dbo].[Get_EV_EBITDA](@securityId varchar(20),@issuerId varchar(20),@chartTitle varchar(20))	
+ALTER PROCEDURE [dbo].[Get_EV_EBITDA](@securityId varchar(20),@issuerId varchar(20),@chartTitle varchar(20))	
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -49,7 +43,7 @@ from PERIOD_FINANCIALS
 where (@issuerId is null or ISSUER_ID = @issuerId)
 		and PERIOD_END_DATE > dateadd (year, -10, getdate())
 		and PERIOD_END_DATE < dateadd (year, 6, getdate())
-		-- and DATA_SOURCE = 'PRIMARY' -- currently no data for Primary analyst
+		and DATA_SOURCE = 'PRIMARY' 
 		and FISCAL_TYPE = 'FISCAL'
 		and Currency = 'USD'
 		and PERIOD_TYPE in ('Q1','Q2','Q3','Q4')
@@ -68,7 +62,10 @@ where (@issuerId is null or ISSUER_ID = @issuerId)
 		and PERIOD_TYPE in ('Q1','Q2','Q3','Q4')
 order by ISSUER_ID, estimate_id, PERIOD_YEAR
 
+
    --Joining tables depending upon the chart title
+ 
+
  IF(@chartTitle = 'EV/EBITDA')
 			BEGIN
 				
@@ -115,9 +112,7 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 					PIVOT ( SUM(Amount)
 								FOR Data_id   IN ([90],[92],[51])
 							  ) AS pvt 
-                  
-                  
-                  --select periodlabel,[90]+[92]-[51] as NetDebt from #PIVOT_EVBTIDA_NetDebt
+                                  
                   
                   SELECT  PERIOD_TYPE + ' ' + CAST(PERIOD_YEAR AS VARCHAR(4)) as PeriodLabel
 						  ,PERIOD_END_DATE
@@ -187,6 +182,7 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 	drop table #ConsensusFinancials	
 
 END
+
 GO
 --indicate thet current script is executed
 declare @CurrentScriptVersion as nvarchar(100) = '00013'
