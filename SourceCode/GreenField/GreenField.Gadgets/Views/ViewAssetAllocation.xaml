@@ -18,7 +18,7 @@
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-            <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
+            <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                 <telerik:RadGridView Name="dgAssetAllocation" AutoGenerateColumns="False" ItemsSource="{Binding AssetAllocationData}" 
                                      CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False"

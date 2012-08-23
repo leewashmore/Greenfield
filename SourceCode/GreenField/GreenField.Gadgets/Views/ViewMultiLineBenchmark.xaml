@@ -67,7 +67,7 @@
 
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" Name="border1" Grid.Row="0">
-                <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
+                <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <telerik:RadChart x:Name="chMultiLineBenchmarkChart" telerik:StyleManager.Theme="Metro" 
                                       ItemsSource="{Binding MultiLineBenchmarkUIChartData, Mode=TwoWay}" IsHitTestVisible="True" 
@@ -140,7 +140,7 @@
                 </telerik:RadBusyIndicator>
             </Border>
 
-            <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
+            <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}" Grid.Row="1">
                 <telerik:RadGridView  x:Name="dgBenchmarkUI" AutoGenerateColumns="False"
                                  ItemsSource="{Binding MultiLineBenchmarUIGridData}"  CanUserSelect="True" 

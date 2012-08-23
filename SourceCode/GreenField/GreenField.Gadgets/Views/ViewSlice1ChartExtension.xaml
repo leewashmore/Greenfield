@@ -99,7 +99,7 @@
 
         <Grid Grid.Row="1" Grid.Column="1">
             <Grid x:Name="grdRadGridView" Visibility="Collapsed">
-                <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
+                <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}" >
                     <telerik:RadGridView Name="dgChartExtension" AutoGenerateColumns="False"
                                          ItemsSource="{Binding ChartExtensionPlottedData}"  CanUserSelect="True" CanUserReorderColumns="False" 
@@ -147,7 +147,7 @@
             <Grid x:Name="grdRadChart" Grid.Column="1">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" Name="border1">
-                    <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
+                    <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                         <telerik:RadChart x:Name="chChartExtension" telerik:StyleManager.Theme="Metro" LegendStyle="{StaticResource ChartLegendStyle}"
                                           ItemsSource="{Binding ChartExtensionPlottedData, Mode=TwoWay}" IsHitTestVisible="True"

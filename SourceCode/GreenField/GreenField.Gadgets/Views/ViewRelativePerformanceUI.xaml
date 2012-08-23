@@ -53,7 +53,7 @@
         </Grid>
 
 
-        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
+        <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" Grid.Row="1" IsBusy="{Binding BusyIndicatorStatus}">
             <telerik:RadGridView x:Name="dgRelativePerformanceUI" 
                                  ItemsSource="{Binding RelativePerformanceReturnData}" 

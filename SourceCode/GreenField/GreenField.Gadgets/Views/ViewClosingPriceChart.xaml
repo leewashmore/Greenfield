@@ -279,7 +279,7 @@
 
         <Grid Grid.Column="1">
             <Grid x:Name="grdRadGridView" Visibility="Collapsed">
-                <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" 
+                <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                     <telerik:RadGridView Name="dgPricing" AutoGenerateColumns="False"
                                          ItemsSource="{Binding PlottedSeries}"  CanUserSelect="True" CanUserReorderColumns="False" 
@@ -347,7 +347,7 @@
                 </Grid.RowDefinitions>
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" Name="border1">
-                    <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" 
+                    <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
 
                         <telerik:RadChart x:Name="chPricing" telerik:StyleManager.Theme="Metro" Grid.Column="0"
@@ -430,7 +430,7 @@
 
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" HorizontalAlignment="Stretch" 
                         VerticalAlignment="Stretch" x:Name="volumeChartBorder" Margin="0,2,0,0" Grid.Row="1">
-                    <telerik:RadBusyIndicator x:Name="busyIndicatorchartVolume" IsIndeterminate="True" IsEnabled="True" 
+                    <telerik:RadBusyIndicator x:Name="busyIndicatorchartVolume" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
                         <telerik:RadChart x:Name="chVolume" telerik:StyleManager.Theme="Metro" 
                                       ItemsSource="{Binding PrimaryPlottedSeries}" IsHitTestVisible="True">
