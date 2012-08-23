@@ -13,6 +13,29 @@ namespace GreenField.Gadgets.Helpers
         private bool _disableNotifications = false;
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="addList"></param>
+        public RangeObservableCollection(List<T> addList)
+        {
+            if (addList != null)
+            {
+                _disableNotifications = true;
+                foreach (T item in addList)
+                {
+                    Add(item);
+                }
+                _disableNotifications = false;
+                OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+            }
+        }
+
+        public RangeObservableCollection()
+        {
+
+        }
+
+        /// <summary>
         /// Collection Changed Event
         /// </summary>
         /// <param name="e"></param>

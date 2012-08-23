@@ -3,7 +3,71 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
     xmlns:Telerik_Windows_Controls_RibbonView_Primitives="clr-namespace:Telerik.Windows.Controls.RibbonView.Primitives;assembly=Telerik.Windows.Controls.RibbonView" 
     xmlns:Telerik_Windows_Controls_Primitives="clr-namespace:Telerik.Windows.Controls.Primitives;assembly=Telerik.Windows.Controls.Navigation" 
+    xmlns:System="clr-namespace:System;assembly=mscorlib"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+<!--##########################################-->
+    
+    <System:Double x:Key="DefaultPrimaryMenuPanelFontSize">12</System:Double>
+    <System:String x:Key="DefaultPrimaryMenuPanelFontFamily">Arial</System:String>
+    <FontWeight x:Key="DefaultPrimaryMenuPanelFontWeight">Bold</FontWeight>
+    <SolidColorBrush x:Key="DefaultPrimaryMenuPanelBackground">#cbd4f1</SolidColorBrush>
+
+
+    <System:Double x:Key="DefaultPrimaryMenuFontSize">10</System:Double>
+    <System:String x:Key="DefaultPrimaryMenuFontFamily">Arial</System:String>
+    <FontWeight x:Key="DefaultPrimaryMenuFontWeight">Bold</FontWeight>
+    <SolidColorBrush x:Key="DefaultPrimaryMenuBackground">#dfe6f8</SolidColorBrush>
+
+
+
+    <System:Double x:Key="DefaultFirstLevelMenuFontSize">10</System:Double>
+    <System:String x:Key="DefaultFirstLevelMenuFontFamily">Arial</System:String>
+    <FontWeight x:Key="DefaultFirstLevelMenuFontWeight">Bold</FontWeight>
+    <SolidColorBrush x:Key="DefaultFirstLevelMenuBackground">#dfe6f8</SolidColorBrush>
+
+
+
+    <System:Double x:Key="DefaultSecondLevelMenuFontSize">10</System:Double>
+    <System:String x:Key="DefaultSecondLevelMenuFontFamily">Arial</System:String>
+    <FontWeight x:Key="DefaultSecondLevelMenuFontWeight">Bold</FontWeight>
+    <SolidColorBrush x:Key="DefaultSecondLevelMenuBackground">#dfe6f8</SolidColorBrush>
+
+
+    <Style TargetType="telerik:RadPanelBarItem" x:Key="PanelBarItemStyle">
+        <Setter Property="Background" Value="{StaticResource DefaultPrimaryMenuPanelBackground}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultPrimaryMenuPanelFontFamily}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultPrimaryMenuPanelFontWeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultPrimaryMenuPanelFontSize}"/>
+    </Style>
+
+    <Style TargetType="telerik:RadMenu" x:Key="RadMenuStyle">
+        <Setter Property="Background" Value="{StaticResource DefaultPrimaryMenuBackground}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultPrimaryMenuFontFamily}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultPrimaryMenuFontWeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultPrimaryMenuFontSize}"/>
+    </Style>
+
+
+    <Style TargetType="telerik:RadMenuItem" x:Key="RadFirstLevelMenuItemStyle">
+        <Setter Property="Background" Value="{StaticResource DefaultFirstLevelMenuBackground}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultFirstLevelMenuFontFamily}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultFirstLevelMenuFontWeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultFirstLevelMenuFontSize}"/>
+    </Style>
+
+    <Style TargetType="telerik:RadMenuItem" x:Key="RadSecondLevelMenuItemStyle">
+        <Setter Property="Background" Value="{StaticResource DefaultSecondLevelMenuBackground}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultSecondLevelMenuFontFamily}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultSecondLevelMenuFontWeight}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultSecondLevelMenuFontSize}"/>
+    </Style>
+    
+    
+    <!--################################-->
+
+
+
 
     <SolidColorBrush x:Key="RibbonForegroundBrush" Color="#464646"/>
     <SolidColorBrush x:Key="RibbonGroupSeparatorLightBrush" Color="#F8FAFC"/>
@@ -1142,5 +1206,11 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
     </Style>
+
+    
+
+
+    
+
 
 </ResourceDictionary>

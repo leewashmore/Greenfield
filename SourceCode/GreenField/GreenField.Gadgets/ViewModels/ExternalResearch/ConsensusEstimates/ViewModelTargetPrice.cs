@@ -246,6 +246,8 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
+                    TargetPriceData = new TargetPriceCEData();
+                    CurrentPriceText = "Current Price";
                     if (result.Count != 0)
                     {
                         Logging.LogMethodParameter(_logger, methodNamespace, result, 1);

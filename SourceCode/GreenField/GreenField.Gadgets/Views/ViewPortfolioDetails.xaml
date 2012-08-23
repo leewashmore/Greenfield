@@ -41,7 +41,7 @@
             </Grid.ColumnDefinitions>
 
             <CheckBox Content="Include Benchmark" Grid.Column="1" ToolTipService.ToolTip="Include Benchmark Securities" Style="{StaticResource CheckBoxStyle}"
-                      Height="15" VerticalContentAlignment="Center" IsChecked="{Binding GetBenchmarkData,Mode=TwoWay}" />
+                      Height="15" VerticalContentAlignment="Center" IsChecked="{Binding GetBenchmarkData,Mode=TwoWay}" Checked="CheckBox_Checked" />
             <Button Height="15" Width="15" Grid.Column="2"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center"
@@ -95,8 +95,8 @@
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          ElementExporting="dgPortfolioDetails_ElementExporting"
                                          ScrollMode="Deferred"
-                                         AlternationCount="2"
-                                         MinColumnWidth="70"
+                                         AlternationCount="2" DataLoading="dgPortfolioDetails_DataLoading"
+                                         MinColumnWidth="70" DataLoaded="dgPortfolioDetails_DataLoaded"
                                          EnableRowVirtualization="True"
                                          EnableColumnVirtualization="True"
                                          GridLinesVisibility="None">

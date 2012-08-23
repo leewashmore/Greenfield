@@ -37,7 +37,8 @@ namespace GreenField.Gadgets.Views
         double totalHeight;
         Canvas canvas;
         RadGridView grid;
-
+        FilterDescriptorCollection gridFilterDescriptors;
+        RangeObservableCollection<PortfolioDetailsData> gridDataSource;
 
         /// <summary>
         /// View Model
@@ -90,6 +91,7 @@ namespace GreenField.Gadgets.Views
 
         #region ExportToExcel/PDF/Print
 
+        #region ExcelExport
         /// <summary>
         /// Static class storing string types
         /// </summary>
@@ -107,7 +109,9 @@ namespace GreenField.Gadgets.Views
         {
             ExportExcel.ExportGridExcel(dgPortfolioDetails);
         }
+        #endregion
 
+        #region HelperMethods
         /// <summary>
         /// Element Exporting Event
         /// </summary>
@@ -117,7 +121,9 @@ namespace GreenField.Gadgets.Views
         {
             RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
         }
+        #endregion
 
+        #region PDFExport
         /// <summary>
         /// Event handler when user wants to Export the Grid to PDF
         /// </summary>
@@ -127,7 +133,6 @@ namespace GreenField.Gadgets.Views
         {
             PDFExporter.btnExportPDF_Click(this.dgPortfolioDetails);
         }
-
         #endregion
 
         #region Printing the DataGrid
@@ -144,32 +149,13 @@ namespace GreenField.Gadgets.Views
                 RichTextBox.Document = PDFExporter.Print(dgPortfolioDetails, 6);
             }));
 
-            this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Portrait;
+            this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
             RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
         }
 
         #endregion
 
-        #region RadDocument
-
-
-
         #endregion
-
-        #region EventUnsubscribe
-
-        /// <summary>
-        /// Unsusbcribing the Events
-        /// </summary>
-        public override void Dispose()
-        {
-            this.DataContextPortfolioDetails.Dispose();
-            this.DataContextPortfolioDetails = null;
-            this.DataContext = null;
-        }
-
-        #endregion
-
 
         #region GroupingHelperMethods
 
@@ -207,6 +193,7 @@ namespace GreenField.Gadgets.Views
         {
             MemberColumnFilterDescriptor filteredColumn = e.ColumnFilterDescriptor as MemberColumnFilterDescriptor;
             DataContextPortfolioDetails.FilterDescriptor = filteredColumn.Member;
+            bool a = e.Cancel;
         }
 
         /// <summary>
@@ -217,6 +204,7 @@ namespace GreenField.Gadgets.Views
         private void dgPortfolioDetails_Filtered(object sender, Telerik.Windows.Controls.GridView.GridViewFilteredEventArgs e)
         {
             SetGroupedData();
+            gridFilterDescriptors = dgPortfolioDetails.FilterDescriptors;
         }
 
         /// <summary>
@@ -255,5 +243,42 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region EventUnsubscribe
+
+        /// <summary>
+        /// Unsusbcribing the Events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextPortfolioDetails.Dispose();
+            this.DataContextPortfolioDetails = null;
+            this.DataContext = null;
+        }
+
+        #endregion
+
+        private void dgPortfolioDetails_DataLoaded(object sender, EventArgs e)
+        {
+            if (this.DataContextPortfolioDetails.CheckIncludeBenchmark > 0)
+            {
+                this.DataContextPortfolioDetails.CheckIncludeBenchmark--;
+                if (this.DataContextPortfolioDetails.CheckIncludeBenchmark == 0)
+                {
+                    SetGroupedData();
+                    this.dgPortfolioDetails.Items.CommitEdit();
+                }
+            }
+        }
+
+        private void dgPortfolioDetails_DataLoading(object sender, GridViewDataLoadingEventArgs e)
+        {
+
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            gridDataSource=this.dgPortfolioDetails.ItemsSource as RangeObservableCollection<PortfolioDetailsData>;
+            this.dgPortfolioDetails.Items.EditItem(gridDataSource);
+        }
     }
 }

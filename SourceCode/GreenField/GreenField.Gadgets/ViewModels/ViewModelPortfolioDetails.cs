@@ -85,6 +85,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _selectedPortfolioId = value;
+                CheckIncludeBenchmark = 1;
                 this.RaisePropertyChanged(() => this.SelectedPortfolioDetailsData);
             }
         }
@@ -181,6 +182,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (SelectedPortfolioId != null && _effectiveDate != null && IsActive)
                 {
                     BusyIndicatorStatus = true;
+                    CheckIncludeBenchmark = 1;
                     RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
                 }
                 this.RaisePropertyChanged(() => this.GetBenchmarkData);
@@ -366,7 +368,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return _filterUniqueValue; 
+                return _filterUniqueValue;
             }
             set
             {
@@ -374,7 +376,21 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.FilterUniqueValue);
             }
         }
-        
+
+        private int _checkIncludeBenchmark;
+        public int CheckIncludeBenchmark
+        {
+            get
+            {
+                return _checkIncludeBenchmark;
+            }
+            set
+            {
+                _checkIncludeBenchmark = value;
+                this.RaisePropertyChanged(() => this.CheckIncludeBenchmark);
+            }
+        }
+
 
         #endregion
 
@@ -393,8 +409,9 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    SelectedPortfolioDetailsData.Clear();
-                    SelectedPortfolioDetailsData.AddRange(CalculatePortfolioValues(result).OrderBy(a => a.ActivePosition).ThenBy(a => a.PortfolioWeight).ToList());
+                    //SelectedPortfolioDetailsData.Clear();
+                    //SelectedPortfolioDetailsData.AddRange(CalculatePortfolioValues(result).OrderBy(a => a.ActivePosition).ThenBy(a => a.PortfolioWeight).ToList());
+                    SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>(CalculatePortfolioValues(result).OrderBy(a => a.ActivePosition).ThenBy(a => a.PortfolioWeight).ToList());
                 }
             }
             catch (Exception ex)
@@ -478,8 +495,8 @@ namespace GreenField.Gadgets.ViewModels
                     }
 
                     List<PortfolioDetailsData> collection = new List<PortfolioDetailsData>(SelectedPortfolioDetailsData);
-                    SelectedPortfolioDetailsData.Clear();
-                    SelectedPortfolioDetailsData.AddRange(collection.OrderBy(a => a.ActivePosition).ThenBy(a => a.PortfolioWeight).ToList());
+                    SelectedPortfolioDetailsData = new RangeObservableCollection<PortfolioDetailsData>
+                        (collection.OrderBy(a => a.ActivePosition).ThenBy(a => a.PortfolioWeight).ToList());
                     collection.Clear();
                 }
             }

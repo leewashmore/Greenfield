@@ -695,6 +695,7 @@ namespace GreenField.Web.Services
                 data.High = (item.High == null) ? "N/A" : (Convert.ToString(item.High));
                 data.Low = (item.Low == null) ? "N/A" : (Convert.ToString(item.Low));
                 data.StandardDeviation = (item.StdDev == null) ? "N/A" : (Convert.ToString(item.StdDev));
+                data.CurrentPriceDate = Convert.ToDateTime(item.CurrentPriceDate);
                 result.Add(data);
             }
 
