@@ -88,7 +88,7 @@ namespace GreenField.Web.Services
                 String sectorCode = securityDetails.GICS_SECTOR;
                 String sectorName = securityDetails.GICS_SECTOR_NAME;
                 String industryCode = securityDetails.GICS_INDUSTRY;
-                String industryName = securityDetails.GICS_SUB_INDUSTRY_NAME;
+                String industryName = securityDetails.GICS_INDUSTRY_NAME;
                 int? securityID = securityDetails.SECURITY_ID;
                 String issueName = securityDetails.ISSUE_NAME;
                 String subIndustryName = securityDetails.GICS_SUB_INDUSTRY_NAME;
@@ -170,14 +170,13 @@ namespace GreenField.Web.Services
             }
         }
 
-        /// <summary>
+       /// <summary>
         /// Get data for Consensus Estimate Detailed gadget
-        /// </summary>
-        /// <param name="issuerId"></param>
-        /// <param name="periodType"></param>
-        /// <param name="currency"></param>
-        /// <param name="currentYear"></param>
-        /// <returns></returns>
+       /// </summary>
+       /// <param name="issuerId"></param>
+       /// <param name="periodType"></param>
+       /// <param name="currency"></param>
+       /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<ConsensusEstimateDetail> RetrieveConsensusEstimateDetailedData(string issuerId, FinancialStatementPeriodType periodType, String currency)
@@ -203,7 +202,7 @@ namespace GreenField.Web.Services
                 foreach (string item in dataDescriptors)
                 {
                     List<BrokerDetail> temp = new List<BrokerDetail>();
-                    temp = entity.GetBrokerDetail(issuerId, "EPS", _periodType, currency).ToList();
+                    temp = entity.GetBrokerDetail(issuerId, item, _periodType, "CNY").ToList();
                     if (temp != null)
                         foreach (BrokerDetail value in temp)
                         {
