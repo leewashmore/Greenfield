@@ -591,7 +591,8 @@ namespace GreenField.Web.Services
                     return null;
 
                 BasicData basicData = new BasicData();
-                basicData.WeekRange52 = data.FIFTYTWO_WEEK_LOW - data.FIFTYTWO_WEEK_HIGH;
+                basicData.WeekRange52Low = data.FIFTYTWO_WEEK_LOW;
+                basicData.WeekRange52High = data.FIFTYTWO_WEEK_HIGH;
                 basicData.AverageVolume = data.SECURITY_VOLUME_AVG_6M;
                 basicData.SharesOutstanding = data.SHARES_OUTSTANDING;
                 if (data.BARRA_BETA != null)

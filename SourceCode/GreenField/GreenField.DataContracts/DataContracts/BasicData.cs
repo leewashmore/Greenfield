@@ -8,7 +8,10 @@ namespace GreenField.DataContracts
     public class BasicData
     {
         [DataMember]
-        public decimal? WeekRange52 { get; set; }
+        public decimal? WeekRange52Low { get; set; }
+
+        [DataMember]
+        public decimal? WeekRange52High { get; set; }
 
         [DataMember]
         public decimal? AverageVolume { get; set; }
