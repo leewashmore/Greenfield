@@ -1,6 +1,6 @@
 --declare  current and required version
-declare @RequiredDBVersion as nvarchar(100) = '00062'
-declare @CurrentScriptVersion as nvarchar(100) = '00063'
+declare @RequiredDBVersion as nvarchar(100) = '00021'
+declare @CurrentScriptVersion as nvarchar(100) = '00022'
 --if current version already in DB, just skip
 if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
  return
@@ -159,6 +159,6 @@ END
 
 GO
 --indicate thet current script is executed
-declare @CurrentScriptVersion as nvarchar(100) = '00063'
+declare @CurrentScriptVersion as nvarchar(100) = '00022'
 insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
 
