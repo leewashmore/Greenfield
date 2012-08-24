@@ -150,7 +150,7 @@ namespace GreenField.Gadgets.Views
 
         private void dgRelativeRisk_RowLoaded(object sender, RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+            
         }
 
         #region Dispose Method

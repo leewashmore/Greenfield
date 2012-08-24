@@ -104,7 +104,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgAttribution_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+           
         }
 
         /// <summary>

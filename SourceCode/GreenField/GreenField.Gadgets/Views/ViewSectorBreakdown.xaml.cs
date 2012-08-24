@@ -78,7 +78,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgSectorBreakdown_Rowloaded(object sender, RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e); 
+         
         }
         #endregion
 

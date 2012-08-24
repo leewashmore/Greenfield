@@ -98,7 +98,7 @@ namespace GreenField.Gadgets.Views
 
         private void dgCommodity_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+           
         }
         #region ExportToExcel
 

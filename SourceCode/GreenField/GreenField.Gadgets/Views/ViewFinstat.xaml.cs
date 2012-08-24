@@ -80,7 +80,7 @@ namespace GreenField.Gadgets.Views
 
         private void dgFinstat_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+            
         }
 
         private void dgFinstat_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)

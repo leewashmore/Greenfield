@@ -178,6 +178,7 @@
                                                     DataMemberBinding="{Binding Q4}" 
                                                     Width="*" 
                                                     HeaderTextAlignment="Right" 
+                                                    IsFilterable="False"
                                                     TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>

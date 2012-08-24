@@ -79,7 +79,7 @@ namespace GreenField.Gadgets.Views
         }
         private void dgPE_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+            
         }
         private void chPE_Loaded(object sender, RoutedEventArgs e)
         {

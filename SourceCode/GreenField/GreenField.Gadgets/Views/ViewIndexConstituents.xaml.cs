@@ -71,7 +71,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgIndexConstituents_RowLoaded(object sender, RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+            
         }
         #endregion
 

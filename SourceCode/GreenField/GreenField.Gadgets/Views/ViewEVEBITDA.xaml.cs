@@ -79,7 +79,7 @@ namespace GreenField.Gadgets.Views
         }
         private void dgEVEBITDA_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+           
         }
         private void chEVEBITDA_Loaded(object sender, RoutedEventArgs e)
         {

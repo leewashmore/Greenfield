@@ -179,7 +179,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgMacroDBKeyReport_RowLoaded(object sender, RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+            
         }
 
         /// <summary>

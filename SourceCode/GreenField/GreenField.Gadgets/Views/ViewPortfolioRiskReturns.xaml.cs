@@ -55,7 +55,7 @@ namespace GreenField.Gadgets.Views
 
         private void dgPortfolioRiskReturn_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+           
         }
         /// <summary>
         /// Method to catch Click Event of Export to Excel

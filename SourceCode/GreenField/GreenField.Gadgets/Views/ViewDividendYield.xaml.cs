@@ -79,7 +79,7 @@ namespace GreenField.Gadgets.Views
         }
         private void dgDividendYield_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+           
         }
         private void chDividendYield_Loaded(object sender, RoutedEventArgs e)
         {

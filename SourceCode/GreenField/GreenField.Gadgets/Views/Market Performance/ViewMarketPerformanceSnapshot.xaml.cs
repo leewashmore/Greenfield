@@ -137,7 +137,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e">RowLoadedEventArgs</param>
         private void radGridSnapshot_RowLoaded(object sender, RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+            
         }
 
         /// <summary>
