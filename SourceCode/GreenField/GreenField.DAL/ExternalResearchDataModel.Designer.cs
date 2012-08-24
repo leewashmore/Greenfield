@@ -6592,6 +6592,30 @@ namespace GreenField.DAL
         private global::System.DateTime _DATA_SOURCE_DATE;
         partial void OnDATA_SOURCE_DATEChanging(global::System.DateTime value);
         partial void OnDATA_SOURCE_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ACTUAL
+        {
+            get
+            {
+                return _ACTUAL;
+            }
+            set
+            {
+                OnACTUALChanging(value);
+                ReportPropertyChanging("ACTUAL");
+                _ACTUAL = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ACTUAL");
+                OnACTUALChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ACTUAL;
+        partial void OnACTUALChanging(Nullable<global::System.Decimal> value);
+        partial void OnACTUALChanged();
 
         #endregion
     }

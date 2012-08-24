@@ -1008,6 +1008,7 @@
 					<Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="10"/>
 					<Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10"/>
 					<Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23"/>
+          <Property Type="Decimal" Name="ACTUAL" Nullable="true" Precision="32" Scale="6" />
 				</ComplexType>
 
 				<EntityType Name="DATA_MASTER">

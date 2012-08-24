@@ -171,7 +171,7 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
-       /// Get data for Consensus Estimate Detailed gadget
+        /// Get data for Consensus Estimate Detailed gadget
         /// </summary>
         /// <param name="issuerId"></param>
         /// <param name="periodType"></param>
@@ -186,7 +186,7 @@ namespace GreenField.Web.Services
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
 
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-               
+
                 List<ConsensusEstimateDetailData> data = new List<ConsensusEstimateDetailData>();
                 List<ConsensusEstimateDetail> result = new List<ConsensusEstimateDetail>();
 
@@ -229,7 +229,7 @@ namespace GreenField.Web.Services
                                 temp.YOYGrowth = (temp.YOYGrowth / data[i + 1].AMOUNT) - 1;
                         }
                     }
-                  result.Add(temp);
+                    result.Add(temp);
                 }
                 return result;
             }
@@ -318,7 +318,7 @@ namespace GreenField.Web.Services
                     temp.Amount = Convert.ToDecimal(requiredBrokerDetailsList[i].Amount);
                     temp.SourceCurrency = requiredBrokerDetailsList[i].Reported_Currency;
                     temp.DataSourceDate = requiredBrokerDetailsList[i].Last_Update_Date;
-                   result.Add(temp);
+                    result.Add(temp);
                 }
                 return result;
             }
@@ -792,7 +792,7 @@ namespace GreenField.Web.Services
             try
             {
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
-
+                decimal previousYearQuarterAmount;
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
                 data = entity.GetConsensusEstimateData(issuerId, "REUTERS", _periodType, "FISCAL", currency).ToList();
@@ -848,21 +848,15 @@ namespace GreenField.Web.Services
 
                         temp.YOYGrowth = data[i].AMOUNT;
                         temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
-                        if (i != data.Count - 1)
-                        {
-                            if (data[i].ESTIMATE_DESC == data[i + 1].ESTIMATE_DESC &&
-                                data[i].PERIOD_YEAR == data[i + 1].PERIOD_YEAR + 1)
-                            {
-                                if (data[i + 1].AMOUNT != 0)
-                                {
-                                    temp.YOYGrowth = ((temp.YOYGrowth / data[i + 1].AMOUNT) - 1) * 100;
-                                }
-                            }
-                            else
-                            {
+                        
+                            previousYearQuarterAmount = data.Where(a => a.ESTIMATE_DESC == data[i].ESTIMATE_DESC && a.PERIOD_YEAR == (data[i].PERIOD_YEAR - 1)
+                                && a.PERIOD_TYPE == data[i].PERIOD_TYPE).Select(a => a.AMOUNT).FirstOrDefault();
+
+                            if (previousYearQuarterAmount == null || previousYearQuarterAmount == 0)
                                 temp.YOYGrowth = 0;
-                            }
-                        }
+                            else
+                                temp.YOYGrowth = (temp.YOYGrowth / previousYearQuarterAmount - 1) * 100;
+                        
                         result.Add(temp);
                     }
                 }
@@ -899,7 +893,7 @@ namespace GreenField.Web.Services
             try
             {
                 string _periodType = EnumUtils.ToString(periodType).Substring(0, 1);
-
+                decimal previousYearQuarterAmount;
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
                 data = entity.GetConsensusEstimatesValuation(issuerId, "REUTERS", _periodType, "FISCAL", currency, null, null).ToList();
@@ -947,25 +941,18 @@ namespace GreenField.Web.Services
                         temp.SourceCurrency = data[i].SOURCE_CURRENCY;
                         temp.DataSource = data[i].DATA_SOURCE;
                         temp.DataSourceDate = data[i].DATA_SOURCE_DATE;
-                        temp.Actual = data[i].AMOUNT;
+                        temp.Actual = data[i].ACTUAL;
 
                         temp.YOYGrowth = data[i].AMOUNT;
                         temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
-                        if (i != data.Count - 1)
-                        {
-                            if (data[i].ESTIMATE_DESC == data[i + 1].ESTIMATE_DESC &&
-                                data[i].PERIOD_YEAR == data[i + 1].PERIOD_YEAR + 1)
-                            {
-                                if (data[i + 1].AMOUNT != 0)
-                                {
-                                    temp.YOYGrowth = ((temp.YOYGrowth / data[i + 1].AMOUNT) - 1) * 100;
-                                }
-                                else
-                                {
-                                    temp.YOYGrowth = 0;
-                                }
-                            }
-                        }
+
+                        previousYearQuarterAmount = data.Where(a => a.ESTIMATE_DESC == data[i].ESTIMATE_DESC && a.PERIOD_YEAR == (data[i].PERIOD_YEAR - 1)
+                                && a.PERIOD_TYPE == data[i].PERIOD_TYPE).Select(a => a.AMOUNT).FirstOrDefault();
+
+                        if (previousYearQuarterAmount == null || previousYearQuarterAmount == 0)
+                            temp.YOYGrowth = 0;
+                        else
+                            temp.YOYGrowth = (temp.YOYGrowth / previousYearQuarterAmount - 1) * 100;
 
                         result.Add(temp);
                     }
@@ -1497,7 +1484,7 @@ namespace GreenField.Web.Services
 
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
