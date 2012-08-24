@@ -1111,9 +1111,9 @@
           <Property Type="Decimal" Name="FX_RATE" Nullable="false" />
           <Property Type="Decimal" Name="AVG12MonthRATE" Nullable="false" />
           <Property Type="String" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="String" Name="FIELD" Nullable="false" />
-          <Property Type="Int32" Name="YEAR1" Nullable="false" />
-          <Property Type="Decimal" Name="VALUE" Nullable="false" />
+          <Property Type="String" Name="FIELD" Nullable="true" />
+          <Property Type="Int32" Name="YEAR1" Nullable="true" />
+          <Property Type="Decimal" Name="VALUE" Nullable="true" />
         </ComplexType>
         <ComplexType Name="FinstatRelativeAnalysisData" >
           <Property Type="Int32" Name="DATA_ID" Nullable="false" />

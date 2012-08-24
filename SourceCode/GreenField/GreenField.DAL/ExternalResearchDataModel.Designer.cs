@@ -7420,18 +7420,12 @@ namespace GreenField.DAL
         /// <param name="fX_RATE">Initial value of the FX_RATE property.</param>
         /// <param name="aVG12MonthRATE">Initial value of the AVG12MonthRATE property.</param>
         /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
-        /// <param name="fIELD">Initial value of the FIELD property.</param>
-        /// <param name="yEAR1">Initial value of the YEAR1 property.</param>
-        /// <param name="vALUE">Initial value of the VALUE property.</param>
-        public static FinstatEconomicMarketData CreateFinstatEconomicMarketData(global::System.Decimal fX_RATE, global::System.Decimal aVG12MonthRATE, global::System.String pERIOD_YEAR, global::System.String fIELD, global::System.Int32 yEAR1, global::System.Decimal vALUE)
+        public static FinstatEconomicMarketData CreateFinstatEconomicMarketData(global::System.Decimal fX_RATE, global::System.Decimal aVG12MonthRATE, global::System.String pERIOD_YEAR)
         {
             FinstatEconomicMarketData finstatEconomicMarketData = new FinstatEconomicMarketData();
             finstatEconomicMarketData.FX_RATE = fX_RATE;
             finstatEconomicMarketData.AVG12MonthRATE = aVG12MonthRATE;
             finstatEconomicMarketData.PERIOD_YEAR = pERIOD_YEAR;
-            finstatEconomicMarketData.FIELD = fIELD;
-            finstatEconomicMarketData.YEAR1 = yEAR1;
-            finstatEconomicMarketData.VALUE = vALUE;
             return finstatEconomicMarketData;
         }
 
@@ -7513,7 +7507,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String FIELD
         {
@@ -7525,7 +7519,7 @@ namespace GreenField.DAL
             {
                 OnFIELDChanging(value);
                 ReportPropertyChanging("FIELD");
-                _FIELD = StructuralObject.SetValidValue(value, false);
+                _FIELD = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("FIELD");
                 OnFIELDChanged();
             }
@@ -7537,9 +7531,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 YEAR1
+        public Nullable<global::System.Int32> YEAR1
         {
             get
             {
@@ -7554,16 +7548,16 @@ namespace GreenField.DAL
                 OnYEAR1Changed();
             }
         }
-        private global::System.Int32 _YEAR1;
-        partial void OnYEAR1Changing(global::System.Int32 value);
+        private Nullable<global::System.Int32> _YEAR1;
+        partial void OnYEAR1Changing(Nullable<global::System.Int32> value);
         partial void OnYEAR1Changed();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Decimal VALUE
+        public Nullable<global::System.Decimal> VALUE
         {
             get
             {
@@ -7578,8 +7572,8 @@ namespace GreenField.DAL
                 OnVALUEChanged();
             }
         }
-        private global::System.Decimal _VALUE;
-        partial void OnVALUEChanging(global::System.Decimal value);
+        private Nullable<global::System.Decimal> _VALUE;
+        partial void OnVALUEChanging(Nullable<global::System.Decimal> value);
         partial void OnVALUEChanged();
 
         #endregion
