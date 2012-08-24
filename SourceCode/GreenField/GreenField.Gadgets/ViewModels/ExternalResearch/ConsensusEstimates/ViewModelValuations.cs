@@ -362,10 +362,10 @@ namespace GreenField.Gadgets.ViewModels
                     _issuerReferenceInfo = value;
                     if (value != null)
                     {
-                        CurrencyInfo = new ObservableCollection<String> { IssuerReferenceInfo.CurrencyCode };
+                        CurrencyInfo = new ObservableCollection<String>();
+                        CurrencyInfo.Add("USD");
                         if (IssuerReferenceInfo.CurrencyCode != "USD")
-                            CurrencyInfo.Add("USD");
-
+                            CurrencyInfo.Add(IssuerReferenceInfo.CurrencyCode);
                         SelectedCurrency = CurrencyInfo[0];
                     }
                 }
@@ -498,12 +498,10 @@ namespace GreenField.Gadgets.ViewModels
         public void SetConsensusEstimateMedianDisplayInfo()
         {
             BusyIndicatorNotification(true, "Updating information based on selected preference");
-
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(Iterator, defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
             ConsensusEstimateDetailDisplayInfo = PeriodColumns.SetPeriodColumnDisplayInfo(ConsensusEstimateDetailInfo, out periodRecord, periodRecord, subGroups: DataGrouping);
             PeriodRecord = periodRecord;
             PeriodColumnHeader = PeriodColumns.SetColumnHeaders(PeriodRecord, false);
-
             BusyIndicatorNotification();
         }
 

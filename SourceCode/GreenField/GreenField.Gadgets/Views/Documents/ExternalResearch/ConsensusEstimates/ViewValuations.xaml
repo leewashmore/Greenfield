@@ -139,7 +139,7 @@
                                  RowHeight="15" 
                                  EnableColumnVirtualization="False"
                                  GridLinesVisibility="None"
-                                 AutoExpandGroups="True"
+                                 AutoExpandGroups="False"
                                  EnableRowVirtualization="False"
                                  ItemsSource="{Binding ConsensusEstimateDetailDisplayInfo}"
                                  ElementExporting="dgConsensusEstimateValuations_ElementExporting"
