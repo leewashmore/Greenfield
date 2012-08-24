@@ -306,8 +306,7 @@
                                                  AutoGenerateColumns="False"
                                                  CanUserSelect="False" 
                                                  CanUserReorderColumns="False" 
-                                                 CanUserInsertRows="False" 
-                                                 telerik:StyleManager.Theme="Metro"
+                                                 CanUserInsertRows="False"                                                  
                                                  CanUserDeleteRows="False" 
                                                  IsReadOnly="True" 
                                                  CanUserSortColumns="False" 
@@ -324,6 +323,7 @@
                                                  RowStyle="{StaticResource GridViewRowStyle}"
                                                  ItemsSource="{Binding COASpecificDisplayInfo}"
                                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                                 RowLoaded="dgCOASpecific_RowLoaded"
                                                  GridLinesVisibility="None">
                                 <telerik:RadGridView.Columns>
                                     <telerik:GridViewDataColumn x:Name="dgvcDataType" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="200" CellStyle="{StaticResource GridViewCellStyle}"/>

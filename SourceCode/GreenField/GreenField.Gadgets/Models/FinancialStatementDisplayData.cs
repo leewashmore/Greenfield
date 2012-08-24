@@ -40,6 +40,21 @@ namespace GreenField.Gadgets.Models
         public String QUARTER_SIX_DATA_ROOT_SOURCE { get; set; }
         public String QUARTER_SEVEN_DATA_ROOT_SOURCE { get; set; }
 
+        public String YEAR_ONE_DATA_SOURCE { get; set; }
+        public String YEAR_TWO_DATA_SOURCE { get; set; }
+        public String YEAR_THREE_DATA_SOURCE { get; set; }
+        public String YEAR_FOUR_DATA_SOURCE { get; set; }
+        public String YEAR_FIVE_DATA_SOURCE { get; set; }
+        public String YEAR_SIX_DATA_SOURCE { get; set; }
+        public String YEAR_SEVEN_DATA_SOURCE { get; set; }
+        public String QUARTER_ONE_DATA_SOURCE { get; set; }
+        public String QUARTER_TWO_DATA_SOURCE { get; set; }
+        public String QUARTER_THREE_DATA_SOURCE { get; set; }
+        public String QUARTER_FOUR_DATA_SOURCE { get; set; }
+        public String QUARTER_FIVE_DATA_SOURCE { get; set; }
+        public String QUARTER_SIX_DATA_SOURCE { get; set; }
+        public String QUARTER_SEVEN_DATA_SOURCE { get; set; }
+
         public DateTime? YEAR_ONE_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? YEAR_TWO_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? YEAR_THREE_DATA_ROOT_SOURCE_DATE { get; set; }

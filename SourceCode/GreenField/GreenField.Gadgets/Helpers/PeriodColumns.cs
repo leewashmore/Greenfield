@@ -602,6 +602,19 @@ namespace GreenField.Gadgets.Helpers
                         QUARTER_FIVE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterFiveData, "RootSource"),
                         QUARTER_SIX_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterSixData, "RootSource"),
 
+                        YEAR_ONE_DATA_SOURCE = GetFormatPrecursors<T, String>(yearOneData, "DataSource"),
+                        YEAR_TWO_DATA_SOURCE = GetFormatPrecursors<T, String>(yearTwoData, "DataSource"),
+                        YEAR_THREE_DATA_SOURCE = GetFormatPrecursors<T, String>(yearThreeData, "DataSource"),
+                        YEAR_FOUR_DATA_SOURCE = GetFormatPrecursors<T, String>(yearFourData, "DataSource"),
+                        YEAR_FIVE_DATA_SOURCE = GetFormatPrecursors<T, String>(yearFiveData, "DataSource"),
+                        YEAR_SIX_DATA_SOURCE = GetFormatPrecursors<T, String>(yearSixData, "DataSource"),
+                        QUARTER_ONE_DATA_SOURCE = GetFormatPrecursors<T, String>(quarterOneData, "DataSource"),
+                        QUARTER_TWO_DATA_SOURCE = GetFormatPrecursors<T, String>(quarterTwoData, "DataSource"),
+                        QUARTER_THREE_DATA_SOURCE = GetFormatPrecursors<T, String>(quarterThreeData, "DataSource"),
+                        QUARTER_FOUR_DATA_SOURCE = GetFormatPrecursors<T, String>(quarterFourData, "DataSource"),
+                        QUARTER_FIVE_DATA_SOURCE = GetFormatPrecursors<T, String>(quarterFiveData, "DataSource"),
+                        QUARTER_SIX_DATA_SOURCE = GetFormatPrecursors<T, String>(quarterSixData, "DataSource"),
+
                         YEAR_ONE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearOneData, "RootSourceDate"),
                         YEAR_TWO_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearTwoData, "RootSourceDate"),
                         YEAR_THREE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearThreeData, "RootSourceDate"),
@@ -719,6 +732,58 @@ namespace GreenField.Gadgets.Helpers
                 }
             }
         }
+
+        /// <summary>
+        /// Set Bold/Percentage formats on data and place tooltips
+        /// </summary>
+        /// <param name="e">RowLoadedEventArgs</param>
+        public static void RowDataCustomizationforCOASpecificGadget(RowLoadedEventArgs e)
+        {
+            if (e.Row is GridViewRow)
+            {
+                var row = e.Row as GridViewRow;
+
+                if (row != null)
+                {
+                    PeriodColumnDisplayData rowContext = row.DataContext as PeriodColumnDisplayData;
+                    if (rowContext != null)
+                    {
+                        if (rowContext.DATA_BOLD != null)
+                            row.FontWeight = Convert.ToBoolean(rowContext.DATA_BOLD) ? FontWeights.ExtraBold : FontWeights.Normal;
+                        foreach (GridViewCell cell in row.Cells)
+                        {
+                            //Null Check
+                            if (cell.Value == null)
+                                continue;
+
+                            //No toolTip service for Description and left navigation
+                            if (cell.Column.DisplayIndex <= 1)
+                                continue;
+
+                            //No toolTip service for right navigation column
+                            if (cell.Column.DisplayIndex == e.GridViewDataControl.Columns.Count - 1)
+                                continue;
+
+                            String toolTipContent = GetToolTipContentForCOASpecificGadget(rowContext, cell.DataColumn.DataMemberBinding.Path.Path);
+
+                            if (toolTipContent != null)
+                            {
+                                ToolTip toolTip = new ToolTip()
+                                {
+                                    Content = toolTipContent,
+                                    FontSize = 7,
+                                    FontFamily = new FontFamily("Arial")
+                                };
+
+                                ToolTipService.SetToolTip(cell, toolTip);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Private Methods
@@ -899,6 +964,36 @@ namespace GreenField.Gadgets.Helpers
 
             return result;
         }
+
+
+         //<summary>
+         //Create tooltip content from property name factor - assumed that data source and data source
+         //date property names are tightly linked with column binded property name
+         //</summary>
+         //<param name="data">PeriodColumnDisplayData</param>
+         //<param name="columnBindedPropertyName">Name of the property binded to the cell column</param>
+         //<returns>tool tip content</returns>
+        private static String GetToolTipContentForCOASpecificGadget(PeriodColumnDisplayData data, String columnBindedPropertyName)
+        {
+            String result = null;
+
+            if (data == null)
+                return result;
+
+            String rootSource = (String)data.GetType().GetProperty(columnBindedPropertyName + "_DATA_ROOT_SOURCE").GetValue(data, null);
+
+            if (rootSource == null)
+                return result;
+
+            String dataSource = (String)data.GetType().GetProperty(columnBindedPropertyName + "_DATA_SOURCE").GetValue(data, null);
+
+            result = "SOURCE:" + rootSource + " " + "DATA SOURCE:" + dataSource ;
+
+            return result;
+        }
+
+
+
         #endregion
     }
 

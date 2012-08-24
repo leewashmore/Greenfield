@@ -13,6 +13,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using GreenField.Gadgets.Models;
+using Telerik.Windows.Controls.GridView;
 
 namespace GreenField.Gadgets.Views
 {
@@ -124,8 +125,7 @@ namespace GreenField.Gadgets.Views
         {
             if (e.PeriodColumnNamespace == typeof(ViewModelCOASpecific).FullName && IsActive)
             {
-                PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, e, isQuarterImplemented: false);              
-                //this.btnExportExcel.IsEnabled = true;
+                PeriodColumns.UpdateColumnInformation(this.dgCOASpecific, e, isQuarterImplemented: false);
             }
         }
 
@@ -210,12 +210,15 @@ namespace GreenField.Gadgets.Views
             this.chCOASpecific.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chCOASpecific.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chCOASpecific.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chCOASpecific.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;
-            //this.chCOASpecific.DefaultView.ChartLegend.Header = string.Empty;
-            //this.chCOASpecific.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-           // this.chCOASpecific.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
-            
+            this.chCOASpecific.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;            
         }
+
+       
+        private void dgCOASpecific_RowLoaded(object sender, RowLoadedEventArgs e)
+        {
+            PeriodColumns.RowDataCustomizationforCOASpecificGadget(e);
+        }
+       
         #endregion
 
 
