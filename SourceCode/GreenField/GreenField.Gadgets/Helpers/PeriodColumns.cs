@@ -995,7 +995,7 @@ namespace GreenField.Gadgets.Helpers
 
             String dataSource = (String)data.GetType().GetProperty(columnBindedPropertyName + "_DATA_SOURCE").GetValue(data, null);
 
-            result = "SOURCE:" + dataSource + " " + "ROOT SOURCE:" + rootSource;
+            result = "SOURCE:" + dataSource + Environment.NewLine + "ROOT SOURCE:" + rootSource;
 
             return result;
         }
