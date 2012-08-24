@@ -101,7 +101,7 @@ namespace GreenField.Gadgets.Helpers
                 for (int i = 0; i < columns.Count(); i++)
                 {
                     TableCell cell = new TableCell();
-                    cell.Background = Color.FromArgb(255, 159, 29, 33);
+                    cell.Background = Color.FromArgb(255, 228, 229, 229);
                     AddCellValue(cell, columns[i].UniqueName);
                     cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
                     headerRow.Cells.Add(cell);

@@ -67,11 +67,12 @@
                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                  GridLinesVisibility="None"
+                                 ElementExporting="dgRelativePerformanceUI_ElementExporting"
                                  RowStyle="{StaticResource GridViewRowStyle}"
                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                  EnableRowVirtualization="false">
                 <telerik:RadGridView.Columns>
-                    <telerik:GridViewDataColumn  Header="Name"  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                    <telerik:GridViewDataColumn  Header="Name"  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" UniqueName="Name"
                                                  DataMemberBinding="{Binding EntityName}"  HeaderTextAlignment="Left" 
                                                  CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -84,7 +85,7 @@
                     <telerik:GridViewDataColumn  Header="YTD" UniqueName="YTD" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding YTDReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
                                                  HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
-                    <telerik:GridViewDataColumn  Header="1-Year" UniqueName="One Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                    <telerik:GridViewDataColumn  Header="1-Year" UniqueName="1-Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                  DataMemberBinding="{Binding OneYearReturn, StringFormat=\{0:n4\}%}" TextAlignment="Right"
                                                  HeaderTextAlignment="Right" SortingState="Descending" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <!--<telerik:GridViewDataColumn  Header="3-Year" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"

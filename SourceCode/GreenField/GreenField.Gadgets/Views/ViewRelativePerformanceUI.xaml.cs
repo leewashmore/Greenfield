@@ -203,6 +203,16 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Helper method Export
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgRelativePerformanceUI_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
+
         #endregion
 
         #region ApplyStyles
@@ -232,5 +242,7 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
+
+        
     }
 }
