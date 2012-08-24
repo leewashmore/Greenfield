@@ -335,19 +335,19 @@ namespace GreenField.Gadgets.Helpers
                     if (propertyInfo.Any(record => record.Name == "SortOrder"))
                         sortOrder = (Int32)defaultRecord.GetType().GetProperty("SortOrder").GetValue(defaultRecord, null);
 
-                    decimal? dataFirstAdditionalInfo = null;
-                    if (additionalFirstDescPropertyName != null)
-                    {
-                        if (propertyInfo.Any(record => record.Name == additionalFirstDescPropertyName))
-                            dataFirstAdditionalInfo = (decimal?)defaultRecord.GetType().GetProperty(additionalFirstDescPropertyName).GetValue(defaultRecord, null);
-                    }
+                    //decimal? dataFirstAdditionalInfo = null;
+                    //if (additionalFirstDescPropertyName != null)
+                    //{
+                    //    if (propertyInfo.Any(record => record.Name == additionalFirstDescPropertyName))
+                    //        dataFirstAdditionalInfo = (decimal?)defaultRecord.GetType().GetProperty(additionalFirstDescPropertyName).GetValue(defaultRecord, null);
+                    //}
 
-                    decimal? dataSecondAdditionalInfo = null;
-                    if (additionalSecondDescPropertyName != null)
-                    {
-                        if (propertyInfo.Any(record => record.Name == additionalSecondDescPropertyName))
-                            dataSecondAdditionalInfo = (decimal?)defaultRecord.GetType().GetProperty(additionalSecondDescPropertyName).GetValue(defaultRecord, null);
-                    }
+                    //decimal? dataSecondAdditionalInfo = null;
+                    //if (additionalSecondDescPropertyName != null)
+                    //{
+                    //    if (propertyInfo.Any(record => record.Name == additionalSecondDescPropertyName))
+                    //        dataSecondAdditionalInfo = (decimal?)defaultRecord.GetType().GetProperty(additionalSecondDescPropertyName).GetValue(defaultRecord, null);
+                    //}
 
                     Int32 columnCount = 0;
                     T yearOneData = default(T);
@@ -504,8 +504,6 @@ namespace GreenField.Gadgets.Helpers
                         PeriodColumnDisplayData displayData = new PeriodColumnDisplayData()
                         {
                             DATA_DESC = dataDesc,
-                            ADDITIONAL_DESC_FIRST = dataFirstAdditionalInfo,
-                            ADDITIONAL_DESC_SECOND = dataSecondAdditionalInfo,
                             SUB_DATA_DESC = item.GroupDisplayName
                         };
 
@@ -581,6 +579,16 @@ namespace GreenField.Gadgets.Helpers
                     #endregion
 
                 RECORD_ENTRY:
+                    object dataFirstAdditionalInfo = null;
+                    if (additionalFirstDescPropertyName != null)
+                    {
+                        dataFirstAdditionalInfo = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType().GetProperty("HarmonicFirst").GetValue(yearFourData, null), dataDecimal, dataPercentage);
+                    }
+                    object dataSecondAdditionalInfo = null;
+                    if (additionalSecondDescPropertyName != null)
+                    {
+                        dataSecondAdditionalInfo = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType().GetProperty("HarmonicSecond").GetValue(yearFourData, null), dataDecimal, dataPercentage);
+                    }
                     result.Add(new PeriodColumnDisplayData()
                     {
                         DATA_ID = dataId,
@@ -589,8 +597,8 @@ namespace GreenField.Gadgets.Helpers
                         DATA_DECIMALS = dataDecimal,
                         SUB_DATA_DESC = groupDescription,
                         SORT_ORDER = sortOrder,
-                        ADDITIONAL_DESC_FIRST = GetFormattedValue(dataFirstAdditionalInfo,dataDecimal,dataPercentage),
-                        ADDITIONAL_DESC_SECOND = GetFormattedValue(dataSecondAdditionalInfo,dataDecimal,dataPercentage),
+                        ADDITIONAL_DESC_FIRST = dataFirstAdditionalInfo,
+                        ADDITIONAL_DESC_SECOND = dataSecondAdditionalInfo,
                         YEAR_ONE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearOneData, "RootSource"),
                         YEAR_TWO_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearTwoData, "RootSource"),
                         YEAR_THREE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearThreeData, "RootSource"),
