@@ -13,6 +13,11 @@ begin
 end
 GO
 
+
+IF OBJECT_ID ('[dbo].[Get_Consensus_Detail]') IS NOT NULL
+	DROP PROCEDURE [dbo].[Get_Consensus_Detail]
+GO
+
 /****** Object:  StoredProcedure [dbo].[Get_Consensus_Detail]    Script Date: 08/23/2012 20:01:16 ******/
 SET ANSI_NULLS ON
 GO

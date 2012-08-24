@@ -18,12 +18,16 @@ begin
 end
 
 GO
+
+IF OBJECT_ID ('[dbo].[usp_GetQuarterlyResults]') IS NOT NULL
+	DROP PROCEDURE [dbo].[usp_GetQuarterlyResults]
+GO
 /****** Object:  StoredProcedure [dbo].[usp_GetQuarterlyResults] Script Date: 06/27/2012 12:02:56 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
-ALTER PROCEDURE [dbo].[usp_GetQuarterlyResults]
+CREATE PROCEDURE [dbo].[usp_GetQuarterlyResults]
 (
 @DataId INT = 44,
 @PeriodYear INT

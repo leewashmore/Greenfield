@@ -18,6 +18,11 @@ begin
 end
 
 GO
+
+IF OBJECT_ID ('[dbo].[usp_GetDataForPeriodGadgets]') IS NOT NULL
+	DROP PROCEDURE [dbo].[usp_GetDataForPeriodGadgets]
+GO
+
 /****** Object:  StoredProcedure [dbo].[usp_GetDataForPeriodGadgets]    Script Date: 08/07/2012 17:24:27 ******/
 SET ANSI_NULLS ON
 GO

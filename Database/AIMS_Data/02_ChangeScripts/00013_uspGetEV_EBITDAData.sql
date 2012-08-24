@@ -17,7 +17,12 @@ begin
 	set noexec on
 end
 GO
-ALTER PROCEDURE [dbo].[Get_EV_EBITDA](@securityId varchar(20),@issuerId varchar(20),@chartTitle varchar(20))	
+
+IF OBJECT_ID ('[dbo].[Get_EV_EBITDA]') IS NOT NULL
+	DROP PROCEDURE [dbo].[Get_EV_EBITDA]
+GO
+
+CREATE PROCEDURE [dbo].[Get_EV_EBITDA](@securityId varchar(20),@issuerId varchar(20),@chartTitle varchar(20))	
 AS
 BEGIN
 	SET NOCOUNT ON;

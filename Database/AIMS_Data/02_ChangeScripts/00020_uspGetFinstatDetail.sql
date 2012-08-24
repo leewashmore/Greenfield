@@ -15,6 +15,10 @@ end
 
 GO
 
+IF OBJECT_ID ('[dbo].[GetFinstatDetail]') IS NOT NULL
+	DROP PROCEDURE [dbo].[GetFinstatDetail]
+GO
+
 /****** Object:  StoredProcedure [dbo].[GetFinstatDetail]    Script Date: 08/23/2012 11:51:27 ******/
 SET ANSI_NULLS ON
 GO

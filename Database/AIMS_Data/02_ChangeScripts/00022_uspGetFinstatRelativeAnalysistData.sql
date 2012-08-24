@@ -13,6 +13,10 @@ begin
 end
 GO
 
+IF OBJECT_ID ('[dbo].[GetFinstatRelativeAnalysisData]') IS NOT NULL
+	DROP PROCEDURE [dbo].[GetFinstatRelativeAnalysisData]
+GO
+
 /****** Object:  StoredProcedure [dbo].[GetFinstatRelativeAnalysisData]    Script Date: 08/23/2012 11:58:11 ******/
 SET ANSI_NULLS ON
 GO

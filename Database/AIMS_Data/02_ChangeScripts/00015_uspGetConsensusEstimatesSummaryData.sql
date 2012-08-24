@@ -19,7 +19,12 @@ begin
 end
 
 GO
-ALTER PROCEDURE [dbo].[GetConsensusEstimatesSummaryData] @Security varchar(500)
+
+IF OBJECT_ID ('[dbo].[GetConsensusEstimatesSummaryData]') IS NOT NULL
+	DROP PROCEDURE [dbo].[GetConsensusEstimatesSummaryData]
+GO
+
+CREATE PROCEDURE [dbo].[GetConsensusEstimatesSummaryData] @Security varchar(500)
 AS
 
 SET FMTONLY OFF

@@ -19,6 +19,10 @@ end
 
 GO
 
+IF OBJECT_ID ('[dbo].[Get_Statement]') IS NOT NULL
+	DROP PROCEDURE [dbo].[Get_Statement]
+GO
+
 Create PROCEDURE [dbo].[Get_Statement](
 	@ISSUER_ID			varchar(20),				-- The company identifier		
 	@DATA_SOURCE		varchar(10)  = 'REUTERS',	-- REUTERS, PRIMARY, INDUSTRY

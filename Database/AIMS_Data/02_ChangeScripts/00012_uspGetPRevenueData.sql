@@ -19,7 +19,11 @@ end
 
 GO
 
-ALTER PROCEDURE [dbo].[Get_PRevenue](@securityId varchar(20),@issuerId varchar(20),@chartTitle varchar(20))	
+IF OBJECT_ID ('[dbo].[Get_PRevenue]') IS NOT NULL
+	DROP PROCEDURE [dbo].[Get_PRevenue]
+GO
+
+CREATE PROCEDURE [dbo].[Get_PRevenue](@securityId varchar(20),@issuerId varchar(20),@chartTitle varchar(20))	
 AS
 BEGIN
 	SET NOCOUNT ON;

@@ -13,6 +13,10 @@ begin
 end
 GO
 
+IF OBJECT_ID ('[dbo].[Broker_Detail] ') IS NOT NULL
+	DROP PROCEDURE [dbo].[Broker_Detail]
+GO
+
 /****** Object:  StoredProcedure [dbo].[Broker_Detail]    Script Date: 08/23/2012 19:59:49 ******/
 SET ANSI_NULLS ON
 GO
