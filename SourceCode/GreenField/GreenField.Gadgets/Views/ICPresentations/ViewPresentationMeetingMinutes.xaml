@@ -1,0 +1,290 @@
+﻿<helpers:ViewBaseUserControl xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"  x:Class="GreenField.Gadgets.Views.ViewPresentationMeetingMinutes"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+    d:DesignHeight="400" d:DesignWidth="550">
+
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                <ResourceDictionary>
+                    <helpers:MeetingMinutesAttendenceRemoveButtonEnabledConverter x:Key="MeetingMinutesAttendenceRemoveButtonEnabledConverter"/>
+                    <helpers:DataContextProxy x:Key="DataContextProxy"/>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
+    
+    <telerik:RadBusyIndicator x:Name="biMeetingMinutes" BusyContent="{Binding BusyIndicatorContent}" FontSize="7" FontFamily="Arial"
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <!--Selected Presentation Details-->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Presentation Date: " VerticalAlignment="Center" FontWeight="Bold"
+                           Style="{StaticResource TextBlockStyle}"/>
+                <telerik:RadComboBox Grid.Column="1" Width="150" ItemsSource="{Binding ClosedForVotingMeetingInfo}"
+                                     SelectedItem="{Binding SelectedClosedForVotingMeetingInfo, Mode=TwoWay}"
+                                     HorizontalContentAlignment="Left"
+                                     EmptyText="Select Date"                                 
+                                     Style="{StaticResource RadComboBoxStyle}">
+                    <telerik:RadComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding MeetingDateTime, StringFormat='MM/dd/yyyy'}"
+                                       VerticalAlignment="Center" HorizontalAlignment="Left"
+                                       Style="{StaticResource TextBlockStyle}"/>
+                        </DataTemplate>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+            </Grid>
+            <Grid Grid.Row="1" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0" MinHeight="{StaticResource DefaultControlMinHeight}" Background="{StaticResource DefaultGridHeaderBackground}">
+                    <TextBlock Margin="5" Text="PRESENTER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="1" MinHeight="{StaticResource DefaultControlMinHeight}" Background="{StaticResource DefaultGridHeaderBackground}">
+                    <TextBlock Margin="5" Text="SECURITY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="2" MinHeight="{StaticResource DefaultControlMinHeight}" Background="{StaticResource DefaultGridHeaderBackground}">
+                    <TextBlock Margin="5" Text="TICKER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="3" MinHeight="{StaticResource DefaultControlMinHeight}" Background="{StaticResource DefaultGridHeaderBackground}">
+                    <TextBlock Margin="5" Text="COUNTRY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                </Grid>
+                <Grid Grid.Row="0" Grid.Column="4" MinHeight="{StaticResource DefaultControlMinHeight}" Background="{StaticResource DefaultGridHeaderBackground}">
+                    <TextBlock Margin="5" Text="INDUSTRY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                </Grid>                
+                <ItemsControl Grid.Row="1" Grid.Column="0" Margin="0,5,5,5" 
+                              ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctPresentationInfo}" 
+                              Style="{StaticResource ItemsControlStyle}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="2" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding Presenter}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl Grid.Row="1" Grid.Column="1" Margin="0,5,5,5" 
+                              ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctPresentationInfo}" 
+                              Style="{StaticResource ItemsControlStyle}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="2" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityName}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl Grid.Row="1" Grid.Column="2" Margin="0,5,5,5" 
+                              ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctPresentationInfo}" 
+                              Style="{StaticResource ItemsControlStyle}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="2" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityTicker}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl Grid.Row="1" Grid.Column="3" Margin="0,5,5,5" 
+                              ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctPresentationInfo}" 
+                              Style="{StaticResource ItemsControlStyle}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="2" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityCountry}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <ItemsControl Grid.Row="1" Grid.Column="4" Margin="0,5,5,5" 
+                              ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctPresentationInfo}" 
+                              Style="{StaticResource ItemsControlStyle}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Margin="2" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityIndustry}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>            
+            <Grid Grid.Row="2" Margin="0,5,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Attendance" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Row="1" Margin="0,2,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition MinHeight="{StaticResource DefaultControlMinHeight}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="NAMES" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="ATTENDANCE" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
+                    <ItemsControl Grid.Row="1" Grid.Column="0" Margin="0,5,5,5" 
+                              ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctAttendanceInfo}" 
+                              Style="{StaticResource ItemsControlStyle}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5,2,2,2" MinHeight="{StaticResource DefaultControlMinHeight}">
+                                    <TextBlock Text="{Binding Name}" 
+                                               HorizontalAlignment="Left" VerticalAlignment="Center"
+                                               Style="{StaticResource TextBlockStyle}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl Grid.Row="1" Grid.Column="1" Margin="0,5,5,5" 
+                              ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctAttendanceInfo}" 
+                              Style="{StaticResource ItemsControlStyle}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <telerik:RadComboBox Margin="5,2,2,2" SelectedItem="{Binding AttendanceType, Mode=TwoWay}" 
+                                                     VerticalAlignment="Center" HorizontalContentAlignment="Left" 
+                                                     Style="{StaticResource RadComboBoxStyle}"
+                                                     ItemsSource="{Binding Source={StaticResource DataContextProxy},Path=DataSource.AttendanceTypeInfo}"
+                                                     HorizontalAlignment="Left" Width="150"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl Grid.Row="1" Grid.Column="2" Margin="0,5,5,5" 
+                              ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctAttendanceInfo}" 
+                              Style="{StaticResource ItemsControlStyle}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="{StaticResource DefaultControlMinHeight}"
+                                                   IsEnabled="{Binding Converter={StaticResource MeetingMinutesAttendenceRemoveButtonEnabledConverter}}"
+                                                   Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttendeeCommand}" 
+                                                   CommandParameter="{Binding}"
+                                                   Style="{StaticResource RadButtonStyle}"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>                
+                <Grid Grid.Row="2" Margin="0,2,0,0">
+                    <telerik:RadButton Content="ADD" Width="75" HorizontalAlignment="Left" Style="{StaticResource RadButtonStyle}"
+                               Command="{Binding AddAttendeeCommand}"/>
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="3" Margin="0,5,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Notes:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <TextBox Grid.Row="1" Text="{Binding SelectedClosedForVotingMeetingInfo.MeetingDescription, Mode=TwoWay}" MaxLength="255" Style="{StaticResource TextBoxStyle}"/>
+            </Grid>
+            <!--Reports Section-->
+            <Grid Grid.Row="4" Margin="0,5,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Uploads:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Row="1" Margin="0,2,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>                        
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Industry Report" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    <TextBlock Text="Other Documents" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    <TextBox Text="{Binding SelectedIndustryReports, Mode=TwoWay}" Margin="2,0,0,0" IsEnabled="False" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
+                    <TextBox Text="{Binding SelectedOtherReports, Mode=TwoWay}" Margin="2,2,0,0" IsEnabled="False" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
+                    <telerik:RadButton x:Name="btnBrowseIndustryReport" Content="BROWSE" Width="75" Margin="2,0,0,0" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
+                                       Click="btnBrowseIndustryReport_Click"/>
+                    <telerik:RadButton x:Name="btnBrowseOtherDocuments" Content="BROWSE" Width="75" Margin="2,2,0,0" Grid.Row="1" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
+                                       Click="btnBrowseOtherDocuments_Click"/>
+                    <telerik:RadButton Content="ADD" Width="75" Margin="2,0,0,0" Grid.Column="3" Style="{StaticResource RadButtonStyle}"
+                                       Command="{Binding AddIndustryReportCommand}"/>
+                    <telerik:RadButton Content="ADD" Width="75" Margin="2,2,0,0" Grid.Row="1" Grid.Column="3" Style="{StaticResource RadButtonStyle}"
+                                       Command="{Binding AddOtherDocumentCommand}"/>                    
+                </Grid>
+            </Grid>
+
+            <!--Attachment Section-->
+            <Grid Grid.Row="5" Margin="0,5,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Attachments:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Row="1" Margin="0,2,0,0">
+                    <ItemsControl ItemsSource="{Binding ClosedForVotingMeetingAttachedFileInfo}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <toolkit:WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="2">
+                                    <Grid Background="{StaticResource DefaultGridHeaderBackground}">
+                                        <TextBlock Margin="2" Text="{Binding MeetingAttachedFileData.FileName}" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                                           HorizontalAlignment="Left"/>
+                                    </Grid>
+                                    <Grid Background="{StaticResource DefaultGridHeaderBackground}">
+                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="20"
+                                                           Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
+                                                           CommandParameter="{Binding}"
+                                                           Style="{StaticResource RadButtonStyle}"/>
+                                    </Grid>
+                                </StackPanel>                                
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>                    
+                </Grid>
+            </Grid>
+
+            <!--Application Section-->
+            <Grid Grid.Row="6" Margin="0,2,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <telerik:RadButton Content="PREVIEW" Grid.Column="0" Width="100" 
+                               Command="{Binding}" Style="{StaticResource RadButtonStyle}"/>
+                <telerik:RadButton Content="SUBMIT" Grid.Column="1" Width="100" Command="{Binding}" Style="{StaticResource RadButtonStyle}"/>
+                <telerik:RadButton Content="SAVE" Grid.Column="2" Width="100"
+                               Command="{Binding SaveCommand}" Style="{StaticResource RadButtonStyle}"/>
+            </Grid>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</helpers:ViewBaseUserControl>

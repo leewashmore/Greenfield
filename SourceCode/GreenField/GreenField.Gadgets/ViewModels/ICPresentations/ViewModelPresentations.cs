@@ -14,7 +14,7 @@ using System.ComponentModel.Composition;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.ViewModel;
 //using Ashmore.Emm.GreenField.BusinessLogic.MeetingServiceReference;
-using GreenField.ServiceCaller.MeetingServiceReference;
+using GreenField.ServiceCaller.MeetingDefinitions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Logging;
@@ -38,7 +38,7 @@ namespace GreenField.Gadgets.ViewModels
     {
 
         #region Fields
-
+        private IRegionManager _regionManager;
        // private ManageMeetings _manageMeetings;
         /// <summary>
         /// Event Aggregator
@@ -61,573 +61,287 @@ namespace GreenField.Gadgets.ViewModels
         private bool _isActive;
         public bool IsActive
         {
-            get
-            {
-                return _isActive;
-            }
+            get { return _isActive; }
             set
             {
                 _isActive = value;
             }
         }
-
         #endregion
 
         #region Constructor
-
         public ViewModelPresentations(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
             _regionManager = param.RegionManager;
-
-
-            ManageMeetingsServiceCalls();
             
+            RetrievePresentationOverviewData();
         }
-
-
         #endregion
 
         #region Properties
 
-        #region Prism-Imported Properties
-
-        public IRegionManager _regionManager { private get; set; }
-
-        #endregion
-
-        #region Binded Properties
-
-        private ObservableCollection<string> _presenterInfo;
-        public ObservableCollection<string> PresenterInfo
+        #region Busy Indicator Notification
+        /// <summary>
+        /// Displays/Hides busy indicator to notify user of the on going process
+        /// </summary>
+        private bool _busyIndicatorIsBusy = false;
+        public bool BusyIndicatorIsBusy
         {
-            get { return _presenterInfo; }
+            get { return _busyIndicatorIsBusy; }
             set
             {
-                if (_presenterInfo != value)
-                {
-                    _presenterInfo = value;
-                    RaisePropertyChanged(() => this.PresenterInfo);
-                }
+                _busyIndicatorIsBusy = value;
+                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
             }
         }
 
-        private ObservableCollection<StatusType> _statusTypeInfo;
-        public ObservableCollection<StatusType> StatusTypeInfo
+        /// <summary>
+        /// Stores the message displayed over the busy indicator to notify user of the on going process
+        /// </summary>
+        private string _busyIndicatorContent;
+        public string BusyIndicatorContent
         {
-            get { return _statusTypeInfo; }
+            get { return _busyIndicatorContent; }
             set
             {
-                if (_statusTypeInfo != value)
-                {
-                    _statusTypeInfo = value;
-                    RaisePropertyChanged(() => this.StatusTypeInfo);
-                }
+                _busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }
+        #endregion        
+
+        private List<ICPresentationOverviewData> _iCPresentationOverviewInfo;
+        public List<ICPresentationOverviewData> ICPresentationOverviewInfo
+        {
+            get { return _iCPresentationOverviewInfo; }
+            set 
+            {
+                _iCPresentationOverviewInfo = value; 
+                RaisePropertyChanged(() => this.ICPresentationOverviewInfo);
             }
         }
 
-        private ICPPresentationInfo _selectedPresentation;
-        public ICPPresentationInfo SelectedPresentation
+        private ICPresentationOverviewData _selectedPresentationOverviewInfo;
+        public ICPresentationOverviewData SelectedPresentationOverviewInfo
         {
-            get { return _selectedPresentation; }
+            get { return _selectedPresentationOverviewInfo; }
             set
             {
-                if (_selectedPresentation != value)
-                {
-                    _selectedPresentation = value;
-                    NavigationInfo.PresentationInfoObject = value;
-                    RaisePropertyChanged(() => this.SelectedPresentation);
-                    SelectionRaisePropertyChanged();
-                }
+                _selectedPresentationOverviewInfo = value;
+                RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
+                ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, value);                
+                SelectionRaisePropertyChanged();
             }
-        }
-
-        private ObservableCollection<ICPPresentationInfo> _presentationInfo;
-        public ObservableCollection<ICPPresentationInfo> PresentationInfo
-        {
-            get { return _presentationInfo; }
-            set
-            {
-                if (_presentationInfo != value)
-                {
-                    _presentationInfo = value;
-                    RaisePropertyChanged(() => this.PresentationInfo);
-                }
-            }
-        }
-
-
-        private DateTime? _searchDateFilter = null;
-        public DateTime? SearchDateFilter
-        {
-            get { return _searchDateFilter; }
-            set
-            {
-                if (_searchDateFilter != value)
-                {
-                    _searchDateFilter = value;
-                    RaisePropertyChanged(() => this.SearchDateFilter);
-                    FilterRaisePropertyChanged();
-                }
-            }
-        }
-
-
-
-
-        private string _presenterFilter;
-        public string PresenterFilter
-        {
-            get { return _presenterFilter; }
-            set
-            {
-                if (_presenterFilter != value)
-                {
-                    _presenterFilter = value;
-                    RaisePropertyChanged(() => this.PresenterFilter);
-                    FilterRaisePropertyChanged();
-                }
-            }
-        }
-
-
-
-        private StatusType _statusTypeFilter;
-        public StatusType StatusTypeFilter
-        {
-            get { return _statusTypeFilter; }
-            set
-            {
-                if (_statusTypeFilter != value)
-                {
-                    _statusTypeFilter = value;
-                    RaisePropertyChanged(() => this.StatusTypeFilter);
-                    FilterRaisePropertyChanged();
-                }
-            }
-        }
-   
-        #endregion
+        }                        
 
         #region ICommand Properties
+        public ICommand ChangeDateCommand
+        {
+            get { return new DelegateCommand<object>(ChangeDateCommandMethod, ChangeDateCommandValidationMethod); }
+        }
 
+        public ICommand DecisionEntryCommand
+        {
+            get { return new DelegateCommand<object>(DecisionEntryCommandMethod, DecisionEntryCommandValidationMethod); }
+        }
      
         public ICommand UploadCommand
         {
-            get { return new DelegateCommand<object>(ICPPresentationsUploadItem, ICPPresentationsUploadItemValidation); }
+            get { return new DelegateCommand<object>(UploadCommandMethod, UploadCommandValidationMethod); }
         }
 
         public ICommand EditCommand
         {
-            get { return new DelegateCommand<object>(ICPPresentationsEditItem, ICPPresentationsEditItemValidation); }
+            get { return new DelegateCommand<object>(EditCommandMethod, ChangeDateCommandValidationMethod); }
         }
-
       
         public ICommand WithdrawCommand
         {
-            get { return new DelegateCommand<object>(ICPPresentationsWithdrawItem, ICPPresentationsEditItemValidation); }
+            get { return new DelegateCommand<object>(WithdrawCommandMethod, EditCommandValidationMethod); }
         }
 
         public ICommand ViewCommand
         {
-            get { return new DelegateCommand<object>(ICPPresentationsViewItem, ICPPresentationsViewItemValidation); }
-        }
+            get { return new DelegateCommand<object>(ViewCommandMethod, ViewCommandValidationMethod); }
+        }    
 
-    
-
-        public ICommand NewPresentationCommand
+        public ICommand NewCommand
         {
-            get { return new DelegateCommand<object>(ICPPresentationsNewItem); }
+            get { return new DelegateCommand<object>(NewCommandMethod); }
         }
-
-        public ICommand SearchCommand
-        {
-            get { return new DelegateCommand<object>(ICPPresentationsSearch, ICPPresentationsSearchResetValidation); }
-        }
-
-        public ICommand ResetCommand
-        {
-            get { return new DelegateCommand<object>(ICPPresentationsReset, ICPPresentationsSearchResetValidation); }
-        }
-
-        //public ICommand AcceptCommand
-        //{
-        //    get { return new DelegateCommand<object>(ICPPresentationsAcceptItem, ICPPresentationsAcceptItemValidation); }
-        //}
-
-        //public ICommand RequestCommand
-        //{
-        //    get { return new DelegateCommand<object>(ICPPresentationsRequestItem, ICPPresentationsRequestItemValidation); }
-        //}
-
-
-        #endregion
-
-        #region Navigation Properties
-
-        //Meeting Information not required - nulled
-        private ICPNavigationInfo _navigationInfo = new ICPNavigationInfo { MeetingInfoObject = null };
-        public ICPNavigationInfo NavigationInfo
-        {
-            get { return _navigationInfo; }
-            set { _navigationInfo = value; }
-        }
-
-        #endregion
+        #endregion        
 
         #endregion
 
         #region ICommand Methods
-
-      
-        #region UploadCommand
-
-        private bool ICPPresentationsUploadItemValidation(object param)
-        {
-            bool userRoleValidation = true; //Check if user is the author
-            bool statusValidation = true;
-            if (SelectedPresentation != null)
-            {
-                long status = SelectedPresentation.StatusTypeID;
-                statusValidation = (status == StatusTypes.InProgress);
-            }
-            return SelectedPresentation != null ? (userRoleValidation && statusValidation ? true : false) : false;
-        }
-
-        private void ICPPresentationsUploadItem(object param)
-        {
-            if (NavigationInfo == null) NavigationInfo = new ICPNavigationInfo();
-
-            NavigationInfo.MeetingInfoObject = null;
-            NavigationInfo.ViewPluginFlagEnumerationObject = ViewPluginFlagEnumeration.Upload;
-            NavigationInfo.PresentationInfoObject = SelectedPresentation;
-            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION);
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeEditPresentations", UriKind.Relative));
-        }
-        
-        #endregion
-
-
-        #region EditCommand
-
-        private bool ICPPresentationsEditItemValidation(object param)
-        {
-            bool userRoleValidation = true; //Check if user is the author
-            bool statusValidation = true;
-            if (SelectedPresentation != null)
-            {
-                long status = SelectedPresentation.StatusTypeID;
-                statusValidation = (status == StatusTypes.InProgress) || (status == StatusTypes.ReadyforVoting);
-            }
-            return SelectedPresentation != null ? (userRoleValidation && statusValidation ? true : false) : false;
-        }
-
-        private void ICPPresentationsEditItem(object param)
-        {
-            if (NavigationInfo == null) NavigationInfo = new ICPNavigationInfo();
-                        
-            NavigationInfo.MeetingInfoObject = null;
-            NavigationInfo.ViewPluginFlagEnumerationObject = ViewPluginFlagEnumeration.Edit;
-            NavigationInfo.PresentationInfoObject = SelectedPresentation;
-            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION);
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeEditPresentations", UriKind.Relative));
-        }
-
-        #endregion
-
-        #region SearchCommand, ResetCommand
-
-        private bool ICPPresentationsSearchResetValidation(object param)
-        {
-            return (SearchDateFilter != null || PresenterFilter != null || StatusTypeFilter != null) ? true : false;
-        }
-
-        private void ICPPresentationsSearch(object param)
-        {
-            DateTime? SearchDate = (SearchDateFilter != null) ? SearchDateFilter : null;
-            string Presenter = (PresenterFilter != null) ? PresenterFilter : null;
-            string Status = (StatusTypeFilter != null) ? StatusTypeFilter.StatusType1 : null;
-
-            _dbInteractivity.GetPresentationsByMeetingDatePresenterStatus(SearchDate, Presenter, Status, GetPresentationsCallBackMethod);
-        }
-
-        private void ICPPresentationsReset(object param)
-        {
-            ManageMeetingsServiceCalls();
-        }
-
-        #endregion
-
-
-        #region WithdrawCommand
-
-        private bool ICPPresentationsWithdrawItemValidation(object param)
-        {
-            bool userRoleValidation = true; //Check if user is Author
-            bool statusValidation = true; //Status checks might come later
-            
-            return SelectedPresentation != null ? (userRoleValidation && statusValidation ? true : false) : false;
-        }
-
-        private void ICPPresentationsWithdrawItem(object param)
-        {
-            //Mapping to be removed or not ?
-            SelectedPresentation.StatusTypeID = StatusTypes.Withdrawn;
-            _dbInteractivity.UpdatePresentation(SelectedPresentation.ConvertToDB(), (msg) =>
-            {
-                _dbInteractivity.GetPresentations(GetPresentationsCallBackMethod);
-            });
-        }
-
-        #endregion
-
-        #region ViewCommand
-
-        private bool ICPPresentationsViewItemValidation(object param)
-        {
-            bool userRoleValidation = true; //Check if user is Author
-            bool statusValidation = true;
-            if (SelectedPresentation != null)
-            {
-                long status = SelectedPresentation.StatusTypeID;
-                if (userRoleValidation)//if user is voting member and voting open
-                {
-                    //long status = SelectedPresentation.StatusTypeID;
-                    statusValidation = (status == StatusTypes.ReadyforVoting);
-                    
-                }
-                else
-                {
-                    statusValidation = (status > StatusTypes.InProgress && status != StatusTypes.Withdrawn);
-                }
-            }
-
-            return SelectedPresentation != null ? (statusValidation ? true : false) : false;
-        }
-
-        private void ICPPresentationsViewItem(object param)
-        {
-            bool userRoleValidation = true; //Check if user is voting member
-
-            if (userRoleValidation && SelectedPresentation.StatusTypeID == StatusTypes.ReadyforVoting)
-                NavigationInfo.ViewPluginFlagEnumerationObject = ViewPluginFlagEnumeration.Vote;
-            else
-                NavigationInfo.ViewPluginFlagEnumerationObject = ViewPluginFlagEnumeration.View;
-            
-            NavigationInfo.PresentationInfoObject = SelectedPresentation;
-            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE);
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeVote", UriKind.Relative));
-        }
-
-        #endregion       
-
-        #region NewPresentationCommand
-
-        private void ICPPresentationsNewItem(object param)
-        {
-            NavigationInfo.ViewPluginFlagEnumerationObject = ViewPluginFlagEnumeration.Create;
-            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_NEW_PRESENTATION);
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeNew", UriKind.Relative));
-        }
-
-        #endregion
-
-        #region AcceptCommand
-
-        //private bool ICPPresentationsAcceptItemValidation(object param)
-        //{
-
-        //    bool userRoleValidation = true; //Check if user is ICAdmin
-        //    bool statusValidation = true;
-        //    if (SelectedPresentation != null)
-        //    {
-        //        long status = SelectedPresentation.StatusTypeID;
-        //        statusValidation = (status == StatusTypes.Requested);
-        //    }
-
-        //    return SelectedPresentation != null ? (userRoleValidation && statusValidation ? true : false) : false;
-        //}
-
-        //private void ICPPresentationsAcceptItem(object param)
-        //{
-
-        //    ChildAcceptRequestPresentations acceptPresentationNotification =
-        //    new ChildAcceptRequestPresentations(_dbInteractivity, _logger, Convert.ToDateTime(SelectedPresentation.PresentationDate)) { Title = "Accept Presentation" };
-
-        //    acceptPresentationNotification.Show();
-        //    acceptPresentationNotification.Unloaded += (se, e) =>
-        //        {
-        //            if ((se as ChildAcceptRequestPresentations).DialogResult == true)
-        //            {
-        //                MeetingInfo meetingInfo = (se as ChildAcceptRequestPresentations).SelectedMeeting;
-
-        //                //Update Mapping
-
-        //                if (meetingInfo.MeetingDateTime != SelectedPresentation.PresentationDate)
-        //                {
-        //                    MeetingPresentationMappingInfo mappingUpdateInfo = new MeetingPresentationMappingInfo
-        //                    {
-        //                        MeetingID = meetingInfo.MeetingID,
-        //                        PresentationID = SelectedPresentation.PresentationID,
-        //                        ModifedBy = "rvig",
-        //                        ModifiedOn = DateTime.Now
-        //                    };
-
-        //                    _dbInteractivity.UpdateMeetingPresentationMapping(mappingUpdateInfo, (msg) => { });
-        //                }
-
-        //                //Update Status
-        //                SelectedPresentation.PresentationDate = meetingInfo.MeetingDateTime;
-        //                SelectedPresentation.StatusTypeID = StatusTypes.PendingDocuments;
-        //                _dbInteractivity.UpdatePresentation(SelectedPresentation.ConvertToDB(), (msg) =>
-        //                {
-        //                    _dbInteractivity.GetPresentations(GetPresentationsCallBackMethod);
-        //                });
-        //            }
-        //        };
-
-        //}
-
-        #endregion
-
-        #region RequestCommand
-
-        //private bool ICPPresentationsRequestItemValidation(object param)
-        //{
-        //    bool userRoleValidation = true; //Check if user is Author
-        //    bool statusValidation = true;
-        //    if (SelectedPresentation != null)
-        //    {
-        //        long status = SelectedPresentation.StatusTypeID;
-        //        statusValidation = (status == StatusTypes.InProgress);
-        //    }
-
-        //    return SelectedPresentation != null ? (userRoleValidation && statusValidation ? true : false) : false;
-        //}
-
-        //private void ICPPresentationsRequestItem(object param)
-        //{
-
-        //    ChildAcceptRequestPresentations requestMeetingNotification =
-        //        new ChildAcceptRequestPresentations(_dbInteractivity, _logger, Convert.ToDateTime(SelectedPresentation.PresentationDate)) { Title = "Request Meeting" };
-
-        //    requestMeetingNotification.Show();
-        //    requestMeetingNotification.Unloaded += (se, e) =>
-        //    {
-        //        MeetingInfo meetingInfo = (se as ChildAcceptRequestPresentations).SelectedMeeting;
-
-        //        //Create Mapping
-
-        //        MeetingPresentationMappingInfo mappingInfo = new MeetingPresentationMappingInfo
-        //        {
-        //            MeetingID = meetingInfo.MeetingID,
-        //            PresentationID = SelectedPresentation.PresentationID,
-        //            CreatedBy = "rvig",
-        //            CreatedOn = DateTime.Now,
-        //            ModifedBy = "rvig",
-        //            ModifiedOn = DateTime.Now
-        //        };
-
-        //        _dbInteractivity.CreateMeetingPresentationMapping(mappingInfo, (msg) => { MessageBox.Show(msg); });
-
-        //        //Update Status
-
-        //        SelectedPresentation.PresentationDate = meetingInfo.MeetingDateTime;
-        //        SelectedPresentation.StatusTypeID = StatusTypes.Requested;
-        //        _dbInteractivity.UpdatePresentation(SelectedPresentation.ConvertToDB(), (msg) =>
-        //        {
-        //            _dbInteractivity.GetPresentations(GetPresentationsCallBackMethod);
-        //        });
-
-        //    };
-        //}
-
-        #endregion
-
-        #endregion
-
-        #region INavigationAware methods
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            navigationContext.NavigationService.Region.Context = NavigationInfo;
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            //Make Service Calls to DB everytime we navigate to this view
-            ManageMeetingsServiceCalls();
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
+        private bool ChangeDateCommandValidationMethod(object param)
         {
             return true;
         }
 
-        #endregion
+        private void ChangeDateCommandMethod(object param)
+        {
+            ChildViewPresentationDateChangeEdit childViewPresentationDateChangeEdit = new ChildViewPresentationDateChangeEdit();
+            childViewPresentationDateChangeEdit.Show();
+        }
 
+        private bool DecisionEntryCommandValidationMethod(object param)
+        {
+            return true;
+        }
+
+        private void DecisionEntryCommandMethod(object param)
+        {
+            
+        }
+
+        private bool UploadCommandValidationMethod(object param)
+        {
+            if (UserSession.SessionManager.SESSION == null 
+                || SelectedPresentationOverviewInfo == null)
+                return false;
+
+            bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
+            bool statusValidation = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS;
+            return userRoleValidation && statusValidation;
+        }
+
+        private void UploadCommandMethod(object param)
+        {
+            ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Upload);
+            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION);
+            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeEditPresentations", UriKind.Relative));
+        }
+
+        private bool EditCommandValidationMethod(object param)
+        {
+            if (UserSession.SessionManager.SESSION == null
+                || SelectedPresentationOverviewInfo == null)
+                return false;
+
+            bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
+            bool statusValidation = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
+                || SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING;
+
+            return userRoleValidation && statusValidation;
+        }
+
+        private void EditCommandMethod(object param)
+        {
+            ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Edit);
+            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_EDIT_PRESENTATION);
+            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeEditPresentations", UriKind.Relative));
+        }
+
+        private bool ICPPresentationsWithdrawItemValidation(object param)
+        {
+            if (UserSession.SessionManager.SESSION == null
+                || SelectedPresentationOverviewInfo == null)
+                return false;
+
+            bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
+            bool statusValidation = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
+                || SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING;
+
+            return userRoleValidation && statusValidation;
+        }
+
+        private void WithdrawCommandMethod(object param)
+        {
+            
+        }   
+
+        private bool ViewCommandValidationMethod(object param)
+        {
+            if (UserSession.SessionManager.SESSION == null
+                || SelectedPresentationOverviewInfo == null)
+                return false;
+
+            bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
+            bool statusValidation = UserSession.SessionManager.SESSION.Roles.Contains("IC_MEMBER_VOTING")
+                ? SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING
+                : SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
+                    || SelectedPresentationOverviewInfo.StatusType == StatusType.WITHDRAWN;
+
+            return userRoleValidation && statusValidation;            
+        }
+
+        private void ViewCommandMethod(object param)
+        {
+            bool userRoleValidation = UserSession.SessionManager.SESSION.Roles.Contains("IC_MEMBER_VOTING");
+
+            if (userRoleValidation && SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING
+                ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Vote);
+            else
+                ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.View);
+                        
+            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_VOTE);
+            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeVote", UriKind.Relative));
+        }
+
+        private void NewCommandMethod(object param)
+        {
+            ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Create);
+            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_NEW_PRESENTATION);
+            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeNew", UriKind.Relative));
+        }
+        #endregion
+        
         #region Helper Methods
 
+        private void RetrievePresentationOverviewData()
+        {
+            if (_dbInteractivity != null)
+            {
+                BusyIndicatorNotification(true, "Retrieving Presentation Overview Information...");
+                _dbInteractivity.RetrievePresentationOverviewData(RetrievePresentationOverviewDataCallbackMethod);
+            }
+        }
+        
         private void SelectionRaisePropertyChanged()
         {
             RaisePropertyChanged(() => this.EditCommand);
             RaisePropertyChanged(() => this.UploadCommand);
-            //RaisePropertyChanged(() => this.AcceptCommand);
+            RaisePropertyChanged(() => this.NewCommand);
             RaisePropertyChanged(() => this.WithdrawCommand);
             RaisePropertyChanged(() => this.ViewCommand);
-            //RaisePropertyChanged(() => this.RequestCommand);
-        }
-
-        private void FilterRaisePropertyChanged()
-        {
-            RaisePropertyChanged(() => this.SearchCommand);
-            RaisePropertyChanged(() => this.ResetCommand);
-        }
-
-        public void ManageMeetingsServiceCalls()
-        {
-            _dbInteractivity.GetPresentations(GetPresentationsCallBackMethod);
-            _dbInteractivity.GetDistinctPresenters(GetDistinctPresentersCallBackMethod);
-            _dbInteractivity.GetStatusTypes(GetDistinctStatusTypesCallBackMethod);
-
-            //Default Settings
-            PresenterFilter = null;
-            StatusTypeFilter = null;
-            SearchDateFilter = null;
-
-            SelectionRaisePropertyChanged();
-        }
+            RaisePropertyChanged(() => this.ChangeDateCommand);
+            RaisePropertyChanged(() => this.DecisionEntryCommand);
+        }        
 
         #endregion
 
         #region CallBack Methods
-
-        private void GetPresentationsCallBackMethod(List<PresentationInfoResult> val)
+        private void RetrievePresentationOverviewDataCallbackMethod(List<ICPresentationOverviewData> result)
         {
-            ObservableCollection<PresentationInfoResult> PresentationInfoCollObj = new ObservableCollection<PresentationInfoResult>(val);
-            ObservableCollection<ICPPresentationInfo> ICPPresentationInfoCollObj = new ObservableCollection<ICPPresentationInfo>();
-            foreach (PresentationInfoResult pinfo in PresentationInfoCollObj)
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
             {
-                ICPPresentationInfo ICPPresentationInfoObj = new ICPPresentationInfo(pinfo);
-                ICPPresentationInfoCollObj.Add(ICPPresentationInfoObj);
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    ICPresentationOverviewInfo = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
             }
-
-            PresentationInfo = ICPPresentationInfoCollObj;
-
-        }
-
-        private void GetDistinctPresentersCallBackMethod(List<string> val)
-        {
-            PresenterInfo = new ObservableCollection<string>(val);
-        }
-
-        private void GetDistinctStatusTypesCallBackMethod(List<StatusType> val)
-        {
-            StatusTypeInfo = new ObservableCollection<StatusType>(val);
-        }
-
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }            
+        }        
         #endregion
 
         #region EventUnSubscribe
@@ -641,7 +355,12 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion   
 
-    
-        
+        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        {
+            if (message != null)
+                BusyIndicatorContent = message;
+
+            BusyIndicatorIsBusy = showBusyIndicator;
+        }
     }
 }

@@ -115,7 +115,6 @@ namespace GreenField.Gadgets.Views
         {
             GroupedGridRowLoadedHandler.Implement(e);
             PeriodColumns.RowDataCustomization(e);
-
         } 
         #endregion
 
@@ -137,17 +136,13 @@ namespace GreenField.Gadgets.Views
 
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            //List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
-            //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Financial Statement Data", Element = this.dgFinancialReport, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-            //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "External Research Data", Element = this.dgFinancialReportExt, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+            RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Financial Statement Data", Element = this.dgFinancialReport, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+            RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "External Research Data", Element = this.dgFinancialReportExt, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
 
-            //ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_BALANCE_SHEET);
-            //childExportOptions.Show();
-
-            ExportExcel.ExportGridExcel(dgFinancialReport);
-            //ExportExcel.ExportGridExcel(dgFinancialReportExt);
-        
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Financial Statements");
+            childExportOptions.Show();        
         }
         #endregion
         #endregion

@@ -20,6 +20,7 @@ using GreenField.Common.Helper;
 using Microsoft.Practices.Prism.Regions;
 using GreenField.Gadgets.Helpers;
 using GreenField.DataContracts;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.DashboardModule.Views
 {
@@ -31,6 +32,8 @@ namespace GreenField.DashboardModule.Views
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
         private IRegionManager _regionManager;
+        private ViewPresentations _dashboardView;
+        private ViewModelPresentations _dashboardViewModel;
         #endregion
 
         [ImportingConstructor]
@@ -44,8 +47,7 @@ namespace GreenField.DashboardModule.Views
             _dBInteractivity = dbInteractivity;
             _regionManager = regionManager;
 
-            _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-           // _eventAggregator.GetEvent<ToolboxUpdateEvent>().Subscribe(HandleToolboxUpdateEvent);
+            _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);            
 
             this.tbHeader.Text = GadgetNames.ICPRESENTATION_PRESENTATIONS;
         }
@@ -64,7 +66,9 @@ namespace GreenField.DashboardModule.Views
                 RegionManager = _regionManager
             };
 
-            this.cctrDashboardContent.Content = null;// new ViewPresentations(new ViewModelPresentations(param));
+            _dashboardViewModel = new ViewModelPresentations(param);
+            _dashboardView = new ViewPresentations(_dashboardViewModel);
+            this.cctrDashboardContent.Content = _dashboardView;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -74,6 +78,7 @@ namespace GreenField.DashboardModule.Views
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+            //navigationContext.NavigationService.Region.Context = _dashboardViewModel.NavigationInfo;            
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
@@ -83,11 +88,14 @@ namespace GreenField.DashboardModule.Views
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            //_dashboardViewModel.ManageMeetingsServiceCalls();
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
                 control.IsActive = true;
             }
         }
+
+        
     }
 }

@@ -151,7 +151,7 @@ namespace GreenField.Gadgets.Views
 
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            ExportExcel.ExportGridExcel(dgConsensusEstimate);
+            //ExportExcel.ExportGridExcel(dgConsensusEstimate);
         }
 
     }

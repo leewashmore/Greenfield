@@ -78,22 +78,18 @@ namespace GreenField.Gadgets.Views
         #region Export To Excel Methods
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            //ChildExportOptions childExportOptions = new ChildExportOptions
-            //    (
-            //    new List<RadExportOptions>
-            //    {
-            //        new RadExportOptions() 
-            //        {
-            //            Element = this.dgIndexConstituents,
-            //            ElementName = "Index Constituent Data",
-            //            ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-            //        } 
-            //    }, "Export Options: " + GadgetNames.BENCHMARK_INDEX_CONSTITUENTS);
-            //childExportOptions.Show();
-
-            ExportExcel.ExportGridExcel(dgIndexConstituents);
-
-
+            ChildExportOptions childExportOptions = new ChildExportOptions
+                (
+                new List<RadExportOptions>
+                {
+                    new RadExportOptions() 
+                    {
+                        Element = this.dgIndexConstituents,
+                        ElementName = "Index Constituent Data",
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                    } 
+                }, "Export Options: " + GadgetNames.BENCHMARK_INDEX_CONSTITUENTS);
+            childExportOptions.Show();
         }
         private void dgIndexConstituents_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {

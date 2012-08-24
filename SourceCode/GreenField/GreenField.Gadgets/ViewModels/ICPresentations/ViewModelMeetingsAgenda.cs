@@ -21,7 +21,7 @@ using GreenField.Common;
 using GreenField.ServiceCaller;
 using System.Collections.Generic;
 //using Ashmore.Emm.GreenField.BusinessLogic.MeetingServiceReference;
-using GreenField.ServiceCaller.MeetingServiceReference;
+using GreenField.ServiceCaller.MeetingDefinitions;
 using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
@@ -105,34 +105,34 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private ICPNavigationInfo _meetingNavigationObject = new ICPNavigationInfo();
-        public ICPNavigationInfo MeetingNavigationObjectProperty
+        private ICNavigationInfo _meetingNavigationObject = new ICNavigationInfo();
+        public ICNavigationInfo MeetingNavigationObjectProperty
         {
             get { return _meetingNavigationObject; }
             set { _meetingNavigationObject = value; }
         }
 
-        private ObservableCollection<ICPPresentationInfo> _presentationList;
-        public ObservableCollection<ICPPresentationInfo> PresentationListProperty
-        {
-            get 
-            {
-                if (_presentationList == null)
-                {
-                    //_manageMeetings.GetMeetings(GetMeetingsCallBackMethod);
+        //private ObservableCollection<ICPPresentationData> _presentationList;
+        //public ObservableCollection<ICPPresentationData> PresentationListProperty
+        //{
+        //    get 
+        //    {
+        //        if (_presentationList == null)
+        //        {
+        //            //_manageMeetings.GetMeetings(GetMeetingsCallBackMethod);
                    
-                }            
-                return _presentationList; 
-            }
-            set
-            {
-                if (_presentationList != value)
-                {
-                    _presentationList = value;
-                    RaisePropertyChanged(() => this.PresentationListProperty);
-                }
-            }
-        }
+        //        }            
+        //        return _presentationList; 
+        //    }
+        //    set
+        //    {
+        //        if (_presentationList != value)
+        //        {
+        //            _presentationList = value;
+        //            RaisePropertyChanged(() => this.PresentationListProperty);
+        //        }
+        //    }
+        //}
 
         public ICommand EditCommand
         {
@@ -195,10 +195,10 @@ namespace GreenField.Gadgets.ViewModels
 
         private void ICPMeetingsAgendaEditItem(object param)
         {
-            if (MeetingNavigationObjectProperty == null) MeetingNavigationObjectProperty = new ICPNavigationInfo();
-            MeetingNavigationObjectProperty.ViewPluginFlagEnumerationObject = ViewPluginFlagEnumeration.Update;
-            MeetingNavigationObjectProperty.PresentationInfoObject = GridActiveItemProperty as ICPPresentationInfo;
-            MeetingNavigationObjectProperty.MeetingInfoObject = null;
+            if (MeetingNavigationObjectProperty == null) MeetingNavigationObjectProperty = new ICNavigationInfo();
+            //MeetingNavigationObjectProperty.ViewPluginFlagEnumerationObject = ViewPluginFlagEnumeration.Update;
+            //MeetingNavigationObjectProperty.PresentationInfoObject = GridActiveItemProperty as ICPPresentationData;
+            //MeetingNavigationObjectProperty.MeetingInfoObject = null;
             regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewCreateUpdatePresentations", UriKind.Relative));
 
         }
@@ -220,7 +220,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private void ICPMeetingsAgendaNavigateBack(object param)
         {
-            MeetingNavigationObjectProperty = null;
+            //MeetingNavigationObjectProperty = null;
             regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewMeetings", UriKind.Relative));
         }
 
@@ -235,9 +235,9 @@ namespace GreenField.Gadgets.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            MeetingDateProperty = (navigationContext.NavigationService.Region.Context as ICPNavigationInfo).MeetingInfoObject.MeetingDateProperty.ToString("MMMM dd, yyyy");
-            long MeetingID = (navigationContext.NavigationService.Region.Context as ICPNavigationInfo).MeetingInfoObject.MeetingID;
-            _dbInteractivity.GetPresentationsByMeetingID(MeetingID, GetPresentationsCallBackMethod);
+            //MeetingDateProperty = (navigationContext.NavigationService.Region.Context as ICNavigationInfo).MeetingInfoObject.MeetingDateProperty.ToString("MMMM dd, yyyy");
+            //long MeetingID = (navigationContext.NavigationService.Region.Context as ICNavigationInfo).MeetingInfoObject.MeetingID;
+            //_dbInteractivity.GetPresentationsByMeetingID(MeetingID, GetPresentationsCallBackMethod);
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -249,18 +249,18 @@ namespace GreenField.Gadgets.ViewModels
 
         #region CallBacks
 
-        private void GetPresentationsCallBackMethod(List<PresentationInfoResult> val)
-        {
-            ObservableCollection<PresentationInfoResult> PresentationInfoCollObj = new ObservableCollection<PresentationInfoResult>(val);
-            ObservableCollection<ICPPresentationInfo> ICPPresentationInfoCollObj = new ObservableCollection<ICPPresentationInfo>();
-            foreach (PresentationInfoResult pinfo in PresentationInfoCollObj)
-            {
-                ICPPresentationInfo ICPPresentationInfoObj = new ICPPresentationInfo(pinfo);
-                ICPPresentationInfoCollObj.Add(ICPPresentationInfoObj);
-            }
+        //private void GetPresentationsCallBackMethod(List<PresentationInfoResult> val)
+        //{
+        //    ObservableCollection<PresentationInfoResult> PresentationInfoCollObj = new ObservableCollection<PresentationInfoResult>(val);
+        //    ObservableCollection<ICPPresentationData> ICPPresentationInfoCollObj = new ObservableCollection<ICPPresentationData>();
+        //    foreach (PresentationInfoResult pinfo in PresentationInfoCollObj)
+        //    {
+        //        ICPPresentationData ICPPresentationInfoObj = new ICPPresentationData(pinfo);
+        //        ICPPresentationInfoCollObj.Add(ICPPresentationInfoObj);
+        //    }
 
-            PresentationListProperty = ICPPresentationInfoCollObj;
-        }
+        //    PresentationListProperty = ICPPresentationInfoCollObj;
+        //}
 
         #endregion
 

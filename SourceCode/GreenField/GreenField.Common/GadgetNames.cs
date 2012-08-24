@@ -232,6 +232,8 @@ namespace GreenField.Common
         public static string ICPRESENTATION_UPLOAD_EDIT = "Investment Committee Presentation Upload/Edit";
 
         public static string ICPRESENTATION_PRESENTATIONS_NEW = "IC PRESENTATION - NEW";
+
+        public static string ICPRESENTATION_PRESENTATIONS_CHANGE_DATE = "Investment Committee Presentation Change Date";
         
         #endregion
     }

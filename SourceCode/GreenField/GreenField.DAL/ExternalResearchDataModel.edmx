@@ -559,6 +559,9 @@
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="RetrieveRatioComparisonData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="securityBucketXML" Type="varchar(max)" Mode="In" />
+        </Function>
         <Function Name="usp_GetDataForPeriodGadgets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cSource" Type="varchar" Mode="In" />
           <Parameter Name="cFiscalType" Type="varchar" Mode="In" />
@@ -616,9 +619,6 @@
 						<Parameter Name="CURRENCY" Mode="In" Type="String" />
 						<Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
 						<Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
-					</FunctionImport>
-					<FunctionImport Name="usp_RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
-						<Parameter Name="securityBucketXML" Mode="In" Type="String" />
 					</FunctionImport>
 
 					<FunctionImport Name="GetConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">

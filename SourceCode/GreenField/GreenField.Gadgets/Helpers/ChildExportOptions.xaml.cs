@@ -49,6 +49,9 @@ namespace GreenField.Gadgets.Helpers
         }
         #endregion
 
+        /// <summary>
+        /// Title
+        /// </summary>
         private string _childWindowTitle = "Export Options";
         public string ChildWindowTitle
         {

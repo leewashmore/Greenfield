@@ -115,8 +115,7 @@ namespace GreenField.Gadgets.Views
 
                 if (LayoutRoot.Visibility == Visibility.Visible)
                 {
-                    //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-                    ExportExcel.ExportGridExcel(dgCommodity);
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Commodity Data", Element = this.dgCommodity, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
                     return;
                 }
 

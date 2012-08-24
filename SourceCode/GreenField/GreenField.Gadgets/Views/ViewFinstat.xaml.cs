@@ -90,7 +90,7 @@ namespace GreenField.Gadgets.Views
 
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            ExportExcel.ExportGridExcel(dgFinstat);
+            //ExportExcel.ExportGridExcel(dgFinstat);
         }
 
         #region Dispose Method

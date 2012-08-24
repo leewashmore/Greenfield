@@ -130,12 +130,7 @@ namespace GreenField.Gadgets.Views
                 
                 }
                 else if (dgPRevenue.Visibility == Visibility.Visible)
-                //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_Revenue_DATA, Element = this.chPRevenue, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-                {
-                    ExportExcel.ExportGridExcel(dgPRevenue);
-                }
-
-                
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_Revenue_DATA, Element = this.chPRevenue, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });                
             }
             catch (Exception ex)
             {

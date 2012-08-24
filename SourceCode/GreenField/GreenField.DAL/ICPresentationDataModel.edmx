@@ -7,39 +7,29 @@
     <Schema Namespace="ICPresentationModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="ICPresentationModelStoreContainer">
           <EntitySet Name="AttachedFileInfo" EntityType="ICPresentationModel.Store.AttachedFileInfo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="AttendanceType" EntityType="ICPresentationModel.Store.AttendanceType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MeetingAttachedFileInfo" EntityType="ICPresentationModel.Store.MeetingAttachedFileInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MeetingInfo" EntityType="ICPresentationModel.Store.MeetingInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MeetingPresentationMappingInfo" EntityType="ICPresentationModel.Store.MeetingPresentationMappingInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PresentationInfo" EntityType="ICPresentationModel.Store.PresentationInfo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="StatusType" EntityType="ICPresentationModel.Store.StatusType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="VoterInfo" EntityType="ICPresentationModel.Store.VoterInfo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="VoteType" EntityType="ICPresentationModel.Store.VoteType" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_tblICP_FileInfo_tblICP_PresentationInfo" Association="ICPresentationModel.Store.FK_tblICP_FileInfo_tblICP_PresentationInfo">
+          <AssociationSet Name="FK_AttachedFileInfo_PresentationInfo" Association="ICPresentationModel.Store.FK_AttachedFileInfo_PresentationInfo">
             <End Role="PresentationInfo" EntitySet="PresentationInfo" />
             <End Role="AttachedFileInfo" EntitySet="AttachedFileInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblICP_MeetingPresentationMappingInfo_tblICP_MeetingInfo1" Association="ICPresentationModel.Store.FK_tblICP_MeetingPresentationMappingInfo_tblICP_MeetingInfo1">
+          <AssociationSet Name="FK_MeetingAttachedFileInfo_MeetingInfo" Association="ICPresentationModel.Store.FK_MeetingAttachedFileInfo_MeetingInfo">
+            <End Role="MeetingInfo" EntitySet="MeetingInfo" />
+            <End Role="MeetingAttachedFileInfo" EntitySet="MeetingAttachedFileInfo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingPresentationMappingInfo_MeetingInfo" Association="ICPresentationModel.Store.FK_MeetingPresentationMappingInfo_MeetingInfo">
             <End Role="MeetingInfo" EntitySet="MeetingInfo" />
             <End Role="MeetingPresentationMappingInfo" EntitySet="MeetingPresentationMappingInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblICP_MeetingPresentationMappingInfo_tblICP_PresentationInfo" Association="ICPresentationModel.Store.FK_tblICP_MeetingPresentationMappingInfo_tblICP_PresentationInfo">
+          <AssociationSet Name="FK_MeetingPresentationMappingInfo_PresentationInfo" Association="ICPresentationModel.Store.FK_MeetingPresentationMappingInfo_PresentationInfo">
             <End Role="PresentationInfo" EntitySet="PresentationInfo" />
             <End Role="MeetingPresentationMappingInfo" EntitySet="MeetingPresentationMappingInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblICP_PresentationInfo_tblICP_StatusType" Association="ICPresentationModel.Store.FK_tblICP_PresentationInfo_tblICP_StatusType">
-            <End Role="StatusType" EntitySet="StatusType" />
+          <AssociationSet Name="FK_VoterInfo_PresentationInfo" Association="ICPresentationModel.Store.FK_VoterInfo_PresentationInfo">
             <End Role="PresentationInfo" EntitySet="PresentationInfo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblICP_VoterInfo_tblICP_AttendanceType" Association="ICPresentationModel.Store.FK_tblICP_VoterInfo_tblICP_AttendanceType">
-            <End Role="AttendanceType" EntitySet="AttendanceType" />
-            <End Role="VoterInfo" EntitySet="VoterInfo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblICP_VoterInfo_tblICP_PresentationInfo" Association="ICPresentationModel.Store.FK_tblICP_VoterInfo_tblICP_PresentationInfo">
-            <End Role="PresentationInfo" EntitySet="PresentationInfo" />
-            <End Role="VoterInfo" EntitySet="VoterInfo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblICP_VoterInfo_tblICP_VoteType" Association="ICPresentationModel.Store.FK_tblICP_VoterInfo_tblICP_VoteType">
-            <End Role="VoteType" EntitySet="VoteType" />
             <End Role="VoterInfo" EntitySet="VoterInfo" />
           </AssociationSet>
         </EntityContainer>
@@ -56,12 +46,15 @@
           <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="AttendanceType">
+        <EntityType Name="MeetingAttachedFileInfo">
           <Key>
-            <PropertyRef Name="AttendanceTypeID" />
+            <PropertyRef Name="FileID" />
           </Key>
-          <Property Name="AttendanceTypeID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="AttendanceType" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="FileID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MeetingID" Type="bigint" Nullable="false" />
+          <Property Name="FileName" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="FileType" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="FileLocation" Type="varchar" Nullable="false" MaxLength="255" />
           <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
@@ -74,7 +67,8 @@
           <Property Name="MeetingID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MeetingDateTime" Type="datetime" Nullable="false" />
           <Property Name="MeetingClosedDateTime" Type="datetime" Nullable="false" />
-          <Property Name="Description" Type="varchar" MaxLength="50" />
+          <Property Name="MeetingVotingClosedDateTime" Type="datetime" Nullable="false" />
+          <Property Name="MeetingDescription" Type="varchar" MaxLength="255" />
           <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
@@ -98,7 +92,7 @@
           </Key>
           <Property Name="PresentationID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Presenter" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="StatusTypeID" Type="bigint" Nullable="false" />
+          <Property Name="StatusType" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="SecurityTicker" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="SecurityName" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="SecurityCountry" Type="varchar" Nullable="false" MaxLength="50" />
@@ -133,17 +127,6 @@
           <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="StatusType">
-          <Key>
-            <PropertyRef Name="StatusTypeID" />
-          </Key>
-          <Property Name="StatusTypeID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="StatusType" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="VoterInfo">
           <Key>
             <PropertyRef Name="VoterID" />
@@ -152,8 +135,8 @@
           <Property Name="PresentationID" Type="bigint" Nullable="false" />
           <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="Notes" Type="varchar" MaxLength="50" />
-          <Property Name="VoteTypeID" Type="bigint" />
-          <Property Name="AttendanceTypeID" Type="bigint" />
+          <Property Name="VoteType" Type="varchar" MaxLength="50" />
+          <Property Name="AttendanceType" Type="varchar" MaxLength="50" />
           <Property Name="PostMeetingFlag" Type="bit" />
           <Property Name="DiscussionFlag" Type="bit" />
           <Property Name="VoterPFVMeasure" Type="varchar" MaxLength="50" />
@@ -165,18 +148,7 @@
           <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="VoteType">
-          <Key>
-            <PropertyRef Name="VoteTypeID" />
-          </Key>
-          <Property Name="VoteTypeID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="VoteType" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_tblICP_FileInfo_tblICP_PresentationInfo">
+        <Association Name="FK_AttachedFileInfo_PresentationInfo">
           <End Role="PresentationInfo" Type="ICPresentationModel.Store.PresentationInfo" Multiplicity="1" />
           <End Role="AttachedFileInfo" Type="ICPresentationModel.Store.AttachedFileInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -188,8 +160,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblICP_MeetingPresentationMappingInfo_tblICP_MeetingInfo1">
-          <End Role="MeetingInfo" Type="ICPresentationModel.Store.MeetingInfo" Multiplicity="1" />
+        <Association Name="FK_MeetingAttachedFileInfo_MeetingInfo">
+          <End Role="MeetingInfo" Type="ICPresentationModel.Store.MeetingInfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MeetingAttachedFileInfo" Type="ICPresentationModel.Store.MeetingAttachedFileInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeetingInfo">
+              <PropertyRef Name="MeetingID" />
+            </Principal>
+            <Dependent Role="MeetingAttachedFileInfo">
+              <PropertyRef Name="MeetingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingPresentationMappingInfo_MeetingInfo">
+          <End Role="MeetingInfo" Type="ICPresentationModel.Store.MeetingInfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MeetingPresentationMappingInfo" Type="ICPresentationModel.Store.MeetingPresentationMappingInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MeetingInfo">
@@ -200,8 +188,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblICP_MeetingPresentationMappingInfo_tblICP_PresentationInfo">
-          <End Role="PresentationInfo" Type="ICPresentationModel.Store.PresentationInfo" Multiplicity="1" />
+        <Association Name="FK_MeetingPresentationMappingInfo_PresentationInfo">
+          <End Role="PresentationInfo" Type="ICPresentationModel.Store.PresentationInfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="MeetingPresentationMappingInfo" Type="ICPresentationModel.Store.MeetingPresentationMappingInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PresentationInfo">
@@ -212,32 +202,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblICP_PresentationInfo_tblICP_StatusType">
-          <End Role="StatusType" Type="ICPresentationModel.Store.StatusType" Multiplicity="1" />
-          <End Role="PresentationInfo" Type="ICPresentationModel.Store.PresentationInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StatusType">
-              <PropertyRef Name="StatusTypeID" />
-            </Principal>
-            <Dependent Role="PresentationInfo">
-              <PropertyRef Name="StatusTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblICP_VoterInfo_tblICP_AttendanceType">
-          <End Role="AttendanceType" Type="ICPresentationModel.Store.AttendanceType" Multiplicity="0..1" />
-          <End Role="VoterInfo" Type="ICPresentationModel.Store.VoterInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AttendanceType">
-              <PropertyRef Name="AttendanceTypeID" />
-            </Principal>
-            <Dependent Role="VoterInfo">
-              <PropertyRef Name="AttendanceTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblICP_VoterInfo_tblICP_PresentationInfo">
-          <End Role="PresentationInfo" Type="ICPresentationModel.Store.PresentationInfo" Multiplicity="1" />
+        <Association Name="FK_VoterInfo_PresentationInfo">
+          <End Role="PresentationInfo" Type="ICPresentationModel.Store.PresentationInfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="VoterInfo" Type="ICPresentationModel.Store.VoterInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PresentationInfo">
@@ -248,18 +216,24 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblICP_VoterInfo_tblICP_VoteType">
-          <End Role="VoteType" Type="ICPresentationModel.Store.VoteType" Multiplicity="0..1" />
-          <End Role="VoterInfo" Type="ICPresentationModel.Store.VoterInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VoteType">
-              <PropertyRef Name="VoteTypeID" />
-            </Principal>
-            <Dependent Role="VoterInfo">
-              <PropertyRef Name="VoteTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <Function Name="RetrieveICMeetingInfoByStatusType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PresentationStatus" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RetrieveICPMeetingAttachedFileDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MeetingId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="RetrieveICPMeetingMinuteDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MeetingId" Type="bigint" Mode="In" />
+        </Function>
+        <Function Name="RetrieveICPresentationOverviewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SetICPMeetingAttachedFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SetICPMeetingMinutesDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="usp_InsertFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="presentationID" Type="bigint" Mode="In" />
           <Parameter Name="fileName" Type="varchar" Mode="In" />
@@ -342,7 +316,6 @@
         </Function>
         <Function Name="usp_SelectMeetingInfoDistinctMeetingDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usp_SelectMeetingInfoMeetingDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="usp_SelectPresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="usp_SelectPresentationInfoByMeetingDatePresenterStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="meetingDate" Type="datetime" Mode="In" />
           <Parameter Name="presenter" Type="varchar" Mode="In" />
@@ -416,42 +389,6 @@
     <edmx:ConceptualModels>
       <Schema Namespace="ICPresentationModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="ICPresentationEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="VoterInfoes" EntityType="ICPresentationModel.VoterInfo" />
-          <EntitySet Name="AttachedFileInfoes" EntityType="ICPresentationModel.AttachedFileInfo" />
-          <EntitySet Name="AttendanceTypes" EntityType="ICPresentationModel.AttendanceType" />
-          <EntitySet Name="MeetingInfoes" EntityType="ICPresentationModel.MeetingInfo" />
-          <EntitySet Name="MeetingPresentationMappingInfoes" EntityType="ICPresentationModel.MeetingPresentationMappingInfo" />
-          <EntitySet Name="PresentationInfoes" EntityType="ICPresentationModel.PresentationInfo" />
-          <EntitySet Name="StatusTypes" EntityType="ICPresentationModel.StatusType" />
-          <EntitySet Name="VoteTypes" EntityType="ICPresentationModel.VoteType" />
-          <AssociationSet Name="FK_tblICP_FileInfo_tblICP_PresentationInfo" Association="ICPresentationModel.FK_tblICP_FileInfo_tblICP_PresentationInfo">
-            <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
-            <End Role="AttachedFileInfo" EntitySet="AttachedFileInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblICP_VoterInfo_tblICP_AttendanceType" Association="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_AttendanceType">
-            <End Role="AttendanceType" EntitySet="AttendanceTypes" />
-            <End Role="VoterInfo" EntitySet="VoterInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblICP_MeetingPresentationMappingInfo_tblICP_MeetingInfo1" Association="ICPresentationModel.FK_tblICP_MeetingPresentationMappingInfo_tblICP_MeetingInfo1">
-            <End Role="MeetingInfo" EntitySet="MeetingInfoes" />
-            <End Role="MeetingPresentationMappingInfo" EntitySet="MeetingPresentationMappingInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblICP_MeetingPresentationMappingInfo_tblICP_PresentationInfo" Association="ICPresentationModel.FK_tblICP_MeetingPresentationMappingInfo_tblICP_PresentationInfo">
-            <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
-            <End Role="MeetingPresentationMappingInfo" EntitySet="MeetingPresentationMappingInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblICP_PresentationInfo_tblICP_StatusType" Association="ICPresentationModel.FK_tblICP_PresentationInfo_tblICP_StatusType">
-            <End Role="StatusType" EntitySet="StatusTypes" />
-            <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblICP_VoterInfo_tblICP_PresentationInfo" Association="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_PresentationInfo">
-            <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
-            <End Role="VoterInfo" EntitySet="VoterInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblICP_VoterInfo_tblICP_VoteType" Association="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_VoteType">
-            <End Role="VoteType" EntitySet="VoteTypes" />
-            <End Role="VoterInfo" EntitySet="VoterInfoes" />
-          </AssociationSet>
           <FunctionImport Name="usp_InsertMeetingInformation">
             <Parameter Name="meetingDateTime" Mode="In" Type="DateTime" />
             <Parameter Name="meetingClosedDateTime" Mode="In" Type="DateTime" />
@@ -533,16 +470,16 @@
             <Parameter Name="modifiedOn" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="usp_SelectMeetingInfoDistinctMeetingDates" ReturnType="Collection(Single)" />
-          <FunctionImport Name="usp_SelectPresentationInfo" ReturnType="Collection(ICPresentationModel.PresentationInfoResult)" />
-          <FunctionImport Name="usp_SelectPresentationInfoByMeetingDatePresenterStatus" ReturnType="Collection(ICPresentationModel.PresentationInfoResult)">
+          <FunctionImport Name="usp_SelectPresentationInfo" />
+          <FunctionImport Name="usp_SelectPresentationInfoByMeetingDatePresenterStatus">
             <Parameter Name="meetingDate" Mode="In" Type="DateTime" />
             <Parameter Name="presenter" Mode="In" Type="String" />
             <Parameter Name="status" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="usp_SelectPresentationInfoByMeetingID" ReturnType="Collection(ICPresentationModel.PresentationInfoResult)">
+          <FunctionImport Name="usp_SelectPresentationInfoByMeetingID">
           <Parameter Name="meetingID" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="usp_SelectPresentationInfoByPresentationDate" ReturnType="Collection(ICPresentationModel.PresentationInfoResult)">
+          <FunctionImport Name="usp_SelectPresentationInfoByPresentationDate">
           <Parameter Name="presentationDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="usp_SelectPresentationInfoDistinctPresenters" ReturnType="Collection(String)" />
@@ -603,31 +540,149 @@
             <Parameter Name="modifiedOn" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="usp_SelectMeetingInfoMeetingDates" ReturnType="Collection(DateTime)" />
+          <FunctionImport Name="SetICPMeetingMinutesDetails">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="xmlScript" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SetICPMeetingAttachedFileInfo">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="xmlScript" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="MeetingInfoes" EntityType="ICPresentationModel.MeetingInfo" />
+          <EntitySet Name="MeetingAttachedFileInfoes" EntityType="ICPresentationModel.MeetingAttachedFileInfo" />
+          <AssociationSet Name="FK_MeetingAttachedFileInfo_MeetingInfo" Association="ICPresentationModel.FK_MeetingAttachedFileInfo_MeetingInfo">
+            <End Role="MeetingInfo" EntitySet="MeetingInfoes" />
+            <End Role="MeetingAttachedFileInfo" EntitySet="MeetingAttachedFileInfoes" />
+          </AssociationSet>
+          <EntitySet Name="MeetingPresentationMappingInfoes" EntityType="ICPresentationModel.MeetingPresentationMappingInfo" />
+          <AssociationSet Name="FK_MeetingPresentationMappingInfo_MeetingInfo" Association="ICPresentationModel.FK_MeetingPresentationMappingInfo_MeetingInfo">
+            <End Role="MeetingInfo" EntitySet="MeetingInfoes" />
+            <End Role="MeetingPresentationMappingInfo" EntitySet="MeetingPresentationMappingInfoes" />
+          </AssociationSet>
+          <EntitySet Name="AttachedFileInfoes" EntityType="ICPresentationModel.AttachedFileInfo" />
+          <EntitySet Name="PresentationInfoes" EntityType="ICPresentationModel.PresentationInfo" />
+          <EntitySet Name="VoterInfoes" EntityType="ICPresentationModel.VoterInfo" />
+          <AssociationSet Name="FK_AttachedFileInfo_PresentationInfo" Association="ICPresentationModel.FK_AttachedFileInfo_PresentationInfo">
+            <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
+            <End Role="AttachedFileInfo" EntitySet="AttachedFileInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingPresentationMappingInfo_PresentationInfo" Association="ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo">
+            <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
+            <End Role="MeetingPresentationMappingInfo" EntitySet="MeetingPresentationMappingInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VoterInfo_PresentationInfo" Association="ICPresentationModel.FK_VoterInfo_PresentationInfo">
+            <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
+            <End Role="VoterInfo" EntitySet="VoterInfoes" />
+          </AssociationSet>
+          <FunctionImport Name="RetrieveICPMeetingAttachedFileDetails" ReturnType="Collection(ICPresentationModel.MeetingAttachedFileData)">
+          <Parameter Name="MeetingId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveICPMeetingMinuteDetails" ReturnType="Collection(ICPresentationModel.MeetingMinuteData)">
+          <Parameter Name="MeetingId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveICPresentationOverviewData" ReturnType="Collection(ICPresentationModel.ICPresentationOverviewData)" />
+          <FunctionImport Name="RetrieveICMeetingInfoByStatusType" EntitySet="MeetingInfoes" ReturnType="Collection(ICPresentationModel.MeetingInfo)">
+            <Parameter Name="PresentationStatus" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
-        <EntityType Name="VoterInfo">
+        <ComplexType Name="VoterInfoByPresentationIDResult">
+          <Property Type="Int64" Name="VoterID" Nullable="false" />
+          <Property Type="Int64" Name="PresentationID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Notes" Nullable="true" MaxLength="50" />
+          <Property Type="Int64" Name="VoteTypeID" Nullable="true" />
+          <Property Type="Int64" Name="AttendanceTypeID" Nullable="true" />
+          <Property Type="Boolean" Name="PostMeetingFlag" Nullable="true" />
+          <Property Type="Boolean" Name="DiscussionFlag" Nullable="true" />
+          <Property Type="String" Name="VoterPFVMeasure" Nullable="true" MaxLength="50" />
+          <Property Type="Single" Name="VoterBuyRange" Nullable="true" />
+          <Property Type="Single" Name="VoterSellRange" Nullable="true" />
+          <Property Type="String" Name="VoterRecommendation" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="MeetingMinuteData">
+          <Property Type="Int64" Name="PresentationID" Nullable="false" />
+          <Property Type="String" Name="Presenter" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SecurityName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SecurityTicker" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SecurityCountry" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="SecurityIndustry" Nullable="false" MaxLength="50" />
+          <Property Type="Int64" Name="VoterID" Nullable="true" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="AttendanceType" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="MeetingInfo">
           <Key>
-            <PropertyRef Name="VoterID" />
+            <PropertyRef Name="MeetingID" />
           </Key>
-          <Property Name="VoterID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PresentationID" Type="Int64" Nullable="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="Notes" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="VoteTypeID" Type="Int64" />
-          <Property Name="AttendanceTypeID" Type="Int64" />
-          <Property Name="PostMeetingFlag" Type="Boolean" />
-          <Property Name="DiscussionFlag" Type="Boolean" />
-          <Property Name="VoterPFVMeasure" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="VoterBuyRange" Type="Single" />
-          <Property Name="VoterSellRange" Type="Single" />
-          <Property Name="VoterRecommendation" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="AttendanceType" Relationship="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_AttendanceType" FromRole="VoterInfo" ToRole="AttendanceType" />
-          <NavigationProperty Name="PresentationInfo" Relationship="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_PresentationInfo" FromRole="VoterInfo" ToRole="PresentationInfo" />
-          <NavigationProperty Name="VoteType" Relationship="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_VoteType" FromRole="VoterInfo" ToRole="VoteType" />
+          <Property Type="Int64" Name="MeetingID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="MeetingDateTime" Nullable="false" />
+          <Property Type="DateTime" Name="MeetingClosedDateTime" Nullable="false" />
+          <Property Type="DateTime" Name="MeetingVotingClosedDateTime" Nullable="false" />
+          <Property Type="String" Name="MeetingDescription" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
+          <NavigationProperty Name="MeetingAttachedFileInfoes" Relationship="ICPresentationModel.FK_MeetingAttachedFileInfo_MeetingInfo" FromRole="MeetingInfo" ToRole="MeetingAttachedFileInfo" />
+          <NavigationProperty Name="MeetingPresentationMappingInfoes" Relationship="ICPresentationModel.FK_MeetingPresentationMappingInfo_MeetingInfo" FromRole="MeetingInfo" ToRole="MeetingPresentationMappingInfo" />
         </EntityType>
+        <EntityType Name="MeetingAttachedFileInfo">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Type="Int64" Name="FileID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="MeetingID" Nullable="false" />
+          <Property Type="String" Name="FileName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FileType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FileLocation" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
+          <NavigationProperty Name="MeetingInfo" Relationship="ICPresentationModel.FK_MeetingAttachedFileInfo_MeetingInfo" FromRole="MeetingAttachedFileInfo" ToRole="MeetingInfo" />
+        </EntityType>
+        <Association Name="FK_MeetingAttachedFileInfo_MeetingInfo">
+          <End Type="ICPresentationModel.MeetingInfo" Role="MeetingInfo" Multiplicity="1" />
+          <End Type="ICPresentationModel.MeetingAttachedFileInfo" Role="MeetingAttachedFileInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeetingInfo">
+              <PropertyRef Name="MeetingID" />
+            </Principal>
+            <Dependent Role="MeetingAttachedFileInfo">
+              <PropertyRef Name="MeetingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MeetingPresentationMappingInfo">
+          <Key>
+            <PropertyRef Name="MappingID" />
+          </Key>
+          <Property Type="Int64" Name="MappingID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="MeetingID" Nullable="false" />
+          <Property Type="Int64" Name="PresentationID" Nullable="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="String" Name="ModifedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
+          <NavigationProperty Name="MeetingInfo" Relationship="ICPresentationModel.FK_MeetingPresentationMappingInfo_MeetingInfo" FromRole="MeetingPresentationMappingInfo" ToRole="MeetingInfo" />
+          <NavigationProperty Name="PresentationInfo" Relationship="ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo" FromRole="MeetingPresentationMappingInfo" ToRole="PresentationInfo" />
+        </EntityType>
+        <Association Name="FK_MeetingPresentationMappingInfo_MeetingInfo">
+          <End Type="ICPresentationModel.MeetingInfo" Role="MeetingInfo" Multiplicity="1" />
+          <End Type="ICPresentationModel.MeetingPresentationMappingInfo" Role="MeetingPresentationMappingInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeetingInfo">
+              <PropertyRef Name="MeetingID" />
+            </Principal>
+            <Dependent Role="MeetingPresentationMappingInfo">
+              <PropertyRef Name="MeetingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="AttachedFileInfo">
           <Key>
             <PropertyRef Name="FileID" />
@@ -640,47 +695,7 @@
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
           <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="PresentationInfo" Relationship="ICPresentationModel.FK_tblICP_FileInfo_tblICP_PresentationInfo" FromRole="AttachedFileInfo" ToRole="PresentationInfo" />
-        </EntityType>
-        <EntityType Name="AttendanceType">
-          <Key>
-            <PropertyRef Name="AttendanceTypeID" />
-          </Key>
-          <Property Type="Int64" Name="AttendanceTypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="AttendanceType1" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
-          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="VoterInfoes" Relationship="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_AttendanceType" FromRole="AttendanceType" ToRole="VoterInfo" />
-        </EntityType>
-        <EntityType Name="MeetingInfo">
-          <Key>
-            <PropertyRef Name="MeetingID" />
-          </Key>
-          <Property Type="Int64" Name="MeetingID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="DateTime" Name="MeetingDateTime" Nullable="false" />
-          <Property Type="DateTime" Name="MeetingClosedDateTime" Nullable="false" />
-          <Property Type="String" Name="Description" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
-          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="MeetingPresentationMappingInfoes" Relationship="ICPresentationModel.FK_tblICP_MeetingPresentationMappingInfo_tblICP_MeetingInfo1" FromRole="MeetingInfo" ToRole="MeetingPresentationMappingInfo" />
-        </EntityType>
-        <EntityType Name="MeetingPresentationMappingInfo">
-          <Key>
-            <PropertyRef Name="MappingID" />
-          </Key>
-          <Property Type="Int64" Name="MappingID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int64" Name="MeetingID" Nullable="false" />
-          <Property Type="Int64" Name="PresentationID" Nullable="false" />
-          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
-          <Property Type="String" Name="ModifedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="MeetingInfo" Relationship="ICPresentationModel.FK_tblICP_MeetingPresentationMappingInfo_tblICP_MeetingInfo1" FromRole="MeetingPresentationMappingInfo" ToRole="MeetingInfo" />
-          <NavigationProperty Name="PresentationInfo" Relationship="ICPresentationModel.FK_tblICP_MeetingPresentationMappingInfo_tblICP_PresentationInfo" FromRole="MeetingPresentationMappingInfo" ToRole="PresentationInfo" />
+          <NavigationProperty Name="PresentationInfo" Relationship="ICPresentationModel.FK_AttachedFileInfo_PresentationInfo" FromRole="AttachedFileInfo" ToRole="PresentationInfo" />
         </EntityType>
         <EntityType Name="PresentationInfo">
           <Key>
@@ -688,7 +703,7 @@
           </Key>
           <Property Type="Int64" Name="PresentationID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="Presenter" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Int64" Name="StatusTypeID" Nullable="false" />
+          <Property Type="String" Name="StatusType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="SecurityTicker" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="SecurityName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="SecurityCountry" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -722,36 +737,33 @@
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
           <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="AttachedFileInfoes" Relationship="ICPresentationModel.FK_tblICP_FileInfo_tblICP_PresentationInfo" FromRole="PresentationInfo" ToRole="AttachedFileInfo" />
-          <NavigationProperty Name="MeetingPresentationMappingInfoes" Relationship="ICPresentationModel.FK_tblICP_MeetingPresentationMappingInfo_tblICP_PresentationInfo" FromRole="PresentationInfo" ToRole="MeetingPresentationMappingInfo" />
-          <NavigationProperty Name="StatusType" Relationship="ICPresentationModel.FK_tblICP_PresentationInfo_tblICP_StatusType" FromRole="PresentationInfo" ToRole="StatusType" />
-          <NavigationProperty Name="VoterInfoes" Relationship="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_PresentationInfo" FromRole="PresentationInfo" ToRole="VoterInfo" />
+          <NavigationProperty Name="AttachedFileInfoes" Relationship="ICPresentationModel.FK_AttachedFileInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="AttachedFileInfo" />
+          <NavigationProperty Name="MeetingPresentationMappingInfoes" Relationship="ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="MeetingPresentationMappingInfo" />
+          <NavigationProperty Name="VoterInfoes" Relationship="ICPresentationModel.FK_VoterInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="VoterInfo" />
         </EntityType>
-        <EntityType Name="StatusType">
+        <EntityType Name="VoterInfo">
           <Key>
-            <PropertyRef Name="StatusTypeID" />
+            <PropertyRef Name="VoterID" />
           </Key>
-          <Property Type="Int64" Name="StatusTypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="StatusType1" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int64" Name="VoterID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="PresentationID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Notes" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="VoteType" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="AttendanceType" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="PostMeetingFlag" />
+          <Property Type="Boolean" Name="DiscussionFlag" />
+          <Property Type="String" Name="VoterPFVMeasure" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Single" Name="VoterBuyRange" />
+          <Property Type="Single" Name="VoterSellRange" />
+          <Property Type="String" Name="VoterRecommendation" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
           <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="PresentationInfoes" Relationship="ICPresentationModel.FK_tblICP_PresentationInfo_tblICP_StatusType" FromRole="StatusType" ToRole="PresentationInfo" />
+          <NavigationProperty Name="PresentationInfo" Relationship="ICPresentationModel.FK_VoterInfo_PresentationInfo" FromRole="VoterInfo" ToRole="PresentationInfo" />
         </EntityType>
-        <EntityType Name="VoteType">
-          <Key>
-            <PropertyRef Name="VoteTypeID" />
-          </Key>
-          <Property Type="Int64" Name="VoteTypeID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="VoteType1" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
-          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="VoterInfoes" Relationship="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_VoteType" FromRole="VoteType" ToRole="VoterInfo" />
-        </EntityType>
-        <Association Name="FK_tblICP_FileInfo_tblICP_PresentationInfo">
+        <Association Name="FK_AttachedFileInfo_PresentationInfo">
           <End Type="ICPresentationModel.PresentationInfo" Role="PresentationInfo" Multiplicity="1" />
           <End Type="ICPresentationModel.AttachedFileInfo" Role="AttachedFileInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -763,31 +775,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblICP_VoterInfo_tblICP_AttendanceType">
-          <End Type="ICPresentationModel.AttendanceType" Role="AttendanceType" Multiplicity="0..1" />
-          <End Type="ICPresentationModel.VoterInfo" Role="VoterInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AttendanceType">
-              <PropertyRef Name="AttendanceTypeID" />
-            </Principal>
-            <Dependent Role="VoterInfo">
-              <PropertyRef Name="AttendanceTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblICP_MeetingPresentationMappingInfo_tblICP_MeetingInfo1">
-          <End Type="ICPresentationModel.MeetingInfo" Role="MeetingInfo" Multiplicity="1" />
-          <End Type="ICPresentationModel.MeetingPresentationMappingInfo" Role="MeetingPresentationMappingInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MeetingInfo">
-              <PropertyRef Name="MeetingID" />
-            </Principal>
-            <Dependent Role="MeetingPresentationMappingInfo">
-              <PropertyRef Name="MeetingID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblICP_MeetingPresentationMappingInfo_tblICP_PresentationInfo">
+        <Association Name="FK_MeetingPresentationMappingInfo_PresentationInfo">
           <End Type="ICPresentationModel.PresentationInfo" Role="PresentationInfo" Multiplicity="1" />
           <End Type="ICPresentationModel.MeetingPresentationMappingInfo" Role="MeetingPresentationMappingInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -799,19 +787,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblICP_PresentationInfo_tblICP_StatusType">
-          <End Type="ICPresentationModel.StatusType" Role="StatusType" Multiplicity="1" />
-          <End Type="ICPresentationModel.PresentationInfo" Role="PresentationInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StatusType">
-              <PropertyRef Name="StatusTypeID" />
-            </Principal>
-            <Dependent Role="PresentationInfo">
-              <PropertyRef Name="StatusTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblICP_VoterInfo_tblICP_PresentationInfo">
+        <Association Name="FK_VoterInfo_PresentationInfo">
           <End Type="ICPresentationModel.PresentationInfo" Role="PresentationInfo" Multiplicity="1" />
           <End Type="ICPresentationModel.VoterInfo" Role="VoterInfo" Multiplicity="*" />
           <ReferentialConstraint>
@@ -823,19 +799,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblICP_VoterInfo_tblICP_VoteType">
-          <End Type="ICPresentationModel.VoteType" Role="VoteType" Multiplicity="0..1" />
-          <End Type="ICPresentationModel.VoterInfo" Role="VoterInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VoteType">
-              <PropertyRef Name="VoteTypeID" />
-            </Principal>
-            <Dependent Role="VoterInfo">
-              <PropertyRef Name="VoteTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="PresentationInfoResult">
+        <ComplexType Name="MeetingAttachedFileData">
+          <Property Type="Int64" Name="FileID" Nullable="false" />
+          <Property Type="Int64" Name="MeetingID" Nullable="false" />
+          <Property Type="String" Name="FileName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FileType" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FileLocation" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <ComplexType Name="ICPresentationOverviewData">
           <Property Type="Boolean" Name="AcceptWithoutDiscussionFlag" Nullable="true" />
           <Property Type="String" Name="AdminNotes" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Background" Nullable="true" />
@@ -871,27 +842,10 @@
           <Property Type="Single" Name="SecuritySellRange" Nullable="false" />
           <Property Type="String" Name="SecurityTicker" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Valuations" Nullable="true" />
-          <Property Type="Int64" Name="StatusTypeID" Nullable="false" />
-          <Property Type="DateTime" Name="PresentationDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="StatusType" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="VoterInfoByPresentationIDResult">
-          <Property Type="Int64" Name="VoterID" Nullable="false" />
-          <Property Type="Int64" Name="PresentationID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Notes" Nullable="true" MaxLength="50" />
-          <Property Type="Int64" Name="VoteTypeID" Nullable="true" />
-          <Property Type="Int64" Name="AttendanceTypeID" Nullable="true" />
-          <Property Type="Boolean" Name="PostMeetingFlag" Nullable="true" />
-          <Property Type="Boolean" Name="DiscussionFlag" Nullable="true" />
-          <Property Type="String" Name="VoterPFVMeasure" Nullable="true" MaxLength="50" />
-          <Property Type="Single" Name="VoterBuyRange" Nullable="true" />
-          <Property Type="Single" Name="VoterSellRange" Nullable="true" />
-          <Property Type="String" Name="VoterRecommendation" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
-          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="MeetingDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="MeetingClosedDateTime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="MeetingVotingClosedDateTime" Nullable="true" Precision="23" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -899,50 +853,47 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ICPresentationModelStoreContainer" CdmEntityContainer="ICPresentationEntities">
-          <EntitySetMapping Name="VoterInfoes"><EntityTypeMapping TypeName="ICPresentationModel.VoterInfo"><MappingFragment StoreEntitySet="VoterInfo">
-            <ScalarProperty Name="VoterID" ColumnName="VoterID" />
-            <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
-            <ScalarProperty Name="Name" ColumnName="Name" />
-            <ScalarProperty Name="Notes" ColumnName="Notes" />
-            <ScalarProperty Name="VoteTypeID" ColumnName="VoteTypeID" />
-            <ScalarProperty Name="AttendanceTypeID" ColumnName="AttendanceTypeID" />
-            <ScalarProperty Name="PostMeetingFlag" ColumnName="PostMeetingFlag" />
-            <ScalarProperty Name="DiscussionFlag" ColumnName="DiscussionFlag" />
-            <ScalarProperty Name="VoterPFVMeasure" ColumnName="VoterPFVMeasure" />
-            <ScalarProperty Name="VoterBuyRange" ColumnName="VoterBuyRange" />
-            <ScalarProperty Name="VoterSellRange" ColumnName="VoterSellRange" />
-            <ScalarProperty Name="VoterRecommendation" ColumnName="VoterRecommendation" />
-            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-            <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-            <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-            <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="AttachedFileInfoes">
-            <EntityTypeMapping TypeName="ICPresentationModel.AttachedFileInfo">
-              <MappingFragment StoreEntitySet="AttachedFileInfo">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="FileSerializedData" ColumnName="FileSerializedData" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <FunctionImportMapping FunctionImportName="usp_InsertMeetingInformation" FunctionName="ICPresentationModel.Store.usp_InsertMeetingInformation" />
+          <FunctionImportMapping FunctionImportName="usp_InsertMeetingPresentationMappingInfo" FunctionName="ICPresentationModel.Store.usp_InsertMeetingPresentationMappingInfo" />
+          <FunctionImportMapping FunctionImportName="usp_InsertPresentationInfo" FunctionName="ICPresentationModel.Store.usp_InsertPresentationInfo" />
+          <FunctionImportMapping FunctionImportName="usp_InsertVoterInfo" FunctionName="ICPresentationModel.Store.usp_InsertVoterInfo" />
+          <FunctionImportMapping FunctionImportName="usp_InsertFileInfo" FunctionName="ICPresentationModel.Store.usp_InsertFileInfo" />
+          <FunctionImportMapping FunctionImportName="usp_SelectMeetingInfoDistinctMeetingDates" FunctionName="ICPresentationModel.Store.usp_SelectMeetingInfoDistinctMeetingDates" />
+          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoByMeetingDatePresenterStatus" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoByMeetingDatePresenterStatus">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoByMeetingID" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoByMeetingID">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoByPresentationDate" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoByPresentationDate">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoDistinctPresenters" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoDistinctPresenters" />
+          <FunctionImportMapping FunctionImportName="usp_SelectVoterInfoByPresentationIDPostMeetingFlag" FunctionName="ICPresentationModel.Store.usp_SelectVoterInfoByPresentationIDPostMeetingFlag">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ICPresentationModel.VoterInfoByPresentationIDResult">
+                <ScalarProperty Name="VoterID" ColumnName="VoterID" />
                 <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
-                <ScalarProperty Name="FileID" ColumnName="FileID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AttendanceTypes">
-            <EntityTypeMapping TypeName="ICPresentationModel.AttendanceType">
-              <MappingFragment StoreEntitySet="AttendanceType">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="AttendanceType1" ColumnName="AttendanceType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="VoteTypeID" ColumnName="VoteTypeID" />
                 <ScalarProperty Name="AttendanceTypeID" ColumnName="AttendanceTypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
+                <ScalarProperty Name="PostMeetingFlag" ColumnName="PostMeetingFlag" />
+                <ScalarProperty Name="DiscussionFlag" ColumnName="DiscussionFlag" />
+                <ScalarProperty Name="VoterPFVMeasure" ColumnName="VoterPFVMeasure" />
+                <ScalarProperty Name="VoterBuyRange" ColumnName="VoterBuyRange" />
+                <ScalarProperty Name="VoterSellRange" ColumnName="VoterSellRange" />
+                <ScalarProperty Name="VoterRecommendation" ColumnName="VoterRecommendation" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_UpdateMeetingInfo" FunctionName="ICPresentationModel.Store.usp_UpdateMeetingInfo" />
+          <FunctionImportMapping FunctionImportName="usp_UpdateMeetingPresentationMappingInfo" FunctionName="ICPresentationModel.Store.usp_UpdateMeetingPresentationMappingInfo" />
+          <FunctionImportMapping FunctionImportName="usp_UpdatePresentationInfo" FunctionName="ICPresentationModel.Store.usp_UpdatePresentationInfo" />
+          <FunctionImportMapping FunctionImportName="usp_SelectMeetingInfoMeetingDates" FunctionName="ICPresentationModel.Store.usp_SelectMeetingInfoMeetingDates" />
+          <FunctionImportMapping FunctionImportName="SetICPMeetingMinutesDetails" FunctionName="ICPresentationModel.Store.SetICPMeetingMinutesDetails" />
+          <FunctionImportMapping FunctionImportName="SetICPMeetingAttachedFileInfo" FunctionName="ICPresentationModel.Store.SetICPMeetingAttachedFileInfo" />
           <EntitySetMapping Name="MeetingInfoes">
             <EntityTypeMapping TypeName="ICPresentationModel.MeetingInfo">
               <MappingFragment StoreEntitySet="MeetingInfo">
@@ -950,10 +901,26 @@
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="MeetingDescription" ColumnName="MeetingDescription" />
+                <ScalarProperty Name="MeetingVotingClosedDateTime" ColumnName="MeetingVotingClosedDateTime" />
                 <ScalarProperty Name="MeetingClosedDateTime" ColumnName="MeetingClosedDateTime" />
                 <ScalarProperty Name="MeetingDateTime" ColumnName="MeetingDateTime" />
                 <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeetingAttachedFileInfoes">
+            <EntityTypeMapping TypeName="ICPresentationModel.MeetingAttachedFileInfo">
+              <MappingFragment StoreEntitySet="MeetingAttachedFileInfo">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="FileLocation" ColumnName="FileLocation" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -967,6 +934,20 @@
                 <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
                 <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
                 <ScalarProperty Name="MappingID" ColumnName="MappingID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttachedFileInfoes">
+            <EntityTypeMapping TypeName="ICPresentationModel.AttachedFileInfo">
+              <MappingFragment StoreEntitySet="AttachedFileInfo">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="FileSerializedData" ColumnName="FileSerializedData" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1006,245 +987,106 @@
                 <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
                 <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
                 <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
-                <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
+                <ScalarProperty Name="StatusType" ColumnName="StatusType" />
                 <ScalarProperty Name="Presenter" ColumnName="Presenter" />
                 <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="StatusTypes">
-            <EntityTypeMapping TypeName="ICPresentationModel.StatusType">
-              <MappingFragment StoreEntitySet="StatusType">
+          <EntitySetMapping Name="VoterInfoes">
+            <EntityTypeMapping TypeName="ICPresentationModel.VoterInfo">
+              <MappingFragment StoreEntitySet="VoterInfo">
                 <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="StatusType1" ColumnName="StatusType" />
-                <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="VoteTypes">
-            <EntityTypeMapping TypeName="ICPresentationModel.VoteType">
-              <MappingFragment StoreEntitySet="VoteType">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="VoteType1" ColumnName="VoteType" />
-                <ScalarProperty Name="VoteTypeID" ColumnName="VoteTypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="usp_InsertMeetingInformation" FunctionName="ICPresentationModel.Store.usp_InsertMeetingInformation" />
-          <FunctionImportMapping FunctionImportName="usp_InsertMeetingPresentationMappingInfo" FunctionName="ICPresentationModel.Store.usp_InsertMeetingPresentationMappingInfo" />
-          <FunctionImportMapping FunctionImportName="usp_InsertPresentationInfo" FunctionName="ICPresentationModel.Store.usp_InsertPresentationInfo" />
-          <FunctionImportMapping FunctionImportName="usp_InsertVoterInfo" FunctionName="ICPresentationModel.Store.usp_InsertVoterInfo" />
-          <FunctionImportMapping FunctionImportName="usp_InsertFileInfo" FunctionName="ICPresentationModel.Store.usp_InsertFileInfo" />
-          <FunctionImportMapping FunctionImportName="usp_SelectMeetingInfoDistinctMeetingDates" FunctionName="ICPresentationModel.Store.usp_SelectMeetingInfoDistinctMeetingDates" />
-          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfo" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfo">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ICPresentationModel.PresentationInfoResult">
-                <ScalarProperty Name="AcceptWithoutDiscussionFlag" ColumnName="AcceptWithoutDiscussionFlag" />
-                <ScalarProperty Name="AdminNotes" ColumnName="AdminNotes" />
-                <ScalarProperty Name="Background" ColumnName="Background" />
-                <ScalarProperty Name="CommitteeBuyRange" ColumnName="CommitteeBuyRange" />
-                <ScalarProperty Name="CommitteePFVMeasure" ColumnName="CommitteePFVMeasure" />
-                <ScalarProperty Name="CommitteeRangeEffectiveThrough" ColumnName="CommitteeRangeEffectiveThrough" />
-                <ScalarProperty Name="CommitteeRecommendation" ColumnName="CommitteeRecommendation" />
-                <ScalarProperty Name="CommitteeSellRange" ColumnName="CommitteeSellRange" />
-                <ScalarProperty Name="CompetitiveAdvantage" ColumnName="CompetitiveAdvantage" />
-                <ScalarProperty Name="CompetitiveDisadvantage" ColumnName="CompetitiveDisadvantage" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="EarningsOutlook" ColumnName="EarningsOutlook" />
-                <ScalarProperty Name="InvestmentThesis" ColumnName="InvestmentThesis" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
-                <ScalarProperty Name="Presenter" ColumnName="Presenter" />
-                <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
-                <ScalarProperty Name="SecurityCashPosition" ColumnName="SecurityCashPosition" />
-                <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
-                <ScalarProperty Name="SecurityCountryCode" ColumnName="SecurityCountryCode" />
-                <ScalarProperty Name="SecurityGlobalActiveWeight" ColumnName="SecurityGlobalActiveWeight" />
-                <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
-                <ScalarProperty Name="SecurityLastClosingPrice" ColumnName="SecurityLastClosingPrice" />
-                <ScalarProperty Name="SecurityMSCIIMIWeight" ColumnName="SecurityMSCIIMIWeight" />
-                <ScalarProperty Name="SecurityMSCIStdWeight" ColumnName="SecurityMSCIStdWeight" />
-                <ScalarProperty Name="SecurityMarketCapitalization" ColumnName="SecurityMarketCapitalization" />
-                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
-                <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
-                <ScalarProperty Name="SecurityPosition" ColumnName="SecurityPosition" />
-                <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
-                <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
-                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
-                <ScalarProperty Name="Valuations" ColumnName="Valuations" />
-                <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
-                <ScalarProperty Name="PresentationDate" ColumnName="PresentationDate" />
-                <ScalarProperty Name="StatusType" ColumnName="StatusType" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoByMeetingDatePresenterStatus" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoByMeetingDatePresenterStatus">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ICPresentationModel.PresentationInfoResult">
-                <ScalarProperty Name="AcceptWithoutDiscussionFlag" ColumnName="AcceptWithoutDiscussionFlag" />
-                <ScalarProperty Name="AdminNotes" ColumnName="AdminNotes" />
-                <ScalarProperty Name="Background" ColumnName="Background" />
-                <ScalarProperty Name="CommitteeBuyRange" ColumnName="CommitteeBuyRange" />
-                <ScalarProperty Name="CommitteePFVMeasure" ColumnName="CommitteePFVMeasure" />
-                <ScalarProperty Name="CommitteeRangeEffectiveThrough" ColumnName="CommitteeRangeEffectiveThrough" />
-                <ScalarProperty Name="CommitteeRecommendation" ColumnName="CommitteeRecommendation" />
-                <ScalarProperty Name="CommitteeSellRange" ColumnName="CommitteeSellRange" />
-                <ScalarProperty Name="CompetitiveAdvantage" ColumnName="CompetitiveAdvantage" />
-                <ScalarProperty Name="CompetitiveDisadvantage" ColumnName="CompetitiveDisadvantage" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="EarningsOutlook" ColumnName="EarningsOutlook" />
-                <ScalarProperty Name="InvestmentThesis" ColumnName="InvestmentThesis" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
-                <ScalarProperty Name="Presenter" ColumnName="Presenter" />
-                <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
-                <ScalarProperty Name="SecurityCashPosition" ColumnName="SecurityCashPosition" />
-                <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
-                <ScalarProperty Name="SecurityCountryCode" ColumnName="SecurityCountryCode" />
-                <ScalarProperty Name="SecurityGlobalActiveWeight" ColumnName="SecurityGlobalActiveWeight" />
-                <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
-                <ScalarProperty Name="SecurityLastClosingPrice" ColumnName="SecurityLastClosingPrice" />
-                <ScalarProperty Name="SecurityMSCIIMIWeight" ColumnName="SecurityMSCIIMIWeight" />
-                <ScalarProperty Name="SecurityMSCIStdWeight" ColumnName="SecurityMSCIStdWeight" />
-                <ScalarProperty Name="SecurityMarketCapitalization" ColumnName="SecurityMarketCapitalization" />
-                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
-                <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
-                <ScalarProperty Name="SecurityPosition" ColumnName="SecurityPosition" />
-                <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
-                <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
-                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
-                <ScalarProperty Name="Valuations" ColumnName="Valuations" />
-                <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
-                <ScalarProperty Name="PresentationDate" ColumnName="PresentationDate" />
-                <ScalarProperty Name="StatusType" ColumnName="StatusType" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoByMeetingID" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoByMeetingID">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ICPresentationModel.PresentationInfoResult">
-                <ScalarProperty Name="AcceptWithoutDiscussionFlag" ColumnName="AcceptWithoutDiscussionFlag" />
-                <ScalarProperty Name="AdminNotes" ColumnName="AdminNotes" />
-                <ScalarProperty Name="Background" ColumnName="Background" />
-                <ScalarProperty Name="CommitteeBuyRange" ColumnName="CommitteeBuyRange" />
-                <ScalarProperty Name="CommitteePFVMeasure" ColumnName="CommitteePFVMeasure" />
-                <ScalarProperty Name="CommitteeRangeEffectiveThrough" ColumnName="CommitteeRangeEffectiveThrough" />
-                <ScalarProperty Name="CommitteeRecommendation" ColumnName="CommitteeRecommendation" />
-                <ScalarProperty Name="CommitteeSellRange" ColumnName="CommitteeSellRange" />
-                <ScalarProperty Name="CompetitiveAdvantage" ColumnName="CompetitiveAdvantage" />
-                <ScalarProperty Name="CompetitiveDisadvantage" ColumnName="CompetitiveDisadvantage" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="EarningsOutlook" ColumnName="EarningsOutlook" />
-                <ScalarProperty Name="InvestmentThesis" ColumnName="InvestmentThesis" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
-                <ScalarProperty Name="Presenter" ColumnName="Presenter" />
-                <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
-                <ScalarProperty Name="SecurityCashPosition" ColumnName="SecurityCashPosition" />
-                <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
-                <ScalarProperty Name="SecurityCountryCode" ColumnName="SecurityCountryCode" />
-                <ScalarProperty Name="SecurityGlobalActiveWeight" ColumnName="SecurityGlobalActiveWeight" />
-                <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
-                <ScalarProperty Name="SecurityLastClosingPrice" ColumnName="SecurityLastClosingPrice" />
-                <ScalarProperty Name="SecurityMSCIIMIWeight" ColumnName="SecurityMSCIIMIWeight" />
-                <ScalarProperty Name="SecurityMSCIStdWeight" ColumnName="SecurityMSCIStdWeight" />
-                <ScalarProperty Name="SecurityMarketCapitalization" ColumnName="SecurityMarketCapitalization" />
-                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
-                <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
-                <ScalarProperty Name="SecurityPosition" ColumnName="SecurityPosition" />
-                <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
-                <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
-                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
-                <ScalarProperty Name="Valuations" ColumnName="Valuations" />
-                <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
-                <ScalarProperty Name="PresentationDate" ColumnName="PresentationDate" />
-                <ScalarProperty Name="StatusType" ColumnName="StatusType" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoByPresentationDate" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoByPresentationDate">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ICPresentationModel.PresentationInfoResult">
-                <ScalarProperty Name="AcceptWithoutDiscussionFlag" ColumnName="AcceptWithoutDiscussionFlag" />
-                <ScalarProperty Name="AdminNotes" ColumnName="AdminNotes" />
-                <ScalarProperty Name="Background" ColumnName="Background" />
-                <ScalarProperty Name="CommitteeBuyRange" ColumnName="CommitteeBuyRange" />
-                <ScalarProperty Name="CommitteePFVMeasure" ColumnName="CommitteePFVMeasure" />
-                <ScalarProperty Name="CommitteeRangeEffectiveThrough" ColumnName="CommitteeRangeEffectiveThrough" />
-                <ScalarProperty Name="CommitteeRecommendation" ColumnName="CommitteeRecommendation" />
-                <ScalarProperty Name="CommitteeSellRange" ColumnName="CommitteeSellRange" />
-                <ScalarProperty Name="CompetitiveAdvantage" ColumnName="CompetitiveAdvantage" />
-                <ScalarProperty Name="CompetitiveDisadvantage" ColumnName="CompetitiveDisadvantage" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="EarningsOutlook" ColumnName="EarningsOutlook" />
-                <ScalarProperty Name="InvestmentThesis" ColumnName="InvestmentThesis" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
-                <ScalarProperty Name="Presenter" ColumnName="Presenter" />
-                <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
-                <ScalarProperty Name="SecurityCashPosition" ColumnName="SecurityCashPosition" />
-                <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
-                <ScalarProperty Name="SecurityCountryCode" ColumnName="SecurityCountryCode" />
-                <ScalarProperty Name="SecurityGlobalActiveWeight" ColumnName="SecurityGlobalActiveWeight" />
-                <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
-                <ScalarProperty Name="SecurityLastClosingPrice" ColumnName="SecurityLastClosingPrice" />
-                <ScalarProperty Name="SecurityMSCIIMIWeight" ColumnName="SecurityMSCIIMIWeight" />
-                <ScalarProperty Name="SecurityMSCIStdWeight" ColumnName="SecurityMSCIStdWeight" />
-                <ScalarProperty Name="SecurityMarketCapitalization" ColumnName="SecurityMarketCapitalization" />
-                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
-                <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
-                <ScalarProperty Name="SecurityPosition" ColumnName="SecurityPosition" />
-                <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
-                <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
-                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
-                <ScalarProperty Name="Valuations" ColumnName="Valuations" />
-                <ScalarProperty Name="StatusTypeID" ColumnName="StatusTypeID" />
-                <ScalarProperty Name="PresentationDate" ColumnName="PresentationDate" />
-                <ScalarProperty Name="StatusType" ColumnName="StatusType" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="usp_SelectPresentationInfoDistinctPresenters" FunctionName="ICPresentationModel.Store.usp_SelectPresentationInfoDistinctPresenters" />
-          <FunctionImportMapping FunctionImportName="usp_SelectVoterInfoByPresentationIDPostMeetingFlag" FunctionName="ICPresentationModel.Store.usp_SelectVoterInfoByPresentationIDPostMeetingFlag">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ICPresentationModel.VoterInfoByPresentationIDResult">
-                <ScalarProperty Name="VoterID" ColumnName="VoterID" />
-                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Notes" ColumnName="Notes" />
-                <ScalarProperty Name="VoteTypeID" ColumnName="VoteTypeID" />
-                <ScalarProperty Name="AttendanceTypeID" ColumnName="AttendanceTypeID" />
-                <ScalarProperty Name="PostMeetingFlag" ColumnName="PostMeetingFlag" />
-                <ScalarProperty Name="DiscussionFlag" ColumnName="DiscussionFlag" />
-                <ScalarProperty Name="VoterPFVMeasure" ColumnName="VoterPFVMeasure" />
-                <ScalarProperty Name="VoterBuyRange" ColumnName="VoterBuyRange" />
-                <ScalarProperty Name="VoterSellRange" ColumnName="VoterSellRange" />
                 <ScalarProperty Name="VoterRecommendation" ColumnName="VoterRecommendation" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="VoterSellRange" ColumnName="VoterSellRange" />
+                <ScalarProperty Name="VoterBuyRange" ColumnName="VoterBuyRange" />
+                <ScalarProperty Name="VoterPFVMeasure" ColumnName="VoterPFVMeasure" />
+                <ScalarProperty Name="DiscussionFlag" ColumnName="DiscussionFlag" />
+                <ScalarProperty Name="PostMeetingFlag" ColumnName="PostMeetingFlag" />
+                <ScalarProperty Name="AttendanceType" ColumnName="AttendanceType" />
+                <ScalarProperty Name="VoteType" ColumnName="VoteType" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
+                <ScalarProperty Name="VoterID" ColumnName="VoterID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveICPMeetingAttachedFileDetails" FunctionName="ICPresentationModel.Store.RetrieveICPMeetingAttachedFileDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ICPresentationModel.MeetingAttachedFileData">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="FileType" ColumnName="FileType" />
+                <ScalarProperty Name="FileLocation" ColumnName="FileLocation" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="usp_UpdateMeetingInfo" FunctionName="ICPresentationModel.Store.usp_UpdateMeetingInfo" />
-          <FunctionImportMapping FunctionImportName="usp_UpdateMeetingPresentationMappingInfo" FunctionName="ICPresentationModel.Store.usp_UpdateMeetingPresentationMappingInfo" />
-          <FunctionImportMapping FunctionImportName="usp_UpdatePresentationInfo" FunctionName="ICPresentationModel.Store.usp_UpdatePresentationInfo" />
-          <FunctionImportMapping FunctionImportName="usp_SelectMeetingInfoMeetingDates" FunctionName="ICPresentationModel.Store.usp_SelectMeetingInfoMeetingDates" />
+          <FunctionImportMapping FunctionImportName="RetrieveICPMeetingMinuteDetails" FunctionName="ICPresentationModel.Store.RetrieveICPMeetingMinuteDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ICPresentationModel.MeetingMinuteData">
+                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
+                <ScalarProperty Name="Presenter" ColumnName="Presenter" />
+                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+                <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
+                <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
+                <ScalarProperty Name="VoterID" ColumnName="VoterID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AttendanceType" ColumnName="AttendanceType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveICPresentationOverviewData" FunctionName="ICPresentationModel.Store.RetrieveICPresentationOverviewData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ICPresentationModel.ICPresentationOverviewData">
+                <ScalarProperty Name="AcceptWithoutDiscussionFlag" ColumnName="AcceptWithoutDiscussionFlag" />
+                <ScalarProperty Name="AdminNotes" ColumnName="AdminNotes" />
+                <ScalarProperty Name="Background" ColumnName="Background" />
+                <ScalarProperty Name="CommitteeBuyRange" ColumnName="CommitteeBuyRange" />
+                <ScalarProperty Name="CommitteePFVMeasure" ColumnName="CommitteePFVMeasure" />
+                <ScalarProperty Name="CommitteeRangeEffectiveThrough" ColumnName="CommitteeRangeEffectiveThrough" />
+                <ScalarProperty Name="CommitteeRecommendation" ColumnName="CommitteeRecommendation" />
+                <ScalarProperty Name="CommitteeSellRange" ColumnName="CommitteeSellRange" />
+                <ScalarProperty Name="CompetitiveAdvantage" ColumnName="CompetitiveAdvantage" />
+                <ScalarProperty Name="CompetitiveDisadvantage" ColumnName="CompetitiveDisadvantage" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="EarningsOutlook" ColumnName="EarningsOutlook" />
+                <ScalarProperty Name="InvestmentThesis" ColumnName="InvestmentThesis" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
+                <ScalarProperty Name="Presenter" ColumnName="Presenter" />
+                <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
+                <ScalarProperty Name="SecurityCashPosition" ColumnName="SecurityCashPosition" />
+                <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
+                <ScalarProperty Name="SecurityCountryCode" ColumnName="SecurityCountryCode" />
+                <ScalarProperty Name="SecurityGlobalActiveWeight" ColumnName="SecurityGlobalActiveWeight" />
+                <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
+                <ScalarProperty Name="SecurityLastClosingPrice" ColumnName="SecurityLastClosingPrice" />
+                <ScalarProperty Name="SecurityMSCIIMIWeight" ColumnName="SecurityMSCIIMIWeight" />
+                <ScalarProperty Name="SecurityMSCIStdWeight" ColumnName="SecurityMSCIStdWeight" />
+                <ScalarProperty Name="SecurityMarketCapitalization" ColumnName="SecurityMarketCapitalization" />
+                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+                <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
+                <ScalarProperty Name="SecurityPosition" ColumnName="SecurityPosition" />
+                <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
+                <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
+                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+                <ScalarProperty Name="Valuations" ColumnName="Valuations" />
+                <ScalarProperty Name="StatusType" ColumnName="StatusType" />
+                <ScalarProperty Name="MeetingDateTime" ColumnName="MeetingDateTime" />
+                <ScalarProperty Name="MeetingClosedDateTime" ColumnName="MeetingClosedDateTime" />
+                <ScalarProperty Name="MeetingVotingClosedDateTime" ColumnName="MeetingVotingClosedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveICMeetingInfoByStatusType" FunctionName="ICPresentationModel.Store.RetrieveICMeetingInfoByStatusType" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1265,52 +1107,32 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="ICPresentationDataModel">
-        <EntityTypeShape EntityType="ICPresentationModel.VoterInfo" Width="1.5" PointX="0.75" PointY="0.75" Height="4.0956022135416656" IsExpanded="true" />
-        <EntityTypeShape EntityType="ICPresentationModel.AttachedFileInfo" Width="1.5" PointX="5.25" PointY="6.625" Height="2.749492187499996" />
-        <EntityTypeShape EntityType="ICPresentationModel.AttendanceType" Width="1.5" PointX="2.75" PointY="6" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="ICPresentationModel.MeetingInfo" Width="1.5" PointX="6.125" PointY="0.5" Height="2.7494921875000031" />
-        <EntityTypeShape EntityType="ICPresentationModel.MeetingPresentationMappingInfo" Width="1.5" PointX="3.5" PointY="0.5" Height="2.7494921875000031" />
-        <EntityTypeShape EntityType="ICPresentationModel.PresentationInfo" Width="1.5" PointX="0.75" PointY="0.75" Height="8.7108365885416674" />
-        <EntityTypeShape EntityType="ICPresentationModel.StatusType" Width="1.5" PointX="5.125" PointY="3.5" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="ICPresentationModel.VoteType" Width="1.5" PointX="2.75" PointY="3.5" Height="2.3648893229166674" />
-        <AssociationConnector Association="ICPresentationModel.FK_tblICP_FileInfo_tblICP_PresentationInfo" >
-          <ConnectorPoint PointX="2.25" PointY="8.9009407552083317" />
-          <ConnectorPoint PointX="5.25" PointY="8.9009407552083317" />
+      <Diagram Name="ICPresentationDataModel" ZoomLevel="81">
+        <EntityTypeShape EntityType="ICPresentationModel.MeetingInfo" Width="1.5" PointX="2.75" PointY="0.75" Height="3.1340950520833326" />
+        <EntityTypeShape EntityType="ICPresentationModel.MeetingAttachedFileInfo" Width="1.5" PointX="0.625" PointY="0.75" Height="2.9417936197916674" />
+        <AssociationConnector Association="ICPresentationModel.FK_MeetingAttachedFileInfo_MeetingInfo" >
+          <ConnectorPoint PointX="2.75" PointY="2.2208968098958337" />
+          <ConnectorPoint PointX="2.125" PointY="2.2208968098958337" />
         </AssociationConnector>
-        <AssociationConnector Association="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_AttendanceType" >
-          <ConnectorPoint PointX="2.75" PointY="6" />
-          <ConnectorPoint PointX="2.25" PointY="5.4225065104166656" />
+        <EntityTypeShape EntityType="ICPresentationModel.MeetingPresentationMappingInfo" Width="1.5" PointX="2.75" PointY="4.125" Height="2.749492187499996" />
+        <AssociationConnector Association="ICPresentationModel.FK_MeetingPresentationMappingInfo_MeetingInfo" >
+          <ConnectorPoint PointX="3.5" PointY="3.8840950520833331" />
+          <ConnectorPoint PointX="3.5" PointY="4.125" />
         </AssociationConnector>
-        <AssociationConnector Association="ICPresentationModel.FK_tblICP_MeetingPresentationMappingInfo_tblICP_MeetingInfo1" >
-          <ConnectorPoint PointX="6.125" PointY="1.8747460937500016" />
-          <ConnectorPoint PointX="5" PointY="1.8747460937500016" />
+        <EntityTypeShape EntityType="ICPresentationModel.AttachedFileInfo" Width="1.5" PointX="6.375" PointY="5.375" Height="2.7494921875000031" />
+        <EntityTypeShape EntityType="ICPresentationModel.PresentationInfo" Width="1.5" PointX="4.5" PointY="0.75" Height="8.5185351562500067" />
+        <EntityTypeShape EntityType="ICPresentationModel.VoterInfo" Width="1.5" PointX="6.25" PointY="0.75" Height="4.2879036458333282" />
+        <AssociationConnector Association="ICPresentationModel.FK_AttachedFileInfo_PresentationInfo" >
+          <ConnectorPoint PointX="6" PointY="6.7497460937500016" />
+          <ConnectorPoint PointX="6.375" PointY="6.7497460937500016" />
         </AssociationConnector>
-        <AssociationConnector Association="ICPresentationModel.FK_tblICP_MeetingPresentationMappingInfo_tblICP_PresentationInfo" >
-          <ConnectorPoint PointX="2.25" PointY="1.3980466422526037" />
-          <ConnectorPoint PointX="3.1666666666666665" PointY="1.398046642252603" />
-          <ConnectorPoint PointX="3.3333333333333335" PointY="1.3980466422526037" />
-          <ConnectorPoint PointX="3.5" PointY="1.3980466422526037" />
+        <AssociationConnector Association="ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo" >
+          <ConnectorPoint PointX="4.5" PointY="5.49974609375" />
+          <ConnectorPoint PointX="4.25" PointY="5.49974609375" />
         </AssociationConnector>
-        <AssociationConnector Association="ICPresentationModel.FK_tblICP_PresentationInfo_tblICP_StatusType" >
-          <ConnectorPoint PointX="5.125" PointY="4.6824446614583337" />
-          <ConnectorPoint PointX="4.5" PointY="4.6824446614583337" />
-          <ConnectorPoint PointX="4.5" PointY="3.4994921875000031" />
-          <ConnectorPoint PointX="3.25" PointY="3.4994921875000031" />
-          <ConnectorPoint PointX="3.25" PointY="0.5" />
-          <ConnectorPoint PointX="1.5" PointY="0.5" />
-          <ConnectorPoint PointX="1.5" PointY="0.75" />
-        </AssociationConnector>
-        <AssociationConnector Association="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_PresentationInfo" >
-          <ConnectorPoint PointX="1.5" PointY="9.4608365885416674" />
-          <ConnectorPoint PointX="1.5" PointY="9.423336588541666" />
-          <ConnectorPoint PointX="0.6875" PointY="9.423336588541666" />
-          <ConnectorPoint PointX="0.6875" PointY="3.0862532552083328" />
-          <ConnectorPoint PointX="0.75" PointY="3.0862532552083328" />
-        </AssociationConnector>
-        <AssociationConnector Association="ICPresentationModel.FK_tblICP_VoterInfo_tblICP_VoteType" >
-          <ConnectorPoint PointX="2.75" PointY="4.4612532552083328" />
-          <ConnectorPoint PointX="2.25" PointY="4.4612532552083328" />
+        <AssociationConnector Association="ICPresentationModel.FK_VoterInfo_PresentationInfo" >
+          <ConnectorPoint PointX="6" PointY="2.8939518229166641" />
+          <ConnectorPoint PointX="6.25" PointY="2.8939518229166641" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

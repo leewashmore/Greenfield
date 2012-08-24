@@ -73,6 +73,11 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        private void dgICPPresentationsList_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+
+        }
+
         
     }
 }

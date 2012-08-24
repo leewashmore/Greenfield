@@ -1236,7 +1236,7 @@ namespace GreenField.Web.Services
             try
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-                List<RatioComparisonData> result = entity.usp_RetrieveRatioComparisonData(contextSecurityXML).ToList();
+                List<RatioComparisonData> result = entity.RetrieveRatioComparisonData(contextSecurityXML).ToList();
                 return result;
             }
             catch (Exception ex)

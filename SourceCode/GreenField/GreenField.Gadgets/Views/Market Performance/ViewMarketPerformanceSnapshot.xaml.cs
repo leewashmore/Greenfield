@@ -274,17 +274,16 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            //List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            //RadExportOptionsInfo.Add(new RadExportOptions()
-            //{
-            //    ElementName = this.txtHeader.Text,
-            //    Element = this.radGridSnapshot,
-            //    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-            //});
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions()
+            {
+                ElementName = this.txtHeader.Text,
+                Element = this.radGridSnapshot,
+                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+            });
 
-            //ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);
-            //childExportOptions.Show();
-            ExportExcel.ExportGridExcel(radGridSnapshot);
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.BENCHMARKS_MARKET_PERFORMANCE_SNAPSHOT);
+            childExportOptions.Show();
         }
 
         /// <summary>

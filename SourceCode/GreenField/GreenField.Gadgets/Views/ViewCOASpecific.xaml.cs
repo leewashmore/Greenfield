@@ -108,13 +108,10 @@ namespace GreenField.Gadgets.Views
         #region Export
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            //List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Gadget With Period Columns COA Specific", Element = this.dgCOASpecific, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });           
-            //ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
-            //childExportOptions.Show();
-
-            ExportExcel.ExportGridExcel(dgCOASpecific);
-
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+            RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Gadget With Period Columns COA Specific", Element = this.dgCOASpecific, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
+            childExportOptions.Show();
         }
         #endregion
         #endregion

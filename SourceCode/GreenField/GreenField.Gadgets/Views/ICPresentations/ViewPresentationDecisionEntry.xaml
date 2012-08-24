@@ -1,0 +1,343 @@
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewPresentationDecisionEntry"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+    d:DesignHeight="500" d:DesignWidth="550">
+    
+        <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
+
+
+    <Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>            
+        </Grid.RowDefinitions>
+        <!--Selected Presentation Details-->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Security: " Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Grid.Column="1" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Grid.Column="2" Margin="5,0,0,0" Text="Status: " Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Grid.Column="3" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Grid.Column="4" Margin="5,0,0,0" Text="Presentation Date: " Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Grid.Column="5" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Grid.Column="6" Margin="5,0,0,0" Text="Presenter: " Style="{StaticResource TextBlockStyle}"/>
+            <TextBlock Grid.Column="7" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+        </Grid>
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1" Margin="0,5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Presented" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Row="1" Margin="0,2,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0" Background="#e4e5e5">
+                        <TextBlock Margin="5" Text="RECOMMENDATION" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" Background="#e4e5e5">
+                        <TextBlock Margin="5" Text="P/FV" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="2" Background="#e4e5e5">
+                        <TextBlock Margin="5" Text="BUY" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="3" Background="#e4e5e5">
+                        <TextBlock Margin="5" Text="SELL" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <TextBlock Margin="5" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <TextBlock Margin="5" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="2">
+                        <TextBlock Margin="5" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="3">
+                        <TextBlock Margin="5" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="2" Margin="0,2">
+            <CheckBox Content="ACCEPT WITHOUT DISCUSSION" HorizontalAlignment="Left" Style="{StaticResource CheckBoxStyle}"/>
+        </Grid>
+        <Border Grid.Row="3" BorderBrush="Black" BorderThickness="1" Margin="0,5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="IC Decision" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Row="1" Margin="0,2,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0" Background="#e4e5e5">
+                        <TextBlock Margin="5" Text="RECOMMENDATION" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" Background="#e4e5e5">
+                        <TextBlock Margin="5" Text="P/FV" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="2" Background="#e4e5e5">
+                        <TextBlock Margin="5" Text="BUY" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="3" Background="#e4e5e5">
+                        <TextBlock Margin="5" Text="SELL" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="4" Background="#e4e5e5">
+                        <TextBlock Margin="5" Text="EFFECTIVE THROUGH" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <TextBlock Margin="5" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <TextBlock Margin="5" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="2">
+                        <TextBlock Margin="5" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="3">
+                        <TextBlock Margin="5" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="4">
+                        <TextBlock Margin="5" Text="{Binding}" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Border>
+        <Border Grid.Row="4" BorderBrush="Black" BorderThickness="1" Margin="0,5">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Final Votes" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <telerik:RadGridView x:Name="dgFinalVotes"
+                                     Grid.Row="1" Grid.Column="0" Margin="0,2"
+                                     CanUserReorderColumns ="False"
+                                     CanUserSelect="False"
+                                     CanUserSortColumns="False"
+                                     AutoGenerateColumns="False"
+                                     CanUserInsertRows="False"
+                                     CanUserDeleteRows="False"
+                                     ShowGroupFooters="False"
+                                     ShowColumnFooters="False"
+                                     ShowGroupPanel="False"
+                                     UseLayoutRounding="True"
+                                     IsReadOnly="True"
+                                     RowIndicatorVisibility="Collapsed"
+                                     ScrollMode="RealTime"
+                                     AlternationCount="2" 
+                                     EnableRowVirtualization="False"
+                                     EnableColumnVirtualization="False"                             
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     ItemsSource="{Binding}"
+                                     SelectedItem="{Binding}">                                     
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="USER"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="ABSTAIN"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="AGREE"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="MODIFY"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="P/FV"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="BUY"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="SELL"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+                <TextBlock Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Text="Pre-Meeting Notes" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <telerik:RadGridView x:Name="dgPreMeetingVotes"
+                                     Grid.Row="1" Grid.Column="1" Margin="5,2"
+                                     CanUserReorderColumns ="False"
+                                     CanUserSelect="False"
+                                     CanUserSortColumns="False"
+                                     AutoGenerateColumns="False"
+                                     CanUserInsertRows="False"
+                                     CanUserDeleteRows="False"
+                                     ShowGroupFooters="False"
+                                     ShowColumnFooters="False"
+                                     ShowGroupPanel="False"
+                                     UseLayoutRounding="True"
+                                     IsReadOnly="True"
+                                     RowIndicatorVisibility="Collapsed"
+                                     ScrollMode="RealTime"
+                                     AlternationCount="2" 
+                                     EnableRowVirtualization="False"
+                                     EnableColumnVirtualization="False"                             
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     ItemsSource="{Binding}"
+                                     SelectedItem="{Binding}">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="USER"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="ABSTAIN"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="AGREE"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="MODIFY"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="P/FV"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="BUY"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                        <telerik:GridViewDataColumn Width="Auto"
+                                                    Header="SELL"
+                                                    DataMemberBinding="{Binding}"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                    CellStyle="{StaticResource GridViewCellStyle}"
+                                                    HeaderTextAlignment="Left"
+                                                    TextAlignment="Left"
+                                                    IsFilterable="False"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </Grid>
+        </Border>
+        <Grid Grid.Row="5" Margin="0,2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Notes:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+            <TextBox Grid.Row="1" Text="{Binding}" MaxLength="255" Style="{StaticResource TextBoxStyle}"/>
+        </Grid>
+        <Grid Grid.Row="6" Margin="0,2">
+            <telerik:RadButton Content="SUBMIT" Width="100"
+                               Style="{StaticResource RadButtonStyle}"/>
+        </Grid>
+    </Grid>
+</helpers:ViewBaseUserControl>

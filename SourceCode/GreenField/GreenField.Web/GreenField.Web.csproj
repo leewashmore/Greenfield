@@ -77,7 +77,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
     <Content Include="Services\ExternalResearchOperations.svc" />
-    <Content Include="Services\MeetingService.svc" />
+    <Content Include="Services\MeetingOperations.svc" />
     <Content Include="Services\ModelFXOperations.svc" />
     <Content Include="Services\BenchmarkHoldingsOperations.svc" />
     <Content Include="Services\DashboardOperations.svc" />
@@ -101,6 +101,7 @@
   <ItemGroup>
     <Compile Include="DataContracts\IssuerReferenceData.cs" />
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
+    <Compile Include="DataContracts\MeetingAttachedFileStreamData.cs" />
     <Compile Include="DataContracts\PopulatedMarketPerformanceSnapshotData.cs" />
     <Compile Include="Helpers\AssetAllocationCalculations.cs" />
     <Compile Include="Helpers\CheckServiceAvailability.cs" />
@@ -130,8 +131,8 @@
     <Compile Include="Services\ExternalResearchOperations.svc.cs">
       <DependentUpon>ExternalResearchOperations.svc</DependentUpon>
     </Compile>
-    <Compile Include="Services\MeetingService.svc.cs">
-      <DependentUpon>MeetingService.svc</DependentUpon>
+    <Compile Include="Services\MeetingOperations.svc.cs">
+      <DependentUpon>MeetingOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\ModelFXOperations.svc.cs">
       <DependentUpon>ModelFXOperations.svc</DependentUpon>

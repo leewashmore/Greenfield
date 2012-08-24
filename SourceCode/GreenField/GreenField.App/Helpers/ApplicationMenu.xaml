@@ -15,8 +15,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-    
-    
+
+
     <Grid x:Name="LayoutRoot" Background="White">
         <telerik:RadPanelBar Name="pbMainMenu" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Visible">
 

@@ -253,8 +253,7 @@ namespace GreenField.Gadgets.Views
 
                 if (grdRadGridView.Visibility == Visibility.Visible)
                 {
-                    //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-                    ExportExcel.ExportGridExcel(dgPricing);
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
                     return;
                 }
 

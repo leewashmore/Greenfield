@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
+  <xs:import schemaLocation="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" />
+  <xs:element name="RetrievePresentationOverviewData">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePresentationOverviewDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrievePresentationOverviewDataResult" nillable="true" type="q1:ArrayOfICPresentationOverviewData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveMeetingInfoByPresentationStatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="presentationStatus" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveMeetingInfoByPresentationStatusResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveMeetingInfoByPresentationStatusResult" nillable="true" type="q2:ArrayOfMeetingInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveMeetingMinuteDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="meetingID" nillable="true" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveMeetingMinuteDetailsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveMeetingMinuteDetailsResult" nillable="true" type="q3:ArrayOfMeetingMinuteData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveMeetingAttachedFileDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="meetingID" nillable="true" type="xs:long" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveMeetingAttachedFileDetailsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveMeetingAttachedFileDetailsResult" nillable="true" type="q4:ArrayOfMeetingAttachedFileData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateMeetingMinuteDetails">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="meetingInfo" nillable="true" type="q5:MeetingInfo" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="meetingMinuteData" nillable="true" type="q6:ArrayOfMeetingMinuteData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateMeetingMinuteDetailsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateMeetingMinuteDetailsResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateMeetingAttachedFileStreamData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts" minOccurs="0" name="meetingAttachedFileStreamData" nillable="true" type="q7:MeetingAttachedFileStreamData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateMeetingAttachedFileStreamDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateMeetingAttachedFileStreamDataResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

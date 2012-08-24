@@ -133,16 +133,18 @@ namespace GreenField.Gadgets.Views
                 {
                     if (this.dgSectorBreakdown.Visibility == Visibility.Visible)
                     {
-                    //    ChildExportOptions childExportOptions = new ChildExportOptions
-                    //(new List<RadExportOptions>{new RadExportOptions() 
-                    //{
-                    //    Element = this.dgSectorBreakdown,
-                    //    ElementName = "Sector Breakdown Data",
-                    //    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-                    //}}, "Export Options: " + GadgetNames.HOLDINGS_SECTOR_BREAKDOWN);
-                    //    childExportOptions.Show();
-                        ExportExcel.ExportGridExcel(dgSectorBreakdown);
-
+                        ChildExportOptions childExportOptions = new ChildExportOptions
+                            (new List<RadExportOptions>
+                            {
+                                new RadExportOptions()
+                                {
+                                    Element = this.dgSectorBreakdown,
+                                    ElementName = "Sector Breakdown Data",
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                                }
+                            }
+                            , "Export Options: " + GadgetNames.HOLDINGS_SECTOR_BREAKDOWN);
+                        childExportOptions.Show();
                     }
                 }
             }

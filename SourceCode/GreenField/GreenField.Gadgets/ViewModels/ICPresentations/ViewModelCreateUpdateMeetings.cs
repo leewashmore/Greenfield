@@ -121,21 +121,21 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private ICPMeetingInfo _meetingInfo;
-        public ICPMeetingInfo MeetingInfo
-        {
-            get
-            {
-                if (_meetingInfo == null)
-                    return new ICPMeetingInfo();
-                return _meetingInfo;
-            }
-            set
-            {
-                _meetingInfo = value;
-                RaisePropertyChanged(() => this.MeetingInfo);
-            }
-        }
+        //private ICPMeetingInfo _meetingInfo;
+        //public ICPMeetingInfo MeetingInfo
+        //{
+        //    get
+        //    {
+        //        if (_meetingInfo == null)
+        //            return new ICPMeetingInfo();
+        //        return _meetingInfo;
+        //    }
+        //    set
+        //    {
+        //        _meetingInfo = value;
+        //        RaisePropertyChanged(() => this.MeetingInfo);
+        //    }
+        //}
         
         #region Constructor
         
@@ -164,10 +164,10 @@ namespace GreenField.Gadgets.ViewModels
             switch (ViewPluginFlagProperty)
             {
                 case ViewPluginFlagEnumeration.Create:
-                    _dbInteractivity.CreateMeeting(MeetingInfo.GetMeetingInfo(), (msg) => { MessageBox.Show(msg); });
+                    //_dbInteractivity.CreateMeeting(MeetingInfo.GetMeetingInfo(), (msg) => { MessageBox.Show(msg); });
                     break;
                 case ViewPluginFlagEnumeration.Update:
-                    _dbInteractivity.UpdateMeeting(MeetingInfo.GetMeetingInfo(), (msg) => { MessageBox.Show(msg); });
+                    //_dbInteractivity.UpdateMeeting(MeetingInfo.GetMeetingInfo(), (msg) => { MessageBox.Show(msg); });
                     break;
             }
 
@@ -188,8 +188,8 @@ namespace GreenField.Gadgets.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            ViewPluginFlagProperty = (navigationContext.NavigationService.Region.Context as ICPNavigationInfo).ViewPluginFlagEnumerationObject;
-            MeetingInfo = (navigationContext.NavigationService.Region.Context as ICPNavigationInfo).MeetingInfoObject;
+            //ViewPluginFlagProperty = (navigationContext.NavigationService.Region.Context as ICNavigationInfo).ViewPluginFlagEnumerationObject;
+            //MeetingInfo = (navigationContext.NavigationService.Region.Context as ICNavigationInfo).MeetingInfoObject;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

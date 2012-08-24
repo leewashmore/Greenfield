@@ -127,14 +127,12 @@
     <Compile Include="Helpers\ChildExportOptions.xaml.cs">
       <DependentUpon>ChildExportOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Converters\MeetingMinutesAttendenceRemoveButtonEnabledConverter.cs" />
     <Compile Include="Helpers\Converters\EntityDisplayConverter.cs" />
     <Compile Include="Helpers\Converters\GroupAggregationToVisibilityConverter.cs" />
     <Compile Include="Helpers\Converters\ReportedCurrencyConverter.cs" />
     <Compile Include="Helpers\DataContextProxy.cs" />
     <Compile Include="Helpers\Converters\DraggedItemTemplateConverter.cs" />
-    <Compile Include="Helpers\Export\ExportExcel.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Helpers\Export\ExportOptions.cs" />
     <Compile Include="Helpers\Converters\FlattenGroupConverter.cs" />
     <Compile Include="Helpers\Export\PDFExporter.cs" />
@@ -157,15 +155,8 @@
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
     <Compile Include="Models\FinancialStatementDisplayData.cs" />
     <Compile Include="Models\FiveYearDataModels.cs" />
-    <Compile Include="Models\ICPresentations\ICPAttachmentInfo.cs" />
+    <Compile Include="Models\ICPresentations\ICNavigationInfo.cs" />
     <Compile Include="Models\GadgetWithPeriodColumns.cs" />
-    <Compile Include="Models\ICPresentations\ICPBlogInfo.cs" />
-    <Compile Include="Models\ICPresentations\ICPMeetingInfo.cs" />
-    <Compile Include="Models\ICPresentations\ICPMeetingNavigation.cs" />
-    <Compile Include="Models\ICPresentations\ICPNavigationInfo.cs" />
-    <Compile Include="Models\ICPresentations\ICPPresentationInfo.cs" />
-    <Compile Include="Models\ICPresentations\ICPSecurityInfo.cs" />
-    <Compile Include="Models\ICPresentations\ICPVoterInfo.cs" />
     <Compile Include="Models\PerformancePeriodData.cs" />
     <Compile Include="Models\PeriodAttributeData.cs" />
     <Compile Include="Models\RegionSpecificData.cs" />
@@ -174,6 +165,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
+    <Compile Include="ViewModels\ICPresentations\ViewModelPresentationMeetingMinutes.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelICPresentationNew.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelCreateUpdateMeetings.cs" />
     <Compile Include="ViewModels\Documents\ViewModelDocuments.cs" />
@@ -243,6 +235,18 @@
     </Compile>
     <Compile Include="Views\Documents\ViewDocuments.xaml.cs">
       <DependentUpon>ViewDocuments.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ChildViewPresentationDateChangeEdit.xaml.cs">
+      <DependentUpon>ChildViewPresentationDateChangeEdit.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml.cs">
+      <DependentUpon>ChildViewPresentationMeetingMinutesAddAttendee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ViewPresentationMeetingMinutes.xaml.cs">
+      <DependentUpon>ViewPresentationMeetingMinutes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ViewPresentationDecisionEntry.xaml.cs">
+      <DependentUpon>ViewPresentationDecisionEntry.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ICPresentations\ViewICPresentationNew.xaml.cs">
       <DependentUpon>ViewICPresentationNew.xaml</DependentUpon>
@@ -446,6 +450,22 @@
     <Page Include="Views\Documents\ViewDocuments.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ICPresentations\ChildViewPresentationDateChangeEdit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewPresentationMeetingMinutes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewPresentationDecisionEntry.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ICPresentations\ViewICPresentationNew.xaml">
       <Generator>MSBuild:Compile</Generator>

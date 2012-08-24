@@ -621,25 +621,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="securityBucketXML">No Metadata Documentation available.</param>
-        public ObjectResult<RatioComparisonData> usp_RetrieveRatioComparisonData(global::System.String securityBucketXML)
-        {
-            ObjectParameter securityBucketXMLParameter;
-            if (securityBucketXML != null)
-            {
-                securityBucketXMLParameter = new ObjectParameter("securityBucketXML", securityBucketXML);
-            }
-            else
-            {
-                securityBucketXMLParameter = new ObjectParameter("securityBucketXML", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<RatioComparisonData>("usp_RetrieveRatioComparisonData", securityBucketXMLParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
         /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
         /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
@@ -1188,6 +1169,25 @@ namespace GreenField.DAL
         public ObjectResult<Nullable<global::System.Decimal>> GetMarketCap()
         {
             return base.ExecuteFunction<Nullable<global::System.Decimal>>("GetMarketCap");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="securityBucketXML">No Metadata Documentation available.</param>
+        public ObjectResult<RatioComparisonData> RetrieveRatioComparisonData(global::System.String securityBucketXML)
+        {
+            ObjectParameter securityBucketXMLParameter;
+            if (securityBucketXML != null)
+            {
+                securityBucketXMLParameter = new ObjectParameter("securityBucketXML", securityBucketXML);
+            }
+            else
+            {
+                securityBucketXMLParameter = new ObjectParameter("securityBucketXML", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<RatioComparisonData>("RetrieveRatioComparisonData", securityBucketXMLParameter);
         }
     
         /// <summary>

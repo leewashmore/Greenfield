@@ -107,7 +107,15 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            ExportExcel.ExportGridExcel(dgPortfolioDetails);
+            if (this.dgPortfolioDetails.Visibility == Visibility.Visible)
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
+                        new RadExportOptions() { ElementName = ExportTypes.PORTFOLIO_DETAILS_UI, Element = this.dgPortfolioDetails, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                };
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.PORTFOLIO_DETAILS_UI);
+                childExportOptions.Show();
+            }
         }
         #endregion
 

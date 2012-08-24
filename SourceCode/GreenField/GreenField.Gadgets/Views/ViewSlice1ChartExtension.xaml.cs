@@ -154,8 +154,7 @@ namespace GreenField.Gadgets.Views
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION, Element = this.chChartExtension, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
                 else if (grdRadGridView.Visibility == Visibility.Visible)
                 {
-                    //RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION_DATA, Element = this.dgChartExtension, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-                    ExportExcel.ExportGridExcel(dgChartExtension);
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION_DATA, Element = this.dgChartExtension, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
                     return;
                 }
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_CHART_EXTENTION);

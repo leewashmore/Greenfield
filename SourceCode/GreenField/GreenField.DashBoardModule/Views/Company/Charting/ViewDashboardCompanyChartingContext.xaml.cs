@@ -65,7 +65,7 @@ namespace GreenField.DashboardModule.Views
             {
                 RestoredHeight = 300,
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_BANK,
-                Content =null// new ViewScatterGraph(new ViewModelScatterGraph(param))
+                Content = new ViewScatterGraph(new ViewModelScatterGraph(param))
             });
 
             param.AdditionalInfo = ScatterChartDefaults.INDUSTRIAL;
@@ -73,7 +73,7 @@ namespace GreenField.DashboardModule.Views
             {
                 RestoredHeight = 300, 
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_INDUSTRIAL,
-                Content =null// new ViewScatterGraph(new ViewModelScatterGraph(param))
+                Content = new ViewScatterGraph(new ViewModelScatterGraph(param))
             });
 
             param.AdditionalInfo = ScatterChartDefaults.INSURANCE;
@@ -81,7 +81,7 @@ namespace GreenField.DashboardModule.Views
             {
                 RestoredHeight = 300,
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_INSURANCE,
-                Content =null// new ViewScatterGraph(new ViewModelScatterGraph(param))
+                Content = new ViewScatterGraph(new ViewModelScatterGraph(param))
             });
 
             param.AdditionalInfo = ScatterChartDefaults.UTILITY;
@@ -89,7 +89,7 @@ namespace GreenField.DashboardModule.Views
             {
                 RestoredHeight = 300,
                 Header = GadgetNames.EXTERNAL_RESEARCH_SCATTER_CHART_UTILITY,
-                Content =null// new ViewScatterGraph(new ViewModelScatterGraph(param))
+                Content = new ViewScatterGraph(new ViewModelScatterGraph(param))
             }); 
         }
 

@@ -116,20 +116,17 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                //if (this.dgAttribution.Visibility == Visibility.Visible)
-                //{
-                //    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                //{
+                if (this.dgAttribution.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                {
                   
-                //      new RadExportOptions() { ElementName = "Performance Attribution", Element = this.dgAttribution, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
+                      new RadExportOptions() { ElementName = "Performance Attribution", Element = this.dgAttribution, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
                     
-                //};
-                //    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_ATTRIBUTION);
-                //    childExportOptions.Show();
-                //}
-                ExportExcel.ExportGridExcel(dgAttribution);
-
-
+                };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.PERFORMANCE_ATTRIBUTION);
+                    childExportOptions.Show();
+                }
             }
             catch (Exception ex)
             {

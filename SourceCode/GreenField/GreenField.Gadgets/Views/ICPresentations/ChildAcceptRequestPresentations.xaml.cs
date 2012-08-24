@@ -17,7 +17,7 @@ using GreenField.ServiceCaller;
 //using Ashmore.Emm.GreenField.Common;
 using GreenField.Common;
 //using Ashmore.Emm.GreenField.BusinessLogic.MeetingServiceReference;
-using GreenField.ServiceCaller.MeetingServiceReference;
+using GreenField.ServiceCaller.MeetingDefinitions;
 using System.Collections.ObjectModel;
 using GreenField.Gadgets.ViewModels;
 using GreenField.DataContracts;
@@ -53,7 +53,7 @@ namespace GreenField.Gadgets.Views
             _logger = logger;
             _presentationDate = presentationDate;
 
-            _dBInteractivity.GetMeetings(GetMeetingsCallBackMethod);
+            //_dBInteractivity.GetMeetings(GetMeetingsCallBackMethod);
         }
 
         

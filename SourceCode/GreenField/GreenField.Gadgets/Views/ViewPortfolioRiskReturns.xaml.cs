@@ -66,23 +66,15 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-
-
-                //if (this.dgPortfolioRiskReturn.Visibility == Visibility.Visible)
-                //{
-                //    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
-                //{
-
-                //      new RadExportOptions() { ElementName = "Portfolio Risk Return", Element = this.dgPortfolioRiskReturn, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER },
-
-                //};
-                //    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_RISK_RETURN);
-                //    childExportOptions.Show();
-                //}
-
-                ExportExcel.ExportGridExcel(dgPortfolioRiskReturn);
-
-
+                if (this.dgPortfolioRiskReturn.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                    {
+                        new RadExportOptions() { ElementName = "Portfolio Risk Return", Element = this.dgPortfolioRiskReturn, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                    };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_RISK_RETURN);
+                    childExportOptions.Show();
+                }
             }
             catch (Exception ex)
             {

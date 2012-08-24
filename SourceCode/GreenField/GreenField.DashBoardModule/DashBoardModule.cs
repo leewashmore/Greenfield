@@ -131,7 +131,7 @@ namespace GreenField.DashboardModule
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeMetricsReport));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteePresentations));
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeEditPresentations));
-            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeNew));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardInvestmentCommitteeNew));            
             #endregion
 
         }

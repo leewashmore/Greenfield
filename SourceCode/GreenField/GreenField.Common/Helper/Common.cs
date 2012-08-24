@@ -17,6 +17,7 @@ using GreenField.ServiceCaller.PerformanceDefinitions;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
+using System.ComponentModel;
 
 
 namespace GreenField.Common
@@ -175,31 +176,37 @@ namespace GreenField.Common
 
 #region IC PRESENTATION
 
-    public static class StatusTypes
+    public static class StatusType
     {
-        public static int InProgress = 1;
-        //public static int Requested = 2;
-        public static int ReadyforVoting = 2;
-        public static int ReadyClosed = 3;
-        public static int Final = 4;
-        public static int Withdrawn = 5;
-        //public static int PendingDocuments = 3;
-        
-        
-        //public static int Presented = 6;
-        //public static int Closed = 7;
-       
-
+        public static String IN_PROGRESS = "In Progress";
+        public static String READY_FOR_VOTING = "Ready for Voting";
+        public static String CLOSED_FOR_VOTING = "Closed for Voting";
+        public static String FINAL = "Final";
+        public static String WITHDRAWN = "Withdrawn";
     }
 
-    public static class VoteTypes
+    public static class VoteType
     {
-        public static int Agree = 7;
-        public static int Modify = 8;
-        public static int Abstain = 9;
+        public static String AGREE = "Agree";
+        public static String MODIFY = "Modify";
+        public static String ABSTAIN = "Abstain";     
+    }
+
+    public static class MeetingAttachedFileType
+    {
+        public static String INDUSTRY_REPORT = "Industry Report";
+        public static String OTHER_DOCUMENT = "Other Document";
+    }
+
+    public static class AttendanceType
+    {
+        public static String ATTENDED = "Attended";
+        public static String VIDEO_CONFERENCE = "Video Conference";
+        public static String TELE_CONFERENCE = "Tele Conference";
+        public static String NOT_PRESENT = "Not Present";
     }
 
     public enum VIEWVOTEFLAG {VIEW,VOTE} ;
-    public enum ViewPluginFlagEnumeration { Create,Upload, Update, View, Vote,Edit };
+    public enum ViewPluginFlagEnumeration { Create,Upload, Update, View, Vote,Edit, ChangeDate };
 #endregion
 }

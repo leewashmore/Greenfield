@@ -1,6 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DAL" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:59430/Services/MeetingService.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+  <xs:import schemaLocation="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+  <xs:complexType name="ArrayOfICPresentationOverviewData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ICPresentationOverviewData" nillable="true" type="tns:ICPresentationOverviewData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfICPresentationOverviewData" nillable="true" type="tns:ArrayOfICPresentationOverviewData" />
+  <xs:complexType name="ICPresentationOverviewData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q1:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AcceptWithoutDiscussionFlag" nillable="true" type="xs:boolean" />
+          <xs:element minOccurs="0" name="AdminNotes" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Background" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CommitteeBuyRange" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="CommitteePFVMeasure" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CommitteeRangeEffectiveThrough" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CommitteeRecommendation" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CommitteeSellRange" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="CompetitiveAdvantage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CompetitiveDisadvantage" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EarningsOutlook" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="InvestmentThesis" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MeetingClosedDateTime" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="MeetingDateTime" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="MeetingVotingClosedDateTime" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
+          <xs:element minOccurs="0" name="Presenter" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityBuyRange" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityCashPosition" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityCountry" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityCountryCode" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityGlobalActiveWeight" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityIndustry" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityLastClosingPrice" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityMSCIIMIWeight" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityMSCIStdWeight" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityMarketCapitalization" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityPFVMeasure" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityPosition" type="xs:long" />
+          <xs:element minOccurs="0" name="SecurityRecommendation" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecuritySellRange" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="StatusType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Valuations" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="ICPresentationOverviewData" nillable="true" type="tns:ICPresentationOverviewData" />
   <xs:complexType name="ArrayOfMeetingInfo">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="MeetingInfo" nillable="true" type="tns:MeetingInfo" />
@@ -9,15 +63,17 @@
   <xs:element name="ArrayOfMeetingInfo" nillable="true" type="tns:ArrayOfMeetingInfo" />
   <xs:complexType name="MeetingInfo">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q1="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q1:EntityObject">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:EntityObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MeetingAttachedFileInfoes" nillable="true" type="tns:ArrayOfMeetingAttachedFileInfo" />
           <xs:element minOccurs="0" name="MeetingClosedDateTime" type="xs:dateTime" />
           <xs:element minOccurs="0" name="MeetingDateTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="MeetingDescription" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MeetingID" type="xs:long" />
           <xs:element minOccurs="0" name="MeetingPresentationMappingInfoes" nillable="true" type="tns:ArrayOfMeetingPresentationMappingInfo" />
+          <xs:element minOccurs="0" name="MeetingVotingClosedDateTime" type="xs:dateTime" />
           <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
         </xs:sequence>
@@ -25,6 +81,32 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="MeetingInfo" nillable="true" type="tns:MeetingInfo" />
+  <xs:complexType name="ArrayOfMeetingAttachedFileInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MeetingAttachedFileInfo" nillable="true" type="tns:MeetingAttachedFileInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMeetingAttachedFileInfo" nillable="true" type="tns:ArrayOfMeetingAttachedFileInfo" />
+  <xs:complexType name="MeetingAttachedFileInfo">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:EntityObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="FileID" type="xs:long" />
+          <xs:element minOccurs="0" name="FileLocation" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MeetingID" type="xs:long" />
+          <xs:element minOccurs="0" name="MeetingInfo" nillable="true" type="tns:MeetingInfo" />
+          <xs:element minOccurs="0" name="MeetingInfoReference" nillable="true" type="q3:EntityReferenceOfMeetingInfojzQAem8p" />
+          <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MeetingAttachedFileInfo" nillable="true" type="tns:MeetingAttachedFileInfo" />
   <xs:complexType name="ArrayOfMeetingPresentationMappingInfo">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="MeetingPresentationMappingInfo" nillable="true" type="tns:MeetingPresentationMappingInfo" />
@@ -33,19 +115,19 @@
   <xs:element name="ArrayOfMeetingPresentationMappingInfo" nillable="true" type="tns:ArrayOfMeetingPresentationMappingInfo" />
   <xs:complexType name="MeetingPresentationMappingInfo">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:EntityObject">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q4:EntityObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="MappingID" type="xs:long" />
           <xs:element minOccurs="0" name="MeetingID" type="xs:long" />
           <xs:element minOccurs="0" name="MeetingInfo" nillable="true" type="tns:MeetingInfo" />
-          <xs:element minOccurs="0" name="MeetingInfoReference" nillable="true" type="q2:EntityReferenceOfMeetingInfojzQAem8p" />
+          <xs:element minOccurs="0" name="MeetingInfoReference" nillable="true" type="q4:EntityReferenceOfMeetingInfojzQAem8p" />
           <xs:element minOccurs="0" name="ModifedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
           <xs:element minOccurs="0" name="PresentationInfo" nillable="true" type="tns:PresentationInfo" />
-          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q2:EntityReferenceOfPresentationInfojzQAem8p" />
+          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q4:EntityReferenceOfPresentationInfojzQAem8p" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -53,7 +135,7 @@
   <xs:element name="MeetingPresentationMappingInfo" nillable="true" type="tns:MeetingPresentationMappingInfo" />
   <xs:complexType name="PresentationInfo">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:EntityObject">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q5:EntityObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="AcceptWithoutDiscussionFlag" nillable="true" type="xs:boolean" />
           <xs:element minOccurs="0" name="AdminNotes" nillable="true" type="xs:string" />
@@ -91,9 +173,7 @@
           <xs:element minOccurs="0" name="SecurityRecommendation" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecuritySellRange" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="StatusType" nillable="true" type="tns:StatusType" />
-          <xs:element minOccurs="0" name="StatusTypeID" type="xs:long" />
-          <xs:element minOccurs="0" name="StatusTypeReference" nillable="true" type="q3:EntityReferenceOfStatusTypejzQAem8p" />
+          <xs:element minOccurs="0" name="StatusType" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Valuations" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="VoterInfoes" nillable="true" type="tns:ArrayOfVoterInfo" />
         </xs:sequence>
@@ -109,7 +189,7 @@
   <xs:element name="ArrayOfAttachedFileInfo" nillable="true" type="tns:ArrayOfAttachedFileInfo" />
   <xs:complexType name="AttachedFileInfo">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q4:EntityObject">
+      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q6:EntityObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
@@ -120,34 +200,12 @@
           <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
           <xs:element minOccurs="0" name="PresentationInfo" nillable="true" type="tns:PresentationInfo" />
-          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q4:EntityReferenceOfPresentationInfojzQAem8p" />
+          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q6:EntityReferenceOfPresentationInfojzQAem8p" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="AttachedFileInfo" nillable="true" type="tns:AttachedFileInfo" />
-  <xs:complexType name="StatusType">
-    <xs:complexContent mixed="false">
-      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q5:EntityObject">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="PresentationInfoes" nillable="true" type="tns:ArrayOfPresentationInfo" />
-          <xs:element minOccurs="0" name="StatusType1" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="StatusTypeID" type="xs:long" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="StatusType" nillable="true" type="tns:StatusType" />
-  <xs:complexType name="ArrayOfPresentationInfo">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PresentationInfo" nillable="true" type="tns:PresentationInfo" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfPresentationInfo" nillable="true" type="tns:ArrayOfPresentationInfo" />
   <xs:complexType name="ArrayOfVoterInfo">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="VoterInfo" nillable="true" type="tns:VoterInfo" />
@@ -156,11 +214,9 @@
   <xs:element name="ArrayOfVoterInfo" nillable="true" type="tns:ArrayOfVoterInfo" />
   <xs:complexType name="VoterInfo">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q6:EntityObject">
+      <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q7:EntityObject">
         <xs:sequence>
-          <xs:element minOccurs="0" name="AttendanceType" nillable="true" type="tns:AttendanceType" />
-          <xs:element minOccurs="0" name="AttendanceTypeID" nillable="true" type="xs:long" />
-          <xs:element minOccurs="0" name="AttendanceTypeReference" nillable="true" type="q6:EntityReferenceOfAttendanceTypejzQAem8p" />
+          <xs:element minOccurs="0" name="AttendanceType" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="DiscussionFlag" nillable="true" type="xs:boolean" />
@@ -171,10 +227,8 @@
           <xs:element minOccurs="0" name="PostMeetingFlag" nillable="true" type="xs:boolean" />
           <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
           <xs:element minOccurs="0" name="PresentationInfo" nillable="true" type="tns:PresentationInfo" />
-          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q6:EntityReferenceOfPresentationInfojzQAem8p" />
-          <xs:element minOccurs="0" name="VoteType" nillable="true" type="tns:VoteType" />
-          <xs:element minOccurs="0" name="VoteTypeID" nillable="true" type="xs:long" />
-          <xs:element minOccurs="0" name="VoteTypeReference" nillable="true" type="q6:EntityReferenceOfVoteTypejzQAem8p" />
+          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q7:EntityReferenceOfPresentationInfojzQAem8p" />
+          <xs:element minOccurs="0" name="VoteType" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="VoterBuyRange" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="VoterID" type="xs:long" />
           <xs:element minOccurs="0" name="VoterPFVMeasure" nillable="true" type="xs:string" />
@@ -185,95 +239,48 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="VoterInfo" nillable="true" type="tns:VoterInfo" />
-  <xs:complexType name="AttendanceType">
-    <xs:complexContent mixed="false">
-      <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q7:EntityObject">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="AttendanceType1" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="AttendanceTypeID" type="xs:long" />
-          <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="VoterInfoes" nillable="true" type="tns:ArrayOfVoterInfo" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="AttendanceType" nillable="true" type="tns:AttendanceType" />
-  <xs:complexType name="VoteType">
-    <xs:complexContent mixed="false">
-      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q8:EntityObject">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="VoteType1" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="VoteTypeID" type="xs:long" />
-          <xs:element minOccurs="0" name="VoterInfoes" nillable="true" type="tns:ArrayOfVoterInfo" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="VoteType" nillable="true" type="tns:VoteType" />
-  <xs:complexType name="ArrayOfPresentationInfoResult">
+  <xs:complexType name="ArrayOfMeetingMinuteData">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="PresentationInfoResult" nillable="true" type="tns:PresentationInfoResult" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MeetingMinuteData" nillable="true" type="tns:MeetingMinuteData" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfPresentationInfoResult" nillable="true" type="tns:ArrayOfPresentationInfoResult" />
-  <xs:complexType name="PresentationInfoResult">
+  <xs:element name="ArrayOfMeetingMinuteData" nillable="true" type="tns:ArrayOfMeetingMinuteData" />
+  <xs:complexType name="MeetingMinuteData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q8:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AttendanceType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
+          <xs:element minOccurs="0" name="Presenter" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityCountry" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityIndustry" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VoterID" nillable="true" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MeetingMinuteData" nillable="true" type="tns:MeetingMinuteData" />
+  <xs:complexType name="ArrayOfMeetingAttachedFileData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MeetingAttachedFileData" nillable="true" type="tns:MeetingAttachedFileData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMeetingAttachedFileData" nillable="true" type="tns:ArrayOfMeetingAttachedFileData" />
+  <xs:complexType name="MeetingAttachedFileData">
     <xs:complexContent mixed="false">
       <xs:extension xmlns:q9="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q9:ComplexObject">
         <xs:sequence>
-          <xs:element minOccurs="0" name="AcceptWithoutDiscussionFlag" nillable="true" type="xs:boolean" />
-          <xs:element minOccurs="0" name="AdminNotes" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Background" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CommitteeBuyRange" nillable="true" type="xs:float" />
-          <xs:element minOccurs="0" name="CommitteePFVMeasure" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CommitteeRangeEffectiveThrough" nillable="true" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="CommitteeRecommendation" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CommitteeSellRange" nillable="true" type="xs:float" />
-          <xs:element minOccurs="0" name="CompetitiveAdvantage" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CompetitiveDisadvantage" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="EarningsOutlook" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="InvestmentThesis" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="PresentationDate" nillable="true" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
-          <xs:element minOccurs="0" name="Presenter" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="SecurityBuyRange" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityCashPosition" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityCountry" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="SecurityCountryCode" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="SecurityGlobalActiveWeight" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityIndustry" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="SecurityLastClosingPrice" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityMSCIIMIWeight" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityMSCIStdWeight" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityMarketCapitalization" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="SecurityPFVMeasure" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="SecurityPosition" type="xs:long" />
-          <xs:element minOccurs="0" name="SecurityRecommendation" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="SecuritySellRange" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="StatusType" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="StatusTypeID" type="xs:long" />
-          <xs:element minOccurs="0" name="Valuations" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileID" type="xs:long" />
+          <xs:element minOccurs="0" name="FileLocation" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FileType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="MeetingID" type="xs:long" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="PresentationInfoResult" nillable="true" type="tns:PresentationInfoResult" />
-  <xs:complexType name="ArrayOfStatusType">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="StatusType" nillable="true" type="tns:StatusType" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfStatusType" nillable="true" type="tns:ArrayOfStatusType" />
+  <xs:element name="MeetingAttachedFileData" nillable="true" type="tns:MeetingAttachedFileData" />
 </xs:schema>

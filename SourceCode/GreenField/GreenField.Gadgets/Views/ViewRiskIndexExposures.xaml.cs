@@ -121,15 +121,18 @@ namespace GreenField.Gadgets.Views
                 {
                     if (this.dgRelativeRisk.Visibility == Visibility.Visible)
                     {
-                        //    ChildExportOptions childExportOptions = new ChildExportOptions
-                        //(new List<RadExportOptions>{new RadExportOptions() 
-                        //{
-                        //    Element = this.dgRelativeRisk,
-                        //    ElementName = "Relative Risk Data",
-                        //    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-                        //}}, "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
-                        //    childExportOptions.Show();
-                        ExportExcel.ExportGridExcel(dgRelativeRisk);
+                        ChildExportOptions childExportOptions = new ChildExportOptions
+                            (new List<RadExportOptions>
+                            {
+                                new RadExportOptions() 
+                                {
+                                    Element = this.dgRelativeRisk,
+                                    ElementName = "Relative Risk Data",
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                                }
+                            }
+                            , "Export Options: " + GadgetNames.HOLDINGS_RELATIVE_RISK);
+                        childExportOptions.Show();
                     }
                 }
             }
