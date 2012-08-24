@@ -210,7 +210,7 @@ namespace GreenField.Gadgets.Views
 
         private void dgMacroDBKeyReport_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
-            RadGridView_ElementExport.ElementExporting(e);
+            RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 8 });
         }
 
         #endregion

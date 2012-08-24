@@ -133,7 +133,7 @@ namespace GreenField.Gadgets.Views
 
         private void dgCOASpecific_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
-            RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 14 });
+            RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 8 });
         }
         #endregion
         #endregion
