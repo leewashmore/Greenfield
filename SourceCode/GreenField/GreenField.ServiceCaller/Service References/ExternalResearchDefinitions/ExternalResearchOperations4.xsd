@@ -74,4 +74,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PRevenueData" nillable="true" type="tns:PRevenueData" />
+  <xs:complexType name="ArrayOfValuationQualityGrowthData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ValuationQualityGrowthData" nillable="true" type="tns:ValuationQualityGrowthData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfValuationQualityGrowthData" nillable="true" type="tns:ArrayOfValuationQualityGrowthData" />
+  <xs:complexType name="ValuationQualityGrowthData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Benchmark" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Description" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Portfolio" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Relative" nillable="true" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ValuationQualityGrowthData" nillable="true" type="tns:ValuationQualityGrowthData" />
 </xs:schema>

@@ -200,6 +200,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\UnrealizedGainLossData.cs">
       <Link>DataContracts\UnrealizedGainLossData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\ValuationQualityGrowthData.cs">
+      <Link>DataContracts\ValuationQualityGrowthData.cs</Link>
+    </Compile>
     <Compile Include="DataContracts\PRevenueData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

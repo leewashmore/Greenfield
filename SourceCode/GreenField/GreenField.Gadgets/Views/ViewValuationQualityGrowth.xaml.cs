@@ -26,8 +26,36 @@ namespace GreenField.Gadgets.Views
         public ViewValuationQualityGrowth(ViewModelValuationQualityGrowth dataContextSource)
         {
             InitializeComponent();
-            this.DataContext = dataContextSource;            
+            this.DataContext = dataContextSource;
+            this.DataContextViewQualityGrowth = dataContextSource;
         }
+
+        /// <summary>
+        /// True is gadget is currently on display
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextViewQualityGrowth != null)
+                    DataContextViewQualityGrowth.IsActive = _isActive;
+            }
+        }
+
+        /// <summary>
+        /// Property of the type of View Model for this view
+        /// </summary>
+        private ViewModelValuationQualityGrowth _dataContextViewQualityGrowth;
+        public ViewModelValuationQualityGrowth DataContextViewQualityGrowth
+        {
+            get { return _dataContextViewQualityGrowth; }
+            set { _dataContextViewQualityGrowth = value; }
+        }
+
+
         #endregion
     }
 }

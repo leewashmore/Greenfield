@@ -268,4 +268,22 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveValuationGrowthData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="selectedPortfolio" nillable="true" type="q37:PortfolioSelectionData" />
+        <xs:element minOccurs="0" name="effectiveDate" nillable="true" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="filterType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="filterValue" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="lookThruEnabled" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveValuationGrowthDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveValuationGrowthDataResult" nillable="true" type="q38:ArrayOfValuationQualityGrowthData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

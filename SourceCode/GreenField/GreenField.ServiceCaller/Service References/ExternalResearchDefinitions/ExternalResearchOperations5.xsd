@@ -122,7 +122,8 @@
       <xs:element minOccurs="0" name="EnterpriseValue" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="MarketCapitalization" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="SharesOutstanding" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="WeekRange52" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WeekRange52High" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="WeekRange52Low" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="BasicData" nillable="true" type="tns:BasicData" />
@@ -155,7 +156,7 @@
   <xs:element name="ArrayOfConsensusEstimateMedian" nillable="true" type="tns:ArrayOfConsensusEstimateMedian" />
   <xs:complexType name="ConsensusEstimateMedian">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Actual" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Actual" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Amount" type="xs:decimal" />
       <xs:element minOccurs="0" name="AmountType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="AshmoreEmmAmount" nillable="true" type="xs:decimal" />
@@ -170,6 +171,7 @@
       <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
+      <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
       <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
       <xs:element minOccurs="0" name="Variance" nillable="true" type="xs:decimal" />
@@ -200,6 +202,7 @@
       <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
+      <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
       <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
       <xs:element minOccurs="0" name="Variance" nillable="true" type="xs:decimal" />
@@ -342,4 +345,13 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="DocumentCategoryType" nillable="true" type="tns:DocumentCategoryType" />
+  <xs:complexType name="PortfolioSelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BenchmarkId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioThemeSubGroupId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioThemeSubGroupName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PortfolioSelectionData" nillable="true" type="tns:PortfolioSelectionData" />
 </xs:schema>

@@ -1397,5 +1397,115 @@ namespace GreenField.Web.Services
             }
         }
 
+        #region Valuation,Quality and Growth
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<ValuationQualityGrowthData> RetrieveValuationGrowthData(PortfolioSelectionData selectedPortfolio, DateTime? effectiveDate, String filterType, String filterValue, bool lookThruEnabled)
+        {
+            try
+            {
+                if (selectedPortfolio == null)
+                    return new List<ValuationQualityGrowthData>();
+                if (effectiveDate == null)
+                    return new List<ValuationQualityGrowthData>();
+                StringBuilder issuerIDPortfolio = new StringBuilder();
+                StringBuilder securityIDPortfolio = new StringBuilder();
+                StringBuilder issuerIDBenchmark = new StringBuilder();
+                StringBuilder securityIDBenchmark = new StringBuilder();
+                int check = 1;
+                int checkBen = 1;
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                List<ValuationQualityGrowthData> result = new List<ValuationQualityGrowthData>();
+
+                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
+                    .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                    .ToList();
+
+                List<String> distinctSecuritiesForPortfolio = dataPortfolio
+                            .Select(record => record.ISSUE_NAME)
+                            .Distinct()
+                            .ToList();
+
+                List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                    .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                    .ToList();
+
+                List<String> distinctSecuritiesForBenchmark = dataBenchmark
+                            .Select(record => record.ISSUE_NAME)
+                            .Distinct()
+                            .ToList();
+                issuerIDPortfolio.Append("'");
+                securityIDPortfolio.Append("'");
+                issuerIDBenchmark.Append("'");
+                securityIDBenchmark.Append("'");
+
+                foreach (String issueName in distinctSecuritiesForPortfolio)
+                {
+                    GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
+                     .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
+                    if (securityDetails != null)
+                    {
+                        check = 0;
+                        issuerIDPortfolio.Append("," + securityDetails.ISSUER_ID);
+                        securityIDPortfolio.Append("," + securityDetails.SECURITY_ID);
+                    }
+                }
+                issuerIDPortfolio.Append("'");
+                securityIDPortfolio.Append("'");
+                if (check == 0)
+                {
+                    issuerIDPortfolio.Remove(1, 1);
+                    securityIDPortfolio.Remove(1, 1);
+                }
+                else
+                {
+                    issuerIDPortfolio = null;
+                    issuerIDPortfolio = null;
+                }
+                foreach (String issueName in distinctSecuritiesForBenchmark)
+                {
+                    GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
+                     .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
+                    if (securityDetails != null)
+                    {
+                        checkBen = 0;
+                        issuerIDBenchmark.Append("," + securityDetails.ISSUER_ID);
+                        securityIDBenchmark.Append("," + securityDetails.SECURITY_ID);
+                    }
+                }
+
+                issuerIDBenchmark.Append("'");
+                securityIDBenchmark.Append("'");
+                if (checkBen == 0)
+                {
+                    issuerIDBenchmark.Remove(1, 1);
+                    securityIDBenchmark.Remove(1, 1);
+                }
+                else
+                {
+                    issuerIDBenchmark = null;
+                    securityIDBenchmark = null;
+                }
+
+                return result;
+            }
+            catch(Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        #endregion
+
     }
 }

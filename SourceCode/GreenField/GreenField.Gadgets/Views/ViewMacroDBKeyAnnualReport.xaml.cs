@@ -88,7 +88,7 @@ namespace GreenField.Gadgets.Views
             {
                 GroupDescriptor descriptor = new GroupDescriptor();
                 descriptor.Member = "CategoryName";
-                descriptor.SortDirection = ListSortDirection.Ascending;
+                //descriptor.SortDirection = ListSortDirection.Ascending;
                 this.dgMacroDBKeyReport.GroupDescriptors.Add(descriptor);
                 SortDescriptor sdescriptor = new SortDescriptor();
                 sdescriptor.Member = "SortOrder";

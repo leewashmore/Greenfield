@@ -371,7 +371,7 @@
                                         <telerik:ChartDefaultView ChartLegendPosition="Right">
                                             <telerik:ChartDefaultView.ChartArea>
                                                 <telerik:ChartArea LegendName="chCOASpecificLegend" SmartLabelsEnabled="True" 
-                                                           EnableAnimations="False" NoDataString=" No Data Available for the Selected Item in the provided Time-Period">
+                                                           EnableAnimations="False" LabelFormatBehavior="None" NoDataString=" No Data Available for the Selected Item in the provided Time-Period">
                                                     <telerik:ChartArea.ZoomScrollSettingsX>
                                                         <telerik:ZoomScrollSettings ScrollMode="ScrollOnly" SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
                                                     </telerik:ChartArea.ZoomScrollSettingsX>
@@ -412,7 +412,7 @@
                                             <telerik:SeriesMapping.SeriesDefinition>
                                                 <telerik:LineSeriesDefinition ShowItemLabels="False" ShowPointMarks="False"
                                                                       EmptyPointBehavior="Gap" ShowItemToolTips="True"
-                                                                      LegendDisplayMode="SeriesLabel"/>
+                                                                      LegendDisplayMode="SeriesLabel" />
                                             </telerik:SeriesMapping.SeriesDefinition>
                                             <telerik:SeriesMapping.GroupingSettings>
                                                 <telerik:GroupingSettings>

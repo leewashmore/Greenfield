@@ -1672,6 +1672,14 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         System.IAsyncResult BeginRetrieveDocumentsData(string searchString, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> EndRetrieveDocumentsData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveValuationGrowthData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveValuationGrowthDataResponse" +
+            "")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveValuationGrowthDataServiceF" +
+            "aultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveValuationGrowthData(GreenField.DataContracts.PortfolioSelectionData selectedPortfolio, System.Nullable<System.DateTime> effectiveDate, string filterType, string filterValue, bool lookThruEnabled, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> EndRetrieveValuationGrowthData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -2003,6 +2011,25 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveValuationGrowthDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveValuationGrowthDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ExternalResearchOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations>, GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations {
         
         private BeginOperationDelegate onBeginRetrieveIssuerIdDelegate;
@@ -2107,6 +2134,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveDocumentsDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveValuationGrowthDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveValuationGrowthDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveValuationGrowthDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -2193,6 +2226,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         public event System.EventHandler<RetrieveCOASpecificDataCompletedEventArgs> RetrieveCOASpecificDataCompleted;
         
         public event System.EventHandler<RetrieveDocumentsDataCompletedEventArgs> RetrieveDocumentsDataCompleted;
+        
+        public event System.EventHandler<RetrieveValuationGrowthDataCompletedEventArgs> RetrieveValuationGrowthDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -3030,6 +3065,60 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                         searchString}, this.onEndRetrieveDocumentsDataDelegate, this.onRetrieveDocumentsDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveValuationGrowthData(GreenField.DataContracts.PortfolioSelectionData selectedPortfolio, System.Nullable<System.DateTime> effectiveDate, string filterType, string filterValue, bool lookThruEnabled, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveValuationGrowthData(selectedPortfolio, effectiveDate, filterType, filterValue, lookThruEnabled, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveValuationGrowthData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveValuationGrowthData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveValuationGrowthData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.PortfolioSelectionData selectedPortfolio = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
+            System.Nullable<System.DateTime> effectiveDate = ((System.Nullable<System.DateTime>)(inValues[1]));
+            string filterType = ((string)(inValues[2]));
+            string filterValue = ((string)(inValues[3]));
+            bool lookThruEnabled = ((bool)(inValues[4]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveValuationGrowthData(selectedPortfolio, effectiveDate, filterType, filterValue, lookThruEnabled, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveValuationGrowthData(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveValuationGrowthData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveValuationGrowthDataCompleted(object state) {
+            if ((this.RetrieveValuationGrowthDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveValuationGrowthDataCompleted(this, new RetrieveValuationGrowthDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveValuationGrowthDataAsync(GreenField.DataContracts.PortfolioSelectionData selectedPortfolio, System.Nullable<System.DateTime> effectiveDate, string filterType, string filterValue, bool lookThruEnabled) {
+            this.RetrieveValuationGrowthDataAsync(selectedPortfolio, effectiveDate, filterType, filterValue, lookThruEnabled, null);
+        }
+        
+        public void RetrieveValuationGrowthDataAsync(GreenField.DataContracts.PortfolioSelectionData selectedPortfolio, System.Nullable<System.DateTime> effectiveDate, string filterType, string filterValue, bool lookThruEnabled, object userState) {
+            if ((this.onBeginRetrieveValuationGrowthDataDelegate == null)) {
+                this.onBeginRetrieveValuationGrowthDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveValuationGrowthData);
+            }
+            if ((this.onEndRetrieveValuationGrowthDataDelegate == null)) {
+                this.onEndRetrieveValuationGrowthDataDelegate = new EndOperationDelegate(this.OnEndRetrieveValuationGrowthData);
+            }
+            if ((this.onRetrieveValuationGrowthDataCompletedDelegate == null)) {
+                this.onRetrieveValuationGrowthDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveValuationGrowthDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveValuationGrowthDataDelegate, new object[] {
+                        selectedPortfolio,
+                        effectiveDate,
+                        filterType,
+                        filterValue,
+                        lookThruEnabled}, this.onEndRetrieveValuationGrowthDataDelegate, this.onRetrieveValuationGrowthDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -3349,6 +3438,23 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> EndRetrieveDocumentsData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData>)(base.EndInvoke("RetrieveDocumentsData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveValuationGrowthData(GreenField.DataContracts.PortfolioSelectionData selectedPortfolio, System.Nullable<System.DateTime> effectiveDate, string filterType, string filterValue, bool lookThruEnabled, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
+                _args[0] = selectedPortfolio;
+                _args[1] = effectiveDate;
+                _args[2] = filterType;
+                _args[3] = filterValue;
+                _args[4] = lookThruEnabled;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveValuationGrowthData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> EndRetrieveValuationGrowthData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>)(base.EndInvoke("RetrieveValuationGrowthData", _args, result)));
                 return _result;
             }
         }
