@@ -36,7 +36,7 @@ GO
 -- Author:		<Mansi Gupta>
 -- Create date: <08/13/2012>
 -- =============================================
-ALTER PROCEDURE [dbo].[GetFinstatEconomic_MarketData] 
+CREATE PROCEDURE [dbo].[GetFinstatEconomic_MarketData] 
 @issuerID varchar(20),
 @securityId varchar(20),
 @dataSource varchar(10),
