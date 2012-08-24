@@ -113,7 +113,7 @@ namespace GreenField.Gadgets.Views
         #region Styling
         private void dgFinancialReport_RowLoaded(object sender, RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+            //GroupedGridRowLoadedHandler.Implement(e);
             PeriodColumns.RowDataCustomization(e);
         } 
         #endregion

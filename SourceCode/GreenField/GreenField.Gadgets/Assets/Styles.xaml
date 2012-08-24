@@ -92,7 +92,7 @@
 
     <!--GridViewRowStyle-->
     <Style TargetType="telerik:GridViewRow" x:Name="GridViewRowStyle">
-        <Setter Property="Height" Value="{StaticResource DefaultControlForeground}"/>
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewRowHeight}"/>
     </Style>
 
     <!--GridViewRowStyle-->
