@@ -78,12 +78,12 @@ namespace GreenField.Gadgets.Models
         /// <summary>
         /// Data Description
         /// </summary>
-        public String ADDITIONAL_DESC_FIRST { get; set; }
+        public object ADDITIONAL_DESC_FIRST { get; set; }
 
         /// <summary>
         /// Data Description
         /// </summary>
-        public String ADDITIONAL_DESC_SECOND { get; set; }
+        public object ADDITIONAL_DESC_SECOND { get; set; }
 
 
         /// <summary>

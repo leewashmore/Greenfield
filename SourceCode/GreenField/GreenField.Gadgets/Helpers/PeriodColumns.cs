@@ -335,18 +335,18 @@ namespace GreenField.Gadgets.Helpers
                     if (propertyInfo.Any(record => record.Name == "SortOrder"))
                         sortOrder = (Int32)defaultRecord.GetType().GetProperty("SortOrder").GetValue(defaultRecord, null);
 
-                    String dataFirstAdditionalInfo = null;
+                    decimal? dataFirstAdditionalInfo = null;
                     if (additionalFirstDescPropertyName != null)
                     {
                         if (propertyInfo.Any(record => record.Name == additionalFirstDescPropertyName))
-                            dataFirstAdditionalInfo = (String)defaultRecord.GetType().GetProperty(additionalFirstDescPropertyName).GetValue(defaultRecord, null);
+                            dataFirstAdditionalInfo = (decimal?)defaultRecord.GetType().GetProperty(additionalFirstDescPropertyName).GetValue(defaultRecord, null);
                     }
 
-                    String dataSecondAdditionalInfo = null;
+                    decimal? dataSecondAdditionalInfo = null;
                     if (additionalSecondDescPropertyName != null)
                     {
                         if (propertyInfo.Any(record => record.Name == additionalSecondDescPropertyName))
-                            dataSecondAdditionalInfo = (String)defaultRecord.GetType().GetProperty(additionalSecondDescPropertyName).GetValue(defaultRecord, null);
+                            dataSecondAdditionalInfo = (decimal?)defaultRecord.GetType().GetProperty(additionalSecondDescPropertyName).GetValue(defaultRecord, null);
                     }
 
                     Int32 columnCount = 0;
@@ -589,18 +589,22 @@ namespace GreenField.Gadgets.Helpers
                         DATA_DECIMALS = dataDecimal,
                         SUB_DATA_DESC = groupDescription,
                         SORT_ORDER = sortOrder,
+                        ADDITIONAL_DESC_FIRST = GetFormattedValue(dataFirstAdditionalInfo,dataDecimal,dataPercentage),
+                        ADDITIONAL_DESC_SECOND = GetFormattedValue(dataSecondAdditionalInfo,dataDecimal,dataPercentage),
                         YEAR_ONE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearOneData, "RootSource"),
                         YEAR_TWO_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearTwoData, "RootSource"),
                         YEAR_THREE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearThreeData, "RootSource"),
                         YEAR_FOUR_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearFourData, "RootSource"),
                         YEAR_FIVE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearFiveData, "RootSource"),
                         YEAR_SIX_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearSixData, "RootSource"),
+                        YEAR_SEVEN_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(yearSevenData, "RootSource"),
                         QUARTER_ONE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterOneData, "RootSource"),
                         QUARTER_TWO_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterTwoData, "RootSource"),
                         QUARTER_THREE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterThreeData, "RootSource"),
                         QUARTER_FOUR_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterFourData, "RootSource"),
                         QUARTER_FIVE_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterFiveData, "RootSource"),
                         QUARTER_SIX_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterSixData, "RootSource"),
+                        QUARTER_SEVEN_DATA_ROOT_SOURCE = GetFormatPrecursors<T, String>(quarterSevenData, "RootSource"),
 
                         YEAR_ONE_DATA_SOURCE = GetFormatPrecursors<T, String>(yearOneData, "DataSource"),
                         YEAR_TWO_DATA_SOURCE = GetFormatPrecursors<T, String>(yearTwoData, "DataSource"),
@@ -621,12 +625,14 @@ namespace GreenField.Gadgets.Helpers
                         YEAR_FOUR_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearFourData, "RootSourceDate"),
                         YEAR_FIVE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearFiveData, "RootSourceDate"),
                         YEAR_SIX_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearSixData, "RootSourceDate"),
+                        YEAR_SEVEN_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(yearSevenData, "RootSourceDate"),
                         QUARTER_ONE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterOneData, "RootSourceDate"),
                         QUARTER_TWO_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterTwoData, "RootSourceDate"),
                         QUARTER_THREE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterThreeData, "RootSourceDate"),
                         QUARTER_FOUR_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterFourData, "RootSourceDate"),
                         QUARTER_FIVE_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterFiveData, "RootSourceDate"),
                         QUARTER_SIX_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterSixData, "RootSourceDate"),
+                        QUARTER_SEVEN_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterSevenData, "RootSourceDate"),
 
                         //DATA_ROOT_SOURCE = dataRootSource,
                         //DATA_ROOT_SOURCE_DATE = dataRootSourceDate,
@@ -637,12 +643,14 @@ namespace GreenField.Gadgets.Helpers
                         YEAR_FOUR = yearFourData == null ? null : GetFormattedValue(yearFourData.GetType().GetProperty("Amount").GetValue(yearFourData, null), dataDecimal, dataPercentage),
                         YEAR_FIVE = yearFiveData == null ? null : GetFormattedValue(yearFiveData.GetType().GetProperty("Amount").GetValue(yearFiveData, null), dataDecimal, dataPercentage),
                         YEAR_SIX = yearSixData == null ? null : GetFormattedValue(yearSixData.GetType().GetProperty("Amount").GetValue(yearSixData, null), dataDecimal, dataPercentage),
+                        YEAR_SEVEN = yearSevenData == null ? null : GetFormattedValue(yearSevenData.GetType().GetProperty("Amount").GetValue(yearSevenData, null), dataDecimal, dataPercentage),
                         QUARTER_ONE = quarterOneData == null ? null : GetFormattedValue(quarterOneData.GetType().GetProperty("Amount").GetValue(quarterOneData, null), dataDecimal, dataPercentage),
                         QUARTER_TWO = quarterTwoData == null ? null : GetFormattedValue(quarterTwoData.GetType().GetProperty("Amount").GetValue(quarterTwoData, null), dataDecimal, dataPercentage),
                         QUARTER_THREE = quarterThreeData == null ? null : GetFormattedValue(quarterThreeData.GetType().GetProperty("Amount").GetValue(quarterThreeData, null), dataDecimal, dataPercentage),
                         QUARTER_FOUR = quarterFourData == null ? null : GetFormattedValue(quarterFourData.GetType().GetProperty("Amount").GetValue(quarterFourData, null), dataDecimal, dataPercentage),
                         QUARTER_FIVE = quarterFiveData == null ? null : GetFormattedValue(quarterFiveData.GetType().GetProperty("Amount").GetValue(quarterFiveData, null), dataDecimal, dataPercentage),
                         QUARTER_SIX = quarterSixData == null ? null : GetFormattedValue(quarterSixData.GetType().GetProperty("Amount").GetValue(quarterSixData, null), dataDecimal, dataPercentage),
+                        QUARTER_SEVEN = quarterSevenData == null ? null : GetFormattedValue(quarterSevenData.GetType().GetProperty("Amount").GetValue(quarterSevenData, null), dataDecimal, dataPercentage),
                     });
                 } 
             }

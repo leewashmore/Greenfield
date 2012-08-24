@@ -412,6 +412,9 @@ namespace GreenField.Gadgets.ViewModels
         } 
         #endregion
 
+        /// <summary>
+        /// Displays reprt run date
+        /// </summary>
         private string _reportRunDate = DateTime.Now.Date.ToShortDateString();
         public string ReportRunDate
         {
@@ -538,7 +541,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Event Handlers
-
+        /// <summary>
+        /// Assigns UI Field Properties based on Entity Selection Data
+        /// </summary>
+        /// <param name="entitySelectionData">EntitySelectionData</param>
         public void HandleSecurityReferenceSetEvent(EntitySelectionData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -572,7 +578,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
         
         #region CallBack Methods
-
+        /// <summary>
+        /// Callback method for Security Overview Service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result">IssuerReferenceData Collection</param>
         public void RetrieveIssuerReferenceDataCallbackMethod(IssuerReferenceData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -594,6 +603,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
+                    BusyIndicatorNotification();
                     Prompt.ShowDialog("No Issuer linked to the entity " + _entitySelectionData.LongName + " (" + _entitySelectionData.ShortName + " : " + _entitySelectionData.InstrumentID + ")");
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
@@ -603,10 +613,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
-            }
-            finally
-            {
-                BusyIndicatorNotification();
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -630,6 +636,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             catch (Exception ex)
             {
+                BusyIndicatorNotification();
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }

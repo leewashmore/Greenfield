@@ -53,6 +53,7 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region Constructor
         public ViewConsensusEstimatesDetails(ViewModelConsensusEstimatesDetails dataContextSource)
         {
             InitializeComponent();
@@ -81,7 +82,8 @@ namespace GreenField.Gadgets.Views
                     this.btnExportExcel.IsEnabled = true;
                 }
             };
-        }
+        } 
+        #endregion
 
         private void LeftNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {

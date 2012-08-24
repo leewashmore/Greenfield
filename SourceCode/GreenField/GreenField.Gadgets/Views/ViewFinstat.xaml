@@ -108,16 +108,19 @@
 
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" x:Name="txt" TextAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                           HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Text=""/>
                     <!--security name/ticker-->
-                    <TextBlock Grid.Row="0" x:Name="txtIssueName" TextAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                    <TextBlock Grid.Row="1" x:Name="txtIssueName" TextAlignment="Center" Style="{StaticResource TextBlockStyle}"
                            HorizontalAlignment="Center" VerticalAlignment="Top" FontWeight="Bold" Text="{Binding IssueName}"/>
                
                 <!-- security details -->
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
@@ -179,7 +182,7 @@
                         </Grid>
                     
                     <!--grid containing data-->
-                    <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" Grid.Row="2">
+                    <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" Grid.Row="3">
                         <telerik:RadGridView x:Name="dgFinstat"
                                  AutoGenerateColumns="False"
                                  ShowColumnFooters="False"
@@ -202,8 +205,11 @@
                                  GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                  GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
-                                 RowStyle="{StaticResource GridViewRowStyle}" ElementExporting="dgFinstat_ElementExporting"
-                                 AutoExpandGroups="True" EnableColumnVirtualization="False" EnableRowVirtualization="False">
+                                 RowStyle="{StaticResource GridViewRowStyle}" 
+                                 ElementExporting="dgFinstat_ElementExporting"
+                                 AutoExpandGroups="True" 
+                                 EnableColumnVirtualization="False" 
+                                 EnableRowVirtualization="False">
                             <!--ElementExporting="dgConsensusEstimate_ElementExporting"-->
                             <telerik:RadGridView.Columns>
                                 <telerik:GridViewDataColumn x:Name="dgvcSubDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" 

@@ -194,7 +194,7 @@ namespace GreenField.Web.Services
 
                 if (data == null)
                     return result;
-
+                decimal previousYearQuarterAmount;
                 data = data.OrderBy(record => record.ESTIMATE_DESC).ThenByDescending(record => record.PERIOD_YEAR).ToList();
 
                 for (int i = 0; i < data.Count; i++)
@@ -220,15 +220,14 @@ namespace GreenField.Web.Services
                     temp.ConsensusMedian = data[i].AMOUNT;
                     temp.YOYGrowth = data[i].AMOUNT;
                     temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
-                    if (i != data.Count - 1)
-                    {
-                        if (data[i].ESTIMATE_DESC == data[i + 1].ESTIMATE_DESC &&
-                            data[i].PERIOD_YEAR == data[i + 1].PERIOD_YEAR + 1)
-                        {
-                            if (data[i + 1].AMOUNT != 0)
-                                temp.YOYGrowth = (temp.YOYGrowth / data[i + 1].AMOUNT) - 1;
-                        }
-                    }
+                   
+                    previousYearQuarterAmount = data.Where(a => a.ESTIMATE_DESC == data[i].ESTIMATE_DESC && a.PERIOD_YEAR == (data[i].PERIOD_YEAR - 1)
+                        && a.PERIOD_TYPE == data[i].PERIOD_TYPE).Select(a => a.AMOUNT).FirstOrDefault();
+
+                    if (previousYearQuarterAmount == null || previousYearQuarterAmount == 0)
+                        temp.YOYGrowth = 0;
+                    else
+                        temp.YOYGrowth = (temp.YOYGrowth / previousYearQuarterAmount - 1) * 100;
                     result.Add(temp);
                 }
                 return result;
@@ -354,7 +353,7 @@ namespace GreenField.Web.Services
             List<FinstatDetailData> result = new List<FinstatDetailData>();
 
             data = entity.GetFinstatDetail(issuerId, securityId, _dataSource, _fiscalType, currency).ToList();
-
+          //  data = data.Where(a => a.GROUP_NAME == "Growth Data" && a.DATA_DESC == "Loan Growth (YOY)").ToList();
             if (data == null || data.Count() == 0)
                 return result;
 
@@ -417,26 +416,26 @@ namespace GreenField.Web.Services
                     decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;
 
                     decimal year1Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 3
-                                                                            && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
-                    year1 = year1Value == 0 ? 0 : 1 / 3 * (1 / year1Value);
+                                                                            && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                    year1 = (year1Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year1Value));
 
                     decimal year2Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 2
-                                                                            && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
-                    year2 = year2Value == 0 ? 0 : 1 / 3 * (1 / year2Value);
+                                                                            && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                    year2 = (year2Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year2Value));
 
                     decimal year3Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 1
-                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
-                    year3 = year3Value == 0 ? 0 : 1 / 3 * (1 / year3Value);
+                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                    year3 = (year3Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year3Value));
 
                     decimal year4Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR
-                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
-                    year4 = year4Value == 0 ? 0 : 1 / 3 * (1 / year4Value);
+                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                    year4 = (year4Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year4Value));
                     decimal year5Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 1
-                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
-                    year5 = year5Value == 0 ? 0 : 1 / 3 * (1 / year5Value);
+                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                    year5 = (year5Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year5Value));
                     decimal year6Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 2
-                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT));
-                    year6 = year6Value == 0 ? 0 : 1 / 3 * (1 / year6Value);
+                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                    year6 = (year6Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year6Value));
 
                     if (year1 != 0 && year2 != 0 && year3 != 0 && year1 != null && year2 != null && year3 != null)
                         temp.HarmonicFirst = Convert.ToDecimal((1 / (year1 + year2 + year3)) * data[i].MULTIPLIER);
@@ -486,15 +485,15 @@ namespace GreenField.Web.Services
             {
                 FinstatDetailData tempData = new FinstatDetailData();
                 tempData.GroupDescription = "Economic & Market Data";
-                tempData.Description = item.FIELD;
-                tempData.PeriodYear = item.YEAR1;
+                tempData.Description = Convert.ToString(item.FIELD);
+                tempData.PeriodYear = Convert.ToInt32(item.YEAR1);
                 tempData.AmountType = "A";
                 tempData.PeriodType = "A";
                 tempData.BoldFont = "N";
                 tempData.IsPercentage = "Y";
                 tempData.RootSource = _dataSource;
                 tempData.RootSourceDate = DateTime.Now;
-                tempData.Amount = Math.Round(((item.VALUE) * 100), 1);
+                tempData.Amount = Math.Round((Convert.ToDecimal(item.VALUE) * 100), 1);
                 result.Add(tempData);
             }
             #endregion
@@ -563,19 +562,19 @@ namespace GreenField.Web.Services
                 {
                     case 166:
                         record.Description = "Relative Country P/E";
-                        decimal countryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 166).Select(a => a.AMOUNT));
+                        decimal countryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 166).Select(a => a.AMOUNT).FirstOrDefault());
                         if (countryPE != 0)
                             record.Amount = Math.Round((item.AMOUNT / countryPE), 2);
                         break;
                     case 164:
                         record.Description = "Relative Country P/BV";
-                        decimal countryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 164).Select(a => a.AMOUNT));
+                        decimal countryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 164).Select(a => a.AMOUNT).FirstOrDefault());
                         if (countryPBV != 0)
                             record.Amount = Math.Round((item.AMOUNT / countryPBV), 2);
                         break;
                     case 133:
                         record.Description = "Relative Country ROE";
-                        decimal countryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 133).Select(a => a.AMOUNT));
+                        decimal countryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 133).Select(a => a.AMOUNT).FirstOrDefault());
                         if (countryROE != 0)
                             record.Amount = Math.Round((item.AMOUNT / countryROE), 2);
                         break;
@@ -599,19 +598,19 @@ namespace GreenField.Web.Services
                 {
                     case 166:
                         record.Description = "Relative Industry P/E";
-                        decimal industryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 166).Select(a => a.AMOUNT));
+                        decimal industryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 166).Select(a => a.AMOUNT).FirstOrDefault());
                         if (industryPE != 0)
                             record.Amount = Math.Round((item.AMOUNT / industryPE), 2);
                         break;
                     case 164:
                         record.Description = "Relative Industry P/BV";
-                        decimal industryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 164).Select(a => a.AMOUNT));
+                        decimal industryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 164).Select(a => a.AMOUNT).FirstOrDefault());
                         if (industryPBV != 0)
                             record.Amount = Math.Round((item.AMOUNT / industryPBV), 2);
                         break;
                     case 133:
                         record.Description = "Relative Industry ROE";
-                        decimal industryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 133).Select(a => a.AMOUNT));
+                        decimal industryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 133).Select(a => a.AMOUNT).FirstOrDefault());
                         if (industryROE != 0)
                             record.Amount = Math.Round((item.AMOUNT / industryROE), 2);
                         break;
