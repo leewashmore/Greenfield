@@ -18,7 +18,7 @@
 
     <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
 
-        <Grid x:Name="LayoutRoot" Background="{StaticResource GridView_GridLinesItemBorder}" Visibility="{Binding BasicDataGadgetVisibility, Mode=TwoWay}">
+        <Grid x:Name="LayoutRoot" Background="White" Visibility="{Binding BasicDataGadgetVisibility, Mode=TwoWay}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
                 <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
@@ -32,63 +32,63 @@
                 <ColumnDefinition Width="0.2*"/>
                 <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
-            <!--<Border  Background="{StaticResource DefaultGridHeaderBackground}" Grid.Row="0" Grid.Column="0">
+            <!--<Border  Background="#e4e5e5" Grid.Row="0" Grid.Column="0">
                 <TextBlock Text="Basic Data"  HorizontalAlignment="Left" VerticalAlignment="Center" 
                 Style="{StaticResource TextBlockStyle}" />
             </Border>
-            <Border Background="{StaticResource DefaultGridHeaderBackground}" Grid.Row="0" Grid.Column="1">
+            <Border Background="#e4e5e5" Grid.Row="0" Grid.Column="1">
                 <TextBlock Text=""  HorizontalAlignment="Right" VerticalAlignment="Center" 
                 Foreground="{StaticResource GridView_GridLinesItemBorder}" Style="{StaticResource TextBlockStyle}" />
             </Border>-->
             <!--52 Week Range-->
-            <Border  Background="{StaticResource DefaultGridRowBackground}" Grid.Row="0" Grid.Column="0">
+            <Border  Background="#e4e5e5" Grid.Row="0" Grid.Column="0">
                 <TextBlock  Margin="2,0,0,0" Text="52 Week Range"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
-            <StackPanel Grid.Row="0" Grid.Column="1" Margin="2,0,0,0" Orientation="Horizontal" Background="{StaticResource DefaultGridRowBackground}" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.WeekRange52Low, StringFormat=\{0:n4\}}"  Style="{StaticResource TextBlockStyle}"   />
-                <TextBlock Text=" - " Style="{StaticResource TextBlockStyle}"   />
-                <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.WeekRange52High, StringFormat=\{0:n4\}}" Style="{StaticResource TextBlockStyle}"   />
-            </StackPanel>            
-
-
+            <Border Background="#e4e5e5" Grid.Row="0" Grid.Column="1">
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="2,0,0,0" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                    <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.WeekRange52Low}"  Style="{StaticResource TextBlockStyle}"  />
+                    <TextBlock Text=" - " Style="{StaticResource TextBlockStyle}"   />
+                    <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.WeekRange52High}" Style="{StaticResource TextBlockStyle}"   />
+                </StackPanel>
+            </Border>
             <!--Average Volume – 6 Month-->
-            <Border  Background="{StaticResource DefaultGridHeaderBackground}" Grid.Row="1" Grid.Column="0">
+            <Border Grid.Row="1" Grid.Column="0">
                 <TextBlock  Margin="2,0,0,0" Text="Average Volume – 6 Month"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
-            <Border  Background="{StaticResource DefaultGridHeaderBackground}" Grid.Row="1" Grid.Column="1">
-                <TextBlock Grid.Row="2" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.AverageVolume, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            <Border Grid.Row="1" Grid.Column="1">
+                <TextBlock Grid.Row="2" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.AverageVolume }" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <!--Market Capitalization-->
-            <Border  Background="{StaticResource DefaultGridRowBackground}" Grid.Row="2" Grid.Column="0">
+            <Border  Background="#e4e5e5" Grid.Row="2" Grid.Column="0">
                 <TextBlock  Margin="2,0,0,0" Text="Market Capitalization"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
-            <Border  Background="{StaticResource DefaultGridRowBackground}" Grid.Row="2" Grid.Column="1">
-                <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.MarketCapitalization, Mode=TwoWay, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            <Border  Background="#e4e5e5" Grid.Row="2" Grid.Column="1">
+                <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.MarketCapitalization, Mode=TwoWay}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
 
             <!--Enterprise Value-->
-            <Border Background="{StaticResource DefaultGridHeaderBackground}" Grid.Row="3" Grid.Column="0">
+            <Border Grid.Row="3" Grid.Column="0">
                 <TextBlock  Margin="2,0,0,0" Text="Enterprise Value"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
             </Border>
-            <Border Background="{StaticResource DefaultGridHeaderBackground}" Grid.Row="3" Grid.Column="1">
-                <TextBlock Grid.Row="4" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.EnterpriseValue, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            <Border Grid.Row="3" Grid.Column="1">
+                <TextBlock Grid.Row="4" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.EnterpriseValue }" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <!--Shares Outstanding-->
-            <Border  Background="{StaticResource DefaultGridRowBackground}" Grid.Row="4" Grid.Column="0">
+            <Border  Background="#e4e5e5" Grid.Row="4" Grid.Column="0">
                 <TextBlock  Margin="2,0,0,0" Text="Shares Outstanding"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
-            <Border  Background="{StaticResource DefaultGridRowBackground}" Grid.Row="4" Grid.Column="1">
-                <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.SharesOutstanding, Mode=TwoWay, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
+            <Border  Background="#e4e5e5" Grid.Row="4" Grid.Column="1">
+                <TextBlock  Margin="2,0,0,0" Text="{Binding BasicDataInfo.SharesOutstanding, Mode=TwoWay }" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
             </Border>
 
             <!--Beta-->
-            <StackPanel Grid.Row="5" Grid.Column="0" Margin="2,0,0,0" Orientation="Horizontal"  Background="{StaticResource DefaultGridHeaderBackground}">
+            <StackPanel Grid.Row="5" Grid.Column="0" Margin="2,0,0,0" Orientation="Horizontal"  >
                 <TextBlock Text="Beta ("  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
                 <TextBlock Text="{Binding BasicDataInfo.BetaSource, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
                 <TextBlock Text=")" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </StackPanel>
-            <Border Background="{StaticResource DefaultGridHeaderBackground}" Grid.Row="6" Grid.Column="1">
-                <TextBlock Grid.Row="5" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.Beta, StringFormat=\{0:n4\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            <Border  Grid.Row="6" Grid.Column="1">
+                <TextBlock Grid.Row="5" Grid.Column="1" Margin="2,0,0,0" Text="{Binding BasicDataInfo.Beta }" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
             
         </Grid>

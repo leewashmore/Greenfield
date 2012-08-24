@@ -24,7 +24,7 @@
     <telerik:RadBusyIndicator x:Name="chartBusyIndicator" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
                                               DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
 
-        <Grid x:Name="LayoutRoot" Background="{StaticResource GridView_GridLinesItemBorder}">
+        <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
