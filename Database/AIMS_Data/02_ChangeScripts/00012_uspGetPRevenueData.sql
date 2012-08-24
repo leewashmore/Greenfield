@@ -372,6 +372,8 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 	drop table #ConsensusFinancials	
 
 END
+
+GO
 --indicate thet current script is executed
 declare @CurrentScriptVersion as nvarchar(100) = '00012'
 insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
