@@ -1,3 +1,4 @@
+
 set noexec off
 
 --declare  current and required version
@@ -17,9 +18,12 @@ begin
 	set noexec on
 end
 
+
+
+
 GO
 
-IF OBJECT_ID ('[dbo].[Broker_Detail] ') IS NOT NULL
+IF OBJECT_ID ('[dbo].[Broker_Detail]') IS NOT NULL
 	DROP PROCEDURE [dbo].[Broker_Detail]
 GO
 
