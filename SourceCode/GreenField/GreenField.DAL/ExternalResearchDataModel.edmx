@@ -691,6 +691,9 @@
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
+            <Parameter Name="securityBucketXML" Mode="In" Type="String" />
+          </FunctionImport>
 
 				</EntityContainer>
 
@@ -1548,6 +1551,17 @@
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="Last_Update_Date" ColumnName="Last_Update_Date" />
                 <ScalarProperty Name="Reported_Currency" ColumnName="Reported_Currency" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveRatioComparisonData" FunctionName="ExternalResearchModel.Store.RetrieveRatioComparisonData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.RatioComparisonData">
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+                <ScalarProperty Name="FINANCIAL" ColumnName="FINANCIAL" />
+                <ScalarProperty Name="VALUATION" ColumnName="VALUATION" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

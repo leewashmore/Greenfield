@@ -68,21 +68,21 @@
                                 <TextBlock x:Name="rexpHeaderText" Grid.Column="0" Text="Gadget Controls" FontWeight="Bold" VerticalAlignment="Center"/>
                                 <Rectangle Margin="5,0,0,0" Grid.Column="1" Width="1" Stroke="Gray" Opacity="0.2"/>
 
-                                <telerik:RadButton Grid.Column="2" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="False"
+                                <telerik:RadButton Grid.Column="2" Click="btnExportExcel_Click"  HorizontalAlignment="Right" Height="16" Width="16"
                                                Name="btnExportExcel" VerticalAlignment="Center">
                                     <Image Source="../Images/ExportExcel.png"/>
                                     <ToolTipService.ToolTip>
-                                        <TextBlock Text="Export" FontFamily="Arial" FontSize="7" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Export" Style="{StaticResource TextBlockStyle}"/>
                                     </ToolTipService.ToolTip>
                                 </telerik:RadButton>
 
                                 <Rectangle Margin="5,0,0,0" Grid.Column="3" Width="1" Stroke="Gray" Opacity="0.2"/>
 
-                                <telerik:RadButton Grid.Column="4" Click="btnFlip_Click" HorizontalAlignment="Right" Height="16" Width="16" IsEnabled="False"
+                                <telerik:RadButton Grid.Column="4" Click="btnFlip_Click" HorizontalAlignment="Right" Height="16" Width="16"
                                                Name="btnFlip" VerticalAlignment="Center">
                                     <Image Source="../Images/Flip.png" Stretch="Fill"/>
                                     <ToolTipService.ToolTip>
-                                        <TextBlock Text="Flip" FontFamily="Arial" FontSize="7" VerticalAlignment="Center"/>
+                                        <TextBlock Text="Flip" Style="{StaticResource TextBlockStyle}"/>
                                     </ToolTipService.ToolTip>
                                 </telerik:RadButton>
                             </Grid>
@@ -242,18 +242,33 @@
                     <!--Grid-->
                     <Grid>
                         <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                            <telerik:RadGridView Name="dgScatterGraph" AutoGenerateColumns="False" ItemsSource="{Binding RatioComparisonInfo}" 
-                                     CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False" telerik:StyleManager.Theme="Metro"
-                                     CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="Deferred"
-                                     RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                     CanUserResizeColumns="False"                                     
-                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" AlternationCount="2" AlternateRowBackground="#D8D5D4"
-                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" Visibility="Collapsed"
-                                     RowStyle="{StaticResource GridViewRowStyle}" ElementExporting="dgScatterGraph_ElementExporting"
-                                     GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                     GridLinesVisibility="None">
+                            <telerik:RadGridView Name="dgScatterGraph" 
+                                                 AutoGenerateColumns="False" 
+                                                 ItemsSource="{Binding RatioComparisonInfo}" 
+                                                 CanUserSelect="False"
+                                                 CanUserReorderColumns="False"
+                                                 CanUserInsertRows="False" 
+                                                 CanUserDeleteRows="False" 
+                                                 IsReadOnly="True" 
+                                                 CanUserSortColumns="False"
+                                                 ScrollMode="RealTime"
+                                                 RowIndicatorVisibility="Collapsed" 
+                                                 ShowGroupPanel="False" 
+                                                 UseLayoutRounding="True"
+                                                 CanUserResizeColumns="False"
+                                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
+                                                 AlternationCount="2" 
+                                                 EnableRowVirtualization="False"
+                                                 EnableColumnVirtualization="False"
+                                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                                 GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                                 Visibility="Collapsed"
+                                                 RowStyle="{StaticResource GridViewRowStyle}" 
+                                                 ElementExporting="dgScatterGraph_ElementExporting"
+                                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                                 GridLinesVisibility="None">
                                 <telerik:RadGridView.Columns>
-                                    <telerik:GridViewDataColumn x:Name="dgvcIssueName" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding ISSUE_NAME}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="*"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcIssueName" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding ISSUE_NAME}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
                                     <telerik:GridViewDataColumn x:Name="dgvcValuationRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding VALUATION, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
                                     <telerik:GridViewDataColumn x:Name="dgvcFinancialRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding FINANCIAL, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
                                 </telerik:RadGridView.Columns>

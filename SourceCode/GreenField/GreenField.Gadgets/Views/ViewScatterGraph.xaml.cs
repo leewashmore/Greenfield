@@ -15,6 +15,7 @@ using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using GreenField.Common;
 using GreenField.DataContracts;
 using Telerik.Windows.Controls.Charting;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -31,24 +32,45 @@ namespace GreenField.Gadgets.Views
 
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
+                if (this.chScatter.Visibility == Visibility.Visible)
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Scatter Graph Chart", Element = this.chScatter
+                        , ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });                    
+
+                if (this.dgScatterGraph.Visibility == Visibility.Visible)
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Scatter Graph Data", Element = this.dgScatterGraph
+                        , ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Scatter Graph");
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
         }
 
         private void btnFlip_Click(object sender, RoutedEventArgs e)
         {
-
+            if (this.dgScatterGraph.Visibility == Visibility.Visible)
+            {
+                Flipper.FlipItem(this.dgScatterGraph, this.chScatter);
+            }
+            else
+            {
+                Flipper.FlipItem(this.chScatter, this.dgScatterGraph);
+            }
         }
 
         private void dgScatterGraph_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
-
+            RadGridView_ElementExport.ElementExporting(e);
         }
 
-        private void dgScatterGraph_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-
-        }
-
+        
         private void ChartArea_ItemToolTipOpening(ItemToolTip2D tooltip, ItemToolTipEventArgs e)
         {
             RatioComparisonData dataPointContext = e.DataPoint.DataItem as RatioComparisonData;
