@@ -92,8 +92,8 @@
                             </Grid.ColumnDefinitions>
 
                             <!--Period Type Selector-->
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Period Type" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
-                            <telerik:RadComboBox Grid.Row="0" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding PeriodTypeInfo}"
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Period Type" Style="{StaticResource TextBlockStyle}" Margin="2,2,0,0" VerticalAlignment="Center" />
+                            <telerik:RadComboBox Grid.Row="0" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding PeriodTypeInfo}" 
                                                  VerticalContentAlignment="Center" SelectedItem="{Binding SelectedPeriodType, Mode=TwoWay}" 
                                                  Margin="2,2,2,0"  Style="{StaticResource RadComboBoxStyle}">
                                 <telerik:RadComboBox.ItemTemplate>
@@ -105,8 +105,8 @@
 
                             <!--Currency Selector-->
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Currency" Margin="2,2,0,0" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-                            <telerik:RadComboBox Grid.Row="1" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding CurrencyInfo}"
-                                                 VerticalContentAlignment="Center" SelectedValue="{Binding SelectedCurrency, Mode=TwoWay}"
+                            <telerik:RadComboBox Grid.Row="1" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding CurrencyInfo}" x:Name="cmbCurrencySelector"
+                                                 VerticalContentAlignment="Center" SelectedValue="{Binding SelectedCurrency, Mode=TwoWay}"           
                                                  Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}"/>
                         </Grid>
                     </telerik:RadExpander.Content>
@@ -143,7 +143,7 @@
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}">
                         <telerik:RadGridView.Columns>
                             <!--<telerik:GridViewDataColumn x:Name="dgvcDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>-->
-                            <telerik:GridViewDataColumn x:Name="dgvcSubDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"
+                            <telerik:GridViewDataColumn x:Name="dgvcSubDataType" Header="Median Estimates in USD(Millions)" HeaderTextAlignment="Left" TextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding SUB_DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" 
                                                         IsFilterable="False" Width="Auto"/>
                             <telerik:GridViewDataColumn x:Name="dgcLeftClick" HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}" 

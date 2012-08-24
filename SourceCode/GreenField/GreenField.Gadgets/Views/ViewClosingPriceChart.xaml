@@ -295,7 +295,7 @@
                                          EnableColumnVirtualization="False"
                                          EnableRowVirtualization="False"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                         AlternationCount="2"
+                                         AlternationCount="2" GridLinesVisibility="None"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
                         <telerik:RadGridView.SortDescriptors>

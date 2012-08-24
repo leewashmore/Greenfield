@@ -85,7 +85,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _selectedPortfolioId = value;
-                CheckIncludeBenchmark = 1;
+                CheckFilterApplied = 1;
                 this.RaisePropertyChanged(() => this.SelectedPortfolioDetailsData);
             }
         }
@@ -182,7 +182,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (SelectedPortfolioId != null && _effectiveDate != null && IsActive)
                 {
                     BusyIndicatorStatus = true;
-                    CheckIncludeBenchmark = 1;
+                    CheckFilterApplied = 1;
                     RetrievePortfolioDetailsData(SelectedPortfolioId, Convert.ToDateTime(_effectiveDate), GetBenchmarkData, RetrievePortfolioDetailsDataCallbackMethod);
                 }
                 this.RaisePropertyChanged(() => this.GetBenchmarkData);
@@ -287,6 +287,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _excludeCashSecurities = value;
+                CheckFilterApplied = 1;
                 this.RaisePropertyChanged(() => this.ExcludeCashSecurities);
             }
         }
@@ -301,6 +302,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _enableLookThru = value;
+                CheckFilterApplied = 1;
                 this.RaisePropertyChanged(() => this.EnableLookThru);
             }
         }
@@ -377,20 +379,22 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private int _checkIncludeBenchmark;
-        public int CheckIncludeBenchmark
+        /// <summary>
+        /// Property to check if Filter is applied
+        /// </summary>
+        private int _checkFilterApplied;
+        public int CheckFilterApplied
         {
             get
             {
-                return _checkIncludeBenchmark;
+                return _checkFilterApplied;
             }
             set
             {
-                _checkIncludeBenchmark = value;
-                this.RaisePropertyChanged(() => this.CheckIncludeBenchmark);
+                _checkFilterApplied = value;
+                this.RaisePropertyChanged(() => this.CheckFilterApplied);
             }
         }
-
 
         #endregion
 

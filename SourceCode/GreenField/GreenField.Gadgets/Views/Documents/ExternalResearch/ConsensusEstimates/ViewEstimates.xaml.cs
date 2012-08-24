@@ -22,6 +22,7 @@ namespace GreenField.Gadgets.Views
     /// </summary>
     public partial class ViewEstimates : ViewBaseUserControl
     {
+        #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
@@ -31,6 +32,9 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextEstimates = dataContextSource;
+
+            //this.radExpanderContainers.IsExpanded = true;
+            //this.radExpanderContainers.IsExpanded = false;
 
             PeriodRecord periodRecord = PeriodColumns.SetPeriodRecord(defaultHistoricalYearCount: 2, defaultHistoricalQuarterCount: 2, netColumnCount: 5);
             PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimate, new PeriodColumnUpdateEventArg()
@@ -46,16 +50,13 @@ namespace GreenField.Gadgets.Views
                 {
                     PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimate, e);
                     this.btnExportExcel.IsEnabled = true;
+                    this.dgConsensusEstimate.Columns[0].Header = "Median Estimates in " + this.DataContextEstimates.SelectedCurrency + "(Millions)";
                 }
             };
         }
+        #endregion
 
-        /// <summary>
-        /// Instance of EntitySelectionData
-        /// </summary>
-        private EntitySelectionData _entitySelectionData;
-        private bool _periodIsYearly = true;
-
+        #region ActiveDashboard
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
@@ -70,7 +71,9 @@ namespace GreenField.Gadgets.Views
                     DataContextEstimates.IsActive = _isActive;
             }
         }
+        #endregion
 
+        #region PropertyDeclaration
         /// <summary>
         /// Instance of ViewModelEstimates
         /// </summary>
@@ -81,7 +84,20 @@ namespace GreenField.Gadgets.Views
             set { _dataContextEstimates = value; }
         }
 
+        /// <summary>
+        /// Instance of EntitySelectionData
+        /// </summary>
+        private EntitySelectionData _entitySelectionData;
+        private bool _periodIsYearly = true;
 
+        #endregion
+
+        #region GridMovementHandlers
+        /// <summary>
+        /// Left Navigation button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LeftNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
@@ -91,6 +107,11 @@ namespace GreenField.Gadgets.Views
             });
         }
 
+        /// <summary>
+        /// Right-Navigation button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RightNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
@@ -99,7 +120,9 @@ namespace GreenField.Gadgets.Views
                 PeriodColumnNavigationDirection = NavigationDirection.RIGHT
             });
         }
+        #endregion
 
+        #region EventsUnsusbcribe
         /// <summary>
         /// Dispose method to unsubscribe Events
         /// </summary>
@@ -108,7 +131,9 @@ namespace GreenField.Gadgets.Views
             (this.DataContext as ViewModelEstimates).Dispose();
             this.DataContext = null;
         }
+        #endregion
 
+        #region Export
         /// <summary>
         /// Excel exporting EventHandler
         /// </summary>
@@ -141,5 +166,7 @@ namespace GreenField.Gadgets.Views
             ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
             childExportOptions.Show();            
         }
+        #endregion
+
     }
 }

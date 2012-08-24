@@ -110,11 +110,10 @@
                                          UseLayoutRounding="True" 
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         GroupPanelBackground="#e4e5e5"
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
-                                         ColumnWidth="*"
+                                         ColumnWidth="*" 
                                          AlternationCount="2"
                                          GridLinesVisibility="None" EnableRowVirtualization="false">
                         <telerik:RadGridView.Columns>

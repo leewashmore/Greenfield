@@ -106,7 +106,7 @@ namespace GreenField.Gadgets.Views
             this.cmbTime.SelectedValue = "1-Year";
         }
 
-        
+
         /// <summary>
         /// Frequency Interval Changed Event
         /// </summary>
@@ -254,7 +254,6 @@ namespace GreenField.Gadgets.Views
                 if (grdRadGridView.Visibility == Visibility.Visible)
                 {
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.PRICING_DATA, Element = this.dgPricing, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-                    return;
                 }
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.SECURITY_REFERENCE_PRICE_COMPARISON);
@@ -280,6 +279,12 @@ namespace GreenField.Gadgets.Views
 
         #region HelperMethods
 
+        /// <summary>
+        /// Get Aggregates Function
+        /// </summary>
+        /// <param name="group"></param>
+        /// <param name="column"></param>
+        /// <returns></returns>
         private string GetAggregates(QueryableCollectionViewGroup group, GridViewDataColumn column)
         {
             List<string> aggregates = new List<string>();
@@ -342,6 +347,9 @@ namespace GreenField.Gadgets.Views
 
         #region RemoveEvents
 
+        /// <summary>
+        /// Event Handlers Unsusbcribe
+        /// </summary>
         public override void Dispose()
         {
             this.DataContextClosingPriceChart.Dispose();
@@ -351,6 +359,11 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        /// <summary>
+        /// Add Series Drop Down Opening Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmbAddSeries_DropDownOpened(object sender, EventArgs e)
         {
             if (SelectionData.EntitySelectionData != null && _dataContextClosingPriceChart.SeriesReferenceSource == null)

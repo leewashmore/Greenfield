@@ -155,7 +155,6 @@ namespace GreenField.Gadgets.Views
                 else if (grdRadGridView.Visibility == Visibility.Visible)
                 {
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.CHART_EXTENSION_DATA, Element = this.dgChartExtension, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-                    return;
                 }
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.HOLDINGS_CHART_EXTENTION);
                 childExportOptions.Show();
@@ -170,6 +169,9 @@ namespace GreenField.Gadgets.Views
 
         #region Helpers
 
+        /// <summary>
+        /// Chart Styles Apply
+        /// </summary>
         private void ApplyChartStyles()
         {
             this.chChartExtension.DefaultView.ChartArea.AxisX.TicksDistance = 50;
@@ -187,7 +189,7 @@ namespace GreenField.Gadgets.Views
             switch (sortId)
             {
                 case 1:
-                    return new SolidColorBrush(Color.FromArgb(255,159,29,33));
+                    return new SolidColorBrush(Color.FromArgb(255, 159, 29, 33));
                 case 2:
                     return new SolidColorBrush(Color.FromArgb(255, 167, 54, 44));
                 case 3:
@@ -197,8 +199,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        #endregion
-
+        /// <summary>
+        /// Time Combo-Box Selection Changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
 
@@ -227,7 +232,7 @@ namespace GreenField.Gadgets.Views
                     (this.DataContext as ViewModelSlice1ChartExtension).AxisXMaxValue = Convert.ToDateTime(((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.OrderByDescending(a => a.ToDate)).
                         Select(a => a.ToDate).FirstOrDefault()).ToOADate();
                     int dataCount = (this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.Count;
-                    
+
                     if (dataCount != 0)
                     {
                         this.chChartExtension.DefaultView.ChartArea.AxisX.Step = dataCount / 10;
@@ -271,17 +276,27 @@ namespace GreenField.Gadgets.Views
                             Where(a => a.Type.ToUpper() == "SECTOR").Select(a => a.Ticker).FirstOrDefault();
                         this.chChartExtension.DefaultView.ChartLegend.Items.Add(sectorLegendItem);
                     }
-                    
+
                 }
             }
 
         }
 
+        /// <summary>
+        /// Grid Row Loaded Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgChartExtension_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            GroupedGridRowLoadedHandler.Implement(e);
+            //GroupedGridRowLoadedHandler.Implement(e);
         }
 
+        /// <summary>
+        /// Chart Loaded Event Handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chChartExtension_Loaded(object sender, RoutedEventArgs e)
         {
             if (chChartExtension.DefaultView.ChartLegend.Items.Count != 0)
@@ -290,5 +305,8 @@ namespace GreenField.Gadgets.Views
                 this.chChartExtension.DefaultView.ChartLegend.Items.Remove(var);
             }
         }
+
+        #endregion
+
     }
 }

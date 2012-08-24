@@ -97,7 +97,7 @@
                             </Grid.ColumnDefinitions>
 
                             <!--Period Type Selector-->
-                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Period Type" FontFamily="Arial" FontSize="7" Margin="2,2,0,0" VerticalAlignment="Center" />
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Period Type" Style="{StaticResource TextBlockStyle}" Margin="2,2,0,0" VerticalAlignment="Center" />
                             <telerik:RadComboBox Grid.Row="0" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding PeriodTypeInfo}"
                                                  VerticalContentAlignment="Center" SelectedItem="{Binding SelectedPeriodType, Mode=TwoWay}" Style="{StaticResource RadComboBoxStyle}"
                                                  Margin="2,2,2,0" >
@@ -111,6 +111,7 @@
                             <!--Currency Selector-->
                             <TextBlock Grid.Row="1" Grid.Column="0" Text="Currency" Margin="2,2,0,0" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
                             <telerik:RadComboBox Grid.Row="1" Grid.Column="1" MinHeight="15" Height="15" ItemsSource="{Binding CurrencyInfo}"
+                                                 x:Name="cmbCurrencySelector"
                                                  VerticalContentAlignment="Center" SelectedValue="{Binding SelectedCurrency, Mode=TwoWay}" Style="{StaticResource RadComboBoxStyle}"
                                                  Margin="2,2,2,0" />
                         </Grid>
@@ -149,7 +150,7 @@
                                  RowStyle="{StaticResource GridViewRowStyle}">
                         <telerik:RadGridView.Columns>
                             <!--<telerik:GridViewDataColumn x:Name="dgvcDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>-->
-                            <telerik:GridViewDataColumn x:Name="dgvcSubDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" 
+                            <telerik:GridViewDataColumn x:Name="dgvcSubDataType" Header="Consensus Valuations in USD" HeaderTextAlignment="Left" TextAlignment="Left" 
                                                         DataMemberBinding="{Binding SUB_DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" 
                                                         IsFilterable="False" Width="Auto"/>
                             <telerik:GridViewDataColumn x:Name="dgcLeftClick" HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}" 

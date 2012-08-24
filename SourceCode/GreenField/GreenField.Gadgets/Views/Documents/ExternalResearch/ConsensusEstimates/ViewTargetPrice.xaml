@@ -22,16 +22,16 @@
 
         <Grid x:Name="LayoutRoot" Background="White" Visibility="{Binding MarketCapGadgetVisibility, Mode=TwoWay}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="15" />
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="15"/>
+                <RowDefinition Height="18" />
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
+                <RowDefinition Height="18"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*"/>

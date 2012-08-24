@@ -267,10 +267,10 @@ namespace GreenField.Gadgets.Views
 
         private void dgPortfolioDetails_DataLoaded(object sender, EventArgs e)
         {
-            if (this.DataContextPortfolioDetails.CheckIncludeBenchmark > 0)
+            if (this.DataContextPortfolioDetails.CheckFilterApplied == 1)
             {
-                this.DataContextPortfolioDetails.CheckIncludeBenchmark--;
-                if (this.DataContextPortfolioDetails.CheckIncludeBenchmark == 0)
+                this.DataContextPortfolioDetails.CheckFilterApplied--;
+                if (this.DataContextPortfolioDetails.CheckFilterApplied == 0)
                 {
                     SetGroupedData();
                     this.dgPortfolioDetails.Items.CommitEdit();
@@ -285,7 +285,7 @@ namespace GreenField.Gadgets.Views
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            gridDataSource=this.dgPortfolioDetails.ItemsSource as RangeObservableCollection<PortfolioDetailsData>;
+            gridDataSource = this.dgPortfolioDetails.ItemsSource as RangeObservableCollection<PortfolioDetailsData>;
             this.dgPortfolioDetails.Items.EditItem(gridDataSource);
         }
     }

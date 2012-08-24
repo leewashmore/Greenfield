@@ -33,7 +33,16 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextValuations; }
             set { _dataContextValuations = value; }
         }
+               
+        /// <summary>
+        /// Instance of EntitySelectionData
+        /// </summary>
+        private EntitySelectionData _entitySelectionData;
+        private bool _periodIsYearly = true;
 
+        #endregion
+
+        #region ActiveDashboard
         /// <summary>
         /// To check whether the Dashboard is Active or not
         /// </summary>
@@ -47,14 +56,7 @@ namespace GreenField.Gadgets.Views
                 if (DataContextValuations != null)
                     DataContextValuations.IsActive = _isActive;
             }
-        }
-
-        /// <summary>
-        /// Instance of EntitySelectionData
-        /// </summary>
-        private EntitySelectionData _entitySelectionData;
-        private bool _periodIsYearly = true;
-
+        } 
         #endregion
 
         #region Constructor
@@ -85,10 +87,14 @@ namespace GreenField.Gadgets.Views
                 {
                     PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimateValuations, e);
                     this.btnExportExcel.IsEnabled = true;
+                    this.dgConsensusEstimateValuations.Columns[0].Header = "Consensus Valuations in " + this.DataContextValuations.SelectedCurrency + "(Millions)"; ;
                 }
             };
         }
 
+        #endregion
+               
+        #region GridNavigationButtons
         /// <summary>
         /// Left Navigation Button Click
         /// </summary>
@@ -116,7 +122,9 @@ namespace GreenField.Gadgets.Views
                 PeriodColumnNavigationDirection = NavigationDirection.RIGHT
             });
         }
+        #endregion
 
+        #region EventsUnsusbcribe
         /// <summary>
         /// Dispose method to unsubscribe Events
         /// </summary>
@@ -125,7 +133,9 @@ namespace GreenField.Gadgets.Views
             (this.DataContext as ViewModelValuations).Dispose();
             this.DataContext = null;
         }
+        #endregion
 
+        #region Export
         /// <summary>
         /// Excel exporting EventHandler
         /// </summary>
@@ -136,7 +146,7 @@ namespace GreenField.Gadgets.Views
             RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 12 });
         }
 
-       
+
         /// <summary>
         /// Export to Excel Button Click
         /// </summary>
@@ -159,7 +169,7 @@ namespace GreenField.Gadgets.Views
             ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
             childExportOptions.Show();
         }
-
         #endregion
+                
     }
 }
