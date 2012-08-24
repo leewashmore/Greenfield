@@ -33,7 +33,7 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextValuations; }
             set { _dataContextValuations = value; }
         }
-               
+
         /// <summary>
         /// Instance of EntitySelectionData
         /// </summary>
@@ -56,7 +56,7 @@ namespace GreenField.Gadgets.Views
                 if (DataContextValuations != null)
                     DataContextValuations.IsActive = _isActive;
             }
-        } 
+        }
         #endregion
 
         #region Constructor
@@ -87,13 +87,13 @@ namespace GreenField.Gadgets.Views
                 {
                     PeriodColumns.UpdateColumnInformation(this.dgConsensusEstimateValuations, e);
                     this.btnExportExcel.IsEnabled = true;
-                    this.dgConsensusEstimateValuations.Columns[0].Header = "Consensus Valuations in " + this.DataContextValuations.SelectedCurrency + "(Millions)"; ;
+                    this.dgConsensusEstimateValuations.Columns[0].Header = "Consensus Valuations in " + this.DataContextValuations.SelectedCurrency;
                 }
             };
         }
 
         #endregion
-               
+
         #region GridNavigationButtons
         /// <summary>
         /// Left Navigation Button Click
@@ -170,6 +170,6 @@ namespace GreenField.Gadgets.Views
             childExportOptions.Show();
         }
         #endregion
-                
+
     }
 }
