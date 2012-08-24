@@ -63,8 +63,8 @@ namespace GreenField.DashboardModule.Views
             };
 
             //for accessing the gadgets data 
-            _viewModel = new ViewModelMemberVoting(param);
-            _view = new ViewMemberVoting(_viewModel);           
+            //_viewModel = new ViewModelMemberVoting(param);
+            //_view = new ViewMemberVoting(_viewModel);           
 
            // this.cctrDashboardContent.Content = new ViewMemberVoting(new ViewModelMemberVoting(param));
             this.cctrDashboardContent.Content = null;// _view;

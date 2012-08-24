@@ -68,8 +68,8 @@ namespace GreenField.DashboardModule.Views
             };
 
             //for accessing the gadgets data 
-            _viewModel = new ViewModelICPresentationNew(param);
-            _view = new ViewICPresentationNew(_viewModel);
+            //_viewModel = new ViewModelICPresentationNew(param);
+            //_view = new ViewICPresentationNew(_viewModel);
 
             this.cctrDashboardContent.Content = null;// _view;
         }

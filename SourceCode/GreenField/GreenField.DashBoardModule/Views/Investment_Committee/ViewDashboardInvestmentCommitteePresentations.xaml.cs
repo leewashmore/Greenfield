@@ -66,8 +66,8 @@ namespace GreenField.DashboardModule.Views
                 RegionManager = _regionManager
             };
 
-            _dashboardViewModel = new ViewModelPresentations(param);
-            _dashboardView = new ViewPresentations(_dashboardViewModel);
+            //_dashboardViewModel = new ViewModelPresentations(param);
+            //_dashboardView = new ViewPresentations(_dashboardViewModel);
             this.cctrDashboardContent.Content = null;//_dashboardView;
         }
 
