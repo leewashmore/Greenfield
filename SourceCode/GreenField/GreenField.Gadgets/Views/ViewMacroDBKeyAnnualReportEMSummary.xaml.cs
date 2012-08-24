@@ -112,7 +112,6 @@ namespace GreenField.Gadgets.Views
                 sdescriptor.Member = "SortOrder";
                 sdescriptor.SortDirection = ListSortDirection.Ascending;
                 this.dgMacroDBKeyReport.SortDescriptors.Add(sdescriptor);
-
                 this.dgMacroDBKeyReport.AutoGenerateColumns = false;
                 dgMacroDBKeyReport.Columns[2].Header = (_currentYear - 3).ToString();
                 dgMacroDBKeyReport.Columns[3].Header = (_currentYear - 2).ToString();

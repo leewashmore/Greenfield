@@ -14,6 +14,7 @@ using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using GreenField.Gadgets.Models;
 using Telerik.Windows.Controls.GridView;
+using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
@@ -107,12 +108,32 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
         #region Export
+
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Gadget With Period Columns COA Specific", Element = this.dgCOASpecific, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
-            childExportOptions.Show();
+            
+            if (this.grdRadChart.Visibility == Visibility.Visible)
+            {
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Gadget With Period Columns COA Specific", Element = this.chCOASpecific, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
+                childExportOptions.Show();
+            }
+            else
+            {
+                if (this.grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Gadget With Period Columns COA Specific", Element = this.dgCOASpecific, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.GADGET_WITH_PERIOD_COLUMNS_COA_SPECIFIC);
+                    childExportOptions.Show();
+                }
+            }
+        }
+
+        private void dgCOASpecific_ElementExporting(object sender, GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e, hideColumnIndex: new List<int> { 1, 14 });
         }
         #endregion
         #endregion

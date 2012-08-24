@@ -87,14 +87,12 @@ namespace GreenField.Gadgets.Views
             if (_macroInfo != null)
             {
                 GroupDescriptor descriptor = new GroupDescriptor();
-                descriptor.Member = "CategoryName";
-                //descriptor.SortDirection = ListSortDirection.Ascending;
+                descriptor.Member = "CategoryName";               
                 this.dgMacroDBKeyReport.GroupDescriptors.Add(descriptor);
                 SortDescriptor sdescriptor = new SortDescriptor();
                 sdescriptor.Member = "SortOrder";
                 sdescriptor.SortDirection = ListSortDirection.Ascending;
                 this.dgMacroDBKeyReport.SortDescriptors.Add(sdescriptor);
-
                 this.dgMacroDBKeyReport.AutoGenerateColumns = false;
                 dgMacroDBKeyReport.Columns[2].Header = (_currentYear - 3).ToString();
                 dgMacroDBKeyReport.Columns[3].Header = (_currentYear - 2).ToString();
