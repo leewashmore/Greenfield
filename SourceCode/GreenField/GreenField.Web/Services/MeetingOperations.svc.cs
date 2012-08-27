@@ -658,7 +658,255 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
 
+        }
+        #endregion
+
+        #region New Presentation
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+
+                XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverviewData });
+                String xmlScript = xmlDoc.ToString();
+                Int32? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();
+
+                return result == 0;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public ICPresentationOverviewData RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData)
+        {
+            try
+            {
+                if (entitySelectionData == null)
+                    return presentationOverviewData;
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+
+                ExternalResearchEntities research = new ExternalResearchEntities();
+                ObjectResult<Decimal?> queryResult = research.GetMarketCap();
+                List<Decimal?> resultCap = new List<Decimal?>();
+                resultCap = queryResult.ToList<Decimal?>();
+
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.TICKER == entitySelectionData.ShortName
+                        && record.ISSUE_NAME == entitySelectionData.LongName
+                        && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                        && record.SECURITY_TYPE == entitySelectionData.SecurityType)
+                    .FirstOrDefault();
+
+
+                if (data == null)
+                    return new ICPresentationOverviewData();
+
+                presentationOverviewData.SecurityTicker = data.TICKER;
+                presentationOverviewData.SecurityName = data.ISSUE_NAME;
+                presentationOverviewData.SecurityCountry = data.ISO_COUNTRY_CODE;
+                presentationOverviewData.SecurityIndustry = data.GICS_INDUSTRY_NAME;
+                presentationOverviewData.Analyst = data.ASHMOREEMM_PRIMARY_ANALYST;
+                presentationOverviewData.Price = data.CLOSING_PRICE.ToString();
+                presentationOverviewData.FVCalc = "3";
+                presentationOverviewData.SecurityBuySellvsCrnt = "$16.50(8*2013PE)-$21.50(10.5*2013PE)";
+                presentationOverviewData.CurrentHoldings = "$0mn";
+                presentationOverviewData.PercentEMIF = "0%";
+                presentationOverviewData.SecurityBMWeight = "1%";
+                presentationOverviewData.SecurityActiveWeight = "Underweight";
+                presentationOverviewData.YTDRet_Absolute = "-3.5%";
+                presentationOverviewData.YTDRet_RELtoLOC = "+8%";
+                presentationOverviewData.YTDRet_RELtoEM = "-2%";
+                presentationOverviewData.SecurityRecommendation = "BUY";
+                presentationOverviewData.SecurityMarketCapitalization = 0;
+
+
+                return presentationOverviewData;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
         } 
+        #endregion
+
+        #region Meeting Configuration Schedule
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<MeetingInfo> GetAvailablePresentationDates()
+        {
+            try
+            {
+                int months = Convert.ToInt16(ConfigurationManager.AppSettings["ConfigurableMeetingMonths"]);
+
+                ICPresentationEntities entity = new ICPresentationEntities();
+                MeetingConfigurationSchedule meetingConfigurationSchedule = entity.MeetingConfigurationSchedules.FirstOrDefault();
+
+                DateTime presentationDateTime = meetingConfigurationSchedule.PresentationDateTime;
+                DateTime preMeetingVotingDeadline = meetingConfigurationSchedule.PreMeetingVotingDeadline;
+                DateTime presentationDeadline = meetingConfigurationSchedule.PresentationDeadline;
+
+                List<MeetingInfo> result = new List<MeetingInfo>();
+
+                for (DateTime id = DateTime.Now; id < DateTime.Now.AddMonths(months); id = id.AddDays(7))
+                {
+                    DateTime tempPresentationDeadline = id.Date.Add(presentationDeadline.TimeOfDay);
+
+                    if (tempPresentationDeadline < DateTime.Now)
+                        continue;
+
+                    while (tempPresentationDeadline.DayOfWeek != presentationDeadline.DayOfWeek)
+                        tempPresentationDeadline = tempPresentationDeadline.AddDays(1);
+
+                    DateTime tempPreMeetingVotingDeadline = tempPresentationDeadline.Date.Add(preMeetingVotingDeadline.TimeOfDay);
+                    while (tempPreMeetingVotingDeadline.DayOfWeek != preMeetingVotingDeadline.DayOfWeek)
+                        tempPreMeetingVotingDeadline = tempPreMeetingVotingDeadline.AddDays(1);
+
+                    DateTime meetingDateTime = tempPreMeetingVotingDeadline.Date.Add(presentationDateTime.TimeOfDay);
+                    while (meetingDateTime.DayOfWeek != presentationDateTime.DayOfWeek)
+                        meetingDateTime = meetingDateTime.AddDays(1);
+
+                    result.Add(new MeetingInfo()
+                    {
+                        MeetingDateTime = meetingDateTime,
+                        MeetingClosedDateTime = tempPresentationDeadline,
+                        MeetingVotingClosedDateTime = tempPreMeetingVotingDeadline
+                    });
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean UpdateMeetingConfigSchedule(String userName, MeetingConfigurationSchedule meetingConfigurationSchedule)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                Int32? result = entity.SetMeetingConfigSchedule(meetingConfigurationSchedule.PresentationDateTime,
+                                                            meetingConfigurationSchedule.PresentationTimeZone,
+                                                            meetingConfigurationSchedule.PresentationDeadline,
+                                                            meetingConfigurationSchedule.PreMeetingVotingDeadline,
+                                                            userName).FirstOrDefault();
+
+                return result == 0;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        } 
+        #endregion        
+
+        #region Decision Entry
+        /// <summary>
+        /// Retrieve Voter Information
+        /// </summary>
+        /// <param name="objUserID"></param>
+        /// <returns> RetrievePresentationInfo_Result</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<VoterInfo> RetrievePresentationVoterData(Int64 presentationId)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                return entity.VoterInfoes.Where(record => record.PresentationID == presentationId).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+        }
+
+        /// <summary>
+        /// Retrieve Security PFVMeasure Current Prices
+        /// </summary>
+        /// <param name="securityId">Security ID</param>
+        /// <param name="pfvTypeInfo">List of PFV Types</param>
+        /// <returns>Dictionary element with PFVType as key and prices as values</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Dictionary<String, Decimal?> RetrieveSecurityPFVMeasureCurrentPrices(String securityId, List<String> pfvTypeInfo)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                Dictionary<String, Decimal?> result = new Dictionary<string, decimal?>();
+                foreach (String pfvType in pfvTypeInfo)
+                {
+                    Decimal? pfvTypeCurrentPrice = entity.RetrieveSecurityPFVMeasureCurrentPrice(securityId, pfvType).FirstOrDefault();
+                    if (!result.Any(record => record.Key == pfvType))
+                    {
+                        result.Add(pfvType, pfvTypeCurrentPrice); 
+                    }
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean UpdateDecisionEntryDetails(String userName, ICPresentationOverviewData presentationOverViewData, List<VoterInfo> voterInfo)
+        {
+            try
+            {
+                XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverViewData }
+                    , strictlyInclusiveProperties: new List<string> { "PresentationID", "AdminNotes", "CommitteePFVMeasure", "CommitteeBuyRange",
+                    "CommitteeSellRange" });
+                xmlDoc = GetEntityXml<VoterInfo>(parameters: voterInfo, xmlDoc: xmlDoc, strictlyInclusiveProperties: new List<string> { "VoterID",
+                    "VoterPFVMeasure", "VoterBuyRange", "VoterSellRange", "VoteType" });
+                String xmlScript = xmlDoc.ToString();
+                ICPresentationEntities entity = new ICPresentationEntities();
+                Int32? result = entity.SetICPresentationDecisionEntryDetails(userName, xmlScript).FirstOrDefault();
+                return result == 0;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
         #endregion
 
         #region Meeting Minutes

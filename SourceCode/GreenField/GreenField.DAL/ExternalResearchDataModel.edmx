@@ -562,6 +562,10 @@
         <Function Name="RetrieveRatioComparisonData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityBucketXML" Type="varchar(max)" Mode="In" />
         </Function>
+        <Function Name="RetrieveSecurityPFVMeasureCurrentPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SecurityId" Type="varchar" Mode="In" />
+          <Parameter Name="PFVMeasure" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="usp_GetDataForPeriodGadgets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cSource" Type="varchar" Mode="In" />
           <Parameter Name="cFiscalType" Type="varchar" Mode="In" />
@@ -692,7 +696,11 @@
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
-            <Parameter Name="securityBucketXML" Mode="In" Type="String" />
+          <Parameter Name="securityBucketXML" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveSecurityPFVMeasureCurrentPrice" ReturnType="Collection(Decimal)">
+            <Parameter Name="SecurityId" Mode="In" Type="String" />
+            <Parameter Name="PFVMeasure" Mode="In" Type="String" />
           </FunctionImport>
 
 				</EntityContainer>
@@ -1566,6 +1574,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveSecurityPFVMeasureCurrentPrice" FunctionName="ExternalResearchModel.Store.RetrieveSecurityPFVMeasureCurrentPrice" />
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />

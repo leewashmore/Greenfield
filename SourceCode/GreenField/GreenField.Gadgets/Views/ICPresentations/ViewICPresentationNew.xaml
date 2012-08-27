@@ -6,7 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" FontFamily="Arial" FontSize="7"
+    mc:Ignorable="d" 
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
     xmlns:my="clr-namespace:GreenField.Common;assembly=GreenField.Common"
     d:DesignHeight="300" d:DesignWidth="800">
@@ -19,10 +19,9 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <Grid x:Name="LayoutRoot">
-        <telerik:RadBusyIndicator   Style="{StaticResource BusyIndicatorStyle}" x:Name="gridBusyIndicator"                                  
-                                  BusyContent="{Binding BusyIndicatorContent}"                                                        
-                                  IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+    <telerik:RadBusyIndicator x:Name="biMeetingMinutes" BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+        <Grid x:Name="LayoutRoot">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -32,153 +31,101 @@
                 </Grid.RowDefinitions>
 
                 <!--security name/ticker-->
-              
-                    <TextBlock Grid.Row="0" Grid.Column="0" FontSize="13" x:Name="txtSecurityName" TextAlignment="Center" FontWeight="Bold" Text="{Binding SecurityName}"/>                   
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                        <TextBlock FontWeight="Bold" FontStyle="Italic">(</TextBlock>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" FontSize="13" x:Name="txtSecurityName" TextAlignment="Center" FontWeight="Bold" Text="{Binding SecurityName}"/>
+                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock FontWeight="Bold" FontStyle="Italic">(</TextBlock>
                     <TextBlock x:Name="txtTicker" FontWeight="Bold" FontStyle="Italic" Text="{Binding SecurityTicker}"/>
-                        <TextBlock FontWeight="Bold" FontStyle="Italic">)</TextBlock>
-                    </StackPanel>
-
-
-                <!-- Presentation Details -->
-                <!--<Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>-->                  
-
-                        <!--<TextBlock Text="Security :"                                     
-                                   Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" Margin="2,5,0,5"
-                                   Visibility="{Binding SecuritySelectionVisibility}"
-                                   VerticalAlignment="Center"/>
-
-                        <telerik:RadComboBox MinWidth="100"
-                                             MinHeight="15"
-                                             Grid.Row="1"
-                                             Grid.Column="1"
-                                  Margin="5,5,0,5"                                  
-                                  SelectedItem="{Binding SelectedSecurityInfo, Mode=TwoWay}" 
-                                  ItemsSource="{Binding SecurityInfo}" 
-                                  Visibility="{Binding SecuritySelectionVisibility}"
-                                  HorizontalAlignment="Left"
-                                  VerticalAlignment="Center">                       
-                        </telerik:RadComboBox>-->
-
-                    <!--<TextBlock Text="Ticker : "                                     
-                                   Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Margin="2,5,0,2"                                   
-                                   VerticalAlignment="Center"/>
-
-                    <telerik:RadComboBox MinWidth="100"
-                                         MinHeight="15"
-                                         Grid.Row="1"
-                                         Grid.Column="3"
-                                         Margin="5,5,0,5"                                  
-                                         SelectedItem="{Binding SelectedTickerInfo, Mode=TwoWay}" 
-                                         ItemsSource="{Binding SecurityTicker}" 
-                                         Visibility="{Binding TcikerSelectionVisibility}"
-                                         HorizontalAlignment="Left"
-                                         VerticalAlignment="Center">
-                    </telerik:RadComboBox>
-
-                    <telerik:RadButton x:Name="btnICPPresentationsSearch"
-                                   Command="{Binding SearchCommand}"
-                                   Grid.Row="1"
-                                   Grid.Column="4"
-                                       Margin="5,5,0,5"
-                                   VerticalAlignment="Center"
-                                   Width="75"
-                                   Visibility="Visible"
-                                   HorizontalAlignment="Center"
-                                   Content="SEARCH"/>-->
-
-                <!--</Grid>-->
+                    <TextBlock FontWeight="Bold" FontStyle="Italic">)</TextBlock>
+                </StackPanel>
 
                 <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="110"/>
+                        <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Recommendation :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtRecommendation" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding SecurityRecommendation}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Analyst}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Country :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtCountry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding SecurityCountry}"/>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding SecurityIndustry}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Mkt Cap :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtMktCap" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding MarketCap}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Price :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtPrice" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding Price}"/>
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="FV Calc :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="6" Grid.Column="1" x:Name="txtFVCalc" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding FVCalc}"/>
-                    <TextBlock Grid.Row="7" Grid.Column="0" Text="Buy/Sell vs Crnt :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="7" Grid.Column="1" x:Name="txtBuySell" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding SecurityBuySellvsCrnt}"/>
+                    <Grid Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Recommendation :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtRecommendation" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityRecommendation}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtAnalyst" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.Analyst}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Country :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtCountry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityCountry}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityIndustry}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Mkt Cap :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtMktCap" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.MarketCap}"/>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Price :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtPrice" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.Price}"/>
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="FV Calc :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="6" Grid.Column="1" x:Name="txtFVCalc" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.FVCalc}"/>
+                        <TextBlock Grid.Row="7" Grid.Column="0" Text="Buy/Sell vs Crnt :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="7" Grid.Column="1" x:Name="txtBuySell" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityBuySellvsCrnt}"/>
+                    </Grid>
+
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Total Current Holdings :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtTotalCurrentHoldings" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.TotalCurrentHoldings}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="% of EMIF :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtEMIF" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.PercentEMIF}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="BM Weight :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtBMWeight" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityBMWeight}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Active Weight :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtActiveWeight" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityActiveWeight}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="YTD Ret - Absolute :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtYTDAbsulute" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.YTDRet_Absolute}"/>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="YTD Ret - Rel to Loc :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtYTDReltoLoc" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.YTDRet_RELtoLOC}"/>
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="YTD Ret - Rel to EM :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="6" Grid.Column="1" x:Name="txtYTDReltoEM" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.YTDRet_RELtoEM}"/>
+                    </Grid>
+
                 </Grid>
 
-                <Grid Grid.Column="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="110"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
+            </Grid>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Total Current Holdings :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                    <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtTotalCurrentHoldings" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding TotalCurrentHoldings}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Text="% of EMIF :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtEMIF" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding PercentEMIF}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Text="BM Weight :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtBMWeight" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding SecurityBMWeight}"/>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Active Weight :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtActiveWeight" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding SecurityActiveWeight}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="YTD Ret - Absolute :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtYTDAbsulute" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding YTDRet_Absolute}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="YTD Ret - Rel to Loc :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtYTDReltoLoc" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding YTDRet_RELtoLOC}"/>
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="YTD Ret - Rel to EM :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                    <TextBlock Grid.Row="6" Grid.Column="1" x:Name="txtYTDReltoEM" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding YTDRet_RELtoEM}"/>
-                </Grid>
-            </Grid> 
             <!-- Security Details -->
-                <Grid Grid.Row="3">
-                    <telerik:RadButton x:Name="btnICPPresentationsSubmit"
+            <Grid Grid.Row="3">
+                <telerik:RadButton x:Name="btnICPPresentationsSubmit"
                                    Command="{Binding SaveCommand}"
                                    Grid.Row="1"
-                                   Grid.Column="4"
                                    VerticalAlignment="Center"
                                    Width="75"
                                    Visibility="Visible"
                                    HorizontalAlignment="Center"
-                                   Content="SUBMIT"/>                  
-                </Grid>
+                                   Content="SUBMIT"/>
             </Grid>
-        </telerik:RadBusyIndicator>
-    </Grid>
+        </Grid>
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

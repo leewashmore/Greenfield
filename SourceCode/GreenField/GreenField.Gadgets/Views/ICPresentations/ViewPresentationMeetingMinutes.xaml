@@ -20,8 +20,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
-    
-    <telerik:RadBusyIndicator x:Name="biMeetingMinutes" BusyContent="{Binding BusyIndicatorContent}" FontSize="7" FontFamily="Arial"
+
+    <telerik:RadBusyIndicator x:Name="biMeetingMinutes" BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
         <Grid x:Name="LayoutRoot">
             <Grid.RowDefinitions>
@@ -64,22 +64,22 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Grid.Column="0" MinHeight="{StaticResource DefaultControlMinHeight}" Background="{StaticResource DefaultGridHeaderBackground}">
+                <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
                     <TextBlock Margin="5" Text="PRESENTER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                 </Grid>
-                <Grid Grid.Row="0" Grid.Column="1" MinHeight="{StaticResource DefaultControlMinHeight}" Background="{StaticResource DefaultGridHeaderBackground}">
+                <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
                     <TextBlock Margin="5" Text="SECURITY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                 </Grid>
-                <Grid Grid.Row="0" Grid.Column="2" MinHeight="{StaticResource DefaultControlMinHeight}" Background="{StaticResource DefaultGridHeaderBackground}">
+                <Grid Grid.Row="0" Grid.Column="2" Background="{StaticResource DefaultGridHeaderBackground}">
                     <TextBlock Margin="5" Text="TICKER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                 </Grid>
-                <Grid Grid.Row="0" Grid.Column="3" MinHeight="{StaticResource DefaultControlMinHeight}" Background="{StaticResource DefaultGridHeaderBackground}">
+                <Grid Grid.Row="0" Grid.Column="3" Background="{StaticResource DefaultGridHeaderBackground}">
                     <TextBlock Margin="5" Text="COUNTRY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                 </Grid>
-                <Grid Grid.Row="0" Grid.Column="4" MinHeight="{StaticResource DefaultControlMinHeight}" Background="{StaticResource DefaultGridHeaderBackground}">
+                <Grid Grid.Row="0" Grid.Column="4" Background="{StaticResource DefaultGridHeaderBackground}">
                     <TextBlock Margin="5" Text="INDUSTRY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                 </Grid>                
                 <ItemsControl Grid.Row="1" Grid.Column="0" Margin="0,5,5,5" 

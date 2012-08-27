@@ -10,21 +10,16 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.ComponentModel.Composition;
-//using Ashmore.Emm.GreenField.BusinessLogic;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.ViewModel;
-//using Ashmore.Emm.GreenField.BusinessLogic.MeetingServiceReference;
 using GreenField.ServiceCaller.MeetingDefinitions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.Commands;
-//using Ashmore.Emm.GreenField.ICP.Meeting.Module.Model;
 using GreenField.Gadgets.Models;
 using Microsoft.Practices.Prism.Regions;
-//using Ashmore.Emm.GreenField.Common;
 using GreenField.Common;
-//using Ashmore.Emm.GreenField.ICP.Meeting.Module.Views;
 using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.ServiceLocation;
@@ -135,7 +130,36 @@ namespace GreenField.Gadgets.ViewModels
                 ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, value);                
                 SelectionRaisePropertyChanged();
             }
-        }                        
+        }
+
+        private List<MeetingInfo> _meetingInfoDates;
+        public List<MeetingInfo> MeetingInfoDates
+        {
+            get { return _meetingInfoDates; }
+            set
+            {
+                if (value != null)
+                {
+                    _meetingInfoDates = value;
+                    RaisePropertyChanged(() => this.MeetingInfoDates);                    
+                }
+            }
+        }
+
+        private MeetingInfo _selectedMeetingInfoDate;
+        public MeetingInfo SelectedMeetingInfoDate
+        {
+            get { return _selectedMeetingInfoDate; }
+            set
+            {
+                if (value != null)
+                {
+                    _selectedMeetingInfoDate = value;
+                    RaisePropertyChanged(() => this.SelectedMeetingInfoDate);
+                    ICNavigation.Update(ICNavigationInfo.MeetingInfo, value);
+                }
+            }
+        }        
 
         #region ICommand Properties
         public ICommand ChangeDateCommand
@@ -195,7 +219,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private void DecisionEntryCommandMethod(object param)
         {
-            
+            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteeDecisionEntry");
         }
 
         private bool UploadCommandValidationMethod(object param)
@@ -325,22 +349,53 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     ICPresentationOverviewInfo = result;
+                    _dbInteractivity.GetAvailablePresentationDates(GetAvailablePresentationDatesCallbackMethod);
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                //BusyIndicatorNotification();
+            }            
+        }
+
+        private void GetAvailablePresentationDatesCallbackMethod(List<MeetingInfo> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    MeetingInfoDates = result;                    
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);                
             }
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
                 BusyIndicatorNotification();
-            }            
+            }
         }        
         #endregion
 

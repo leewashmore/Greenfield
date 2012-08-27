@@ -296,6 +296,9 @@
     <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.MeetingMinuteData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.VoterInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\MeetingDefinitions\MeetingOperations.wsdl" />
     <None Include="Service References\MeetingDefinitions\MeetingOperations.xsd">
       <SubType>Designer</SubType>
@@ -313,6 +316,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MeetingDefinitions\MeetingOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingDefinitions\MeetingOperations6.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingDefinitions\MeetingOperations61.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MeetingDefinitions\MeetingOperations7.xsd">

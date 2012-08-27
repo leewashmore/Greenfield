@@ -8,6 +8,20 @@
         <EntityContainer Name="ICPresentationModelStoreContainer">
           <EntitySet Name="AttachedFileInfo" EntityType="ICPresentationModel.Store.AttachedFileInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MeetingAttachedFileInfo" EntityType="ICPresentationModel.Store.MeetingAttachedFileInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MeetingConfigurationSchedule" EntityType="ICPresentationModel.Store.MeetingConfigurationSchedule" store:Type="Tables" store:Schema="dbo" store:Name="MeetingConfigurationSchedule">
+            <DefiningQuery>SELECT 
+      [MeetingConfigurationSchedule].[PresentationDateTime] AS [PresentationDateTime], 
+      [MeetingConfigurationSchedule].[PresentationTimeZone] AS [PresentationTimeZone], 
+      [MeetingConfigurationSchedule].[PresentationDeadline] AS [PresentationDeadline], 
+      [MeetingConfigurationSchedule].[PreMeetingVotingDeadline] AS [PreMeetingVotingDeadline], 
+      [MeetingConfigurationSchedule].[CreatedBy] AS [CreatedBy], 
+      [MeetingConfigurationSchedule].[CreatedOn] AS [CreatedOn], 
+      [MeetingConfigurationSchedule].[ModifiedBy] AS [ModifiedBy], 
+      [MeetingConfigurationSchedule].[ModifiedOn] AS [ModifiedOn], 
+      [MeetingConfigurationSchedule].[ConfigurablePresentationDeadline] AS [ConfigurablePresentationDeadline], 
+      [MeetingConfigurationSchedule].[ConfigurablePreMeetingVotingDeadline] AS [ConfigurablePreMeetingVotingDeadline]
+      FROM [dbo].[MeetingConfigurationSchedule] AS [MeetingConfigurationSchedule]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="MeetingInfo" EntityType="ICPresentationModel.Store.MeetingInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="MeetingPresentationMappingInfo" EntityType="ICPresentationModel.Store.MeetingPresentationMappingInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PresentationInfo" EntityType="ICPresentationModel.Store.PresentationInfo" store:Type="Tables" Schema="dbo" />
@@ -60,6 +74,31 @@
           <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AshmoreEMMPOC.dbo.MeetingConfigurationSchedule' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="MeetingConfigurationSchedule">
+          <Key>
+            <PropertyRef Name="PresentationDateTime" />
+            <PropertyRef Name="PresentationTimeZone" />
+            <PropertyRef Name="PresentationDeadline" />
+            <PropertyRef Name="PreMeetingVotingDeadline" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedOn" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedOn" />
+          </Key>
+          <Property Name="PresentationDateTime" Type="datetime" Nullable="false" />
+          <Property Name="PresentationTimeZone" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="PresentationDeadline" Type="datetime" Nullable="false" />
+          <Property Name="PreMeetingVotingDeadline" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="ConfigurablePresentationDeadline" Type="decimal" Scale="2" />
+          <Property Name="ConfigurablePreMeetingVotingDeadline" Type="decimal" Scale="2" />
+        </EntityType>
         <EntityType Name="MeetingInfo">
           <Key>
             <PropertyRef Name="MeetingID" />
@@ -93,39 +132,50 @@
           <Property Name="PresentationID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Presenter" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="StatusType" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="SecurityTicker" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="SecurityName" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="SecurityCountry" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="SecurityCountryCode" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="SecurityIndustry" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="SecurityCashPosition" Type="real" Nullable="false" />
-          <Property Name="SecurityPosition" Type="bigint" Nullable="false" />
-          <Property Name="SecurityMSCIStdWeight" Type="real" Nullable="false" />
-          <Property Name="SecurityMSCIIMIWeight" Type="real" Nullable="false" />
-          <Property Name="SecurityGlobalActiveWeight" Type="real" Nullable="false" />
-          <Property Name="SecurityLastClosingPrice" Type="real" Nullable="false" />
-          <Property Name="SecurityMarketCapitalization" Type="real" Nullable="false" />
-          <Property Name="SecurityPFVMeasure" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="SecurityBuyRange" Type="real" Nullable="false" />
-          <Property Name="SecuritySellRange" Type="real" Nullable="false" />
-          <Property Name="SecurityRecommendation" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="SecurityTicker" Type="varchar" MaxLength="50" />
+          <Property Name="SecurityName" Type="varchar" MaxLength="50" />
+          <Property Name="SecurityCountry" Type="varchar" MaxLength="50" />
+          <Property Name="SecurityCountryCode" Type="varchar" MaxLength="50" />
+          <Property Name="SecurityIndustry" Type="varchar" MaxLength="50" />
+          <Property Name="SecurityCashPosition" Type="real" />
+          <Property Name="SecurityPosition" Type="bigint" />
+          <Property Name="SecurityMSCIStdWeight" Type="real" />
+          <Property Name="SecurityMSCIIMIWeight" Type="real" />
+          <Property Name="SecurityGlobalActiveWeight" Type="real" />
+          <Property Name="SecurityLastClosingPrice" Type="real" />
+          <Property Name="SecurityMarketCapitalization" Type="real" />
+          <Property Name="SecurityPFVMeasure" Type="varchar" MaxLength="50" />
+          <Property Name="SecurityBuyRange" Type="real" />
+          <Property Name="SecuritySellRange" Type="real" />
+          <Property Name="SecurityRecommendation" Type="varchar" MaxLength="50" />
           <Property Name="InvestmentThesis" Type="nvarchar(max)" />
           <Property Name="Background" Type="nvarchar(max)" />
           <Property Name="Valuations" Type="nvarchar(max)" />
           <Property Name="EarningsOutlook" Type="nvarchar(max)" />
           <Property Name="CompetitiveAdvantage" Type="nvarchar(max)" />
           <Property Name="CompetitiveDisadvantage" Type="nvarchar(max)" />
-          <Property Name="CommitteePFVMeasure" Type="varchar" MaxLength="50" />
+          <Property Name="CommitteePFVMeasure" Type="varchar" MaxLength="255" />
           <Property Name="CommitteeBuyRange" Type="real" />
           <Property Name="CommitteeSellRange" Type="real" />
           <Property Name="CommitteeRecommendation" Type="varchar" MaxLength="50" />
           <Property Name="CommitteeRangeEffectiveThrough" Type="date" />
           <Property Name="AcceptWithoutDiscussionFlag" Type="bit" />
-          <Property Name="AdminNotes" Type="varchar" MaxLength="50" />
+          <Property Name="AdminNotes" Type="varchar" MaxLength="255" />
           <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+          <Property Name="Analyst" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="varchar" MaxLength="50" />
+          <Property Name="FVCalc" Type="varchar" MaxLength="50" />
+          <Property Name="SecurityBuySellvsCrnt" Type="varchar" MaxLength="50" />
+          <Property Name="CurrentHoldings" Type="varchar" MaxLength="50" />
+          <Property Name="PercentEMIF" Type="varchar" MaxLength="50" />
+          <Property Name="SecurityBMWeight" Type="varchar" MaxLength="50" />
+          <Property Name="SecurityActiveWeight" Type="varchar" MaxLength="50" />
+          <Property Name="YTDRet_Absolute" Type="varchar" MaxLength="50" />
+          <Property Name="YTDRet_RELtoLOC" Type="varchar" MaxLength="50" />
+          <Property Name="YTDRet_RELtoEM" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="VoterInfo">
           <Key>
@@ -216,6 +266,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetMeetingConfigSchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="RetrieveICMeetingInfoByStatusType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PresentationStatus" Type="varchar" Mode="In" />
         </Function>
@@ -232,6 +283,21 @@
         </Function>
         <Function Name="SetICPMeetingMinutesDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SetICPresentationDecisionEntryDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SetMeetingConfigSchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="presentationDateTime" Type="datetime" Mode="In" />
+          <Parameter Name="presentationTimeZone" Type="varchar" Mode="In" />
+          <Parameter Name="presentationDeadline" Type="datetime" Mode="In" />
+          <Parameter Name="preMeetingVotingDeadline" Type="datetime" Mode="In" />
+          <Parameter Name="userName" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SetPresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userName" Type="varchar" Mode="In" />
           <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="usp_InsertFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -255,43 +321,6 @@
         <Function Name="usp_InsertMeetingPresentationMappingInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="meetingID" Type="bigint" Mode="In" />
           <Parameter Name="presentationID" Type="bigint" Mode="In" />
-          <Parameter Name="createdBy" Type="varchar" Mode="In" />
-          <Parameter Name="createdOn" Type="datetime" Mode="In" />
-          <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
-          <Parameter Name="modifiedOn" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="usp_InsertPresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="presenter" Type="varchar" Mode="In" />
-          <Parameter Name="statusTypeID" Type="bigint" Mode="In" />
-          <Parameter Name="securityTicker" Type="varchar" Mode="In" />
-          <Parameter Name="securityName" Type="varchar" Mode="In" />
-          <Parameter Name="securityCountry" Type="varchar" Mode="In" />
-          <Parameter Name="securityCountryCode" Type="varchar" Mode="In" />
-          <Parameter Name="securityIndustry" Type="varchar" Mode="In" />
-          <Parameter Name="securityCashPosition" Type="real" Mode="In" />
-          <Parameter Name="securityPosition" Type="bigint" Mode="In" />
-          <Parameter Name="securityMSCIStdWeight" Type="real" Mode="In" />
-          <Parameter Name="securityMSCIIMIWeight" Type="real" Mode="In" />
-          <Parameter Name="securityGlobalActiveWeight" Type="real" Mode="In" />
-          <Parameter Name="securityLastClosingPrice" Type="real" Mode="In" />
-          <Parameter Name="securityMarketCapitalization" Type="real" Mode="In" />
-          <Parameter Name="securityPFVMeasure" Type="varchar" Mode="In" />
-          <Parameter Name="securityBuyRange" Type="real" Mode="In" />
-          <Parameter Name="securitySellRange" Type="real" Mode="In" />
-          <Parameter Name="securityRecommendation" Type="varchar" Mode="In" />
-          <Parameter Name="investmentThesis" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="background" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="valuations" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="earningsOutlook" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="competitiveAdvantage" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="competitiveDisadvantage" Type="nvarchar(max)" Mode="In" />
-          <Parameter Name="committeePFVMeasure" Type="varchar" Mode="In" />
-          <Parameter Name="committeeBuyRange" Type="real" Mode="In" />
-          <Parameter Name="committeeSellRange" Type="real" Mode="In" />
-          <Parameter Name="committeeRecommendation" Type="varchar" Mode="In" />
-          <Parameter Name="committeeRangeEffectiveThrough" Type="datetime" Mode="In" />
-          <Parameter Name="acceptWithoutDiscussionFlag" Type="bit" Mode="In" />
-          <Parameter Name="adminNotes" Type="varchar" Mode="In" />
           <Parameter Name="createdBy" Type="varchar" Mode="In" />
           <Parameter Name="createdOn" Type="datetime" Mode="In" />
           <Parameter Name="modifiedBy" Type="varchar" Mode="In" />
@@ -401,43 +430,6 @@
           <FunctionImport Name="usp_InsertMeetingPresentationMappingInfo">
             <Parameter Name="meetingID" Mode="In" Type="Int64" />
             <Parameter Name="presentationID" Mode="In" Type="Int64" />
-            <Parameter Name="createdBy" Mode="In" Type="String" />
-            <Parameter Name="createdOn" Mode="In" Type="DateTime" />
-            <Parameter Name="modifiedBy" Mode="In" Type="String" />
-            <Parameter Name="modifiedOn" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="usp_InsertPresentationInfo" ReturnType="Collection(Decimal)">
-            <Parameter Name="presenter" Mode="In" Type="String" />
-            <Parameter Name="statusTypeID" Mode="In" Type="Int64" />
-            <Parameter Name="securityTicker" Mode="In" Type="String" />
-            <Parameter Name="securityName" Mode="In" Type="String" />
-            <Parameter Name="securityCountry" Mode="In" Type="String" />
-            <Parameter Name="securityCountryCode" Mode="In" Type="String" />
-            <Parameter Name="securityIndustry" Mode="In" Type="String" />
-            <Parameter Name="securityCashPosition" Mode="In" Type="Single" />
-            <Parameter Name="securityPosition" Mode="In" Type="Int64" />
-            <Parameter Name="securityMSCIStdWeight" Mode="In" Type="Single" />
-            <Parameter Name="securityMSCIIMIWeight" Mode="In" Type="Single" />
-            <Parameter Name="securityGlobalActiveWeight" Mode="In" Type="Single" />
-            <Parameter Name="securityLastClosingPrice" Mode="In" Type="Single" />
-            <Parameter Name="securityMarketCapitalization" Mode="In" Type="Single" />
-            <Parameter Name="securityPFVMeasure" Mode="In" Type="String" />
-            <Parameter Name="securityBuyRange" Mode="In" Type="Single" />
-            <Parameter Name="securitySellRange" Mode="In" Type="Single" />
-            <Parameter Name="securityRecommendation" Mode="In" Type="String" />
-            <Parameter Name="investmentThesis" Mode="In" Type="String" />
-            <Parameter Name="background" Mode="In" Type="String" />
-            <Parameter Name="valuations" Mode="In" Type="String" />
-            <Parameter Name="earningsOutlook" Mode="In" Type="String" />
-            <Parameter Name="competitiveAdvantage" Mode="In" Type="String" />
-            <Parameter Name="competitiveDisadvantage" Mode="In" Type="String" />
-            <Parameter Name="committeePFVMeasure" Mode="In" Type="String" />
-            <Parameter Name="committeeBuyRange" Mode="In" Type="Single" />
-            <Parameter Name="committeeSellRange" Mode="In" Type="Single" />
-            <Parameter Name="committeeRecommendation" Mode="In" Type="String" />
-            <Parameter Name="committeeRangeEffectiveThrough" Mode="In" Type="DateTime" />
-            <Parameter Name="acceptWithoutDiscussionFlag" Mode="In" Type="Boolean" />
-            <Parameter Name="adminNotes" Mode="In" Type="String" />
             <Parameter Name="createdBy" Mode="In" Type="String" />
             <Parameter Name="createdOn" Mode="In" Type="DateTime" />
             <Parameter Name="modifiedBy" Mode="In" Type="String" />
@@ -560,8 +552,17 @@
             <End Role="MeetingPresentationMappingInfo" EntitySet="MeetingPresentationMappingInfoes" />
           </AssociationSet>
           <EntitySet Name="AttachedFileInfoes" EntityType="ICPresentationModel.AttachedFileInfo" />
-          <EntitySet Name="PresentationInfoes" EntityType="ICPresentationModel.PresentationInfo" />
           <EntitySet Name="VoterInfoes" EntityType="ICPresentationModel.VoterInfo" />
+          <FunctionImport Name="RetrieveICPMeetingAttachedFileDetails" ReturnType="Collection(ICPresentationModel.MeetingAttachedFileData)">
+          <Parameter Name="MeetingId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveICPMeetingMinuteDetails" ReturnType="Collection(ICPresentationModel.MeetingMinuteData)">
+          <Parameter Name="MeetingId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveICMeetingInfoByStatusType" EntitySet="MeetingInfoes" ReturnType="Collection(ICPresentationModel.MeetingInfo)">
+          <Parameter Name="PresentationStatus" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="PresentationInfoes" EntityType="ICPresentationModel.PresentationInfo" />
           <AssociationSet Name="FK_AttachedFileInfo_PresentationInfo" Association="ICPresentationModel.FK_AttachedFileInfo_PresentationInfo">
             <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
             <End Role="AttachedFileInfo" EntitySet="AttachedFileInfoes" />
@@ -574,15 +575,23 @@
             <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
             <End Role="VoterInfo" EntitySet="VoterInfoes" />
           </AssociationSet>
-          <FunctionImport Name="RetrieveICPMeetingAttachedFileDetails" ReturnType="Collection(ICPresentationModel.MeetingAttachedFileData)">
-          <Parameter Name="MeetingId" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="RetrieveICPMeetingMinuteDetails" ReturnType="Collection(ICPresentationModel.MeetingMinuteData)">
-          <Parameter Name="MeetingId" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="RetrieveICPresentationOverviewData" ReturnType="Collection(ICPresentationModel.ICPresentationOverviewData)" />
-          <FunctionImport Name="RetrieveICMeetingInfoByStatusType" EntitySet="MeetingInfoes" ReturnType="Collection(ICPresentationModel.MeetingInfo)">
-            <Parameter Name="PresentationStatus" Mode="In" Type="String" />
+          <FunctionImport Name="SetICPresentationDecisionEntryDetails" ReturnType="Collection(Int32)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="xmlScript" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="MeetingConfigurationSchedules" EntityType="ICPresentationModel.MeetingConfigurationSchedule" />
+          <FunctionImport Name="GetMeetingConfigSchedule" ReturnType="Collection(ICPresentationModel.MeetingConfigScheduleData)" />
+          <FunctionImport Name="SetPresentationInfo" ReturnType="Collection(Int32)">
+            <Parameter Name="userName" Mode="In" Type="String" />
+            <Parameter Name="xmlScript" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SetMeetingConfigSchedule" ReturnType="Collection(Int32)">
+            <Parameter Name="presentationDateTime" Mode="In" Type="DateTime" />
+            <Parameter Name="presentationTimeZone" Mode="In" Type="String" />
+            <Parameter Name="presentationDeadline" Mode="In" Type="DateTime" />
+            <Parameter Name="preMeetingVotingDeadline" Mode="In" Type="DateTime" />
+            <Parameter Name="userName" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
@@ -697,50 +706,6 @@
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
           <NavigationProperty Name="PresentationInfo" Relationship="ICPresentationModel.FK_AttachedFileInfo_PresentationInfo" FromRole="AttachedFileInfo" ToRole="PresentationInfo" />
         </EntityType>
-        <EntityType Name="PresentationInfo">
-          <Key>
-            <PropertyRef Name="PresentationID" />
-          </Key>
-          <Property Type="Int64" Name="PresentationID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Presenter" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="StatusType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SecurityTicker" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SecurityName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SecurityCountry" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SecurityCountryCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SecurityIndustry" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Single" Name="SecurityCashPosition" Nullable="false" />
-          <Property Type="Int64" Name="SecurityPosition" Nullable="false" />
-          <Property Type="Single" Name="SecurityMSCIStdWeight" Nullable="false" />
-          <Property Type="Single" Name="SecurityMSCIIMIWeight" Nullable="false" />
-          <Property Type="Single" Name="SecurityGlobalActiveWeight" Nullable="false" />
-          <Property Type="Single" Name="SecurityLastClosingPrice" Nullable="false" />
-          <Property Type="Single" Name="SecurityMarketCapitalization" Nullable="false" />
-          <Property Type="String" Name="SecurityPFVMeasure" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Single" Name="SecurityBuyRange" Nullable="false" />
-          <Property Type="Single" Name="SecuritySellRange" Nullable="false" />
-          <Property Type="String" Name="SecurityRecommendation" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="InvestmentThesis" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Background" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Valuations" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="EarningsOutlook" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="CompetitiveAdvantage" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="CompetitiveDisadvantage" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="CommitteePFVMeasure" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Single" Name="CommitteeBuyRange" />
-          <Property Type="Single" Name="CommitteeSellRange" />
-          <Property Type="String" Name="CommitteeRecommendation" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="CommitteeRangeEffectiveThrough" />
-          <Property Type="Boolean" Name="AcceptWithoutDiscussionFlag" />
-          <Property Type="String" Name="AdminNotes" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
-          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="AttachedFileInfoes" Relationship="ICPresentationModel.FK_AttachedFileInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="AttachedFileInfo" />
-          <NavigationProperty Name="MeetingPresentationMappingInfoes" Relationship="ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="MeetingPresentationMappingInfo" />
-          <NavigationProperty Name="VoterInfoes" Relationship="ICPresentationModel.FK_VoterInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="VoterInfo" />
-        </EntityType>
         <EntityType Name="VoterInfo">
           <Key>
             <PropertyRef Name="VoterID" />
@@ -762,6 +727,68 @@
           <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
           <NavigationProperty Name="PresentationInfo" Relationship="ICPresentationModel.FK_VoterInfo_PresentationInfo" FromRole="VoterInfo" ToRole="PresentationInfo" />
+        </EntityType>
+        <ComplexType Name="MeetingAttachedFileData">
+          <Property Type="Int64" Name="FileID" Nullable="false" />
+          <Property Type="Int64" Name="MeetingID" Nullable="false" />
+          <Property Type="String" Name="FileName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FileType" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FileLocation" Nullable="false" MaxLength="255" />
+        </ComplexType>
+        <EntityType Name="PresentationInfo">
+          <Key>
+            <PropertyRef Name="PresentationID" />
+          </Key>
+          <Property Type="Int64" Name="PresentationID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Presenter" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="StatusType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SecurityTicker" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SecurityName" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SecurityCountry" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SecurityCountryCode" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SecurityIndustry" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Single" Name="SecurityCashPosition" />
+          <Property Type="Int64" Name="SecurityPosition" />
+          <Property Type="Single" Name="SecurityMSCIStdWeight" />
+          <Property Type="Single" Name="SecurityMSCIIMIWeight" />
+          <Property Type="Single" Name="SecurityGlobalActiveWeight" />
+          <Property Type="Single" Name="SecurityLastClosingPrice" />
+          <Property Type="Single" Name="SecurityMarketCapitalization" />
+          <Property Type="String" Name="SecurityPFVMeasure" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Single" Name="SecurityBuyRange" />
+          <Property Type="Single" Name="SecuritySellRange" />
+          <Property Type="String" Name="SecurityRecommendation" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="InvestmentThesis" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Background" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Valuations" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="EarningsOutlook" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CompetitiveAdvantage" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CompetitiveDisadvantage" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CommitteePFVMeasure" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Single" Name="CommitteeBuyRange" />
+          <Property Type="Single" Name="CommitteeSellRange" />
+          <Property Type="String" Name="CommitteeRecommendation" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CommitteeRangeEffectiveThrough" />
+          <Property Type="Boolean" Name="AcceptWithoutDiscussionFlag" />
+          <Property Type="String" Name="AdminNotes" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
+          <Property Type="String" Name="Analyst" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Price" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="FVCalc" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SecurityBuySellvsCrnt" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CurrentHoldings" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PercentEMIF" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SecurityBMWeight" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SecurityActiveWeight" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="YTDRet_Absolute" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="YTDRet_RELtoLOC" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="YTDRet_RELtoEM" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AttachedFileInfoes" Relationship="ICPresentationModel.FK_AttachedFileInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="AttachedFileInfo" />
+          <NavigationProperty Name="MeetingPresentationMappingInfoes" Relationship="ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="MeetingPresentationMappingInfo" />
+          <NavigationProperty Name="VoterInfoes" Relationship="ICPresentationModel.FK_VoterInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="VoterInfo" />
         </EntityType>
         <Association Name="FK_AttachedFileInfo_PresentationInfo">
           <End Type="ICPresentationModel.PresentationInfo" Role="PresentationInfo" Multiplicity="1" />
@@ -799,13 +826,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="MeetingAttachedFileData">
-          <Property Type="Int64" Name="FileID" Nullable="false" />
-          <Property Type="Int64" Name="MeetingID" Nullable="false" />
-          <Property Type="String" Name="FileName" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="FileType" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="FileLocation" Nullable="false" MaxLength="255" />
-        </ComplexType>
         <ComplexType Name="ICPresentationOverviewData">
           <Property Type="Boolean" Name="AcceptWithoutDiscussionFlag" Nullable="true" />
           <Property Type="String" Name="AdminNotes" Nullable="true" MaxLength="50" />
@@ -825,27 +845,68 @@
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
           <Property Type="Int64" Name="PresentationID" Nullable="false" />
           <Property Type="String" Name="Presenter" Nullable="false" MaxLength="50" />
-          <Property Type="Single" Name="SecurityBuyRange" Nullable="false" />
-          <Property Type="Single" Name="SecurityCashPosition" Nullable="false" />
-          <Property Type="String" Name="SecurityCountry" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="SecurityCountryCode" Nullable="false" MaxLength="50" />
-          <Property Type="Single" Name="SecurityGlobalActiveWeight" Nullable="false" />
-          <Property Type="String" Name="SecurityIndustry" Nullable="false" MaxLength="50" />
-          <Property Type="Single" Name="SecurityLastClosingPrice" Nullable="false" />
-          <Property Type="Single" Name="SecurityMSCIIMIWeight" Nullable="false" />
-          <Property Type="Single" Name="SecurityMSCIStdWeight" Nullable="false" />
-          <Property Type="Single" Name="SecurityMarketCapitalization" Nullable="false" />
-          <Property Type="String" Name="SecurityName" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="SecurityPFVMeasure" Nullable="false" MaxLength="50" />
-          <Property Type="Int64" Name="SecurityPosition" Nullable="false" />
-          <Property Type="String" Name="SecurityRecommendation" Nullable="false" MaxLength="50" />
-          <Property Type="Single" Name="SecuritySellRange" Nullable="false" />
-          <Property Type="String" Name="SecurityTicker" Nullable="false" MaxLength="50" />
+          <Property Type="Single" Name="SecurityBuyRange" Nullable="true" />
+          <Property Type="Single" Name="SecurityCashPosition" Nullable="true" />
+          <Property Type="String" Name="SecurityCountry" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SecurityCountryCode" Nullable="true" MaxLength="50" />
+          <Property Type="Single" Name="SecurityGlobalActiveWeight" Nullable="true" />
+          <Property Type="String" Name="SecurityIndustry" Nullable="true" MaxLength="50" />
+          <Property Type="Single" Name="SecurityLastClosingPrice" Nullable="true" />
+          <Property Type="Single" Name="SecurityMSCIIMIWeight" Nullable="true" />
+          <Property Type="Single" Name="SecurityMSCIStdWeight" Nullable="true" />
+          <Property Type="Single" Name="SecurityMarketCapitalization" Nullable="true" />
+          <Property Type="String" Name="SecurityName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SecurityPFVMeasure" Nullable="true" MaxLength="50" />
+          <Property Type="Int64" Name="SecurityPosition" Nullable="true" />
+          <Property Type="String" Name="SecurityRecommendation" Nullable="true" MaxLength="50" />
+          <Property Type="Single" Name="SecuritySellRange" Nullable="true" />
+          <Property Type="String" Name="SecurityTicker" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Valuations" Nullable="true" />
           <Property Type="String" Name="StatusType" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Analyst" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Price" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FVCalc" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SecurityBuySellvsCrnt" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CurrentHoldings" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PercentEMIF" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SecurityBMWeight" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SecurityActiveWeight" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="YTDRet_Absolute" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="YTDRet_RELtoLOC" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="YTDRet_RELtoEM" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="MeetingDateTime" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="MeetingClosedDateTime" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="MeetingVotingClosedDateTime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <EntityType Name="MeetingConfigurationSchedule">
+          <Key>
+            <PropertyRef Name="PresentationDateTime" />
+            <PropertyRef Name="PresentationTimeZone" />
+            <PropertyRef Name="PresentationDeadline" />
+            <PropertyRef Name="PreMeetingVotingDeadline" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="CreatedOn" />
+            <PropertyRef Name="ModifiedBy" />
+            <PropertyRef Name="ModifiedOn" />
+          </Key>
+          <Property Type="DateTime" Name="PresentationDateTime" Nullable="false" />
+          <Property Type="String" Name="PresentationTimeZone" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="PresentationDeadline" Nullable="false" />
+          <Property Type="DateTime" Name="PreMeetingVotingDeadline" Nullable="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
+          <Property Type="Decimal" Name="ConfigurablePresentationDeadline" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="ConfigurablePreMeetingVotingDeadline" Precision="18" Scale="2" />
+        </EntityType>
+        <ComplexType Name="MeetingConfigScheduleData">
+          <Property Type="DateTime" Name="PresentationDateTime" Nullable="false" Precision="23" />
+          <Property Type="String" Name="PresentationTimeZone" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="PreMeetingVotingDeadline" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="PresentationDeadline" Nullable="false" Precision="23" />
+          <Property Type="Decimal" Name="ConfigurablePresentationDeadline" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="ConfigurablePreMeetingVotingDeadline" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -855,7 +916,6 @@
         <EntityContainerMapping StorageEntityContainer="ICPresentationModelStoreContainer" CdmEntityContainer="ICPresentationEntities">
           <FunctionImportMapping FunctionImportName="usp_InsertMeetingInformation" FunctionName="ICPresentationModel.Store.usp_InsertMeetingInformation" />
           <FunctionImportMapping FunctionImportName="usp_InsertMeetingPresentationMappingInfo" FunctionName="ICPresentationModel.Store.usp_InsertMeetingPresentationMappingInfo" />
-          <FunctionImportMapping FunctionImportName="usp_InsertPresentationInfo" FunctionName="ICPresentationModel.Store.usp_InsertPresentationInfo" />
           <FunctionImportMapping FunctionImportName="usp_InsertVoterInfo" FunctionName="ICPresentationModel.Store.usp_InsertVoterInfo" />
           <FunctionImportMapping FunctionImportName="usp_InsertFileInfo" FunctionName="ICPresentationModel.Store.usp_InsertFileInfo" />
           <FunctionImportMapping FunctionImportName="usp_SelectMeetingInfoDistinctMeetingDates" FunctionName="ICPresentationModel.Store.usp_SelectMeetingInfoDistinctMeetingDates" />
@@ -951,48 +1011,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PresentationInfoes">
-            <EntityTypeMapping TypeName="ICPresentationModel.PresentationInfo">
-              <MappingFragment StoreEntitySet="PresentationInfo">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="AdminNotes" ColumnName="AdminNotes" />
-                <ScalarProperty Name="AcceptWithoutDiscussionFlag" ColumnName="AcceptWithoutDiscussionFlag" />
-                <ScalarProperty Name="CommitteeRangeEffectiveThrough" ColumnName="CommitteeRangeEffectiveThrough" />
-                <ScalarProperty Name="CommitteeRecommendation" ColumnName="CommitteeRecommendation" />
-                <ScalarProperty Name="CommitteeSellRange" ColumnName="CommitteeSellRange" />
-                <ScalarProperty Name="CommitteeBuyRange" ColumnName="CommitteeBuyRange" />
-                <ScalarProperty Name="CommitteePFVMeasure" ColumnName="CommitteePFVMeasure" />
-                <ScalarProperty Name="CompetitiveDisadvantage" ColumnName="CompetitiveDisadvantage" />
-                <ScalarProperty Name="CompetitiveAdvantage" ColumnName="CompetitiveAdvantage" />
-                <ScalarProperty Name="EarningsOutlook" ColumnName="EarningsOutlook" />
-                <ScalarProperty Name="Valuations" ColumnName="Valuations" />
-                <ScalarProperty Name="Background" ColumnName="Background" />
-                <ScalarProperty Name="InvestmentThesis" ColumnName="InvestmentThesis" />
-                <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
-                <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
-                <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
-                <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
-                <ScalarProperty Name="SecurityMarketCapitalization" ColumnName="SecurityMarketCapitalization" />
-                <ScalarProperty Name="SecurityLastClosingPrice" ColumnName="SecurityLastClosingPrice" />
-                <ScalarProperty Name="SecurityGlobalActiveWeight" ColumnName="SecurityGlobalActiveWeight" />
-                <ScalarProperty Name="SecurityMSCIIMIWeight" ColumnName="SecurityMSCIIMIWeight" />
-                <ScalarProperty Name="SecurityMSCIStdWeight" ColumnName="SecurityMSCIStdWeight" />
-                <ScalarProperty Name="SecurityPosition" ColumnName="SecurityPosition" />
-                <ScalarProperty Name="SecurityCashPosition" ColumnName="SecurityCashPosition" />
-                <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
-                <ScalarProperty Name="SecurityCountryCode" ColumnName="SecurityCountryCode" />
-                <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
-                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
-                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
-                <ScalarProperty Name="StatusType" ColumnName="StatusType" />
-                <ScalarProperty Name="Presenter" ColumnName="Presenter" />
-                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="VoterInfoes">
             <EntityTypeMapping TypeName="ICPresentationModel.VoterInfo">
               <MappingFragment StoreEntitySet="VoterInfo">
@@ -1041,6 +1059,60 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveICMeetingInfoByStatusType" FunctionName="ICPresentationModel.Store.RetrieveICMeetingInfoByStatusType" />
+          <EntitySetMapping Name="PresentationInfoes">
+            <EntityTypeMapping TypeName="ICPresentationModel.PresentationInfo">
+              <MappingFragment StoreEntitySet="PresentationInfo">
+                <ScalarProperty Name="YTDRet_RELtoEM" ColumnName="YTDRet_RELtoEM" />
+                <ScalarProperty Name="YTDRet_RELtoLOC" ColumnName="YTDRet_RELtoLOC" />
+                <ScalarProperty Name="YTDRet_Absolute" ColumnName="YTDRet_Absolute" />
+                <ScalarProperty Name="SecurityActiveWeight" ColumnName="SecurityActiveWeight" />
+                <ScalarProperty Name="SecurityBMWeight" ColumnName="SecurityBMWeight" />
+                <ScalarProperty Name="PercentEMIF" ColumnName="PercentEMIF" />
+                <ScalarProperty Name="CurrentHoldings" ColumnName="CurrentHoldings" />
+                <ScalarProperty Name="SecurityBuySellvsCrnt" ColumnName="SecurityBuySellvsCrnt" />
+                <ScalarProperty Name="FVCalc" ColumnName="FVCalc" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Analyst" ColumnName="Analyst" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="AdminNotes" ColumnName="AdminNotes" />
+                <ScalarProperty Name="AcceptWithoutDiscussionFlag" ColumnName="AcceptWithoutDiscussionFlag" />
+                <ScalarProperty Name="CommitteeRangeEffectiveThrough" ColumnName="CommitteeRangeEffectiveThrough" />
+                <ScalarProperty Name="CommitteeRecommendation" ColumnName="CommitteeRecommendation" />
+                <ScalarProperty Name="CommitteeSellRange" ColumnName="CommitteeSellRange" />
+                <ScalarProperty Name="CommitteeBuyRange" ColumnName="CommitteeBuyRange" />
+                <ScalarProperty Name="CommitteePFVMeasure" ColumnName="CommitteePFVMeasure" />
+                <ScalarProperty Name="CompetitiveDisadvantage" ColumnName="CompetitiveDisadvantage" />
+                <ScalarProperty Name="CompetitiveAdvantage" ColumnName="CompetitiveAdvantage" />
+                <ScalarProperty Name="EarningsOutlook" ColumnName="EarningsOutlook" />
+                <ScalarProperty Name="Valuations" ColumnName="Valuations" />
+                <ScalarProperty Name="Background" ColumnName="Background" />
+                <ScalarProperty Name="InvestmentThesis" ColumnName="InvestmentThesis" />
+                <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
+                <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
+                <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
+                <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
+                <ScalarProperty Name="SecurityMarketCapitalization" ColumnName="SecurityMarketCapitalization" />
+                <ScalarProperty Name="SecurityLastClosingPrice" ColumnName="SecurityLastClosingPrice" />
+                <ScalarProperty Name="SecurityGlobalActiveWeight" ColumnName="SecurityGlobalActiveWeight" />
+                <ScalarProperty Name="SecurityMSCIIMIWeight" ColumnName="SecurityMSCIIMIWeight" />
+                <ScalarProperty Name="SecurityMSCIStdWeight" ColumnName="SecurityMSCIStdWeight" />
+                <ScalarProperty Name="SecurityPosition" ColumnName="SecurityPosition" />
+                <ScalarProperty Name="SecurityCashPosition" ColumnName="SecurityCashPosition" />
+                <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
+                <ScalarProperty Name="SecurityCountryCode" ColumnName="SecurityCountryCode" />
+                <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
+                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+                <ScalarProperty Name="StatusType" ColumnName="StatusType" />
+                <ScalarProperty Name="Presenter" ColumnName="Presenter" />
+                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="RetrieveICPresentationOverviewData" FunctionName="ICPresentationModel.Store.RetrieveICPresentationOverviewData">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ICPresentationModel.ICPresentationOverviewData">
@@ -1080,13 +1152,54 @@
                 <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
                 <ScalarProperty Name="Valuations" ColumnName="Valuations" />
                 <ScalarProperty Name="StatusType" ColumnName="StatusType" />
+                <ScalarProperty Name="Analyst" ColumnName="Analyst" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="FVCalc" ColumnName="FVCalc" />
+                <ScalarProperty Name="SecurityBuySellvsCrnt" ColumnName="SecurityBuySellvsCrnt" />
+                <ScalarProperty Name="CurrentHoldings" ColumnName="CurrentHoldings" />
+                <ScalarProperty Name="PercentEMIF" ColumnName="PercentEMIF" />
+                <ScalarProperty Name="SecurityBMWeight" ColumnName="SecurityBMWeight" />
+                <ScalarProperty Name="SecurityActiveWeight" ColumnName="SecurityActiveWeight" />
+                <ScalarProperty Name="YTDRet_Absolute" ColumnName="YTDRet_Absolute" />
+                <ScalarProperty Name="YTDRet_RELtoLOC" ColumnName="YTDRet_RELtoLOC" />
+                <ScalarProperty Name="YTDRet_RELtoEM" ColumnName="YTDRet_RELtoEM" />
                 <ScalarProperty Name="MeetingDateTime" ColumnName="MeetingDateTime" />
                 <ScalarProperty Name="MeetingClosedDateTime" ColumnName="MeetingClosedDateTime" />
                 <ScalarProperty Name="MeetingVotingClosedDateTime" ColumnName="MeetingVotingClosedDateTime" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveICMeetingInfoByStatusType" FunctionName="ICPresentationModel.Store.RetrieveICMeetingInfoByStatusType" />
+          <FunctionImportMapping FunctionImportName="SetICPresentationDecisionEntryDetails" FunctionName="ICPresentationModel.Store.SetICPresentationDecisionEntryDetails" />
+          <EntitySetMapping Name="MeetingConfigurationSchedules">
+            <EntityTypeMapping TypeName="ICPresentationModel.MeetingConfigurationSchedule">
+              <MappingFragment StoreEntitySet="MeetingConfigurationSchedule">
+                <ScalarProperty Name="ConfigurablePreMeetingVotingDeadline" ColumnName="ConfigurablePreMeetingVotingDeadline" />
+                <ScalarProperty Name="ConfigurablePresentationDeadline" ColumnName="ConfigurablePresentationDeadline" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="PreMeetingVotingDeadline" ColumnName="PreMeetingVotingDeadline" />
+                <ScalarProperty Name="PresentationDeadline" ColumnName="PresentationDeadline" />
+                <ScalarProperty Name="PresentationTimeZone" ColumnName="PresentationTimeZone" />
+                <ScalarProperty Name="PresentationDateTime" ColumnName="PresentationDateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetMeetingConfigSchedule" FunctionName="ICPresentationModel.Store.GetMeetingConfigSchedule">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ICPresentationModel.MeetingConfigScheduleData">
+                <ScalarProperty Name="PresentationDateTime" ColumnName="PresentationDateTime" />
+                <ScalarProperty Name="PresentationTimeZone" ColumnName="PresentationTimeZone" />
+                <ScalarProperty Name="PreMeetingVotingDeadline" ColumnName="PreMeetingVotingDeadline" />
+                <ScalarProperty Name="PresentationDeadline" ColumnName="PresentationDeadline" />
+                <ScalarProperty Name="ConfigurablePresentationDeadline" ColumnName="ConfigurablePresentationDeadline" />
+                <ScalarProperty Name="ConfigurablePreMeetingVotingDeadline" ColumnName="ConfigurablePreMeetingVotingDeadline" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SetPresentationInfo" FunctionName="ICPresentationModel.Store.SetPresentationInfo" />
+          <FunctionImportMapping FunctionImportName="SetMeetingConfigSchedule" FunctionName="ICPresentationModel.Store.SetMeetingConfigSchedule" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1116,24 +1229,25 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="ICPresentationModel.MeetingPresentationMappingInfo" Width="1.5" PointX="2.75" PointY="4.125" Height="2.749492187499996" />
         <AssociationConnector Association="ICPresentationModel.FK_MeetingPresentationMappingInfo_MeetingInfo" >
-          <ConnectorPoint PointX="3.5" PointY="3.8840950520833331" />
+          <ConnectorPoint PointX="3.5" PointY="3.8840950520833326" />
           <ConnectorPoint PointX="3.5" PointY="4.125" />
         </AssociationConnector>
         <EntityTypeShape EntityType="ICPresentationModel.AttachedFileInfo" Width="1.5" PointX="6.375" PointY="5.375" Height="2.7494921875000031" />
-        <EntityTypeShape EntityType="ICPresentationModel.PresentationInfo" Width="1.5" PointX="4.5" PointY="0.75" Height="8.5185351562500067" />
         <EntityTypeShape EntityType="ICPresentationModel.VoterInfo" Width="1.5" PointX="6.25" PointY="0.75" Height="4.2879036458333282" />
+        <EntityTypeShape EntityType="ICPresentationModel.PresentationInfo" Width="1.5" PointX="4.5" PointY="0.75" Height="10.633850911458332" />
         <AssociationConnector Association="ICPresentationModel.FK_AttachedFileInfo_PresentationInfo" >
-          <ConnectorPoint PointX="6" PointY="6.7497460937500016" />
-          <ConnectorPoint PointX="6.375" PointY="6.7497460937500016" />
+          <ConnectorPoint PointX="6" PointY="6.74974609375" />
+          <ConnectorPoint PointX="6.375" PointY="6.74974609375" />
         </AssociationConnector>
         <AssociationConnector Association="ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo" >
           <ConnectorPoint PointX="4.5" PointY="5.49974609375" />
           <ConnectorPoint PointX="4.25" PointY="5.49974609375" />
         </AssociationConnector>
         <AssociationConnector Association="ICPresentationModel.FK_VoterInfo_PresentationInfo" >
-          <ConnectorPoint PointX="6" PointY="2.8939518229166641" />
-          <ConnectorPoint PointX="6.25" PointY="2.8939518229166641" />
+          <ConnectorPoint PointX="6" PointY="2.8939518229166659" />
+          <ConnectorPoint PointX="6.25" PointY="2.8939518229166659" />
         </AssociationConnector>
+        <EntityTypeShape EntityType="ICPresentationModel.MeetingConfigurationSchedule" Width="2.25" PointX="0.75" PointY="7.75" Height="2.9417936197916674" />
       </Diagram>
     </Diagrams>
   </Designer>

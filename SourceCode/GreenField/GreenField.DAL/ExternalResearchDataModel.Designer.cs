@@ -1241,6 +1241,36 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<RatioComparisonData>("RetrieveRatioComparisonData", securityBucketXMLParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="securityId">No Metadata Documentation available.</param>
+        /// <param name="pFVMeasure">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Decimal>> RetrieveSecurityPFVMeasureCurrentPrice(global::System.String securityId, global::System.String pFVMeasure)
+        {
+            ObjectParameter securityIdParameter;
+            if (securityId != null)
+            {
+                securityIdParameter = new ObjectParameter("SecurityId", securityId);
+            }
+            else
+            {
+                securityIdParameter = new ObjectParameter("SecurityId", typeof(global::System.String));
+            }
+    
+            ObjectParameter pFVMeasureParameter;
+            if (pFVMeasure != null)
+            {
+                pFVMeasureParameter = new ObjectParameter("PFVMeasure", pFVMeasure);
+            }
+            else
+            {
+                pFVMeasureParameter = new ObjectParameter("PFVMeasure", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Decimal>>("RetrieveSecurityPFVMeasureCurrentPrice", securityIdParameter, pFVMeasureParameter);
+        }
 
         #endregion
     }

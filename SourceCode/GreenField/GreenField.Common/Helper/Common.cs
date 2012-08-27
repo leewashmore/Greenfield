@@ -174,7 +174,7 @@ namespace GreenField.Common
         public string CurrencyName { get; set; }
     }
 
-#region IC PRESENTATION
+    #region IC PRESENTATION
 
     public static class StatusType
     {
@@ -189,7 +189,7 @@ namespace GreenField.Common
     {
         public static String AGREE = "Agree";
         public static String MODIFY = "Modify";
-        public static String ABSTAIN = "Abstain";     
+        public static String ABSTAIN = "Abstain";
     }
 
     public static class MeetingAttachedFileType
@@ -206,7 +206,41 @@ namespace GreenField.Common
         public static String NOT_PRESENT = "Not Present";
     }
 
-    public enum VIEWVOTEFLAG {VIEW,VOTE} ;
-    public enum ViewPluginFlagEnumeration { Create,Upload, Update, View, Vote,Edit, ChangeDate };
-#endregion
+    public static class PFVType
+    {
+        public static String FORWARD_DIVIDEND_YIELD = "Forward Dividend Yield";
+        public static String FORWARD_EV_EBITDA = "Forward EV/EBITDA";
+        public static String FORWARD_EV_EBITDA_RELATIVE_TO_COUNTRY = "Forward EV/EBITDA relative to Country";
+        public static String FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY = "Forward EV/EBITDA relative to Industry";
+        public static String FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward EV/EBITDA relative to Industry within Country";
+        public static String FORWARD_EV_REVENUE = "Forward EV/Revenue";
+        public static String FORWARD_P_NAV = "Forward P/NAV";
+        public static String FORWARD_P_APPRAISAL_VALUE = "Forward P/Appraisal Value";
+        public static String FORWARD_P_BV = "Forward P/BV";
+        public static String FORWARD_P_BV_RELATIVE_TO_COUNTRY = "Forward P/BV relative to Country";
+        public static String FORWARD_P_BV_RELATIVE_TO_INDUSTRY = "Forward P/BV relative to Industry";
+        public static String FORWARD_P_BV_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward P/BV relative to Industry within Country";
+        public static String FORWARD_P_CE = "Forward P/CE";
+        public static String FORWARD_P_E = "Forward P/E";
+        public static String FORWARD_P_E_RELATIVE_TO_COUNTRY = "Forward P/E relative to Country";
+        public static String FORWARD_P_E_RELATIVE_TO_INDUSTRY = "Forward P/E relative to Industry";
+        public static String FORWARD_P_E_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward P/E relative to Industry within Country";
+        public static String FORWARD_P_E_TO_2_YEAR_EARNINGS_GROWTH = "Forward P/E to 2 Year Earnings Growth";
+        public static String FORWARD_P_E_TO_3_YEAR_EARNINGS_GROWTH = "Forward P/E to 3 Year Earnings Growth";
+        public static String FORWARD_P_EMBEDDED_VALUE = "Forward P/Embedded Value";
+        public static String FORWARD_P_REVENUE = "Forward P/Revenue";
+    }
+
+    public static class RecommendationType
+    {
+        public static String HOLD = "Hold";
+        public static String SELL = "Sell";
+        public static String BUY = "Buy";
+        public static String WATCH = "Watch";
+    }
+
+
+    public enum VIEWVOTEFLAG { VIEW, VOTE } ;
+    public enum ViewPluginFlagEnumeration { Create, Upload, Update, View, Vote, Edit, ChangeDate };
+    #endregion
 }

@@ -16,13 +16,15 @@ namespace GreenField.Gadgets.Models
 {
     public enum ICNavigationInfo
     {
+        MeetingInfo,
         PresentationOverviewInfo,
         ViewPluginFlagEnumerationInfo
+
     }
 
     public static class ICNavigation
     {
-        public static Dictionary<ICNavigationInfo, Object>  NavigationInfo { get; set; }
+        public static Dictionary<ICNavigationInfo, Object> NavigationInfo { get; set; }
         public static void Update(ICNavigationInfo key, Object value)
         {
             if (NavigationInfo == null)

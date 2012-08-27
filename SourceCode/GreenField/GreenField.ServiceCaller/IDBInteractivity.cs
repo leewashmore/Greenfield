@@ -224,7 +224,8 @@ namespace GreenField.ServiceCaller
         void RetrieveConsensusEstimatesSummaryData(EntitySelectionData entitySelectionData, Action<List<ConsensusEstimatesSummaryData>> callback);
 
         #endregion
- void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback);
+
+        void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback);
 
         #region Investment Committee
 
@@ -275,7 +276,23 @@ namespace GreenField.ServiceCaller
 
         void UpdateMeetingAttachedFileStreamData(String userName, MeetingAttachedFileStreamData meetingAttachedFileStreamData, Action<Boolean?> callback);
 
-        void RetrievePresentationOverviewData(Action<List<ICPresentationOverviewData>> callback);        
+        void RetrievePresentationOverviewData(Action<List<ICPresentationOverviewData>> callback);
+
+        void RetrievePresentationVoterData(Int64 presentationId, Action<List<VoterInfo>> callback);
+
+        void RetrieveSecurityPFVMeasureCurrentPrices(String securityId, List<String> pfvTypeInfo, Action<Dictionary<String, Decimal?>> callback);
+
+        void UpdateDecisionEntryDetails(String userName, ICPresentationOverviewData presentationOverViewData, List<VoterInfo> voterInfo, Action<Boolean?> callback);
+
+        void CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData, Action<Boolean?> callback);
+
+        void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData, Action<ICPresentationOverviewData> callback);
+
+        void GetAvailablePresentationDates(Action<List<MeetingInfo>> callback);
+
+        void UpdateMeetingConfigSchedule(String userName, MeetingConfigurationSchedule meetingConfigurationSchedule, Action<Boolean?> callback);
+
+
         #endregion
 
     }
