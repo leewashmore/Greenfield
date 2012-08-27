@@ -220,7 +220,7 @@ namespace GreenField.Web.Services
                     temp.ConsensusMedian = data[i].AMOUNT;
                     temp.YOYGrowth = data[i].AMOUNT;
                     temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
-                   
+
                     previousYearQuarterAmount = data.Where(a => a.ESTIMATE_DESC == data[i].ESTIMATE_DESC && a.PERIOD_YEAR == (data[i].PERIOD_YEAR - 1)
                         && a.PERIOD_TYPE == data[i].PERIOD_TYPE).Select(a => a.AMOUNT).FirstOrDefault();
 
@@ -353,7 +353,7 @@ namespace GreenField.Web.Services
             List<FinstatDetailData> result = new List<FinstatDetailData>();
 
             data = entity.GetFinstatDetail(issuerId, securityId, _dataSource, _fiscalType, currency).ToList();
-          //  data = data.Where(a => a.GROUP_NAME == "Growth Data" && a.DATA_DESC == "Loan Growth (YOY)").ToList();
+            //  data = data.Where(a => a.GROUP_NAME == "Growth Data" && a.DATA_DESC == "Loan Growth (YOY)").ToList();
             if (data == null || data.Count() == 0)
                 return result;
 
@@ -847,15 +847,15 @@ namespace GreenField.Web.Services
 
                         temp.YOYGrowth = data[i].AMOUNT;
                         temp.Variance = data[i].AMOUNT == 0 ? null : ((data[i].ASHMOREEMM_AMOUNT / data[i].AMOUNT) - 1) * 100;
-                        
-                            previousYearQuarterAmount = data.Where(a => a.ESTIMATE_DESC == data[i].ESTIMATE_DESC && a.PERIOD_YEAR == (data[i].PERIOD_YEAR - 1)
-                                && a.PERIOD_TYPE == data[i].PERIOD_TYPE).Select(a => a.AMOUNT).FirstOrDefault();
 
-                            if (previousYearQuarterAmount == null || previousYearQuarterAmount == 0)
-                                temp.YOYGrowth = 0;
-                            else
-                                temp.YOYGrowth = (temp.YOYGrowth / previousYearQuarterAmount - 1) * 100;
-                        
+                        previousYearQuarterAmount = data.Where(a => a.ESTIMATE_DESC == data[i].ESTIMATE_DESC && a.PERIOD_YEAR == (data[i].PERIOD_YEAR - 1)
+                            && a.PERIOD_TYPE == data[i].PERIOD_TYPE).Select(a => a.AMOUNT).FirstOrDefault();
+
+                        if (previousYearQuarterAmount == null || previousYearQuarterAmount == 0)
+                            temp.YOYGrowth = 0;
+                        else
+                            temp.YOYGrowth = (temp.YOYGrowth / previousYearQuarterAmount - 1) * 100;
+
                         result.Add(temp);
                     }
                 }
@@ -874,8 +874,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
-
+        
         /// <summary>
         /// Service Method for ConsensusEstimateGadget- Valuations
         /// </summary>
