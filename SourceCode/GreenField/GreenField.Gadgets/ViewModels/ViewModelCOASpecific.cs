@@ -150,7 +150,7 @@ namespace GreenField.Gadgets.ViewModels
                         if (IssuerReferenceInfo.CurrencyCode != "USD")
                             CurrencyInfo.Add("USD");
 
-                        SelectedCurrency = CurrencyInfo[0];
+                        SelectedCurrency = "USD";
                     }
                 }
             }
@@ -242,7 +242,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected FinancialStatementDataSource
         /// </summary>
-        private FinancialStatementDataSource _selectedDataSource = FinancialStatementDataSource.REUTERS;
+        private FinancialStatementDataSource _selectedDataSource = FinancialStatementDataSource.PRIMARY;
         public FinancialStatementDataSource SelectedDataSource
         {
             get { return _selectedDataSource; }
