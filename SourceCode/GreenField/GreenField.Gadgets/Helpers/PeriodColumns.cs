@@ -335,20 +335,6 @@ namespace GreenField.Gadgets.Helpers
                     if (propertyInfo.Any(record => record.Name == "SortOrder"))
                         sortOrder = (Int32)defaultRecord.GetType().GetProperty("SortOrder").GetValue(defaultRecord, null);
 
-                    //decimal? dataFirstAdditionalInfo = null;
-                    //if (additionalFirstDescPropertyName != null)
-                    //{
-                    //    if (propertyInfo.Any(record => record.Name == additionalFirstDescPropertyName))
-                    //        dataFirstAdditionalInfo = (decimal?)defaultRecord.GetType().GetProperty(additionalFirstDescPropertyName).GetValue(defaultRecord, null);
-                    //}
-
-                    //decimal? dataSecondAdditionalInfo = null;
-                    //if (additionalSecondDescPropertyName != null)
-                    //{
-                    //    if (propertyInfo.Any(record => record.Name == additionalSecondDescPropertyName))
-                    //        dataSecondAdditionalInfo = (decimal?)defaultRecord.GetType().GetProperty(additionalSecondDescPropertyName).GetValue(defaultRecord, null);
-                    //}
-
                     Int32 columnCount = 0;
                     T yearOneData = default(T);
                     T yearTwoData = default(T);
@@ -642,8 +628,36 @@ namespace GreenField.Gadgets.Helpers
                         QUARTER_SIX_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterSixData, "RootSourceDate"),
                         QUARTER_SEVEN_DATA_ROOT_SOURCE_DATE = GetFormatPrecursors<T, DateTime?>(quarterSevenData, "RootSourceDate"),
 
-                        //DATA_ROOT_SOURCE = dataRootSource,
-                        //DATA_ROOT_SOURCE_DATE = dataRootSourceDate,
+                        YEAR_ONE_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(yearOneData, "LastUpdateDate"),
+                        YEAR_TWO_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(yearTwoData, "LastUpdateDate"),
+                        YEAR_THREE_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(yearThreeData, "LastUpdateDate"),
+                        YEAR_FOUR_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(yearFourData, "LastUpdateDate"),
+                        YEAR_FIVE_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(yearFiveData, "LastUpdateDate"),
+                        YEAR_SIX_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(yearSixData, "LastUpdateDate"),
+                        YEAR_SEVEN_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(yearSevenData, "LastUpdateDate"),
+                        QUARTER_ONE_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(quarterOneData, "LastUpdateDate"),
+                        QUARTER_TWO_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(quarterTwoData, "LastUpdateDate"),
+                        QUARTER_THREE_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(quarterThreeData, "LastUpdateDate"),
+                        QUARTER_FOUR_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(quarterFourData, "LastUpdateDate"),
+                        QUARTER_FIVE_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(quarterFiveData, "LastUpdateDate"),
+                        QUARTER_SIX_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(quarterSixData, "LastUpdateDate"),
+                        QUARTER_SEVEN_LAST_UPDATE_DATE = GetFormatPrecursors<T, string>(quarterSevenData, "LastUpdateDate"),
+
+                        YEAR_ONE_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(yearOneData, "ReportedCurrency"),
+                        YEAR_TWO_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(yearTwoData, "ReportedCurrency"),
+                        YEAR_THREE_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(yearThreeData, "ReportedCurrency"),
+                        YEAR_FOUR_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(yearFourData, "ReportedCurrency"),
+                        YEAR_FIVE_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(yearFiveData, "ReportedCurrency"),
+                        YEAR_SIX_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(yearSixData, "ReportedCurrency"),
+                        YEAR_SEVEN_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(yearSevenData, "ReportedCurrency"),
+                        QUARTER_ONE_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(quarterOneData, "ReportedCurrency"),
+                        QUARTER_TWO_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(quarterTwoData, "ReportedCurrency"),
+                        QUARTER_THREE_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(quarterThreeData, "ReportedCurrency"),
+                        QUARTER_FOUR_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(quarterFourData, "ReportedCurrency"),
+                        QUARTER_FIVE_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(quarterFiveData, "ReportedCurrency"),
+                        QUARTER_SIX_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(quarterSixData, "ReportedCurrency"),
+                        QUARTER_SEVEN_REPORTED_CURRENCY = GetFormatPrecursors<T, string>(quarterSevenData, "ReportedCurrency"),
+
                         DATA_DESC = dataDesc,
                         YEAR_ONE = yearOneData == null ? null : GetFormattedValue(yearOneData.GetType().GetProperty("Amount").GetValue(yearOneData, null), dataDecimal, dataPercentage),
                         YEAR_TWO = yearTwoData == null ? null : GetFormattedValue(yearTwoData.GetType().GetProperty("Amount").GetValue(yearTwoData, null), dataDecimal, dataPercentage),
@@ -781,6 +795,57 @@ namespace GreenField.Gadgets.Helpers
                                 continue;
 
                             String toolTipContent = GetToolTipContentForCOASpecificGadget(rowContext, cell.DataColumn.DataMemberBinding.Path.Path);
+
+                            if (toolTipContent != null)
+                            {
+                                ToolTip toolTip = new ToolTip()
+                                {
+                                    Content = toolTipContent,
+                                    FontSize = 7,
+                                    FontFamily = new FontFamily("Arial")
+                                };
+
+                                ToolTipService.SetToolTip(cell, toolTip);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Set Bold/Percentage formats on data and place tooltips
+        /// </summary>
+        /// <param name="e">RowLoadedEventArgs</param>
+        public static void RowDataCustomizationForConsensusDetailedGadget(RowLoadedEventArgs e)
+        {
+            if (e.Row is GridViewRow)
+            {
+                var row = e.Row as GridViewRow;
+
+                if (row != null)
+                {
+                    PeriodColumnDisplayData rowContext = row.DataContext as PeriodColumnDisplayData;
+                    if (rowContext != null)
+                    {
+                        if (rowContext.DATA_BOLD != null)
+                            row.FontWeight = Convert.ToBoolean(rowContext.DATA_BOLD) ? FontWeights.ExtraBold : FontWeights.Normal;
+                        foreach (GridViewCell cell in row.Cells)
+                        {
+                            //Null Check
+                            if (cell.Value == null)
+                                continue;
+
+                            //No toolTip service for Description and left navigation
+                            if (cell.Column.DisplayIndex <= 1)
+                                continue;
+
+                            //No toolTip service for right navigation column
+                            if (cell.Column.DisplayIndex == e.GridViewDataControl.Columns.Count - 1)
+                                continue;
+
+                            String toolTipContent = GetToolTipContentForConsensusDetailedGadget(rowContext, cell.DataColumn.DataMemberBinding.Path.Path);
 
                             if (toolTipContent != null)
                             {
@@ -1008,7 +1073,31 @@ namespace GreenField.Gadgets.Helpers
             return result;
         }
 
+        //<summary>
+        //Create tooltip content from property name factor - assumed that data source and data source
+        //date property names are tightly linked with column binded property name
+        //</summary>
+        //<param name="data">PeriodColumnDisplayData</param>
+        //<param name="columnBindedPropertyName">Name of the property binded to the cell column</param>
+        //<returns>tool tip content</returns>
+        private static String GetToolTipContentForConsensusDetailedGadget(PeriodColumnDisplayData data, String columnBindedPropertyName)
+        {
+            String result = null;
 
+            if (data == null)
+                return result;
+
+            String lastUpdate = (String)data.GetType().GetProperty(columnBindedPropertyName + "_LAST_UPDATE_DATE").GetValue(data, null);
+
+            if (lastUpdate == null)
+                return result;
+
+            String reportedCurrency = (String)data.GetType().GetProperty(columnBindedPropertyName + "_REPORTED_CURRENCY").GetValue(data, null);
+
+            result = "LAST UPDATE: " + lastUpdate + Environment.NewLine + "REPROTED CURRENCY: " + reportedCurrency;
+
+            return result;
+        }
 
         #endregion
     }

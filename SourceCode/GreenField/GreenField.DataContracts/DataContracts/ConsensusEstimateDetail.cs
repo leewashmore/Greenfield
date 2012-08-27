@@ -74,12 +74,15 @@ namespace GreenField.DataContracts
         public object BrokerPrice { get; set; }
 
         [DataMember]
-        public DateTime LastUpdateDate { get; set; }
+        public string LastUpdateDate { get; set; }
 
         [DataMember]
         public string ReportedCurrency { get; set; }
 
         [DataMember]
         public string GroupDescription { get; set; }
+
+        [DataMember]
+        public Int32 SortOrder { get; set; }
     }
 }

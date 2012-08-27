@@ -200,6 +200,20 @@ namespace GreenField.Web.Services
                 for (int i = 0; i < data.Count; i++)
                 {
                     ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
+
+                    if (data[i].ESTIMATE_ID == 17)
+                        temp.SortOrder = 1;
+                    else if (data[i].ESTIMATE_ID == 7)
+                        temp.SortOrder = 2;
+                    else if (data[i].ESTIMATE_ID == 11)
+                        temp.SortOrder = 3;
+                    else if (data[i].ESTIMATE_ID == 8)
+                        temp.SortOrder = 4;
+                    else if (data[i].ESTIMATE_ID == 18)
+                        temp.SortOrder = 5;
+                    else if (data[i].ESTIMATE_ID == 19)
+                        temp.SortOrder = 6;
+
                     temp.IssuerId = data[i].ISSUER_ID;
                     temp.EstimateId = data[i].ESTIMATE_ID;
                     temp.Description = data[i].ESTIMATE_DESC;
@@ -230,7 +244,7 @@ namespace GreenField.Web.Services
                         temp.YOYGrowth = (temp.YOYGrowth / previousYearQuarterAmount - 1) * 100;
                     result.Add(temp);
                 }
-                return result;
+                return result.OrderBy(a => a.SortOrder).ToList();
             }
             catch (Exception ex)
             {
@@ -268,6 +282,7 @@ namespace GreenField.Web.Services
 
                 List<BrokerDetailData> requiredBrokerDetailsList = new List<BrokerDetailData>();
 
+                #region Mapping Broker's Estimate_Type with Consensus Detail's Estimate_Desc
                 foreach (BrokerDetailData item in data)
                 {
                     switch (item.EstimateType)
@@ -304,22 +319,36 @@ namespace GreenField.Web.Services
                         default:
                             break;
                     }
-                }
+                } 
+                #endregion
 
                 for (int i = 0; i < requiredBrokerDetailsList.Count; i++)
                 {
                     ConsensusEstimateDetail temp = new ConsensusEstimateDetail();
+
+                    if (data[i].EstimateType == "Revenue")
+                        temp.SortOrder = 1;
+                    else if (data[i].EstimateType == "EBITDA")
+                        temp.SortOrder = 2;
+                    else if (data[i].EstimateType == "Net Income (Pre Exceptional)")
+                        temp.SortOrder = 3;
+                    else if (data[i].EstimateType == "Earnings Per Share (Pre Exceptional)")
+                        temp.SortOrder = 4;
+                    else if (data[i].EstimateType == "Return on Assets")
+                        temp.SortOrder = 5;
+                    else if (data[i].EstimateType == "Return on Equity")
+                        temp.SortOrder = 6;
                     temp.Description = requiredBrokerDetailsList[i].EstimateType;
                     temp.GroupDescription = requiredBrokerDetailsList[i].broker_name;
                     temp.AmountType = "A";
                     temp.PeriodYear = Convert.ToInt32(requiredBrokerDetailsList[i].fPeriodEnd);
                     temp.PeriodType = _periodType;
                     temp.Amount = Convert.ToDecimal(requiredBrokerDetailsList[i].Amount);
-                    temp.SourceCurrency = requiredBrokerDetailsList[i].Reported_Currency;
-                    temp.DataSourceDate = requiredBrokerDetailsList[i].Last_Update_Date;
+                    temp.ReportedCurrency = requiredBrokerDetailsList[i].Reported_Currency;
+                    temp.LastUpdateDate = requiredBrokerDetailsList[i].Last_Update_Date.Date.ToShortDateString();
                     result.Add(temp);
                 }
-                return result;
+                return result.OrderBy(a => a.SortOrder).ToList();
             }
             catch (Exception ex)
             {
@@ -622,8 +651,6 @@ namespace GreenField.Web.Services
             #endregion
 
             return result;
-
-
         }
 
         /// <summary>

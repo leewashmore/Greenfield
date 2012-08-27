@@ -68,7 +68,37 @@ namespace GreenField.Gadgets.Models
         public DateTime? QUARTER_FOUR_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? QUARTER_FIVE_DATA_ROOT_SOURCE_DATE { get; set; }
         public DateTime? QUARTER_SIX_DATA_ROOT_SOURCE_DATE { get; set; }
-        public DateTime? QUARTER_SEVEN_DATA_ROOT_SOURCE_DATE { get; set; }        
+        public DateTime? QUARTER_SEVEN_DATA_ROOT_SOURCE_DATE { get; set; }
+
+        public string YEAR_ONE_LAST_UPDATE_DATE { get; set; }
+        public string YEAR_TWO_LAST_UPDATE_DATE { get; set; }
+        public string YEAR_THREE_LAST_UPDATE_DATE { get; set; }
+        public string YEAR_FOUR_LAST_UPDATE_DATE { get; set; }
+        public string YEAR_FIVE_LAST_UPDATE_DATE { get; set; }
+        public string YEAR_SIX_LAST_UPDATE_DATE { get; set; }
+        public string YEAR_SEVEN_LAST_UPDATE_DATE { get; set; }
+        public string QUARTER_ONE_LAST_UPDATE_DATE { get; set; }
+        public string QUARTER_TWO_LAST_UPDATE_DATE { get; set; }
+        public string QUARTER_THREE_LAST_UPDATE_DATE { get; set; }
+        public string QUARTER_FOUR_LAST_UPDATE_DATE { get; set; }
+        public string QUARTER_FIVE_LAST_UPDATE_DATE { get; set; }
+        public string QUARTER_SIX_LAST_UPDATE_DATE { get; set; }
+        public string QUARTER_SEVEN_LAST_UPDATE_DATE { get; set; }
+
+        public string YEAR_ONE_REPORTED_CURRENCY { get; set; }
+        public string YEAR_TWO_REPORTED_CURRENCY { get; set; }
+        public string YEAR_THREE_REPORTED_CURRENCY { get; set; }
+        public string YEAR_FOUR_REPORTED_CURRENCY { get; set; }
+        public string YEAR_FIVE_REPORTED_CURRENCY { get; set; }
+        public string YEAR_SIX_REPORTED_CURRENCY { get; set; }
+        public string YEAR_SEVEN_REPORTED_CURRENCY { get; set; }
+        public string QUARTER_ONE_REPORTED_CURRENCY { get; set; }
+        public string QUARTER_TWO_REPORTED_CURRENCY { get; set; }
+        public string QUARTER_THREE_REPORTED_CURRENCY { get; set; }
+        public string QUARTER_FOUR_REPORTED_CURRENCY { get; set; }
+        public string QUARTER_FIVE_REPORTED_CURRENCY { get; set; }
+        public string QUARTER_SIX_REPORTED_CURRENCY { get; set; }
+        public string QUARTER_SEVEN_REPORTED_CURRENCY { get; set; }   
 
         /// <summary>
         /// Data Description

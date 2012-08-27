@@ -249,6 +249,7 @@ namespace GreenField.Gadgets.Views
             {
                 Telerik.Windows.Controls.GridViewDataColumn dataColumn = new Telerik.Windows.Controls.GridViewDataColumn();
                 dataColumn.Header = sectorData.SectorName;
+                dataColumn.UniqueName = sectorData.SectorName;
                 dataColumn.DataMemberBinding = new System.Windows.Data.Binding("RelativePerformanceCountrySpecificInfo[" + cIndex + "]");
 
                 StringBuilder CellTemp = new StringBuilder();
@@ -473,7 +474,7 @@ namespace GreenField.Gadgets.Views
 
         #endregion
                 
-        #region Export to Pdf
+        #region Export to Pdf/Print
         /// <summary>
         /// Event handler when user wants to Export the Grid to PDF
         /// </summary>
@@ -500,6 +501,34 @@ namespace GreenField.Gadgets.Views
                 }
             }
         }
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                RichTextBox.Document = CreateDocument(dgRelativePerformance);
+            }));
+
+            this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+        }
+
+        ///// <summary>
+        ///// Printing the Grid
+        ///// </summary>
+        ///// <param name="grid"></param>
+        ///// <param name="fontSize"></param>
+        ///// <returns></returns>
+        //public static RadDocument Print(RadGridView grid, int fontSize = 8)
+        //{
+        //    int fontSizePDF = fontSize;
+        //    RadDocument document =  CreateDocument(grid);
+        //}
 
         private RadDocument CreateDocument(RadGridView grid)
         {
@@ -582,7 +611,7 @@ namespace GreenField.Gadgets.Views
                 for (int j = 0; j < columns.Count(); j++)
                 {                    
                     TableCell cell = new TableCell();
-                    string value = null;
+                    object value = null;
                     if (j == 0)
                     {
                         value = columns[j].GetValueForItem(items[i]) != null ?
@@ -590,8 +619,8 @@ namespace GreenField.Gadgets.Views
                     }
                     else if (j == columns.Count - 1)
                     {
-                        value = columns[0].GetValueForItem(items[i]) != null ?
-                            ((columns[0].GetValueForItem(items[i])) as RelativePerformanceData).AggregateCountryAlpha.ToString() : null;
+                        value = columns[j].GetValueForItem(items[i]) != null ?
+                            ((columns[j].GetValueForItem(items[i])) as RelativePerformanceData).AggregateCountryAlpha.ToString() : null;
                     }
 
                     else
@@ -686,77 +715,7 @@ namespace GreenField.Gadgets.Views
 
         #region Printing the DataGrid
 
-        void doc_PrintPage(object sender, PrintPageEventArgs e)
-        {
-            e.PageVisual = canvas;
-            if (totalHeight == 0)
-            {
-                totalHeight = grid.DesiredSize.Height;
-            }
-
-            Canvas.SetTop(grid, -offsetY);
-            offsetY += e.PrintableArea.Height;
-            e.HasMorePages = offsetY <= totalHeight;
-        }
-
-        /// <summary>
-        /// Printing the DataGrid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnPrint_Click(object sender, RoutedEventArgs e)
-        {
-            offsetY = 0d;
-            totalHeight = 0d;
-
-            grid = new RadGridView();
-            grid.DataContext = dgRelativePerformance.DataContext;
-            grid.ItemsSource = dgRelativePerformance.ItemsSource;
-            grid.RowIndicatorVisibility = Visibility.Collapsed;
-            grid.ShowGroupPanel = false;
-            grid.CanUserFreezeColumns = false;
-            grid.IsFilteringAllowed = false;
-            grid.AutoExpandGroups = true;
-            grid.AutoGenerateColumns = false;
-            grid.FontFamily = new FontFamily("Arial");
-            grid.FontSize = 9;
-
-
-            foreach (GridViewDataColumn column in dgRelativePerformance.Columns.OfType<GridViewDataColumn>())
-            {
-                GridViewDataColumn newColumn = new GridViewDataColumn();
-                newColumn.DataMemberBinding = new System.Windows.Data.Binding(column.UniqueName);
-                grid.Columns.Add(newColumn);
-            }
-
-            foreach (GridViewDataColumn column in grid.Columns.OfType<GridViewDataColumn>())
-            {
-                GridViewDataColumn currentColumn = column;
-                GridViewDataColumn originalColumn = (from c in dgRelativePerformance.Columns.OfType<GridViewDataColumn>()
-                                                     where c.UniqueName == currentColumn.UniqueName
-                                                     select c).FirstOrDefault();
-                if (originalColumn != null)
-                {
-                    column.Width = originalColumn.ActualWidth;
-                    column.DisplayIndex = originalColumn.DisplayIndex;
-
-                }
-            }
-
-            StyleManager.SetTheme(grid, StyleManager.GetTheme(dgRelativePerformance));
-
-            grid.SortDescriptors.AddRange(dgRelativePerformance.SortDescriptors);
-            grid.GroupDescriptors.AddRange(dgRelativePerformance.GroupDescriptors);
-            grid.FilterDescriptors.AddRange(dgRelativePerformance.FilterDescriptors);
-
-            ScrollViewer.SetHorizontalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
-            ScrollViewer.SetVerticalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
-            PrintDocument doc = new PrintDocument();
-            canvas = new Canvas();
-            canvas.Children.Add(grid);
-            doc.PrintPage += this.doc_PrintPage;
-            doc.Print("RadGridView print");
-        }
+       
 
         #endregion
 

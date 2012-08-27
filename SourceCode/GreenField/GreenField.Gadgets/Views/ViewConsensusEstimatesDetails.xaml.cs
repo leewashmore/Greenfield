@@ -17,6 +17,7 @@ using GreenField.Gadgets.Models;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller;
+using Telerik.Windows.Controls.GridView;
 
 namespace GreenField.Gadgets.Views
 {
@@ -140,9 +141,9 @@ namespace GreenField.Gadgets.Views
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        private void dgConsensusEstimate_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        private void dgConsensusEstimate_RowLoaded(object sender, RowLoadedEventArgs e)
         {
-            
+            PeriodColumns.RowDataCustomizationForConsensusDetailedGadget(e);
         }
 
         private void dgConsensusEstimate_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)

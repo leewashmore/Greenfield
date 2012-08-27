@@ -130,7 +130,8 @@
                                  EnableRowVirtualization="False"
                                  GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                 AutoExpandGroups="False">
+                                 AutoExpandGroups="False"
+                                 RowLoaded="dgConsensusEstimate_RowLoaded">
                         <telerik:RadGridView.Columns>
                             <!--<telerik:GridViewDataColumn x:Name="dgvcDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>-->
                             <telerik:GridViewDataColumn x:Name="dgvcSubDataType" HeaderTextAlignment="Left" TextAlignment="Left" 
