@@ -70,5 +70,10 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+        private void btnBrowsePowerPoint_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

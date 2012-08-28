@@ -65,13 +65,14 @@
       <xs:element minOccurs="0" name="GroupDescription" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="High" type="xs:decimal" />
       <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="LastUpdateDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastUpdateDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Low" type="xs:decimal" />
       <xs:element minOccurs="0" name="NumberOfEstimates" type="xs:int" />
       <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
       <xs:element minOccurs="0" name="ReportedCurrency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
       <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
       <xs:element minOccurs="0" name="Variance" nillable="true" type="xs:decimal" />

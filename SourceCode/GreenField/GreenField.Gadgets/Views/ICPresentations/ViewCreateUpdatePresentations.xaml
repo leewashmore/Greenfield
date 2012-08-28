@@ -1,15 +1,14 @@
 ﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewCreateUpdatePresentations"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-    xmlns:ig="http://schemas.infragistics.com/xaml"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
-    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="750"
-    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
-    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
-    xmlns:my="clr-namespace:GreenField.Common;assembly=GreenField.Common">
+                             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+                             xmlns:ig="http://schemas.infragistics.com/xaml"
+                             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"   
+                             xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+                             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"    
+                             xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+                             xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers;assembly=GreenField.Gadgets" 
+                             xmlns:my="clr-namespace:GreenField.Common;assembly=GreenField.Common">
 
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
@@ -80,22 +79,22 @@
                         <TextBlock Text="Investent Context :" VerticalAlignment="Center" Grid.Row="2" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                         <TextBlock Text="DCF :" VerticalAlignment="Center" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
 
-                        <TextBox Text="{Binding SelectedPowerPoint, Mode=TwoWay}" Margin="2,0,0,0" IsEnabled="False" Grid.Column="1" Style="{StaticResource TextBoxStyle} "/>
+                        <TextBox Text="{Binding SelectedPowerPoint, Mode=TwoWay}" Margin="2,0,0,0" IsEnabled="False" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
                         <TextBox Text="{Binding SelectedFinStatReport, Mode=TwoWay}" Margin="2,2,0,0" IsEnabled="False" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
                         <TextBox Text="{Binding SelectedInvestmentContext, Mode=TwoWay}" Margin="2,2,0,0" IsEnabled="False" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
                         <TextBox Text="{Binding SelectedDCFReports, Mode=TwoWay}" Margin="2,2,0,0" IsEnabled="False" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
 
                         <telerik:RadButton x:Name="btnBrowsePowerPoint" Content="BROWSE" Width="75" Margin="2,0,0,0" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
-                                       Click="btnBrowsePowerPoint_Click"/>
+                                       />
 
                         <telerik:RadButton x:Name="btnFinStatReport" Content="BROWSE" Width="75" Margin="2,0,0,0" Grid.Row="1" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
-                                       Click="btnFinStatReport_Click"/>
+                                       />
 
                         <telerik:RadButton x:Name="btnInvestmentContext" Content="BROWSE" Width="75" Margin="2,0,0,0" Grid.Row="2" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
-                                       Click="btnInvestmentContext_Click"/>
+                                       />
 
                         <telerik:RadButton x:Name="btnDCFReport" Content="BROWSE" Width="75" Margin="2,0,0,0" Grid.Row="3" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
-                                       Click="btnDCFReport_Click"/>
+                                       />
 
                         <telerik:RadButton Content="ADD" Width="75" Margin="2,0,0,0" Grid.Column="3" Style="{StaticResource RadButtonStyle}"
                                        Command="{Binding AddPowerPointCommand}"/>

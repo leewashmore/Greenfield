@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
 using GreenField.ServiceCaller.MeetingDefinitions;
-
+using GreenField.ServiceCaller.DCFDefinitions;
 
 
 namespace GreenField.ServiceCaller
@@ -294,6 +294,12 @@ namespace GreenField.ServiceCaller
 
         void GetMeetingConfigSchedule(Action<MeetingConfigurationSchedule> callback);
         #endregion
+        
+         #region DCF
+
+        //void RetrieveDCFAnalysisData(EntitySelectionData entitySelectionData, Action<List<GreenField.DataContracts.DCFAnalysisSummaryData>> callback);
+
+#endregion
 
     }
 }

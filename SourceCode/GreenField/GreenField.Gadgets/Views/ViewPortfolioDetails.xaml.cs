@@ -22,6 +22,7 @@ using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using Telerik.Windows.Documents.UI;
+using GreenField.ServiceCaller;
 #endif
 
 namespace GreenField.Gadgets.Views
@@ -107,14 +108,24 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            if (this.dgPortfolioDetails.Visibility == Visibility.Visible)
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            try
             {
-                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                if (this.dgPortfolioDetails.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                 {
                         new RadExportOptions() { ElementName = ExportTypes.PORTFOLIO_DETAILS_UI, Element = this.dgPortfolioDetails, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                 };
-                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.PORTFOLIO_DETAILS_UI);
-                childExportOptions.Show();
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.PORTFOLIO_DETAILS_UI);
+                    childExportOptions.Show();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
             }
         }
         #endregion
@@ -139,7 +150,17 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportPDF_Click(object sender, RoutedEventArgs e)
         {
-            PDFExporter.btnExportPDF_Click(this.dgPortfolioDetails);
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            try
+            {
+                PDFExporter.btnExportPDF_Click(this.dgPortfolioDetails);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+            }
         }
         #endregion
 
@@ -152,13 +173,23 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            Dispatcher.BeginInvoke((Action)(() =>
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            try
             {
-                RichTextBox.Document = PDFExporter.Print(dgPortfolioDetails, 6);
-            }));
+                Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(dgPortfolioDetails, 6);
+                    }));
 
-            this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
-            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+            }
         }
 
         #endregion
@@ -174,22 +205,32 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgPortfolioDetails_Grouping(object sender, GridViewGroupingEventArgs e)
         {
-            if (e.Action.ToString() != "Remove")
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            try
             {
-                if (this.dgPortfolioDetails.GroupDescriptors.Count > 0)
+                if (e.Action.ToString() != "Remove")
                 {
-                    e.Cancel = true;
-                    this.dgPortfolioDetails.GroupDescriptors.Clear();
-                    dgPortfolioDetails.GroupDescriptors.Add(e.GroupDescriptor);
+                    if (this.dgPortfolioDetails.GroupDescriptors.Count > 0)
+                    {
+                        e.Cancel = true;
+                        this.dgPortfolioDetails.GroupDescriptors.Clear();
+                        dgPortfolioDetails.GroupDescriptors.Add(e.GroupDescriptor);
+                    }
+                    Telerik.Windows.Controls.GridView.ColumnGroupDescriptor groupDescriptor = e.GroupDescriptor as Telerik.Windows.Controls.GridView.ColumnGroupDescriptor;
+                    DataContextPortfolioDetails.GroupingColumn = Convert.ToString(groupDescriptor.Column.UniqueName);
                 }
-                Telerik.Windows.Controls.GridView.ColumnGroupDescriptor groupDescriptor = e.GroupDescriptor as Telerik.Windows.Controls.GridView.ColumnGroupDescriptor;
-                DataContextPortfolioDetails.GroupingColumn = Convert.ToString(groupDescriptor.Column.UniqueName);
+                else
+                {
+                    DataContextPortfolioDetails.GroupingColumn = "No Grouping";
+                }
+                this.dgPortfolioDetails.GroupPanelItemStyle = this.Resources["GridViewGroupPanelItemStyle"] as Style;
             }
-            else
+            catch (Exception ex)
             {
-                DataContextPortfolioDetails.GroupingColumn = "No Grouping";
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
             }
-            this.dgPortfolioDetails.GroupPanelItemStyle = this.Resources["GridViewGroupPanelItemStyle"] as Style;
         }
 
         /// <summary>
@@ -199,9 +240,19 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgPortfolioDetails_Filtering(object sender, Telerik.Windows.Controls.GridView.GridViewFilteringEventArgs e)
         {
-            MemberColumnFilterDescriptor filteredColumn = e.ColumnFilterDescriptor as MemberColumnFilterDescriptor;
-            DataContextPortfolioDetails.FilterDescriptor = filteredColumn.Member;
-            bool a = e.Cancel;
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            try
+            {
+                MemberColumnFilterDescriptor filteredColumn = e.ColumnFilterDescriptor as MemberColumnFilterDescriptor;
+                DataContextPortfolioDetails.FilterDescriptor = filteredColumn.Member;
+                bool a = e.Cancel;
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+            }
         }
 
         /// <summary>
@@ -211,8 +262,18 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgPortfolioDetails_Filtered(object sender, Telerik.Windows.Controls.GridView.GridViewFilteredEventArgs e)
         {
-            SetGroupedData();
-            gridFilterDescriptors = dgPortfolioDetails.FilterDescriptors;
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            try
+            {
+                SetGroupedData();
+                gridFilterDescriptors = dgPortfolioDetails.FilterDescriptors;
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+            }
         }
 
         /// <summary>
@@ -220,33 +281,43 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private void SetGroupedData()
         {
-            RangeObservableCollection<PortfolioDetailsData> collection = new RangeObservableCollection<PortfolioDetailsData>();
-            foreach (PortfolioDetailsData item in dgPortfolioDetails.Items)
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            try
             {
-                PortfolioDetailsData data = new PortfolioDetailsData();
-                data.ActivePosition = item.ActivePosition;
-                data.AsecSecShortName = item.AsecSecShortName;
-                data.AshEmmModelWeight = item.AshEmmModelWeight;
-                data.BalanceNominal = item.BalanceNominal;
-                data.BenchmarkWeight = item.BenchmarkWeight;
-                data.DirtyValuePC = item.DirtyValuePC;
-                data.IndustryName = item.IndustryName;
-                data.IsoCountryCode = item.IsoCountryCode;
-                data.IssueName = item.IssueName;
-                data.MarketCapUSD = item.MarketCapUSD;
-                data.PortfolioDirtyValuePC = item.PortfolioDirtyValuePC;
-                data.PortfolioWeight = item.PortfolioWeight;
-                data.ProprietaryRegionCode = item.ProprietaryRegionCode;
-                data.ReAshEmmModelWeight = item.ReAshEmmModelWeight;
-                data.ReBenchmarkWeight = item.ReBenchmarkWeight;
-                data.RePortfolioWeight = item.RePortfolioWeight;
-                data.SectorName = item.SectorName;
-                data.SecurityType = item.SecurityType;
-                data.SubIndustryName = item.SubIndustryName;
-                data.Ticker = item.Ticker;
-                collection.Add(data);
+                RangeObservableCollection<PortfolioDetailsData> collection = new RangeObservableCollection<PortfolioDetailsData>();
+                foreach (PortfolioDetailsData item in dgPortfolioDetails.Items)
+                {
+                    PortfolioDetailsData data = new PortfolioDetailsData();
+                    data.ActivePosition = item.ActivePosition;
+                    data.AsecSecShortName = item.AsecSecShortName;
+                    data.AshEmmModelWeight = item.AshEmmModelWeight;
+                    data.BalanceNominal = item.BalanceNominal;
+                    data.BenchmarkWeight = item.BenchmarkWeight;
+                    data.DirtyValuePC = item.DirtyValuePC;
+                    data.IndustryName = item.IndustryName;
+                    data.IsoCountryCode = item.IsoCountryCode;
+                    data.IssueName = item.IssueName;
+                    data.MarketCapUSD = item.MarketCapUSD;
+                    data.PortfolioDirtyValuePC = item.PortfolioDirtyValuePC;
+                    data.PortfolioWeight = item.PortfolioWeight;
+                    data.ProprietaryRegionCode = item.ProprietaryRegionCode;
+                    data.ReAshEmmModelWeight = item.ReAshEmmModelWeight;
+                    data.ReBenchmarkWeight = item.ReBenchmarkWeight;
+                    data.RePortfolioWeight = item.RePortfolioWeight;
+                    data.SectorName = item.SectorName;
+                    data.SecurityType = item.SecurityType;
+                    data.SubIndustryName = item.SubIndustryName;
+                    data.Ticker = item.Ticker;
+                    collection.Add(data);
+                }
+                DataContextPortfolioDetails.GroupedFilteredPortfolioDetailsData = collection;
             }
-            DataContextPortfolioDetails.GroupedFilteredPortfolioDetailsData = collection;
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+            }
         }
 
         #endregion
@@ -265,6 +336,13 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region HelperMethods
+
+        /// <summary>
+        /// DataLoaded Event of DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgPortfolioDetails_DataLoaded(object sender, EventArgs e)
         {
             if (this.DataContextPortfolioDetails.CheckFilterApplied == 1)
@@ -278,15 +356,27 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// DataLoadingEvent of DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgPortfolioDetails_DataLoading(object sender, GridViewDataLoadingEventArgs e)
         {
 
         }
 
+        /// <summary>
+        /// Include Benchmark Checkbox
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             gridDataSource = this.dgPortfolioDetails.ItemsSource as RangeObservableCollection<PortfolioDetailsData>;
             this.dgPortfolioDetails.Items.EditItem(gridDataSource);
         }
+
+        #endregion
     }
 }

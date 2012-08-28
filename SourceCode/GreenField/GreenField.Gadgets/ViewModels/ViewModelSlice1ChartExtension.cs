@@ -5,14 +5,11 @@ using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
 using System.Collections.Generic;
 using Telerik.Windows.Controls.Charting;
 using System.Collections.ObjectModel;
-using Telerik.Windows.Controls;
 using GreenField.DataContracts;
 using System.Linq;
 
@@ -40,7 +37,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Instance of LoggerFacade
         /// </summary>
-        private ILoggerFacade _logger;
+        public ILoggerFacade _logger;
 
         /// <summary>
         /// Details of selected Security
@@ -52,7 +49,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private string _period;
 
-       
+
 
         #endregion
 
@@ -315,13 +312,13 @@ namespace GreenField.Gadgets.ViewModels
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
         private bool _isActive;
-        public bool IsActive 
+        public bool IsActive
         {
             get
             {
                 return _isActive;
             }
-            set 
+            set
             {
                 _isActive = value;
                 if (SelectedEntities.ContainsKey("PORTFOLIO") && SelectedEntities.ContainsKey("SECURITY") && SelectedStartDate != null && _period != null && _isActive)
@@ -617,99 +614,111 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="chartedData"></param>
         private void RetrieveChartAccordingDataPeriod(string selectedPeriod)
         {
-            if (selectedPeriod == null)
-                return;
-            if (ChartExtensionPlottedData == null)
-                return;
-            if (ChartExtensionPlottedData.Count == 0)
-                return;
-
-            List<ChartExtensionData> data = ChartExtensionPlottedData.ToList();
-
-            switch (selectedPeriod)
+            try
             {
-                case ("1D"):
-                    {
-                        foreach (ChartExtensionData item in data)
-                        {
-                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
-                            {
-                                item.PriceReturn = item.OneD;
-                            }
-                        }
-                        break;
-                    }
-                case ("1W"):
-                    {
-                        foreach (ChartExtensionData item in data)
-                        {
-                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
-                            {
-                                item.PriceReturn = item.WTD;
-                            }
-                        }
-                        break;
-                    }
-                case ("MTD"):
-                    {
-                        foreach (ChartExtensionData item in data)
-                        {
-                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
-                            {
-                                item.PriceReturn = item.MTD;
-                            }
-                        }
-                        break;
-                    }
-                case ("QTD"):
-                    {
-                        foreach (ChartExtensionData item in data)
-                        {
-                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
-                            {
-                                item.PriceReturn = item.QTD;
-                            }
-                        }
-                        break;
-                    }
-                case ("YTD"):
-                    {
-                        foreach (ChartExtensionData item in data)
-                        {
-                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
-                            {
-                                item.PriceReturn = item.YTD;
-                            }
-                        }
-                        break;
-                    }
-                case ("1Y"):
-                    {
-                        foreach (ChartExtensionData item in data)
-                        {
-                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
-                            {
-                                item.PriceReturn = item.OneY;
-                            }
-                        }
-                        break;
-                    }
+                if (selectedPeriod == null)
+                    return;
+                if (ChartExtensionPlottedData == null)
+                    return;
+                if (ChartExtensionPlottedData.Count == 0)
+                    return;
 
-                default:
-                    {
-                        foreach (ChartExtensionData item in data)
+                List<ChartExtensionData> data = ChartExtensionPlottedData.ToList();
+
+                #region SwitchAccordingToPeriod
+
+                switch (selectedPeriod)
+                {
+                    case ("1D"):
                         {
-                            if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
+                            foreach (ChartExtensionData item in data)
                             {
-                                item.PriceReturn = item.OneD;
+                                if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
+                                {
+                                    item.PriceReturn = item.OneD;
+                                }
                             }
+                            break;
                         }
-                        break;
-                    }
+                    case ("1W"):
+                        {
+                            foreach (ChartExtensionData item in data)
+                            {
+                                if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
+                                {
+                                    item.PriceReturn = item.WTD;
+                                }
+                            }
+                            break;
+                        }
+                    case ("MTD"):
+                        {
+                            foreach (ChartExtensionData item in data)
+                            {
+                                if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
+                                {
+                                    item.PriceReturn = item.MTD;
+                                }
+                            }
+                            break;
+                        }
+                    case ("QTD"):
+                        {
+                            foreach (ChartExtensionData item in data)
+                            {
+                                if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
+                                {
+                                    item.PriceReturn = item.QTD;
+                                }
+                            }
+                            break;
+                        }
+                    case ("YTD"):
+                        {
+                            foreach (ChartExtensionData item in data)
+                            {
+                                if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
+                                {
+                                    item.PriceReturn = item.YTD;
+                                }
+                            }
+                            break;
+                        }
+                    case ("1Y"):
+                        {
+                            foreach (ChartExtensionData item in data)
+                            {
+                                if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
+                                {
+                                    item.PriceReturn = item.OneY;
+                                }
+                            }
+                            break;
+                        }
+
+                    default:
+                        {
+                            foreach (ChartExtensionData item in data)
+                            {
+                                if (item.Type.ToUpper().Trim() == "SECTOR" || item.Type.ToUpper().Trim() == "COUNTRY")
+                                {
+                                    item.PriceReturn = item.OneD;
+                                }
+                            }
+                            break;
+                        }
+                }
+                #endregion
+
+                ChartExtensionPlottedData.Clear();
+                ChartExtensionPlottedData.AddRange(data);
+                this.RaisePropertyChanged(() => this.ChartExtensionPlottedData);
             }
-            ChartExtensionPlottedData.Clear();
-            ChartExtensionPlottedData.AddRange(data);
-            this.RaisePropertyChanged(() => this.ChartExtensionPlottedData);
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
         }
 
         /// <summary>
@@ -718,14 +727,21 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="chartArea"></param>
         private void ZoomIn(ChartArea chartArea)
         {
-            chartArea.ZoomScrollSettingsX.SuspendNotifications();
+            try
+            {
+                chartArea.ZoomScrollSettingsX.SuspendNotifications();
+                double zoomCenter = chartArea.ZoomScrollSettingsX.RangeStart + (chartArea.ZoomScrollSettingsX.Range / 2);
+                double newRange = Math.Max(chartArea.ZoomScrollSettingsX.MinZoomRange, chartArea.ZoomScrollSettingsX.Range) / 2;
+                chartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - (newRange / 2));
+                chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + (newRange / 2));
 
-            double zoomCenter = chartArea.ZoomScrollSettingsX.RangeStart + (chartArea.ZoomScrollSettingsX.Range / 2);
-            double newRange = Math.Max(chartArea.ZoomScrollSettingsX.MinZoomRange, chartArea.ZoomScrollSettingsX.Range) / 2;
-            chartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - (newRange / 2));
-            chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + (newRange / 2));
-
-            chartArea.ZoomScrollSettingsX.ResumeNotifications();
+                chartArea.ZoomScrollSettingsX.ResumeNotifications();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
         }
 
         /// <summary>
@@ -734,20 +750,28 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="chartArea"></param>
         private void ZoomOut(ChartArea chartArea)
         {
-            chartArea.ZoomScrollSettingsX.SuspendNotifications();
+            try
+            {
+                chartArea.ZoomScrollSettingsX.SuspendNotifications();
 
-            double zoomCenter = chartArea.ZoomScrollSettingsX.RangeStart + (chartArea.ZoomScrollSettingsX.Range / 2);
-            double newRange = Math.Min(1, chartArea.ZoomScrollSettingsX.Range) * 2;
+                double zoomCenter = chartArea.ZoomScrollSettingsX.RangeStart + (chartArea.ZoomScrollSettingsX.Range / 2);
+                double newRange = Math.Min(1, chartArea.ZoomScrollSettingsX.Range) * 2;
 
-            if (zoomCenter + (newRange / 2) > 1)
-                zoomCenter = 1 - (newRange / 2);
-            else if (zoomCenter - (newRange / 2) < 0)
-                zoomCenter = newRange / 2;
+                if (zoomCenter + (newRange / 2) > 1)
+                    zoomCenter = 1 - (newRange / 2);
+                else if (zoomCenter - (newRange / 2) < 0)
+                    zoomCenter = newRange / 2;
 
-            chartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - newRange / 2);
-            chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
+                chartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - newRange / 2);
+                chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
 
-            chartArea.ZoomScrollSettingsX.ResumeNotifications();
+                chartArea.ZoomScrollSettingsX.ResumeNotifications();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
         }
 
         /// <summary>

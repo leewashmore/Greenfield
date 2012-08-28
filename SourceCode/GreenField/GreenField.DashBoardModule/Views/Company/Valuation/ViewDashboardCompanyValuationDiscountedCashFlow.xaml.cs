@@ -44,7 +44,7 @@ namespace GreenField.DashboardModule.Views
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
             this.tbHeader.Text = GadgetNames.HOLDINGS_DISCOUNTED_CASH_FLOW;
-            
+
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -60,7 +60,7 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = null;
+            this.cctrDashboardContent.Content = null;// new ViewAnalysisSummary(new ViewModelAnalysisSummary(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

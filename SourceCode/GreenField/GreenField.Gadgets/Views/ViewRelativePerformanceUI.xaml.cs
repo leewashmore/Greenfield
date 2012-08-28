@@ -89,85 +89,25 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
-            Dispatcher.BeginInvoke((Action)(() =>
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextRelativePerformanceUI._logger, methodNamespace);
+
+            try
             {
-                RichTextBox.Document = PDFExporter.Print(dgRelativePerformanceUI, 10);
-            }));
+                Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(dgRelativePerformanceUI, 10);
+                    }));
 
-            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
-
-
-            //offsetY = 0d;
-            //totalHeight = 0d;
-
-            //grid = new RadGridView();
-            //grid.DataContext = dgRelativePerformanceUI.DataContext;
-            //grid.ItemsSource = dgRelativePerformanceUI.ItemsSource;
-            //grid.RowIndicatorVisibility = Visibility.Collapsed;
-            //grid.ShowGroupPanel = false;
-            //grid.CanUserFreezeColumns = false;
-            //grid.IsFilteringAllowed = false;
-            //grid.AutoExpandGroups = true;
-            //grid.AutoGenerateColumns = false;
-
-            //foreach (GridViewDataColumn column in dgRelativePerformanceUI.Columns.OfType<GridViewDataColumn>())
-            //{
-            //    GridViewDataColumn newColumn = new GridViewDataColumn();
-            //    newColumn.DataMemberBinding = new System.Windows.Data.Binding(column.UniqueName);
-            //    grid.Columns.Add(newColumn);
-            //}
-
-            //foreach (GridViewDataColumn column in grid.Columns.OfType<GridViewDataColumn>())
-            //{
-            //    GridViewDataColumn currentColumn = column;
-
-            //    GridViewDataColumn originalColumn = (from c in dgRelativePerformanceUI.Columns.OfType<GridViewDataColumn>()
-            //                                         where c.UniqueName == currentColumn.UniqueName
-            //                                         select c).FirstOrDefault();
-            //    if (originalColumn != null)
-            //    {
-            //        column.Width = originalColumn.ActualWidth;
-            //        column.DisplayIndex = originalColumn.DisplayIndex;
-            //    }
-            //}
-
-            //StyleManager.SetTheme(grid, StyleManager.GetTheme(dgRelativePerformanceUI));
-
-            //grid.SortDescriptors.AddRange(dgRelativePerformanceUI.SortDescriptors);
-            //grid.GroupDescriptors.AddRange(dgRelativePerformanceUI.GroupDescriptors);
-            //grid.FilterDescriptors.AddRange(dgRelativePerformanceUI.FilterDescriptors);
-
-            //ScrollViewer.SetHorizontalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
-            //ScrollViewer.SetVerticalScrollBarVisibility(grid, ScrollBarVisibility.Hidden);
-
-            //PrintDocument doc = new PrintDocument();
-
-            //canvas = new Canvas();
-            //canvas.Children.Add(grid);
-
-            //doc.PrintPage += this.doc_PrintPage;
-            //doc.Print("RadGridView print");
-        }
-
-        /// <summary>
-        /// Prinitng Helper Method
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        void doc_PrintPage(object sender, PrintPageEventArgs e)
-        {
-            e.PageVisual = canvas;
-
-            if (totalHeight == 0)
-            {
-                totalHeight = grid.DesiredSize.Height;
+                RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
             }
-
-            Canvas.SetTop(grid, -offsetY);
-
-            offsetY += e.PrintableArea.Height;
-            e.HasMorePages = offsetY <= totalHeight;
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextRelativePerformanceUI._logger, ex);
+            }
         }
+
 
         #endregion
 
@@ -188,6 +128,8 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextRelativePerformanceUI._logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
@@ -199,7 +141,8 @@ namespace GreenField.Gadgets.Views
             }
             catch (Exception ex)
             {
-                Prompt.ShowDialog(ex.Message);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextRelativePerformanceUI._logger, ex);
             }
         }
 
@@ -217,15 +160,6 @@ namespace GreenField.Gadgets.Views
 
         #region ApplyStyles
 
-        /// <summary>
-        /// Applying Styles to Grid
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgRelativePerformanceUI_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-          
-        }
 
         #endregion
 
@@ -243,6 +177,5 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
-        
     }
 }

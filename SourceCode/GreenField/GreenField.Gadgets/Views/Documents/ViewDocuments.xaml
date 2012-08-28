@@ -28,7 +28,7 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <HyperlinkButton Content="Upload Document" Foreground="{StaticResource RadRibbonViewCustomColor}"
+            <HyperlinkButton Content="Upload Document" 
                              Margin="2,0,0,0" FontSize="7" FontWeight="Bold" FontFamily="Arial" VerticalAlignment="Center" />
             <TextBox Grid.Column="1" Height="15" Width="255" MaxLength="254" VerticalContentAlignment="Center" Margin="2,0,0,0" VerticalAlignment="Center"
                      Text="{Binding SearchString, Mode=TwoWay}"/>
