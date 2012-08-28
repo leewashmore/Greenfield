@@ -21,29 +21,37 @@ using Microsoft.Practices.Prism.Regions;
 using GreenField.Gadgets.Helpers;
 using GreenField.DataContracts;
 
+
 namespace GreenField.DashboardModule.Views
 {
     [Export]
-    public partial class ViewDashboardInvestmentCommitteeMeetingMinutes : ViewBaseUserControl, INavigationAware
+    public partial class ViewDashboardAdminInvestmentCommitteeChangeDate : ViewBaseUserControl, INavigationAware
     {
         #region Fields
         private IEventAggregator _eventAggregator;
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
+        private IRegionManager _regionManager;
+        private ViewPresentations _view;
+        private ViewModelPresentations _viewModel;
+        private ViewModelICPresentationNew _viewModelNew;
+        private ViewICPresentationNew _viewNew;
         #endregion
+
         [ImportingConstructor]
-        public ViewDashboardInvestmentCommitteeMeetingMinutes(ILoggerFacade logger, IEventAggregator eventAggregator,
-            IDBInteractivity dbInteractivity)
+        public ViewDashboardAdminInvestmentCommitteeChangeDate(ILoggerFacade logger, IEventAggregator eventAggregator,
+            IDBInteractivity dbInteractivity, IRegionManager regionManager)
         {
             InitializeComponent();
 
             _eventAggregator = eventAggregator;
             _logger = logger;
             _dBInteractivity = dbInteractivity;
+            _regionManager = regionManager;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
-            this.tbHeader.Text = GadgetNames.ICPRESENTATION_MEETING_MINUTES;
+            this.tbHeader.Text = GadgetNames.ADMIN_CHANGE_DATE;
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -56,10 +64,25 @@ namespace GreenField.DashboardModule.Views
                 DashboardGadgetPayload = payload,
                 DBInteractivity = _dBInteractivity,
                 EventAggregator = _eventAggregator,
-                LoggerFacade = _logger
+                LoggerFacade = _logger,
+                RegionManager = _regionManager
             };
 
-            this.cctrDashboardContent.Content = new ViewPresentationMeetingMinutes(new ViewModelPresentationMeetingMinutes(param));
+            ////for accessing the gadgets data 
+            //_viewModel = new ViewModelPresentations(param);
+            //_view = new ViewPresentations(_viewModel);
+
+            //if (_viewModel.NavigationInfo.ViewPluginFlagEnumerationObject == ViewPluginFlagEnumeration.Create)
+            //{
+            //    _viewModelNew = new ViewModelICPresentationNew(param);
+            //    _viewNew = new ViewICPresentationNew(_viewModelNew);
+            //    this.cctrDashboardContent.Content = _viewNew;
+            //}
+            //else
+            //{               
+            //    this.cctrDashboardContent.Content = _view;
+            //}
+            this.cctrDashboardContent.Content = new ViewMeetingConfigurationSchedule(new ViewModelMeetingConfigSchedule(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -69,6 +92,7 @@ namespace GreenField.DashboardModule.Views
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
+           // navigationContext.NavigationService.Region.Context = _viewModel.NavigationInfo;
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
@@ -78,6 +102,7 @@ namespace GreenField.DashboardModule.Views
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+         //   _viewModel.ManageMeetingsServiceCalls();
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {

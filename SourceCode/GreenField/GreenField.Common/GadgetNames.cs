@@ -236,5 +236,9 @@ namespace GreenField.Common
         public static string ICPRESENTATION_PRESENTATIONS_CHANGE_DATE = "Investment Committee Presentation Change Date";
         
         #endregion
+
+        #region Admin
+        public static string ADMIN_CHANGE_DATE = "Change Meeting Config Date";
+        #endregion
     }
 }

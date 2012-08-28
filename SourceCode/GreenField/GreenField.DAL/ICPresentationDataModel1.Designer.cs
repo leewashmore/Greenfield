@@ -4829,20 +4829,12 @@ namespace GreenField.DAL
         /// <summary>
         /// Create a new ICPresentationOverviewData object.
         /// </summary>
-        /// <param name="createdBy">Initial value of the CreatedBy property.</param>
-        /// <param name="createdOn">Initial value of the CreatedOn property.</param>
-        /// <param name="modifiedBy">Initial value of the ModifiedBy property.</param>
-        /// <param name="modifiedOn">Initial value of the ModifiedOn property.</param>
         /// <param name="presentationID">Initial value of the PresentationID property.</param>
         /// <param name="presenter">Initial value of the Presenter property.</param>
         /// <param name="statusType">Initial value of the StatusType property.</param>
-        public static ICPresentationOverviewData CreateICPresentationOverviewData(global::System.String createdBy, global::System.DateTime createdOn, global::System.String modifiedBy, global::System.DateTime modifiedOn, global::System.Int64 presentationID, global::System.String presenter, global::System.String statusType)
+        public static ICPresentationOverviewData CreateICPresentationOverviewData(global::System.Int64 presentationID, global::System.String presenter, global::System.String statusType)
         {
             ICPresentationOverviewData iCPresentationOverviewData = new ICPresentationOverviewData();
-            iCPresentationOverviewData.CreatedBy = createdBy;
-            iCPresentationOverviewData.CreatedOn = createdOn;
-            iCPresentationOverviewData.ModifiedBy = modifiedBy;
-            iCPresentationOverviewData.ModifiedOn = modifiedOn;
             iCPresentationOverviewData.PresentationID = presentationID;
             iCPresentationOverviewData.Presenter = presenter;
             iCPresentationOverviewData.StatusType = statusType;
@@ -5095,7 +5087,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String CreatedBy
         {
@@ -5107,7 +5099,7 @@ namespace GreenField.DAL
             {
                 OnCreatedByChanging(value);
                 ReportPropertyChanging("CreatedBy");
-                _CreatedBy = StructuralObject.SetValidValue(value, false);
+                _CreatedBy = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("CreatedBy");
                 OnCreatedByChanged();
             }
@@ -5119,9 +5111,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.DateTime CreatedOn
+        public Nullable<global::System.DateTime> CreatedOn
         {
             get
             {
@@ -5136,8 +5128,8 @@ namespace GreenField.DAL
                 OnCreatedOnChanged();
             }
         }
-        private global::System.DateTime _CreatedOn;
-        partial void OnCreatedOnChanging(global::System.DateTime value);
+        private Nullable<global::System.DateTime> _CreatedOn;
+        partial void OnCreatedOnChanging(Nullable<global::System.DateTime> value);
         partial void OnCreatedOnChanged();
     
         /// <summary>
@@ -5191,7 +5183,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String ModifiedBy
         {
@@ -5203,7 +5195,7 @@ namespace GreenField.DAL
             {
                 OnModifiedByChanging(value);
                 ReportPropertyChanging("ModifiedBy");
-                _ModifiedBy = StructuralObject.SetValidValue(value, false);
+                _ModifiedBy = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("ModifiedBy");
                 OnModifiedByChanged();
             }
@@ -5215,9 +5207,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.DateTime ModifiedOn
+        public Nullable<global::System.DateTime> ModifiedOn
         {
             get
             {
@@ -5232,8 +5224,8 @@ namespace GreenField.DAL
                 OnModifiedOnChanged();
             }
         }
-        private global::System.DateTime _ModifiedOn;
-        partial void OnModifiedOnChanging(global::System.DateTime value);
+        private Nullable<global::System.DateTime> _ModifiedOn;
+        partial void OnModifiedOnChanging(Nullable<global::System.DateTime> value);
         partial void OnModifiedOnChanged();
     
         /// <summary>

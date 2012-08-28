@@ -239,6 +239,12 @@ namespace GreenField.Common
         public static String WATCH = "Watch";
     }
 
+    public static class MemberGroups
+    {
+        public static String VOTINGMEMBER = "IC_MEMBER_VOTING";
+        public static String NONVOTINGMEMBER = "IC_MEMBER_NONVOTING";
+        public static String ADMIN = "IC_ADMIN";       
+    }
 
     public enum VIEWVOTEFLAG { VIEW, VOTE } ;
     public enum ViewPluginFlagEnumeration { Create, Upload, Update, View, Vote, Edit, ChangeDate };

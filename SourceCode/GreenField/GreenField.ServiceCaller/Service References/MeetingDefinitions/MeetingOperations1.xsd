@@ -23,7 +23,7 @@
           <xs:element minOccurs="0" name="CompetitiveAdvantage" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CompetitiveDisadvantage" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="CreatedOn" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="CurrentHoldings" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="EarningsOutlook" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="FVCalc" nillable="true" type="xs:string" />
@@ -32,7 +32,7 @@
           <xs:element minOccurs="0" name="MeetingDateTime" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="MeetingVotingClosedDateTime" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ModifiedOn" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="PercentEMIF" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
           <xs:element minOccurs="0" name="Presenter" nillable="true" type="xs:string" />
@@ -66,6 +66,25 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="ICPresentationOverviewData" nillable="true" type="tns:ICPresentationOverviewData" />
+  <xs:complexType name="MeetingConfigurationSchedule">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:EntityObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="ConfigurablePreMeetingVotingDeadline" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="ConfigurablePresentationDeadline" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PreMeetingVotingDeadline" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PresentationDateTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PresentationDeadline" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PresentationTimeZone" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="MeetingConfigurationSchedule" nillable="true" type="tns:MeetingConfigurationSchedule" />
   <xs:complexType name="ArrayOfMeetingInfo">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="MeetingInfo" nillable="true" type="tns:MeetingInfo" />
@@ -74,7 +93,7 @@
   <xs:element name="ArrayOfMeetingInfo" nillable="true" type="tns:ArrayOfMeetingInfo" />
   <xs:complexType name="MeetingInfo">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:EntityObject">
+      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:EntityObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
@@ -100,7 +119,7 @@
   <xs:element name="ArrayOfMeetingAttachedFileInfo" nillable="true" type="tns:ArrayOfMeetingAttachedFileInfo" />
   <xs:complexType name="MeetingAttachedFileInfo">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q3="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q3:EntityObject">
+      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q4:EntityObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
@@ -110,7 +129,7 @@
           <xs:element minOccurs="0" name="FileType" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MeetingID" type="xs:long" />
           <xs:element minOccurs="0" name="MeetingInfo" nillable="true" type="tns:MeetingInfo" />
-          <xs:element minOccurs="0" name="MeetingInfoReference" nillable="true" type="q3:EntityReferenceOfMeetingInfojzQAem8p" />
+          <xs:element minOccurs="0" name="MeetingInfoReference" nillable="true" type="q4:EntityReferenceOfMeetingInfojzQAem8p" />
           <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
         </xs:sequence>
@@ -126,19 +145,19 @@
   <xs:element name="ArrayOfMeetingPresentationMappingInfo" nillable="true" type="tns:ArrayOfMeetingPresentationMappingInfo" />
   <xs:complexType name="MeetingPresentationMappingInfo">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q4="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q4:EntityObject">
+      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q5:EntityObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="MappingID" type="xs:long" />
           <xs:element minOccurs="0" name="MeetingID" type="xs:long" />
           <xs:element minOccurs="0" name="MeetingInfo" nillable="true" type="tns:MeetingInfo" />
-          <xs:element minOccurs="0" name="MeetingInfoReference" nillable="true" type="q4:EntityReferenceOfMeetingInfojzQAem8p" />
+          <xs:element minOccurs="0" name="MeetingInfoReference" nillable="true" type="q5:EntityReferenceOfMeetingInfojzQAem8p" />
           <xs:element minOccurs="0" name="ModifedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
           <xs:element minOccurs="0" name="PresentationInfo" nillable="true" type="tns:PresentationInfo" />
-          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q4:EntityReferenceOfPresentationInfojzQAem8p" />
+          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q5:EntityReferenceOfPresentationInfojzQAem8p" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -146,7 +165,7 @@
   <xs:element name="MeetingPresentationMappingInfo" nillable="true" type="tns:MeetingPresentationMappingInfo" />
   <xs:complexType name="PresentationInfo">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q5="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q5:EntityObject">
+      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q6:EntityObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="AcceptWithoutDiscussionFlag" nillable="true" type="xs:boolean" />
           <xs:element minOccurs="0" name="AdminNotes" nillable="true" type="xs:string" />
@@ -211,7 +230,7 @@
   <xs:element name="ArrayOfAttachedFileInfo" nillable="true" type="tns:ArrayOfAttachedFileInfo" />
   <xs:complexType name="AttachedFileInfo">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q6="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q6:EntityObject">
+      <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q7:EntityObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
@@ -222,7 +241,7 @@
           <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
           <xs:element minOccurs="0" name="PresentationInfo" nillable="true" type="tns:PresentationInfo" />
-          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q6:EntityReferenceOfPresentationInfojzQAem8p" />
+          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q7:EntityReferenceOfPresentationInfojzQAem8p" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -236,7 +255,7 @@
   <xs:element name="ArrayOfVoterInfo" nillable="true" type="tns:ArrayOfVoterInfo" />
   <xs:complexType name="VoterInfo">
     <xs:complexContent mixed="false">
-      <xs:extension xmlns:q7="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q7:EntityObject">
+      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q8:EntityObject">
         <xs:sequence>
           <xs:element minOccurs="0" name="AttendanceType" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
@@ -249,7 +268,7 @@
           <xs:element minOccurs="0" name="PostMeetingFlag" nillable="true" type="xs:boolean" />
           <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
           <xs:element minOccurs="0" name="PresentationInfo" nillable="true" type="tns:PresentationInfo" />
-          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q7:EntityReferenceOfPresentationInfojzQAem8p" />
+          <xs:element minOccurs="0" name="PresentationInfoReference" nillable="true" type="q8:EntityReferenceOfPresentationInfojzQAem8p" />
           <xs:element minOccurs="0" name="VoteType" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="VoterBuyRange" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="VoterID" type="xs:long" />
@@ -261,25 +280,6 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="VoterInfo" nillable="true" type="tns:VoterInfo" />
-  <xs:complexType name="MeetingConfigurationSchedule">
-    <xs:complexContent mixed="false">
-      <xs:extension xmlns:q8="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q8:EntityObject">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="ConfigurablePreMeetingVotingDeadline" nillable="true" type="xs:decimal" />
-          <xs:element minOccurs="0" name="ConfigurablePresentationDeadline" nillable="true" type="xs:decimal" />
-          <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="PreMeetingVotingDeadline" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="PresentationDateTime" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="PresentationDeadline" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="PresentationTimeZone" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="MeetingConfigurationSchedule" nillable="true" type="tns:MeetingConfigurationSchedule" />
   <xs:complexType name="ArrayOfMeetingMinuteData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="MeetingMinuteData" nillable="true" type="tns:MeetingMinuteData" />

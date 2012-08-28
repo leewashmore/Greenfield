@@ -275,7 +275,9 @@ namespace GreenField.Gadgets.ViewModels
 
         private void WithdrawCommandMethod(object param)
         {
-            
+            SelectedPresentationOverviewInfo.StatusType = StatusType.WITHDRAWN;
+
+            //_dbInteractivity.WithDrawPresentation(SelectedPresentation.PresentationID, WithDrawPresentationCallback);
         }   
 
         private bool ViewCommandValidationMethod(object param)

@@ -837,12 +837,12 @@
           <Property Type="Single" Name="CommitteeSellRange" Nullable="true" />
           <Property Type="String" Name="CompetitiveAdvantage" Nullable="true" />
           <Property Type="String" Name="CompetitiveDisadvantage" Nullable="true" />
-          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
+          <Property Type="String" Name="CreatedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreatedOn" Precision="23" Nullable="true" />
           <Property Type="String" Name="EarningsOutlook" Nullable="true" />
           <Property Type="String" Name="InvestmentThesis" Nullable="true" />
-          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="true" Precision="23" />
           <Property Type="Int64" Name="PresentationID" Nullable="false" />
           <Property Type="String" Name="Presenter" Nullable="false" MaxLength="50" />
           <Property Type="Single" Name="SecurityBuyRange" Nullable="true" />

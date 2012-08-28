@@ -21,6 +21,7 @@ using GreenField.Web.DataContracts;
 using System.Xml.Linq;
 using System.Reflection;
 using System.IO;
+using System.Web.Security;
 
 namespace GreenField.Web.Services
 {
@@ -671,8 +672,20 @@ namespace GreenField.Web.Services
                 ICPresentationEntities entity = new ICPresentationEntities();
 
                 XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverviewData });
+                String[] votingUsers = Roles.GetUsersInRole("IC_MEMBER_VOTING");
+                foreach (String user in votingUsers)
+                {
+                    if (user != userName)
+                    {
+                        XElement element = new XElement("VotingUser", user);
+                        xmlDoc.Root.Add(element);                        
+                    }
+
+                }
+
                 String xmlScript = xmlDoc.ToString();
-                Int32? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();
+                Int32? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();              
+
 
                 return result == 0;
             }
@@ -724,18 +737,18 @@ namespace GreenField.Web.Services
                 presentationOverviewData.SecurityIndustry = data.GICS_INDUSTRY_NAME;
                 presentationOverviewData.Analyst = data.ASHMOREEMM_PRIMARY_ANALYST;
                 presentationOverviewData.Price = data.CLOSING_PRICE.ToString();
-                presentationOverviewData.FVCalc = "3";
-                presentationOverviewData.SecurityBuySellvsCrnt = "$16.50(8*2013PE)-$21.50(10.5*2013PE)";
-                presentationOverviewData.CurrentHoldings = "$0mn";
-                presentationOverviewData.PercentEMIF = "0%";
-                presentationOverviewData.SecurityBMWeight = "1%";
-                presentationOverviewData.SecurityActiveWeight = "Underweight";
-                presentationOverviewData.YTDRet_Absolute = "-3.5%";
-                presentationOverviewData.YTDRet_RELtoLOC = "+8%";
-                presentationOverviewData.YTDRet_RELtoEM = "-2%";
-                presentationOverviewData.SecurityRecommendation = "BUY";
+                presentationOverviewData.FVCalc = String.Empty;//"3";
+                presentationOverviewData.SecurityBuySellvsCrnt = String.Empty; //"$16.50(8*2013PE)-$21.50(10.5*2013PE)";
+                presentationOverviewData.CurrentHoldings = String.Empty; //"$0mn";
+                presentationOverviewData.PercentEMIF = String.Empty; //"0%";
+                presentationOverviewData.SecurityBMWeight = String.Empty; //"1%";
+                presentationOverviewData.SecurityActiveWeight = String.Empty;// "Underweight";
+                presentationOverviewData.YTDRet_Absolute = String.Empty; //"-3.5%";
+                presentationOverviewData.YTDRet_RELtoLOC = String.Empty;  //"+8%";
+                presentationOverviewData.YTDRet_RELtoEM = String.Empty;// "-2%";
+                presentationOverviewData.SecurityRecommendation = String.Empty; //"BUY";
                 presentationOverviewData.SecurityMarketCapitalization = 0;
-
+                
 
                 return presentationOverviewData;
             }
@@ -749,6 +762,26 @@ namespace GreenField.Web.Services
         #endregion
 
         #region Meeting Configuration Schedule
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public MeetingConfigurationSchedule GetMeetingConfigSchedule()
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                MeetingConfigurationSchedule result = entity.MeetingConfigurationSchedules.FirstOrDefault();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+        }
+
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<MeetingInfo> GetAvailablePresentationDates()

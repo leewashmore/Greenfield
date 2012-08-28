@@ -117,6 +117,9 @@
     <Compile Include="Helpers\GetDashboardTileContent.cs" />
     <Compile Include="Helpers\TypeResolution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Admin\InvestmentCommittee\EditDate\ViewDashboardAdminInvestmentCommitteeChangeDate.xaml.cs">
+      <DependentUpon>ViewDashboardAdminInvestmentCommitteeChangeDate.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Investment_Committee\ViewDashboardInvestmentCommitteeNew.xaml.cs">
       <DependentUpon>ViewDashboardInvestmentCommitteeNew.xaml</DependentUpon>
     </Compile>
@@ -280,6 +283,10 @@
     <Page Include="Assets\DashboardStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Admin\InvestmentCommittee\EditDate\ViewDashboardAdminInvestmentCommitteeChangeDate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Investment_Committee\ViewDashboardInvestmentCommitteeNew.xaml">
       <Generator>MSBuild:Compile</Generator>

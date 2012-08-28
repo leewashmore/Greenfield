@@ -7,11 +7,19 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="750"
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
     xmlns:my="clr-namespace:GreenField.Common;assembly=GreenField.Common">
 
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
 
-        <Grid x:Name="LayoutRoot">
+    <Grid x:Name="LayoutRoot">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
             <Grid Margin="10">
                 <Grid.RowDefinitions>
@@ -19,233 +27,142 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-            
 
                 <!-- Presentation Details -->
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" Margin="0,5,0,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0">
-                        
-                            <TextBlock Text="Security : " 
-                                   Visibility="{Binding SecuritySelectionVisibility}"
+
+                        <TextBlock Text="Security : "                                   
                                    HorizontalAlignment="Left"
-                                   VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding SecurityInfo.SecurityName}"
+                                   VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
+                        <TextBlock Text="{Binding SelectedPresentationSecurity}"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"
-                                   FontStyle="Italic" FontWeight="Bold"
-                                   Visibility="{Binding PresenterSelectionVisibility}"/>                                                   
+                                   Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
-                    <Grid Grid.Column="1">                       
-                            <TextBlock Text="Status : " HorizontalAlignment="left" VerticalAlignment="Center"/>
-                            <TextBlock Text="{Binding PresentationInfo.Status}"
-                                       FontStyle="Italic" FontWeight="Bold" 
+                    <Grid Grid.Column="1">
+                        <TextBlock Text="Status : " HorizontalAlignment="left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                        <TextBlock Text="{Binding SelectedPresentationStatus}"
+                                       Style="{StaticResource TextBlockStyle}"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Center"/>
-                        
+
                     </Grid>
                 </Grid>
 
-                <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
+                <Grid Grid.Row="1" Margin="0,5,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                    <TextBlock Text="PowerPoint :"                                     
-                                   Grid.Column="1" HorizontalAlignment="Left" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
+                    <Grid Grid.Row="1" Margin="0,2,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="PowerPoint :" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                        <TextBlock Text="FinStat Report :" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                        <TextBlock Text="Investent Context :" VerticalAlignment="Center" Grid.Row="2" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                        <TextBlock Text="DCF :" VerticalAlignment="Center" Grid.Row="3" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
 
-                    <TextBlock x:Name ="txtPPT" TextWrapping="Wrap"                                    
-                                   Grid.Column="2" HorizontalAlignment="Center" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
+                        <TextBox Text="{Binding SelectedPowerPoint, Mode=TwoWay}" Margin="2,0,0,0" IsEnabled="False" Grid.Column="1" Style="{StaticResource TextBoxStyle} "/>
+                        <TextBox Text="{Binding SelectedFinStatReport, Mode=TwoWay}" Margin="2,2,0,0" IsEnabled="False" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
+                        <TextBox Text="{Binding SelectedInvestmentContext, Mode=TwoWay}" Margin="2,2,0,0" IsEnabled="False" Grid.Row="2" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
+                        <TextBox Text="{Binding SelectedDCFReports, Mode=TwoWay}" Margin="2,2,0,0" IsEnabled="False" Grid.Row="3" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
 
-                    <telerik:RadButton x:Name="btnICPPptBrowse"
-                                   Command="{Binding BrowseCommand}"                                  
-                                   Grid.Column="3"
-                                       Margin="5,5,0,5"
-                                   VerticalAlignment="Center"
-                                   Width="75"
-                                   Visibility="Visible"
-                                   HorizontalAlignment="Center"
-                                   Content="Browse"/>
+                        <telerik:RadButton x:Name="btnBrowsePowerPoint" Content="BROWSE" Width="75" Margin="2,0,0,0" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
+                                       Click="btnBrowsePowerPoint_Click"/>
+
+                        <telerik:RadButton x:Name="btnFinStatReport" Content="BROWSE" Width="75" Margin="2,0,0,0" Grid.Row="1" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
+                                       Click="btnFinStatReport_Click"/>
+
+                        <telerik:RadButton x:Name="btnInvestmentContext" Content="BROWSE" Width="75" Margin="2,0,0,0" Grid.Row="2" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
+                                       Click="btnInvestmentContext_Click"/>
+
+                        <telerik:RadButton x:Name="btnDCFReport" Content="BROWSE" Width="75" Margin="2,0,0,0" Grid.Row="3" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
+                                       Click="btnDCFReport_Click"/>
+
+                        <telerik:RadButton Content="ADD" Width="75" Margin="2,0,0,0" Grid.Column="3" Style="{StaticResource RadButtonStyle}"
+                                       Command="{Binding AddPowerPointCommand}"/>
+
+                        <telerik:RadButton Content="ADD" Width="75" Margin="2,2,0,0" Grid.Row="1" Grid.Column="3" Style="{StaticResource RadButtonStyle}"
+                                       Command="{Binding AddFinStatCommand}"/>
+
+                        <telerik:RadButton Content="ADD" Width="75" Margin="2,0,0,0" Grid.Row="2" Grid.Column="3" Style="{StaticResource RadButtonStyle}"
+                                       Command="{Binding AddInvestmentContextCommand}"/>
+
+                        <telerik:RadButton Content="ADD" Width="75" Margin="2,2,0,0" Grid.Row="3" Grid.Column="3" Style="{StaticResource RadButtonStyle}"
+                                       Command="{Binding AddDCFCommand}"/>
+                    </Grid>
                 </Grid>
 
-                <Grid Grid.Row="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="FinStat Report :"                                     
-                                   Grid.Column="1" HorizontalAlignment="Left" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
-
-                    <TextBlock x:Name ="txtFinStat" TextWrapping="Wrap"                                    
-                                   Grid.Column="2" HorizontalAlignment="Center" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
-
-                    <telerik:RadButton x:Name="btnICPFinBrowse"
-                                   Command="{Binding BrowseCommand}"                                  
-                                   Grid.Column="3"
-                                       Margin="5,5,0,5"
-                                   VerticalAlignment="Center"
-                                   Width="75"
-                                   Visibility="Visible"
-                                   HorizontalAlignment="Center"
-                                   Content="Browse"/>
-                </Grid>
-
-                <Grid Grid.Row="3">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="Investent Context :"                                     
-                                   Grid.Column="1" HorizontalAlignment="Left" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
-
-                    <TextBlock x:Name ="txtICPInvestTxt" TextWrapping="Wrap"                                    
-                                   Grid.Column="2" HorizontalAlignment="Center" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
-
-                    <telerik:RadButton x:Name="btnICPInvestBrowse"
-                                   Command="{Binding BrowseCommand}"                                  
-                                   Grid.Column="3"
-                                       Margin="5,5,0,5"
-                                   VerticalAlignment="Center"
-                                   Width="75"
-                                   Visibility="Visible"
-                                   HorizontalAlignment="Center"
-                                   Content="Browse"/>
-                </Grid>
-
-                <Grid Grid.Row="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="DCF :"                                     
-                                   Grid.Column="1" HorizontalAlignment="Left" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
-
-                    <TextBlock x:Name ="txtICPDCFTxt" TextWrapping="Wrap"                                    
-                                   Grid.Column="2" HorizontalAlignment="Center" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
-
-                    <telerik:RadButton x:Name="btnICPDCFBrowse"
-                                   Command="{Binding BrowseCommand}"                                  
-                                   Grid.Column="3"
-                                       Margin="5,5,0,5"
-                                   VerticalAlignment="Center"
-                                   Width="75"
-                                   Visibility="Visible"
-                                   HorizontalAlignment="Center"
-                                   Content="Browse"/>
-                </Grid>
-
-                <Grid Grid.Row="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="Additional Attachments :"                                     
-                                   Grid.Column="1" HorizontalAlignment="Left" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
-
-                    <TextBlock x:Name ="txtICPAttachtxt" TextWrapping="Wrap"                                    
-                                   Grid.Column="2" HorizontalAlignment="Center" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
-
-                    <telerik:RadButton x:Name="btnICPAttachBrowse"
-                                   Command="{Binding BrowseCommand}"                                  
-                                   Grid.Column="3"
-                                       Margin="5,5,0,5"
-                                   VerticalAlignment="Center"
-                                   Width="75"
-                                   Visibility="Visible"
-                                   HorizontalAlignment="Center"
-                                   Content="Browse"/>
-                </Grid>
-
-                <Grid Grid.Row="6">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="Attachment1.xx"                                     
-                                   Grid.Column="2" HorizontalAlignment="Left" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
-
-                    <TextBlock Text="X"                                     
-                                   Grid.Column="3" HorizontalAlignment="Center" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
+                <!--Attachment Section-->
+                <Grid Grid.Row="2" Margin="0,5,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Attachments:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                    <Grid Grid.Row="1" Margin="0,2,0,0">
+                        <ItemsControl ItemsSource="{Binding AdditionalAttachedFileInfo}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <toolkit:WrapPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="2">
+                                        <Grid Background="{StaticResource DefaultGridHeaderBackground}">
+                                            <TextBlock Margin="2" Text="{Binding AdditionalAttachedFileData.FileName}" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                                           HorizontalAlignment="Left"/>
+                                        </Grid>
+                                        <Grid Background="{StaticResource DefaultGridHeaderBackground}">
+                                            <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="20"
+                                                           Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
+                                                           CommandParameter="{Binding}"
+                                                           Style="{StaticResource RadButtonStyle}"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Grid>
                 </Grid>
 
 
-                <Grid Grid.Row="7">
+                <Grid Grid.Row="3" Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="22"/>
+                        <ColumnDefinition Width="158" />
+                        <ColumnDefinition Width="180*"/>
+                        <ColumnDefinition Width="180*"/>
+                        <ColumnDefinition Width="180*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Attachment2.xx"                                     
-                                   Grid.Column="2" HorizontalAlignment="Left" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
-                    <TextBlock Text="X"                                     
-                                   Grid.Column="3" HorizontalAlignment="Center" Margin="2,5,0,5"
-                                                                      VerticalAlignment="Center"/>
-                </Grid>
-
-                <Grid Grid.Row="10">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <telerik:RadButton Content=" Preview" Grid.Column="1"
-                                       Command="{Binding PreviewCommand}"
-                                         Margin="5,0,0,0"/>
+                    <telerik:RadButton Content=" Preview" Grid.Column="2"
+                                       Command="{Binding PreviewCommand}"/>
 
 
-                    <telerik:RadButton Content="Submit" Grid.Column="3"
+                    <telerik:RadButton Content="Submit" Grid.Column="4"
                                        HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                       Command="{Binding SaveCommand}"
-                                         Margin="5,0,0,0"/>
+                                       Command="{Binding SaveCommand}"/>
 
                 </Grid>
             </Grid>

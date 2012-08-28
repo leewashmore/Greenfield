@@ -292,7 +292,7 @@ namespace GreenField.ServiceCaller
 
         void UpdateMeetingConfigSchedule(String userName, MeetingConfigurationSchedule meetingConfigurationSchedule, Action<Boolean?> callback);
 
-
+        void GetMeetingConfigSchedule(Action<MeetingConfigurationSchedule> callback);
         #endregion
 
     }

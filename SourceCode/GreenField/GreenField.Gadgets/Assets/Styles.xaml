@@ -968,5 +968,12 @@
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
 
+    <!--TimeUpDown-->
+    <Style TargetType="toolkit:TimeUpDown" x:Name="TimeUpDownStyle">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
 
 </ResourceDictionary>
