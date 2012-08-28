@@ -23,6 +23,7 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_AttachedFileInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "AttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.AttachedFileInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingPresentationMappingInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "MeetingPresentationMappingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingPresentationMappingInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_VoterInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "VoterInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.VoterInfo), true)]
+[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(GreenField.DAL.PresentationInfo), "CommentInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.CommentInfo), true)]
 
 #endregion
 
@@ -185,6 +186,38 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<MeetingConfigurationSchedule> _MeetingConfigurationSchedules;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<ChangeScript> ChangeScripts
+        {
+            get
+            {
+                if ((_ChangeScripts == null))
+                {
+                    _ChangeScripts = base.CreateObjectSet<ChangeScript>("ChangeScripts");
+                }
+                return _ChangeScripts;
+            }
+        }
+        private ObjectSet<ChangeScript> _ChangeScripts;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<CommentInfo> CommentInfoes
+        {
+            get
+            {
+                if ((_CommentInfoes == null))
+                {
+                    _CommentInfoes = base.CreateObjectSet<CommentInfo>("CommentInfoes");
+                }
+                return _CommentInfoes;
+            }
+        }
+        private ObjectSet<CommentInfo> _CommentInfoes;
 
         #endregion
         #region AddTo Methods
@@ -243,6 +276,22 @@ namespace GreenField.DAL
         public void AddToMeetingConfigurationSchedules(MeetingConfigurationSchedule meetingConfigurationSchedule)
         {
             base.AddObject("MeetingConfigurationSchedules", meetingConfigurationSchedule);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the ChangeScripts EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToChangeScripts(ChangeScript changeScript)
+        {
+            base.AddObject("ChangeScripts", changeScript);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the CommentInfoes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToCommentInfoes(CommentInfo commentInfo)
+        {
+            base.AddObject("CommentInfoes", commentInfo);
         }
 
         #endregion
@@ -1370,8 +1419,9 @@ namespace GreenField.DAL
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="userName">No Metadata Documentation available.</param>
+        /// <param name="meetingId">No Metadata Documentation available.</param>
         /// <param name="xmlScript">No Metadata Documentation available.</param>
-        public int SetICPMeetingAttachedFileInfo(global::System.String userName, global::System.String xmlScript)
+        public int SetICPMeetingAttachedFileInfo(global::System.String userName, Nullable<global::System.Int64> meetingId, global::System.String xmlScript)
         {
             ObjectParameter userNameParameter;
             if (userName != null)
@@ -1381,6 +1431,16 @@ namespace GreenField.DAL
             else
             {
                 userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
+            }
+    
+            ObjectParameter meetingIdParameter;
+            if (meetingId.HasValue)
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", meetingId);
+            }
+            else
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", typeof(global::System.Int64));
             }
     
             ObjectParameter xmlScriptParameter;
@@ -1393,7 +1453,7 @@ namespace GreenField.DAL
                 xmlScriptParameter = new ObjectParameter("xmlScript", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction("SetICPMeetingAttachedFileInfo", userNameParameter, xmlScriptParameter);
+            return base.ExecuteFunction("SetICPMeetingAttachedFileInfo", userNameParameter, meetingIdParameter, xmlScriptParameter);
         }
     
         /// <summary>
@@ -1900,6 +1960,303 @@ namespace GreenField.DAL
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ICPresentationModel", Name="ChangeScript")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class ChangeScript : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new ChangeScript object.
+        /// </summary>
+        /// <param name="scriptVersion">Initial value of the ScriptVersion property.</param>
+        /// <param name="dateExecuted">Initial value of the DateExecuted property.</param>
+        public static ChangeScript CreateChangeScript(global::System.String scriptVersion, global::System.DateTime dateExecuted)
+        {
+            ChangeScript changeScript = new ChangeScript();
+            changeScript.ScriptVersion = scriptVersion;
+            changeScript.DateExecuted = dateExecuted;
+            return changeScript;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ScriptVersion
+        {
+            get
+            {
+                return _ScriptVersion;
+            }
+            set
+            {
+                if (_ScriptVersion != value)
+                {
+                    OnScriptVersionChanging(value);
+                    ReportPropertyChanging("ScriptVersion");
+                    _ScriptVersion = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("ScriptVersion");
+                    OnScriptVersionChanged();
+                }
+            }
+        }
+        private global::System.String _ScriptVersion;
+        partial void OnScriptVersionChanging(global::System.String value);
+        partial void OnScriptVersionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime DateExecuted
+        {
+            get
+            {
+                return _DateExecuted;
+            }
+            set
+            {
+                OnDateExecutedChanging(value);
+                ReportPropertyChanging("DateExecuted");
+                _DateExecuted = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DateExecuted");
+                OnDateExecutedChanged();
+            }
+        }
+        private global::System.DateTime _DateExecuted;
+        partial void OnDateExecutedChanging(global::System.DateTime value);
+        partial void OnDateExecutedChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ICPresentationModel", Name="CommentInfo")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class CommentInfo : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new CommentInfo object.
+        /// </summary>
+        /// <param name="commentID">Initial value of the CommentID property.</param>
+        public static CommentInfo CreateCommentInfo(global::System.Int64 commentID)
+        {
+            CommentInfo commentInfo = new CommentInfo();
+            commentInfo.CommentID = commentID;
+            return commentInfo;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 CommentID
+        {
+            get
+            {
+                return _CommentID;
+            }
+            set
+            {
+                if (_CommentID != value)
+                {
+                    OnCommentIDChanging(value);
+                    ReportPropertyChanging("CommentID");
+                    _CommentID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("CommentID");
+                    OnCommentIDChanged();
+                }
+            }
+        }
+        private global::System.Int64 _CommentID;
+        partial void OnCommentIDChanging(global::System.Int64 value);
+        partial void OnCommentIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> PresentationID
+        {
+            get
+            {
+                return _PresentationID;
+            }
+            set
+            {
+                OnPresentationIDChanging(value);
+                ReportPropertyChanging("PresentationID");
+                _PresentationID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PresentationID");
+                OnPresentationIDChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _PresentationID;
+        partial void OnPresentationIDChanging(Nullable<global::System.Int64> value);
+        partial void OnPresentationIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int64> FileID
+        {
+            get
+            {
+                return _FileID;
+            }
+            set
+            {
+                OnFileIDChanging(value);
+                ReportPropertyChanging("FileID");
+                _FileID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FileID");
+                OnFileIDChanged();
+            }
+        }
+        private Nullable<global::System.Int64> _FileID;
+        partial void OnFileIDChanging(Nullable<global::System.Int64> value);
+        partial void OnFileIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Comment
+        {
+            get
+            {
+                return _Comment;
+            }
+            set
+            {
+                OnCommentChanging(value);
+                ReportPropertyChanging("Comment");
+                _Comment = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Comment");
+                OnCommentChanged();
+            }
+        }
+        private global::System.String _Comment;
+        partial void OnCommentChanging(global::System.String value);
+        partial void OnCommentChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CommentBy
+        {
+            get
+            {
+                return _CommentBy;
+            }
+            set
+            {
+                OnCommentByChanging(value);
+                ReportPropertyChanging("CommentBy");
+                _CommentBy = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CommentBy");
+                OnCommentByChanged();
+            }
+        }
+        private global::System.String _CommentBy;
+        partial void OnCommentByChanging(global::System.String value);
+        partial void OnCommentByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CommentOn
+        {
+            get
+            {
+                return _CommentOn;
+            }
+            set
+            {
+                OnCommentOnChanging(value);
+                ReportPropertyChanging("CommentOn");
+                _CommentOn = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CommentOn");
+                OnCommentOnChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CommentOn;
+        partial void OnCommentOnChanging(Nullable<global::System.DateTime> value);
+        partial void OnCommentOnChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "PresentationInfo")]
+        public PresentationInfo PresentationInfo
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PresentationInfo> PresentationInfoReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="ICPresentationModel", Name="MeetingAttachedFileInfo")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -1919,7 +2276,8 @@ namespace GreenField.DAL
         /// <param name="createdOn">Initial value of the CreatedOn property.</param>
         /// <param name="modifiedBy">Initial value of the ModifiedBy property.</param>
         /// <param name="modifiedOn">Initial value of the ModifiedOn property.</param>
-        public static MeetingAttachedFileInfo CreateMeetingAttachedFileInfo(global::System.Int64 fileID, global::System.Int64 meetingID, global::System.String fileName, global::System.String fileType, global::System.String fileLocation, global::System.String createdBy, global::System.DateTime createdOn, global::System.String modifiedBy, global::System.DateTime modifiedOn)
+        /// <param name="id">Initial value of the ID property.</param>
+        public static MeetingAttachedFileInfo CreateMeetingAttachedFileInfo(global::System.Int64 fileID, global::System.Int64 meetingID, global::System.String fileName, global::System.String fileType, global::System.String fileLocation, global::System.String createdBy, global::System.DateTime createdOn, global::System.String modifiedBy, global::System.DateTime modifiedOn, global::System.Int64 id)
         {
             MeetingAttachedFileInfo meetingAttachedFileInfo = new MeetingAttachedFileInfo();
             meetingAttachedFileInfo.FileID = fileID;
@@ -1931,6 +2289,7 @@ namespace GreenField.DAL
             meetingAttachedFileInfo.CreatedOn = createdOn;
             meetingAttachedFileInfo.ModifiedBy = modifiedBy;
             meetingAttachedFileInfo.ModifiedOn = modifiedOn;
+            meetingAttachedFileInfo.ID = id;
             return meetingAttachedFileInfo;
         }
 
@@ -2155,6 +2514,33 @@ namespace GreenField.DAL
         private global::System.DateTime _ModifiedOn;
         partial void OnModifiedOnChanging(global::System.DateTime value);
         partial void OnModifiedOnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ID
+        {
+            get
+            {
+                return _ID;
+            }
+            set
+            {
+                if (_ID != value)
+                {
+                    OnIDChanging(value);
+                    ReportPropertyChanging("ID");
+                    _ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ID");
+                    OnIDChanged();
+                }
+            }
+        }
+        private global::System.Int64 _ID;
+        partial void OnIDChanging(global::System.Int64 value);
+        partial void OnIDChanged();
 
         #endregion
     
@@ -4338,6 +4724,28 @@ namespace GreenField.DAL
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<VoterInfo>("ICPresentationModel.FK_VoterInfo_PresentationInfo", "VoterInfo", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "CommentInfo")]
+        public EntityCollection<CommentInfo> CommentInfoes
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<CommentInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "CommentInfo");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<CommentInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "CommentInfo", value);
                 }
             }
         }

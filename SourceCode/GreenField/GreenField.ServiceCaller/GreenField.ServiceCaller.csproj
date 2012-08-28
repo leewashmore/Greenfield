@@ -346,10 +346,10 @@
     <None Include="Service References\MeetingDefinitions\MeetingOperations6.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MeetingDefinitions\MeetingOperations61.xsd">
+    <None Include="Service References\MeetingDefinitions\MeetingOperations7.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MeetingDefinitions\MeetingOperations7.xsd">
+    <None Include="Service References\MeetingDefinitions\MeetingOperations8.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations.wsdl" />
@@ -454,17 +454,17 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\MeetingDefinitions\MeetingOperations.disco" />
-    <None Include="Service References\MeetingDefinitions\configuration91.svcinfo" />
-    <None Include="Service References\MeetingDefinitions\configuration.svcinfo" />
-    <None Include="Service References\MeetingDefinitions\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Service References\DCFDefinitions\DCFOperations.disco" />
     <None Include="Service References\DCFDefinitions\configuration91.svcinfo" />
     <None Include="Service References\DCFDefinitions\configuration.svcinfo" />
     <None Include="Service References\DCFDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\MeetingDefinitions\MeetingOperations.disco" />
+    <None Include="Service References\MeetingDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\MeetingDefinitions\configuration.svcinfo" />
+    <None Include="Service References\MeetingDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
