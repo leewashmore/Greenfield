@@ -16,6 +16,7 @@ using GreenField.Common;
 using GreenField.ServiceCaller;
 using GreenField.DataContracts;
 using Telerik.Windows.Controls.Charting;
+using Telerik.Windows.Documents.Model;
 
 namespace GreenField.Gadgets.Views
 {
@@ -146,6 +147,8 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension._logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
@@ -161,7 +164,47 @@ namespace GreenField.Gadgets.Views
             }
             catch (Exception ex)
             {
-                Prompt.ShowDialog(ex.Message);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextSlice1ChartExtension._logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Print the Grid/Chart
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension._logger, methodNamespace);
+            try
+            {
+                if (grdRadGridView.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.Print(dgChartExtension, 10);
+                    }));
+
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+                }
+                else if (grdRadChart.Visibility == Visibility.Visible)
+                {
+                    Dispatcher.BeginInvoke((Action)(() =>
+                    {
+                        RichTextBox.Document = PDFExporter.PrintChart(chChartExtension);
+                        RichTextBox.ChangeSectionPageOrientation(PageOrientation.Landscape);
+                    }));
+
+                    RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextSlice1ChartExtension._logger, ex);
             }
         }
 
@@ -174,9 +217,19 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private void ApplyChartStyles()
         {
-            this.chChartExtension.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-            this.chChartExtension.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chChartExtension.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension._logger, methodNamespace);
+            try
+            {
+                this.chChartExtension.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+                this.chChartExtension.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+                this.chChartExtension.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextSlice1ChartExtension._logger, ex);
+            }
         }
 
         /// <summary>
@@ -200,96 +253,86 @@ namespace GreenField.Gadgets.Views
         }
 
         /// <summary>
-        /// Time Combo-Box Selection Changed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
-        }
-
-        /// <summary>
         /// Data-Bound Event 
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void chChartExtension_DataBound(object sender, Telerik.Windows.Controls.Charting.ChartDataBoundEventArgs e)
         {
-            if (this.DataContext as ViewModelSlice1ChartExtension != null)
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension._logger, methodNamespace);
+            try
             {
-                if (this.chChartExtension.DefaultView.ChartLegend.Items.Count != 0)
+                if (this.DataContext as ViewModelSlice1ChartExtension != null)
                 {
-                    this.chChartExtension.DefaultView.ChartLegend.Items.Clear();
-                }
-
-                int i = 0;
-
-                if ((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData != null)
-                {
-                    (this.DataContext as ViewModelSlice1ChartExtension).AxisXMinValue = Convert.ToDateTime(((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.OrderBy(a => a.ToDate)).
-                        Select(a => a.ToDate).FirstOrDefault()).ToOADate();
-                    (this.DataContext as ViewModelSlice1ChartExtension).AxisXMaxValue = Convert.ToDateTime(((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.OrderByDescending(a => a.ToDate)).
-                        Select(a => a.ToDate).FirstOrDefault()).ToOADate();
-                    int dataCount = (this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.Count;
-
-                    if (dataCount != 0)
+                    if (this.chChartExtension.DefaultView.ChartLegend.Items.Count != 0)
                     {
-                        this.chChartExtension.DefaultView.ChartArea.AxisX.Step = dataCount / 10;
+                        this.chChartExtension.DefaultView.ChartLegend.Items.Clear();
                     }
 
-                    if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.AmountTraded != null))
-                    {
-                        ChartLegendItem transactionLegendItem = new ChartLegendItem();
-                        transactionLegendItem.MarkerFill = new SolidColorBrush(Color.FromArgb(255, 33, 54, 113));
-                        transactionLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
-                            Where(a => a.Type.ToUpper() == "SECURITY").Select(a => a.Ticker).FirstOrDefault();
-                        this.chChartExtension.DefaultView.ChartLegend.Items.Add(transactionLegendItem);
-                    }
+                    int i = 0;
 
-                    if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.Type.ToUpper() == "SECURITY"))
+                    if ((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData != null)
                     {
-                        i++;
-                        ChartLegendItem securityLegendItem = new ChartLegendItem();
-                        securityLegendItem.MarkerFill = ReturnLegendItemColor(i);
-                        securityLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
-                            Where(a => a.Type.ToUpper() == "SECURITY").Select(a => a.Ticker).FirstOrDefault();
-                        this.chChartExtension.DefaultView.ChartLegend.Items.Add(securityLegendItem);
-                    }
+                        (this.DataContext as ViewModelSlice1ChartExtension).AxisXMinValue = Convert.ToDateTime(((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.OrderBy(a => a.ToDate)).
+                            Select(a => a.ToDate).FirstOrDefault()).ToOADate();
+                        (this.DataContext as ViewModelSlice1ChartExtension).AxisXMaxValue = Convert.ToDateTime(((this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.OrderByDescending(a => a.ToDate)).
+                            Select(a => a.ToDate).FirstOrDefault()).ToOADate();
+                        int dataCount = (this.DataContext as ViewModelSlice1ChartExtension).ChartExtensionPlottedData.Count;
 
-                    if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.Type == "COUNTRY"))
-                    {
-                        i++;
-                        ChartLegendItem countryLegendItem = new ChartLegendItem();
-                        countryLegendItem.MarkerFill = ReturnLegendItemColor(i);
-                        countryLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
-                            Where(a => a.Type.ToUpper() == "COUNTRY").Select(a => a.Ticker).FirstOrDefault();
-                        this.chChartExtension.DefaultView.ChartLegend.Items.Add(countryLegendItem);
-                    }
+                        if (dataCount != 0)
+                        {
+                            this.chChartExtension.DefaultView.ChartArea.AxisX.Step = dataCount / 10;
+                        }
 
-                    if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.Type.ToUpper() == "SECTOR"))
-                    {
-                        i++;
-                        ChartLegendItem sectorLegendItem = new ChartLegendItem();
-                        sectorLegendItem.MarkerFill = ReturnLegendItemColor(i);
-                        sectorLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
-                            Where(a => a.Type.ToUpper() == "SECTOR").Select(a => a.Ticker).FirstOrDefault();
-                        this.chChartExtension.DefaultView.ChartLegend.Items.Add(sectorLegendItem);
-                    }
+                        if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.AmountTraded != null))
+                        {
+                            ChartLegendItem transactionLegendItem = new ChartLegendItem();
+                            transactionLegendItem.MarkerFill = new SolidColorBrush(Color.FromArgb(255, 33, 54, 113));
+                            transactionLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
+                                Where(a => a.Type.ToUpper() == "SECURITY").Select(a => a.Ticker).FirstOrDefault();
+                            this.chChartExtension.DefaultView.ChartLegend.Items.Add(transactionLegendItem);
+                        }
 
+                        if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.Type.ToUpper() == "SECURITY"))
+                        {
+                            i++;
+                            ChartLegendItem securityLegendItem = new ChartLegendItem();
+                            securityLegendItem.MarkerFill = ReturnLegendItemColor(i);
+                            securityLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
+                                Where(a => a.Type.ToUpper() == "SECURITY").Select(a => a.Ticker).FirstOrDefault();
+                            this.chChartExtension.DefaultView.ChartLegend.Items.Add(securityLegendItem);
+                        }
+
+                        if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.Type == "COUNTRY"))
+                        {
+                            i++;
+                            ChartLegendItem countryLegendItem = new ChartLegendItem();
+                            countryLegendItem.MarkerFill = ReturnLegendItemColor(i);
+                            countryLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
+                                Where(a => a.Type.ToUpper() == "COUNTRY").Select(a => a.Ticker).FirstOrDefault();
+                            this.chChartExtension.DefaultView.ChartLegend.Items.Add(countryLegendItem);
+                        }
+
+                        if (this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.Any(a => a.Type.ToUpper() == "SECTOR"))
+                        {
+                            i++;
+                            ChartLegendItem sectorLegendItem = new ChartLegendItem();
+                            sectorLegendItem.MarkerFill = ReturnLegendItemColor(i);
+                            sectorLegendItem.Label = this.DataContextSlice1ChartExtension.ChartExtensionPlottedData.
+                                Where(a => a.Type.ToUpper() == "SECTOR").Select(a => a.Ticker).FirstOrDefault();
+                            this.chChartExtension.DefaultView.ChartLegend.Items.Add(sectorLegendItem);
+                        }
+
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextSlice1ChartExtension._logger, ex);
+            }
 
-        }
-
-        /// <summary>
-        /// Grid Row Loaded Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgChartExtension_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            //GroupedGridRowLoadedHandler.Implement(e);
         }
 
         /// <summary>
@@ -299,10 +342,20 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void chChartExtension_Loaded(object sender, RoutedEventArgs e)
         {
-            if (chChartExtension.DefaultView.ChartLegend.Items.Count != 0)
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextSlice1ChartExtension._logger, methodNamespace);
+            try
             {
-                ChartLegendItem var = this.chChartExtension.DefaultView.ChartLegend.Items[0];
-                this.chChartExtension.DefaultView.ChartLegend.Items.Remove(var);
+                if (chChartExtension.DefaultView.ChartLegend.Items.Count != 0)
+                {
+                    ChartLegendItem var = this.chChartExtension.DefaultView.ChartLegend.Items[0];
+                    this.chChartExtension.DefaultView.ChartLegend.Items.Remove(var);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextSlice1ChartExtension._logger, ex);
             }
         }
 

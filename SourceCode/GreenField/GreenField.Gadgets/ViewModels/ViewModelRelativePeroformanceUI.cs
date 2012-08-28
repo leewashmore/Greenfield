@@ -40,7 +40,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Instance of Logger Facade
         /// </summary>
-        private ILoggerFacade _logger;
+        public ILoggerFacade _logger;
 
         /// <summary>
         /// Instance of Event Aggregator

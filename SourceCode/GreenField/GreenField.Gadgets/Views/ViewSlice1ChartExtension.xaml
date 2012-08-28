@@ -23,6 +23,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="0"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -61,7 +62,7 @@
                     </Button>
                     <Button Height="15" Width="15" Grid.Column="4"
                         BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
-                        HorizontalAlignment="Center" HorizontalContentAlignment="Center" Name="btnPrint"
+                        HorizontalAlignment="Center" HorizontalContentAlignment="Center" Name="btnPrint" Click="btnPrint_Click" 
                         Margin="5,0,0,0" >
                         <Image Source="../Images/Print.png" />
                     </Button>
@@ -86,8 +87,7 @@
                     <TextBlock Grid.Column="0" Text="Time" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                     <telerik:RadComboBox x:Name="cmbTime" Grid.Column="1" Margin="5,0,0,0" VerticalAlignment="Top" 
                                          HorizontalAlignment="Stretch" Style="{StaticResource RadComboBoxStyle}"
-                                         ItemsSource="{Binding TimeRange}" SelectedValue="{Binding SelectedTimeRange, Mode=TwoWay}" 
-                                         SelectionChanged="cmbTime_SelectionChanged"/>
+                                         ItemsSource="{Binding TimeRange}" SelectedValue="{Binding SelectedTimeRange, Mode=TwoWay}" />
                 </Grid>
             </telerik:RadExpander.Content>
         </telerik:RadExpander>
@@ -151,11 +151,11 @@
                         <telerik:RadChart x:Name="chChartExtension" telerik:StyleManager.Theme="Metro" LegendStyle="{StaticResource ChartLegendStyle}"
                                           ItemsSource="{Binding ChartExtensionPlottedData, Mode=TwoWay}" IsHitTestVisible="True"
                                           DataBound="chChartExtension_DataBound" Loaded="chChartExtension_Loaded">
-                           <!--Sampling Settings-->
+                            <!--Sampling Settings-->
                             <telerik:RadChart.SamplingSettings>
                                 <telerik:SamplingSettings SamplingThreshold="0" />
                             </telerik:RadChart.SamplingSettings>
-                            
+
                             <telerik:RadChart.PaletteBrushes>
                                 <SolidColorBrush Color="#213671"/>
                                 <SolidColorBrush Color="#9F1D21"/>
@@ -254,5 +254,6 @@
                 </Border>
             </Grid>
         </Grid>
+        <telerik:RadRichTextBox x:Name="RichTextBox" Width="0" Grid.Row="2"/>
     </Grid>
 </helpers:ViewBaseUserControl>

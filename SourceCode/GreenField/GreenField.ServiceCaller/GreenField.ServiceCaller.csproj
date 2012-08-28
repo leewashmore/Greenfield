@@ -98,6 +98,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\DCFDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ExternalResearchDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -163,6 +168,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.QuarterlyResultsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.RegionSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.ValuationQualityGrowthData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DCFAnalysisSummaryData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCategoricalData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.EntitySelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FilterSelectionData.datasource" />
@@ -220,6 +226,19 @@
     <None Include="Service References\DashboardDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DCFDefinitions\DCFOperations.wsdl" />
+    <None Include="Service References\DCFDefinitions\DCFOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DCFDefinitions\DCFOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DCFDefinitions\DCFOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DCFDefinitions\DCFOperations3.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.wsdl" />
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.xsd">
@@ -436,6 +455,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\DCFDefinitions\DCFOperations.disco" />
+    <None Include="Service References\DCFDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\DCFDefinitions\configuration.svcinfo" />
+    <None Include="Service References\DCFDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
@@ -501,6 +527,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\BenchmarkHoldingsDefinitions\" />
     <WCFMetadataStorage Include="Service References\DashboardDefinitions\" />
+    <WCFMetadataStorage Include="Service References\DCFDefinitions\" />
     <WCFMetadataStorage Include="Service References\ExternalResearchDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoginDefinitions\" />

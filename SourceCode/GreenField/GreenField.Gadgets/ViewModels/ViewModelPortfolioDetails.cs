@@ -26,7 +26,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
+        public ILoggerFacade _logger;
         private PortfolioSelectionData _portfolioSelectionData;
         private DateTime? _effectiveDate;
         private bool _lookThruEnabled = false;

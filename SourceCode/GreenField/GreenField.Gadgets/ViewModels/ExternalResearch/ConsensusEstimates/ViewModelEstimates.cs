@@ -35,7 +35,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// LoggerFacade
         /// </summary>
-        private ILoggerFacade _logger;
+        public ILoggerFacade _logger;
 
         /// <summary>
         /// Selected Security

@@ -294,6 +294,12 @@ namespace GreenField.ServiceCaller
 
 
         #endregion
+        
+         #region DCF
+
+        void RetrieveDCFAnalysisData(EntitySelectionData entitySelectionData, Action<List<DCFAnalysisSummaryData>> callback);
+
+#endregion
 
     }
 }

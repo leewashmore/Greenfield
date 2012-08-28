@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="3096787d-24f3-4173-b119-3e5a0effc9a5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:59430/Services/MeetingService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MeetingService.disco" MetadataType="Disco" ID="a6c5dcdf-ad7e-472f-8cd9-2e7818b34350" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingService.svc?disco" />
+    <MetadataFile FileName="MeetingService.xsd" MetadataType="Schema" ID="1e056c22-eb73-4172-85d6-ac4752c88c0d" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingService.svc?xsd=xsd1" />
+    <MetadataFile FileName="MeetingService.wsdl" MetadataType="Wsdl" ID="7c75f424-f44a-423c-bc40-c2b0e6d26ad0" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingService.svc?wsdl" />
+    <MetadataFile FileName="MeetingService1.xsd" MetadataType="Schema" ID="34588f05-028e-4f10-84c5-64434b96c12f" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingService.svc?xsd=xsd4" />
+    <MetadataFile FileName="MeetingService2.xsd" MetadataType="Schema" ID="35b949be-3620-4074-92d4-805c58f087d7" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingService.svc?xsd=xsd3" />
+    <MetadataFile FileName="MeetingService3.xsd" MetadataType="Schema" ID="083eaf18-5518-49a9-806a-6cebf224f43a" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingService.svc?xsd=xsd2" />
+    <MetadataFile FileName="MeetingService4.xsd" MetadataType="Schema" ID="4556aecf-a530-4f6d-b28c-e6945a0cb030" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingService.svc?xsd=xsd5" />
+    <MetadataFile FileName="MeetingService5.xsd" MetadataType="Schema" ID="9851af6f-fd49-48bf-a033-a5280ca64d26" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingService.svc?xsd=xsd8" />
+    <MetadataFile FileName="MeetingService6.xsd" MetadataType="Schema" ID="0dac5a3b-a048-4375-ba31-3bdfaf7bc4df" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingService.svc?xsd=xsd7" />
+    <MetadataFile FileName="MeetingService7.xsd" MetadataType="Schema" ID="99704afa-5a4b-4307-9c2a-e8e5ce5d198e" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingService.svc?xsd=xsd6" />
+    <MetadataFile FileName="MeetingService8.xsd" MetadataType="Schema" ID="dc4ee6ca-0da1-4ec0-9df6-c85ad016fa1e" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingService.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

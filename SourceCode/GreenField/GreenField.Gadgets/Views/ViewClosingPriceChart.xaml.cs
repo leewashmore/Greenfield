@@ -83,8 +83,6 @@ namespace GreenField.Gadgets.Views
             ApplyChartStyles();
         }
 
-
-
         #endregion
 
         #region Styling
@@ -94,16 +92,26 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private void ApplyChartStyles()
         {
-            this.chPricing.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chPricing.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chVolume.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chVolume.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
-            this.chPricing.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;
-            this.chVolume.DefaultView.ChartLegend.Header = string.Empty;
-            this.chPricing.DefaultView.ChartArea.AxisX.TicksDistance = 50;
-            this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
-            this.cmbAddSeries.CanAutocompleteSelectItems = false;
-            this.cmbTime.SelectedValue = "1-Year";
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextClosingPriceChart._logger, methodNamespace);
+            try
+            {
+                this.chPricing.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+                this.chPricing.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+                this.chVolume.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+                this.chVolume.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
+                this.chPricing.DefaultView.ChartLegend.Style = this.Resources["ChartLegendStyle"] as Style;
+                this.chVolume.DefaultView.ChartLegend.Header = string.Empty;
+                this.chPricing.DefaultView.ChartArea.AxisX.TicksDistance = 50;
+                this.chVolume.DefaultView.ChartLegend.Visibility = Visibility.Collapsed;
+                this.cmbAddSeries.CanAutocompleteSelectItems = false;
+                this.cmbTime.SelectedValue = "1-Year";
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextClosingPriceChart._logger, ex);
+            }
         }
 
 
@@ -241,6 +249,8 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextClosingPriceChart._logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
@@ -261,7 +271,8 @@ namespace GreenField.Gadgets.Views
             }
             catch (Exception ex)
             {
-                Prompt.ShowDialog(ex.Message);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextClosingPriceChart._logger, ex);
             }
         }
 
@@ -309,27 +320,37 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void cmbTime_DropDownClosed(object sender, EventArgs e)
         {
-            if (Convert.ToString(cmbTime.SelectedValue) == "Custom")
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextClosingPriceChart._logger, methodNamespace);
+            try
             {
-                ViewCustomDateChildWindow customDateWindow = new ViewCustomDateChildWindow();
-                customDateWindow.Show();
-                customDateWindow.Unloaded += (se, a) =>
+                if (Convert.ToString(cmbTime.SelectedValue) == "Custom")
                 {
-                    if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
+                    ViewCustomDateChildWindow customDateWindow = new ViewCustomDateChildWindow();
+                    customDateWindow.Show();
+                    customDateWindow.Unloaded += (se, a) =>
                     {
-                        DataContextClosingPriceChart.SelectedStartDate = Convert.ToDateTime(customDateWindow.dpStartDate.SelectedDate);
-                        DataContextClosingPriceChart.SelectedEndDate = Convert.ToDateTime(customDateWindow.dpEndDate.SelectedDate);
-                    }
-                    else
-                    {
-                        this.cmbTime.SelectedValue = "1-Year";
-                    }
+                        if (Convert.ToBoolean(customDateWindow.enteredDateCorrect))
+                        {
+                            DataContextClosingPriceChart.SelectedStartDate = Convert.ToDateTime(customDateWindow.dpStartDate.SelectedDate);
+                            DataContextClosingPriceChart.SelectedEndDate = Convert.ToDateTime(customDateWindow.dpEndDate.SelectedDate);
+                        }
+                        else
+                        {
+                            this.cmbTime.SelectedValue = "1-Year";
+                        }
+                        this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
+                    };
+                }
+                else
+                {
                     this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
-                };
+                }
             }
-            else
+            catch (Exception ex)
             {
-                this.DataContextClosingPriceChart.SelectedTimeRange = Convert.ToString(cmbTime.SelectedValue);
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextClosingPriceChart._logger, ex);
             }
         }
 
@@ -341,6 +362,19 @@ namespace GreenField.Gadgets.Views
         private void cmbTime_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
 
+        }
+
+        /// <summary>
+        /// Add Series Drop Down Opening Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbAddSeries_DropDownOpened(object sender, EventArgs e)
+        {
+            if (SelectionData.EntitySelectionData != null && _dataContextClosingPriceChart.SeriesReferenceSource == null)
+            {
+                _dataContextClosingPriceChart.RetrieveEntitySelectionDataCallBackMethod(SelectionData.EntitySelectionData);
+            }
         }
 
         #endregion
@@ -358,18 +392,5 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-
-        /// <summary>
-        /// Add Series Drop Down Opening Event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cmbAddSeries_DropDownOpened(object sender, EventArgs e)
-        {
-            if (SelectionData.EntitySelectionData != null && _dataContextClosingPriceChart.SeriesReferenceSource == null)
-            {
-                _dataContextClosingPriceChart.RetrieveEntitySelectionDataCallBackMethod(SelectionData.EntitySelectionData);
-            }
-        }
     }
 }

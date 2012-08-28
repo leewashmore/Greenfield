@@ -16,6 +16,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Telerik.Windows.Data;
 using System.Collections;
+using System.Windows.Media.Imaging;
+using Telerik.Windows.Media.Imaging;
+using Microsoft.Practices.Prism.Logging;
+using GreenField.Common;
+using GreenField.ServiceCaller;
+
 
 namespace GreenField.Gadgets.Helpers
 {
@@ -24,10 +30,18 @@ namespace GreenField.Gadgets.Helpers
     /// </summary>
     public static class PDFExporter
     {
+        #region DataGrid
+
+        #region PrivateVariables
+
         /// <summary>
         /// FontSize of Document
         /// </summary>
         private static int fontSizePDF = 6;
+
+        #endregion
+
+        #region PDF Export.
 
         /// <summary>
         /// Event handler when user wants to Export the Grid to PDF
@@ -36,28 +50,39 @@ namespace GreenField.Gadgets.Helpers
         /// <param name="e"></param>
         public static void btnExportPDF_Click(RadGridView dataGrid, int fontSize = 6)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
-            dialog.DefaultExt = "*.pdf";
-            dialog.Filter = "Adobe PDF Document (*.pdf)|*.pdf";
-
-            fontSizePDF = fontSize;
-
-            if (dialog.ShowDialog() == true)
+            try
             {
-                RadDocument document = CreateDocument(dataGrid);
+                SaveFileDialog dialog = new SaveFileDialog();
+                dialog.DefaultExt = "*.pdf";
+                dialog.Filter = "Adobe PDF Document (*.pdf)|*.pdf";
 
-                document.LayoutMode = DocumentLayoutMode.Paged;
-                document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
-                document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+                fontSizePDF = fontSize;
 
-                PdfFormatProvider provider = new PdfFormatProvider();
-                using (Stream output = dialog.OpenFile())
+                if (dialog.ShowDialog() == true)
                 {
-                    provider.Export(document, output);
+                    RadDocument document = CreateDocument(dataGrid);
+
+                    document.LayoutMode = DocumentLayoutMode.Paged;
+                    document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+                    document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+
+                    PdfFormatProvider provider = new PdfFormatProvider();
+                    using (Stream output = dialog.OpenFile())
+                    {
+                        provider.Export(document, output);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
             }
 
         }
+
+        #endregion
+
+        #region Print
 
         /// <summary>
         /// Printing the Grid
@@ -67,9 +92,21 @@ namespace GreenField.Gadgets.Helpers
         /// <returns></returns>
         public static RadDocument Print(RadGridView grid, int fontSize = 8)
         {
-            fontSizePDF = fontSize;
-            return CreateDocument(grid);
+            try
+            {
+                fontSizePDF = fontSize;
+                return CreateDocument(grid);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                return null;
+            }
         }
+
+        #endregion
+
+        #region Helper Methods
 
         /// <summary>
         /// Helper Function for PDF
@@ -249,5 +286,78 @@ namespace GreenField.Gadgets.Helpers
             }
             return level;
         }
+
+        #endregion
+        
+        #endregion
+
+        #region Chart
+
+        #region PrintChart
+
+        /// <summary>
+        /// Method to Print Chart
+        /// </summary>
+        /// <param name="chart"></param>
+        public static RadDocument PrintChart(RadChart chart)
+        {
+            try
+            {
+                RadDocument document = new RadDocument();
+                document = CreateChartDocumentPart(chart);
+                return document;
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Helper Method for printing Chart
+        /// </summary>
+        /// <param name="chart">The Chart to be Printed</param>
+        private static RadDocument CreateChartDocumentPart(RadChart chart)
+        {
+            try
+            {
+                RadDocument document = new RadDocument();
+                Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
+                Telerik.Windows.Documents.Model.Paragraph paragraph = new Telerik.Windows.Documents.Model.Paragraph();
+                BitmapImage bi = new BitmapImage();
+
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    chart.ExportToImage(ms, new PngBitmapEncoder());
+                    bi.SetSource(ms);
+                }
+
+                double imageWidth = chart.ActualWidth;
+                double imageHeight = chart.ActualHeight;
+
+                if (imageWidth > 625)
+                {
+                    imageWidth = 625;
+                    imageHeight = chart.ActualHeight * imageWidth / chart.ActualWidth;
+                }
+
+                ImageInline image = new ImageInline(new WriteableBitmap(bi)) { Width = imageWidth, Height = imageHeight };
+                paragraph.Inlines.Add(image);
+                section.Blocks.Add(paragraph);
+                document.Sections.Add(section);
+                return document;
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                return null;
+            }
+        }
+
+        #endregion 
+        
+        #endregion
+
     }
 }

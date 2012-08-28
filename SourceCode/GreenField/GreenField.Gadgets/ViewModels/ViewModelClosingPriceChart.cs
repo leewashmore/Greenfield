@@ -32,7 +32,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Instance of ILoggerFacade
         /// </summary>
-        private ILoggerFacade _logger;
+        public ILoggerFacade _logger;
 
         /// <summary>
         /// Instance of IEventAggregator

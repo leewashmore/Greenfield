@@ -14,6 +14,7 @@ using GreenField.Gadgets.ViewModels;
 using GreenField.DataContracts;
 using GreenField.Common;
 using GreenField.Gadgets.Models;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -102,11 +103,22 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void LeftNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextValuations._logger, methodNamespace);
+
+            try
             {
-                PeriodColumnNamespace = typeof(ViewModelValuations).FullName,
-                PeriodColumnNavigationDirection = NavigationDirection.LEFT
-            });
+                PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
+                    {
+                        PeriodColumnNamespace = typeof(ViewModelValuations).FullName,
+                        PeriodColumnNavigationDirection = NavigationDirection.LEFT
+                    });
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextValuations._logger, ex);
+            }
         }
 
         /// <summary>
@@ -116,11 +128,22 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void RightNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextValuations._logger, methodNamespace);
+
+            try
             {
-                PeriodColumnNamespace = typeof(ViewModelValuations).FullName,
-                PeriodColumnNavigationDirection = NavigationDirection.RIGHT
-            });
+                PeriodColumns.RaisePeriodColumnNavigationCompleted(new PeriodColumnNavigationEventArg()
+                    {
+                        PeriodColumnNamespace = typeof(ViewModelValuations).FullName,
+                        PeriodColumnNavigationDirection = NavigationDirection.RIGHT
+                    });
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextValuations._logger, ex);
+            }
         }
         #endregion
 
@@ -154,20 +177,30 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
-            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
-            String elementName = "Consensus Estimate - " + (this.DataContextValuations.EntitySelectionInfo).LongName + " (" + (this.DataContextValuations.EntitySelectionInfo).ShortName + ") " +
-                (_periodIsYearly ? this.dgConsensusEstimateValuations.Columns[2].Header : this.dgConsensusEstimateValuations.Columns[6].Header) + " - " +
-                (_periodIsYearly ? this.dgConsensusEstimateValuations.Columns[7].Header : this.dgConsensusEstimateValuations.Columns[11].Header);
-            RadExportOptionsInfo.Add(new RadExportOptions()
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(this.DataContextValuations._logger, methodNamespace);
+            try
             {
-                ElementName = elementName,
-                Element = this.dgConsensusEstimateValuations
-                ,
-                ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
-            });
+                List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+                String elementName = "Consensus Estimate - " + (this.DataContextValuations.EntitySelectionInfo).LongName + " (" + (this.DataContextValuations.EntitySelectionInfo).ShortName + ") " +
+                    (_periodIsYearly ? this.dgConsensusEstimateValuations.Columns[2].Header : this.dgConsensusEstimateValuations.Columns[6].Header) + " - " +
+                    (_periodIsYearly ? this.dgConsensusEstimateValuations.Columns[7].Header : this.dgConsensusEstimateValuations.Columns[11].Header);
+                RadExportOptionsInfo.Add(new RadExportOptions()
+                {
+                    ElementName = elementName,
+                    Element = this.dgConsensusEstimateValuations
+                    ,
+                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                });
 
-            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
-            childExportOptions.Show();
+                ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_CONSENSUS_MEDIAN_ESTIMATES);
+                childExportOptions.Show();
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextValuations._logger, ex);
+            }
         }
         #endregion
 
