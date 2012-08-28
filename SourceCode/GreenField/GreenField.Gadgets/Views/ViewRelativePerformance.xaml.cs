@@ -614,13 +614,12 @@ namespace GreenField.Gadgets.Views
                     object value = null;
                     if (j == 0)
                     {
-                        value = columns[j].GetValueForItem(items[i]) != null ?
-                            ((columns[j].GetValueForItem(items[i])) as RelativePerformanceData).CountryId.ToString() : null;
+                        value = columns[j].GetValueForItem(items[i]) != null ? (columns[j].GetValueForItem(items[i])) : null;
                     }
                     else if (j == columns.Count - 1)
                     {
-                        value = columns[j].GetValueForItem(items[i]) != null ?
-                            ((columns[j].GetValueForItem(items[i])) as RelativePerformanceData).AggregateCountryAlpha.ToString() : null;
+                        value = ((items[i]) as RelativePerformanceData) != null ?
+                            ((items[i]) as RelativePerformanceData).AggregateCountryAlpha.ToString() : null;
                     }
 
                     else
