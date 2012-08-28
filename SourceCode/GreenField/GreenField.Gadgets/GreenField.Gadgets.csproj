@@ -154,6 +154,7 @@
     <Compile Include="Helpers\PortfolioDetails\BenchmarkWeight.cs" />
     <Compile Include="Helpers\PortfolioDetails\Statistics.cs" />
     <Compile Include="Helpers\ViewBaseUserControl.cs" />
+    <Compile Include="Models\DCFAnalysisSummaryDisplayData.cs" />
     <Compile Include="Models\FinancialStatementDisplayData.cs" />
     <Compile Include="Models\FiveYearDataModels.cs" />
     <Compile Include="Models\ICPresentations\ICNavigationInfo.cs" />

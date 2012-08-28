@@ -12,6 +12,7 @@ using Telerik.Windows.Controls.Charting;
 using System.Collections.ObjectModel;
 using GreenField.DataContracts;
 using System.Linq;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -50,6 +51,17 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
+
+            EntitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            if (_eventAggregator != null)
+            {
+                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
+            }
+
+            if (EntitySelectionData != null)
+            {
+                HandleSecurityReferenceSetEvent(EntitySelectionData);
+            }
         }
 
         #endregion
@@ -108,8 +120,8 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                if (AnalysisSummaryData == null)
-                    AnalysisSummaryData = new RangeObservableCollection<DCFAnalysisSummaryData>();
+                if (_analysisSummaryData == null)
+                    _analysisSummaryData = new RangeObservableCollection<DCFAnalysisSummaryData>();
                 return _analysisSummaryData;
             }
             set
@@ -160,7 +172,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Event Handler to subscribed event 'SecurityReferenceSet'
         /// </summary>
         /// <param name="securityReferenceData">SecurityReferenceData</param>
-        public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
+        public void HandleSecurityReferenceSetEvent(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -244,7 +256,26 @@ namespace GreenField.Gadgets.ViewModels
             BusyIndicatorIsBusy = showBusyIndicator;
         }
 
+        public void SetAnalysisSummaryDisplayData(RangeObservableCollection<DCFAnalysisSummaryData> data)
+        {
+            List<DCFAnalysisSummaryDisplayData> result = new List<DCFAnalysisSummaryDisplayData>();
+            
+        }
+
         #endregion
+
+        #region EventsUnsubscribe
+
+        /// <summary>
+        /// Unsubscribing Events & Event Handlers
+        /// </summary>
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSetEvent);
+        }
+
+        #endregion
+
 
     }
 }

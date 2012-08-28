@@ -367,7 +367,7 @@ namespace GreenField.Gadgets.ViewModels
                 SelectedPresentationOverviewInfo.CommitteePFVMeasure = SelectedPresentationOverviewInfo.SecurityPFVMeasure;
                 SelectedPresentationOverviewInfo.CommitteeBuyRange = SelectedPresentationOverviewInfo.SecurityBuyRange;
                 SelectedPresentationOverviewInfo.CommitteeSellRange = SelectedPresentationOverviewInfo.SecuritySellRange;
-                SelectedPresentationOverviewInfo.CommitteeRecommendation = SelectedPresentationOverviewInfo.SecurityRecommendation; 
+                SelectedPresentationOverviewInfo.CommitteeRecommendation = SelectedPresentationOverviewInfo.SecurityRecommendation;
             }
             RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
         }
@@ -417,6 +417,7 @@ namespace GreenField.Gadgets.ViewModels
         public void RetrievePresentationDecisionEntryData()
         {
             SelectedPresentationOverviewInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
+
         }
 
         public void RaiseUpdateFinalVoteType(VoterInfo voterInfo)
@@ -448,3 +449,5 @@ namespace GreenField.Gadgets.ViewModels
 
     }
 }
+
+
