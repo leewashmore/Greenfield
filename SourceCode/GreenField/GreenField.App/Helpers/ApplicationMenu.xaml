@@ -143,7 +143,7 @@
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem x:Name="rmItemDocuments" Header="Documents"/>
+                    <telerik:RadMenuItem x:Name="rmItemDocuments" Header="Documents" Command="{Binding DashboardCompanyDocumentsCommand}"/>
 
                     <telerik:RadMenuItem x:Name="rmItemCharting" Header="Charting">
                         <telerik:RadMenuItem Header="Price/Comparison" x:Name="rmItemPriceComparison"

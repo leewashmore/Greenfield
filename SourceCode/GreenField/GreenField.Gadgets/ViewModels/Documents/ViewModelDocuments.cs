@@ -17,6 +17,7 @@ using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Practices.Prism.Commands;
+using GreenField.Gadgets.Views.Documents;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -79,6 +80,17 @@ namespace GreenField.Gadgets.ViewModels
         public ICommand DocumentSearchCommand
         {
             get { return new DelegateCommand<object>(DocumentSearchCommandMethod); }
+        }
+
+        public ICommand DocumentUploadCommand
+        {
+            get { return new DelegateCommand<object>(DocumentUploadCommandMethod); }
+        }
+
+        private void DocumentUploadCommandMethod(object param)
+        {
+            ChildViewDocumentsUpload uploadWindow = new ChildViewDocumentsUpload(_dbInteractivity, _logger);
+            uploadWindow.Show();
         }
 
         private void DocumentSearchCommandMethod(object param)
