@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
 using GreenField.ServiceCaller.MeetingDefinitions;
-using GreenField.ServiceCaller.DCFDefinitions;
+
 
 
 namespace GreenField.ServiceCaller
@@ -224,57 +224,19 @@ namespace GreenField.ServiceCaller
         void RetrieveConsensusEstimatesSummaryData(EntitySelectionData entitySelectionData, Action<List<ConsensusEstimatesSummaryData>> callback);
 
         #endregion
-
-        void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback);
+ void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback);
 
         #region Investment Committee
-
-        //void GetMeetings(Action<List<MeetingInfo>> callback);
-
-        //void GetMeetingDates(Action<List<DateTime?>> callback);
-
-        //void GetMeetingsByDate(DateTime date, Action<List<MeetingInfo>> callback);
-
-        //void CreateMeeting(MeetingInfo meeting, Action<string> callback);
-
-        //void UpdateMeeting(MeetingInfo meeting, Action<string> callback);
-
-        //void CreateMeetingPresentationMapping(MeetingPresentationMappingInfo meetingPresentationMappingInfo, Action<string> callback);
-
-        //void UpdateMeetingPresentationMapping(MeetingPresentationMappingInfo meetingPresentationMappingInfo, Action<string> callback);
-
-        //void CreatePresentation(PresentationInfo presentation, Action<long?> callback);
-
-        //void UpdatePresentation(PresentationInfo presentationInfo, Action<string> callback);
-
-        //void CreateVoterInfo(VoterInfo voterInfo, Action<string> callback);
-
-        //void CreateFileInfo(ObservableCollection<AttachedFileInfo> fileInfoColl, Action<string> callback);
-
-        ////void GetPresentations(Action<List<PresentationInfoResult>> callback);
-
-        ////void GetPresentationsByMeetingID(long meetingID, Action<List<PresentationInfoResult>> callback);
-
-        ////void GetPresentationsByMeetingDatePresenterStatus(DateTime? meetingDate, string presenter, string status, Action<List<PresentationInfoResult>> callback);
-
-        //void GetDistinctPresenters(Action<List<string>> callback);
-
-        //void GetStatusTypes(Action<List<StatusType>> callback);
-
-        //void GetFileInfo(long presentationID, Action<List<AttachedFileInfo>> callback);
-
-        //void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, Action<SecurityInformation> callback);
-        //--------------------------------------------------------------------------------------------------------------------------------------------------
 
         void RetrieveMeetingInfoByPresentationStatus(String presentationStatus, Action<List<MeetingInfo>> callback);
 
         void RetrieveMeetingMinuteDetails(Int64? meetingID, Action<List<MeetingMinuteData>> callback);
 
-        void RetrieveMeetingAttachedFileDetails(Int64? meetingID, Action<List<MeetingAttachedFileData>> callback);
+        void RetrieveMeetingAttachedFileDetails(Int64? meetingID, Action<List<FileMaster>> callback);
 
         void UpdateMeetingMinuteDetails(String userName, MeetingInfo meetingInfo, List<MeetingMinuteData> meetingMinuteData, Action<Boolean?> callback);
 
-        void UpdateMeetingAttachedFileStreamData(String userName, MeetingAttachedFileStreamData meetingAttachedFileStreamData, Action<Boolean?> callback);
+        void UpdateMeetingAttachedFileStreamData(String userName, Int64 meetingId, MeetingAttachedFileStreamData meetingAttachedFileStreamData, Action<Boolean?> callback);
 
         void RetrievePresentationOverviewData(Action<List<ICPresentationOverviewData>> callback);
 
@@ -292,14 +254,18 @@ namespace GreenField.ServiceCaller
 
         void UpdateMeetingConfigSchedule(String userName, MeetingConfigurationSchedule meetingConfigurationSchedule, Action<Boolean?> callback);
 
+        void RetrievePresentationComments(Int64 presentationId, Action<List<CommentInfo>> callback);
+
+        void SetPresentationComments(string userName, Int64 presentationId, String comment, Action<List<CommentInfo>> callback);
+
+        void UpdatePreMeetingVoteDetails(String userName, List<VoterInfo> voterInfo, Action<Boolean?> callback);
+
+        void SetMeetingPresentationStatus(String userName, Int64 meetingId, String status, Action<Boolean?> callback);
+
+        void UpdateMeetingPresentationDate(String userName, Int64 presentationId, MeetingInfo meetingInfo, Action<Boolean?> callback);
+
         void GetMeetingConfigSchedule(Action<MeetingConfigurationSchedule> callback);
         #endregion
-        
-         #region DCF
-
-        //void RetrieveDCFAnalysisData(EntitySelectionData entitySelectionData, Action<List<GreenField.DataContracts.DCFAnalysisSummaryData>> callback);
-
-#endregion
 
     }
 }

@@ -304,7 +304,6 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-
         public void RetrieveRatioSecurityReferenceDataCallbackMethod(List<GF_SECURITY_BASEVIEW> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

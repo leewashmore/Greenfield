@@ -30,22 +30,23 @@ namespace GreenField.DashboardModule.Views
         private IEventAggregator _eventAggregator;
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
-        private ViewModelMemberVoting _viewModel;
-        private ViewMemberVoting _view;
+        private IRegionManager _regionManager;
+        private ViewModelPresentationVote _viewModel;
+        private ViewPresentationVote _view;
         #endregion
 
         [ImportingConstructor]
        public ViewDashboardInvestmentCommitteeVote(ILoggerFacade logger, IEventAggregator eventAggregator,
-            IDBInteractivity dbInteractivity)
+            IDBInteractivity dbInteractivity, IRegionManager regionManager)
         {
             InitializeComponent();
 
             _eventAggregator = eventAggregator;
             _logger = logger;
             _dBInteractivity = dbInteractivity;
+            _regionManager = regionManager;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-
             this.tbHeader.Text = GadgetNames.ICPRESENTATION_VOTE;
         }
 
@@ -59,15 +60,15 @@ namespace GreenField.DashboardModule.Views
                 DashboardGadgetPayload = payload,
                 DBInteractivity = _dBInteractivity,
                 EventAggregator = _eventAggregator,
-                LoggerFacade = _logger
+                LoggerFacade = _logger,
+                RegionManager = _regionManager
             };
 
             //for accessing the gadgets data 
-            //_viewModel = new ViewModelMemberVoting(param);
-            //_view = new ViewMemberVoting(_viewModel);           
+            _viewModel = new ViewModelPresentationVote(param);
+            _view = new ViewPresentationVote(_viewModel);           
 
-            this.cctrDashboardContent.Content = new ViewMemberVoting(new ViewModelMemberVoting(param));
-            //this.cctrDashboardContent.Content = null;// _view;
+            this.cctrDashboardContent.Content = _view;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -90,6 +91,7 @@ namespace GreenField.DashboardModule.Views
             if (control != null)
             {
                 control.IsActive = true;
+                _viewModel.Initialize();
             }
         }
     }

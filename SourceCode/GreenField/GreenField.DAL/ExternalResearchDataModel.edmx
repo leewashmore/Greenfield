@@ -708,7 +708,7 @@
           <FunctionImport Name="RetrieveDCFAnalysisSummaryData" ReturnType="Collection(ExternalResearchModel.DCFAnalysisSummaryData_Result)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />          
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>

@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <telerik:RadCalendar x:Name="dpPresentationDate"
+        <telerik:RadCalendar x:Name="dpPresentationDate" 
                              SelectionChanged="dpPresentationDate_SelectionChanged"
                              Style="{StaticResource RadCalendarStyle}"/>
         <CheckBox Content="Alert" x:Name="chkbAlert" Grid.Row="1" VerticalAlignment="Center" Checked="chkbAlert_Checked" IsChecked="False"

@@ -306,10 +306,13 @@
     <None Include="Service References\LoginDefinitions\LoginOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData.datasource">
+    <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.CommentInfo.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileData.datasource">
+    <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.FileMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.MeetingConfigurationSchedule.datasource">
@@ -347,6 +350,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MeetingDefinitions\MeetingOperations7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingDefinitions\MeetingOperations8.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MeetingDefinitions\MeetingOperations8.xsd">

@@ -24,19 +24,18 @@ using GreenField.DataContracts;
 namespace GreenField.DashboardModule.Views
 {
     [Export]
-    public partial class ViewDashboardInvestmentCommitteeMeetingMinutes : ViewBaseUserControl, INavigationAware
+    public partial class ViewDashboardInvestmentCommitteeDecisionEntry : ViewBaseUserControl, INavigationAware
     {
         #region Fields
         private IEventAggregator _eventAggregator;
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
         private IRegionManager _regionManager;
-        private ViewModelPresentationMeetingMinutes _viewModel;
-        private ViewPresentationMeetingMinutes _view;
+        private ViewModelPresentationDecisionEntry _viewmodel;
+        private ViewPresentationDecisionEntry _view;
         #endregion
-
         [ImportingConstructor]
-        public ViewDashboardInvestmentCommitteeMeetingMinutes(ILoggerFacade logger, IEventAggregator eventAggregator,
+        public ViewDashboardInvestmentCommitteeDecisionEntry(ILoggerFacade logger, IEventAggregator eventAggregator,
             IDBInteractivity dbInteractivity, IRegionManager regionManager)
         {
             InitializeComponent();
@@ -47,7 +46,7 @@ namespace GreenField.DashboardModule.Views
             _regionManager = regionManager;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-            this.tbHeader.Text = GadgetNames.ICPRESENTATION_MEETING_MINUTES;
+            this.tbHeader.Text = GadgetNames.ICPRESENTATION_PRESENTATIONS_DECISION_ENTRY;
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -64,8 +63,8 @@ namespace GreenField.DashboardModule.Views
                 RegionManager = _regionManager
             };
 
-            _viewModel = new ViewModelPresentationMeetingMinutes(param);
-            _view = new ViewPresentationMeetingMinutes(_viewModel);
+            _viewmodel = new ViewModelPresentationDecisionEntry(param);
+            _view = new ViewPresentationDecisionEntry(_viewmodel);
             this.cctrDashboardContent.Content = _view;
         }
 
@@ -88,8 +87,8 @@ namespace GreenField.DashboardModule.Views
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
-                control.IsActive = true;
-                _viewModel.Initialize();
+                control.IsActive = true; 
+                _viewmodel.Initialize();            
             }
         }
     }

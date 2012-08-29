@@ -127,6 +127,7 @@
     <Compile Include="Helpers\ChildExportOptions.xaml.cs">
       <DependentUpon>ChildExportOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Converters\UTCToLocalDateTimeConverter.cs" />
     <Compile Include="Helpers\Converters\MeetingDecisionEntryPFVBuySellInputEnabledConverter.cs" />
     <Compile Include="Helpers\Converters\MeetingMinutesAttendenceRemoveButtonEnabledConverter.cs" />
     <Compile Include="Helpers\Converters\EntityDisplayConverter.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelMeetingConfigSchedule.cs" />
+    <Compile Include="ViewModels\ICPresentations\ViewModelPresentationVote.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentationDecisionEntry.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentationMeetingMinutes.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelICPresentationNew.cs" />
@@ -249,6 +251,10 @@
     <Compile Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml.cs">
       <DependentUpon>ChildViewPresentationMeetingMinutesAddAttendee.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ICPresentations\ViewPresentationVote.xaml.cs">
+      <DependentUpon>ViewPresentationVote.xaml</DependentUpon>
+    </Compile>
+
     <Compile Include="Views\ICPresentations\ViewMeetingConfigurationSchedule.xaml.cs">
       <DependentUpon>ViewMeetingConfigurationSchedule.xaml</DependentUpon>
     </Compile>
@@ -467,6 +473,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewPresentationVote.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

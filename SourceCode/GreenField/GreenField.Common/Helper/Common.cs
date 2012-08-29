@@ -18,6 +18,7 @@ using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
 using System.ComponentModel;
+using System.Reflection;
 
 
 namespace GreenField.Common
@@ -228,7 +229,7 @@ namespace GreenField.Common
         public static String FORWARD_P_E_TO_2_YEAR_EARNINGS_GROWTH = "Forward P/E to 2 Year Earnings Growth";
         public static String FORWARD_P_E_TO_3_YEAR_EARNINGS_GROWTH = "Forward P/E to 3 Year Earnings Growth";
         public static String FORWARD_P_EMBEDDED_VALUE = "Forward P/Embedded Value";
-        public static String FORWARD_P_REVENUE = "Forward P/Revenue";
+        public static String FORWARD_P_REVENUE = "Forward P/Revenue";        
     }
 
     public static class RecommendationType
@@ -241,9 +242,10 @@ namespace GreenField.Common
 
     public static class MemberGroups
     {
-        public static String VOTINGMEMBER = "IC_MEMBER_VOTING";
-        public static String NONVOTINGMEMBER = "IC_MEMBER_NONVOTING";
-        public static String ADMIN = "IC_ADMIN";       
+        public static String VOTING_MEMBER = "IC_MEMBER_VOTING";
+        public static String NON_VOTING_MEMBER = "IC_MEMBER_NONVOTING";
+        public static String IC_ADMIN = "IC_ADMIN";
+        public static String IC_CHIEF_EXECUTIVE = "IC_CHIEF_EXECUTIVE";       
     }
 
     public enum VIEWVOTEFLAG { VIEW, VOTE } ;

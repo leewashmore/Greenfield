@@ -16,386 +16,390 @@
                 <ResourceDictionary>
                     <helpers:DataContextProxy x:Key="DataContextProxy"/>
                     <helpers:MeetingDecisionEntryPFVBuySellInputEnabledConverter x:Key="MeetingDecisionEntryPFVBuySellInputEnabledConverter"/>
+                    <helpers:UTCToLocalDateTimeConverter x:Key="UTCToLocalDateTimeConverter"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>            
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
 
-    <Grid x:Name="LayoutRoot">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <!--Selected Presentation Details-->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Security: " FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.SecurityName}" Style="{StaticResource TextBlockStyle}"/>
-            </Grid>
-            <Grid Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Margin="5,0,0,0" Text="Status: " FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.StatusType}" Style="{StaticResource TextBlockStyle}"/>
-            </Grid>
-            <Grid Grid.Column="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Margin="5,0,0,0" Text="Presentation Date: " FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.MeetingDateTime}" Style="{StaticResource TextBlockStyle}"/>
-            </Grid>
-            <Grid Grid.Column="3">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Margin="5,0,0,0" Text="Presenter: " FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.Presenter}" Style="{StaticResource TextBlockStyle}"/>
-            </Grid>
-            
-        </Grid>
-        <!--Presented Section-->
-        <Grid Grid.Row="1" Margin="0,5">
+    <telerik:RadBusyIndicator x:Name="biDecisionEntry" BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+        <Grid x:Name="LayoutRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Presented" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
-            <Grid Grid.Row="1" Margin="0,2,0,0">
+            <!--Selected Presentation Details-->
+            <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="RECOMMENDATION" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Security: " FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.SecurityName}" Style="{StaticResource TextBlockStyle}"/>
                 </Grid>
-                <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="P/FV" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Column="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="5,0,0,0" Text="Status: " FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.StatusType}" Style="{StaticResource TextBlockStyle}"/>
                 </Grid>
-                <Grid Grid.Row="0" Grid.Column="2" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="BUY" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Column="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="5,0,0,0" Text="Presentation Date: " FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.MeetingDateTime}" Style="{StaticResource TextBlockStyle}"/>
                 </Grid>
-                <Grid Grid.Row="0" Grid.Column="3" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="SELL" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Column="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Margin="5,0,0,0" Text="Presenter: " FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.Presenter}" Style="{StaticResource TextBlockStyle}"/>
                 </Grid>
 
-                <Grid Grid.Row="1" Grid.Column="0">
-                    <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.SecurityRecommendation}" VerticalAlignment="Center"
+            </Grid>
+            <!--Presented Section-->
+            <Grid Grid.Row="1" Margin="0,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Presented" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Row="1" Margin="0,2,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="RECOMMENDATION" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="P/FV" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="2" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="BUY" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="3" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="SELL" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.SecurityRecommendation}" VerticalAlignment="Center"
                                    Style="{StaticResource TextBlockStyle}"/>
-                </Grid>
-                <Grid Grid.Row="1" Grid.Column="1">
-                    <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.SecurityPFVMeasure}" VerticalAlignment="Center"
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.SecurityPFVMeasure}" VerticalAlignment="Center"
                                    Style="{StaticResource TextBlockStyle}"/>
-                </Grid>
-                <Grid Grid.Row="1" Grid.Column="2">
-                    <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.SecurityBuyRange}" VerticalAlignment="Center"
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="2">
+                        <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.SecurityBuyRange}" VerticalAlignment="Center"
                                    Style="{StaticResource TextBlockStyle}"/>
-                </Grid>
-                <Grid Grid.Row="1" Grid.Column="3">
-                    <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.SecuritySellRange}" VerticalAlignment="Center"
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="3">
+                        <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.SecuritySellRange}" VerticalAlignment="Center"
                                    Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-        <!--Accept Without Discussion Section-->
-        <Grid Grid.Row="2" Margin="0,2">
-            <CheckBox x:Name="chkbAcceptWithoutDiscussion" Content="ACCEPT WITHOUT DISCUSSION" IsThreeState="False"
+            <!--Accept Without Discussion Section-->
+            <Grid Grid.Row="2" Margin="0,2">
+                <CheckBox x:Name="chkbAcceptWithoutDiscussion" Content="ACCEPT WITHOUT DISCUSSION" IsThreeState="False"
                       IsChecked="{Binding SelectedPresentationOverviewInfo.AcceptWithoutDiscussionFlag, Mode=TwoWay, FallbackValue=True}"
                       HorizontalAlignment="Left" Style="{StaticResource CheckBoxStyle}" Checked="chkbAcceptWithoutDiscussion_Checked" Unchecked="chkbAcceptWithoutDiscussion_Unchecked"
                       />
-        </Grid>
-        <!--IC Decision Section-->
-        <Grid Grid.Row="3" Margin="0,5" x:Name="grdICDecision">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Text="IC Decision" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
-            <Grid Grid.Row="1" Margin="0,2,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+            </Grid>
+            <!--IC Decision Section-->
+            <Grid Grid.Row="3" Margin="0,5" x:Name="grdICDecision">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="RECOMMENDATION" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                </Grid>
-                <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="P/FV" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                </Grid>
-                <Grid Grid.Row="0" Grid.Column="2" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="BUY" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                </Grid>
-                <Grid Grid.Row="0" Grid.Column="3" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="SELL" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                </Grid>
-                <Grid Grid.Row="0" Grid.Column="4" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="EFFECTIVE THROUGH" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                </Grid>
+                <TextBlock Text="IC Decision" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Row="1" Margin="0,2,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="RECOMMENDATION" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="P/FV" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="2" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="BUY" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="3" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="SELL" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="4" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="EFFECTIVE THROUGH" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
 
-                <Grid Grid.Row="1" Grid.Column="0">
-                    <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeRecommendation}" VerticalAlignment="Center"
+                    <Grid Grid.Row="1" Grid.Column="0">
+                        <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeRecommendation}" VerticalAlignment="Center"
                                Style="{StaticResource TextBlockStyle}"/>
-                </Grid>
-                <Grid Grid.Row="1" Grid.Column="1">
-                    <telerik:RadComboBox x:Name="cbPFVICDecision" ItemsSource="{Binding PFVTypeInfo}" SelectionChanged="cbPFVICDecision_SelectionChanged"
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="1">
+                        <telerik:RadComboBox x:Name="cbPFVICDecision" ItemsSource="{Binding PFVTypeInfo}" SelectionChanged="cbPFVICDecision_SelectionChanged"
                                          SelectedItem="{Binding SelectedPresentationOverviewInfo.CommitteePFVMeasure, Mode=TwoWay}"
                                          HorizontalContentAlignment="Left" EmptyText="Select P/FV"  
                                          Height="{StaticResource DefaultControlMinHeight}"
                                          Style="{StaticResource RadComboBoxStyle}"
                                          IsEnabled="{Binding ICDecisionIsEnable}"/>
-                </Grid>
-                <Grid Grid.Row="1" Grid.Column="2">
-                    <TextBox x:Name="txtbPFVICDecisionBuy" Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeBuyRange, Mode=TwoWay}"
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="2">
+                        <TextBox x:Name="txtbPFVICDecisionBuy" Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeBuyRange, Mode=TwoWay}"
                              VerticalAlignment="Center" Height="{StaticResource DefaultControlMinHeight}" LostFocus="txtbPFVICDecisionBuy_LostFocus"
                              Style="{StaticResource TextBoxStyle}"
                              IsEnabled="{Binding ICDecisionIsEnable}"/>
-                </Grid>
-                <Grid Grid.Row="1" Grid.Column="3">
-                    <TextBox x:Name="txtbPFVICDecisionSell" Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeSellRange, Mode=TwoWay}" VerticalAlignment="Center"
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="3">
+                        <TextBox x:Name="txtbPFVICDecisionSell" Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeSellRange, Mode=TwoWay}" VerticalAlignment="Center"
                              Height="{StaticResource DefaultControlMinHeight}" Style="{StaticResource TextBoxStyle}" LostFocus="txtbPFVICDecisionSell_LostFocus"
                              IsEnabled="{Binding ICDecisionIsEnable}"/>
-                </Grid>
-                <Grid Grid.Row="1" Grid.Column="4">
-                    <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeRangeEffectiveThrough}" VerticalAlignment="Center"
+                    </Grid>
+                    <Grid Grid.Row="1" Grid.Column="4">
+                        <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeRangeEffectiveThrough, Converter={StaticResource UTCToLocalDateTimeConverter}}" VerticalAlignment="Center"
                                Style="{StaticResource TextBlockStyle}"/>
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-        <!--Voting Section-->
-        <Grid Grid.Row="4" Margin="0,5">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <!--Final Voting Section-->
-            <TextBlock Text="Final Votes" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
-            <Grid Grid.Row="1" Margin="0,5,0,0">
+            <!--Voting Section-->
+            <Grid Grid.Row="4" Margin="0,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="USER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                </Grid>
-                <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="VOTE" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                </Grid>
-                <Grid Grid.Row="0" Grid.Column="2" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="P/FV" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                </Grid>
-                <Grid Grid.Row="0" Grid.Column="3" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="BUY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                </Grid>
-                <Grid Grid.Row="0" Grid.Column="4" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="SELL" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                </Grid>
+                <!--Final Voting Section-->
+                <TextBlock Text="Final Votes" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Row="1" Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="USER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="VOTE" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="2" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="P/FV" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="3" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="BUY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="4" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="SELL" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
 
-                <ItemsControl Grid.Row="1" Grid.Column="0"
+                    <ItemsControl Grid.Row="1" Grid.Column="0"
                                   ItemsSource="{Binding PresentationPostMeetingVoterInfo}" 
                                   Style="{StaticResource ItemsControlStyle}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
-                                <TextBlock  VerticalAlignment="Center" Text="{Binding Name}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="1" x:Name="icFinalVoteType"
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
+                                    <TextBlock  VerticalAlignment="Center" Text="{Binding Name}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl Grid.Row="1" Grid.Column="1" x:Name="icFinalVoteType"
                                   ItemsSource="{Binding PresentationPostMeetingVoterInfo}" 
                                   Style="{StaticResource ItemsControlStyle}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <telerik:RadComboBox x:Name="cbFinalVoteType" Margin="0,2,2,2" SelectedItem="{Binding VoteType, Mode=TwoWay}" 
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <telerik:RadComboBox x:Name="cbFinalVoteType" Margin="0,2,2,2" SelectedItem="{Binding VoteType, Mode=TwoWay}" 
                                                  VerticalAlignment="Center" HorizontalContentAlignment="Left" 
                                                  Style="{StaticResource RadComboBoxStyle}"
                                                  Width="100" SelectionChanged="cbFinalVoteType_SelectionChanged"
                                                  ItemsSource="{Binding Source={StaticResource DataContextProxy},Path=DataSource.VoteTypeInfo}"
                                                  HorizontalAlignment="Left" />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="2" x:Name="icFinalVotesPFVMeasure"
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl Grid.Row="1" Grid.Column="2" x:Name="icFinalVotesPFVMeasure"
                               ItemsSource="{Binding PresentationPostMeetingVoterInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <telerik:RadComboBox Margin="0,2,2,2" SelectedItem="{Binding VoterPFVMeasure, Mode=TwoWay}" 
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <telerik:RadComboBox Margin="0,2,2,2" SelectedItem="{Binding VoterPFVMeasure, Mode=TwoWay}" 
                                                  VerticalAlignment="Center" HorizontalContentAlignment="Left" 
                                                  Style="{StaticResource RadComboBoxStyle}" Width="250"
                                                  IsEnabled="{Binding VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"
                                                  ItemsSource="{Binding Source={StaticResource DataContextProxy},Path=DataSource.PFVTypeInfo}"
-                                                 HorizontalAlignment="Left" />                           
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="3" x:Name="icFinalVotesBuyRange"
+                                                 HorizontalAlignment="Left" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl Grid.Row="1" Grid.Column="3" x:Name="icFinalVotesBuyRange"
                               ItemsSource="{Binding PresentationPostMeetingVoterInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
-                                <TextBox VerticalAlignment="Center" Text="{Binding VoterBuyRange, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
+                                    <TextBox VerticalAlignment="Center" Text="{Binding VoterBuyRange, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"
                                          IsEnabled="{Binding VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"/>
-                            </Grid>                            
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="4" x:Name="icFinalVotesSellRange"
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl Grid.Row="1" Grid.Column="4" x:Name="icFinalVotesSellRange"
                               ItemsSource="{Binding PresentationPostMeetingVoterInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
-                                <TextBox VerticalAlignment="Center" Text="{Binding VoterSellRange, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"
-                                         IsEnabled="{Binding VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"/>                                
-                            </Grid>                            
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </Grid>
-            <!--Pre Meeting Votes-->
-            <TextBlock Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Text="Pre-Meeting Votes" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
-            <Grid Grid.Row="1" Grid.Column="1" Margin="5,5,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="100"/>
-                    <ColumnDefinition Width="250"/>
-                    <ColumnDefinition Width="50"/>
-                    <ColumnDefinition Width="50"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="USER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
+                                    <TextBox VerticalAlignment="Center" Text="{Binding VoterSellRange, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"
+                                         IsEnabled="{Binding VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </Grid>
-                <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="VOTE" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                </Grid>
-                <Grid Grid.Row="0" Grid.Column="2" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="P/FV" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                </Grid>
-                <Grid Grid.Row="0" Grid.Column="3" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="BUY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                </Grid>
-                <Grid Grid.Row="0" Grid.Column="4" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="SELL" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                </Grid>
+                <!--Pre Meeting Votes-->
+                <TextBlock Grid.Row="0" Grid.Column="1" Margin="5,0,0,0" Text="Pre-Meeting Votes" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <Grid Grid.Row="1" Grid.Column="1" Margin="5,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="250"/>
+                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="USER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="VOTE" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="2" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="P/FV" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="3" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="BUY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
+                    <Grid Grid.Row="0" Grid.Column="4" Background="{StaticResource DefaultGridHeaderBackground}">
+                        <TextBlock Margin="5" Text="SELL" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    </Grid>
 
-                <ItemsControl Grid.Row="1" Grid.Column="0"
+                    <ItemsControl Grid.Row="1" Grid.Column="0"
                                   ItemsSource="{Binding PresentationPreMeetingVoterInfo}" 
                                   Style="{StaticResource ItemsControlStyle}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
-                                <TextBlock VerticalAlignment="Center" Text="{Binding Name}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="1"
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl Grid.Row="1" Grid.Column="1"
                                   ItemsSource="{Binding PresentationPreMeetingVoterInfo}" 
                                   Style="{StaticResource ItemsControlStyle}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
-                                <TextBlock VerticalAlignment="Center" Text="{Binding VoteType}"/>
-                            </Grid>                    
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="2"
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding VoteType}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl Grid.Row="1" Grid.Column="2"
                               ItemsSource="{Binding PresentationPreMeetingVoterInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
-                                <TextBlock VerticalAlignment="Center" Text="{Binding VoterPFVMeasure}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="3" 
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding VoterPFVMeasure}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl Grid.Row="1" Grid.Column="3" 
                               ItemsSource="{Binding PresentationPreMeetingVoterInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
-                                <TextBlock VerticalAlignment="Center" Text="{Binding VoterBuyRange}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="4" 
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding VoterBuyRange}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <ItemsControl Grid.Row="1" Grid.Column="4" 
                               ItemsSource="{Binding PresentationPreMeetingVoterInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
-                                <TextBlock VerticalAlignment="Center" Text="{Binding VoterSellRange}"/>
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
+                                    <TextBlock VerticalAlignment="Center" Text="{Binding VoterSellRange}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Grid>
+            </Grid>
+            <Grid Grid.Row="5" Margin="0,2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Notes:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
+                <TextBox Grid.Row="1" Text="{Binding SelectedPresentationOverviewInfo.AdminNotes, Mode=TwoWay}" MaxLength="255" Style="{StaticResource TextBoxStyle}"/>
+            </Grid>
+            <Grid Grid.Row="6" Margin="0,2">
+                <telerik:RadButton Content="SUBMIT" Width="100" Command="{Binding SubmitCommand}"
+                               Style="{StaticResource RadButtonStyle}"/>
             </Grid>
         </Grid>
-        <Grid Grid.Row="5" Margin="0,2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="50"/>
-            </Grid.RowDefinitions>
-            <TextBlock Text="Notes:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
-            <TextBox Grid.Row="1" Text="{Binding SelectedPresentationOverviewInfo.AdminNotes, Mode=TwoWay}" MaxLength="255" Style="{StaticResource TextBoxStyle}"/>
-        </Grid>
-        <Grid Grid.Row="6" Margin="0,2">
-            <telerik:RadButton Content="SUBMIT" Width="100" Command="{Binding SubmitCommand}"
-                               Style="{StaticResource RadButtonStyle}"/>
-        </Grid>
-    </Grid>
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

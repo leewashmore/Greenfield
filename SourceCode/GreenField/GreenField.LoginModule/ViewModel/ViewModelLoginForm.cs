@@ -720,25 +720,25 @@ namespace GreenField.LoginModule.ViewModel
                 //Session data posted to server creation
                 Session sessionVariable = new Session
                     {
-                        UserName = LoginIdText,
+                        UserName = LoginIdText.ToLower(),
                         Roles=UserRoles
                     };
 
                 _manageSessions.SetSession(sessionVariable, (result) =>
                 {
                     string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-                    Logging.LogLoginBeginMethod(_logger, methodNamespace, LoginIdText);
+                    Logging.LogLoginBeginMethod(_logger, methodNamespace, LoginIdText.ToLower());
 
                     try
                     {
                         if (result != null)
                         {
-                            HtmlPage.Document.SetProperty("cookie", "UserName=" + LoginIdText);
+                            HtmlPage.Document.SetProperty("cookie", "UserName=" + LoginIdText.ToLower());
                             if ((bool)result) HtmlPage.Window.Navigate(new Uri(@"HomePage.aspx", UriKind.Relative));
                         }
                         else
                         {
-                            Logging.LogLoginMethodParameterNull(_logger, methodNamespace, 1, LoginIdText);
+                            Logging.LogLoginMethodParameterNull(_logger, methodNamespace, 1, LoginIdText.ToLower());
                         }
                     }
                     catch (Exception ex)
@@ -747,7 +747,7 @@ namespace GreenField.LoginModule.ViewModel
                         Logging.LogLoginException(_logger, ex);
                     }
 
-                    Logging.LogLoginEndMethod(_logger, methodNamespace, LoginIdText);
+                    Logging.LogLoginEndMethod(_logger, methodNamespace, LoginIdText.ToLower());
                 });
             }
             catch (Exception ex)
