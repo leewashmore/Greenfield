@@ -62,12 +62,109 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
             _regionManager = param.RegionManager;
+
         }
 
         #endregion       
         
-        //#region Properties
+        #region Properties
 
+        private String _selectedPowerPoint;
+        public String SelectedPowerPoint
+        {
+            get { return _selectedPowerPoint; }
+            set
+            {
+                _selectedPowerPoint = value;
+                RaisePropertyChanged(() => this.SelectedPowerPoint);
+            }
+        }
+
+        private String _selectedFinStatReport;
+        public String SelectedFinStatReport
+        {
+            get { return _selectedFinStatReport; }
+            set
+            {
+                _selectedFinStatReport = value;
+                RaisePropertyChanged(() => this.SelectedFinStatReport);
+            }
+        }
+
+        private String _selectedInvestmentContext;
+        public String SelectedInvestmentContext
+        {
+            get { return _selectedInvestmentContext; }
+            set
+            {
+                _selectedInvestmentContext = value;
+                RaisePropertyChanged(() => this.SelectedInvestmentContext);
+            }
+        }
+
+        private String _selectedDCFReports;
+        public String SelectedDCFReports
+        {
+            get { return _selectedDCFReports; }
+            set
+            {
+                _selectedDCFReports = value;
+                RaisePropertyChanged(() => this.SelectedDCFReports);
+            }
+        }
+
+
+        #region Busy Indicator Notification
+        /// <summary>
+        /// Displays/Hides busy indicator to notify user of the on going process
+        /// </summary>
+        private bool _busyIndicatorIsBusy = false;
+        public bool BusyIndicatorIsBusy
+        {
+            get { return _busyIndicatorIsBusy; }
+            set
+            {
+                _busyIndicatorIsBusy = value;
+                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+            }
+        }
+
+        /// <summary>
+        /// Stores the message displayed over the busy indicator to notify user of the on going process
+        /// </summary>
+        private string _busyIndicatorContent;
+        public string BusyIndicatorContent
+        {
+            get { return _busyIndicatorContent; }
+            set
+            {
+                _busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }
+        #endregion
+
+
+
+
+        #region ICommand
+
+        public ICommand BrowsePowerpointCommand
+        {
+            get { return new DelegateCommand<object>(AddPowerpointCommandMethod); }
+        }
+
+        #endregion
+
+
+        #region ICommand Methods
+
+        private void AddPowerpointCommandMethod(object param)
+        {
+            //DB update ppt
+        }
+
+        #endregion
         //private ObservableCollection<ICPAttachmentInfo> _attachmentInfo;
         //public ObservableCollection<ICPAttachmentInfo> AttachmentInfo
         //{
@@ -293,7 +390,7 @@ namespace GreenField.Gadgets.ViewModels
         //    }
         //}
 
-        //#endregion
+        #endregion
 
         //#region ICommand Methods
 

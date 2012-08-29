@@ -180,6 +180,11 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        private void dgDCFAnalysisSummary_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
+        {
+            int Index = this.dgDCFAnalysisSummary.Items.IndexOf(e.Row);
+        }
+
         #endregion
 
     }

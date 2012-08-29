@@ -240,6 +240,12 @@
     <None Include="Service References\DCFDefinitions\DCFOperations3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\DCFDefinitions\DCFOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DCFDefinitions\GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\DCFDefinitions\GreenField.ServiceCaller.DCFDefinitions.DCFAnalysisSummaryData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
