@@ -182,7 +182,7 @@ namespace GreenField.Gadgets.ViewModels
       
         public ICommand WithdrawCommand
         {
-            get { return new DelegateCommand<object>(WithdrawCommandMethod, EditCommandValidationMethod); }
+            get { return new DelegateCommand<object>(WithdrawCommandMethod, WithdrawCommandValidationMethod); }
         }
 
         public ICommand ViewCommand
@@ -340,6 +340,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private void WithdrawCommandMethod(object param)
         {
+            Prompt.ShowDialog("Please confirm withdrawal","Confirmation", MessageBoxButton.OK);
             
         }   
 

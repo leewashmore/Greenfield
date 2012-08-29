@@ -93,7 +93,7 @@ namespace GreenField.Web.Services
                     if (user != userName)
                     {
                         XElement element = new XElement("VotingUser", user);
-                        xmlDoc.Root.Add(element);                        
+                        xmlDoc.Root.Add(element);
                     }
 
                 }
