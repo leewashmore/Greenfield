@@ -213,6 +213,15 @@ namespace GreenField.Web.Services
                     resultDB = research.ExecuteStoreQuery<CommodityResult>("exec GetCOMMODITY_FORECASTS @commodityID={0}", selectedCommodityID).ToList();
                  
                 //Retrieving Data from Views
+                DateTime CurrentDate = System.DateTime.Now;
+                DateTime Date1DayBack = Convert.ToDateTime(FXCommodityCalculations.GetPreviousDate(CurrentDate));
+                DateTime DateLastYearEnd = CurrentDate.AddYears(-1).AddMonths(-(CurrentDate.Month) + 12).AddDays(-(CurrentDate.Day) + 31);
+                DateLastYearEnd = Convert.ToDateTime(FXCommodityCalculations.CheckBusinessDay(DateLastYearEnd));
+                DateTime Date12MonthsAgo = CurrentDate.AddYears(-1);
+                Date12MonthsAgo = Convert.ToDateTime(FXCommodityCalculations.CheckBusinessDay(Date12MonthsAgo));
+                DateTime Date36MonthsAgo = CurrentDate.AddYears(-3);
+                Date36MonthsAgo = Convert.ToDateTime(FXCommodityCalculations.CheckBusinessDay(Date36MonthsAgo));
+
 
                 if (selectedCommodityID != null && selectedCommodityID != string.Empty)
                 {
@@ -233,8 +242,13 @@ namespace GreenField.Web.Services
                         if (item.INSTRUMENT_ID != null && item.INSTRUMENT_ID != string.Empty)
                         {
                             dimSvcPricingViewData = entity.GF_PRICING_BASEVIEW
-                                                    .Where(g => g.INSTRUMENT_ID.ToUpper() == item.INSTRUMENT_ID.ToUpper())
-                                                    .ToList();
+                                                    .Where(g => (g.INSTRUMENT_ID.ToUpper() == item.INSTRUMENT_ID.ToUpper())
+                                                        && ((g.FROMDATE == Convert.ToDateTime(Date1DayBack.ToString()).Date)
+                                                        || (g.FROMDATE == Convert.ToDateTime(DateLastYearEnd.ToString()).Date)
+                                                        || (g.FROMDATE == Convert.ToDateTime(Date12MonthsAgo.ToString()).Date)
+                                                        || (g.FROMDATE == Convert.ToDateTime(Date36MonthsAgo.ToString()).Date))
+                                                        )
+                                                    .ToList();                            
                             if (dimSvcPricingViewData != null && dimSvcPricingViewData.Count > 0)
                             {
                                 List<FXCommodityData> resultView = new List<FXCommodityData>();
@@ -252,7 +266,7 @@ namespace GreenField.Web.Services
                                 FXCommodityData calculatedData = new FXCommodityData();
 
                                 //calling method to perform calculations
-                                FXCommodityData calculatedDataForCommodity = FXCommodityCalculations.CalculateCommodityData(resultView);
+                                FXCommodityData calculatedDataForCommodity = FXCommodityCalculations.CalculateCommodityData(resultView, Date1DayBack.Date, DateLastYearEnd.Date, Date12MonthsAgo.Date, Date36MonthsAgo.Date);
                                 calculatedData.CommodityId = calculatedDataForCommodity.CommodityId;
                                 calculatedData.InstrumentId = calculatedDataForCommodity.InstrumentId;
                                 calculatedData.YTD = calculatedDataForCommodity.YTD;

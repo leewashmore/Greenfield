@@ -14,21 +14,21 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="commodityData"></param>
         /// <returns></returns>
-        public static FXCommodityData CalculateCommodityData(List<FXCommodityData> commodityData)
+        public static FXCommodityData CalculateCommodityData(List<FXCommodityData> commodityData, DateTime Date1DayBack, DateTime DateLastYearEnd, DateTime Date12MonthsAgo, DateTime Date36MonthsAgo)
         {
             decimal? GPToday = null;
             decimal? GPLastYearEnd = null;
             decimal? GP12MonthsAgo = null;
             decimal? GP36MonthsAgo = null;
 
-            DateTime CurrentDate = System.DateTime.Now;
-            DateTime Date1DayBack = GetPreviousDate(CurrentDate);
-            DateTime DateLastYearEnd = CurrentDate.AddYears(-1).AddMonths(-(CurrentDate.Month) + 12).AddDays(-(CurrentDate.Day) + 31);
-            DateLastYearEnd = CheckBusinessDay(DateLastYearEnd);
-            DateTime Date12MonthsAgo = CurrentDate.AddYears(-1);
-            Date12MonthsAgo = CheckBusinessDay(Date12MonthsAgo);
-            DateTime Date36MonthsAgo = CurrentDate.AddYears(-3);
-            Date36MonthsAgo = CheckBusinessDay(Date36MonthsAgo);
+            //DateTime CurrentDate = System.DateTime.Now;
+            //DateTime Date1DayBack = GetPreviousDate(CurrentDate);
+            //DateTime DateLastYearEnd = CurrentDate.AddYears(-1).AddMonths(-(CurrentDate.Month) + 12).AddDays(-(CurrentDate.Day) + 31);
+            //DateLastYearEnd = CheckBusinessDay(DateLastYearEnd);
+            //DateTime Date12MonthsAgo = CurrentDate.AddYears(-1);
+            //Date12MonthsAgo = CheckBusinessDay(Date12MonthsAgo);
+            //DateTime Date36MonthsAgo = CurrentDate.AddYears(-3);
+            //Date36MonthsAgo = CheckBusinessDay(Date36MonthsAgo);
 
             FXCommodityData result = new FXCommodityData();
 
@@ -65,7 +65,7 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
-        private static DateTime CheckBusinessDay(DateTime date)
+        public static DateTime CheckBusinessDay(DateTime date)
         {
             switch (date.DayOfWeek)
             {
@@ -97,7 +97,7 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="date"></param>
         /// <returns></returns>
-        private static DateTime GetPreviousDate(DateTime date)
+        public static DateTime GetPreviousDate(DateTime date)
         {
             if (date.Day == 1)
             {

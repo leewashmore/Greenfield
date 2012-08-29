@@ -198,6 +198,7 @@
     <Compile Include="ViewModels\ViewModelEVEBITDA.cs" />
     <Compile Include="ViewModels\ViewModelFCFYield.cs" />
     <Compile Include="ViewModels\ViewModelFinstat.cs" />
+    <Compile Include="ViewModels\DCF\ViewModelFreeCashFlows.cs" />
     <Compile Include="ViewModels\ViewModelHeatMap.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChartRegion.cs" />
@@ -230,6 +231,9 @@
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
     <Compile Include="ViewModels\ViewModelValuationQualityGrowth.cs" />
+    <Compile Include="Views\DCF\ViewFreeCashFlows.xaml.cs">
+      <DependentUpon>ViewFreeCashFlows.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml.cs">
       <DependentUpon>ViewEstimates.xaml</DependentUpon>
     </Compile>
@@ -447,7 +451,11 @@
     <Page Include="Helpers\ChildExportOptions.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
+    </Page>      
+    <Page Include="Views\DCF\ViewFreeCashFlows.xaml">
+		<Generator>MSBuild:Compile</Generator>
+		<SubType>Designer</SubType>
+	</Page>
     <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -780,7 +788,6 @@
   <ItemGroup>
     <Resource Include="Images\AshmoreEMMLogo.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>
