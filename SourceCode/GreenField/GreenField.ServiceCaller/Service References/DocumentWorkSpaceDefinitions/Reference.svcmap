@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="1f32001d-11fa-41c5-9640-5eeb7f881547" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DocumentWorkSpaceOperations.disco" MetadataType="Disco" ID="0ed2dba9-0610-48c5-8318-5b29f592e1a8" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?disco" />
+    <MetadataFile FileName="DocumentWorkSpaceOperations.xsd" MetadataType="Schema" ID="aa323e3d-92ec-48cd-ac2d-aedc21f46899" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="DocumentWorkSpaceOperations1.xsd" MetadataType="Schema" ID="f3b51b00-d205-4b32-b8f9-5637b5135db1" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="DocumentWorkSpaceOperations2.xsd" MetadataType="Schema" ID="aeb3e29c-82ab-4317-8238-98f1b232f4cc" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="DocumentWorkspaceOperations.wsdl" MetadataType="Wsdl" ID="d3c6f932-546a-4dce-989d-c279a806447c" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

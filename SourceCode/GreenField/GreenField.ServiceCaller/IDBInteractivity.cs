@@ -224,7 +224,14 @@ namespace GreenField.ServiceCaller
         void RetrieveConsensusEstimatesSummaryData(EntitySelectionData entitySelectionData, Action<List<ConsensusEstimatesSummaryData>> callback);
 
         #endregion
- void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback);
+
+        #region PortalEnhancements
+        void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback);
+
+        void UploadDocument(String fileName, Byte[] fileByteStream, Action<String> callback);
+
+        void RetrieveDocument(String fileName, Action<Byte[]> callback);
+        #endregion
 
         #region Investment Committee
 
