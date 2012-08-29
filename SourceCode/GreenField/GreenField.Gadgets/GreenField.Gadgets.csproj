@@ -234,6 +234,9 @@
     <Compile Include="Views\DCF\ViewFreeCashFlows.xaml.cs">
       <DependentUpon>ViewFreeCashFlows.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Documents\ChildViewDocumentsUpload.xaml.cs">
+      <DependentUpon>ChildViewDocumentsUpload.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml.cs">
       <DependentUpon>ViewEstimates.xaml</DependentUpon>
     </Compile>
@@ -258,7 +261,6 @@
     <Compile Include="Views\ICPresentations\ViewPresentationVote.xaml.cs">
       <DependentUpon>ViewPresentationVote.xaml</DependentUpon>
     </Compile>
-
     <Compile Include="Views\ICPresentations\ViewMeetingConfigurationSchedule.xaml.cs">
       <DependentUpon>ViewMeetingConfigurationSchedule.xaml</DependentUpon>
     </Compile>
@@ -451,11 +453,15 @@
     <Page Include="Helpers\ChildExportOptions.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>      
+    </Page>
     <Page Include="Views\DCF\ViewFreeCashFlows.xaml">
-		<Generator>MSBuild:Compile</Generator>
-		<SubType>Designer</SubType>
-	</Page>
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Documents\ChildViewDocumentsUpload.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -1521,5 +1521,23 @@ namespace GreenField.Web.Services
 
         #endregion
 
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<tblCompanyInfo> RetrieveCompanyData()
+        {
+            try
+            {
+                ReutersEntities entity = new ReutersEntities();
+                return entity.tblCompanyInfoes.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
     }
 }

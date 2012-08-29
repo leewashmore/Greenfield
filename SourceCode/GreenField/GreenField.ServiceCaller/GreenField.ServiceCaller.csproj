@@ -88,6 +88,11 @@
     </Compile>
     <Compile Include="Helper\Prompt\Prompt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\AlertDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\BenchmarkHoldingsDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -204,6 +209,19 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.TopBenchmarkSecuritiesData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.TopHoldingsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.UnrealizedGainLossData.datasource" />
+    <None Include="Service References\AlertDefinitions\AlertOperations.wsdl" />
+    <None Include="Service References\AlertDefinitions\AlertOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AlertDefinitions\AlertOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AlertDefinitions\AlertOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AlertDefinitions\AlertOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.wsdl" />
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.xsd">
       <SubType>Designer</SubType>
@@ -277,6 +295,9 @@
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations8.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations9.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -287,6 +308,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\LoggingDefinitions\LoggingOperations.disco" />
@@ -480,6 +504,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\AlertDefinitions\AlertOperations.disco" />
+    <None Include="Service References\AlertDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\AlertDefinitions\configuration.svcinfo" />
+    <None Include="Service References\AlertDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
@@ -543,6 +574,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AlertDefinitions\" />
     <WCFMetadataStorage Include="Service References\BenchmarkHoldingsDefinitions\" />
     <WCFMetadataStorage Include="Service References\DashboardDefinitions\" />
     <WCFMetadataStorage Include="Service References\DCFDefinitions\" />

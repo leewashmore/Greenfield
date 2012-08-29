@@ -534,6 +534,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.EntityObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData))]
@@ -545,6 +547,424 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
             if ((propertyChanged != null)) {
                 propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EntityObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo))]
+    public partial class EntityObject : GreenField.ServiceCaller.ExternalResearchDefinitions.StructuralObject {
+        
+        private GreenField.ServiceCaller.ExternalResearchDefinitions.EntityKey EntityKeyField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.ExternalResearchDefinitions.EntityKey EntityKey {
+            get {
+                return this.EntityKeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntityKeyField, value) != true)) {
+                    this.EntityKeyField = value;
+                    this.RaisePropertyChanged("EntityKey");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="tblCompanyInfo", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class tblCompanyInfo : GreenField.ServiceCaller.ExternalResearchDefinitions.EntityObject {
+        
+        private System.Nullable<bool> ActiveField;
+        
+        private string CUSIPField;
+        
+        private string ConsensusField;
+        
+        private string CountryField;
+        
+        private string CurrencyField;
+        
+        private string CurrentPeriodField;
+        
+        private System.Nullable<float> CurrentPriceField;
+        
+        private System.Nullable<System.DateTime> CurrentPriceDateField;
+        
+        private string DisplayRICField;
+        
+        private string EarningsField;
+        
+        private string EstimateField;
+        
+        private string ISINField;
+        
+        private string NameField;
+        
+        private System.Nullable<decimal> OutstandingSharesField;
+        
+        private string PeriodicityField;
+        
+        private string RICField;
+        
+        private System.Nullable<System.DateTime> RecentCapitalAdjDateField;
+        
+        private System.Nullable<System.DateTime> RecentSplitDateField;
+        
+        private string ReportNumberField;
+        
+        private string SEDOLField;
+        
+        private string TickerField;
+        
+        private string VALORENField;
+        
+        private string XRefField;
+        
+        private string fPeriodEndField;
+        
+        private string fYearEndField;
+        
+        private System.Nullable<System.DateTime> pEndDateField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<bool> Active {
+            get {
+                return this.ActiveField;
+            }
+            set {
+                if ((this.ActiveField.Equals(value) != true)) {
+                    this.ActiveField = value;
+                    this.RaisePropertyChanged("Active");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CUSIP {
+            get {
+                return this.CUSIPField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CUSIPField, value) != true)) {
+                    this.CUSIPField = value;
+                    this.RaisePropertyChanged("CUSIP");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Consensus {
+            get {
+                return this.ConsensusField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ConsensusField, value) != true)) {
+                    this.ConsensusField = value;
+                    this.RaisePropertyChanged("Consensus");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Country {
+            get {
+                return this.CountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
+                    this.CountryField = value;
+                    this.RaisePropertyChanged("Country");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Currency {
+            get {
+                return this.CurrencyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrencyField, value) != true)) {
+                    this.CurrencyField = value;
+                    this.RaisePropertyChanged("Currency");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentPeriod {
+            get {
+                return this.CurrentPeriodField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentPeriodField, value) != true)) {
+                    this.CurrentPeriodField = value;
+                    this.RaisePropertyChanged("CurrentPeriod");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<float> CurrentPrice {
+            get {
+                return this.CurrentPriceField;
+            }
+            set {
+                if ((this.CurrentPriceField.Equals(value) != true)) {
+                    this.CurrentPriceField = value;
+                    this.RaisePropertyChanged("CurrentPrice");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> CurrentPriceDate {
+            get {
+                return this.CurrentPriceDateField;
+            }
+            set {
+                if ((this.CurrentPriceDateField.Equals(value) != true)) {
+                    this.CurrentPriceDateField = value;
+                    this.RaisePropertyChanged("CurrentPriceDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DisplayRIC {
+            get {
+                return this.DisplayRICField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DisplayRICField, value) != true)) {
+                    this.DisplayRICField = value;
+                    this.RaisePropertyChanged("DisplayRIC");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Earnings {
+            get {
+                return this.EarningsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EarningsField, value) != true)) {
+                    this.EarningsField = value;
+                    this.RaisePropertyChanged("Earnings");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Estimate {
+            get {
+                return this.EstimateField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EstimateField, value) != true)) {
+                    this.EstimateField = value;
+                    this.RaisePropertyChanged("Estimate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ISIN {
+            get {
+                return this.ISINField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ISINField, value) != true)) {
+                    this.ISINField = value;
+                    this.RaisePropertyChanged("ISIN");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> OutstandingShares {
+            get {
+                return this.OutstandingSharesField;
+            }
+            set {
+                if ((this.OutstandingSharesField.Equals(value) != true)) {
+                    this.OutstandingSharesField = value;
+                    this.RaisePropertyChanged("OutstandingShares");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Periodicity {
+            get {
+                return this.PeriodicityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PeriodicityField, value) != true)) {
+                    this.PeriodicityField = value;
+                    this.RaisePropertyChanged("Periodicity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RIC {
+            get {
+                return this.RICField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RICField, value) != true)) {
+                    this.RICField = value;
+                    this.RaisePropertyChanged("RIC");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> RecentCapitalAdjDate {
+            get {
+                return this.RecentCapitalAdjDateField;
+            }
+            set {
+                if ((this.RecentCapitalAdjDateField.Equals(value) != true)) {
+                    this.RecentCapitalAdjDateField = value;
+                    this.RaisePropertyChanged("RecentCapitalAdjDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> RecentSplitDate {
+            get {
+                return this.RecentSplitDateField;
+            }
+            set {
+                if ((this.RecentSplitDateField.Equals(value) != true)) {
+                    this.RecentSplitDateField = value;
+                    this.RaisePropertyChanged("RecentSplitDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ReportNumber {
+            get {
+                return this.ReportNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ReportNumberField, value) != true)) {
+                    this.ReportNumberField = value;
+                    this.RaisePropertyChanged("ReportNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SEDOL {
+            get {
+                return this.SEDOLField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SEDOLField, value) != true)) {
+                    this.SEDOLField = value;
+                    this.RaisePropertyChanged("SEDOL");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Ticker {
+            get {
+                return this.TickerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TickerField, value) != true)) {
+                    this.TickerField = value;
+                    this.RaisePropertyChanged("Ticker");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VALOREN {
+            get {
+                return this.VALORENField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VALORENField, value) != true)) {
+                    this.VALORENField = value;
+                    this.RaisePropertyChanged("VALOREN");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string XRef {
+            get {
+                return this.XRefField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.XRefField, value) != true)) {
+                    this.XRefField = value;
+                    this.RaisePropertyChanged("XRef");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string fPeriodEnd {
+            get {
+                return this.fPeriodEndField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.fPeriodEndField, value) != true)) {
+                    this.fPeriodEndField = value;
+                    this.RaisePropertyChanged("fPeriodEnd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string fYearEnd {
+            get {
+                return this.fYearEndField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.fYearEndField, value) != true)) {
+                    this.fYearEndField = value;
+                    this.RaisePropertyChanged("fYearEnd");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> pEndDate {
+            get {
+                return this.pEndDateField;
+            }
+            set {
+                if ((this.pEndDateField.Equals(value) != true)) {
+                    this.pEndDateField = value;
+                    this.RaisePropertyChanged("pEndDate");
+                }
             }
         }
     }
@@ -634,6 +1054,161 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                     this.VALUATIONField = value;
                     this.RaisePropertyChanged("VALUATION");
                 }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EntityKey", Namespace="http://schemas.datacontract.org/2004/07/System.Data", IsReference=true)]
+    public partial class EntityKey : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string EntityContainerNameField;
+        
+        private System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.EntityKeyMember> EntityKeyValuesField;
+        
+        private string EntitySetNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EntityContainerName {
+            get {
+                return this.EntityContainerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntityContainerNameField, value) != true)) {
+                    this.EntityContainerNameField = value;
+                    this.RaisePropertyChanged("EntityContainerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.EntityKeyMember> EntityKeyValues {
+            get {
+                return this.EntityKeyValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntityKeyValuesField, value) != true)) {
+                    this.EntityKeyValuesField = value;
+                    this.RaisePropertyChanged("EntityKeyValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EntitySetName {
+            get {
+                return this.EntitySetNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntitySetNameField, value) != true)) {
+                    this.EntitySetNameField = value;
+                    this.RaisePropertyChanged("EntitySetName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EntityKeyMember", Namespace="http://schemas.datacontract.org/2004/07/System.Data")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.IssuerReferenceData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.EntityKey))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.EntityKeyMember>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.QuarterlyResultsData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.QuarterlyResultsData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.PRevenueData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.PRevenueData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DataContracts.ValuationQualityGrowthData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.GF_SECURITY_BASEVIEW>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.GF_SECURITY_BASEVIEW))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.EntitySelectionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.FinancialStatementDataSource))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.FinancialStatementPeriodType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.FinancialStatementFiscalType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.FinancialStatementType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateDetail>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.ConsensusEstimateDetail))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.FinstatDetailData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.FinstatDetailData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.BasicData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.BasicData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.TargetPriceCEData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.TargetPriceCEData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimateMedian>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.ConsensusEstimateMedian))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimatesValuations>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.ConsensusEstimatesValuations))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.ScatterGraphContext))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.COASpecificData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.COASpecificData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DocumentCategoricalData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.CommentDetails>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.CommentDetails))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DocumentCatalogData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DocumentCategoryType))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.PortfolioSelectionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ComplexObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.StructuralObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.EntityObject))]
+    public partial class EntityKeyMember : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string KeyField;
+        
+        private object ValueField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Key {
+            get {
+                return this.KeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.KeyField, value) != true)) {
+                    this.KeyField = value;
+                    this.RaisePropertyChanged("Key");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public object Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
             }
         }
     }
@@ -1680,6 +2255,13 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         System.IAsyncResult BeginRetrieveValuationGrowthData(GreenField.DataContracts.PortfolioSelectionData selectedPortfolio, System.Nullable<System.DateTime> effectiveDate, string filterType, string filterValue, bool lookThruEnabled, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> EndRetrieveValuationGrowthData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ExternalResearchOperations/RetrieveCompanyData", ReplyAction="http://tempuri.org/ExternalResearchOperations/RetrieveCompanyDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveCompanyDataServiceFaultFaul" +
+            "t", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveCompanyData(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo> EndRetrieveCompanyData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -2030,6 +2612,25 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveCompanyDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveCompanyDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class ExternalResearchOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations>, GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations {
         
         private BeginOperationDelegate onBeginRetrieveIssuerIdDelegate;
@@ -2140,6 +2741,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveValuationGrowthDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveCompanyDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveCompanyDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveCompanyDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -2228,6 +2835,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         public event System.EventHandler<RetrieveDocumentsDataCompletedEventArgs> RetrieveDocumentsDataCompleted;
         
         public event System.EventHandler<RetrieveValuationGrowthDataCompletedEventArgs> RetrieveValuationGrowthDataCompleted;
+        
+        public event System.EventHandler<RetrieveCompanyDataCompletedEventArgs> RetrieveCompanyDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -3119,6 +3728,50 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                         lookThruEnabled}, this.onEndRetrieveValuationGrowthDataDelegate, this.onRetrieveValuationGrowthDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveCompanyData(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveCompanyData(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo> GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.EndRetrieveCompanyData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveCompanyData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveCompanyData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveCompanyData(callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveCompanyData(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo> retVal = ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).EndRetrieveCompanyData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveCompanyDataCompleted(object state) {
+            if ((this.RetrieveCompanyDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveCompanyDataCompleted(this, new RetrieveCompanyDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveCompanyDataAsync() {
+            this.RetrieveCompanyDataAsync(null);
+        }
+        
+        public void RetrieveCompanyDataAsync(object userState) {
+            if ((this.onBeginRetrieveCompanyDataDelegate == null)) {
+                this.onBeginRetrieveCompanyDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveCompanyData);
+            }
+            if ((this.onEndRetrieveCompanyDataDelegate == null)) {
+                this.onEndRetrieveCompanyDataDelegate = new EndOperationDelegate(this.OnEndRetrieveCompanyData);
+            }
+            if ((this.onRetrieveCompanyDataCompletedDelegate == null)) {
+                this.onRetrieveCompanyDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveCompanyDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveCompanyDataDelegate, null, this.onEndRetrieveCompanyDataDelegate, this.onRetrieveCompanyDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -3455,6 +4108,18 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> EndRetrieveValuationGrowthData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>)(base.EndInvoke("RetrieveValuationGrowthData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveCompanyData(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveCompanyData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo> EndRetrieveCompanyData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo>)(base.EndInvoke("RetrieveCompanyData", _args, result)));
                 return _result;
             }
         }

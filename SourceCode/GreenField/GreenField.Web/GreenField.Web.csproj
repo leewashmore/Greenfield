@@ -76,6 +76,7 @@
       <Generator>DataServiceClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Services\AlertOperations.svc" />
     <Content Include="Services\DCFOperations.svc" />
     <Content Include="Services\ExternalResearchOperations.svc" />
     <Content Include="Services\MeetingOperations.svc" />
@@ -128,6 +129,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AlertOperations.svc.cs">
+      <DependentUpon>AlertOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\DCFOperations.svc.cs">
       <DependentUpon>DCFOperations.svc</DependentUpon>

@@ -61,6 +61,14 @@
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
+    <binding name="BasicHttpBinding_AlertOperations" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="ExternalResearchOperations1" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
    </basicHttpBinding>
   </bindings>
 
@@ -91,13 +99,16 @@
    <endpoint address="http://localhost:59430/Services/LoginOperations.svc"
     binding="basicHttpBinding" bindingConfiguration="LoginOperations"
     contract="LoginDefinitions.LoginOperations" name="LoginOperations" />
+   <endpoint address="http://localhost:59430/Services/MeetingOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="MeetingOperations"
+    contract="MeetingDefinitions.MeetingOperations" name="MeetingOperations" />
+   <endpoint address="http://localhost:59430/Services/AlertOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_AlertOperations"
+    contract="AlertDefinitions.AlertOperations" name="BasicHttpBinding_AlertOperations" />
    <endpoint address="http://localhost:59430/Services/ExternalResearchOperations.svc"
     binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations"
     contract="ExternalResearchDefinitions.ExternalResearchOperations"
     name="ExternalResearchOperations" />
-   <endpoint address="http://localhost:59430/Services/MeetingOperations.svc"
-    binding="basicHttpBinding" bindingConfiguration="MeetingOperations"
-    contract="MeetingDefinitions.MeetingOperations" name="MeetingOperations" />
   </client>
 	</system.serviceModel>
 </configuration>

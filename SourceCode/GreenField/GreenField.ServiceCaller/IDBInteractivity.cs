@@ -11,7 +11,7 @@ using System.Collections.ObjectModel;
 using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
 using GreenField.ServiceCaller.MeetingDefinitions;
-
+using GreenField.ServiceCaller.AlertDefinitions;
 
 
 namespace GreenField.ServiceCaller
@@ -267,5 +267,6 @@ namespace GreenField.ServiceCaller
         void GetMeetingConfigSchedule(Action<MeetingConfigurationSchedule> callback);
         #endregion
 
+        void RetrieveCompanyData(Action<List<tblCompanyInfo>> callback);
     }
 }
