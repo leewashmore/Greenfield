@@ -1578,20 +1578,20 @@ namespace GreenField.Web.Services
                   CalculateHarmonicMeanBenchmark(valuesBenchForPBV, ref entry);
                   result.Add(entry);
                   entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
-                  CalculateHarmonicMeanPortfolio(valuesPortForROE, "Forward ROE", ref entry);
-                  CalculateHarmonicMeanBenchmark(valuesBenchForROE, ref entry);
+                  CalculateHarmonicMeanPortfolioROE(valuesPortForROE, "Forward ROE", ref entry);
+                  CalculateHarmonicMeanBenchmarkROE(valuesBenchForROE, ref entry);
                   result.Add(entry);
                   entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
-                  CalculateHarmonicMeanPortfolio(valuesPortForDividendYield, "Forward Dividend Yield", ref entry);
-                  CalculateHarmonicMeanBenchmark(valuesBenchForDividendYield, ref entry);
+                  CalculateHarmonicMeanPortfolioROE(valuesPortForDividendYield, "Forward Dividend Yield", ref entry);
+                  CalculateHarmonicMeanBenchmarkROE(valuesBenchForDividendYield, ref entry);
                   result.Add(entry);
                   entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
-                  CalculateHarmonicMeanPortfolio(valuesPortForRevGrowth, "Forward Revenue Growth", ref entry);
-                  CalculateHarmonicMeanBenchmark(valuesBenchForRevGrowth, ref entry);
+                  CalculateHarmonicMeanPortfolioROE(valuesPortForRevGrowth, "Forward Revenue Growth", ref entry);
+                  CalculateHarmonicMeanBenchmarkROE(valuesBenchForRevGrowth, ref entry);
                   result.Add(entry);
                   entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
-                  CalculateHarmonicMeanPortfolio(valuesPortForNetGrowth, "Forward Net Income Growth", ref entry);
-                  CalculateHarmonicMeanBenchmark(valuesBenchForNetGrowth, ref entry);
+                  CalculateHarmonicMeanPortfolioROE(valuesPortForNetGrowth, "Forward Net Income Growth", ref entry);
+                  CalculateHarmonicMeanBenchmarkROE(valuesBenchForNetGrowth, ref entry);
                   result.Add(entry);              
                   
                   return result;
@@ -1686,6 +1686,88 @@ namespace GreenField.Web.Services
                 entry.Relative = entry.Portfolio / entry.Benchmark;        
         }
 
+
+        private void CalculateHarmonicMeanPortfolioROE(List<CalculatedValuesForValuation> filteredByDataIdList, String description, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? initialSumDirtyValuePC = 0, Decimal? harmonicMeanPortfolio = 0)
+        {
+            foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+            {
+                initialSumDirtyValuePC = initialSumDirtyValuePC + row.PortfolioPercent;
+            }
+            foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+            {
+                if (initialSumDirtyValuePC != 0)
+                    row.PortfolioPercent = (row.PortfolioPercent / initialSumDirtyValuePC) * 100;
+            }
+            int countInvalidPorPRevenue = filteredByDataIdList.Where(t => t.PortfolioPercent < 0).ToList().Count();
+            if (countInvalidPorPRevenue > 0)
+            {
+                filteredByDataIdList = filteredByDataIdList.Where(t => t.PortfolioPercent > 0).ToList();
+                initialSumDirtyValuePC = 0;
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    initialSumDirtyValuePC = initialSumDirtyValuePC + row.PortfolioPercent;
+                }
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    if (initialSumDirtyValuePC != 0)
+                        row.PortfolioPercent = (row.PortfolioPercent / initialSumDirtyValuePC) * 100;
+                    row.InverseAmount = 1 / row.Amount;
+                    row.MultipliedValue = row.PortfolioPercent * row.Amount;
+                    harmonicMeanPortfolio = harmonicMeanPortfolio + row.MultipliedValue;
+                }
+            }
+
+            else
+            {
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    row.InverseAmount = 1 / row.Amount;
+                    row.MultipliedValue = row.PortfolioPercent * row.Amount;
+                    harmonicMeanPortfolio = harmonicMeanPortfolio + row.MultipliedValue;
+                }
+            }
+
+            entry.Description = description;
+            if (harmonicMeanPortfolio != 0)
+                entry.Portfolio = 1 / harmonicMeanPortfolio;
+        }
+
+
+        private void CalculateHarmonicMeanBenchmarkROE(List<CalculatedValuesForValuation> filteredByDataIdList, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? harmonicMeanBenchmark = 0)
+        {
+
+            int countInvalidPorPRevenue = filteredByDataIdList.Where(t => t.PortfolioPercent < 0).ToList().Count();
+            Decimal? initialSumBenchmarkWeight = 0;
+            if (countInvalidPorPRevenue > 0)
+            {
+                filteredByDataIdList = filteredByDataIdList.Where(t => t.PortfolioPercent > 0).ToList();
+
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    initialSumBenchmarkWeight = initialSumBenchmarkWeight + row.PortfolioPercent;
+                }
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    row.PortfolioPercent = (row.PortfolioPercent / initialSumBenchmarkWeight) * 100;
+                    row.InverseAmount = 1 / row.Amount;
+                    row.MultipliedValue = row.PortfolioPercent * row.Amount;
+                    harmonicMeanBenchmark = harmonicMeanBenchmark + row.MultipliedValue;
+                }
+            }
+            else
+            {
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    row.InverseAmount = 1 / row.Amount;
+                    row.MultipliedValue = row.PortfolioPercent * row.Amount;
+                    harmonicMeanBenchmark = harmonicMeanBenchmark + row.MultipliedValue;
+                }
+            }
+            if (harmonicMeanBenchmark != 0)
+                entry.Benchmark = 1 / harmonicMeanBenchmark;
+            if (entry.Benchmark != 0)
+                entry.Relative = entry.Portfolio / entry.Benchmark;
+        }
         #endregion               
 
         [OperationContract]
