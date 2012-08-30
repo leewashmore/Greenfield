@@ -573,6 +573,12 @@
           <Parameter Name="cIssuerID" Type="varchar" Mode="In" />
           <Parameter Name="cSecurityID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="usp_GetDataForValuationQualityGrowth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="issuerIdsForPortfolio" Type="varchar(max)" Mode="In" />
+          <Parameter Name="securityIdsForPortfolio" Type="varchar(max)" Mode="In" />
+          <Parameter Name="issuerIdsForBenchmark" Type="varchar(max)" Mode="In" />
+          <Parameter Name="securityIdsForBenchmark" Type="varchar(max)" Mode="In" />
+        </Function>
         <Function Name="usp_GetQuarterlyResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DataId" Type="int" Mode="In" />
           <Parameter Name="PeriodYear" Type="int" Mode="In" />
@@ -715,6 +721,12 @@
           <FunctionImport Name="RetrieveSecurityPFVMeasureCurrentPrice" ReturnType="Collection(Decimal)">
             <Parameter Name="SecurityId" Mode="In" Type="String" />
             <Parameter Name="PFVMeasure" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetDataForValuationQualityGrowth" ReturnType="Collection(ExternalResearchModel.ValuationQualityGrowthData)">
+            <Parameter Name="issuerIdsForPortfolio" Mode="In" Type="String" />
+            <Parameter Name="securityIdsForPortfolio" Mode="In" Type="String" />
+            <Parameter Name="issuerIdsForBenchmark" Mode="In" Type="String" />
+            <Parameter Name="securityIdsForBenchmark" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -1190,6 +1202,16 @@
           <Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" />
           <Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" />
         </ComplexType>
+        <ComplexType Name="ValuationQualityGrowthData" >
+          <Property Type="String" Name="IssuerId" Nullable="false" />
+          <Property Type="String" Name="SecurityId" Nullable="false" />
+          <Property Type="String" Name="DataSource" Nullable="false" />
+          <Property Type="String" Name="PeriodType" Nullable="false" />
+          <Property Type="String" Name="Currency" Nullable="false" />
+          <Property Type="Int32" Name="DataId" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" />
+          <Property Type="String" Name="AmountType" Nullable="false" />
+        </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -1630,6 +1652,19 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="RetrieveSecurityPFVMeasureCurrentPrice" FunctionName="ExternalResearchModel.Store.RetrieveSecurityPFVMeasureCurrentPrice" />
+          <FunctionImportMapping FunctionImportName="usp_GetDataForValuationQualityGrowth" FunctionName="ExternalResearchModel.Store.usp_GetDataForValuationQualityGrowth">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.ValuationQualityGrowthData">
+                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
+                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
+                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="DataId" ColumnName="DataId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />

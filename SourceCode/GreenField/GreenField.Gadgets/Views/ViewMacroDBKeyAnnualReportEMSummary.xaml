@@ -115,6 +115,7 @@
                                                     Width="Auto"
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"
+                                                    DataFormatString="{}{0:p2}"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcYear2" 
@@ -123,6 +124,7 @@
                                                     Width="Auto"
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right" 
+                                                    DataFormatString="{}{0:p2}"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
 
@@ -131,6 +133,7 @@
                                                     DataMemberBinding="{Binding YearThree}" 
                                                     Width="Auto"
                                                     HeaderTextAlignment="Right" 
+                                                    DataFormatString="{}{0:p2}"
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -140,6 +143,7 @@
                                                     DataMemberBinding="{Binding YearFour}" 
                                                     Width="Auto"
                                                     HeaderTextAlignment="Right" 
+                                                    DataFormatString="{}{0:p2}"
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -148,6 +152,7 @@
                                                     DataMemberBinding="{Binding YearFive}" 
                                                     Width="Auto"
                                                     HeaderTextAlignment="Right" 
+                                                    DataFormatString="{}{0:p2}"
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -156,6 +161,7 @@
                                                     DataMemberBinding="{Binding YearSix}" 
                                                     Width="Auto"
                                                     HeaderTextAlignment="Right" 
+                                                    DataFormatString="{}{0:p2}"
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -167,6 +173,7 @@
                                                     Width="Auto"
                                                     HeaderTextAlignment="Right" 
                                                     TextAlignment="Right"
+                                                    DataFormatString="{}{0:p2}"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                            

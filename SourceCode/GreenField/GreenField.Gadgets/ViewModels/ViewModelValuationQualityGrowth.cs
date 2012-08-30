@@ -94,6 +94,8 @@ namespace GreenField.Gadgets.ViewModels
                 _isActive = value;
                 if (_effectiveDate != null && _PortfolioSelectionData != null  && _isActive)
                 {
+                    if (null != valuationQualityGrowthDataLoadedEvent)
+                        valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                     _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "", "", true, RetrieveValuationQualityGrowthCallbackMethod);
                 }
             }
@@ -118,7 +120,31 @@ namespace GreenField.Gadgets.ViewModels
 
         public void RetrieveValuationQualityGrowthCallbackMethod(List<ValuationQualityGrowthData> result)
         {
-             ValuationQualityGrowthInfo = result;
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null && result.Count > 0)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    ValuationQualityGrowthInfo = result;
+                    if (null != valuationQualityGrowthDataLoadedEvent)
+                        valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
+                else
+                {
+                    ValuationQualityGrowthInfo = result;
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                }
+            }
+
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
 
@@ -142,6 +168,8 @@ namespace GreenField.Gadgets.ViewModels
                     _PortfolioSelectionData = PortfolioSelectionData;
                     if (_effectiveDate != null && _PortfolioSelectionData != null && IsActive)
                     {
+                        if (null != valuationQualityGrowthDataLoadedEvent)
+                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "", "", true, RetrieveValuationQualityGrowthCallbackMethod);
                     }
                 }
@@ -174,6 +202,8 @@ namespace GreenField.Gadgets.ViewModels
                     _effectiveDate = effectiveDate;
                     if (_effectiveDate != null && _PortfolioSelectionData != null  && IsActive)
                     {
+                        if (null != valuationQualityGrowthDataLoadedEvent)
+                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
                         _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "", "", true, RetrieveValuationQualityGrowthCallbackMethod);
                     }
                 }
@@ -189,6 +219,13 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// Event for the notification of Data Load Completion
+        /// </summary>
+        public event DataRetrievalProgressIndicatorEventHandler valuationQualityGrowthDataLoadedEvent;
         #endregion
 
     }

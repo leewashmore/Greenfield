@@ -1335,18 +1335,44 @@ namespace GreenField.Web.Services
         #region Valuation,Quality and Growth
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<ValuationQualityGrowthData> RetrieveValuationGrowthData(PortfolioSelectionData selectedPortfolio, DateTime? effectiveDate, String filterType, String filterValue, bool lookThruEnabled)
+        public List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> RetrieveValuationGrowthData(PortfolioSelectionData selectedPortfolio, DateTime? effectiveDate, String filterType, String filterValue, bool lookThruEnabled)
         {
             try
             {
                 if (selectedPortfolio == null)
-                    return new List<ValuationQualityGrowthData>();
+                    return new List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>();
                 if (effectiveDate == null)
-                    return new List<ValuationQualityGrowthData>();
+                    return new List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>();
                 StringBuilder issuerIDPortfolio = new StringBuilder();
                 StringBuilder securityIDPortfolio = new StringBuilder();
                 StringBuilder issuerIDBenchmark = new StringBuilder();
                 StringBuilder securityIDBenchmark = new StringBuilder();
+                List<String> distinctSecuritiesForPortfolio = new List<String>();
+                List<String> distinctSecuritiesForBenchmark = new List<String>();
+                Dictionary<String, String> listForPortfolio = new Dictionary<string, string>();
+                Dictionary<String, String> listForBenchmark = new Dictionary<string, string>();
+
+                List<CalculatedValuesForValuation> valuesPortForAllDataIds = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForAllDataIds = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesPortForPRevenue = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForPRevenue = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesPortForEVEBITDA = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForEVEBITDA = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesPortForPE = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForPE = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesPortForPCE = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForPCE = new List<CalculatedValuesForValuation>();                
+                List<CalculatedValuesForValuation> valuesPortForPBV = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForPBV = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesPortForROE = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForROE = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesPortForDividendYield = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForDividendYield = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesPortForRevGrowth = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForRevGrowth = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesPortForNetGrowth = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForNetGrowth = new List<CalculatedValuesForValuation>();
+
                 int check = 1;
                 int checkBen = 1;
 
@@ -1358,29 +1384,26 @@ namespace GreenField.Web.Services
                 if (!isServiceUp)
                     throw new Exception("Services are not available");
 
-                List<ValuationQualityGrowthData> result = new List<ValuationQualityGrowthData>();
-
+                #region Calling Stored Proc for all securities in Benchmark and Portfolio Holdings
+                List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> result = new List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>();
+                List<GreenField.DAL.ValuationQualityGrowthData> storedProcResult = new List<GreenField.DAL.ValuationQualityGrowthData>();
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
                     .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
                     .ToList();
 
-                List<String> distinctSecuritiesForPortfolio = dataPortfolio
-                            .Select(record => record.ISSUE_NAME)
-                            .Distinct()
-                            .ToList();
-
+                if (dataPortfolio.Count() > 0)
+                {
+                    distinctSecuritiesForPortfolio = dataPortfolio.Select(record => record.ISSUE_NAME).Distinct().ToList();
+                }
+               
                 List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
                     .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
                     .ToList();
 
-                List<String> distinctSecuritiesForBenchmark = dataBenchmark
-                            .Select(record => record.ISSUE_NAME)
-                            .Distinct()
-                            .ToList();
-                issuerIDPortfolio.Append("'");
-                securityIDPortfolio.Append("'");
-                issuerIDBenchmark.Append("'");
-                securityIDBenchmark.Append("'");
+                if (dataBenchmark.Count() > 0)
+                {
+                     distinctSecuritiesForBenchmark = dataBenchmark.Select(record => record.ISSUE_NAME).Distinct().ToList();
+                }                
 
                 foreach (String issueName in distinctSecuritiesForPortfolio)
                 {
@@ -1391,20 +1414,13 @@ namespace GreenField.Web.Services
                         check = 0;
                         issuerIDPortfolio.Append("," + securityDetails.ISSUER_ID);
                         securityIDPortfolio.Append("," + securityDetails.SECURITY_ID);
+                        listForPortfolio.Add(securityDetails.SECURITY_ID.ToString(),securityDetails.ISSUE_NAME);
                     }
                 }
-                issuerIDPortfolio.Append("'");
-                securityIDPortfolio.Append("'");
-                if (check == 0)
-                {
-                    issuerIDPortfolio.Remove(1, 1);
-                    securityIDPortfolio.Remove(1, 1);
-                }
-                else
-                {
-                    issuerIDPortfolio = null;
-                    issuerIDPortfolio = null;
-                }
+
+                issuerIDPortfolio = check == 0 ? issuerIDPortfolio.Remove(0, 1) : null;
+                securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;              
+
                 foreach (String issueName in distinctSecuritiesForBenchmark)
                 {
                     GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
@@ -1414,23 +1430,171 @@ namespace GreenField.Web.Services
                         checkBen = 0;
                         issuerIDBenchmark.Append("," + securityDetails.ISSUER_ID);
                         securityIDBenchmark.Append("," + securityDetails.SECURITY_ID);
+                        listForBenchmark.Add(securityDetails.SECURITY_ID.ToString(),securityDetails.ISSUE_NAME);
                     }
                 }
 
-                issuerIDBenchmark.Append("'");
-                securityIDBenchmark.Append("'");
-                if (checkBen == 0)
+                issuerIDBenchmark = checkBen == 0 ? issuerIDBenchmark.Remove(0, 1) : null;
+                securityIDBenchmark = checkBen == 0 ? securityIDBenchmark.Remove(0, 1) : null;
+
+                string _issuerIDPortfolio = issuerIDPortfolio == null ? null : issuerIDPortfolio.ToString();
+                string _issuerIDBenchmark = issuerIDBenchmark == null ? null : issuerIDBenchmark.ToString();
+                string _securityIDBenchmark = securityIDBenchmark == null ? null : securityIDBenchmark.ToString();
+                string _securityIDPortfolio = securityIDPortfolio == null ? null : securityIDPortfolio.ToString();             
+
+                ExternalResearchEntities research = new ExternalResearchEntities();
+                storedProcResult = research.usp_GetDataForValuationQualityGrowth(_issuerIDPortfolio, _securityIDPortfolio, _issuerIDBenchmark, _securityIDBenchmark).ToList();
+                #endregion
+
+               
+                #region Calculating values for all Data Id's for Portfolio View and Benchmark View 
+                //******************Combining Portfolio weight and Benchmark weight for all securities from Portfolio View,Benchmark View and Amount from Data Base****************
+                List<String> dinstinctIssuerIdsForPortfolio = new List<String>();
+                List<String> dinstinctSecurityIdsForPortfolio = new List<String>();
+                List<String> dinstinctIssuerIdsForBenchmark = new List<String>();
+                List<String> dinstinctSecurityIdsForBenchmark = new List<String>();
+
+                if (storedProcResult.Count() > 0)
                 {
-                    issuerIDBenchmark.Remove(1, 1);
-                    securityIDBenchmark.Remove(1, 1);
+                    dinstinctIssuerIdsForPortfolio = storedProcResult.Where(t=>t.AmountType == "Portfolio").Select(t => t.IssuerId).Distinct().ToList();
+                    dinstinctSecurityIdsForPortfolio = storedProcResult.Where(t=>t.AmountType == "Portfolio").Select(t => t.SecurityId).Distinct().ToList();
+                    dinstinctIssuerIdsForBenchmark = storedProcResult.Where(t => t.AmountType == "Benchmark").Select(t => t.IssuerId).Distinct().ToList();
+                    dinstinctSecurityIdsForBenchmark = storedProcResult.Where(t => t.AmountType == "Benchmark").Select(t => t.SecurityId).Distinct().ToList();
                 }
-                else
+                List<String> distinctSecurityNamesForPortfolio = new List<string>();
+                List<String> distinctSecurityNamesForBenchmark = new List<string>();
+
+                foreach (String secId in  dinstinctSecurityIdsForPortfolio)
                 {
-                    issuerIDBenchmark = null;
-                    securityIDBenchmark = null;
+                    if (listForPortfolio.ContainsKey(secId))
+                    distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
+                }
+                foreach (String secId in dinstinctSecurityIdsForBenchmark)
+                {
+                    if (listForBenchmark.ContainsKey(secId))
+                        distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
                 }
 
-                return result;
+                foreach (String s in dinstinctIssuerIdsForPortfolio)
+                {
+                    foreach (GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUER_ID == s).ToList())
+                    {                       
+                        CalculatedValuesForValuation objPort= new CalculatedValuesForValuation();
+                        objPort.IssuerId = s;                       
+                        objPort.SecurityId = listForPortfolio.FirstOrDefault(t => t.Value == row.ISSUE_NAME).Key;
+                        objPort.DataId = storedProcResult.Where(t=>t.IssuerId == s).Select(t=>t.DataId).FirstOrDefault();
+                        objPort.Amount = storedProcResult.Where(t=>t.IssuerId == s).Select(t=>t.Amount).FirstOrDefault();
+                        objPort.PortfolioPercent = row.DIRTY_VALUE_PC;
+                        valuesPortForAllDataIds.Add(objPort);
+                    }
+                }
+
+                foreach (String s in distinctSecurityNamesForPortfolio)
+                {
+                    foreach (GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUE_NAME == s).ToList())
+                    {                     
+                        CalculatedValuesForValuation objPort= new CalculatedValuesForValuation();
+                        objPort.SecurityId = listForPortfolio.FirstOrDefault(t => t.Value == s).Key;
+                        objPort.IssuerId = row.ISSUER_ID;
+                        objPort.DataId = storedProcResult.Where(t => t.SecurityId == (listForPortfolio.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.DataId).FirstOrDefault();
+                        objPort.Amount = storedProcResult.Where(t => t.SecurityId == (listForPortfolio.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.Amount).FirstOrDefault();
+                        objPort.PortfolioPercent = row.DIRTY_VALUE_PC;
+                        valuesPortForAllDataIds.Add(objPort);
+                    }                   
+                }
+
+                foreach (String s in dinstinctIssuerIdsForBenchmark)
+                {
+                    foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUER_ID == s).ToList())
+                    {
+                        CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
+                        objPort.IssuerId = s;
+                        objPort.SecurityId = listForBenchmark.FirstOrDefault(t => t.Value == row.ISSUE_NAME).Key;
+                        objPort.DataId = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.DataId).FirstOrDefault();
+                        objPort.Amount = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.Amount).FirstOrDefault();
+                        objPort.PortfolioPercent = row.BENCHMARK_WEIGHT;
+                        valuesBenchForAllDataIds.Add(objPort);
+                    }
+                }
+
+                foreach (String s in distinctSecurityNamesForBenchmark)
+                {
+                    foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUE_NAME == s).ToList())
+                    {
+                        CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
+                        objPort.SecurityId = listForBenchmark.FirstOrDefault(t => t.Value == s).Key;
+                        objPort.IssuerId = row.ISSUER_ID;
+                        objPort.DataId = storedProcResult.Where(t => t.SecurityId == (listForBenchmark.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.DataId).FirstOrDefault();
+                        objPort.Amount = storedProcResult.Where(t => t.SecurityId == (listForBenchmark.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.Amount).FirstOrDefault();
+                        objPort.PortfolioPercent = row.BENCHMARK_WEIGHT;
+                        valuesBenchForAllDataIds.Add(objPort);
+                    }
+                }
+
+                #endregion
+
+                if (valuesPortForAllDataIds.Count() > 0)
+                {
+                    valuesPortForPRevenue = valuesPortForAllDataIds.Where(t => t.DataId == 197).ToList();
+                    valuesPortForEVEBITDA = valuesPortForAllDataIds.Where(t => t.DataId == 198).ToList();
+                    valuesPortForPE = valuesPortForAllDataIds.Where(t => t.DataId == 187).ToList();
+                    valuesPortForPCE = valuesPortForAllDataIds.Where(t => t.DataId == 189).ToList();
+                    valuesPortForPBV = valuesPortForAllDataIds.Where(t => t.DataId == 188).ToList();
+                    valuesPortForROE = valuesPortForAllDataIds.Where(t => t.DataId == 200).ToList();
+                    valuesPortForDividendYield = valuesPortForAllDataIds.Where(t => t.DataId == 236).ToList();
+                    valuesPortForRevGrowth = valuesPortForAllDataIds.Where(t => t.DataId == 201).ToList();
+                    valuesPortForNetGrowth = valuesPortForAllDataIds.Where(t => t.DataId == 202).ToList();
+                }
+                if (valuesBenchForAllDataIds.Count() > 0)
+                {
+                    valuesBenchForPRevenue = valuesBenchForAllDataIds.Where(t => t.DataId == 197).ToList();
+                    valuesBenchForEVEBITDA = valuesBenchForAllDataIds.Where(t => t.DataId == 198).ToList();
+                    valuesBenchForPE = valuesBenchForAllDataIds.Where(t => t.DataId == 187).ToList();
+                    valuesBenchForPCE = valuesBenchForAllDataIds.Where(t => t.DataId == 189).ToList();
+                    valuesBenchForPBV = valuesBenchForAllDataIds.Where(t => t.DataId == 188).ToList();
+                    valuesBenchForROE = valuesBenchForAllDataIds.Where(t => t.DataId == 200).ToList();
+                    valuesBenchForDividendYield = valuesBenchForAllDataIds.Where(t => t.DataId == 236).ToList();
+                    valuesBenchForRevGrowth = valuesBenchForAllDataIds.Where(t => t.DataId == 201).ToList();
+                    valuesBenchForNetGrowth = valuesBenchForAllDataIds.Where(t => t.DataId == 202).ToList();
+                }
+                  GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForPRevenue, "Forward P/Revenue", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForPRevenue, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForEVEBITDA, "Forward EV/EBITDA", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForEVEBITDA, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForPE, "Forward P/E", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForPE, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForPCE, "Forward P/CE", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForPCE, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForPBV, "Forward P/BV", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForPBV, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForROE, "Forward ROE", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForROE, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForDividendYield, "Forward Dividend Yield", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForDividendYield, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForRevGrowth, "Forward Revenue Growth", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForRevGrowth, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForNetGrowth, "Forward Net Income Growth", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForNetGrowth, ref entry);
+                  result.Add(entry);              
+                  
+                  return result;
             }
             catch (Exception ex)
             {
@@ -1440,7 +1604,89 @@ namespace GreenField.Web.Services
             }
         }
 
-        #endregion
+        private void CalculateHarmonicMeanPortfolio(List<CalculatedValuesForValuation> filteredByDataIdList,String description,ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry ,Decimal? initialSumDirtyValuePC = 0, Decimal? harmonicMeanPortfolio = 0 )
+        {
+            foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    initialSumDirtyValuePC = initialSumDirtyValuePC + row.PortfolioPercent;
+                }
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    if(initialSumDirtyValuePC != 0 )
+                    row.PortfolioPercent = (row.PortfolioPercent / initialSumDirtyValuePC)*100;
+                }
+                  int countInvalidPorPRevenue = filteredByDataIdList.Where(t => t.PortfolioPercent < 0 ).ToList().Count();
+                  if (countInvalidPorPRevenue > 0)
+                  {
+                      filteredByDataIdList = filteredByDataIdList.Where(t => t.PortfolioPercent > 0 ).ToList();
+                      initialSumDirtyValuePC = 0;
+                      foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                      {
+                          initialSumDirtyValuePC = initialSumDirtyValuePC + row.PortfolioPercent;
+                      }
+                      foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                      {
+                          if (initialSumDirtyValuePC != 0)
+                              row.PortfolioPercent = (row.PortfolioPercent / initialSumDirtyValuePC) * 100;
+                          row.InverseAmount = 1 / row.Amount;
+                          row.MultipliedValue = row.PortfolioPercent * row.InverseAmount;
+                          harmonicMeanPortfolio = harmonicMeanPortfolio + row.MultipliedValue;
+                      }
+                  }
+
+                  else
+                  {
+                      foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                      {
+                          row.InverseAmount = 1 / row.Amount;
+                          row.MultipliedValue = row.PortfolioPercent * row.InverseAmount;
+                          harmonicMeanPortfolio = harmonicMeanPortfolio + row.MultipliedValue;
+                      }
+                  }
+                 
+                  entry.Description = description;
+                  if (harmonicMeanPortfolio != 0)
+                  entry.Portfolio = 1 / harmonicMeanPortfolio;   
+        }
+
+
+        private void CalculateHarmonicMeanBenchmark(List<CalculatedValuesForValuation> filteredByDataIdList, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? harmonicMeanBenchmark = 0)
+        {          
+
+            int countInvalidPorPRevenue = filteredByDataIdList.Where(t => t.PortfolioPercent < 0).ToList().Count();
+            Decimal? initialSumBenchmarkWeight = 0;
+            if (countInvalidPorPRevenue > 0)
+            {
+                filteredByDataIdList = filteredByDataIdList.Where(t => t.PortfolioPercent > 0).ToList();
+
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    initialSumBenchmarkWeight = initialSumBenchmarkWeight + row.PortfolioPercent;
+                }
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    row.PortfolioPercent = (row.PortfolioPercent / initialSumBenchmarkWeight) * 100;
+                    row.InverseAmount = 1 / row.Amount;
+                    row.MultipliedValue = row.PortfolioPercent * row.InverseAmount;
+                    harmonicMeanBenchmark = harmonicMeanBenchmark + row.MultipliedValue;
+                }
+            }
+            else
+            {
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    row.InverseAmount = 1 / row.Amount;
+                    row.MultipliedValue = row.PortfolioPercent * row.InverseAmount;
+                    harmonicMeanBenchmark = harmonicMeanBenchmark + row.MultipliedValue;
+                }
+            }
+            if (harmonicMeanBenchmark != 0)
+                entry.Benchmark = 1 / harmonicMeanBenchmark;
+            if (entry.Benchmark != 0)
+                entry.Relative = entry.Portfolio / entry.Benchmark;        
+        }
+
+        #endregion               
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]

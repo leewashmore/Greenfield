@@ -126,6 +126,7 @@
       <DependentUpon>DocumentWorkSpaceOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AssetAllocationCalculations.cs" />
+    <Compile Include="Helpers\CalculatedValuesForValuation.cs" />
     <Compile Include="Helpers\CheckServiceAvailability.cs" />
     <Compile Include="Helpers\ConsensusEstimateCalculations.cs" />
     <Compile Include="Helpers\EnumUtils.cs" />
