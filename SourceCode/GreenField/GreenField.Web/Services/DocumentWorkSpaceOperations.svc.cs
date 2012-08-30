@@ -97,6 +97,12 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Returns the url of file after upload is successful
+        /// </summary>
+        /// <param name="fileName">name of the file to upload</param>
+        /// <param name="fileByteStream"> byte streams to return</param>
+        /// <returns>file url is upload is successful;empty otherwise</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public String UploadDocument(String fileName, Byte[] fileByteStream)
@@ -112,12 +118,15 @@ namespace GreenField.Web.Services
                     DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };
 
                     UInt32 copyResult = CopyService.CopyIntoItems(null, destinationUrl, ffieldInfoArray, fileByteStream, out cResultArray);
-                    //result = copyResult == 0 && cResultArray.First().ErrorCode == DocumentCopyService.CopyErrorCode.Success;
+
+                    if (cResultArray[0].ErrorCode == CopyErrorCode.Success)
+                        resultUrl = cResultArray[0].DestinationUrl;
                 }
                 catch (Exception)
                 {
                     throw;
                 }
+
                 return resultUrl;
             }
             catch (Exception ex)
@@ -128,6 +137,11 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Retruns the bytes of the requested file
+        /// </summary>
+        /// <param name="fileName">name of the file</param>
+        /// <returns>byte array is successful;null otherwise</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public Byte[] RetrieveDocument(String fileName)
