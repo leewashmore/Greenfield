@@ -82,10 +82,7 @@ namespace GreenField.Gadgets.Views
             set { _dataContextEstimates = value; }
         }
 
-        /// <summary>
-        /// Instance of EntitySelectionData
-        /// </summary>
-        private EntitySelectionData _entitySelectionData;
+       
         private bool _periodIsYearly = true;
 
         #endregion
@@ -99,7 +96,7 @@ namespace GreenField.Gadgets.Views
         private void LeftNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextEstimates._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextEstimates.Logger, methodNamespace);
             try
             {
 
@@ -112,7 +109,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextEstimates._logger, ex);
+                Logging.LogException(this.DataContextEstimates.Logger, ex);
             }
         }
 
@@ -124,7 +121,7 @@ namespace GreenField.Gadgets.Views
         private void RightNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextEstimates._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextEstimates.Logger, methodNamespace);
             try
             {
 
@@ -137,12 +134,13 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextEstimates._logger, ex);
+                Logging.LogException(this.DataContextEstimates.Logger, ex);
             }
         }
         #endregion
 
         #region EventsUnsusbcribe
+        
         /// <summary>
         /// Dispose method to unsubscribe Events
         /// </summary>
@@ -151,6 +149,7 @@ namespace GreenField.Gadgets.Views
             (this.DataContext as ViewModelEstimates).Dispose();
             this.DataContext = null;
         }
+
         #endregion
 
         #region Export
@@ -172,7 +171,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextEstimates._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextEstimates.Logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
@@ -193,7 +192,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextEstimates._logger, ex);
+                Logging.LogException(this.DataContextEstimates.Logger, ex);
             }
         }
         #endregion

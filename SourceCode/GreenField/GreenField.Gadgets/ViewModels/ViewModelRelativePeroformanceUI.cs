@@ -26,7 +26,7 @@ namespace GreenField.Gadgets.ViewModels
     /// <summary>
     /// View-Model for RelativePerformanceUI gadget
     /// </summary>
-    public class ViewModelRelativePeroformanceUI : NotificationObject
+    public class ViewModelRelativePerformanceUI : NotificationObject
     {
         #region Private Fields
 
@@ -72,7 +72,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Constructor that initialises the class.
         /// </summary>
         /// <param name="param">DashboardGadget payload</param>
-        public ViewModelRelativePeroformanceUI(DashboardGadgetParam param)
+        public ViewModelRelativePerformanceUI(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;

@@ -32,8 +32,8 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of type View-Model
         /// </summary>
-        private ViewModelRelativePeroformanceUI _dataContextRelativePerformanceUI;
-        public ViewModelRelativePeroformanceUI DataContextRelativePerformanceUI
+        private ViewModelRelativePerformanceUI _dataContextRelativePerformanceUI;
+        public ViewModelRelativePerformanceUI DataContextRelativePerformanceUI
         {
             get { return _dataContextRelativePerformanceUI; }
             set { _dataContextRelativePerformanceUI = value; }
@@ -62,7 +62,7 @@ namespace GreenField.Gadgets.Views
         /// Constructor that initialises the class
         /// </summary>
         /// <param name="dataContextSource"></param>
-        public ViewRelativePerformanceUI(ViewModelRelativePeroformanceUI dataContextSource)
+        public ViewRelativePerformanceUI(ViewModelRelativePerformanceUI dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;

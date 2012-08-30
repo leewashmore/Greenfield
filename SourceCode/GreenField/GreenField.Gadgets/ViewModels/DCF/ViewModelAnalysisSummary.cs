@@ -134,8 +134,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Default Display Data
         /// </summary>
-        private List<DCFAnalysisSummaryDisplayData> _analysisSummaryDisplayData;
-        public List<DCFAnalysisSummaryDisplayData> AnalysisSummaryDisplayData
+        private RangeObservableCollection<DCFAnalysisSummaryDisplayData> _analysisSummaryDisplayData;
+        public RangeObservableCollection<DCFAnalysisSummaryDisplayData> AnalysisSummaryDisplayData
         {
             get
             {
@@ -185,7 +185,30 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Calculations
 
-
+        /// <summary>
+        /// Stock Specific Discount
+        /// </summary>
+        private decimal? _stockSpecificDiscount;
+        public decimal? StockSpecificDiscount
+        {
+            get
+            {
+                return _stockSpecificDiscount;
+            }
+            set
+            {
+                _stockSpecificDiscount = value;
+                if (AnalysisSummaryData.Count == 0)
+                {
+                    if (AnalysisSummaryDisplayData.Where(a => a.PropertyName == "Stock Specific Discount").FirstOrDefault() != null)
+                        AnalysisSummaryDisplayData.Where(a => a.PropertyName == "Stock Specific Discount").FirstOrDefault().Value = Convert.ToString(value) + "%";
+                    this.RaisePropertyChanged(() => this.AnalysisSummaryDisplayData);
+                }
+                else
+                    SetAnalysisSummaryDisplayData();
+                this.RaisePropertyChanged(() => this.StockSpecificDiscount);
+            }
+        }
 
 
         #endregion
@@ -289,61 +312,72 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="data"></param>
         public void SetAnalysisSummaryDisplayData()
         {
-            decimal costOfEquity;
-            decimal weightOfEquity;
-            decimal costOfDebt;
-            decimal WACC;
-
-            List<DCFAnalysisSummaryDisplayData> result = new List<DCFAnalysisSummaryDisplayData>();
-
-            result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Market Risk Premium", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
-            result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Beta (*)", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()) });
-            result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Risk Free Rate", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
-            result.Add(new DCFAnalysisSummaryDisplayData()
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
             {
-                PropertyName = "Stock Specific Discount",
-                Value = Convert.ToString(AnalysisSummaryDisplayData.Where(a => a.PropertyName == "Stock Specific Discount").Select(a => a.Value).FirstOrDefault())
-            });
+                RangeObservableCollection<DCFAnalysisSummaryDisplayData> result = new RangeObservableCollection<DCFAnalysisSummaryDisplayData>();
 
-            result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Marginal Tax Rate", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
+                decimal costOfEquity;
+                decimal weightOfEquity;
+                decimal costOfDebt;
+                decimal WACC;
 
-            string aa = Convert.ToString(result.Where(a => a.PropertyName == "Stock Specific Discount").Select(a => a.Value).FirstOrDefault());
+                result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Market Risk Premium", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) + "%" });
+                result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Beta (*)", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()) + "%" });
+                result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Risk Free Rate", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
+                result.Add(new DCFAnalysisSummaryDisplayData()
+                {
+                    PropertyName = "Stock Specific Discount",
+                    Value = Convert.ToString(StockSpecificDiscount) + "%"
+                });
 
-            result.Add(new DCFAnalysisSummaryDisplayData()
+                result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Marginal Tax Rate", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) + "%" });
+
+
+                costOfEquity = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()) * Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault()) + Convert.ToDecimal(StockSpecificDiscount);
+                result.Add(new DCFAnalysisSummaryDisplayData()
+                {
+                    PropertyName = "Cost of Equity",
+                    Value = Convert.ToString(costOfEquity) + "%"
+                });
+
+                costOfDebt = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault());
+                result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Cost of Debt", Value = Convert.ToString(costOfDebt) + "%" });
+
+
+                result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Market Cap", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
+                result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Gross Debt", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
+                if ((Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()) == 0))
+                {
+                    weightOfEquity = 0;
+                    WACC = 0;
+                }
+                else
+                {
+                    weightOfEquity = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) / (Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()));
+                    WACC = (weightOfEquity * costOfEquity) + ((1 - weightOfEquity) * (costOfDebt * (1 - Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault()))));
+                }
+                result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Weight of Equity", Value = Convert.ToString(weightOfEquity) + "%" });
+                result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "WACC", Value = Convert.ToString(WACC) + "%" });
+
+                AnalysisSummaryDisplayData = result;
+                this.RaisePropertyChanged(() => this.AnalysisSummaryDisplayData);
+            }
+            catch (Exception ex)
             {
-                PropertyName = "Cost of Equity",
-                Value = Convert.ToString(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()) * Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault()) + Convert.ToDecimal(result.Where(a => a.PropertyName == "Stock Specific Discount").Select(a => a.Value).FirstOrDefault()))
-            });
-
-            costOfEquity = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()) * Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault()) + Convert.ToDecimal(Convert.ToString(result.Where(a => a.PropertyName == "Stock Specific Discount").Select(a => a.Value).FirstOrDefault()));
-
-
-
-            result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Cost of Debt", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
-
-            costOfDebt = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault());
-
-            result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Market Cap", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
-            result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Gross Debt", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
-            result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Weight of Equity", Value = Convert.ToString(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) / (Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()))) });
-            weightOfEquity = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) / (Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()));
-
-
-            WACC = (weightOfEquity * costOfEquity) + ((1 - weightOfEquity) * (costOfDebt * (1 - Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault()))));
-
-            result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "WACC", Value = Convert.ToString(WACC) });
-            AnalysisSummaryDisplayData = result;
-            this.RaisePropertyChanged(() => this.AnalysisSummaryDisplayData);
-
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
         }
 
         /// <summary>
         /// Set Default Display Data
         /// </summary>
         /// <returns></returns>
-        private List<DCFAnalysisSummaryDisplayData> SetDefaultAnalysisDisplayData()
+        private RangeObservableCollection<DCFAnalysisSummaryDisplayData> SetDefaultAnalysisDisplayData()
         {
-            List<DCFAnalysisSummaryDisplayData> result = new List<DCFAnalysisSummaryDisplayData>();
+            RangeObservableCollection<DCFAnalysisSummaryDisplayData> result = new RangeObservableCollection<DCFAnalysisSummaryDisplayData>();
             result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Market Risk Premium" });
             result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Beta (*)" });
             result.Add(new DCFAnalysisSummaryDisplayData() { PropertyName = "Risk Free Rate" });

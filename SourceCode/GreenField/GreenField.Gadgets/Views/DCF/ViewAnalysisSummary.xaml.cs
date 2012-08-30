@@ -181,7 +181,7 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         /// <summary>
-        /// Before Edit
+        /// Before Editing Begins
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -190,21 +190,33 @@ namespace GreenField.Gadgets.Views
             int Index = this.dgDCFAnalysisSummary.Items.IndexOf(e.Cell.ParentRow.Item);
             if (Index != 3)
                 e.Cancel = true;
-            else
-                this.DataContextSource.SetAnalysisSummaryDisplayData();
         }
 
         #endregion
 
+
         /// <summary>
-        /// 
+        /// Validating the Contents of the Edited Cell.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dgDCFAnalysisSummary_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
+        private void dgDCFAnalysisSummary_CellValidating(object sender, GridViewCellValidatingEventArgs e)
         {
+            if (e.Cell.Column.UniqueName == "High")
+            {
+                decimal value;
+                var textEntered = e.NewValue as string;
 
+                if (!Decimal.TryParse(textEntered, out value))
+                {
+                    e.IsValid = false;
+                    e.ErrorMessage = "The Entered value should be a valid number";
+                }
+                else
+                {
+                    this.DataContextSource.StockSpecificDiscount = Convert.ToDecimal(textEntered);
+                }
+            }
         }
-
     }
 }

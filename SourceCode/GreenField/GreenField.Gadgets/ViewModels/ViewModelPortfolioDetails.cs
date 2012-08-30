@@ -26,7 +26,20 @@ namespace GreenField.Gadgets.ViewModels
 
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
-        public ILoggerFacade _logger;
+        
+        private ILoggerFacade _logger;
+        public ILoggerFacade Logger
+        {
+            get
+            {
+                return _logger;
+            }
+            set
+            {
+                _logger = value;
+            }
+        }
+
         private PortfolioSelectionData _portfolioSelectionData;
         private DateTime? _effectiveDate;
         private bool _lookThruEnabled = false;
@@ -124,7 +137,7 @@ namespace GreenField.Gadgets.ViewModels
                     _groupedFilteredPortfolioDetailsData = value;
                     if (value.Count > 0)
                     {
-                        ReturnGroupedColumnData(FilterDescriptor);
+                        ReturnGroupedColumnData();
                     }
                     this.RaisePropertyChanged(() => this.GroupedFilteredPortfolioDetailsData);
                 }
@@ -468,7 +481,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Helper methods to Re-Calculate Weights while Grouping
         /// </summary>
         /// <param name="objGroupingColumnName">Column on the basis of which Grouping is Done</param>
-        private void ReturnGroupedColumnData(string objGroupingColumnName)
+        private void ReturnGroupedColumnData()
         {
             try
             {
@@ -582,17 +595,17 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Event handler for FundSelection changed Event
         /// </summary>
-        /// <param name="PortfolioSelectionData"></param>
-        public void HandlePortfolioReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        /// <param name="portfolioSelectionData"></param>
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
                 //Arguement Null Exception
-                if (PortfolioSelectionData != null)
+                if (portfolioSelectionData != null)
                 {
-                    SelectedPortfolioId = PortfolioSelectionData;
+                    SelectedPortfolioId = portfolioSelectionData;
                     if (SelectedPortfolioId != null && _effectiveDate != null && IsActive)
                     {
                         BusyIndicatorStatus = true;

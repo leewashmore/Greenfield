@@ -104,7 +104,7 @@ namespace GreenField.Gadgets.Views
         private void LeftNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextValuations._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextValuations.Logger, methodNamespace);
 
             try
             {
@@ -117,7 +117,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextValuations._logger, ex);
+                Logging.LogException(this.DataContextValuations.Logger, ex);
             }
         }
 
@@ -129,7 +129,7 @@ namespace GreenField.Gadgets.Views
         private void RightNavigation_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextValuations._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextValuations.Logger, methodNamespace);
 
             try
             {
@@ -142,7 +142,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextValuations._logger, ex);
+                Logging.LogException(this.DataContextValuations.Logger, ex);
             }
         }
         #endregion
@@ -178,7 +178,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextValuations._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextValuations.Logger, methodNamespace);
             try
             {
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
@@ -199,7 +199,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextValuations._logger, ex);
+                Logging.LogException(this.DataContextValuations.Logger, ex);
             }
         }
         #endregion

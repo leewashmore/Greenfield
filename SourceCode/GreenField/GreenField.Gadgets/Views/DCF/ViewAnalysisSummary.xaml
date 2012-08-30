@@ -83,12 +83,13 @@
                                          EnableColumnVirtualization="False"
                                          GridLinesVisibility="None"
                                          BeginningEdit="dgDCFAnalysisSummary_BeginningEdit"
-                                         RowEditEnded="dgDCFAnalysisSummary_RowEditEnded" >
+                                         CellValidating="dgDCFAnalysisSummary_CellValidating">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn Header="Assumptions" DataMemberBinding="{Binding PropertyName,Mode=TwoWay}" HeaderTextAlignment="Left" TextAlignment="Left"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn Header="High" DataMemberBinding="{Binding Value,Mode=TwoWay}" HeaderTextAlignment="Right" TextAlignment="Right"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn Header="Assumptions" UniqueName="Assumptions" DataMemberBinding="{Binding PropertyName,Mode=TwoWay}" 
+                                                    HeaderTextAlignment="Left" TextAlignment="Left"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn Header="High" UniqueName="High" DataMemberBinding="{Binding Value,Mode=TwoWay}" HeaderTextAlignment="Right" TextAlignment="Right"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                     </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </Grid>
