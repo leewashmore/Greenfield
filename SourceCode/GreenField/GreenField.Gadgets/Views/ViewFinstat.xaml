@@ -112,7 +112,7 @@
                                            Style="{StaticResource TextBlockStyle}"/>
                                 <telerik:RadComboBox Grid.Row="3" Grid.Column="1" ItemsSource="{Binding StartYearRange}"
                                                  VerticalContentAlignment="Center" SelectedValue="{Binding SelectedYearRange,Mode=TwoWay}"
-                                                 Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}"/>
+                                                 Margin="2,2,2,0" Style="{StaticResource RadComboBoxStyle}" EmptyText="Select Year..." />
                             </Grid>
                         </telerik:RadExpander.Content>
                     </telerik:RadExpander>

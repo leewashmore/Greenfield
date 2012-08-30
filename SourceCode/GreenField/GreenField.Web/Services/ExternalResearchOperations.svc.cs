@@ -382,7 +382,6 @@ namespace GreenField.Web.Services
             List<FinstatDetailData> result = new List<FinstatDetailData>();
 
             data = entity.GetFinstatDetail(issuerId, securityId, _dataSource, _fiscalType, currency).ToList();
-            //  data = data.Where(a => a.GROUP_NAME == "Growth Data" && a.DATA_DESC == "Loan Growth (YOY)").ToList();
             if (data == null || data.Count() == 0)
                 return result;
 
@@ -434,12 +433,12 @@ namespace GreenField.Web.Services
                 temp.GroupDescription = data[i].GROUP_NAME;
                 temp.Harmonic = data[i].HARMONIC;
                 temp.IsPercentage = data[i].PERCENTAGE;
-                temp.PeriodYear = data[i].PERIOD_YEAR;
+                temp.PeriodYear = Convert.ToInt32(data[i].PERIOD_YEAR);
                 temp.SortOrder = data[i].SORT_ORDER;
                 temp.AmountType = "A";
                 temp.PeriodType = "A";
                 temp.RootSource = data[i].ROOT_SOURCE;
-                temp.RootSourceDate = data[i].ROOT_SOURCE_DATE;
+                temp.RootSourceDate = Convert.ToDateTime(data[i].ROOT_SOURCE_DATE);
                 if (data[i].HARMONIC == "Y")
                 {
                     decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;

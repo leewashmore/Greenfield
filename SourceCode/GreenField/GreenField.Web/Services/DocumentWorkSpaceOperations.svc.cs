@@ -293,6 +293,8 @@ namespace GreenField.Web.Services
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
                 List<string> metaTagsInfo = entity.FileMasters.Select(a => a.MetaTags).Distinct().ToList();
+                metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityName).Distinct().ToList());
+                metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityTicker).Distinct().ToList());
 
                 return metaTagsInfo;
             }
