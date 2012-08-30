@@ -65,10 +65,10 @@ namespace GreenField.DashboardModule.Views
             };
 
             //for accessing the gadgets data 
-            _viewModel = new ViewModelPresentationVote(param);
-            _view = new ViewPresentationVote(_viewModel);           
+            //_viewModel = new ViewModelPresentationVote(param);
+            //_view = new ViewPresentationVote(_viewModel);           
 
-            this.cctrDashboardContent.Content = _view;
+            this.cctrDashboardContent.Content = null;// _view;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
