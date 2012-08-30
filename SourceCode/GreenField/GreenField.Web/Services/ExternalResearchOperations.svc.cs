@@ -1434,13 +1434,21 @@ namespace GreenField.Web.Services
                 List<CalculatedValuesForValuation> valuesPortForPRevenue = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesBenchForPRevenue = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesPortForEVEBITDA = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForEVEBITDA = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesPortForPE = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForPE = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesPortForPCE = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForPCE = new List<CalculatedValuesForValuation>();                
                 List<CalculatedValuesForValuation> valuesPortForPBV = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForPBV = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesPortForROE = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForROE = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesPortForDividendYield = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForDividendYield = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesPortForRevGrowth = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForRevGrowth = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesPortForNetGrowth = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForNetGrowth = new List<CalculatedValuesForValuation>();
 
                 int check = 1;
                 int checkBen = 1;
@@ -1601,15 +1609,67 @@ namespace GreenField.Web.Services
                 }
 
                 #endregion
-                 
-                  if(valuesPortForAllDataIds.Count() > 0)
-                      valuesPortForPRevenue = valuesPortForAllDataIds.Where(t => t.DataId == 3).ToList();
-                  if (valuesBenchForAllDataIds.Count() > 0)
-                      valuesBenchForPRevenue = valuesBenchForAllDataIds.Where(t => t.DataId == 3).ToList();
+
+                if (valuesPortForAllDataIds.Count() > 0)
+                {
+                    valuesPortForPRevenue = valuesPortForAllDataIds.Where(t => t.DataId == 197).ToList();
+                    valuesPortForEVEBITDA = valuesPortForAllDataIds.Where(t => t.DataId == 198).ToList();
+                    valuesPortForPE = valuesPortForAllDataIds.Where(t => t.DataId == 187).ToList();
+                    valuesPortForPCE = valuesPortForAllDataIds.Where(t => t.DataId == 189).ToList();
+                    valuesPortForPBV = valuesPortForAllDataIds.Where(t => t.DataId == 188).ToList();
+                    valuesPortForROE = valuesPortForAllDataIds.Where(t => t.DataId == 200).ToList();
+                    valuesPortForDividendYield = valuesPortForAllDataIds.Where(t => t.DataId == 236).ToList();
+                    valuesPortForRevGrowth = valuesPortForAllDataIds.Where(t => t.DataId == 201).ToList();
+                    valuesPortForNetGrowth = valuesPortForAllDataIds.Where(t => t.DataId == 202).ToList();
+                }
+                if (valuesBenchForAllDataIds.Count() > 0)
+                {
+                    valuesBenchForPRevenue = valuesBenchForAllDataIds.Where(t => t.DataId == 197).ToList();
+                    valuesBenchForEVEBITDA = valuesBenchForAllDataIds.Where(t => t.DataId == 198).ToList();
+                    valuesBenchForPE = valuesBenchForAllDataIds.Where(t => t.DataId == 187).ToList();
+                    valuesBenchForPCE = valuesBenchForAllDataIds.Where(t => t.DataId == 189).ToList();
+                    valuesBenchForPBV = valuesBenchForAllDataIds.Where(t => t.DataId == 188).ToList();
+                    valuesBenchForROE = valuesBenchForAllDataIds.Where(t => t.DataId == 200).ToList();
+                    valuesBenchForDividendYield = valuesBenchForAllDataIds.Where(t => t.DataId == 236).ToList();
+                    valuesBenchForRevGrowth = valuesBenchForAllDataIds.Where(t => t.DataId == 201).ToList();
+                    valuesBenchForNetGrowth = valuesBenchForAllDataIds.Where(t => t.DataId == 202).ToList();
+                }
                   GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
                   CalculateHarmonicMeanPortfolio(valuesPortForPRevenue, "Forward P/Revenue", ref entry);
                   CalculateHarmonicMeanBenchmark(valuesBenchForPRevenue, ref entry);
                   result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForEVEBITDA, "Forward EV/EBITDA", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForEVEBITDA, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForPE, "Forward P/E", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForPE, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForPCE, "Forward P/CE", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForPCE, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForPBV, "Forward P/BV", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForPBV, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForROE, "Forward ROE", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForROE, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForDividendYield, "Forward Dividend Yield", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForDividendYield, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForRevGrowth, "Forward Revenue Growth", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForRevGrowth, ref entry);
+                  result.Add(entry);
+                  entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForNetGrowth, "Forward Net Income Growth", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForNetGrowth, ref entry);
+                  result.Add(entry);              
                   
                   return result;
             }

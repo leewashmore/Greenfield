@@ -50,6 +50,7 @@
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"
                                                     Width="*" 
+                                                    IsFilterable="False"
                                                     HeaderTextAlignment="Left"
                                                     TextAlignment="Left">
                     </telerik:GridViewDataColumn>
@@ -57,7 +58,8 @@
                                                     DataMemberBinding="{Binding Portfolio}"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"
-                                                    Width="Auto"                                                  
+                                                    Width="Auto"     
+                                                    IsFilterable="False"
                                                     DataFormatString="{}{0:n1}"
                                                     HeaderTextAlignment="Right"
                                                     TextAlignment="Right">
@@ -67,15 +69,17 @@
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                  Width="Auto"   
-                                                 HeaderTextAlignment="Right"                                                   
+                                                 HeaderTextAlignment="Right"  
+                                                 IsFilterable="False"
                                                  DataFormatString="{}{0:n1}"
                                                  TextAlignment="Right"/>
 
                     <telerik:GridViewDataColumn Header="Relative"                                                     
                                                  DataMemberBinding="{Binding Relative}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                  Width="Auto"   
+                                                 IsFilterable="False"
                                                  HeaderTextAlignment="Right"                                                   
                                                  DataFormatString="{}{0:n2}"
                                                  TextAlignment="Right"/>
