@@ -1,5 +1,5 @@
 --declare  current and required version
-declare @RequiredDBVersion as nvarchar(100) = '00061
+declare @RequiredDBVersion as nvarchar(100) = '00061'
 declare @CurrentScriptVersion as nvarchar(100) = '00062'
 --if current version already in DB, just skip
 if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
