@@ -1608,7 +1608,7 @@ namespace GreenField.Web.Services
                       valuesBenchForPRevenue = valuesBenchForAllDataIds.Where(t => t.DataId == 3).ToList();
                   GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
                   CalculateHarmonicMeanPortfolio(valuesPortForPRevenue, "Forward P/Revenue", ref entry);
-                  CalculateHarmonicMeanBenchmark(valuesPortForPRevenue,ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesBenchForPRevenue, ref entry);
                   result.Add(entry);
                   
                   return result;
