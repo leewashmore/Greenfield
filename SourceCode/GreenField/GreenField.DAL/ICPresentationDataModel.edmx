@@ -759,7 +759,7 @@
             <Parameter Name="MeetingVotingClosedDateTime" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="GetDocumentsData" ReturnType="Collection(ICPresentationModel.DocumentsData)">
-            <Parameter Name="searchString" Mode="In" Type="String" />
+          <Parameter Name="searchString" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">

@@ -33,7 +33,7 @@
   <xs:element name="CommentDetails" nillable="true" type="tns:CommentDetails" />
   <xs:complexType name="DocumentCatalogData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FileId" type="xs:int" />
+      <xs:element minOccurs="0" name="FileId" nillable="true" type="xs:anyType" />
       <xs:element minOccurs="0" name="FileMetaTags" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="FilePath" nillable="true" type="xs:string" />

@@ -67,6 +67,13 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         System.IAsyncResult BeginRetrieveDocumentsData(string searchString, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> EndRetrieveDocumentsData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTags", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTagsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTagsServiceFaultFa" +
+            "ult", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginGetDocumentsMetaTags(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.ObjectModel.ObservableCollection<string> EndGetDocumentsMetaTags(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -132,6 +139,25 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetDocumentsMetaTagsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetDocumentsMetaTagsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.ObjectModel.ObservableCollection<string> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.ObjectModel.ObservableCollection<string>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class DocumentWorkspaceOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations>, GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations {
         
         private BeginOperationDelegate onBeginUploadDocumentDelegate;
@@ -151,6 +177,12 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         private EndOperationDelegate onEndRetrieveDocumentsDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveDocumentsDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetDocumentsMetaTagsDelegate;
+        
+        private EndOperationDelegate onEndGetDocumentsMetaTagsDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetDocumentsMetaTagsCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -210,6 +242,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         public event System.EventHandler<RetrieveDocumentCompletedEventArgs> RetrieveDocumentCompleted;
         
         public event System.EventHandler<RetrieveDocumentsDataCompletedEventArgs> RetrieveDocumentsDataCompleted;
+        
+        public event System.EventHandler<GetDocumentsMetaTagsCompletedEventArgs> GetDocumentsMetaTagsCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -355,6 +389,50 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
                         searchString}, this.onEndRetrieveDocumentsDataDelegate, this.onRetrieveDocumentsDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginGetDocumentsMetaTags(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetDocumentsMetaTags(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.ObjectModel.ObservableCollection<string> GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndGetDocumentsMetaTags(System.IAsyncResult result) {
+            return base.Channel.EndGetDocumentsMetaTags(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetDocumentsMetaTags(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginGetDocumentsMetaTags(callback, asyncState);
+        }
+        
+        private object[] OnEndGetDocumentsMetaTags(System.IAsyncResult result) {
+            System.Collections.ObjectModel.ObservableCollection<string> retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndGetDocumentsMetaTags(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetDocumentsMetaTagsCompleted(object state) {
+            if ((this.GetDocumentsMetaTagsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetDocumentsMetaTagsCompleted(this, new GetDocumentsMetaTagsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetDocumentsMetaTagsAsync() {
+            this.GetDocumentsMetaTagsAsync(null);
+        }
+        
+        public void GetDocumentsMetaTagsAsync(object userState) {
+            if ((this.onBeginGetDocumentsMetaTagsDelegate == null)) {
+                this.onBeginGetDocumentsMetaTagsDelegate = new BeginOperationDelegate(this.OnBeginGetDocumentsMetaTags);
+            }
+            if ((this.onEndGetDocumentsMetaTagsDelegate == null)) {
+                this.onEndGetDocumentsMetaTagsDelegate = new EndOperationDelegate(this.OnEndGetDocumentsMetaTags);
+            }
+            if ((this.onGetDocumentsMetaTagsCompletedDelegate == null)) {
+                this.onGetDocumentsMetaTagsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetDocumentsMetaTagsCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetDocumentsMetaTagsDelegate, null, this.onEndGetDocumentsMetaTagsDelegate, this.onGetDocumentsMetaTagsCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -468,6 +546,18 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             public System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> EndRetrieveDocumentsData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData> _result = ((System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.DocumentCategoricalData>)(base.EndInvoke("RetrieveDocumentsData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetDocumentsMetaTags(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetDocumentsMetaTags", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.ObjectModel.ObservableCollection<string> EndGetDocumentsMetaTags(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.ObjectModel.ObservableCollection<string> _result = ((System.Collections.ObjectModel.ObservableCollection<string>)(base.EndInvoke("GetDocumentsMetaTags", _args, result)));
                 return _result;
             }
         }

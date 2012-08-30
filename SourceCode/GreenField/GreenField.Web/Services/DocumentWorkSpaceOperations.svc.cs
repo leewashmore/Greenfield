@@ -260,7 +260,7 @@ namespace GreenField.Web.Services
 
                     result.Add(new DocumentCategoricalData()
                        {
-                           DocumentCategoryType = DocumentCategoryType.COMPANY_MEETING_NOTES,
+                           DocumentCategoryType = (DocumentCategoryType)EnumUtils.ToEnum(record.Type, typeof(DocumentCategoryType)),
                            DocumentCompanyName = record.SecurityName,
                            DocumentCompanyTicker = record.SecurityTicker,
                            DocumentCatalogData = new DocumentCatalogData()
@@ -276,6 +276,25 @@ namespace GreenField.Web.Services
                        });                    
                 }
                 return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<string> GetDocumentsMetaTags()
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                List<string> metaTagsInfo = entity.FileMasters.Select(a => a.MetaTags).Distinct().ToList();
+
+                return metaTagsInfo;
             }
             catch (Exception ex)
             {

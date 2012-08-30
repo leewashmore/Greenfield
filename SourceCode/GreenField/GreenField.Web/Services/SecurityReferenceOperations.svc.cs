@@ -446,7 +446,6 @@ namespace GreenField.Web.Services
         {
             try
             {
-
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 

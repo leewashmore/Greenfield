@@ -6,6 +6,7 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" />
       <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="DocumentWorkspaceOperations_UploadDocument_InputMessage">
@@ -35,6 +36,15 @@
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_GetDocumentsMetaTags_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentsMetaTags" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_GetDocumentsMetaTags_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentsMetaTagsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_GetDocumentsMetaTags_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q4:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="DocumentWorkspaceOperations">
     <wsdl:operation name="UploadDocument">
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UploadDocument" message="tns:DocumentWorkspaceOperations_UploadDocument_InputMessage" />
@@ -50,6 +60,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsData" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataResponse" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentsMetaTags">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTags" message="tns:DocumentWorkspaceOperations_GetDocumentsMetaTags_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTagsResponse" message="tns:DocumentWorkspaceOperations_GetDocumentsMetaTags_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTagsServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_GetDocumentsMetaTags_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_DocumentWorkspaceOperations" type="tns:DocumentWorkspaceOperations">
@@ -80,6 +95,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveDocumentsData">
       <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentsMetaTags">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTags" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

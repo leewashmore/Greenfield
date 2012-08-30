@@ -231,6 +231,8 @@ namespace GreenField.ServiceCaller
         void UploadDocument(String fileName, Byte[] fileByteStream, Action<String> callback);
 
         void RetrieveDocument(String fileName, Action<Byte[]> callback);
+
+        void GetDocumentsMetaTags(Action<List<string>> callback);
         #endregion
 
         #region Investment Committee
