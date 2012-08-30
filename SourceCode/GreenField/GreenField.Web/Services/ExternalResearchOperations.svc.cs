@@ -1428,11 +1428,11 @@ namespace GreenField.Web.Services
                 List<String> distinctSecuritiesForBenchmark = new List<String>();
                 Dictionary<String, String> listForPortfolio = new Dictionary<string, string>();
                 Dictionary<String, String> listForBenchmark = new Dictionary<string, string>();
-                Decimal? initialSumDirtyValuePC = 0;
-                Decimal? harmonicMeanPortfolio = 0;
+
                 List<CalculatedValuesForValuation> valuesPortForAllDataIds = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesBenchForAllDataIds = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesPortForPRevenue = new List<CalculatedValuesForValuation>();
+                List<CalculatedValuesForValuation> valuesBenchForPRevenue = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesPortForEVEBITDA = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesPortForPE = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesPortForPCE = new List<CalculatedValuesForValuation>();
@@ -1601,28 +1601,47 @@ namespace GreenField.Web.Services
                 }
 
                 #endregion
+                 
+                  if(valuesPortForAllDataIds.Count() > 0)
+                      valuesPortForPRevenue = valuesPortForAllDataIds.Where(t => t.DataId == 3).ToList();
+                  if (valuesBenchForAllDataIds.Count() > 0)
+                      valuesBenchForPRevenue = valuesBenchForAllDataIds.Where(t => t.DataId == 3).ToList();
+                  GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
+                  CalculateHarmonicMeanPortfolio(valuesPortForPRevenue, "Forward P/Revenue", ref entry);
+                  CalculateHarmonicMeanBenchmark(valuesPortForPRevenue,ref entry);
+                  result.Add(entry);
+                  
+                  return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
 
-                valuesPortForPRevenue = valuesPortForAllDataIds.Where(t => t.DataId == 3).ToList();
-
-                foreach (CalculatedValuesForValuation row in valuesPortForPRevenue)
+        private void CalculateHarmonicMeanPortfolio(List<CalculatedValuesForValuation> filteredByDataIdList,String description,ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry ,Decimal? initialSumDirtyValuePC = 0, Decimal? harmonicMeanPortfolio = 0 )
+        {
+            foreach (CalculatedValuesForValuation row in filteredByDataIdList)
                 {
                     initialSumDirtyValuePC = initialSumDirtyValuePC + row.PortfolioPercent;
                 }
-                foreach (CalculatedValuesForValuation row in valuesPortForPRevenue)
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
                 {
                     if(initialSumDirtyValuePC != 0 )
                     row.PortfolioPercent = (row.PortfolioPercent / initialSumDirtyValuePC)*100;
                 }
-                  int countInvalidPorPRevenue = valuesPortForPRevenue.Where(t => t.PortfolioPercent < 0 ).ToList().Count();
+                  int countInvalidPorPRevenue = filteredByDataIdList.Where(t => t.PortfolioPercent < 0 ).ToList().Count();
                   if (countInvalidPorPRevenue > 0)
                   {
-                      valuesPortForPRevenue = valuesPortForPRevenue.Where(t => t.PortfolioPercent > 0 ).ToList();
+                      filteredByDataIdList = filteredByDataIdList.Where(t => t.PortfolioPercent > 0 ).ToList();
                       initialSumDirtyValuePC = 0;
-                      foreach (CalculatedValuesForValuation row in valuesPortForPRevenue)
+                      foreach (CalculatedValuesForValuation row in filteredByDataIdList)
                       {
                           initialSumDirtyValuePC = initialSumDirtyValuePC + row.PortfolioPercent;
                       }
-                      foreach (CalculatedValuesForValuation row in valuesPortForPRevenue)
+                      foreach (CalculatedValuesForValuation row in filteredByDataIdList)
                       {
                           if (initialSumDirtyValuePC != 0)
                               row.PortfolioPercent = (row.PortfolioPercent / initialSumDirtyValuePC) * 100;
@@ -1634,28 +1653,55 @@ namespace GreenField.Web.Services
 
                   else
                   {
-                      foreach (CalculatedValuesForValuation row in valuesPortForPRevenue)
+                      foreach (CalculatedValuesForValuation row in filteredByDataIdList)
                       {
                           row.InverseAmount = 1 / row.Amount;
                           row.MultipliedValue = row.PortfolioPercent * row.InverseAmount;
                           harmonicMeanPortfolio = harmonicMeanPortfolio + row.MultipliedValue;
                       }
                   }
-                  GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry = new GreenField.DataContracts.DataContracts.ValuationQualityGrowthData();
-                  entry.Description = "Forward P/Revenue";
-                  if(harmonicMeanPortfolio != 0)
-                  entry.Portfolio = 1/harmonicMeanPortfolio;            
-                  return result;
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
+                 
+                  entry.Description = description;
+                  if (harmonicMeanPortfolio != 0)
+                  entry.Portfolio = 1 / harmonicMeanPortfolio;   
         }
 
-        private void Calculate 
+
+        private void CalculateHarmonicMeanBenchmark(List<CalculatedValuesForValuation> filteredByDataIdList, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? harmonicMeanBenchmark = 0)
+        {          
+
+            int countInvalidPorPRevenue = filteredByDataIdList.Where(t => t.PortfolioPercent < 0).ToList().Count();
+            Decimal? initialSumBenchmarkWeight = 0;
+            if (countInvalidPorPRevenue > 0)
+            {
+                filteredByDataIdList = filteredByDataIdList.Where(t => t.PortfolioPercent > 0).ToList();
+
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    initialSumBenchmarkWeight = initialSumBenchmarkWeight + row.PortfolioPercent;
+                }
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    row.PortfolioPercent = (row.PortfolioPercent / initialSumBenchmarkWeight) * 100;
+                    row.InverseAmount = 1 / row.Amount;
+                    row.MultipliedValue = row.PortfolioPercent * row.InverseAmount;
+                    harmonicMeanBenchmark = harmonicMeanBenchmark + row.MultipliedValue;
+                }
+            }
+            else
+            {
+                foreach (CalculatedValuesForValuation row in filteredByDataIdList)
+                {
+                    row.InverseAmount = 1 / row.Amount;
+                    row.MultipliedValue = row.PortfolioPercent * row.InverseAmount;
+                    harmonicMeanBenchmark = harmonicMeanBenchmark + row.MultipliedValue;
+                }
+            }
+            if (harmonicMeanBenchmark != 0)
+                entry.Benchmark = 1 / harmonicMeanBenchmark;
+            if (entry.Benchmark != 0)
+                entry.Relative = entry.Portfolio / entry.Benchmark;        
+        }
 
         #endregion               
 
