@@ -424,6 +424,16 @@
           <Parameter Name="userName" Type="varchar" Mode="In" />
           <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
         </Function>
+        <Function Name="SetUploadFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="Location" Type="varchar" Mode="In" />
+          <Parameter Name="SecurityName" Type="varchar" Mode="In" />
+          <Parameter Name="SecurityTicker" Type="varchar" Mode="In" />
+          <Parameter Name="Type" Type="varchar" Mode="In" />
+          <Parameter Name="MetaTags" Type="varchar" Mode="In" />
+          <Parameter Name="Comments" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="usp_InsertFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="presentationID" Type="bigint" Mode="In" />
           <Parameter Name="fileName" Type="varchar" Mode="In" />
@@ -760,6 +770,16 @@
           </FunctionImport>
           <FunctionImport Name="GetDocumentsData" ReturnType="Collection(ICPresentationModel.DocumentsData)">
           <Parameter Name="searchString" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SetUploadFileInfo" ReturnType="Collection(Int32)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="Location" Mode="In" Type="String" />
+            <Parameter Name="SecurityName" Mode="In" Type="String" />
+            <Parameter Name="SecurityTicker" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+            <Parameter Name="MetaTags" Mode="In" Type="String" />
+            <Parameter Name="Comments" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
@@ -1497,6 +1517,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SetUploadFileInfo" FunctionName="ICPresentationModel.Store.SetUploadFileInfo" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -181,6 +181,7 @@ namespace GreenField.Gadgets.Views
             HyperlinkButton fileNameHyperlink = new HyperlinkButton()
             {
                 Content = data.DocumentCatalogData.FileName,
+                NavigateUri = new Uri(data.DocumentCatalogData.FilePath, UriKind.RelativeOrAbsolute),
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
                 Foreground = new SolidColorBrush(Colors.Black)
             };
@@ -234,7 +235,7 @@ namespace GreenField.Gadgets.Views
             #region Document Uploaded On
             TextBlock headerExpanderHeaderGridDocumentUploadedOn = new TextBlock()
                 {
-                    Text = data.DocumentCatalogData.FileUploadedOn.ToShortDateString(),
+                    Text = data.DocumentCatalogData.FileUploadedOn.ToLocalTime().ToShortDateString(),
                     Margin = new Thickness(5, 0, 0, 0),
                     VerticalAlignment = System.Windows.VerticalAlignment.Center,
                     TextWrapping = TextWrapping.Wrap
@@ -265,38 +266,41 @@ namespace GreenField.Gadgets.Views
 
             foreach (CommentDetails comment in data.CommentDetails.OrderByDescending(record => record.CommentOn))
             {
-                headerExpanderContentGridCommentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                TextBlock commentOnTextBlock = new TextBlock()
+                if (comment.Comment != null)
                 {
-                    Text = comment.CommentOn.ToShortDateString(),
-                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                    Margin = new Thickness(5, 0, 0, 0)
-                };
-                commentOnTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
-                commentOnTextBlock.SetValue(Grid.ColumnProperty, 0);
+                    headerExpanderContentGridCommentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                    TextBlock commentOnTextBlock = new TextBlock()
+                    {
+                        Text = comment.CommentOn.ToLocalTime().ToShortDateString(),
+                        VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                        Margin = new Thickness(5, 0, 0, 0)
+                    };
+                    commentOnTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
+                    commentOnTextBlock.SetValue(Grid.ColumnProperty, 0);
 
 
-                TextBlock commentByTextBlock = new TextBlock()
-                {
-                    Text = comment.CommentBy,
-                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                    Margin = new Thickness(5, 0, 0, 0)
-                };
-                commentByTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
-                commentByTextBlock.SetValue(Grid.ColumnProperty, 1);
+                    TextBlock commentByTextBlock = new TextBlock()
+                    {
+                        Text = comment.CommentBy,
+                        VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                        Margin = new Thickness(5, 0, 0, 0)
+                    };
+                    commentByTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
+                    commentByTextBlock.SetValue(Grid.ColumnProperty, 1);
 
-                TextBlock commentTextBlock = new TextBlock()
-                {
-                    Text = comment.Comment,
-                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                    Margin = new Thickness(5, 0, 5, 0)
-                };
-                commentTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
-                commentTextBlock.SetValue(Grid.ColumnProperty, 2);
+                    TextBlock commentTextBlock = new TextBlock()
+                    {
+                        Text = comment.Comment,
+                        VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                        Margin = new Thickness(5, 0, 5, 0)
+                    };
+                    commentTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
+                    commentTextBlock.SetValue(Grid.ColumnProperty, 2);
 
-                headerExpanderContentGridCommentGrid.Children.Add(commentOnTextBlock);
-                headerExpanderContentGridCommentGrid.Children.Add(commentByTextBlock);
-                headerExpanderContentGridCommentGrid.Children.Add(commentTextBlock);
+                    headerExpanderContentGridCommentGrid.Children.Add(commentOnTextBlock);
+                    headerExpanderContentGridCommentGrid.Children.Add(commentByTextBlock);
+                    headerExpanderContentGridCommentGrid.Children.Add(commentTextBlock); 
+                }
             }
 
             headerExpanderContentGrid.Children.Add(headerExpanderContentGridCommentGrid);
@@ -471,7 +475,7 @@ namespace GreenField.Gadgets.Views
                 blogSubTreeViewItemHeaderGridCommentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                 TextBlock commentOnTextBlock = new TextBlock()
                 {
-                    Text = comment.CommentOn.ToShortDateString(),
+                    Text = comment.CommentOn.ToLocalTime().ToShortDateString(),
                     VerticalAlignment = System.Windows.VerticalAlignment.Center,
                     Margin = new Thickness(5, 0, 0, 0)
                 };

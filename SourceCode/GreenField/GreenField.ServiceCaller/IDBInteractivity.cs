@@ -232,7 +232,10 @@ namespace GreenField.ServiceCaller
 
         void RetrieveDocument(String fileName, Action<Byte[]> callback);
 
-        void GetDocumentsMetaTags(Action<List<string>> callback);
+        void SetUploadFileInfo(String userName, String Name, String Location, String SecurityName
+            , String SecurityTicker, String Type, String MetaTags, String Comments, Action<Boolean?> callback);
+
+        void GetDocumentsMetaTags(Action<List<string>> callback);            
         #endregion
 
         #region Investment Committee

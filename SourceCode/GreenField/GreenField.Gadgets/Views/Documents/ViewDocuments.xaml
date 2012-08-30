@@ -11,28 +11,29 @@
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/GreenField.App;component/Assets/Styles.xaml"/>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-    </helpers:ViewBaseUserControl.Resources>    
-    
-    <Grid x:Name="LayoutRoot" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <HyperlinkButton Content="Upload Document" 
-                             Margin="2,0,0,0" FontSize="9" FontWeight="Bold" FontFamily="Arial" VerticalAlignment="Center" Command="{Binding DocumentUploadCommand}" />
-                        <telerik:RadComboBox x:Name="cbsecuritySelector"
+    </helpers:ViewBaseUserControl.Resources>
+
+    <telerik:RadBusyIndicator x:Name="biMeetingMinutes" BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <HyperlinkButton Content="Upload Document" Margin="2,0,0,0" Style="{StaticResource HyperlinkButtonStyle}" Command="{Binding DocumentUploadCommand}" />
+                <!--<TextBox Grid.Column="1" Width="255" MaxLength="255" Margin="2,0,0,0" Style="{StaticResource TextBoxStyle}" Text="{Binding SearchString, Mode=TwoWay}"/>-->
+                <telerik:RadComboBox x:Name="cbsecuritySelector"
                                              Grid.Column="1"
                                              ItemsSource="{Binding SearchStringInfo}"
-                                             SelectedItem="{Binding SearchString, Mode=TwoWay}"
                                              Text="{Binding SearchStringText, Mode=TwoWay}"
                                              EmptyText="Search MetaTag..." 
                                              Width="150" 
@@ -46,18 +47,15 @@
                                              Style="{StaticResource RadComboBoxStyle}"
                                              TextOptions.TextHintingMode="Fixed"
                                              IsTextSearchEnabled="False"/>
+                <telerik:RadButton Grid.Column="2" Margin="2,0,0,0" Content="Search" Style="{StaticResource RadButtonStyle}"
+                                   Command="{Binding DocumentSearchCommand}"/>
+            </Grid>
 
-                <telerik:RadButton Grid.Column="2" Margin="2,0,0,2" MinHeight="15" Height="15" FontFamily="Arial" FontSize="9" FontWeight="Bold" HorizontalAlignment="Center"
-                               Content="Search" VerticalContentAlignment="Center" VerticalAlignment="Center" 
-                               Command="{Binding DocumentSearchCommand}"/>
+            <Grid Grid.Row="1">
+                <telerik:RadTreeView x:Name="DocumentsTreeView" IsEditable="False" SelectionMode="Single"
+                                     Margin="0,2,0,0" Selected="DocumentsTreeView_Selected">
+                </telerik:RadTreeView>
+            </Grid>
         </Grid>
-        
-        <Grid Grid.Row="1">
-            <telerik:RadTreeView x:Name="DocumentsTreeView" IsEditable="False" SelectionMode="Single" telerik:StyleManager.Theme="Metro"
-                                 Selected="DocumentsTreeView_Selected">
-                
-
-            </telerik:RadTreeView>
-        </Grid>
-    </Grid>
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

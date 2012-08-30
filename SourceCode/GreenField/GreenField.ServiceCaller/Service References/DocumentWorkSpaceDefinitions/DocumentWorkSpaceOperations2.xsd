@@ -45,6 +45,27 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="SetUploadFileInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="MetaTags" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="Comments" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetUploadFileInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SetUploadFileInfoResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetDocumentsMetaTags">
     <xs:complexType>
       <xs:sequence />

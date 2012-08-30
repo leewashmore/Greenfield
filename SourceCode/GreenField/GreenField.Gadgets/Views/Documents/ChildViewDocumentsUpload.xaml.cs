@@ -39,10 +39,8 @@ namespace GreenField.Gadgets.Views.Documents
             CategoryType.Remove(DocumentCategoryType.IC_PRESENTATIONS);
             CategoryType.Remove(DocumentCategoryType.MODELS);
             this.cbType.ItemsSource = CategoryType;
-
-            //this.cbType.ItemTemplate = new DataTemplate(
-
             this.cbType.SelectedIndex = 0;
+            this.OKButton.IsEnabled = false;
         }
 
         public List<DocumentCategoryType> CategoryType
@@ -52,9 +50,16 @@ namespace GreenField.Gadgets.Views.Documents
 
         public Byte[] UploadFileByteStream { get; set; }
         public String UploadFileName { get; set; }
+        public String UploadFileNotes { get; set; }
+        public String UploadFileTags { get; set; }
+        public tblCompanyInfo UploadFileCompanyInfo { get; set; }
+        public DocumentCategoryType UploadFileType { get; set; }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
+            UploadFileNotes = this.tbTags.Text;
+            UploadFileTags = this.tbNotes.Text;
+            
             this.DialogResult = true;
         }
 
@@ -71,14 +76,14 @@ namespace GreenField.Gadgets.Views.Documents
                 this.tboxFileName.Text = dialog.File.Name;
                 UploadFileName = dialog.File.Name;
                 UploadFileByteStream = FileToByteArray(UploadFileName, dialog.File.OpenRead());
-
-                //UploadFileStream.ReadTimeout = 600000;
+                ValidateSubmission();
             }
         }
 
-        private void RadComboBox_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        private void cbCompany_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-
+            UploadFileCompanyInfo = this.cbCompany.SelectedItem as tblCompanyInfo;
+            ValidateSubmission();
         }
 
         private void RetrieveCompanyDataCallbackMethod(List<tblCompanyInfo> result)
@@ -123,6 +128,25 @@ namespace GreenField.Gadgets.Views.Documents
                 throw;
             }
             return buffer;
+        }
+
+        private void ValidateSubmission()
+        {
+            this.OKButton.IsEnabled = UploadFileByteStream != null &&
+                UploadFileName != null &&
+                UploadFileCompanyInfo != null;
+        }
+
+        public void Initialize()
+        {
+            //UploadFileByteStream = null;
+            //UploadFileName = null;            
+        }
+
+        private void cbType_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            UploadFileType = (DocumentCategoryType)this.cbType.SelectedItem;
+            ValidateSubmission();
         }
     }
 }

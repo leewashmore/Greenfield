@@ -1938,6 +1938,102 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<DocumentsData>("GetDocumentsData", searchStringParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userName">No Metadata Documentation available.</param>
+        /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="location">No Metadata Documentation available.</param>
+        /// <param name="securityName">No Metadata Documentation available.</param>
+        /// <param name="securityTicker">No Metadata Documentation available.</param>
+        /// <param name="type">No Metadata Documentation available.</param>
+        /// <param name="metaTags">No Metadata Documentation available.</param>
+        /// <param name="comments">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> SetUploadFileInfo(global::System.String userName, global::System.String name, global::System.String location, global::System.String securityName, global::System.String securityTicker, global::System.String type, global::System.String metaTags, global::System.String comments)
+        {
+            ObjectParameter userNameParameter;
+            if (userName != null)
+            {
+                userNameParameter = new ObjectParameter("UserName", userName);
+            }
+            else
+            {
+                userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
+            }
+    
+            ObjectParameter nameParameter;
+            if (name != null)
+            {
+                nameParameter = new ObjectParameter("Name", name);
+            }
+            else
+            {
+                nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter locationParameter;
+            if (location != null)
+            {
+                locationParameter = new ObjectParameter("Location", location);
+            }
+            else
+            {
+                locationParameter = new ObjectParameter("Location", typeof(global::System.String));
+            }
+    
+            ObjectParameter securityNameParameter;
+            if (securityName != null)
+            {
+                securityNameParameter = new ObjectParameter("SecurityName", securityName);
+            }
+            else
+            {
+                securityNameParameter = new ObjectParameter("SecurityName", typeof(global::System.String));
+            }
+    
+            ObjectParameter securityTickerParameter;
+            if (securityTicker != null)
+            {
+                securityTickerParameter = new ObjectParameter("SecurityTicker", securityTicker);
+            }
+            else
+            {
+                securityTickerParameter = new ObjectParameter("SecurityTicker", typeof(global::System.String));
+            }
+    
+            ObjectParameter typeParameter;
+            if (type != null)
+            {
+                typeParameter = new ObjectParameter("Type", type);
+            }
+            else
+            {
+                typeParameter = new ObjectParameter("Type", typeof(global::System.String));
+            }
+    
+            ObjectParameter metaTagsParameter;
+            if (metaTags != null)
+            {
+                metaTagsParameter = new ObjectParameter("MetaTags", metaTags);
+            }
+            else
+            {
+                metaTagsParameter = new ObjectParameter("MetaTags", typeof(global::System.String));
+            }
+    
+            ObjectParameter commentsParameter;
+            if (comments != null)
+            {
+                commentsParameter = new ObjectParameter("Comments", comments);
+            }
+            else
+            {
+                commentsParameter = new ObjectParameter("Comments", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetUploadFileInfo", userNameParameter, nameParameter, locationParameter, securityNameParameter, securityTickerParameter, typeParameter, metaTagsParameter, commentsParameter);
+        }
 
         #endregion
     }

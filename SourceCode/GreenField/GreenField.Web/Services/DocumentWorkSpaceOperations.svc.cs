@@ -119,7 +119,7 @@ namespace GreenField.Web.Services
                     DocumentCopyService.CopyResult[] cResultArray = { new DocumentCopyService.CopyResult() };
                     DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };
 
-                    UInt32 copyResult = CopyService.CopyIntoItems(null, destinationUrl, ffieldInfoArray, fileByteStream, out cResultArray);
+                    UInt32 copyResult = CopyService.CopyIntoItems(destinationUrl[0], destinationUrl, ffieldInfoArray, fileByteStream, out cResultArray);
 
                     if (cResultArray[0].ErrorCode == CopyErrorCode.Success)
                         resultUrl = cResultArray[0].DestinationUrl;
@@ -171,111 +171,71 @@ namespace GreenField.Web.Services
             try
             {
                 List<DocumentCategoricalData> result = new List<DocumentCategoricalData>();
-                #region Dummy Data entry
-                //result.Add(new DocumentCategoricalData()
-                //       {
-                //           DocumentCategoryType = DocumentCategoryType.COMPANY_MEETING_NOTES,
-                //           DocumentCompanyName = "Company1",
-                //           DocumentCompanyTicker = "CompanyTicker1",
-                //           DocumentCatalogData = new DocumentCatalogData()
-                //           {
-                //               FileId = 1,
-                //               FileMetaTags = "Finance, specific catalog",
-                //               FileName = "Financial Statement 27-07-2012.docx",
-                //               FilePath = @"http://sharepointLocalSite/Documents/Financial Statement 27-07-2012.docx",
-                //               FileUploadedBy = "Rahul Vig",
-                //               FileUploadedOn = DateTime.Now.AddDays(-5)
-                //           },
-                //           CommentDetails = new List<CommentDetails>
-                //    {
-                //        new CommentDetails() { Comment = "Comment1", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-1) },
-                //        new CommentDetails() { Comment = "Comment2", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-2) },
-                //        new CommentDetails() { Comment = "Comment3", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-3) }
-                //    }
-                //       });
-                //result.Add(new DocumentCategoricalData()
-                //{
-                //    DocumentCategoryType = DocumentCategoryType.COMPANY_MEETING_NOTES,
-                //    DocumentCompanyName = "Company2",
-                //    DocumentCompanyTicker = "CompanyTicker2",
-                //    DocumentCatalogData = new DocumentCatalogData()
-                //    {
-                //        FileId = 1,
-                //        FileMetaTags = "Finance, specific catalog 2",
-                //        FileName = "Financial Statement 30-07-2012.docx",
-                //        FilePath = @"http://sharepointLocalSite/Documents/Financial Statement 27-07-2012.docx",
-                //        FileUploadedBy = "Rahul Vig",
-                //        FileUploadedOn = DateTime.Now.AddDays(-2)
-                //    },
-                //    CommentDetails = new List<CommentDetails>
-                //    {
-                //        new CommentDetails() { Comment = "Comment1", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-1) },
-                //        new CommentDetails() { Comment = "Comment2", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-1) },
-                //        new CommentDetails() { Comment = "Comment3", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-2) }
-                //    }
-                //});
-
-                //result.Add(new DocumentCategoricalData()
-                //{
-                //    DocumentCategoryType = DocumentCategoryType.BLOG,
-                //    DocumentCompanyName = "Company1",
-                //    DocumentCompanyTicker = "CompanyTicker1",
-                //    DocumentCatalogData = null,
-                //    CommentDetails = new List<CommentDetails>
-                //    {
-                //        new CommentDetails() { Comment = "Comment1", CommentBy = "Abhinav Singh", CommentOn = DateTime.Now.AddDays(-1) },
-                //        new CommentDetails() { Comment = "Comment2", CommentBy = "Abhinav Singh", CommentOn = DateTime.Now.AddDays(-22) },
-                //        new CommentDetails() { Comment = "Comment3", CommentBy = "Abhinav Singh", CommentOn = DateTime.Now.AddDays(-31) }
-                //    }
-                //}); 
-                #endregion
-
-                List<DocumentsData> data = new List<DocumentsData>();
+                
                 ICPresentationEntities entity = new ICPresentationEntities();
-                data = entity.GetDocumentsData(searchString).ToList();
+                List<DocumentsData> documentsDataInfo = entity.GetDocumentsData(searchString).ToList();
 
-                if (data == null)
+                if (documentsDataInfo == null)
                     return result;
 
-                List<DocumentsData> distinctFiles = data.GroupBy(
-                                                            i => i.FileID,
-                                                            (key, group) => group.First()).ToList();
+                List<DocumentsData> distinctDocumentsData = documentsDataInfo
+                    .GroupBy(record => record.FileID, (key, group) => group.First()).ToList();
 
-                foreach (DocumentsData record in distinctFiles)
+                foreach (DocumentsData distinctInfo in distinctDocumentsData)
                 {
-                    List<DocumentsData> temp = new List<DocumentsData>();
-                    temp = data.Where(a => a.FileID == record.FileID).ToList();
+                    List<DocumentsData> distinctDocumentsDataInfo = documentsDataInfo
+                        .Where(record => record.FileID == distinctInfo.FileID).ToList();
 
                     List<CommentDetails> commentsDetails = new List<CommentDetails>();
 
-                    foreach (DocumentsData item in temp)
+                    foreach (DocumentsData documentData in distinctDocumentsDataInfo)
                     {
                         commentsDetails.Add(new CommentDetails()
                         {
-                            Comment = item.Comment,
-                            CommentBy = item.CommentBy,
-                            CommentOn = Convert.ToDateTime(item.CommentOn)
+                            Comment = documentData.Comment,
+                            CommentBy = documentData.CommentBy,
+                            CommentOn = Convert.ToDateTime(documentData.CommentOn)
                         });
                     }
 
                     result.Add(new DocumentCategoricalData()
                        {
-                           DocumentCategoryType = (DocumentCategoryType)EnumUtils.ToEnum(record.Type, typeof(DocumentCategoryType)),
-                           DocumentCompanyName = record.SecurityName,
-                           DocumentCompanyTicker = record.SecurityTicker,
+                           DocumentCategoryType = (DocumentCategoryType)EnumUtils.ToEnum(distinctInfo.Type, typeof(DocumentCategoryType)),
+                           DocumentCompanyName = distinctInfo.SecurityName,
+                           DocumentCompanyTicker = distinctInfo.SecurityTicker,
                            DocumentCatalogData = new DocumentCatalogData()
                            {
-                               FileId = record.FileID,
-                               FileMetaTags = record.MetaTags,
-                               FileName = record.Name,
-                               FilePath = '@' + '"' + record.Location +'"',
-                               FileUploadedBy = record.CreatedBy,
-                               FileUploadedOn = Convert.ToDateTime(record.CreatedOn)
+                               FileId = distinctInfo.FileID,
+                               FileMetaTags = distinctInfo.MetaTags,
+                               FileName = distinctInfo.Name,
+                               FilePath = distinctInfo.Location,
+                               FileUploadedBy = distinctInfo.CreatedBy,
+                               FileUploadedOn = Convert.ToDateTime(distinctInfo.CreatedOn)
                            },
                            CommentDetails = commentsDetails
                        });                    
                 }
                 return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean SetUploadFileInfo(String userName, String Name, String Location, String SecurityName
+                    , String SecurityTicker, String Type, String MetaTags, String Comments)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                Int32? result = entity.SetUploadFileInfo(userName, Name, Location, SecurityName
+                    , SecurityTicker, Type, MetaTags, Comments).FirstOrDefault();
+                return result == 0;
             }
             catch (Exception ex)
             {
@@ -296,7 +256,9 @@ namespace GreenField.Web.Services
                 metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityName).Distinct().ToList());
                 metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityTicker).Distinct().ToList());
 
+                
                 return metaTagsInfo;
+                
             }
             catch (Exception ex)
             {
