@@ -332,8 +332,6 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-
-
         #region Helper Methods
 
         private void SelectionRaisePropertyChanged()

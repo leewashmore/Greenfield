@@ -44,10 +44,35 @@ namespace GreenField.Gadgets.Views
         List<UpdationData> updateInfo = new List<UpdationData>();
         List<DocumentCategoricalData> documentCategoricalInfo = new List<DocumentCategoricalData>();
 
+        private ViewModelDocuments _dataContextViewModelDocuments;
+        public ViewModelDocuments DataContextViewModelDocuments
+        {
+            get { return _dataContextViewModelDocuments; }
+            set { _dataContextViewModelDocuments = value; }
+        }
+        
+
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextViewModelDocuments != null) //DataContext instance
+                    DataContextViewModelDocuments.IsActive = _isActive;
+            }
+        }
+        
+
         #region Constructor
         public ViewDocuments(ViewModelDocuments dataContextSource)
         {
             InitializeComponent();
+            DataContextViewModelDocuments = dataContextSource;
             this.DataContext = dataContextSource;
             dataContextSource.ConstructDocumentSearchResultEvent += new ConstructDocumentSearchResultEventHandler(ConstructDocumentSearchResult);            
         }

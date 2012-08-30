@@ -52,13 +52,13 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
 
-            if (_uploadWindow == null)
+            if (_uploadWindow == null && IsActive)
             {
                 _uploadWindow = new ChildViewDocumentsUpload(_dbInteractivity, _logger);
-            }
-            _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);
+                _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded); 
+            }                       
 
-            if (_dbInteractivity != null)
+            if (_dbInteractivity != null && IsActive)
             {
                 _dbInteractivity.GetDocumentsMetaTags(GetDocumentsMetaTagsCallBack); 
             }
@@ -107,6 +107,36 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion        
+
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+                if (value)
+                {
+                    if (_uploadWindow == null)
+                    {
+                        _uploadWindow = new ChildViewDocumentsUpload(_dbInteractivity, _logger);
+                        _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);
+                    }
+
+                    if (_dbInteractivity != null && IsActive && MetaTagsInfo == null)
+                    {
+                        _dbInteractivity.GetDocumentsMetaTags(GetDocumentsMetaTagsCallBack);
+                    }
+                }
+            }
+        }
 
         private List<DocumentCategoricalData> _documentCategoricalInfo;
         public List<DocumentCategoricalData> DocumentCategoricalInfo
