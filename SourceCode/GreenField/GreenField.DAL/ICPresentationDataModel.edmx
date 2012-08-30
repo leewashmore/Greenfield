@@ -364,6 +364,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetDocumentsData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="searchString" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="GetMeetingConfigSchedule" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="RetrieveICMeetingInfoByStatusType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PresentationStatus" Type="varchar" Mode="In" />
@@ -755,6 +758,9 @@
             <Parameter Name="MeetingClosedDateTime" Mode="In" Type="DateTime" />
             <Parameter Name="MeetingVotingClosedDateTime" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="GetDocumentsData" ReturnType="Collection(ICPresentationModel.DocumentsData)">
+            <Parameter Name="searchString" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
           <Property Type="Int64" Name="VoterID" Nullable="false" />
@@ -1143,6 +1149,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="DocumentsData">
+          <Property Type="Int64" Name="FileID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SecurityName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SecurityTicker" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MetaTags" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreatedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Comment" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CommentBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CommentOn" Nullable="true" Precision="23" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1455,6 +1477,26 @@
           <FunctionImportMapping FunctionImportName="SetICPMeetingAttachedFileInfo" FunctionName="ICPresentationModel.Store.SetICPMeetingAttachedFileInfo" />
           <FunctionImportMapping FunctionImportName="SetICPMeetingPresentationStatus" FunctionName="ICPresentationModel.Store.SetICPMeetingPresentationStatus" />
           <FunctionImportMapping FunctionImportName="SetICPMeetingPresentationDate" FunctionName="ICPresentationModel.Store.SetICPMeetingPresentationDate" />
+          <FunctionImportMapping FunctionImportName="GetDocumentsData" FunctionName="ICPresentationModel.Store.GetDocumentsData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ICPresentationModel.DocumentsData">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="MetaTags" ColumnName="MetaTags" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CommentBy" ColumnName="CommentBy" />
+                <ScalarProperty Name="CommentOn" ColumnName="CommentOn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -26,7 +26,7 @@
      openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
      maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
      <security mode="None" />
-    </binding> 
+    </binding>
     <binding name="PerformanceOperations" closeTimeout="00:50:00"
      openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
      maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
@@ -51,14 +51,22 @@
      receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
-    </binding>    
+    </binding>
     <binding name="BasicHttpBinding_AlertOperations" maxBufferSize="2147483647"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
-    </binding>    
-    <binding name="DocumentWorkspaceOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+    </binding>
+    <binding name="DocumentWorkspaceOperations" closeTimeout="00:50:00"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="ExternalResearchOperations1" maxBufferSize="2147483647"
      maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="BasicHttpBinding_DocumentWorkspaceOperations"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
    </basicHttpBinding>

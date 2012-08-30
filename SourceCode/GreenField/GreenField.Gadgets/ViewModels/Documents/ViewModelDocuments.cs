@@ -71,11 +71,17 @@ namespace GreenField.Gadgets.ViewModels
         public String SearchString
         {
             get { return _searchString; }
-            set { _searchString = value; }
+            set 
+            {
+                if (_searchString != value)
+                {
+                    _searchString = value;
+                    RaisePropertyChanged(() => SearchString);
+                }
+                }
         }
 
-        public event ConstructDocumentSearchResultEventHandler ConstructDocumentSearchResultEvent;
-        
+        public event ConstructDocumentSearchResultEventHandler ConstructDocumentSearchResultEvent;        
 
         public ICommand DocumentSearchCommand
         {
@@ -95,6 +101,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private void DocumentSearchCommandMethod(object param)
         {
+            if(SearchString != null)
             _dbInteractivity.RetrieveDocumentsData(SearchString, RetrieveDocumentsDataCallbackMethod);
         }
 

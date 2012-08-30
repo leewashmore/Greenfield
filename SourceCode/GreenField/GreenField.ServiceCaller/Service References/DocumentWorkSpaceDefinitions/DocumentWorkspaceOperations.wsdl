@@ -5,6 +5,7 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" />
       <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="DocumentWorkspaceOperations_UploadDocument_InputMessage">
@@ -25,6 +26,15 @@
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocument_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveDocumentsData" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveDocumentsDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="DocumentWorkspaceOperations">
     <wsdl:operation name="UploadDocument">
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UploadDocument" message="tns:DocumentWorkspaceOperations_UploadDocument_InputMessage" />
@@ -35,6 +45,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocument" message="tns:DocumentWorkspaceOperations_RetrieveDocument_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentResponse" message="tns:DocumentWorkspaceOperations_RetrieveDocument_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_RetrieveDocument_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveDocumentsData">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsData" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataResponse" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_DocumentWorkspaceOperations" type="tns:DocumentWorkspaceOperations">
@@ -53,6 +68,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveDocument">
       <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveDocumentsData">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

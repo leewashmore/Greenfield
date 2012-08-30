@@ -282,6 +282,9 @@
     <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.wsdl" />
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.xsd">
       <SubType>Designer</SubType>

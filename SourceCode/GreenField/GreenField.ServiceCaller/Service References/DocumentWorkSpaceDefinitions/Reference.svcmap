@@ -23,11 +23,12 @@
     <MetadataSource Address="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="DocumentWorkSpaceOperations.disco" MetadataType="Disco" ID="0ed2dba9-0610-48c5-8318-5b29f592e1a8" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?disco" />
-    <MetadataFile FileName="DocumentWorkSpaceOperations.xsd" MetadataType="Schema" ID="aa323e3d-92ec-48cd-ac2d-aedc21f46899" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd2" />
-    <MetadataFile FileName="DocumentWorkSpaceOperations1.xsd" MetadataType="Schema" ID="f3b51b00-d205-4b32-b8f9-5637b5135db1" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd1" />
-    <MetadataFile FileName="DocumentWorkSpaceOperations2.xsd" MetadataType="Schema" ID="aeb3e29c-82ab-4317-8238-98f1b232f4cc" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="DocumentWorkSpaceOperations3.xsd" MetadataType="Schema" ID="4d4343a4-808a-403c-ba7e-d261797934f7" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd3" />
     <MetadataFile FileName="DocumentWorkspaceOperations.wsdl" MetadataType="Wsdl" ID="d3c6f932-546a-4dce-989d-c279a806447c" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?wsdl" />
+    <MetadataFile FileName="DocumentWorkSpaceOperations.xsd" MetadataType="Schema" ID="aa323e3d-92ec-48cd-ac2d-aedc21f46899" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="DocumentWorkSpaceOperations2.xsd" MetadataType="Schema" ID="aeb3e29c-82ab-4317-8238-98f1b232f4cc" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="DocumentWorkSpaceOperations1.xsd" MetadataType="Schema" ID="f3b51b00-d205-4b32-b8f9-5637b5135db1" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="DocumentWorkSpaceOperations.disco" MetadataType="Disco" ID="0ed2dba9-0610-48c5-8318-5b29f592e1a8" SourceId="1" SourceUrl="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?disco" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

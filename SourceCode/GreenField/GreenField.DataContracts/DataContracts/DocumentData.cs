@@ -10,7 +10,7 @@ namespace GreenField.DataContracts
     public class DocumentCatalogData
     {
         [DataMember]
-        public Int32 FileId { get; set; }
+        public Object FileId { get; set; }
 
         [DataMember]
         public String FileName { get; set; }

@@ -254,24 +254,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveDocumentsData">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="searchString" nillable="true" type="xs:string" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveDocumentsDataResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveDocumentsDataResult" nillable="true" type="q36:ArrayOfDocumentCategoricalData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
   <xs:element name="RetrieveValuationGrowthData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="selectedPortfolio" nillable="true" type="q37:PortfolioSelectionData" />
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="selectedPortfolio" nillable="true" type="q36:PortfolioSelectionData" />
         <xs:element minOccurs="0" name="effectiveDate" nillable="true" type="xs:dateTime" />
         <xs:element minOccurs="0" name="filterType" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="filterValue" nillable="true" type="xs:string" />
@@ -282,7 +268,7 @@
   <xs:element name="RetrieveValuationGrowthDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveValuationGrowthDataResult" nillable="true" type="q38:ArrayOfValuationQualityGrowthData" />
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveValuationGrowthDataResult" nillable="true" type="q37:ArrayOfValuationQualityGrowthData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -294,7 +280,7 @@
   <xs:element name="RetrieveCompanyDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveCompanyDataResult" nillable="true" type="q39:ArrayOftblCompanyInfo" />
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveCompanyDataResult" nillable="true" type="q38:ArrayOftblCompanyInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

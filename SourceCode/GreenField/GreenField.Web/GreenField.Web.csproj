@@ -58,8 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientAccessPolicy.xml" />
-    <Content Include="ClientBin\GreenField.App.xap" />
-    <Content Include="ClientBin\GreenField.Login.App.xap" />
     <Content Include="crossdomain.xml" />
     <Content Include="Services\DocumentWorkSpaceOperations.svc" />
     <Content Include="HomePage.aspx" />
@@ -249,6 +247,9 @@
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>GreenField_Web_DocumentCopyService_Copy</CachedSettingsPropName>
     </WebReferenceUrl>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClientBin\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

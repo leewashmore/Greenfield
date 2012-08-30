@@ -3791,7 +3791,7 @@ namespace GreenField.ServiceCaller
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
-            ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
+            DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
             client.RetrieveDocumentsDataAsync(searchString);
             client.RetrieveDocumentsDataCompleted += (se, e) =>
             {
