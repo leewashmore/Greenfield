@@ -66,7 +66,7 @@ namespace GreenField.Web.Services
                 if (entitySelectionData == null)
                     return new List<DCFAnalysisSummaryData>();
 
-                #region ServiceAvailability
+                #region ServiceAvailabilityChecker
                 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();

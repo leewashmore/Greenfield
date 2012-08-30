@@ -17,6 +17,7 @@ using GreenField.DataContracts.DataContracts;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.UserSession;
 using GreenField.ServiceCaller.MeetingDefinitions;
+using GreenField.ServiceCaller.DCFDefinitions;
 using GreenField.ServiceCaller.DocumentWorkSpaceDefinitions;
 
 
@@ -2958,7 +2959,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
-            client.RetrieveFinstatDataAsync(issuerId,securityId,dataSource,fiscalType,currency,yearRange);
+            client.RetrieveFinstatDataAsync(issuerId, securityId, dataSource, fiscalType, currency, yearRange);
             client.RetrieveFinstatDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -3785,7 +3786,50 @@ namespace GreenField.ServiceCaller
         }
         #endregion
 
-        #region PortalEnhancements
+        #region Slice-7 DCF
+
+        /// <summary>
+        /// Service Caller Method for DCFAnalysisData
+        /// </summary>
+        /// <param name="entitySelectionData"></param>
+        /// <param name="callback"></param>
+        public void RetrieveDCFAnalysisData(EntitySelectionData entitySelectionData, Action<List<DCFAnalysisSummaryData>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            DCFOperationsClient client = new DCFOperationsClient();
+            client.RetrieveDCFAnalysisDataAsync(entitySelectionData);
+            client.RetrieveDCFAnalysisDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault> fault
+                      = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
+
+        #endregion
+
         public void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -3909,8 +3953,6 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        #endregion
-
         public void RetrieveCompanyData(Action<List<tblCompanyInfo>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -3951,6 +3993,6 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
-    
+
     }
 }

@@ -183,6 +183,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.EntitySelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FilterSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FinstatDetailData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.FreeCashFlowsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FXCommodityData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.HeatMapData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.HoldingsPercentageData.datasource" />
@@ -265,12 +266,6 @@
     </None>
     <None Include="Service References\DCFDefinitions\DCFOperations4.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\DCFDefinitions\GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\DCFDefinitions\GreenField.ServiceCaller.DCFDefinitions.DCFAnalysisSummaryData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkspaceOperations.wsdl" />
     <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations.xsd">

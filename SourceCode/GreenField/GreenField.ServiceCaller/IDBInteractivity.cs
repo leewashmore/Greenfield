@@ -274,6 +274,12 @@ namespace GreenField.ServiceCaller
         void GetMeetingConfigSchedule(Action<MeetingConfigurationSchedule> callback);
         #endregion
 
+        #region DCF
+
+        void RetrieveDCFAnalysisData(EntitySelectionData entitySelectionData, Action<List<DCFAnalysisSummaryData>> callback);
+        
+        #endregion
+
         void RetrieveCompanyData(Action<List<tblCompanyInfo>> callback);
     }
 }

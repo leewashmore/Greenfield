@@ -17,216 +17,6 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DCFAnalysisSummaryData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts")]
-    public partial class DCFAnalysisSummaryData : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private decimal BetaField;
-        
-        private decimal CostOfDebtField;
-        
-        private decimal CostOfEquityField;
-        
-        private decimal GrossDebtField;
-        
-        private string IssuerIdField;
-        
-        private decimal MarginalTaxRateField;
-        
-        private decimal MarketCapField;
-        
-        private decimal MarketRiskPremiumField;
-        
-        private decimal RiskFreeRateField;
-        
-        private string SecurityIdField;
-        
-        private decimal StockSpecificDiscountField;
-        
-        private decimal WACCField;
-        
-        private decimal WeightOfEquityField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal Beta {
-            get {
-                return this.BetaField;
-            }
-            set {
-                if ((this.BetaField.Equals(value) != true)) {
-                    this.BetaField = value;
-                    this.RaisePropertyChanged("Beta");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal CostOfDebt {
-            get {
-                return this.CostOfDebtField;
-            }
-            set {
-                if ((this.CostOfDebtField.Equals(value) != true)) {
-                    this.CostOfDebtField = value;
-                    this.RaisePropertyChanged("CostOfDebt");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal CostOfEquity {
-            get {
-                return this.CostOfEquityField;
-            }
-            set {
-                if ((this.CostOfEquityField.Equals(value) != true)) {
-                    this.CostOfEquityField = value;
-                    this.RaisePropertyChanged("CostOfEquity");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal GrossDebt {
-            get {
-                return this.GrossDebtField;
-            }
-            set {
-                if ((this.GrossDebtField.Equals(value) != true)) {
-                    this.GrossDebtField = value;
-                    this.RaisePropertyChanged("GrossDebt");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IssuerId {
-            get {
-                return this.IssuerIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IssuerIdField, value) != true)) {
-                    this.IssuerIdField = value;
-                    this.RaisePropertyChanged("IssuerId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal MarginalTaxRate {
-            get {
-                return this.MarginalTaxRateField;
-            }
-            set {
-                if ((this.MarginalTaxRateField.Equals(value) != true)) {
-                    this.MarginalTaxRateField = value;
-                    this.RaisePropertyChanged("MarginalTaxRate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal MarketCap {
-            get {
-                return this.MarketCapField;
-            }
-            set {
-                if ((this.MarketCapField.Equals(value) != true)) {
-                    this.MarketCapField = value;
-                    this.RaisePropertyChanged("MarketCap");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal MarketRiskPremium {
-            get {
-                return this.MarketRiskPremiumField;
-            }
-            set {
-                if ((this.MarketRiskPremiumField.Equals(value) != true)) {
-                    this.MarketRiskPremiumField = value;
-                    this.RaisePropertyChanged("MarketRiskPremium");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal RiskFreeRate {
-            get {
-                return this.RiskFreeRateField;
-            }
-            set {
-                if ((this.RiskFreeRateField.Equals(value) != true)) {
-                    this.RiskFreeRateField = value;
-                    this.RaisePropertyChanged("RiskFreeRate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SecurityId {
-            get {
-                return this.SecurityIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SecurityIdField, value) != true)) {
-                    this.SecurityIdField = value;
-                    this.RaisePropertyChanged("SecurityId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal StockSpecificDiscount {
-            get {
-                return this.StockSpecificDiscountField;
-            }
-            set {
-                if ((this.StockSpecificDiscountField.Equals(value) != true)) {
-                    this.StockSpecificDiscountField = value;
-                    this.RaisePropertyChanged("StockSpecificDiscount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal WACC {
-            get {
-                return this.WACCField;
-            }
-            set {
-                if ((this.WACCField.Equals(value) != true)) {
-                    this.WACCField = value;
-                    this.RaisePropertyChanged("WACC");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal WeightOfEquity {
-            get {
-                return this.WeightOfEquityField;
-            }
-            set {
-                if ((this.WeightOfEquityField.Equals(value) != true)) {
-                    this.WeightOfEquityField = value;
-                    this.RaisePropertyChanged("WeightOfEquity");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
     public partial class ServiceFault : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -255,126 +45,6 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FreeCashFlowsData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts")]
-    public partial class FreeCashFlowsData : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private System.Collections.Generic.List<decimal> CapexField;
-        
-        private System.Collections.Generic.List<decimal> ChangeInWCField;
-        
-        private System.Collections.Generic.List<decimal> EBITDAField;
-        
-        private System.Collections.Generic.List<decimal> EBITDAMarginsField;
-        
-        private System.Collections.Generic.List<decimal> FreeCashFlowField;
-        
-        private System.Collections.Generic.List<decimal> RevenueGrowthField;
-        
-        private System.Collections.Generic.List<decimal> TaxesField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<decimal> Capex {
-            get {
-                return this.CapexField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CapexField, value) != true)) {
-                    this.CapexField = value;
-                    this.RaisePropertyChanged("Capex");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<decimal> ChangeInWC {
-            get {
-                return this.ChangeInWCField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChangeInWCField, value) != true)) {
-                    this.ChangeInWCField = value;
-                    this.RaisePropertyChanged("ChangeInWC");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<decimal> EBITDA {
-            get {
-                return this.EBITDAField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EBITDAField, value) != true)) {
-                    this.EBITDAField = value;
-                    this.RaisePropertyChanged("EBITDA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<decimal> EBITDAMargins {
-            get {
-                return this.EBITDAMarginsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EBITDAMarginsField, value) != true)) {
-                    this.EBITDAMarginsField = value;
-                    this.RaisePropertyChanged("EBITDAMargins");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<decimal> FreeCashFlow {
-            get {
-                return this.FreeCashFlowField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FreeCashFlowField, value) != true)) {
-                    this.FreeCashFlowField = value;
-                    this.RaisePropertyChanged("FreeCashFlow");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<decimal> RevenueGrowth {
-            get {
-                return this.RevenueGrowthField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RevenueGrowthField, value) != true)) {
-                    this.RevenueGrowthField = value;
-                    this.RaisePropertyChanged("RevenueGrowth");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<decimal> Taxes {
-            get {
-                return this.TaxesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TaxesField, value) != true)) {
-                    this.TaxesField = value;
-                    this.RaisePropertyChanged("Taxes");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DCFDefinitions.DCFOperations")]
     public interface DCFOperations {
@@ -383,13 +53,13 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault), Action="http://tempuri.org/DCFOperations/RetrieveDCFAnalysisDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveDCFAnalysisData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFAnalysisSummaryData> EndRetrieveDCFAnalysisData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData> EndRetrieveDCFAnalysisData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsData", ReplyAction="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault), Action="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveFreCashFlowsData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> EndRetrieveFreCashFlowsData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> EndRetrieveFreCashFlowsData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -407,10 +77,10 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFAnalysisSummaryData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFAnalysisSummaryData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData>)(this.results[0]));
             }
         }
     }
@@ -426,10 +96,10 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData>)(this.results[0]));
             }
         }
     }
@@ -517,7 +187,7 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFAnalysisSummaryData> GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveDCFAnalysisData(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData> GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveDCFAnalysisData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveDCFAnalysisData(result);
         }
         
@@ -527,7 +197,7 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         }
         
         private object[] OnEndRetrieveDCFAnalysisData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFAnalysisSummaryData> retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveDCFAnalysisData(result);
+            System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData> retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveDCFAnalysisData(result);
             return new object[] {
                     retVal};
         }
@@ -563,7 +233,7 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveFreCashFlowsData(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveFreCashFlowsData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveFreCashFlowsData(result);
         }
         
@@ -573,7 +243,7 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         }
         
         private object[] OnEndRetrieveFreCashFlowsData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveFreCashFlowsData(result);
+            System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveFreCashFlowsData(result);
             return new object[] {
                     retVal};
         }
@@ -686,9 +356,9 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFAnalysisSummaryData> EndRetrieveDCFAnalysisData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData> EndRetrieveDCFAnalysisData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFAnalysisSummaryData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFAnalysisSummaryData>)(base.EndInvoke("RetrieveDCFAnalysisData", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData>)(base.EndInvoke("RetrieveDCFAnalysisData", _args, result)));
                 return _result;
             }
             
@@ -699,9 +369,9 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> EndRetrieveFreCashFlowsData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> EndRetrieveFreCashFlowsData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData>)(base.EndInvoke("RetrieveFreCashFlowsData", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData>)(base.EndInvoke("RetrieveFreCashFlowsData", _args, result)));
                 return _result;
             }
         }

@@ -180,12 +180,31 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        /// <summary>
+        /// Before Edit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgDCFAnalysisSummary_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
         {
-            int Index = this.dgDCFAnalysisSummary.Items.IndexOf(e.Row);
+            int Index = this.dgDCFAnalysisSummary.Items.IndexOf(e.Cell.ParentRow.Item);
+            if (Index != 3)
+                e.Cancel = true;
+            else
+                this.DataContextSource.SetAnalysisSummaryDisplayData();
         }
 
         #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgDCFAnalysisSummary_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
+        {
+
+        }
 
     }
 }

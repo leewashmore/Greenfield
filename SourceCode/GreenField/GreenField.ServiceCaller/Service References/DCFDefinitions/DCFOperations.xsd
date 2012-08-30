@@ -33,6 +33,7 @@
       <xs:element minOccurs="0" name="StockSpecificDiscount" type="xs:decimal" />
       <xs:element minOccurs="0" name="WACC" type="xs:decimal" />
       <xs:element minOccurs="0" name="WeightOfEquity" type="xs:decimal" />
+      <xs:element minOccurs="0" name="X" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DCFAnalysisSummaryData" nillable="true" type="tns:DCFAnalysisSummaryData" />

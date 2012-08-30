@@ -82,7 +82,8 @@
                                          EnableRowVirtualization="False"
                                          EnableColumnVirtualization="False"
                                          GridLinesVisibility="None"
-                                         BeginningEdit="dgDCFAnalysisSummary_BeginningEdit">
+                                         BeginningEdit="dgDCFAnalysisSummary_BeginningEdit"
+                                         RowEditEnded="dgDCFAnalysisSummary_RowEditEnded" >
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn Header="Assumptions" DataMemberBinding="{Binding PropertyName,Mode=TwoWay}" HeaderTextAlignment="Left" TextAlignment="Left"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
