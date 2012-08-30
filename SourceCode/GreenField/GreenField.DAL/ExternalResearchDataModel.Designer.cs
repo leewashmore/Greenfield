@@ -1334,6 +1334,7 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<Nullable<global::System.Decimal>>("RetrieveSecurityPFVMeasureCurrentPrice", securityIdParameter, pFVMeasureParameter);
         }
+
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7588,12 +7589,7 @@ namespace GreenField.DAL
         /// <summary>
         /// Create a new FinstatDetail object.
         /// </summary>
-        /// <param name="dATA_SOURCE">Initial value of the DATA_SOURCE property.</param>
-        /// <param name="rOOT_SOURCE">Initial value of the ROOT_SOURCE property.</param>
-        /// <param name="rOOT_SOURCE_DATE">Initial value of the ROOT_SOURCE_DATE property.</param>
         /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
-        /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
-        /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
         /// <param name="mULTIPLIER">Initial value of the MULTIPLIER property.</param>
         /// <param name="dECIMALS">Initial value of the DECIMALS property.</param>
         /// <param name="pERCENTAGE">Initial value of the PERCENTAGE property.</param>
@@ -7602,15 +7598,10 @@ namespace GreenField.DAL
         /// <param name="sORT_ORDER">Initial value of the SORT_ORDER property.</param>
         /// <param name="hARMONIC">Initial value of the HARMONIC property.</param>
         /// <param name="dATA_DESC">Initial value of the DATA_DESC property.</param>
-        public static FinstatDetail CreateFinstatDetail(global::System.String dATA_SOURCE, global::System.String rOOT_SOURCE, global::System.DateTime rOOT_SOURCE_DATE, global::System.Int32 pERIOD_YEAR, global::System.Int32 dATA_ID, global::System.Decimal aMOUNT, global::System.Decimal mULTIPLIER, global::System.Int32 dECIMALS, global::System.String pERCENTAGE, global::System.String bOLD_FONT, global::System.String gROUP_NAME, global::System.Int32 sORT_ORDER, global::System.String hARMONIC, global::System.String dATA_DESC)
+        public static FinstatDetail CreateFinstatDetail(global::System.Int32 pERIOD_YEAR, global::System.Decimal mULTIPLIER, global::System.Int32 dECIMALS, global::System.String pERCENTAGE, global::System.String bOLD_FONT, global::System.String gROUP_NAME, global::System.Int32 sORT_ORDER, global::System.String hARMONIC, global::System.String dATA_DESC)
         {
             FinstatDetail finstatDetail = new FinstatDetail();
-            finstatDetail.DATA_SOURCE = dATA_SOURCE;
-            finstatDetail.ROOT_SOURCE = rOOT_SOURCE;
-            finstatDetail.ROOT_SOURCE_DATE = rOOT_SOURCE_DATE;
             finstatDetail.PERIOD_YEAR = pERIOD_YEAR;
-            finstatDetail.DATA_ID = dATA_ID;
-            finstatDetail.AMOUNT = aMOUNT;
             finstatDetail.MULTIPLIER = mULTIPLIER;
             finstatDetail.DECIMALS = dECIMALS;
             finstatDetail.PERCENTAGE = pERCENTAGE;
@@ -7628,7 +7619,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String DATA_SOURCE
         {
@@ -7640,7 +7631,7 @@ namespace GreenField.DAL
             {
                 OnDATA_SOURCEChanging(value);
                 ReportPropertyChanging("DATA_SOURCE");
-                _DATA_SOURCE = StructuralObject.SetValidValue(value, false);
+                _DATA_SOURCE = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("DATA_SOURCE");
                 OnDATA_SOURCEChanged();
             }
@@ -7652,7 +7643,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String ROOT_SOURCE
         {
@@ -7664,7 +7655,7 @@ namespace GreenField.DAL
             {
                 OnROOT_SOURCEChanging(value);
                 ReportPropertyChanging("ROOT_SOURCE");
-                _ROOT_SOURCE = StructuralObject.SetValidValue(value, false);
+                _ROOT_SOURCE = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("ROOT_SOURCE");
                 OnROOT_SOURCEChanged();
             }
@@ -7676,9 +7667,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.DateTime ROOT_SOURCE_DATE
+        public Nullable<global::System.DateTime> ROOT_SOURCE_DATE
         {
             get
             {
@@ -7693,8 +7684,8 @@ namespace GreenField.DAL
                 OnROOT_SOURCE_DATEChanged();
             }
         }
-        private global::System.DateTime _ROOT_SOURCE_DATE;
-        partial void OnROOT_SOURCE_DATEChanging(global::System.DateTime value);
+        private Nullable<global::System.DateTime> _ROOT_SOURCE_DATE;
+        partial void OnROOT_SOURCE_DATEChanging(Nullable<global::System.DateTime> value);
         partial void OnROOT_SOURCE_DATEChanged();
     
         /// <summary>
@@ -7748,9 +7739,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 DATA_ID
+        public Nullable<global::System.Int32> DATA_ID
         {
             get
             {
@@ -7765,16 +7756,16 @@ namespace GreenField.DAL
                 OnDATA_IDChanged();
             }
         }
-        private global::System.Int32 _DATA_ID;
-        partial void OnDATA_IDChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _DATA_ID;
+        partial void OnDATA_IDChanging(Nullable<global::System.Int32> value);
         partial void OnDATA_IDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Decimal AMOUNT
+        public Nullable<global::System.Decimal> AMOUNT
         {
             get
             {
@@ -7789,8 +7780,8 @@ namespace GreenField.DAL
                 OnAMOUNTChanged();
             }
         }
-        private global::System.Decimal _AMOUNT;
-        partial void OnAMOUNTChanging(global::System.Decimal value);
+        private Nullable<global::System.Decimal> _AMOUNT;
+        partial void OnAMOUNTChanging(Nullable<global::System.Decimal> value);
         partial void OnAMOUNTChanged();
     
         /// <summary>

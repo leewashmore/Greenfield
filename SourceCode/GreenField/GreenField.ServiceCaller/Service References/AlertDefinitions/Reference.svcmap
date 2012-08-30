@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="c8b3ab8d-69e6-42a6-801b-3c4164820ad5" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.ObjectModel.ObservableCollection`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:59430/Services/AlertOperations.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="AlertOperations.xsd" MetadataType="Schema" ID="0505f466-9930-4e0a-85f3-0c7e1bf14cc7" SourceId="1" SourceUrl="http://localhost:59430/Services/AlertOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="AlertOperations.wsdl" MetadataType="Wsdl" ID="e51ed1af-ad1c-4ffa-8fd3-a7e506edf660" SourceId="1" SourceUrl="http://localhost:59430/Services/AlertOperations.svc?wsdl" />
+    <MetadataFile FileName="AlertOperations1.xsd" MetadataType="Schema" ID="d43a3c39-f908-4e48-8f6a-38081df6cd55" SourceId="1" SourceUrl="http://localhost:59430/Services/AlertOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="AlertOperations2.xsd" MetadataType="Schema" ID="0df658c3-bf51-4492-b4b7-ef13b019f381" SourceId="1" SourceUrl="http://localhost:59430/Services/AlertOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="AlertOperations.disco" MetadataType="Disco" ID="5ab04106-6b55-45d0-93ee-1c65063ab1bd" SourceId="1" SourceUrl="http://localhost:59430/Services/AlertOperations.svc?disco" />
+    <MetadataFile FileName="AlertOperations3.xsd" MetadataType="Schema" ID="851a10c9-ec60-43d6-97c2-816452980127" SourceId="1" SourceUrl="http://localhost:59430/Services/AlertOperations.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

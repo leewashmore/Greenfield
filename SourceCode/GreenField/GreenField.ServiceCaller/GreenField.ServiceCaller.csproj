@@ -88,6 +88,11 @@
     </Compile>
     <Compile Include="Helper\Prompt\Prompt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\AlertDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\BenchmarkHoldingsDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -99,6 +104,11 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Service References\DCFDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\DocumentWorkSpaceDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -172,6 +182,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.EntitySelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FilterSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FinstatDetailData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.FreeCashFlowsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FXCommodityData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.HeatMapData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.HoldingsPercentageData.datasource" />
@@ -203,6 +214,19 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.TopBenchmarkSecuritiesData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.TopHoldingsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.UnrealizedGainLossData.datasource" />
+    <None Include="Service References\AlertDefinitions\AlertOperations.wsdl" />
+    <None Include="Service References\AlertDefinitions\AlertOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AlertDefinitions\AlertOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AlertDefinitions\AlertOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\AlertDefinitions\AlertOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.wsdl" />
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.xsd">
       <SubType>Designer</SubType>
@@ -239,6 +263,25 @@
     <None Include="Service References\DCFDefinitions\DCFOperations3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\DCFDefinitions\DCFOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkspaceOperations.wsdl" />
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.wsdl" />
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.xsd">
       <SubType>Designer</SubType>
@@ -267,6 +310,9 @@
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations8.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations9.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.FinancialStatementData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -277,6 +323,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\LoggingDefinitions\LoggingOperations.disco" />
@@ -302,10 +351,16 @@
     <None Include="Service References\LoginDefinitions\LoginOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.CommentInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.FileMaster.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileData.datasource">
+    <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.MeetingConfigurationSchedule.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\MeetingDefinitions\GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo.datasource">
@@ -339,10 +394,13 @@
     <None Include="Service References\MeetingDefinitions\MeetingOperations6.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MeetingDefinitions\MeetingOperations61.xsd">
+    <None Include="Service References\MeetingDefinitions\MeetingOperations7.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MeetingDefinitions\MeetingOperations7.xsd">
+    <None Include="Service References\MeetingDefinitions\MeetingOperations8.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingDefinitions\MeetingOperations8.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations.wsdl" />
@@ -447,6 +505,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\DCFDefinitions\DCFOperations.disco" />
+    <None Include="Service References\DCFDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\DCFDefinitions\configuration.svcinfo" />
+    <None Include="Service References\DCFDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <None Include="Service References\MeetingDefinitions\MeetingOperations.disco" />
     <None Include="Service References\MeetingDefinitions\configuration91.svcinfo" />
     <None Include="Service References\MeetingDefinitions\configuration.svcinfo" />
@@ -454,10 +519,17 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\DCFDefinitions\DCFOperations.disco" />
-    <None Include="Service References\DCFDefinitions\configuration91.svcinfo" />
-    <None Include="Service References\DCFDefinitions\configuration.svcinfo" />
-    <None Include="Service References\DCFDefinitions\Reference.svcmap">
+    <None Include="Service References\AlertDefinitions\AlertOperations.disco" />
+    <None Include="Service References\AlertDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\AlertDefinitions\configuration.svcinfo" />
+    <None Include="Service References\AlertDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations.disco" />
+    <None Include="Service References\DocumentWorkSpaceDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\DocumentWorkSpaceDefinitions\configuration.svcinfo" />
+    <None Include="Service References\DocumentWorkSpaceDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -524,9 +596,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Service References\AlertDefinitions\" />
     <WCFMetadataStorage Include="Service References\BenchmarkHoldingsDefinitions\" />
     <WCFMetadataStorage Include="Service References\DashboardDefinitions\" />
     <WCFMetadataStorage Include="Service References\DCFDefinitions\" />
+    <WCFMetadataStorage Include="Service References\DocumentWorkSpaceDefinitions\" />
     <WCFMetadataStorage Include="Service References\ExternalResearchDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoginDefinitions\" />

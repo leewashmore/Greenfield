@@ -245,10 +245,10 @@ namespace GreenField.Gadgets.Helpers
             }
             else
             {
-                for (int i = 0; i < group.ItemCount; i++)
-                {
+                //for (int i = 0; i < group.ItemCount; i++)
+                //{
                     AddDataRows(table, group.Items, columns, grid);
-                }
+                //}
             }
         }
 

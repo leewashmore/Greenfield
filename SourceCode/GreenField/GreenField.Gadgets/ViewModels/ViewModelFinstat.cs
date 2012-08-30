@@ -627,6 +627,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     FinstatDetailInfo = new List<FinstatDetailData>(result);
                     StartYearRange = new List<Int32>(FinstatDetailInfo.OrderBy(a => a.PeriodYear).Select(a => a.PeriodYear).Distinct().ToList());
+                    StartYearRange.Remove(4000);
                 }
                 else
                 {

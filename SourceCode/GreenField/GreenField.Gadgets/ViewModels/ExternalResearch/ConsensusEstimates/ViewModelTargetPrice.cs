@@ -33,7 +33,6 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
-        private EntitySelectionData _entitySelectionData;
         private IEventAggregator _eventAggregator;
 
         /// <summary>

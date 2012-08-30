@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="DocumentWorkspaceOperations" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="DocumentWorkspaceOperations_UploadDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadDocument" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_UploadDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_UploadDocument_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q1:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocument_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveDocument" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocument_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveDocumentResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocument_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveDocumentsData" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveDocumentsDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_GetDocumentsMetaTags_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentsMetaTags" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_GetDocumentsMetaTags_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDocumentsMetaTagsResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_GetDocumentsMetaTags_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q4:ServiceFault" />
+  </wsdl:message>
+  <wsdl:portType name="DocumentWorkspaceOperations">
+    <wsdl:operation name="UploadDocument">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UploadDocument" message="tns:DocumentWorkspaceOperations_UploadDocument_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UploadDocumentResponse" message="tns:DocumentWorkspaceOperations_UploadDocument_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UploadDocumentServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_UploadDocument_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveDocument">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocument" message="tns:DocumentWorkspaceOperations_RetrieveDocument_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentResponse" message="tns:DocumentWorkspaceOperations_RetrieveDocument_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_RetrieveDocument_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveDocumentsData">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsData" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataResponse" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentsMetaTags">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTags" message="tns:DocumentWorkspaceOperations_GetDocumentsMetaTags_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTagsResponse" message="tns:DocumentWorkspaceOperations_GetDocumentsMetaTags_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTagsServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_GetDocumentsMetaTags_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_DocumentWorkspaceOperations" type="tns:DocumentWorkspaceOperations">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UploadDocument">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/UploadDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveDocument">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocument" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveDocumentsData">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetDocumentsMetaTags">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTags" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DocumentWorkspaceOperations">
+    <wsdl:port name="BasicHttpBinding_DocumentWorkspaceOperations" binding="tns:BasicHttpBinding_DocumentWorkspaceOperations">
+      <soap:address location="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

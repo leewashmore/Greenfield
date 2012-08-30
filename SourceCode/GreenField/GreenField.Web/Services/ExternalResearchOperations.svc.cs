@@ -382,7 +382,6 @@ namespace GreenField.Web.Services
             List<FinstatDetailData> result = new List<FinstatDetailData>();
 
             data = entity.GetFinstatDetail(issuerId, securityId, _dataSource, _fiscalType, currency).ToList();
-            //  data = data.Where(a => a.GROUP_NAME == "Growth Data" && a.DATA_DESC == "Loan Growth (YOY)").ToList();
             if (data == null || data.Count() == 0)
                 return result;
 
@@ -434,12 +433,12 @@ namespace GreenField.Web.Services
                 temp.GroupDescription = data[i].GROUP_NAME;
                 temp.Harmonic = data[i].HARMONIC;
                 temp.IsPercentage = data[i].PERCENTAGE;
-                temp.PeriodYear = data[i].PERIOD_YEAR;
+                temp.PeriodYear = Convert.ToInt32(data[i].PERIOD_YEAR);
                 temp.SortOrder = data[i].SORT_ORDER;
                 temp.AmountType = "A";
                 temp.PeriodType = "A";
                 temp.RootSource = data[i].ROOT_SOURCE;
-                temp.RootSourceDate = data[i].ROOT_SOURCE_DATE;
+                temp.RootSourceDate = Convert.ToDateTime(data[i].ROOT_SOURCE_DATE);
                 if (data[i].HARMONIC == "Y")
                 {
                     decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;
@@ -1333,82 +1332,6 @@ namespace GreenField.Web.Services
         }
         #endregion
 
-
-        [OperationContract]
-        [FaultContract(typeof(ServiceFault))]
-        public List<DocumentCategoricalData> RetrieveDocumentsData(String searchString)
-        {
-            try
-            {
-                List<DocumentCategoricalData> result = new List<DocumentCategoricalData>();
-                result.Add(new DocumentCategoricalData()
-                {
-                    DocumentCategoryType = DocumentCategoryType.COMPANY_MEETING_NOTES,
-                    DocumentCompanyName = "Company1",
-                    DocumentCompanyTicker = "CompanyTicker1",
-                    DocumentCatalogData = new DocumentCatalogData()
-                    {
-                        FileId = 1,
-                        FileMetaTags = "Finance, specific catalog",
-                        FileName = "Financial Statement 27-07-2012.docx",
-                        FilePath = @"http://sharepointLocalSite/Documents/Financial Statement 27-07-2012.docx",
-                        FileUploadedBy = "Rahul Vig",
-                        FileUploadedOn = DateTime.Now.AddDays(-5)
-                    },
-                    CommentDetails = new List<CommentDetails>
-                    {
-                        new CommentDetails() { Comment = "Comment1", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-1) },
-                        new CommentDetails() { Comment = "Comment2", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-2) },
-                        new CommentDetails() { Comment = "Comment3", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-3) }
-                    }
-                });
-                result.Add(new DocumentCategoricalData()
-                {
-                    DocumentCategoryType = DocumentCategoryType.COMPANY_MEETING_NOTES,
-                    DocumentCompanyName = "Company2",
-                    DocumentCompanyTicker = "CompanyTicker2",
-                    DocumentCatalogData = new DocumentCatalogData()
-                    {
-                        FileId = 1,
-                        FileMetaTags = "Finance, specific catalog 2",
-                        FileName = "Financial Statement 30-07-2012.docx",
-                        FilePath = @"http://sharepointLocalSite/Documents/Financial Statement 27-07-2012.docx",
-                        FileUploadedBy = "Rahul Vig",
-                        FileUploadedOn = DateTime.Now.AddDays(-2)
-                    },
-                    CommentDetails = new List<CommentDetails>
-                    {
-                        new CommentDetails() { Comment = "Comment1", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-1) },
-                        new CommentDetails() { Comment = "Comment2", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-1) },
-                        new CommentDetails() { Comment = "Comment3", CommentBy = "Neeraj Jindal", CommentOn = DateTime.Now.AddDays(-2) }
-                    }
-                });
-
-                result.Add(new DocumentCategoricalData()
-                {
-                    DocumentCategoryType = DocumentCategoryType.BLOG,
-                    DocumentCompanyName = "Company1",
-                    DocumentCompanyTicker = "CompanyTicker1",
-                    DocumentCatalogData = null,
-                    CommentDetails = new List<CommentDetails>
-                    {
-                        new CommentDetails() { Comment = "Comment1", CommentBy = "Abhinav Singh", CommentOn = DateTime.Now.AddDays(-1) },
-                        new CommentDetails() { Comment = "Comment2", CommentBy = "Abhinav Singh", CommentOn = DateTime.Now.AddDays(-22) },
-                        new CommentDetails() { Comment = "Comment3", CommentBy = "Abhinav Singh", CommentOn = DateTime.Now.AddDays(-31) }
-                    }
-                });
-
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                ExceptionTrace.LogException(ex);
-                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }
-        }
-
         #region Valuation,Quality and Growth
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
@@ -1765,6 +1688,22 @@ namespace GreenField.Web.Services
 
         #endregion               
 
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<tblCompanyInfo> RetrieveCompanyData()
+        {
+            try
+            {
+                ReutersEntities entity = new ReutersEntities();
+                return entity.tblCompanyInfoes.ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
 
     }
 }

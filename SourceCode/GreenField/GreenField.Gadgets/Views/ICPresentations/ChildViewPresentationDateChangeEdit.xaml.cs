@@ -9,28 +9,47 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ChildViewPresentationDateChangeEdit : ChildWindow
     {
-        public ChildViewPresentationDateChangeEdit(List<DateTime> validPresentationDates = null)
+        public ChildViewPresentationDateChangeEdit(List<DateTime> validPresentationDates = null, DateTime? selectedDate = null)
         {
             InitializeComponent();
             
             if (validPresentationDates == null)
                 validPresentationDates = new List<DateTime>() { DateTime.Today.AddDays(1), DateTime.Today.AddMonths(3) };
+
+            this.dpPresentationDate.SelectedDate = selectedDate == null ? DateTime.Today : selectedDate;
             
             DateTime startDate = validPresentationDates.OrderBy(g=>g).First();
             DateTime endDate = validPresentationDates.OrderByDescending(g => g).First();
-            this.dpPresentationDate.DisplayDateStart = startDate;
-            this.dpPresentationDate.DisplayDateEnd = endDate;
+            this.dpPresentationDate.SelectableDateStart = startDate;
+            this.dpPresentationDate.SelectableDateEnd = endDate;
             IEnumerable<DateTime> inValidDates = Enumerable.Range(0, endDate.Subtract(startDate).Days + 1).Select(d => startDate.AddDays(d));
-            this.dpPresentationDate.BlackoutDates = inValidDates.Where(g => ! validPresentationDates.Contains(g));
+            this.dpPresentationDate.AreWeekNumbersVisible = false;
+            this.dpPresentationDate.IsTodayHighlighted = false;
+            this.dpPresentationDate.FirstDayOfWeek = DayOfWeek.Monday;
+            //this.dpPresentationDate.BlackoutDates = inValidDates.Where(g => ! validPresentationDates.Contains(g));
+            this.DataContext = BlackoutDates;
+            this.dpPresentationDate.DisplayDateChanged += (se, e) =>
+            {
+                this.dpPresentationDate.BlackoutDates = inValidDates.Where(g => !validPresentationDates.Contains(g));
+            };
+
+            this.dpPresentationDate.DisplayModeChanged += (se, e) =>
+            {
+                this.dpPresentationDate.BlackoutDates = inValidDates.Where(g => !validPresentationDates.Contains(g));
+            };
+            BlackoutDates = new ObservableCollection<DateTime>(inValidDates.Where(g => !validPresentationDates.Contains(g)));
         }
 
-        public DateTime SelectedPresentationDate { get; set; }
+        public DateTime SelectedPresentationDateTime { get; set; }
         public Boolean AlertNotification { get; set; }
+
+        public ObservableCollection<DateTime> BlackoutDates { get; set; }        
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
@@ -46,7 +65,7 @@ namespace GreenField.Gadgets.Views
         {
             if(this.dpPresentationDate.SelectedDate == null)
                 return;
-            SelectedPresentationDate = Convert.ToDateTime(this.dpPresentationDate.SelectedDate);
+            SelectedPresentationDateTime = Convert.ToDateTime(this.dpPresentationDate.SelectedDate);
             this.OKButton.IsEnabled = true;
         }
 

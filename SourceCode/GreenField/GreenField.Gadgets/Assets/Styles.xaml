@@ -879,6 +879,8 @@
         <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
         <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
         <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="Height" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="Foreground" Value="{StaticResource DefaultControlForeground}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -968,5 +970,12 @@
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
 
+    <!--TimeUpDown-->
+    <Style TargetType="toolkit:TimeUpDown" x:Name="TimeUpDownStyle">
+        <Setter Property="FontFamily" Value="Arial"/>
+        <Setter Property="FontSize" Value="9"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
 
 </ResourceDictionary>

@@ -193,18 +193,18 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Handle Fund Change Event
         /// </summary>
-        /// <param name="PortfolioSelectionData">Details of Selected Portfolio</param>
-        public void HandleFundReferenceSet(PortfolioSelectionData PortfolioSelectionData)
+        /// <param name="portfolioSelectionData">Details of Selected Portfolio</param>
+        public void HandleFundReferenceSet(PortfolioSelectionData portfolioSelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
 
             try
             {
-                if (PortfolioSelectionData != null)
+                if (portfolioSelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
-                    _portfolioSelectionData = PortfolioSelectionData;
+                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
+                    _portfolioSelectionData = portfolioSelectionData;
                     if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)
                     {
                         BusyIndicatorStatus = true;

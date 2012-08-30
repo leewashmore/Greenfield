@@ -61,6 +61,7 @@
     <Content Include="ClientBin\GreenField.App.xap" />
     <Content Include="ClientBin\GreenField.Login.App.xap" />
     <Content Include="crossdomain.xml" />
+    <Content Include="Services\DocumentWorkSpaceOperations.svc" />
     <Content Include="HomePage.aspx" />
     <Content Include="HomePage.html" />
     <Content Include="DataSources\Geospatial\world.dbf">
@@ -72,10 +73,15 @@
     <None Include="Properties\DataSources\System.Data.DataSet.datasource" />
     <None Include="Properties\DataSources\System.Data.DataTable.datasource" />
     <Content Include="Login.aspx" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Service References\DimensionEntitiesService\Reference.datasvcmap">
       <Generator>DataServiceClientGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <Content Include="Services\AlertOperations.svc" />
     <Content Include="Services\DCFOperations.svc" />
     <Content Include="Services\ExternalResearchOperations.svc" />
     <Content Include="Services\MeetingOperations.svc" />
@@ -88,6 +94,7 @@
     <Content Include="Services\SecurityReferenceOperations.svc" />
     <Content Include="Services\SessionOperations.svc" />
     <Content Include="Silverlight.js" />
+    <None Include="Web References\DocumentCopyService\copy.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -98,12 +105,26 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <None Include="Service References\DimensionEntitiesService\service.edmx" />
+    <None Include="Web References\DocumentCopyService\copy.wsdl" />
+    <None Include="Web References\DocumentCopyService\CopyResult.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DocumentCopyService\FieldInformation.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\DocumentCopyService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContracts\IssuerReferenceData.cs" />
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
     <Compile Include="DataContracts\MeetingAttachedFileStreamData.cs" />
     <Compile Include="DataContracts\PopulatedMarketPerformanceSnapshotData.cs" />
+    <Compile Include="Services\DocumentWorkSpaceOperations.svc.cs">
+      <DependentUpon>DocumentWorkSpaceOperations.svc</DependentUpon>
+    </Compile>
     <Compile Include="Helpers\AssetAllocationCalculations.cs" />
     <Compile Include="Helpers\CalculatedValuesForValuation.cs" />
     <Compile Include="Helpers\CheckServiceAvailability.cs" />
@@ -125,10 +146,18 @@
     <Compile Include="Helpers\Service Faults\ServiceFault.cs" />
     <Compile Include="Helpers\SilverlightFaultBehavior.cs" />
     <Compile Include="Helpers\UnrealizedGainLossCalculations.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Service References\DimensionEntitiesService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.datasvcmap</DependentUpon>
+    </Compile>
+    <Compile Include="Services\AlertOperations.svc.cs">
+      <DependentUpon>AlertOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\DCFOperations.svc.cs">
       <DependentUpon>DCFOperations.svc</DependentUpon>
@@ -164,6 +193,11 @@
     </Compile>
     <Compile Include="Services\SessionOperations.svc.cs">
       <DependentUpon>SessionOperations.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\DocumentCopyService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -201,7 +235,22 @@
       <Type>datasvcmap</Type>
     </ServiceReferenceMetadataStorage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://10.101.1.165:90/_vti_bin/copy.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DocumentCopyService\</RelPath>
+      <UpdateFromURL>http://10.101.1.165:90/_vti_bin/copy.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>GreenField_Web_DocumentCopyService_Copy</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

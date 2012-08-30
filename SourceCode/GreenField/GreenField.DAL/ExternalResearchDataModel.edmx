@@ -1126,13 +1126,13 @@
 					<Property Type="Decimal" Name="Shares_Outstanding" Nullable="true" />
 				</ComplexType>
         <ComplexType Name="FinstatDetail">
-          <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
-          <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" Precision="23" />
+          <Property Type="String" Name="DATA_SOURCE" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="ROOT_SOURCE" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="ESTIMATE_ID" Nullable="true" />
           <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="DATA_ID" Nullable="true" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="MULTIPLIER" Nullable="false" Precision="32" Scale="6" />
           <Property Type="Int32" Name="DECIMALS" Nullable="false" />
           <Property Type="String" Name="PERCENTAGE" Nullable="false" MaxLength="1" />

@@ -109,7 +109,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
             try
             {
                 if (this.dgPortfolioDetails.Visibility == Visibility.Visible)
@@ -125,7 +125,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+                Logging.LogException(this.DataContextPortfolioDetails.Logger, ex);
             }
         }
         #endregion
@@ -151,7 +151,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportPDF_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
             try
             {
                 PDFExporter.btnExportPDF_Click(this.dgPortfolioDetails);
@@ -159,7 +159,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+                Logging.LogException(this.DataContextPortfolioDetails.Logger, ex);
             }
         }
         #endregion
@@ -174,7 +174,7 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
             try
             {
                 Dispatcher.BeginInvoke((Action)(() =>
@@ -188,7 +188,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+                Logging.LogException(this.DataContextPortfolioDetails.Logger, ex);
             }
         }
 
@@ -206,7 +206,7 @@ namespace GreenField.Gadgets.Views
         private void dgPortfolioDetails_Grouping(object sender, GridViewGroupingEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
             try
             {
                 if (e.Action.ToString() != "Remove")
@@ -229,7 +229,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+                Logging.LogException(this.DataContextPortfolioDetails.Logger, ex);
             }
         }
 
@@ -241,7 +241,7 @@ namespace GreenField.Gadgets.Views
         private void dgPortfolioDetails_Filtering(object sender, Telerik.Windows.Controls.GridView.GridViewFilteringEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
             try
             {
                 MemberColumnFilterDescriptor filteredColumn = e.ColumnFilterDescriptor as MemberColumnFilterDescriptor;
@@ -251,7 +251,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+                Logging.LogException(this.DataContextPortfolioDetails.Logger, ex);
             }
         }
 
@@ -263,7 +263,7 @@ namespace GreenField.Gadgets.Views
         private void dgPortfolioDetails_Filtered(object sender, Telerik.Windows.Controls.GridView.GridViewFilteredEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
             try
             {
                 SetGroupedData();
@@ -272,7 +272,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+                Logging.LogException(this.DataContextPortfolioDetails.Logger, ex);
             }
         }
 
@@ -282,7 +282,7 @@ namespace GreenField.Gadgets.Views
         private void SetGroupedData()
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextPortfolioDetails._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextPortfolioDetails.Logger, methodNamespace);
             try
             {
                 RangeObservableCollection<PortfolioDetailsData> collection = new RangeObservableCollection<PortfolioDetailsData>();
@@ -316,7 +316,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextPortfolioDetails._logger, ex);
+                Logging.LogException(this.DataContextPortfolioDetails.Logger, ex);
             }
         }
 

@@ -54,18 +54,17 @@
 
             </Grid>
 
-            <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
                 <telerik:RadGridView x:Name="dgDCFAnalysisSummary" 
                                          ShowGroupPanel="False" 
-                                         AutoGenerateColumns="True" 
-                                         ItemsSource="{Binding AnalysisSummaryData}"
+                                         AutoGenerateColumns="False" 
+                                         ItemsSource="{Binding AnalysisSummaryDisplayData}"
                                          CanUserFreezeColumns="False" 
                                          CanUserDeleteRows="False"
                                          CanUserInsertRows="False"
-                                         IsReadOnly="True"
+                                         IsReadOnly="False"
                                          CanUserReorderColumns="False" 
-                                         CanUserSortColumns="True"
-                                         FrozenColumnCount="2" 
+                                         CanUserSortColumns="False"
                                          RowIndicatorVisibility="Collapsed" 
                                          UseLayoutRounding="True" 
                                          ColumnWidth="Auto" ShowColumnFooters="False"
@@ -82,14 +81,23 @@
                                          AlternationCount="2" 
                                          EnableRowVirtualization="False"
                                          EnableColumnVirtualization="False"
-                                         GridLinesVisibility="None">
+                                         GridLinesVisibility="None"
+                                         BeginningEdit="dgDCFAnalysisSummary_BeginningEdit"
+                                         CellValidating="dgDCFAnalysisSummary_CellValidating">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Header="Assumptions" UniqueName="Assumptions" DataMemberBinding="{Binding PropertyName,Mode=TwoWay}" 
+                                                    HeaderTextAlignment="Left" TextAlignment="Left"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn Header="High" UniqueName="High" DataMemberBinding="{Binding Value,Mode=TwoWay}" HeaderTextAlignment="Right" TextAlignment="Right"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                    </telerik:RadGridView.Columns>
                 </telerik:RadGridView>
             </Grid>
-            
+
             <telerik:RadRichTextBox Grid.Row="2" x:Name="RichTextBox" >
 
             </telerik:RadRichTextBox>
-        
+
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

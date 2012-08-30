@@ -80,7 +80,7 @@
 
                                 <telerik:RadButton Grid.Column="4" Click="btnFlip_Click" HorizontalAlignment="Right" Height="16" Width="16"
                                                Name="btnFlip" VerticalAlignment="Center">
-                                    <Image Source="../Images/Flip.png" Stretch="Fill"/>
+                                    <Image Source="../Images/flipIcon.jpg" Stretch="Fill"/>
                                     <ToolTipService.ToolTip>
                                         <TextBlock Text="Flip" Style="{StaticResource TextBlockStyle}"/>
                                     </ToolTipService.ToolTip>
@@ -154,8 +154,48 @@
                 </Grid>
                 <!--Grid and Graph-->
                 <Grid Grid.Column="1">
+                    <!--Grid-->
+                    <Grid>
+                        <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                            <telerik:RadGridView Name="dgScatterGraph" 
+                                                 AutoGenerateColumns="False" 
+                                                 ItemsSource="{Binding RatioComparisonInfo}" 
+                                                 CanUserSelect="False"
+                                                 CanUserReorderColumns="False"
+                                                 CanUserInsertRows="False" 
+                                                 CanUserDeleteRows="False" 
+                                                 IsReadOnly="True" 
+                                                 CanUserSortColumns="False"
+                                                 ScrollMode="RealTime"
+                                                 RowIndicatorVisibility="Collapsed" 
+                                                 ShowGroupPanel="False" 
+                                                 UseLayoutRounding="True"
+                                                 CanUserResizeColumns="False"
+                                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
+                                                 AlternationCount="2" 
+                                                 EnableRowVirtualization="False"
+                                                 EnableColumnVirtualization="False"
+                                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                                 GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                                 Visibility="Collapsed"
+                                                 RowStyle="{StaticResource GridViewRowStyle}" 
+                                                 ElementExporting="dgScatterGraph_ElementExporting"
+                                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                                 GridLinesVisibility="None">
+                                <telerik:RadGridView.Columns>
+                                    <telerik:GridViewDataColumn x:Name="dgvcIssueName" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding ISSUE_NAME}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcValuationRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding VALUATION, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
+                                    <telerik:GridViewDataColumn x:Name="dgvcFinancialRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding FINANCIAL, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
+                                </telerik:RadGridView.Columns>
+                            </telerik:RadGridView>
+
+                        </Border>
+                    </Grid>
                     <!--Chart-->
                     <Grid>
+                        <TextBlock Text="*Missing Data for Security Selected" Margin="5" Opacity="0.3" VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Left"
+                                   Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadChart x:Name="chScatter" telerik:StyleManager.Theme="Metro" FontSize="7" FontFamily="Arial" UseDefaultLayout="False"
                                           Visibility="Visible" ItemsSource="{Binding RatioComparisonInfo, Mode=TwoWay}" Background="Transparent"
                                           IsHitTestVisible="True" Loaded="chScatter_Loaded" DataBound="chScatter_DataBound">
@@ -211,7 +251,7 @@
                                             </telerik:ChartArea.AxisY>
                                         </telerik:ChartArea>
                                     </telerik:ChartDefaultView.ChartArea>-->
-                                    <!--<telerik:ChartDefaultView.ChartLegend>
+                            <!--<telerik:ChartDefaultView.ChartLegend>
                                         <telerik:ChartLegend UseAutoGeneratedItems="False"
                                                              Header="" ItemsPanelOrientation="Horizontal" x:Name="chScatterLegend" 
                                                              Style="{StaticResource ChartLegendStyle}" 
@@ -237,44 +277,7 @@
                                     <telerik:ItemMapping FieldName="VALUATION" DataPointMember="XValue" />
                                 </telerik:SeriesMapping>
                             </telerik:RadChart.SeriesMappings>
-                        </telerik:RadChart>
-                    </Grid>
-                    <!--Grid-->
-                    <Grid>
-                        <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
-                            <telerik:RadGridView Name="dgScatterGraph" 
-                                                 AutoGenerateColumns="False" 
-                                                 ItemsSource="{Binding RatioComparisonInfo}" 
-                                                 CanUserSelect="False"
-                                                 CanUserReorderColumns="False"
-                                                 CanUserInsertRows="False" 
-                                                 CanUserDeleteRows="False" 
-                                                 IsReadOnly="True" 
-                                                 CanUserSortColumns="False"
-                                                 ScrollMode="RealTime"
-                                                 RowIndicatorVisibility="Collapsed" 
-                                                 ShowGroupPanel="False" 
-                                                 UseLayoutRounding="True"
-                                                 CanUserResizeColumns="False"
-                                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" 
-                                                 AlternationCount="2" 
-                                                 EnableRowVirtualization="False"
-                                                 EnableColumnVirtualization="False"
-                                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                                 GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
-                                                 Visibility="Collapsed"
-                                                 RowStyle="{StaticResource GridViewRowStyle}" 
-                                                 ElementExporting="dgScatterGraph_ElementExporting"
-                                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                                 GridLinesVisibility="None">
-                                <telerik:RadGridView.Columns>
-                                    <telerik:GridViewDataColumn x:Name="dgvcIssueName" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding ISSUE_NAME}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
-                                    <telerik:GridViewDataColumn x:Name="dgvcValuationRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding VALUATION, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
-                                    <telerik:GridViewDataColumn x:Name="dgvcFinancialRatio" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding FINANCIAL, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>
-                                </telerik:RadGridView.Columns>
-                            </telerik:RadGridView>
-
-                        </Border>
+                        </telerik:RadChart>                        
                     </Grid>
                 </Grid>
             </Grid>

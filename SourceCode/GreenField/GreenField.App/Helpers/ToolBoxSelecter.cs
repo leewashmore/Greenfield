@@ -210,7 +210,7 @@ namespace GreenField.App.Helpers
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
                     break;
                 case DashboardCategoryType.COMPANY_DOCUMENTS:
-                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);
+                    UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Collapsed);
                     break;
                 case DashboardCategoryType.COMPANY_CHARTING_PRICE_COMPARISON:
                     UpdateToolBoxItemVisibility(securitySelectorVisibility: Visibility.Visible);

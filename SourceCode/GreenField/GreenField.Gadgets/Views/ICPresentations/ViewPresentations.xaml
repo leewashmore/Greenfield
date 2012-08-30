@@ -13,11 +13,14 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                <ResourceDictionary>
+                    <helpers:UTCToLocalDateTimeConverter x:Key="UTCToLocalDateTimeConverter"/>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="biPresentationOverview" BusyContent="{Binding BusyIndicatorContent}" FontSize="7" FontFamily="Arial"
+    <telerik:RadBusyIndicator x:Name="biPresentationOverview" BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
         <Grid x:Name="LayoutRoot">
             <Grid.RowDefinitions>
@@ -79,37 +82,37 @@
                                             DataFormatString="{}{0:MMMM dd, yyyy}"
                                             Width="Auto"
                                             Header="Presentation Date"
-                                            DataMemberBinding="{Binding MeetingDateTime}"
+                                            DataMemberBinding="{Binding MeetingDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
                                             HeaderTextAlignment="Left"
                                             TextAlignment="Left"
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListTime"
-                                            DataFormatString="{}{0:HH:mm tt}"
+                                            DataFormatString="{}{0:h:mm tt}"
                                             Width="Auto"
                                             Header="Meeting Time"
-                                            DataMemberBinding="{Binding MeetingDateTime}"
+                                            DataMemberBinding="{Binding MeetingDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
                                             HeaderTextAlignment="Left"
                                             TextAlignment="Left"
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListSubmitDeadline"
-                                            DataFormatString="{}{0:MM/dd/yyyy HH:mm tt}"
+                                            DataFormatString="{}{0:MM/dd/yyyy h:mm tt}"
                                             Width="Auto"
                                             Header="Submit Deadline"
-                                            DataMemberBinding="{Binding MeetingClosedDateTime}"
+                                            DataMemberBinding="{Binding MeetingClosedDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
                                             HeaderTextAlignment="Left"
                                             TextAlignment="Left"
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListVoteDeadline"
-                                            DataFormatString="{}{0:MM/dd/yyyy HH:mm tt}"
+                                            DataFormatString="{}{0:MM/dd/yyyy h:mm tt}"
                                             Width="Auto"
-                                            Header="Submit Deadline"
-                                            DataMemberBinding="{Binding MeetingVotingClosedDateTime}"
+                                            Header="Voting Deadline"
+                                            DataMemberBinding="{Binding MeetingVotingClosedDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
                                             HeaderTextAlignment="Left"

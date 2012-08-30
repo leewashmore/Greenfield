@@ -66,7 +66,7 @@ namespace GreenField.Web.Services
                 if (entitySelectionData == null)
                     return new List<DCFAnalysisSummaryData>();
 
-                #region ServiceAvailability
+                #region ServiceAvailabilityChecker
                 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -98,6 +98,61 @@ namespace GreenField.Web.Services
                 data.GrossDebt = dbResult.Where(a => a.DATA_ID == 90).Select(a => a.AMOUNT).FirstOrDefault();
 
                 result.Add(data);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+        /// <summary>
+        /// Gets FreCashFlows Data
+        /// </summary>
+        /// <param name="securityId"></param>
+        /// <returns>FreCashFlows data</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<FreeCashFlowsData> RetrieveFreCashFlowsData(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                List<FreeCashFlowsData> result = new List<FreeCashFlowsData>();
+                //List<GetFreeCashFlowsData_Result> resultDB = new List<GetFreeCashFlowsData_Result>();
+                ExternalResearchEntities extResearch = new ExternalResearchEntities();
+                if (entitySelectionData == null)
+                    return null;
+
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                //Retrieving data from security view
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.TICKER == entitySelectionData.ShortName
+                        && record.ISSUE_NAME == entitySelectionData.LongName
+                        && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                        && record.SECURITY_TYPE == entitySelectionData.SecurityType)
+                    .FirstOrDefault();
+
+                if (data == null)
+                    return null;
+
+                FreeCashFlowsData FreeCashFlowsData = new FreeCashFlowsData();                
+
+                ////Retrieving data from Period Financials table
+                //resultDB = extResearch.ExecuteStoreQuery<GetFreeCashFlowsData_Result>("exec GetFreeCashFlowsData @IssuerID={0}", Convert.ToString(data.ISSUER_ID)).ToList();
+
+
+
+                
+                //result.Add(FreeCashFlowsData);
+
                 return result;
             }
             catch (Exception ex)

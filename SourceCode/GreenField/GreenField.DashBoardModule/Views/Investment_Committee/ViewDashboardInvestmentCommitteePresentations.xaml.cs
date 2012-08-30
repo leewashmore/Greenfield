@@ -32,8 +32,8 @@ namespace GreenField.DashboardModule.Views
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
         private IRegionManager _regionManager;
-        private ViewPresentations _dashboardView;
-        private ViewModelPresentations _dashboardViewModel;
+        private ViewPresentations _view;
+        private ViewModelPresentations _viewModel;
         #endregion
 
         [ImportingConstructor]
@@ -66,9 +66,9 @@ namespace GreenField.DashboardModule.Views
                 RegionManager = _regionManager
             };
 
-            //_dashboardViewModel = new ViewModelPresentations(param);
-            //_dashboardView = new ViewPresentations(_dashboardViewModel);
-            this.cctrDashboardContent.Content = null;//_dashboardView;
+            //_viewModel = new ViewModelPresentations(param);
+            //_view = new ViewPresentations(_viewModel);
+            this.cctrDashboardContent.Content = null;// _view;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -78,7 +78,6 @@ namespace GreenField.DashboardModule.Views
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            //navigationContext.NavigationService.Region.Context = _dashboardViewModel.NavigationInfo;            
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
@@ -88,11 +87,11 @@ namespace GreenField.DashboardModule.Views
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            //_dashboardViewModel.ManageMeetingsServiceCalls();
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
                 control.IsActive = true;
+                _viewModel.Initialize();
             }
         }
 

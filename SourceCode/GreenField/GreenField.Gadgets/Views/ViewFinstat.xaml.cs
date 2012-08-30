@@ -13,6 +13,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Models;
 using GreenField.Common;
+using Telerik.Windows.Documents.Model;
 
 namespace GreenField.Gadgets.Views
 {
@@ -62,6 +63,8 @@ namespace GreenField.Gadgets.Views
             }, isQuarterImplemented: false, navigatingColumnStartIndex: 1);
             dgFinstat.Columns[8].Header = "Harmonic Avg " + periodColumnHeader[1] + "-" + periodColumnHeader[3];
             dgFinstat.Columns[9].Header = "Harmonic Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
+            SettingGridColumnUniqueNames(periodColumnHeader);
+
 
             PeriodColumns.PeriodColumnUpdate += (e) =>
             {
@@ -70,6 +73,8 @@ namespace GreenField.Gadgets.Views
                     PeriodColumns.UpdateColumnInformation(this.dgFinstat, e, false, 1);
                     dgFinstat.Columns[8].Header = "Harmonic Avg " + e.PeriodColumnHeader[1] + "-" + e.PeriodColumnHeader[3];
                     dgFinstat.Columns[9].Header = "Harmonic Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
+
+                    SettingGridColumnUniqueNames(e.PeriodColumnHeader);
                     this.btnExportExcel.IsEnabled = true;
                 }
             };
@@ -78,11 +83,9 @@ namespace GreenField.Gadgets.Views
         } 
         #endregion
 
-        private void dgFinstat_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            
-        }
+        #region Export/Pdf/Print
 
+        #region ExportToExcel
         private void dgFinstat_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
@@ -91,7 +94,69 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             //ExportExcel.ExportGridExcel(dgFinstat);
+            List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
+
+            RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Finstat Report", Element = this.dgFinstat, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+          //  RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Security Details", Element = this.dgIssueDetails, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+
+            ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Finstat Report");
+            childExportOptions.Show(); 
         }
+        #endregion
+
+        #region PDFExport
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        {
+            PDFExporter.btnExportPDF_Click(this.dgFinstat);
+        }
+        #endregion
+
+        #region Printing the DataGrid
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                RichTextBox.Document = PDFExporter.Print(dgFinstat, 6);
+            }));
+
+            this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+        }
+
+        #endregion 
+
+        #region Helper Method
+        /// <summary>
+        /// Method to set unique names for grid columns required in Pdf and Print
+        /// </summary>
+        /// <param name="periodColumnHeader">List<string> periodColumnHeader</param>
+        public void SettingGridColumnUniqueNames(List<string> periodColumnHeader)
+        {
+            dgFinstat.Columns[0].UniqueName = "";
+            dgFinstat.Columns[1].UniqueName = periodColumnHeader[0];
+            dgFinstat.Columns[2].UniqueName = periodColumnHeader[1];
+            dgFinstat.Columns[3].UniqueName = periodColumnHeader[2];
+            dgFinstat.Columns[4].UniqueName = periodColumnHeader[3];
+            dgFinstat.Columns[5].UniqueName = periodColumnHeader[4];
+            dgFinstat.Columns[6].UniqueName = periodColumnHeader[5];
+            dgFinstat.Columns[7].UniqueName = periodColumnHeader[6];
+            dgFinstat.Columns[8].UniqueName = "Harmonic Avg " + periodColumnHeader[1] + "-" + periodColumnHeader[3];
+            dgFinstat.Columns[9].UniqueName = "Harmonic Avg " + periodColumnHeader[4] + "-" + periodColumnHeader[6];
+        } 
+        #endregion
+
+        #endregion
 
         #region Dispose Method
         public override void Dispose()

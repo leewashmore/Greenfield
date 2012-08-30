@@ -1,0 +1,164 @@
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewMeetingConfigurationSchedule"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:ig="http://schemas.infragistics.com/xaml"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
+    xmlns:toolkit="http://schemas.microsoft.com/winfx/2006/xaml/presentation/toolkit"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="750"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
+    xmlns:my="clr-namespace:GreenField.Common;assembly=GreenField.Common">
+
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
+
+    <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" BusyContent="{Binding BusyIndicatorContent}"
+                                      IsBusy="{Binding BusyIndicatorIsBusy}" DisplayAfter="0" FontFamily="Arial" FontSize="7">
+
+        <Grid x:Name="LayoutRoot">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Presentation Details -->
+                <Grid Grid.Row="0" Margin="0,2,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Presentation Day : "
+                               Grid.Column="0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                    <telerik:RadComboBox x:Name="cmbPresentationDay" 
+                                         ItemsSource="{Binding PresentationDay}"
+                                         DisplayMemberPath="DayOfWeek"
+                                         SelectedItem="{Binding SelectedPresentationDay, Mode=TwoWay}"                                        
+                                         Width="150"
+                                         Grid.Column="1"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource RadComboBoxStyle}">
+                    </telerik:RadComboBox>
+                </Grid>
+
+                <Grid Grid.Row="1" Margin="0,2,0,0">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Presentation Time : "
+                               Grid.Column="0"
+                               HorizontalAlignment="Left"
+                               VerticalAlignment="Center" 
+                               Style="{StaticResource TextBlockStyle}"/>
+
+                    <Grid Grid.Column="1">
+                        <toolkit:TimeUpDown x:Name="tudPresentationDateTime" 
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left" 
+                                            Width="150"
+                                            Value="{Binding SelectedPresentationDateTime, Mode=TwoWay}" 
+                                            Style="{StaticResource TimeUpDownStyle}"/>
+
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="2" Margin="0,2,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Presentation Time Zone : "  
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource TextBlockStyle}" />
+
+                    <telerik:RadComboBox x:Name="cmbTimeZone" 
+                                         ItemsSource="{Binding PresentationTimeZone}"     
+                                         SelectedItem="{Binding SelectedTimeZone, Mode=TwoWay}"
+                                         Width="150"
+                                         Grid.Column="1"
+                                         HorizontalAlignment="Left"
+                                         VerticalAlignment="Center"
+                                         Style="{StaticResource RadComboBoxStyle}"/>
+                </Grid>
+
+                <Grid Grid.Row="3">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Presentation Deadline : "  
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+
+                    <TextBlock Text="{Binding PresentationDeadline, StringFormat='dddd, hh:mm tt'}"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource TextBlockStyle}"/>
+
+                </Grid>
+
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Pre-Meeting Voting Deadline : "  
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center" 
+                                   Style="{StaticResource TextBlockStyle}"/>
+
+                    <TextBlock Text="{Binding PreMeetingVotingDeadline, StringFormat='dddd, hh:mm tt'}"
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource TextBlockStyle}"/>
+
+                </Grid>
+
+                <Grid Grid.Row="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <telerik:RadButton Grid.Column="0"
+                                   x:Name="btnSubmit"
+                                   Command="{Binding SubmitCommand}" 
+                                   Margin="5,20,0,0"
+                                   Width="75"
+                                   Visibility="Visible"                        
+                                   VerticalAlignment="Center"
+                                   Content="SUBMIT"/>
+                </Grid>
+
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+    </telerik:RadBusyIndicator>
+</helpers:ViewBaseUserControl>

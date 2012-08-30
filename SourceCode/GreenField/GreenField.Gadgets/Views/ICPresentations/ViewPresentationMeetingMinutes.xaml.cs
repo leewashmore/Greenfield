@@ -15,6 +15,8 @@ using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.MeetingDefinitions;
 using System.IO;
+using GreenField.DataContracts;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
@@ -31,9 +33,7 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextViewPresentationMeetingMinutes; }
             set { _dataContextViewPresentationMeetingMinutes = value; }
         }
-
-
-
+        
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
@@ -75,26 +75,43 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        
+
         private void btnBrowseIndustryReport_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false };
             if (dialog.ShowDialog() == true)
             {
                 DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification(true, "Uploading file...");
-                if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo
-                    .Any(record => record.MeetingAttachedFileData.FileName == dialog.File.Name))
+                if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo != null)
                 {
-                    Prompt.ShowDialog("File '" + dialog.File.Name + "' already exists as an attachment. Please change the name of the file and upload again.");
-                    DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
-                    return;
+                    if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo
+                                .Any(record => record.MeetingAttachedFileData.Name == dialog.File.Name))
+                    {
+                        Prompt.ShowDialog("File '" + dialog.File.Name + "' already exists as an attachment. Please change the name of the file and upload again.");
+                        DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
+                        return;
+                    }
                 }
 
-                MeetingAttachedFileData meetingAttachedFileData
-                    = new MeetingAttachedFileData() 
+                String securityName = String.Empty;
+                String securityTicker = String.Empty;
+                String presenters = String.Empty;
+                foreach (MeetingMinuteData item in DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingMinuteDistinctPresentationInfo)
+	            {
+		            securityName += item.SecurityName + ";" ;
+                    securityTicker += item.SecurityTicker + ";" ;
+                    presenters += item.Presenter + ";";
+	            }
+
+                FileMaster meetingAttachedFileData
+                    = new FileMaster() 
                     {
-                        FileName = dialog.File.Name, 
-                        FileType = "Industry Report",
-                        MeetingID = DataContextViewPresentationMeetingMinutes.SelectedClosedForVotingMeetingInfo.MeetingID
+                        Name = dialog.File.Name,
+                        SecurityName = securityName,
+                        SecurityTicker = securityTicker,
+                        Type = EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(DocumentCategoryType.IC_PRESENTATIONS),
+                        MetaTags = "Industry Report;" + presenters + DataContextViewPresentationMeetingMinutes.SelectedClosedForVotingMeetingInfo.MeetingDateTime.ToShortDateString()
                     };
                 
                 FileStream fileStream = dialog.File.OpenRead();
@@ -113,25 +130,42 @@ namespace GreenField.Gadgets.Views
 
         private void btnBrowseOtherDocuments_Click(object sender, RoutedEventArgs e)
         {
-            DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification(true, "Uploading file...");
+            
             OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false };
             if (dialog.ShowDialog() == true)
             {
-                if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo
-                    .Any(record => record.MeetingAttachedFileData.FileName == dialog.File.Name))
+                DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification(true, "Uploading file...");
+                if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo != null)
                 {
-                    Prompt.ShowDialog("File '" + dialog.File.Name + "' already exists as an attachment. Please change the name of the file and upload again.");
-                    DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
-                    return;
+                    if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo
+                                .Any(record => record.MeetingAttachedFileData.Name == dialog.File.Name))
+                    {
+                        Prompt.ShowDialog("File '" + dialog.File.Name + "' already exists as an attachment. Please change the name of the file and upload again.");
+                        DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
+                        return;
+                    } 
                 }
 
-                MeetingAttachedFileData meetingAttachedFileData
-                    = new MeetingAttachedFileData()
+                String securityName = String.Empty;
+                String securityTicker = String.Empty;
+                String presenters = String.Empty;
+                foreach (MeetingMinuteData item in DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingMinuteDistinctPresentationInfo)
+                {
+                    securityName += item.SecurityName + ";";
+                    securityTicker += item.SecurityTicker + ";";
+                    presenters += item.Presenter + ";";
+                }
+
+                FileMaster meetingAttachedFileData
+                    = new FileMaster()
                     {
-                        FileName = dialog.File.Name,
-                        FileType = "Other Document",
-                        MeetingID = DataContextViewPresentationMeetingMinutes.SelectedClosedForVotingMeetingInfo.MeetingID
+                        Name = dialog.File.Name,
+                        SecurityName = securityName,
+                        SecurityTicker = securityTicker,
+                        Type = EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(DocumentCategoryType.IC_PRESENTATIONS),
+                        MetaTags = "Other Document;" + presenters + DataContextViewPresentationMeetingMinutes.SelectedClosedForVotingMeetingInfo.MeetingDateTime.ToShortDateString()
                     };
+
                 FileStream fileStream = dialog.File.OpenRead();
 
                 DataContextViewPresentationMeetingMinutes.SelectedIndustryReportFileStreamData

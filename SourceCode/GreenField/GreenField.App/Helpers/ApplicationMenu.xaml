@@ -143,7 +143,7 @@
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                     </telerik:RadMenuItem>
 
-                    <telerik:RadMenuItem x:Name="rmItemDocuments" Header="Documents"/>
+                    <telerik:RadMenuItem x:Name="rmItemDocuments" Header="Documents" Command="{Binding DashboardCompanyDocumentsCommand}"/>
 
                     <telerik:RadMenuItem x:Name="rmItemCharting" Header="Charting">
                         <telerik:RadMenuItem Header="Price/Comparison" x:Name="rmItemPriceComparison"
@@ -203,7 +203,8 @@
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
                     <telerik:RadMenuItem x:Name="rmItemInvestmentCommittee" Header="Investment Committee">
                         <telerik:RadMenuItem x:Name="rmItemViewAgenda" Header="View Agenda" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
-                        <telerik:RadMenuItem x:Name="rmItemEditDate" Header="Edit Date" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <telerik:RadMenuItem x:Name="rmItemEditDate" Header="Edit Date" Style="{StaticResource RadSecondLevelMenuItemStyle}"
+                                             Command="{Binding DashboardAdminInvestmentCommitteeChangeDateCommand}"/>
                         <telerik:RadMenuItem x:Name="rmItemMeetingDetails" Header="Meeting Details" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem x:Name="rmItemBrokerResearch" Header="Broker Research"/>
@@ -231,3 +232,5 @@
     </Grid>
 
 </UserControl>
+
+

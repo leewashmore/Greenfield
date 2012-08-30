@@ -221,7 +221,7 @@ namespace GreenField.Common
 
         public static string ICPRESENTATION_PRE_MEETING_REPORT = "IC SRD 4.2.1";
 
-        public static string ICPRESENTATION_MEETING_MINUTES = "IC SRD 4.2.2";
+        public static string ICPRESENTATION_MEETING_MINUTES = "IC Admin Meeting Minutes";
 
         public static string ICPRESENTATION_SUMMARY_REPORT = "IC SRD 4.2.4";
 
@@ -234,7 +234,13 @@ namespace GreenField.Common
         public static string ICPRESENTATION_PRESENTATIONS_NEW = "IC PRESENTATION - NEW";
 
         public static string ICPRESENTATION_PRESENTATIONS_CHANGE_DATE = "Investment Committee Presentation Change Date";
+
+        public static string ICPRESENTATION_PRESENTATIONS_DECISION_ENTRY = "IC Admin Decision Entry Screen";
         
+        #endregion
+
+        #region Admin
+        public static string ADMIN_CHANGE_DATE = "Change Meeting Config Date";
         #endregion
     }
 }

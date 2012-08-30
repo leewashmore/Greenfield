@@ -424,8 +424,7 @@ namespace GreenField.Gadgets.Views
                     }
                     else if (columnIndex == this.dgRelativePerformance.Columns.Count - 1)
                     {
-                        string result = value.AggregateCountryAlpha.ToString()
-                            + "(" + Math.Round((decimal)value.AggregateCountryActivePosition, 2).ToString() + "%)";
+                        string result = value.AggregateCountryAlpha.ToString();
                         return result;
                     }
                 }
@@ -437,7 +436,7 @@ namespace GreenField.Gadgets.Views
                     string result = String.Empty;
                     if (value.Alpha != null)
                     {
-                        result = value.Alpha.ToString() + "(" + Math.Round((decimal)value.ActivePosition, 2).ToString() + "%)";
+                        result = value.Alpha.ToString();
                     }
                     return result;
                 }
@@ -614,13 +613,12 @@ namespace GreenField.Gadgets.Views
                     object value = null;
                     if (j == 0)
                     {
-                        value = columns[j].GetValueForItem(items[i]) != null ?
-                            ((columns[j].GetValueForItem(items[i])) as RelativePerformanceData).CountryId.ToString() : null;
+                        value = columns[j].GetValueForItem(items[i]) != null ? (columns[j].GetValueForItem(items[i])) : null;
                     }
                     else if (j == columns.Count - 1)
                     {
-                        value = columns[j].GetValueForItem(items[i]) != null ?
-                            ((columns[j].GetValueForItem(items[i])) as RelativePerformanceData).AggregateCountryAlpha.ToString() : null;
+                        value = ((items[i]) as RelativePerformanceData) != null ?
+                            ((items[i]) as RelativePerformanceData).AggregateCountryAlpha.ToString() : null;
                     }
 
                     else

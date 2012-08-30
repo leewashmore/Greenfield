@@ -127,6 +127,7 @@
     <Compile Include="Helpers\ChildExportOptions.xaml.cs">
       <DependentUpon>ChildExportOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Converters\UTCToLocalDateTimeConverter.cs" />
     <Compile Include="Helpers\Converters\MeetingDecisionEntryPFVBuySellInputEnabledConverter.cs" />
     <Compile Include="Helpers\Converters\MeetingMinutesAttendenceRemoveButtonEnabledConverter.cs" />
     <Compile Include="Helpers\Converters\EntityDisplayConverter.cs" />
@@ -168,6 +169,8 @@
     <Compile Include="ViewModels\DCF\ViewModelAnalysisSummary.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
+    <Compile Include="ViewModels\ICPresentations\ViewModelMeetingConfigSchedule.cs" />
+    <Compile Include="ViewModels\ICPresentations\ViewModelPresentationVote.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentationDecisionEntry.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentationMeetingMinutes.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelICPresentationNew.cs" />
@@ -196,6 +199,7 @@
     <Compile Include="ViewModels\ViewModelEVEBITDA.cs" />
     <Compile Include="ViewModels\ViewModelFCFYield.cs" />
     <Compile Include="ViewModels\ViewModelFinstat.cs" />
+    <Compile Include="ViewModels\DCF\ViewModelFreeCashFlows.cs" />
     <Compile Include="ViewModels\ViewModelHeatMap.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChart.cs" />
     <Compile Include="ViewModels\ViewModelHoldingsPieChartRegion.cs" />
@@ -231,6 +235,12 @@
     <Compile Include="Views\DCF\ViewAnalysisSummary.xaml.cs">
       <DependentUpon>ViewAnalysisSummary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DCF\ViewFreeCashFlows.xaml.cs">
+      <DependentUpon>ViewFreeCashFlows.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Documents\ChildViewDocumentsUpload.xaml.cs">
+      <DependentUpon>ChildViewDocumentsUpload.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml.cs">
       <DependentUpon>ViewEstimates.xaml</DependentUpon>
     </Compile>
@@ -251,6 +261,12 @@
     </Compile>
     <Compile Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml.cs">
       <DependentUpon>ChildViewPresentationMeetingMinutesAddAttendee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ViewPresentationVote.xaml.cs">
+      <DependentUpon>ViewPresentationVote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ViewMeetingConfigurationSchedule.xaml.cs">
+      <DependentUpon>ViewMeetingConfigurationSchedule.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ICPresentations\ViewPresentationMeetingMinutes.xaml.cs">
       <DependentUpon>ViewPresentationMeetingMinutes.xaml</DependentUpon>
@@ -443,6 +459,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DCF\ViewAnalysisSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DCF\ViewFreeCashFlows.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Documents\ChildViewDocumentsUpload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -471,6 +495,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewPresentationVote.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewMeetingConfigurationSchedule.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -770,7 +802,6 @@
   <ItemGroup>
     <Resource Include="Images\AshmoreEMMLogo.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

@@ -35,22 +35,24 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// LoggerFacade
         /// </summary>
-        public ILoggerFacade _logger;
-
-        /// <summary>
-        /// Selected Security
-        /// </summary>
-        private EntitySelectionData _entitySelectionData;
-
+        private ILoggerFacade _logger;
+        public ILoggerFacade Logger
+        {
+            get
+            {
+                return _logger;
+            }
+            set
+            {
+                _logger = value;
+            }
+        }
         /// <summary>
         /// Event Aggregator
         /// </summary>
         private IEventAggregator _eventAggregator;
 
-        /// <summary>
-        /// Selected Date
-        /// </summary>
-        private DateTime? _effectiveDate;
+        
 
         #endregion
 

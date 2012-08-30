@@ -1645,7 +1645,6 @@ namespace GreenField.App.ViewModel
         {
             get { return new DelegateCommand<object>(DashboardInvestmentCommitteeCreateEditCommandMethod); }
         }
-        #endregion
 
         public ICommand DashboardInvestmentCommitteeVoteCommand
         {
@@ -1671,6 +1670,21 @@ namespace GreenField.App.ViewModel
         {
             get { return new DelegateCommand<object>(DashboardInvestmentCommitteeMetricsReportCommandMethod); }
         }
+        #endregion
+
+        #region Admin
+        #region Investment Committee
+        public ICommand DashboardAdminInvestmentCommitteeChangeDateCommand
+        {
+            get { return new DelegateCommand<object>(DashboardAdminInvestmentCommitteeChangeDateCommandMethod); }
+        }
+
+
+        #endregion
+        
+        #endregion
+
+        
 
        
         #endregion
@@ -2653,6 +2667,31 @@ namespace GreenField.App.ViewModel
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+
+        #endregion
+
+        #region Admin
+
+        #region Investment Committee
+        private void DashboardAdminInvestmentCommitteeChangeDateCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.ADMIN_INVESTMENT_COMMITTEE_EDIT_DATE);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardAdminInvestmentCommitteeChangeDate", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+        #endregion
 
         #endregion
 

@@ -11,7 +11,7 @@ namespace GreenField.Web.DataContracts
     public class MeetingAttachedFileStreamData
     {
         [DataMember]
-        public MeetingAttachedFileData MeetingAttachedFileData { get; set; }
+        public FileMaster MeetingAttachedFileData { get; set; }
 
         [DataMember]
         public Byte[] FileStream { get; set; }

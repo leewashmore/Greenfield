@@ -74,12 +74,10 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
             _regionManager = param.RegionManager;
-
-            RetrievePresentationDecisionEntryData();
-
         }
         #endregion
 
+        #region Properties
         public List<String> VoteTypeInfo
         {
             get
@@ -221,7 +219,8 @@ namespace GreenField.Gadgets.ViewModels
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod); }
-        }
+        } 
+        #endregion
 
         #region Busy Indicator Notification
         /// <summary>
@@ -253,7 +252,7 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-
+        #region ICommand Methods
         private void SubmitCommandMethod(object param)
         {
             if (SelectedPresentationOverviewInfo.AcceptWithoutDiscussionFlag == false)
@@ -268,6 +267,26 @@ namespace GreenField.Gadgets.ViewModels
                     Prompt.ShowDialog("Decision Entry form could not be submitted owing to unavailability of current P/FV Measure price for the selected security and P/FV measure in IC Decision section");
                     return;
                 }
+
+                if (SelectedPresentationOverviewInfo.CommitteePFVMeasure == null
+                    || SelectedPresentationOverviewInfo.CommitteeBuyRange == null
+                    || SelectedPresentationOverviewInfo.CommitteeSellRange == null)
+                {
+                    Prompt.ShowDialog("'Modify' Vote input has not been supplemented with valid P/FV Measure, Buy and Sell Range for one or more voting members");
+                    return;
+                }
+            }
+
+            foreach (VoterInfo info in PresentationPostMeetingVoterInfo)
+            {
+                if (info.VoteType == VoteType.MODIFY)
+                {
+                    if (info.VoterPFVMeasure == null || info.VoterBuyRange == null || info.VoterSellRange == null)
+                    {
+                        Prompt.ShowDialog("'Modify' Vote input has not been supplemented with valid P/FV Measure, Buy and Sell Range for one or more voting members");
+                        return;
+                    }
+                }
             }
 
             if (_dbInteractivity != null)
@@ -275,7 +294,8 @@ namespace GreenField.Gadgets.ViewModels
                 _dbInteractivity.UpdateDecisionEntryDetails(UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo
                     , PresentationPostMeetingVoterInfo, UpdateDecisionEntryDetailsCallbackMethod);
             }
-        }
+        } 
+        #endregion
 
         #region CallBack Methods
 
@@ -345,7 +365,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-
+        #region Helper Methods
         /// <summary>
         /// Display/Hide Busy Indicator
         /// </summary>
@@ -414,7 +434,7 @@ namespace GreenField.Gadgets.ViewModels
             RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
         }
 
-        public void RetrievePresentationDecisionEntryData()
+        public void Initialize()
         {
             SelectedPresentationOverviewInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
 
@@ -427,7 +447,7 @@ namespace GreenField.Gadgets.ViewModels
 
             RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
 
-            if (voterInfo.VoteType != VoteType.MODIFY)
+            if (voterInfo.VoteType == VoteType.AGREE)
             {
                 VoterInfo origItem = PresentationVoterInfo.Where(record => record.VoterID == voterInfo.VoterID).FirstOrDefault();
                 if (origItem == null)
@@ -440,14 +460,20 @@ namespace GreenField.Gadgets.ViewModels
 
                 RaisePropertyChanged(() => this.PresentationPostMeetingVoterInfo);
             }
+            else if (voterInfo.VoteType == VoteType.ABSTAIN)
+            {
+                VoterInfo bindedItem = PresentationPostMeetingVoterInfo.Where(record => record.VoterID == voterInfo.VoterID).FirstOrDefault();
+                bindedItem.VoterPFVMeasure = null;
+                bindedItem.VoterBuyRange = null;
+                bindedItem.VoterSellRange = null;
+
+                RaisePropertyChanged(() => this.PresentationPostMeetingVoterInfo);
+            }
         }
 
         public void Dispose()
         {
-        }
-
-
+        } 
+        #endregion
     }
 }
-
-

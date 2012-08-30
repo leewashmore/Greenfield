@@ -71,8 +71,6 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
             _regionManager = param.RegionManager;
-            
-            RetrievePresentationOverviewData();
         }
         #endregion
 
@@ -179,12 +177,12 @@ namespace GreenField.Gadgets.ViewModels
 
         public ICommand EditCommand
         {
-            get { return new DelegateCommand<object>(EditCommandMethod, ChangeDateCommandValidationMethod); }
+            get { return new DelegateCommand<object>(EditCommandMethod, EditCommandValidationMethod); }
         }
       
         public ICommand WithdrawCommand
         {
-            get { return new DelegateCommand<object>(WithdrawCommandMethod, EditCommandValidationMethod); }
+            get { return new DelegateCommand<object>(WithdrawCommandMethod, WithdrawCommandValidationMethod); }
         }
 
         public ICommand ViewCommand
@@ -203,18 +201,85 @@ namespace GreenField.Gadgets.ViewModels
         #region ICommand Methods
         private bool ChangeDateCommandValidationMethod(object param)
         {
-            return true;
+            if (UserSession.SessionManager.SESSION == null
+                || SelectedPresentationOverviewInfo == null)
+                return false;
+
+            return UserSession.SessionManager.SESSION.Roles.Contains("IC_ADMIN")
+                || UserSession.SessionManager.SESSION.Roles.Contains("CHIEF_EXECUTIVE");
         }
 
         private void ChangeDateCommandMethod(object param)
         {
-            ChildViewPresentationDateChangeEdit childViewPresentationDateChangeEdit = new ChildViewPresentationDateChangeEdit();
+            List<DateTime> proposedMeetingDates = MeetingInfoDates.Select(record => record.MeetingDateTime.ToLocalTime().Date).ToList();
+
+            if (! UserSession.SessionManager.SESSION.Roles.Contains("CHIEF_EXECUTIVE"))
+            {
+                proposedMeetingDates = proposedMeetingDates.OrderBy(record => record).ToList();
+                for (int index = 0; index < proposedMeetingDates.Count; index++)
+                {
+                    if (proposedMeetingDates[index] < Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime).Date)
+                    {
+                        proposedMeetingDates.RemoveAt(index);
+                        index--;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+
+            ChildViewPresentationDateChangeEdit childViewPresentationDateChangeEdit = new ChildViewPresentationDateChangeEdit(proposedMeetingDates
+                , SelectedPresentationOverviewInfo.MeetingDateTime);
             childViewPresentationDateChangeEdit.Show();
+
+            childViewPresentationDateChangeEdit.Unloaded += (se, e) =>
+            {
+                if (childViewPresentationDateChangeEdit.DialogResult == true)
+                {
+                    if (childViewPresentationDateChangeEdit.SelectedPresentationDateTime.Date
+                        == Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime).Date)
+                        return;
+
+                    Prompt.ShowDialog("Confirm presentation DateTime from " +
+                        Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime).ToLocalTime().ToString("MM-dd-yyyy h:mm tt") +
+                        " to " + childViewPresentationDateChangeEdit.SelectedPresentationDateTime
+                            .Add(Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime).TimeOfDay).ToLocalTime().ToString("MM-dd-yyyy h:mm tt"),
+                        "Change Presentation Date", MessageBoxButton.OKCancel, (result) =>
+                    {
+                        if (result == MessageBoxResult.OK)
+                        {
+                            MeetingInfo meetingInfo = MeetingInfoDates
+                                .Where(record => record.MeetingDateTime.ToLocalTime().Date == childViewPresentationDateChangeEdit.SelectedPresentationDateTime.Date)
+                                .FirstOrDefault();
+                            
+                            if (_dbInteractivity != null)
+                            {
+                                BusyIndicatorNotification(true, "Updating Presentation date for the selected presentation...");
+                                _dbInteractivity.UpdateMeetingPresentationDate(UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo.PresentationID
+                                    , meetingInfo, UpdateMeetingPresentationDateCallbackMethod);
+                            }
+
+                            if (childViewPresentationDateChangeEdit.AlertNotification)
+                            {
+                                
+                            }
+                        }
+                    });
+
+
+                }
+            };
         }
 
         private bool DecisionEntryCommandValidationMethod(object param)
         {
-            return true;
+            if (UserSession.SessionManager.SESSION == null
+                || SelectedPresentationOverviewInfo == null)
+                return false;
+            return UserSession.SessionManager.SESSION.Roles.Contains("IC_ADMIN")
+                && SelectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING;
         }
 
         private void DecisionEntryCommandMethod(object param)
@@ -260,7 +325,7 @@ namespace GreenField.Gadgets.ViewModels
             _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeEditPresentations", UriKind.Relative));
         }
 
-        private bool ICPPresentationsWithdrawItemValidation(object param)
+        private bool WithdrawCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null
                 || SelectedPresentationOverviewInfo == null)
@@ -275,6 +340,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private void WithdrawCommandMethod(object param)
         {
+            Prompt.ShowDialog("Please confirm withdrawal","Confirmation", MessageBoxButton.OK);
             
         }   
 
@@ -284,13 +350,8 @@ namespace GreenField.Gadgets.ViewModels
                 || SelectedPresentationOverviewInfo == null)
                 return false;
 
-            bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
-            bool statusValidation = UserSession.SessionManager.SESSION.Roles.Contains("IC_MEMBER_VOTING")
-                ? SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING
-                : SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
-                    || SelectedPresentationOverviewInfo.StatusType == StatusType.WITHDRAWN;
-
-            return userRoleValidation && statusValidation;            
+            return SelectedPresentationOverviewInfo.StatusType != StatusType.IN_PROGRESS
+                && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN;
         }
 
         private void ViewCommandMethod(object param)
@@ -316,9 +377,9 @@ namespace GreenField.Gadgets.ViewModels
         
         #region Helper Methods
 
-        private void RetrievePresentationOverviewData()
+        public void Initialize()
         {
-            if (_dbInteractivity != null)
+            if (_dbInteractivity != null && IsActive)
             {
                 BusyIndicatorNotification(true, "Retrieving Presentation Overview Information...");
                 _dbInteractivity.RetrievePresentationOverviewData(RetrievePresentationOverviewDataCallbackMethod);
@@ -334,7 +395,15 @@ namespace GreenField.Gadgets.ViewModels
             RaisePropertyChanged(() => this.ViewCommand);
             RaisePropertyChanged(() => this.ChangeDateCommand);
             RaisePropertyChanged(() => this.DecisionEntryCommand);
-        }        
+        }
+
+        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        {
+            if (message != null)
+                BusyIndicatorContent = message;
+
+            BusyIndicatorIsBusy = showBusyIndicator;
+        }
 
         #endregion
 
@@ -349,7 +418,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     ICPresentationOverviewInfo = result;
-                    _dbInteractivity.GetAvailablePresentationDates(GetAvailablePresentationDatesCallbackMethod);
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving available meeting dates...");
+                        _dbInteractivity.GetAvailablePresentationDates(GetAvailablePresentationDatesCallbackMethod); 
+                    }
                 }
                 else
                 {
@@ -396,6 +469,40 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogEndMethod(_logger, methodNamespace);
                 BusyIndicatorNotification();
             }
+        }
+
+        private void UpdateMeetingPresentationDateCallbackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    if (result == true)
+                    {
+                        Prompt.ShowDialog("Presentation date change was successful");
+                        Initialize();
+                    }
+                }
+                else
+                {
+                    Prompt.ShowDialog("An Error ocurred while updating presentation date");
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);                
+            }
         }        
         #endregion
 
@@ -410,12 +517,6 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion   
 
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
-        {
-            if (message != null)
-                BusyIndicatorContent = message;
-
-            BusyIndicatorIsBusy = showBusyIndicator;
-        }
+        
     }
 }

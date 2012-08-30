@@ -13,6 +13,9 @@ namespace GreenField.DataContracts
     public class DCFAnalysisSummaryData
     {
         [DataMember]
+        public string X { get; set; }
+
+        [DataMember]
         public string SecurityId { get; set; }
 
         [DataMember]

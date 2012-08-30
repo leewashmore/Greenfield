@@ -30,19 +30,23 @@ namespace GreenField.DashboardModule.Views
         private IEventAggregator _eventAggregator;
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
+        private IRegionManager _regionManager;
+        private ViewModelPresentationMeetingMinutes _viewModel;
+        private ViewPresentationMeetingMinutes _view;
         #endregion
+
         [ImportingConstructor]
         public ViewDashboardInvestmentCommitteeMeetingMinutes(ILoggerFacade logger, IEventAggregator eventAggregator,
-            IDBInteractivity dbInteractivity)
+            IDBInteractivity dbInteractivity, IRegionManager regionManager)
         {
             InitializeComponent();
 
             _eventAggregator = eventAggregator;
             _logger = logger;
             _dBInteractivity = dbInteractivity;
+            _regionManager = regionManager;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-
             this.tbHeader.Text = GadgetNames.ICPRESENTATION_MEETING_MINUTES;
         }
 
@@ -56,10 +60,13 @@ namespace GreenField.DashboardModule.Views
                 DashboardGadgetPayload = payload,
                 DBInteractivity = _dBInteractivity,
                 EventAggregator = _eventAggregator,
-                LoggerFacade = _logger
+                LoggerFacade = _logger,
+                RegionManager = _regionManager
             };
 
-            this.cctrDashboardContent.Content = null;// new ViewPresentationMeetingMinutes(new ViewModelPresentationMeetingMinutes(param));
+            //_viewModel = new ViewModelPresentationMeetingMinutes(param);
+            //_view = new ViewPresentationMeetingMinutes(_viewModel);
+            this.cctrDashboardContent.Content = null;// _view;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -82,6 +89,7 @@ namespace GreenField.DashboardModule.Views
             if (control != null)
             {
                 control.IsActive = true;
+                _viewModel.Initialize();
             }
         }
     }

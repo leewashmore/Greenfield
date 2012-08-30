@@ -27,11 +27,6 @@
 				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
-				<binding name="BasicHttpBinding_ExternalResearchOperations" closeTimeout="00:50:00"
-				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
 				<binding name="PerformanceOperations" closeTimeout="00:50:00"
 				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
 				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
@@ -52,29 +47,27 @@
 				 maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
-				<binding name="ExternalResearchOperations1" closeTimeout="00:50:00"
-				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="BasicHttpBinding_MeetingService" closeTimeout="00:50:00"
-				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="BasicHttpBinding_MeetingService1" maxBufferSize="2147483647"
+				<binding name="MeetingOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+				 receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
 				 maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
-				<binding name="BasicHttpBinding_MeetingOperations" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
+				<binding name="BasicHttpBinding_AlertOperations" maxBufferSize="2147483647"
+						 maxReceivedMessageSize="2147483647"
+						 closeTimeout="00:50:00"
+						 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00">
+					<security mode="None" />
+				</binding>
+				<binding name="DocumentWorkspaceOperations" closeTimeout="00:50:00"
+				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
 					<security mode="None" />
 				</binding>
 				<binding name="DCFOperations" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647"
 						 closeTimeout="00:50:00"
 						 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00">
 					<security mode="None" />
-				</binding>
+				</binding>				
 			</basicHttpBinding>
 		</bindings>
 
@@ -105,16 +98,24 @@
 			<endpoint address="http://localhost:59430/Services/LoginOperations.svc"
 			 binding="basicHttpBinding" bindingConfiguration="LoginOperations"
 			 contract="LoginDefinitions.LoginOperations" name="LoginOperations" />
+			<endpoint address="http://localhost:59430/Services/MeetingOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="MeetingOperations"
+			 contract="MeetingDefinitions.MeetingOperations" name="MeetingOperations" />
+			<endpoint address="http://localhost:59430/Services/AlertOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_AlertOperations"
+			 contract="AlertDefinitions.AlertOperations" name="BasicHttpBinding_AlertOperations" />
 			<endpoint address="http://localhost:59430/Services/ExternalResearchOperations.svc"
 			 binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations"
 			 contract="ExternalResearchDefinitions.ExternalResearchOperations"
 			 name="ExternalResearchOperations" />
-			<endpoint address="http://localhost:59430/Services/MeetingOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_MeetingOperations"
-			 contract="MeetingDefinitions.MeetingOperations" name="BasicHttpBinding_MeetingOperations" />
+			<endpoint address="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc"
+			 binding="basicHttpBinding" bindingConfiguration="DocumentWorkspaceOperations"
+			 contract="DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations"
+			 name="DocumentWorkspaceOperations" />
 			<endpoint address="http://localhost:59430/Services/DCFOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="DCFOperations"
-			 contract="DCFDefinitions.DCFOperations" name="DCFOperations" />
+		   binding="basicHttpBinding" bindingConfiguration="DCFOperations"
+		   contract="DCFDefinitions.DCFOperations" name="DCFOperations" />
+
 		</client>
 	</system.serviceModel>
 </configuration>

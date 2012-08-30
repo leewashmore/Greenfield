@@ -68,62 +68,63 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="PRESENTER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    <TextBlock Margin="5,0,5,0" VerticalAlignment="Center" Text="PRESENTER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="SECURITY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    <TextBlock Margin="5,0,5,0" VerticalAlignment="Center" Text="SECURITY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="2" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="TICKER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    <TextBlock Margin="5,0,5,0" VerticalAlignment="Center" Text="TICKER" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="3" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="COUNTRY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    <TextBlock Margin="5,0,5,0" VerticalAlignment="Center" Text="COUNTRY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                 </Grid>
                 <Grid Grid.Row="0" Grid.Column="4" Background="{StaticResource DefaultGridHeaderBackground}">
-                    <TextBlock Margin="5" Text="INDUSTRY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                </Grid>                
-                <ItemsControl Grid.Row="1" Grid.Column="0" Margin="0,5,5,5" 
+                    <TextBlock Margin="5,0,5,0" VerticalAlignment="Center" Text="INDUSTRY" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                </Grid>  
+                
+                <ItemsControl Grid.Row="1" Grid.Column="0" 
                               ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctPresentationInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Margin="2" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding Presenter}"/>
+                            <TextBlock Margin="5,2,0,0" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding Presenter}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="1" Margin="0,5,5,5" 
+                <ItemsControl Grid.Row="1" Grid.Column="1"
                               ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctPresentationInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Margin="2" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityName}"/>
+                            <TextBlock Margin="5,2,0,0" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityName}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="2" Margin="0,5,5,5" 
+                <ItemsControl Grid.Row="1" Grid.Column="2"
                               ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctPresentationInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Margin="2" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityTicker}"/>
+                            <TextBlock Margin="5,2,0,0" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityTicker}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="3" Margin="0,5,5,5" 
+                <ItemsControl Grid.Row="1" Grid.Column="3"
                               ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctPresentationInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Margin="2" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityCountry}"/>
+                            <TextBlock Margin="5,2,0,0" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityCountry}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <ItemsControl Grid.Row="1" Grid.Column="4" Margin="0,5,5,5" 
+                <ItemsControl Grid.Row="1" Grid.Column="4"
                               ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctPresentationInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Margin="2" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityIndustry}"/>
+                            <TextBlock Margin="5,2,0,0" MinHeight="{StaticResource DefaultControlMinHeight}" Text="{Binding SecurityIndustry}"/>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -146,12 +147,12 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0" Grid.Column="0" Background="{StaticResource DefaultGridHeaderBackground}">
-                        <TextBlock Margin="5" Text="NAMES" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                        <TextBlock Margin="5,0,5,0" VerticalAlignment="Center" Text="NAMES" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                     </Grid>
                     <Grid Grid.Row="0" Grid.Column="1" Background="{StaticResource DefaultGridHeaderBackground}">
-                        <TextBlock Margin="5" Text="ATTENDANCE" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                        <TextBlock Margin="5,0,5,0" VerticalAlignment="Center" Text="ATTENDANCE" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                     </Grid>
-                    <ItemsControl Grid.Row="1" Grid.Column="0" Margin="0,5,5,5" 
+                    <ItemsControl Grid.Row="1" Grid.Column="0"
                               ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctAttendanceInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
                         <ItemsControl.ItemTemplate>
@@ -164,7 +165,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ItemsControl Grid.Row="1" Grid.Column="1" Margin="0,5,5,5" 
+                    <ItemsControl Grid.Row="1" Grid.Column="1"
                               ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctAttendanceInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
                         <ItemsControl.ItemTemplate>
@@ -177,7 +178,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    <ItemsControl Grid.Row="1" Grid.Column="2" Margin="0,5,5,5" 
+                    <ItemsControl Grid.Row="1" Grid.Column="2"
                               ItemsSource="{Binding ClosedForVotingMeetingMinuteDistinctAttendanceInfo}" 
                               Style="{StaticResource ItemsControlStyle}">
                         <ItemsControl.ItemTemplate>
@@ -256,7 +257,7 @@
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal" Margin="2">
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
-                                        <TextBlock Margin="2" Text="{Binding MeetingAttachedFileData.FileName}" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"
+                                        <TextBlock Margin="2" Text="{Binding MeetingAttachedFileData.Name}" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"
                                            HorizontalAlignment="Left"/>
                                     </Grid>
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
@@ -281,7 +282,7 @@
                 </Grid.ColumnDefinitions>
                 <telerik:RadButton Content="PREVIEW" Grid.Column="0" Width="100" 
                                Command="{Binding}" Style="{StaticResource RadButtonStyle}"/>
-                <telerik:RadButton Content="SUBMIT" Grid.Column="1" Width="100" Command="{Binding}" Style="{StaticResource RadButtonStyle}"/>
+                <telerik:RadButton Content="SUBMIT" Grid.Column="1" Width="100" Command="{Binding SubmitCommand}" Style="{StaticResource RadButtonStyle}"/>
                 <telerik:RadButton Content="SAVE" Grid.Column="2" Width="100"
                                Command="{Binding SaveCommand}" Style="{StaticResource RadButtonStyle}"/>
             </Grid>

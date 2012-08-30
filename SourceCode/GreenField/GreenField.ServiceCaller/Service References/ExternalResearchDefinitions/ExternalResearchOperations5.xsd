@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:59430/Services/ExternalResearchOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="EntitySelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
@@ -65,13 +64,14 @@
       <xs:element minOccurs="0" name="GroupDescription" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="High" type="xs:decimal" />
       <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="LastUpdateDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastUpdateDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Low" type="xs:decimal" />
       <xs:element minOccurs="0" name="NumberOfEstimates" type="xs:int" />
       <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
       <xs:element minOccurs="0" name="ReportedCurrency" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
       <xs:element minOccurs="0" name="SourceCurrency" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StandardDeviation" type="xs:decimal" />
       <xs:element minOccurs="0" name="Variance" nillable="true" type="xs:decimal" />
@@ -243,108 +243,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="COASpecificData" nillable="true" type="tns:COASpecificData" />
-  <xs:complexType name="ArrayOfDocumentCategoricalData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentCategoricalData" nillable="true" type="tns:DocumentCategoricalData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfDocumentCategoricalData" nillable="true" type="tns:ArrayOfDocumentCategoricalData" />
-  <xs:complexType name="DocumentCategoricalData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="CommentDetails" nillable="true" type="tns:ArrayOfCommentDetails" />
-      <xs:element minOccurs="0" name="DocumentCatalogData" nillable="true" type="tns:DocumentCatalogData" />
-      <xs:element minOccurs="0" name="DocumentCategoryType" type="tns:DocumentCategoryType" />
-      <xs:element minOccurs="0" name="DocumentCompanyName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DocumentCompanyTicker" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="DocumentCategoricalData" nillable="true" type="tns:DocumentCategoricalData" />
-  <xs:complexType name="ArrayOfCommentDetails">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="CommentDetails" nillable="true" type="tns:CommentDetails" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfCommentDetails" nillable="true" type="tns:ArrayOfCommentDetails" />
-  <xs:complexType name="CommentDetails">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Comment" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CommentBy" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="CommentOn" type="xs:dateTime" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="CommentDetails" nillable="true" type="tns:CommentDetails" />
-  <xs:complexType name="DocumentCatalogData">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="FileId" type="xs:int" />
-      <xs:element minOccurs="0" name="FileMetaTags" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FileName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FilePath" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FileUploadedBy" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="FileUploadedOn" type="xs:dateTime" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="DocumentCatalogData" nillable="true" type="tns:DocumentCatalogData" />
-  <xs:simpleType name="DocumentCategoryType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="COMPANY_MEETING_NOTES">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="COMPANY_ISSUED_DOCUMENTS">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="EARNING_CALLS">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="MODELS">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="IC_PRESENTATIONS">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="BROKER_REPORTS">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="COMPANY_FINANCIAL_FILINGS">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-      <xs:enumeration value="BLOG">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">8</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="DocumentCategoryType" nillable="true" type="tns:DocumentCategoryType" />
   <xs:complexType name="PortfolioSelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" name="BenchmarkId" nillable="true" type="xs:string" />

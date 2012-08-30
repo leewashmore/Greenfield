@@ -54,6 +54,12 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         System.IAsyncResult BeginRetrieveDCFAnalysisData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData> EndRetrieveDCFAnalysisData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsData", ReplyAction="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault), Action="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveFreCashFlowsData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> EndRetrieveFreCashFlowsData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -81,6 +87,25 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveFreCashFlowsDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveFreCashFlowsDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class DCFOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.DCFDefinitions.DCFOperations>, GreenField.ServiceCaller.DCFDefinitions.DCFOperations {
         
         private BeginOperationDelegate onBeginRetrieveDCFAnalysisDataDelegate;
@@ -88,6 +113,12 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         private EndOperationDelegate onEndRetrieveDCFAnalysisDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveDCFAnalysisDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveFreCashFlowsDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveFreCashFlowsDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveFreCashFlowsDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -144,6 +175,8 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         
         public event System.EventHandler<RetrieveDCFAnalysisDataCompletedEventArgs> RetrieveDCFAnalysisDataCompleted;
         
+        public event System.EventHandler<RetrieveFreCashFlowsDataCompletedEventArgs> RetrieveFreCashFlowsDataCompleted;
+        
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
@@ -192,6 +225,52 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
             }
             base.InvokeAsync(this.onBeginRetrieveDCFAnalysisDataDelegate, new object[] {
                         entitySelectionData}, this.onEndRetrieveDCFAnalysisDataDelegate, this.onRetrieveDCFAnalysisDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DCFDefinitions.DCFOperations.BeginRetrieveFreCashFlowsData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveFreCashFlowsData(entitySelectionData, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveFreCashFlowsData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveFreCashFlowsData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveFreCashFlowsData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            return ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).BeginRetrieveFreCashFlowsData(entitySelectionData, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveFreCashFlowsData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveFreCashFlowsData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveFreCashFlowsDataCompleted(object state) {
+            if ((this.RetrieveFreCashFlowsDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveFreCashFlowsDataCompleted(this, new RetrieveFreCashFlowsDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveFreCashFlowsDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData) {
+            this.RetrieveFreCashFlowsDataAsync(entitySelectionData, null);
+        }
+        
+        public void RetrieveFreCashFlowsDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, object userState) {
+            if ((this.onBeginRetrieveFreCashFlowsDataDelegate == null)) {
+                this.onBeginRetrieveFreCashFlowsDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveFreCashFlowsData);
+            }
+            if ((this.onEndRetrieveFreCashFlowsDataDelegate == null)) {
+                this.onEndRetrieveFreCashFlowsDataDelegate = new EndOperationDelegate(this.OnEndRetrieveFreCashFlowsData);
+            }
+            if ((this.onRetrieveFreCashFlowsDataCompletedDelegate == null)) {
+                this.onRetrieveFreCashFlowsDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveFreCashFlowsDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveFreCashFlowsDataDelegate, new object[] {
+                        entitySelectionData}, this.onEndRetrieveFreCashFlowsDataDelegate, this.onRetrieveFreCashFlowsDataCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -280,6 +359,19 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
             public System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData> EndRetrieveDCFAnalysisData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData>)(base.EndInvoke("RetrieveDCFAnalysisData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveFreCashFlowsData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = entitySelectionData;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveFreCashFlowsData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> EndRetrieveFreCashFlowsData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData>)(base.EndInvoke("RetrieveFreCashFlowsData", _args, result)));
                 return _result;
             }
         }
