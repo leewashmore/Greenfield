@@ -47,7 +47,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-            if(YearValue !=0 && FieldValue !=null)
+            if(YearValue !=0 && FieldValue !=null && IsActive)
             _dbInteractivity.RetrieveQuarterlyResultsData(FieldValue, YearValue, RetrieveQuarterlyResultsDataCallbackMethod);
         }
         #endregion
