@@ -167,6 +167,7 @@
     <Compile Include="Models\SectorSpecificData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DCF\ViewModelAnalysisSummary.cs" />
+    <Compile Include="ViewModels\DCF\ViewModelSenitivity.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelMeetingConfigSchedule.cs" />
