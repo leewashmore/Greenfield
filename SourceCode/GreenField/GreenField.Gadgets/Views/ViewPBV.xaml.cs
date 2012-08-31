@@ -75,6 +75,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             this.DataContextPBV = dataContextSource;
             dataContextSource.ChartArea = this.chPBV.DefaultView.ChartArea;
+            this.chPBV.DataBound += dataContextSource.ChartDataBound;
             this.ApplyChartStyles();
         }
         private void dgPBV_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)

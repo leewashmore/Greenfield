@@ -75,6 +75,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             this.DataContextEVEBITDA = dataContextSource;
             dataContextSource.ChartArea = this.chEVEBITDA.DefaultView.ChartArea;
+            this.chEVEBITDA.DataBound += dataContextSource.ChartDataBound;
             this.ApplyChartStyles();
         }
         private void dgEVEBITDA_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)

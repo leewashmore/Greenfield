@@ -75,6 +75,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             this.DataContextFCFYield = dataContextSource;
             dataContextSource.ChartArea = this.chFCFYield.DefaultView.ChartArea;
+            this.chFCFYield.DataBound += dataContextSource.ChartDataBound;
             this.ApplyChartStyles();
         }
         private void dgFCFYield_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)

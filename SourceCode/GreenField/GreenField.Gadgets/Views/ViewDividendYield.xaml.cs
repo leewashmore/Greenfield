@@ -75,6 +75,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             this.DataContextDividendYield = dataContextSource;
             dataContextSource.ChartArea = this.chDividendYield.DefaultView.ChartArea;
+            this.chDividendYield.DataBound += dataContextSource.ChartDataBound;
             this.ApplyChartStyles();
         }
         private void dgDividendYield_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)

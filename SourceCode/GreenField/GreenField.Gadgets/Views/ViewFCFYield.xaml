@@ -43,6 +43,14 @@
                             <Image Source="../Images/ExportExcel.png" />
                         </Button.Content>
                     </Button>
+                    <telerik:RadButton x:Name="btnZoomIn" Grid.Column="5"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Margin="5,0,0,0" Command="{Binding ZoomInCommand}" ToolTipService.ToolTip="Zoom In">
+                        <Image Source="../Images/zoom_in.png" Width="16" Height="16" Margin="3" />
+                    </telerik:RadButton>
+                    <telerik:RadButton x:Name="btnZoomOut" Grid.Column="6"  Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
+                                       Margin="5,0,0,0" Command="{Binding ZoomOutCommand}" ToolTipService.ToolTip="Zoom Out">
+                        <Image Source="../Images/zoom_out.png" Width="16" Height="16" Margin="3" />
+                    </telerik:RadButton>
                 </StackPanel>
             </Grid>
 
@@ -73,10 +81,12 @@
                                                             EnableAnimations="False" NoDataString="No Data Available" Margin="0,0,0,0" 
                                                             ItemOverlapPercent="0" ItemWidthPercent="100" LegendName="chFCFYieldLegend">
                                         <telerik:ChartArea.ZoomScrollSettingsX>
-                                            <telerik:ZoomScrollSettings MinZoomRange="0" RangeStart="0" RangeEnd="0.1" ScrollMode="ScrollOnly" SliderSelectionStart="0" SliderSelectionEnd="0.1"></telerik:ZoomScrollSettings>
+                                            <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly" 
+                                                                            SliderSelectionStart="0.0" SliderSelectionEnd="1.0" />
                                         </telerik:ChartArea.ZoomScrollSettingsX>
                                         <telerik:ChartArea.ZoomScrollSettingsY>
-                                            <telerik:ZoomScrollSettings MinZoomRange="0" RangeStart="0" RangeEnd="0.1" ScrollMode="ScrollOnly" SliderSelectionStart="0" SliderSelectionEnd="0.1"></telerik:ZoomScrollSettings>
+                                            <telerik:ZoomScrollSettings MinZoomRange="0.005" ScrollMode="ScrollOnly"
+                                                                            SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
                                         </telerik:ChartArea.ZoomScrollSettingsY>
                                         <telerikCharting:ChartArea.AxisX >
                                             <telerikCharting:AxisX LabelRotationAngle="45">

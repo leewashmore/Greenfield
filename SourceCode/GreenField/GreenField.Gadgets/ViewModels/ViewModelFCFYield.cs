@@ -204,9 +204,129 @@ namespace GreenField.Gadgets.ViewModels
                 CallingWebMethod();
             }
         }
+        /// <summary>
+        /// Zoom-In Command Button
+        /// </summary>
+        private ICommand _zoomInCommand;
+        public ICommand ZoomInCommand
+        {
+            get
+            {
+                if (_zoomInCommand == null)
+                {
+                    _zoomInCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomInCommandMethod, ZoomInCommandValidation);
+                }
+                return _zoomInCommand;
+            }
+        }
+
+        /// <summary>
+        /// Zoom-Out Command Button
+        /// </summary>
+        private ICommand _zoomOutCommand;
+        public ICommand ZoomOutCommand
+        {
+            get
+            {
+                if (_zoomOutCommand == null)
+                {
+                    _zoomOutCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomOutCommandMethod, ZoomOutCommandValidation);
+                }
+                return _zoomOutCommand;
+            }
+        }
 
         #endregion
+        #region ICommand
+        /// <summary>
+        /// Zoom In Command Method
+        /// </summary>
+        /// <param name="parameter"></param>
+        public void ZoomInCommandMethod(object parameter)
+        {
+            ZoomIn(this.ChartArea);
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+        }
 
+        /// <summary>
+        /// Zoom In Command Method Validation
+        /// </summary>
+        /// <param name="parameter"></param>
+        public bool ZoomInCommandValidation(object parameter)
+        {
+            if (this.ChartArea == null)
+                return false;
+
+            return
+                this.ChartArea.ZoomScrollSettingsX.Range > this.ChartArea.ZoomScrollSettingsX.MinZoomRange;
+
+        }
+
+        /// <summary>
+        /// Zoom Out Command Method
+        /// </summary>
+        /// <param name="parameter"></param>
+        public void ZoomOutCommandMethod(object parameter)
+        {
+            ZoomOut(this.ChartArea);
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+        }
+
+        /// <summary>
+        /// Zoom Out Command Method Validation
+        ///  </summary>
+        /// <param name="parameter"></param>
+        public bool ZoomOutCommandValidation(object parameter)
+        {
+            if (this.ChartArea == null)
+                return false;
+
+            return this.ChartArea.ZoomScrollSettingsX.Range < 1d;
+        }
+
+        #endregion
+        #region Helper Methods
+
+        /// <summary>
+        /// Zoom In Algo
+        /// </summary>
+        /// <param name="chartArea"></param>
+        private void ZoomIn(ChartArea chartArea)
+        {
+            chartArea.ZoomScrollSettingsX.SuspendNotifications();
+            double zoomCenter = chartArea.ZoomScrollSettingsX.RangeStart + (chartArea.ZoomScrollSettingsX.Range / 2);
+            double newRange = Math.Max(chartArea.ZoomScrollSettingsX.MinZoomRange, chartArea.ZoomScrollSettingsX.Range) / 2;
+            chartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - (newRange / 2));
+            chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + (newRange / 2));
+            chartArea.ZoomScrollSettingsX.ResumeNotifications();
+        }
+
+        /// <summary>
+        /// Zoom out Algo
+        /// </summary>
+        /// <param name="chartArea"></param>
+        private void ZoomOut(ChartArea chartArea)
+        {
+            chartArea.ZoomScrollSettingsX.SuspendNotifications();
+
+            double zoomCenter = chartArea.ZoomScrollSettingsX.RangeStart + (chartArea.ZoomScrollSettingsX.Range / 2);
+            double newRange = Math.Min(1, chartArea.ZoomScrollSettingsX.Range) * 2;
+
+            if (zoomCenter + (newRange / 2) > 1)
+                zoomCenter = 1 - (newRange / 2);
+            else if (zoomCenter - (newRange / 2) < 0)
+                zoomCenter = newRange / 2;
+
+            chartArea.ZoomScrollSettingsX.RangeStart = Math.Max(0, zoomCenter - newRange / 2);
+            chartArea.ZoomScrollSettingsX.RangeEnd = Math.Min(1, zoomCenter + newRange / 2);
+
+            chartArea.ZoomScrollSettingsX.ResumeNotifications();
+        }
+
+
+        #endregion
               #region EVENTHANDLERS
         /// <summary>
         /// Event Handler to subscribed event 'SecurityReferenceSet'
@@ -236,6 +356,16 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+        }
+        /// <summary>
+        /// Checking the status of Chart, whether zoom can be executed or not
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
+        {
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
         }
         #endregion
 

@@ -75,6 +75,7 @@ namespace GreenField.Gadgets.Views
             this.DataContext = dataContextSource;
             this.DataContextPRevenue = dataContextSource;
             dataContextSource.ChartArea = this.chPRevenue.DefaultView.ChartArea;
+            this.chPRevenue.DataBound += dataContextSource.ChartDataBound;
             this.ApplyChartStyles();
             
         }
