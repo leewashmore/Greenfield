@@ -32,7 +32,7 @@
                 </Grid.ColumnDefinitions>
                 <HyperlinkButton Grid.Column="0" Content="Edit / Delete Document" Foreground="Gray"
                                  Style="{StaticResource HyperlinkButtonStyle}" FontStyle="Italic" IsEnabled="False" 
-                                 Command="{Binding DocumentEditDeleteCommand}" />
+                                 Command="{Binding DocumentEditDeleteCommand}" Visibility="Collapsed" />
                 <HyperlinkButton Grid.Column="1" Content="Upload Document" Margin="2,0,0,0" 
                                  Style="{StaticResource HyperlinkButtonStyle}"  Foreground="Gray"  FontStyle="Italic"
                                  Command="{Binding DocumentUploadCommand}" />

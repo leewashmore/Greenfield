@@ -57,8 +57,8 @@ namespace GreenField.Gadgets.Views.Documents
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
-            UploadFileNotes = this.tbTags.Text;
-            UploadFileTags = this.tbNotes.Text;
+            UploadFileTags = this.tbTags.Text;
+            UploadFileNotes = this.tbNotes.Text;
             
             this.DialogResult = true;
         }
