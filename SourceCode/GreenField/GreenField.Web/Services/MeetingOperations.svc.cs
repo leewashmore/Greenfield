@@ -176,6 +176,103 @@ namespace GreenField.Web.Services
         } 
         #endregion
 
+        #region UploadEdit Presentation Documents
+
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<FileMaster> RetrievePresentationAttachedFileDetails(Int64? presentationID)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                return entity.RetrieveICPresentationAttachedFileDetails(presentationID).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, String url, PresentationAttachedFileStreamData presentationAttachedFileStreamData)
+        {
+            try
+            {
+                if (presentationAttachedFileStreamData.FileStream != null)
+                {
+                    //String filePath = @"\\10.101.13.146\IC Presentation Documents\" + presentationAttachedFileStreamData.PresentationAttachedFileData.Name;
+                    //File.WriteAllBytes(url, presentationAttachedFileStreamData.FileStream);
+                    //presentationAttachedFileStreamData.PresentationAttachedFileData.Location = @"\\10.101.13.146\IC Presentation Documents\";
+                    presentationAttachedFileStreamData.PresentationAttachedFileData.Location = url;
+                }
+                else
+                {
+                    String filePath = @"\\10.101.13.146\IC Presentation Documents\" + presentationAttachedFileStreamData.PresentationAttachedFileData.Name;
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
+                }
+
+                XDocument xmlDoc = GetEntityXml<FileMaster>(new List<FileMaster> { presentationAttachedFileStreamData.PresentationAttachedFileData }
+                    , strictlyInclusiveProperties: new List<string> { "FileID", "Name", "SecurityName", "SecurityTicker", "Location", "MetaTags", "Type" });
+                String xmlScript = xmlDoc.ToString();
+                ICPresentationEntities entity = new ICPresentationEntities();
+                entity.SetICPMeetingAttachedFileInfo(userName, presentationId, xmlScript);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+
+        //[OperationContract]
+        //[FaultContract(typeof(ServiceFault))]
+        //public Boolean UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, String url, FileMaster presentationAttachedFileData)
+        //{
+        //    try
+        //    {
+        //        if (presentationAttachedFileData != null)
+        //        {
+        //            presentationAttachedFileData.Location = url;
+        //        }
+        //        else
+        //        {
+        //            String filePath = @"\\10.101.13.146\IC Presentation Documents\" + presentationAttachedFileData.Name;
+        //            if (File.Exists(filePath))
+        //            {
+        //                File.Delete(filePath);
+        //            }
+        //        }
+
+        //        XDocument xmlDoc = GetEntityXml<FileMaster>(new List<FileMaster> { presentationAttachedFileData }
+        //            , strictlyInclusiveProperties: new List<string> { "FileID", "Name", "SecurityName", "SecurityTicker", "Location", "MetaTags", "Type" });
+        //        String xmlScript = xmlDoc.ToString();
+        //        ICPresentationEntities entity = new ICPresentationEntities();
+        //        entity.SetICPMeetingAttachedFileInfo(userName, presentationId, xmlScript);
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionTrace.LogException(ex);
+        //        string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+        //        throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+        //    }
+        //}
+
+
+        #endregion
+
+
         #region Meeting Configuration Schedule
 
         [OperationContract]

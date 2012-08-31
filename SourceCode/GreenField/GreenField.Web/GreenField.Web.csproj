@@ -118,6 +118,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContracts\PresentationAttachedFileStreamData.cs" />
     <Compile Include="DataContracts\IssuerReferenceData.cs" />
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
     <Compile Include="DataContracts\MeetingAttachedFileStreamData.cs" />

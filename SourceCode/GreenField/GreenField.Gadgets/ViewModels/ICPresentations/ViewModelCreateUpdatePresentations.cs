@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Microsoft.Practices.Prism.Events;
 using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Logging;
+using GreenField.DataContracts;
 
 
 namespace GreenField.Gadgets.ViewModels
@@ -55,7 +56,6 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Constructor
-
         public ViewModelCreateUpdatePresentations(DashboardGadgetParam param)
         {
             _dbInteractivity = param.DBInteractivity;
@@ -63,56 +63,117 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _regionManager = param.RegionManager;
 
+            FetchPresentationInfo();
+            //fetch presentation attached file info based on presentation id
+           // RetrievePresentationAttachedDetails();
+            //set PresentationAttachedFileInfo in callback
+            //check enum for upload/edit
+            //if upload set visibility to false or empty text block
+            //if edit load the files in text blocks
+            
+
         }
 
         #endregion       
         
         #region Properties
 
-        private String _selectedPowerPoint;
-        public String SelectedPowerPoint
+        private FileMaster _selectedPresentationPowerPoint;
+        public FileMaster SelectedPresentationPowerPoint
         {
-            get { return _selectedPowerPoint; }
+            get { return _selectedPresentationPowerPoint; }
             set
             {
-                _selectedPowerPoint = value;
-                RaisePropertyChanged(() => this.SelectedPowerPoint);
+                _selectedPresentationPowerPoint = value;
+                RaisePropertyChanged(() => this.SelectedPresentationPowerPoint);
             }
         }
 
-        private String _selectedFinStatReport;
-        public String SelectedFinStatReport
+        private FileMaster _selectedPresentationFinStatReport;
+        public FileMaster SelectedPresentationFinStatReport
         {
-            get { return _selectedFinStatReport; }
+            get { return _selectedPresentationFinStatReport; }
             set
             {
-                _selectedFinStatReport = value;
-                RaisePropertyChanged(() => this.SelectedFinStatReport);
+                _selectedPresentationFinStatReport = value;
+                RaisePropertyChanged(() => this.SelectedPresentationFinStatReport);
             }
         }
 
-        private String _selectedInvestmentContext;
-        public String SelectedInvestmentContext
+        private FileMaster _selectedPresentationInvestmentContext;
+        public FileMaster SelectedPresentationInvestmentContext
         {
-            get { return _selectedInvestmentContext; }
+            get { return _selectedPresentationInvestmentContext; }
             set
             {
-                _selectedInvestmentContext = value;
-                RaisePropertyChanged(() => this.SelectedInvestmentContext);
+                _selectedPresentationInvestmentContext = value;
+                RaisePropertyChanged(() => this.SelectedPresentationInvestmentContext);
             }
         }
 
-        private String _selectedDCFReports;
-        public String SelectedDCFReports
+        private FileMaster _selectedPresentationDCFReports;
+        public FileMaster SelectedPresentationDCFReports
         {
-            get { return _selectedDCFReports; }
+            get { return _selectedPresentationDCFReports; }
             set
             {
-                _selectedDCFReports = value;
-                RaisePropertyChanged(() => this.SelectedDCFReports);
+                _selectedPresentationDCFReports = value;
+                RaisePropertyChanged(() => this.SelectedPresentationDCFReports);
             }
         }
 
+        public PresentationAttachedFileStreamData SelectedPowerPointFileStreamData { get; set; }
+        public PresentationAttachedFileStreamData SelectedDeleteFileStreamData { get; set; }
+
+        private ICPresentationOverviewData _selectedPresentationOverviewInfo;
+        public ICPresentationOverviewData SelectedPresentationOverviewInfo
+        {
+            get { return _selectedPresentationOverviewInfo; }
+            set
+            {
+                _selectedPresentationOverviewInfo = value;
+            }
+        }
+
+        private List<FileMaster> _selectedPresentationDocumentationInfo;
+        public List<FileMaster> SelectedPresentationDocumentationInfo
+        {
+            get { return _selectedPresentationDocumentationInfo; }
+            set
+            {
+                _selectedPresentationDocumentationInfo = value;
+                RaisePropertyChanged(() => this.SelectedPresentationDocumentationInfo);
+            }
+        }
+
+        #region ICommand
+
+        public ICommand BrowsePowerpointCommand
+        {
+            get { return new DelegateCommand<object>(BrowsePowerPointCommandMethod, BrowsePowerPointCommandValidationMethod); }
+        }
+
+        public ICommand PowerPointHyperlinkCommand
+        {
+            get { return new DelegateCommand<object>(PowerPointHyperlinkCommandMethod); }
+        }
+
+        public ICommand DeleteAttachedFileCommand
+        {
+            get { return new DelegateCommand<object>(DeleteAttachedFileCommandMethod); }
+        }
+
+        public ICommand AddPowerPointCommand
+        {
+            get { return new DelegateCommand<object>(AddPowerPointCommandCommandMethod, AddPowerPointCommandCommandValidationMethod); }
+        }
+
+        public ICommand SubmitCommand
+        {
+            get { return new DelegateCommand<object>(SubmitCommandMethod); }
+        }
+
+        #endregion
 
         #region Busy Indicator Notification
         /// <summary>
@@ -144,368 +205,357 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-
-
-
-        #region ICommand
-
-        public ICommand BrowsePowerpointCommand
-        {
-            get { return new DelegateCommand<object>(AddPowerpointCommandMethod); }
-        }
-
-        #endregion
-
+        #endregion       
 
         #region ICommand Methods
 
-        private void AddPowerpointCommandMethod(object param)
+        private Boolean BrowsePowerPointCommandValidationMethod(object param)
+        {
+            return SelectedPresentationPowerPoint != null && (SelectedPresentationPowerPoint.Name != string.Empty);
+        }
+
+        private void PowerPointHyperlinkCommandMethod(object param)
+        {
+            try
+            {
+                _dbInteractivity.RetrieveDocument(SelectedPresentationPowerPoint.Location, RetrieveDocumentCallback);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogLoginException(_logger, ex);
+            }
+        }
+
+        private void BrowsePowerPointCommandMethod(object param)
         {
             //DB update ppt
+            OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false };
+            if (dialog.ShowDialog() == true)
+            {
+                BusyIndicatorNotification(true, "Uploading file...");
+                if (SelectedPresentationDocumentationInfo != null)
+                {
+                    if (SelectedPresentationDocumentationInfo
+                                .Any(record => record.Name == dialog.File.Name))
+                    {
+                        Prompt.ShowDialog("File '" + dialog.File.Name + "' already exists as an attachment. Please change the name of the file and upload again.");
+                        BusyIndicatorNotification();
+                        return;
+                    }
+                }
+
+                FileMaster presentationAttachedFileData
+                    = new FileMaster()
+                    {
+                        Name = dialog.File.Name,
+                        SecurityName = SelectedPresentationOverviewInfo.SecurityName,
+                        SecurityTicker = SelectedPresentationOverviewInfo.SecurityTicker,
+                        Type = EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(DocumentCategoryType.IC_PRESENTATIONS),
+                        MetaTags = "Power Point Presentation;" + SelectedPresentationOverviewInfo.Presenter + SelectedPresentationOverviewInfo.MeetingDateTime
+                    };
+
+                FileStream fileStream = dialog.File.OpenRead();
+
+                SelectedPowerPointFileStreamData
+                    = new PresentationAttachedFileStreamData()
+                    {
+                        PresentationAttachedFileData = presentationAttachedFileData,
+                        FileStream = ReadFully(fileStream)
+                    };
+
+                SelectedPresentationPowerPoint.Name = dialog.File.Name;
+                //make a call to documnetworksaceoperations to get url
+                _dbInteractivity.UploadDocument(SelectedPresentationPowerPoint.Name, SelectedPowerPointFileStreamData.FileStream, UploadPowerPointPresentationCallbackMethod);
+
+                BusyIndicatorNotification();
+            }
+        }
+
+        private void DeleteAttachedFileCommandMethod(object param)
+        {
+            if (param is PresentationAttachedFileStreamData)
+            {
+                SelectedDeleteFileStreamData = param as PresentationAttachedFileStreamData;
+                Prompt.ShowDialog(messageText: "This action will permanently delete attachment from system. Do you wish to continue?", buttonType: MessageBoxButton.OKCancel, messageBoxResult: (result) =>
+                {
+                    if (result == MessageBoxResult.OK)
+                    {
+                        _dbInteractivity.UpdatePresentationAttachedFileStreamData(GreenField.UserSession.SessionManager.SESSION.UserName
+                            , SelectedPresentationOverviewInfo.PresentationID, SelectedPowerPointFileStreamData.PresentationAttachedFileData.Location,
+                            SelectedPowerPointFileStreamData, UpdatePresentationAttachedFileStreamDataDeleteAttachedFileCallbackMethod);
+                    }
+                });     
+            }
+        }
+
+        private Boolean AddPowerPointCommandCommandValidationMethod(object param)
+        {
+            return SelectedPresentationPowerPoint != null && (SelectedPresentationPowerPoint.Name != string.Empty);
+        }
+
+        private void AddPowerPointCommandCommandMethod(object param)
+        {
+            if (_dbInteractivity != null)
+            {
+                BusyIndicatorNotification(true, "Uploading document");
+
+                _dbInteractivity.UpdatePresentationAttachedFileStreamData(GreenField.UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo.PresentationID,
+                    SelectedPowerPointFileStreamData.PresentationAttachedFileData.Location, SelectedPowerPointFileStreamData, UpdatePresentationAttachedFileStreamDataCallback);
+            }
+        }
+
+        private void SubmitCommandMethod(object param)
+        {
+            Prompt.ShowDialog("Please ensure that all changes have been made before finalizing meeting presentations", "", MessageBoxButton.OKCancel, (result) =>
+            {
+                if (result == MessageBoxResult.OK)
+                {
+                    SelectedPresentationOverviewInfo.StatusType = StatusType.READY_FOR_VOTING;
+                    //update details
+                    
+                    //if (_dbInteractivity != null)
+                    //{
+                    //    _dbInteractivity.SetMeetingPresentationStatus(GreenField.UserSession.SessionManager.SESSION.UserName, SelectedClosedForVotingMeetingInfo.MeetingID,
+                    //            StatusType.READY_FOR_VOTING, SetMeetingPresentationStatusCallbackMethod);
+                    //}
+                }
+            });
+
+
         }
 
         #endregion
-        //private ObservableCollection<ICPAttachmentInfo> _attachmentInfo;
-        //public ObservableCollection<ICPAttachmentInfo> AttachmentInfo
-        //{
-        //    get 
-        //    {
-        //        if (_attachmentInfo == null)
-        //            _attachmentInfo = new ObservableCollection<ICPAttachmentInfo>();
-        //        return _attachmentInfo; 
-        //    }
-        //    set
-        //    {
-        //        if (_attachmentInfo != value)
-        //        {
-        //            _attachmentInfo = value;
-        //            RaisePropertyChanged(() => this.AttachmentInfo);
-        //        }
-        //    }
-        //}
 
-        //private bool _securitySelected = false;
-        //public bool SecuritySelected
-        //{
-        //    get 
-        //    {
-        //        if (ViewPluginFlag == ViewPluginFlagEnumeration.Update)
-        //            _securitySelected = true;
-        //        return _securitySelected; 
-        //    }
-        //    set
-        //    {
-        //        if (_securitySelected != value)
-        //        {
-        //            _securitySelected = value;
-        //            RaisePropertyChanged(() => this.SecuritySelected);
-        //            RaisePropertyChanged(() => this.SaveCommand);
-        //            RaisePropertyChanged(() => this.BrowseCommand);
-        //        }
-        //    }
-        //}
+        #region Helper Methods
 
-        //private string _uploadedFileName;
-        //public string UploadedFileName
-        //{
-        //    get { return _uploadedFileName; }
-        //    set
-        //    {
-        //        if (_uploadedFileName != value)
-        //        {
-        //            _uploadedFileName = value;
-        //            RaisePropertyChanged(() => this.UploadedFileName);
-        //        }
-        //    }
-        //}
+        public void FetchPresentationInfo()
+        {
+            ICPresentationOverviewData presentationInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
+            if (presentationInfo != null)
+            {
+                SelectedPresentationOverviewInfo = presentationInfo;
+            }
+        }
 
-        //private ViewPluginFlagEnumeration _viewPluginFlag;
-        //public ViewPluginFlagEnumeration ViewPluginFlag
-        //{
-        //    get
-        //    {
-        //        return _viewPluginFlag;
-        //    }
-        //    set
-        //    {
-        //        _viewPluginFlag = value;
-        //        RaisePropertyChanged(() => this.ViewPluginFlag);
-        //        RaisePropertyChanged(() => this.SecuritySelectionVisibility);
-        //        RaisePropertyChanged(() => this.PresenterSelectionVisibility);
-        //    }
-        //}
+        private Byte[] ReadFully(Stream input)
+        {
+            Byte[] buffer = new byte[16 * 1024];
 
-        //private ObservableCollection<ICPSecurityInfo> _securityInfo;
-        //public ObservableCollection<ICPSecurityInfo> SecurityInfo
-        //{
-        //    get
-        //    {
-        //        if (ViewPluginFlag == ViewPluginFlagEnumeration.Create)
-        //        {
-        //            _securityInfo = new ObservableCollection<ICPSecurityInfo>();
-        //            ICPSecurityInfo s1 = new ICPSecurityInfo
-        //            {
-        //                SecurityBuyRange = "20",
-        //                SecurityCashPosition = "0",
-        //                SecurityCountry = "India",
-        //                SecurityCountryCode = "IND",
-        //                SecurityGlobalActiveWeight = "0",
-        //                SecurityIndustry = "Chemical",
-        //                SecurityLastClosingPrice = "25.6",
-        //                SecurityMarketCapitalization = "6459800",
-        //                SecurityMSCIIMIWeight = "0",
-        //                SecurityMSCIStdWeight = "0",
-        //                SecurityName = "Reliance Capital Ltd.",
-        //                SecurityPFVMeasure = "PE2012",
-        //                SecurityPosition = "0",
-        //                SecuritySellRange = "30",
-        //                SecurityTicker = "REL"                        
-        //            };
-        //            ICPSecurityInfo s2 = new ICPSecurityInfo
-        //            {
-        //                SecurityBuyRange = "28",
-        //                SecurityCashPosition = "0",
-        //                SecurityCountry = "United States",
-        //                SecurityCountryCode = "US",
-        //                SecurityGlobalActiveWeight = "0",
-        //                SecurityIndustry = "Internet",
-        //                SecurityLastClosingPrice = "25.6",
-        //                SecurityMarketCapitalization = "56,894,000",
-        //                SecurityMSCIIMIWeight = "0",
-        //                SecurityMSCIStdWeight = "0",
-        //                SecurityName = "Facebook",
-        //                SecurityPFVMeasure = "PE2012",
-        //                SecurityPosition = "0",
-        //                SecuritySellRange = "33",
-        //                SecurityTicker = "FCB"
-        //            };
-        //            _securityInfo.Add(s1);
-        //            _securityInfo.Add(s2);
-        //        }
-                    
-        //        return _securityInfo;
-        //    }
-        //    set
-        //    {
-        //        _securityInfo = value;
-        //        RaisePropertyChanged(() => this.PresentationInfo);
-        //    }
-        //}
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
 
-        //private ICPSecurityInfo _selectedSecurityInfo;
-        //public ICPSecurityInfo SelectedSecurityInfo
-        //{
-        //    get { return _selectedSecurityInfo; }
-        //    set
-        //    {
-        //        _selectedSecurityInfo = value;
-        //        RaisePropertyChanged(() => this.SelectedSecurityInfo);
-        //        SecuritySelected = true;
-        //        PresentationInfo = new ICPPresentationData
-        //        {
-        //            Presenter = "Rahul Vig",
-        //            SecurityBuyRange = value.SecurityBuyRange,
-        //            SecurityBuySellRange = value.SecurityBuySellRange,
-        //            SecurityCashPosition = value.SecurityCashPosition,
-        //            SecurityCountry = value.SecurityCountry,
-        //            SecurityCountryCode = value.SecurityCountryCode,
-        //            SecurityGlobalActiveWeight = value.SecurityGlobalActiveWeight,
-        //            SecurityIndustry = value.SecurityIndustry,
-        //            SecurityLastClosingPrice = value.SecurityLastClosingPrice,
-        //            SecurityMarketCapitalization = value.SecurityMarketCapitalization,
-        //            SecurityMSCIIMIWeight = value.SecurityMSCIIMIWeight,
-        //            SecurityMSCIStdWeight = value.SecurityMSCIStdWeight,
-        //            SecurityName = value.SecurityName,
-        //            SecurityPFVMeasure = value.SecurityPFVMeasure,
-        //            SecurityPosition = value.SecurityPosition,
-        //            SecurityRecommendation = value.SecurityRecommendation,
-        //            SecuritySellRange = value.SecuritySellRange,
-        //            SecurityTicker = value.SecurityTicker,
-        //            Status = "In Progress"
-        //        };
-        //    }
-        //}
-        
-        //private ICPPresentationData _presentationInfo;
-        //public ICPPresentationData PresentationInfo
-        //{
-        //    get
-        //    {
-        //        if (_presentationInfo == null)
-        //            return new ICPPresentationData();
-        //        return _presentationInfo;
-        //    }
-        //    set
-        //    {
-        //        _presentationInfo = value;
-        //        RaisePropertyChanged(() => this.PresentationInfo);
-        //    }
-        //}
+        public void RetrievePresentationAttachedDetails()
+        {
+            _dbInteractivity.RetrievePresentationAttachedFileDetails(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationAttachedDetailsCallback);
 
-        //private Visibility _securitySelectionVisibility = Visibility.Visible;
-        //public Visibility SecuritySelectionVisibility
-        //{
-        //    get 
-        //    {
-        //        switch (ViewPluginFlag)
-        //        {
-        //            case ViewPluginFlagEnumeration.Create:
-        //                _securitySelectionVisibility = Visibility.Visible;
-        //                break;
-        //            case ViewPluginFlagEnumeration.Update:
-        //                _securitySelectionVisibility = Visibility.Collapsed;
-        //                break;
-        //        }
-        //        return _securitySelectionVisibility; }
-        //}
+        }
 
-        //private Visibility _presenterSelectionVisibility = Visibility.Collapsed;
-        //public Visibility PresenterSelectionVisibility
-        //{
-        //    get
-        //    {
-        //        switch (ViewPluginFlag)
-        //        {
-        //            case ViewPluginFlagEnumeration.Create:
-        //                _presenterSelectionVisibility = Visibility.Collapsed;
-        //                break;
-        //            case ViewPluginFlagEnumeration.Update:
-        //                _presenterSelectionVisibility = Visibility.Visible;
-        //                break;
-        //        }
-        //        return _presenterSelectionVisibility;
-        //    }
-        //}
+        public void Initialize()
+        {
+            ICPresentationOverviewData presentationInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
+            if (presentationInfo != null)
+            {
+                SelectedPresentationOverviewInfo = presentationInfo;
+                if (_dbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Retrieving Documentation...");
+                    _dbInteractivity.RetrievePresentationAttachedFileDetails(SelectedPresentationOverviewInfo.PresentationID, 
+                        RetrievePresentationAttachedDetailsCallback);
+                }
+            }            
+        }
 
-        //public ICommand SaveCommand
-        //{
-        //    get { return new DelegateCommand<object>(ICPPresentationsSaveItem, SecuritySelectionValidation);  }
-        //}
+        /// <summary>
+        /// Display/Hide Busy Indicator
+        /// </summary>
+        /// <param name="showBusyIndicator">True to display indicator; default false</param>
+        /// <param name="message">Content message for indicator; default null</param>
+        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        {
+            if (message != null)
+                BusyIndicatorContent = message;
 
-        //public ICommand BrowseCommand
-        //{
-        //    get
-        //    {
-        //        return new DelegateCommand<object>(ICPPresentationsBrowse, SecuritySelectionValidation);
-        //    }
-        //}
+            BusyIndicatorIsBusy = showBusyIndicator;
+        }
 
         #endregion
 
-        //#region ICommand Methods
+        #region Callback Methods
 
-        //private void ICPPresentationsSaveItem(object param)
-        //{
-        //    ObservableCollection<AttachedFileInfo> UpdatedAttachmentInfo = new ObservableCollection<AttachedFileInfo>();
+        private void RetrievePresentationAttachedDetailsCallback(List<FileMaster> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                 
+                    SelectedPresentationDocumentationInfo = result;
+                    SelectedPresentationPowerPoint = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
+                    SelectedPresentationFinStatReport = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
+                    SelectedPresentationInvestmentContext = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
+                    SelectedPresentationDCFReports = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+        }
+
+        private void RetrieveDocumentCallback(Byte[] result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    SelectedPowerPointFileStreamData.FileStream = result;
+
+                    //open file for edit
+                    //file to be saved locally and then opened for edit
+                    //what happens when user edits and closes file, save? where? or call upload method?
+
+                    BusyIndicatorNotification();
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void UploadPowerPointPresentationCallbackMethod(string result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    if (result != null)
+                    {  
+                        //set the url
+                        SelectedPowerPointFileStreamData.PresentationAttachedFileData.Location = result;
+
+                        //if (_dbInteractivity != null)
+                        //{
+                        //    BusyIndicatorNotification(true, "Uploading document");
                             
-        //    switch (ViewPluginFlag)
-        //    {
-        //        case ViewPluginFlagEnumeration.Create:
-        //            _dbInteractivity.CreatePresentation(PresentationInfo.ConvertToDB()
-        //                , (presentationID) =>
-        //                {
-        //                    if (presentationID != null)
-        //                    {
-        //                        this.PresentationInfo.PresentationID = long.Parse(presentationID.ToString());
+                        //    _dbInteractivity.UpdatePresentationAttachedFileStreamData(SelectedPresentationOverviewInfo.Presenter, SelectedPresentationOverviewInfo.PresentationID,
+                        //        SelectedPowerPointFileStreamData.PresentationAttachedFileData.Location, SelectedPowerPointFileStreamData, UpdatePresentationAttachedFileStreamDataCallback);                           
+                        //}
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
 
-        //                        foreach (ICPAttachmentInfo attachment in AttachmentInfo.Where(t => t.AttachmentVisibility == Visibility.Visible))
-        //                        {
-        //                            attachment.PresentationID = this.PresentationInfo.PresentationID;
-        //                            UpdatedAttachmentInfo.Add(attachment.ConvertToDB());
-        //                        }
+        private void UpdatePresentationAttachedFileStreamDataCallback(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    if (result == true)
+                    {  
+                        SelectedPresentationPowerPoint = null;
+                        SelectedPowerPointFileStreamData = null;
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
 
-        //                        if (UpdatedAttachmentInfo != null)
-        //                            _dbInteractivity.CreateFileInfo(UpdatedAttachmentInfo, (fmsg) => { MessageBox.Show(fmsg); });
-        //                    }
-        //                });
-        //            break;
-        //        case ViewPluginFlagEnumeration.Update:
-        //            break;
-        //    }
+        private void UpdatePresentationAttachedFileStreamDataDeleteAttachedFileCallbackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    if (result == true)
+                    {
+                        SelectedPresentationDocumentationInfo = SelectedPresentationDocumentationInfo
+                            .Where(record => record != SelectedDeleteFileStreamData.PresentationAttachedFileData).ToList();
+                        SelectedDeleteFileStreamData = null;
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
 
-
-
-        //    _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteePresentations", UriKind.Relative));
-        //}
-
-        //public void ICPPresentationsBrowse(object param)
-        //{
-        //    OpenFileDialog openFile = new OpenFileDialog
-        //    {
-        //        Multiselect = false,
-        //        Filter = "Text Files (.txt)|*.txt|All Files (*.*)|*.*"
-        //    };
-            
-        //    if (openFile.ShowDialog() == true)
-        //    {
-        //        UploadedFileName = openFile.File.Name;
-        //        string serializedData = GetFileSerializedData(openFile.File.OpenRead());
-
-        //        AttachmentInfo.Add(new ICPAttachmentInfo ()
-        //        {
-        //            AttachmentID = AttachmentInfo.Count,
-        //            AttachmentName = UploadedFileName,
-        //            AttachmentSerializedData = serializedData
-        //        });
-        //    }
-        //}
-
-        //private bool SecuritySelectionValidation(object param)
-        //{
-        //    return SecuritySelected;
-        //}
-
-        //#endregion
-
-        //#region Helper Methods
-
-        //private string GetFileSerializedData(FileStream fileStream)
-        //{
-        //    byte[] bytes = new byte[fileStream.Length];
-
-        //    int numBytesToRead = (int)fileStream.Length;
-        //    int numBytesRead = 0;
-
-        //    while (numBytesToRead > 0)
-        //    {
-        //        int n = fileStream.Read(bytes, numBytesRead, numBytesToRead);
-        //        if (n == 0) break;
-
-        //        numBytesRead += n;
-        //        numBytesToRead -= n;
-        //    }
-        //    numBytesToRead = bytes.Length;
-
-        //    StringBuilder sb = new StringBuilder();
-        //    StringWriter wr = new StringWriter(sb);
-
-        //    XmlSerializer serializer = new XmlSerializer(typeof(byte[]));
-            
-        //    serializer.Serialize(wr, bytes);
-        //    return sb.ToString();
-        //}
-
-        //#endregion
-
-        //#region INavigationAware methods
-
-        //public void OnNavigatedFrom(NavigationContext navigationContext)
-        //{
-
-        //}
-
-        //public void OnNavigatedTo(NavigationContext navigationContext)
-        //{
-        //    ViewPluginFlag = (navigationContext.NavigationService.Region.Context as ICNavigationInfo).ViewPluginFlagEnumerationObject;
-        //    PresentationInfo = (navigationContext.NavigationService.Region.Context as ICNavigationInfo).PresentationInfoObject;
-        //}
-
-        //public bool IsNavigationTarget(NavigationContext navigationContext)
-        //{
-        //    return true;
-        //}
-
-        //#endregion
+        #endregion                
 
         #region EventUnSubscribe
         /// <summary>

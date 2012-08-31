@@ -12,6 +12,7 @@ using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
 using GreenField.ServiceCaller.MeetingDefinitions;
 using GreenField.ServiceCaller.AlertDefinitions;
+using GreenField.ServiceCaller.DocumentWorkSpaceDefinitions;
 
 
 namespace GreenField.ServiceCaller
@@ -277,12 +278,19 @@ namespace GreenField.ServiceCaller
         void UpdateMeetingPresentationDate(String userName, Int64 presentationId, MeetingInfo meetingInfo, Action<Boolean?> callback);
 
         void GetMeetingConfigSchedule(Action<MeetingConfigurationSchedule> callback);
+
+        void RetrievePresentationAttachedFileDetails(Int64? presentationID, Action<List<FileMaster>> callback);
+
+      //  void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, string url, FileMaster presentationAttachedFileData, Action<Boolean?> callback);
+
+        void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, String url, PresentationAttachedFileStreamData presentationAttachedFileStreamData, Action<Boolean?> callback);
         #endregion
 
         #region DCF
 
         void RetrieveDCFAnalysisData(EntitySelectionData entitySelectionData, Action<List<DCFAnalysisSummaryData>> callback);
         
+
         #endregion
 
         void RetrieveCompanyData(Action<List<tblCompanyInfo>> callback);

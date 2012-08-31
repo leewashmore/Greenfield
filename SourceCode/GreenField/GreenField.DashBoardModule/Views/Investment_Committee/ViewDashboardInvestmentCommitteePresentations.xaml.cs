@@ -68,7 +68,7 @@ namespace GreenField.DashboardModule.Views
 
             //_viewModel = new ViewModelPresentations(param);
             //_view = new ViewPresentations(_viewModel);
-            this.cctrDashboardContent.Content = null;// _view;
+            this.cctrDashboardContent.Content = new ViewPresentations(new ViewModelPresentations(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

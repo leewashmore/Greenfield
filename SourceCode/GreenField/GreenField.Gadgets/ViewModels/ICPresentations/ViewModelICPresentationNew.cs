@@ -276,6 +276,7 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region Helper Methods
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
@@ -290,9 +291,29 @@ namespace GreenField.Gadgets.ViewModels
             {
                 ICPresentationOverviewInfo.MeetingDateTime = meetingInfo.MeetingDateTime;
                 ICPresentationOverviewInfo.MeetingClosedDateTime = meetingInfo.MeetingClosedDateTime;
-                ICPresentationOverviewInfo.MeetingVotingClosedDateTime = meetingInfo.MeetingVotingClosedDateTime;
+                ICPresentationOverviewInfo.MeetingVotingClosedDateTime = meetingInfo.MeetingVotingClosedDateTime;                
             }
         }
+
+        //public void Initialize()
+        //{
+        //    if (_dbInteractivity != null && IsActive)
+        //    {
+        //        BusyIndicatorNotification(true, "Retrieving Presentation Overview Information...");
+        //        FetchMeetingInfo();                
+
+        //        //Subscription to SecurityReferenceSet event
+        //        _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
+
+        //        //EntitySelectionData handling
+        //        if (_entitySelectionData != null)
+        //        {
+        //            HandleSecurityReferenceSet(_entitySelectionData);
+        //        }
+        //    }
+        //}
+
+        #endregion
 
         #region EventUnSubscribe
         /// <summary>

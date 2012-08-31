@@ -775,15 +775,15 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityObject))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingConfigurationSchedule))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.FileMaster))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.CommentInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.PresentationInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingPresentationMappingInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.VoterInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingConfigurationSchedule))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ComplexObject))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingMinuteData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData))]
@@ -802,15 +802,15 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="EntityObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingConfigurationSchedule))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.FileMaster))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.CommentInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.PresentationInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingPresentationMappingInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.VoterInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingConfigurationSchedule))]
     public partial class EntityObject : GreenField.ServiceCaller.MeetingDefinitions.StructuralObject {
         
         private GreenField.ServiceCaller.MeetingDefinitions.EntityKey EntityKeyField;
@@ -824,504 +824,6 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.EntityKeyField, value) != true)) {
                     this.EntityKeyField = value;
                     this.RaisePropertyChanged("EntityKey");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MeetingConfigurationSchedule", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
-    public partial class MeetingConfigurationSchedule : GreenField.ServiceCaller.MeetingDefinitions.EntityObject {
-        
-        private System.Nullable<decimal> ConfigurablePreMeetingVotingDeadlineField;
-        
-        private System.Nullable<decimal> ConfigurablePresentationDeadlineField;
-        
-        private string CreatedByField;
-        
-        private System.DateTime CreatedOnField;
-        
-        private string ModifiedByField;
-        
-        private System.DateTime ModifiedOnField;
-        
-        private System.DateTime PreMeetingVotingDeadlineField;
-        
-        private System.DateTime PresentationDateTimeField;
-        
-        private System.DateTime PresentationDeadlineField;
-        
-        private string PresentationTimeZoneField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> ConfigurablePreMeetingVotingDeadline {
-            get {
-                return this.ConfigurablePreMeetingVotingDeadlineField;
-            }
-            set {
-                if ((this.ConfigurablePreMeetingVotingDeadlineField.Equals(value) != true)) {
-                    this.ConfigurablePreMeetingVotingDeadlineField = value;
-                    this.RaisePropertyChanged("ConfigurablePreMeetingVotingDeadline");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> ConfigurablePresentationDeadline {
-            get {
-                return this.ConfigurablePresentationDeadlineField;
-            }
-            set {
-                if ((this.ConfigurablePresentationDeadlineField.Equals(value) != true)) {
-                    this.ConfigurablePresentationDeadlineField = value;
-                    this.RaisePropertyChanged("ConfigurablePresentationDeadline");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CreatedBy {
-            get {
-                return this.CreatedByField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
-                    this.CreatedByField = value;
-                    this.RaisePropertyChanged("CreatedBy");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime CreatedOn {
-            get {
-                return this.CreatedOnField;
-            }
-            set {
-                if ((this.CreatedOnField.Equals(value) != true)) {
-                    this.CreatedOnField = value;
-                    this.RaisePropertyChanged("CreatedOn");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ModifiedBy {
-            get {
-                return this.ModifiedByField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ModifiedByField, value) != true)) {
-                    this.ModifiedByField = value;
-                    this.RaisePropertyChanged("ModifiedBy");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ModifiedOn {
-            get {
-                return this.ModifiedOnField;
-            }
-            set {
-                if ((this.ModifiedOnField.Equals(value) != true)) {
-                    this.ModifiedOnField = value;
-                    this.RaisePropertyChanged("ModifiedOn");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime PreMeetingVotingDeadline {
-            get {
-                return this.PreMeetingVotingDeadlineField;
-            }
-            set {
-                if ((this.PreMeetingVotingDeadlineField.Equals(value) != true)) {
-                    this.PreMeetingVotingDeadlineField = value;
-                    this.RaisePropertyChanged("PreMeetingVotingDeadline");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime PresentationDateTime {
-            get {
-                return this.PresentationDateTimeField;
-            }
-            set {
-                if ((this.PresentationDateTimeField.Equals(value) != true)) {
-                    this.PresentationDateTimeField = value;
-                    this.RaisePropertyChanged("PresentationDateTime");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime PresentationDeadline {
-            get {
-                return this.PresentationDeadlineField;
-            }
-            set {
-                if ((this.PresentationDeadlineField.Equals(value) != true)) {
-                    this.PresentationDeadlineField = value;
-                    this.RaisePropertyChanged("PresentationDeadline");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PresentationTimeZone {
-            get {
-                return this.PresentationTimeZoneField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PresentationTimeZoneField, value) != true)) {
-                    this.PresentationTimeZoneField = value;
-                    this.RaisePropertyChanged("PresentationTimeZone");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MeetingInfo", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
-    public partial class MeetingInfo : GreenField.ServiceCaller.MeetingDefinitions.EntityObject {
-        
-        private string CreatedByField;
-        
-        private System.DateTime CreatedOnField;
-        
-        private System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo> MeetingAttachedFileInfoesField;
-        
-        private System.DateTime MeetingClosedDateTimeField;
-        
-        private System.DateTime MeetingDateTimeField;
-        
-        private string MeetingDescriptionField;
-        
-        private long MeetingIDField;
-        
-        private System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingPresentationMappingInfo> MeetingPresentationMappingInfoesField;
-        
-        private System.DateTime MeetingVotingClosedDateTimeField;
-        
-        private string ModifiedByField;
-        
-        private System.DateTime ModifiedOnField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CreatedBy {
-            get {
-                return this.CreatedByField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
-                    this.CreatedByField = value;
-                    this.RaisePropertyChanged("CreatedBy");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime CreatedOn {
-            get {
-                return this.CreatedOnField;
-            }
-            set {
-                if ((this.CreatedOnField.Equals(value) != true)) {
-                    this.CreatedOnField = value;
-                    this.RaisePropertyChanged("CreatedOn");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo> MeetingAttachedFileInfoes {
-            get {
-                return this.MeetingAttachedFileInfoesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MeetingAttachedFileInfoesField, value) != true)) {
-                    this.MeetingAttachedFileInfoesField = value;
-                    this.RaisePropertyChanged("MeetingAttachedFileInfoes");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime MeetingClosedDateTime {
-            get {
-                return this.MeetingClosedDateTimeField;
-            }
-            set {
-                if ((this.MeetingClosedDateTimeField.Equals(value) != true)) {
-                    this.MeetingClosedDateTimeField = value;
-                    this.RaisePropertyChanged("MeetingClosedDateTime");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime MeetingDateTime {
-            get {
-                return this.MeetingDateTimeField;
-            }
-            set {
-                if ((this.MeetingDateTimeField.Equals(value) != true)) {
-                    this.MeetingDateTimeField = value;
-                    this.RaisePropertyChanged("MeetingDateTime");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MeetingDescription {
-            get {
-                return this.MeetingDescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MeetingDescriptionField, value) != true)) {
-                    this.MeetingDescriptionField = value;
-                    this.RaisePropertyChanged("MeetingDescription");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long MeetingID {
-            get {
-                return this.MeetingIDField;
-            }
-            set {
-                if ((this.MeetingIDField.Equals(value) != true)) {
-                    this.MeetingIDField = value;
-                    this.RaisePropertyChanged("MeetingID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingPresentationMappingInfo> MeetingPresentationMappingInfoes {
-            get {
-                return this.MeetingPresentationMappingInfoesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MeetingPresentationMappingInfoesField, value) != true)) {
-                    this.MeetingPresentationMappingInfoesField = value;
-                    this.RaisePropertyChanged("MeetingPresentationMappingInfoes");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime MeetingVotingClosedDateTime {
-            get {
-                return this.MeetingVotingClosedDateTimeField;
-            }
-            set {
-                if ((this.MeetingVotingClosedDateTimeField.Equals(value) != true)) {
-                    this.MeetingVotingClosedDateTimeField = value;
-                    this.RaisePropertyChanged("MeetingVotingClosedDateTime");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ModifiedBy {
-            get {
-                return this.ModifiedByField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ModifiedByField, value) != true)) {
-                    this.ModifiedByField = value;
-                    this.RaisePropertyChanged("ModifiedBy");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ModifiedOn {
-            get {
-                return this.ModifiedOnField;
-            }
-            set {
-                if ((this.ModifiedOnField.Equals(value) != true)) {
-                    this.ModifiedOnField = value;
-                    this.RaisePropertyChanged("ModifiedOn");
-                }
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MeetingAttachedFileInfo", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
-    public partial class MeetingAttachedFileInfo : GreenField.ServiceCaller.MeetingDefinitions.EntityObject {
-        
-        private string CreatedByField;
-        
-        private System.DateTime CreatedOnField;
-        
-        private long FileIDField;
-        
-        private GreenField.ServiceCaller.MeetingDefinitions.FileMaster FileMasterField;
-        
-        private GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfFileMasterjzQAem8p FileMasterReferenceField;
-        
-        private long IDField;
-        
-        private long MeetingIDField;
-        
-        private GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo MeetingInfoField;
-        
-        private GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfMeetingInfojzQAem8p MeetingInfoReferenceField;
-        
-        private string ModifiedByField;
-        
-        private System.DateTime ModifiedOnField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CreatedBy {
-            get {
-                return this.CreatedByField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
-                    this.CreatedByField = value;
-                    this.RaisePropertyChanged("CreatedBy");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime CreatedOn {
-            get {
-                return this.CreatedOnField;
-            }
-            set {
-                if ((this.CreatedOnField.Equals(value) != true)) {
-                    this.CreatedOnField = value;
-                    this.RaisePropertyChanged("CreatedOn");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long FileID {
-            get {
-                return this.FileIDField;
-            }
-            set {
-                if ((this.FileIDField.Equals(value) != true)) {
-                    this.FileIDField = value;
-                    this.RaisePropertyChanged("FileID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GreenField.ServiceCaller.MeetingDefinitions.FileMaster FileMaster {
-            get {
-                return this.FileMasterField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FileMasterField, value) != true)) {
-                    this.FileMasterField = value;
-                    this.RaisePropertyChanged("FileMaster");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfFileMasterjzQAem8p FileMasterReference {
-            get {
-                return this.FileMasterReferenceField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FileMasterReferenceField, value) != true)) {
-                    this.FileMasterReferenceField = value;
-                    this.RaisePropertyChanged("FileMasterReference");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long ID {
-            get {
-                return this.IDField;
-            }
-            set {
-                if ((this.IDField.Equals(value) != true)) {
-                    this.IDField = value;
-                    this.RaisePropertyChanged("ID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public long MeetingID {
-            get {
-                return this.MeetingIDField;
-            }
-            set {
-                if ((this.MeetingIDField.Equals(value) != true)) {
-                    this.MeetingIDField = value;
-                    this.RaisePropertyChanged("MeetingID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo MeetingInfo {
-            get {
-                return this.MeetingInfoField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MeetingInfoField, value) != true)) {
-                    this.MeetingInfoField = value;
-                    this.RaisePropertyChanged("MeetingInfo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfMeetingInfojzQAem8p MeetingInfoReference {
-            get {
-                return this.MeetingInfoReferenceField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MeetingInfoReferenceField, value) != true)) {
-                    this.MeetingInfoReferenceField = value;
-                    this.RaisePropertyChanged("MeetingInfoReference");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ModifiedBy {
-            get {
-                return this.ModifiedByField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ModifiedByField, value) != true)) {
-                    this.ModifiedByField = value;
-                    this.RaisePropertyChanged("ModifiedBy");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime ModifiedOn {
-            get {
-                return this.ModifiedOnField;
-            }
-            set {
-                if ((this.ModifiedOnField.Equals(value) != true)) {
-                    this.ModifiedOnField = value;
-                    this.RaisePropertyChanged("ModifiedOn");
                 }
             }
         }
@@ -2643,6 +2145,348 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MeetingInfo", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class MeetingInfo : GreenField.ServiceCaller.MeetingDefinitions.EntityObject {
+        
+        private string CreatedByField;
+        
+        private System.DateTime CreatedOnField;
+        
+        private System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo> MeetingAttachedFileInfoesField;
+        
+        private System.DateTime MeetingClosedDateTimeField;
+        
+        private System.DateTime MeetingDateTimeField;
+        
+        private string MeetingDescriptionField;
+        
+        private long MeetingIDField;
+        
+        private System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingPresentationMappingInfo> MeetingPresentationMappingInfoesField;
+        
+        private System.DateTime MeetingVotingClosedDateTimeField;
+        
+        private string ModifiedByField;
+        
+        private System.DateTime ModifiedOnField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreatedBy {
+            get {
+                return this.CreatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
+                    this.CreatedByField = value;
+                    this.RaisePropertyChanged("CreatedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreatedOn {
+            get {
+                return this.CreatedOnField;
+            }
+            set {
+                if ((this.CreatedOnField.Equals(value) != true)) {
+                    this.CreatedOnField = value;
+                    this.RaisePropertyChanged("CreatedOn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo> MeetingAttachedFileInfoes {
+            get {
+                return this.MeetingAttachedFileInfoesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MeetingAttachedFileInfoesField, value) != true)) {
+                    this.MeetingAttachedFileInfoesField = value;
+                    this.RaisePropertyChanged("MeetingAttachedFileInfoes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime MeetingClosedDateTime {
+            get {
+                return this.MeetingClosedDateTimeField;
+            }
+            set {
+                if ((this.MeetingClosedDateTimeField.Equals(value) != true)) {
+                    this.MeetingClosedDateTimeField = value;
+                    this.RaisePropertyChanged("MeetingClosedDateTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime MeetingDateTime {
+            get {
+                return this.MeetingDateTimeField;
+            }
+            set {
+                if ((this.MeetingDateTimeField.Equals(value) != true)) {
+                    this.MeetingDateTimeField = value;
+                    this.RaisePropertyChanged("MeetingDateTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MeetingDescription {
+            get {
+                return this.MeetingDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MeetingDescriptionField, value) != true)) {
+                    this.MeetingDescriptionField = value;
+                    this.RaisePropertyChanged("MeetingDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long MeetingID {
+            get {
+                return this.MeetingIDField;
+            }
+            set {
+                if ((this.MeetingIDField.Equals(value) != true)) {
+                    this.MeetingIDField = value;
+                    this.RaisePropertyChanged("MeetingID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingPresentationMappingInfo> MeetingPresentationMappingInfoes {
+            get {
+                return this.MeetingPresentationMappingInfoesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MeetingPresentationMappingInfoesField, value) != true)) {
+                    this.MeetingPresentationMappingInfoesField = value;
+                    this.RaisePropertyChanged("MeetingPresentationMappingInfoes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime MeetingVotingClosedDateTime {
+            get {
+                return this.MeetingVotingClosedDateTimeField;
+            }
+            set {
+                if ((this.MeetingVotingClosedDateTimeField.Equals(value) != true)) {
+                    this.MeetingVotingClosedDateTimeField = value;
+                    this.RaisePropertyChanged("MeetingVotingClosedDateTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ModifiedBy {
+            get {
+                return this.ModifiedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ModifiedByField, value) != true)) {
+                    this.ModifiedByField = value;
+                    this.RaisePropertyChanged("ModifiedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ModifiedOn {
+            get {
+                return this.ModifiedOnField;
+            }
+            set {
+                if ((this.ModifiedOnField.Equals(value) != true)) {
+                    this.ModifiedOnField = value;
+                    this.RaisePropertyChanged("ModifiedOn");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MeetingAttachedFileInfo", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class MeetingAttachedFileInfo : GreenField.ServiceCaller.MeetingDefinitions.EntityObject {
+        
+        private string CreatedByField;
+        
+        private System.DateTime CreatedOnField;
+        
+        private long FileIDField;
+        
+        private GreenField.ServiceCaller.MeetingDefinitions.FileMaster FileMasterField;
+        
+        private GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfFileMasterjzQAem8p FileMasterReferenceField;
+        
+        private long IDField;
+        
+        private long MeetingIDField;
+        
+        private GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo MeetingInfoField;
+        
+        private GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfMeetingInfojzQAem8p MeetingInfoReferenceField;
+        
+        private string ModifiedByField;
+        
+        private System.DateTime ModifiedOnField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreatedBy {
+            get {
+                return this.CreatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
+                    this.CreatedByField = value;
+                    this.RaisePropertyChanged("CreatedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreatedOn {
+            get {
+                return this.CreatedOnField;
+            }
+            set {
+                if ((this.CreatedOnField.Equals(value) != true)) {
+                    this.CreatedOnField = value;
+                    this.RaisePropertyChanged("CreatedOn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long FileID {
+            get {
+                return this.FileIDField;
+            }
+            set {
+                if ((this.FileIDField.Equals(value) != true)) {
+                    this.FileIDField = value;
+                    this.RaisePropertyChanged("FileID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.MeetingDefinitions.FileMaster FileMaster {
+            get {
+                return this.FileMasterField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileMasterField, value) != true)) {
+                    this.FileMasterField = value;
+                    this.RaisePropertyChanged("FileMaster");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfFileMasterjzQAem8p FileMasterReference {
+            get {
+                return this.FileMasterReferenceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileMasterReferenceField, value) != true)) {
+                    this.FileMasterReferenceField = value;
+                    this.RaisePropertyChanged("FileMasterReference");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ID {
+            get {
+                return this.IDField;
+            }
+            set {
+                if ((this.IDField.Equals(value) != true)) {
+                    this.IDField = value;
+                    this.RaisePropertyChanged("ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long MeetingID {
+            get {
+                return this.MeetingIDField;
+            }
+            set {
+                if ((this.MeetingIDField.Equals(value) != true)) {
+                    this.MeetingIDField = value;
+                    this.RaisePropertyChanged("MeetingID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo MeetingInfo {
+            get {
+                return this.MeetingInfoField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MeetingInfoField, value) != true)) {
+                    this.MeetingInfoField = value;
+                    this.RaisePropertyChanged("MeetingInfo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfMeetingInfojzQAem8p MeetingInfoReference {
+            get {
+                return this.MeetingInfoReferenceField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MeetingInfoReferenceField, value) != true)) {
+                    this.MeetingInfoReferenceField = value;
+                    this.RaisePropertyChanged("MeetingInfoReference");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ModifiedBy {
+            get {
+                return this.ModifiedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ModifiedByField, value) != true)) {
+                    this.ModifiedByField = value;
+                    this.RaisePropertyChanged("ModifiedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ModifiedOn {
+            get {
+                return this.ModifiedOnField;
+            }
+            set {
+                if ((this.ModifiedOnField.Equals(value) != true)) {
+                    this.ModifiedOnField = value;
+                    this.RaisePropertyChanged("ModifiedOn");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="PresentationAttachedFileInfo", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
     public partial class PresentationAttachedFileInfo : GreenField.ServiceCaller.MeetingDefinitions.EntityObject {
         
@@ -3090,6 +2934,162 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="MeetingConfigurationSchedule", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class MeetingConfigurationSchedule : GreenField.ServiceCaller.MeetingDefinitions.EntityObject {
+        
+        private System.Nullable<decimal> ConfigurablePreMeetingVotingDeadlineField;
+        
+        private System.Nullable<decimal> ConfigurablePresentationDeadlineField;
+        
+        private string CreatedByField;
+        
+        private System.DateTime CreatedOnField;
+        
+        private string ModifiedByField;
+        
+        private System.DateTime ModifiedOnField;
+        
+        private System.DateTime PreMeetingVotingDeadlineField;
+        
+        private System.DateTime PresentationDateTimeField;
+        
+        private System.DateTime PresentationDeadlineField;
+        
+        private string PresentationTimeZoneField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> ConfigurablePreMeetingVotingDeadline {
+            get {
+                return this.ConfigurablePreMeetingVotingDeadlineField;
+            }
+            set {
+                if ((this.ConfigurablePreMeetingVotingDeadlineField.Equals(value) != true)) {
+                    this.ConfigurablePreMeetingVotingDeadlineField = value;
+                    this.RaisePropertyChanged("ConfigurablePreMeetingVotingDeadline");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> ConfigurablePresentationDeadline {
+            get {
+                return this.ConfigurablePresentationDeadlineField;
+            }
+            set {
+                if ((this.ConfigurablePresentationDeadlineField.Equals(value) != true)) {
+                    this.ConfigurablePresentationDeadlineField = value;
+                    this.RaisePropertyChanged("ConfigurablePresentationDeadline");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreatedBy {
+            get {
+                return this.CreatedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByField, value) != true)) {
+                    this.CreatedByField = value;
+                    this.RaisePropertyChanged("CreatedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime CreatedOn {
+            get {
+                return this.CreatedOnField;
+            }
+            set {
+                if ((this.CreatedOnField.Equals(value) != true)) {
+                    this.CreatedOnField = value;
+                    this.RaisePropertyChanged("CreatedOn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ModifiedBy {
+            get {
+                return this.ModifiedByField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ModifiedByField, value) != true)) {
+                    this.ModifiedByField = value;
+                    this.RaisePropertyChanged("ModifiedBy");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ModifiedOn {
+            get {
+                return this.ModifiedOnField;
+            }
+            set {
+                if ((this.ModifiedOnField.Equals(value) != true)) {
+                    this.ModifiedOnField = value;
+                    this.RaisePropertyChanged("ModifiedOn");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime PreMeetingVotingDeadline {
+            get {
+                return this.PreMeetingVotingDeadlineField;
+            }
+            set {
+                if ((this.PreMeetingVotingDeadlineField.Equals(value) != true)) {
+                    this.PreMeetingVotingDeadlineField = value;
+                    this.RaisePropertyChanged("PreMeetingVotingDeadline");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime PresentationDateTime {
+            get {
+                return this.PresentationDateTimeField;
+            }
+            set {
+                if ((this.PresentationDateTimeField.Equals(value) != true)) {
+                    this.PresentationDateTimeField = value;
+                    this.RaisePropertyChanged("PresentationDateTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime PresentationDeadline {
+            get {
+                return this.PresentationDeadlineField;
+            }
+            set {
+                if ((this.PresentationDeadlineField.Equals(value) != true)) {
+                    this.PresentationDeadlineField = value;
+                    this.RaisePropertyChanged("PresentationDeadline");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PresentationTimeZone {
+            get {
+                return this.PresentationTimeZoneField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PresentationTimeZoneField, value) != true)) {
+                    this.PresentationTimeZoneField = value;
+                    this.RaisePropertyChanged("PresentationTimeZone");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ComplexObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingMinuteData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData))]
@@ -3310,31 +3310,32 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfPresentationInfojzQAem8p))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.EntitySelectionData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, System.Nullable<decimal>>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityKey))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.EntityKeyMember>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, System.Nullable<decimal>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingConfigurationSchedule))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.FileMaster))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.CommentInfo>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.CommentInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.PresentationInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingPresentationMappingInfo>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingPresentationMappingInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileInfo>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.VoterInfo>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.VoterInfo))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingConfigurationSchedule))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingMinuteData>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingMinuteData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster>))]
     public partial class EntityKeyMember : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string KeyField;
@@ -3470,6 +3471,51 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PresentationAttachedFileStreamData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
+    public partial class PresentationAttachedFileStreamData : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private byte[] FileStreamField;
+        
+        private GreenField.ServiceCaller.MeetingDefinitions.FileMaster PresentationAttachedFileDataField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public byte[] FileStream {
+            get {
+                return this.FileStreamField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FileStreamField, value) != true)) {
+                    this.FileStreamField = value;
+                    this.RaisePropertyChanged("FileStream");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.MeetingDefinitions.FileMaster PresentationAttachedFileData {
+            get {
+                return this.PresentationAttachedFileDataField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PresentationAttachedFileDataField, value) != true)) {
+                    this.PresentationAttachedFileDataField = value;
+                    this.RaisePropertyChanged("PresentationAttachedFileData");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MeetingAttachedFileStreamData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class MeetingAttachedFileStreamData : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -3535,6 +3581,22 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         System.IAsyncResult BeginRetrieveSecurityDetails(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, System.AsyncCallback callback, object asyncState);
         
         GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData EndRetrieveSecurityDetails(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/RetrievePresentationAttachedFileDetails", ReplyAction="http://tempuri.org/MeetingOperations/RetrievePresentationAttachedFileDetailsRespo" +
+            "nse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/RetrievePresentationAttachedFileDetailsServi" +
+            "ceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrievePresentationAttachedFileDetails(System.Nullable<long> presentationID, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster> EndRetrievePresentationAttachedFileDetails(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/UpdatePresentationAttachedFileStreamData", ReplyAction="http://tempuri.org/MeetingOperations/UpdatePresentationAttachedFileStreamDataResp" +
+            "onse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/UpdatePresentationAttachedFileStreamDataServ" +
+            "iceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginUpdatePresentationAttachedFileStreamData(string userName, long presentationId, string url, GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData, System.AsyncCallback callback, object asyncState);
+        
+        bool EndUpdatePresentationAttachedFileStreamData(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/GetMeetingConfigSchedule", ReplyAction="http://tempuri.org/MeetingOperations/GetMeetingConfigScheduleResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/GetMeetingConfigScheduleServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
@@ -3704,6 +3766,44 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrievePresentationAttachedFileDetailsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrievePresentationAttachedFileDetailsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class UpdatePresentationAttachedFileStreamDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public UpdatePresentationAttachedFileStreamDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }
@@ -4034,6 +4134,18 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveSecurityDetailsCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrievePresentationAttachedFileDetailsDelegate;
+        
+        private EndOperationDelegate onEndRetrievePresentationAttachedFileDetailsDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrievePresentationAttachedFileDetailsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginUpdatePresentationAttachedFileStreamDataDelegate;
+        
+        private EndOperationDelegate onEndUpdatePresentationAttachedFileStreamDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onUpdatePresentationAttachedFileStreamDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginGetMeetingConfigScheduleDelegate;
         
         private EndOperationDelegate onEndGetMeetingConfigScheduleDelegate;
@@ -4188,6 +4300,10 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         public event System.EventHandler<CreatePresentationCompletedEventArgs> CreatePresentationCompleted;
         
         public event System.EventHandler<RetrieveSecurityDetailsCompletedEventArgs> RetrieveSecurityDetailsCompleted;
+        
+        public event System.EventHandler<RetrievePresentationAttachedFileDetailsCompletedEventArgs> RetrievePresentationAttachedFileDetailsCompleted;
+        
+        public event System.EventHandler<UpdatePresentationAttachedFileStreamDataCompletedEventArgs> UpdatePresentationAttachedFileStreamDataCompleted;
         
         public event System.EventHandler<GetMeetingConfigScheduleCompletedEventArgs> GetMeetingConfigScheduleCompleted;
         
@@ -4363,6 +4479,104 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             base.InvokeAsync(this.onBeginRetrieveSecurityDetailsDelegate, new object[] {
                         entitySelectionData,
                         presentationOverviewData}, this.onEndRetrieveSecurityDetailsDelegate, this.onRetrieveSecurityDetailsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginRetrievePresentationAttachedFileDetails(System.Nullable<long> presentationID, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrievePresentationAttachedFileDetails(presentationID, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster> GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndRetrievePresentationAttachedFileDetails(System.IAsyncResult result) {
+            return base.Channel.EndRetrievePresentationAttachedFileDetails(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrievePresentationAttachedFileDetails(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Nullable<long> presentationID = ((System.Nullable<long>)(inValues[0]));
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginRetrievePresentationAttachedFileDetails(presentationID, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrievePresentationAttachedFileDetails(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster> retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndRetrievePresentationAttachedFileDetails(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrievePresentationAttachedFileDetailsCompleted(object state) {
+            if ((this.RetrievePresentationAttachedFileDetailsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrievePresentationAttachedFileDetailsCompleted(this, new RetrievePresentationAttachedFileDetailsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrievePresentationAttachedFileDetailsAsync(System.Nullable<long> presentationID) {
+            this.RetrievePresentationAttachedFileDetailsAsync(presentationID, null);
+        }
+        
+        public void RetrievePresentationAttachedFileDetailsAsync(System.Nullable<long> presentationID, object userState) {
+            if ((this.onBeginRetrievePresentationAttachedFileDetailsDelegate == null)) {
+                this.onBeginRetrievePresentationAttachedFileDetailsDelegate = new BeginOperationDelegate(this.OnBeginRetrievePresentationAttachedFileDetails);
+            }
+            if ((this.onEndRetrievePresentationAttachedFileDetailsDelegate == null)) {
+                this.onEndRetrievePresentationAttachedFileDetailsDelegate = new EndOperationDelegate(this.OnEndRetrievePresentationAttachedFileDetails);
+            }
+            if ((this.onRetrievePresentationAttachedFileDetailsCompletedDelegate == null)) {
+                this.onRetrievePresentationAttachedFileDetailsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrievePresentationAttachedFileDetailsCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrievePresentationAttachedFileDetailsDelegate, new object[] {
+                        presentationID}, this.onEndRetrievePresentationAttachedFileDetailsDelegate, this.onRetrievePresentationAttachedFileDetailsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginUpdatePresentationAttachedFileStreamData(string userName, long presentationId, string url, GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdatePresentationAttachedFileStreamData(userName, presentationId, url, presentationAttachedFileStreamData, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndUpdatePresentationAttachedFileStreamData(System.IAsyncResult result) {
+            return base.Channel.EndUpdatePresentationAttachedFileStreamData(result);
+        }
+        
+        private System.IAsyncResult OnBeginUpdatePresentationAttachedFileStreamData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string userName = ((string)(inValues[0]));
+            long presentationId = ((long)(inValues[1]));
+            string url = ((string)(inValues[2]));
+            GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData = ((GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData)(inValues[3]));
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginUpdatePresentationAttachedFileStreamData(userName, presentationId, url, presentationAttachedFileStreamData, callback, asyncState);
+        }
+        
+        private object[] OnEndUpdatePresentationAttachedFileStreamData(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndUpdatePresentationAttachedFileStreamData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnUpdatePresentationAttachedFileStreamDataCompleted(object state) {
+            if ((this.UpdatePresentationAttachedFileStreamDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.UpdatePresentationAttachedFileStreamDataCompleted(this, new UpdatePresentationAttachedFileStreamDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void UpdatePresentationAttachedFileStreamDataAsync(string userName, long presentationId, string url, GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData) {
+            this.UpdatePresentationAttachedFileStreamDataAsync(userName, presentationId, url, presentationAttachedFileStreamData, null);
+        }
+        
+        public void UpdatePresentationAttachedFileStreamDataAsync(string userName, long presentationId, string url, GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData, object userState) {
+            if ((this.onBeginUpdatePresentationAttachedFileStreamDataDelegate == null)) {
+                this.onBeginUpdatePresentationAttachedFileStreamDataDelegate = new BeginOperationDelegate(this.OnBeginUpdatePresentationAttachedFileStreamData);
+            }
+            if ((this.onEndUpdatePresentationAttachedFileStreamDataDelegate == null)) {
+                this.onEndUpdatePresentationAttachedFileStreamDataDelegate = new EndOperationDelegate(this.OnEndUpdatePresentationAttachedFileStreamData);
+            }
+            if ((this.onUpdatePresentationAttachedFileStreamDataCompletedDelegate == null)) {
+                this.onUpdatePresentationAttachedFileStreamDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUpdatePresentationAttachedFileStreamDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginUpdatePresentationAttachedFileStreamDataDelegate, new object[] {
+                        userName,
+                        presentationId,
+                        url,
+                        presentationAttachedFileStreamData}, this.onEndUpdatePresentationAttachedFileStreamDataDelegate, this.onUpdatePresentationAttachedFileStreamDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5240,6 +5454,35 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             public GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData EndRetrieveSecurityDetails(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData _result = ((GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData)(base.EndInvoke("RetrieveSecurityDetails", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrievePresentationAttachedFileDetails(System.Nullable<long> presentationID, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = presentationID;
+                System.IAsyncResult _result = base.BeginInvoke("RetrievePresentationAttachedFileDetails", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster> EndRetrievePresentationAttachedFileDetails(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster>)(base.EndInvoke("RetrievePresentationAttachedFileDetails", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginUpdatePresentationAttachedFileStreamData(string userName, long presentationId, string url, GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[4];
+                _args[0] = userName;
+                _args[1] = presentationId;
+                _args[2] = url;
+                _args[3] = presentationAttachedFileStreamData;
+                System.IAsyncResult _result = base.BeginInvoke("UpdatePresentationAttachedFileStreamData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndUpdatePresentationAttachedFileStreamData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("UpdatePresentationAttachedFileStreamData", _args, result)));
                 return _result;
             }
             

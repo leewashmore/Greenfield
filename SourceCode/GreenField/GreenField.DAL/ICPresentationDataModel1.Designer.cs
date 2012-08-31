@@ -1938,6 +1938,25 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<DocumentsData>("GetDocumentsData", searchStringParameter);
         }
+         /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        public ObjectResult<FileMaster> RetrieveICPresentationAttachedFileDetails(Nullable<global::System.Int64> presentationId)
+        {
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<FileMaster>("RetrieveICPresentationAttachedFileDetails", presentationIdParameter);
+        }
+
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -2034,6 +2053,47 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("SetUploadFileInfo", userNameParameter, nameParameter, locationParameter, securityNameParameter, securityTickerParameter, typeParameter, metaTagsParameter, commentsParameter);
         }
+         /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userName">No Metadata Documentation available.</param>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        /// <param name="xmlScript">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> SetICPresentationAttachedFileInfo(global::System.String userName, Nullable<global::System.Int64> presentationId, global::System.String xmlScript)
+        {
+            ObjectParameter userNameParameter;
+            if (userName != null)
+            {
+                userNameParameter = new ObjectParameter("UserName", userName);
+            }
+            else
+            {
+                userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
+            }
+    
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter xmlScriptParameter;
+            if (xmlScript != null)
+            {
+                xmlScriptParameter = new ObjectParameter("xmlScript", xmlScript);
+            }
+            else
+            {
+                xmlScriptParameter = new ObjectParameter("xmlScript", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetICPresentationAttachedFileInfo", userNameParameter, presentationIdParameter, xmlScriptParameter);
+        }
+
 
         #endregion
     }

@@ -377,6 +377,9 @@
         <Function Name="RetrieveICPMeetingMinuteDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MeetingId" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="RetrieveICPresentationAttachedFileDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PresentationId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="RetrieveICPresentationOverviewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="SetICPMeetingAttachedFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
@@ -399,6 +402,11 @@
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="MeetingId" Type="bigint" Mode="In" />
           <Parameter Name="Status" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SetICPresentationAttachedFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="PresentationId" Type="bigint" Mode="In" />
+          <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="SetICPresentationComments" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
@@ -768,8 +776,16 @@
             <Parameter Name="MeetingClosedDateTime" Mode="In" Type="DateTime" />
             <Parameter Name="MeetingVotingClosedDateTime" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="GetDocumentsData" ReturnType="Collection(ICPresentationModel.DocumentsData)">
+          <FunctionImport Name="RetrieveICPresentationAttachedFileDetails" EntitySet="FileMasters" ReturnType="Collection(ICPresentationModel.FileMaster)">
+            <Parameter Name="PresentationId" Mode="In" Type="Int64" />
+          </FunctionImport>
+           <FunctionImport Name="GetDocumentsData" ReturnType="Collection(ICPresentationModel.DocumentsData)">
           <Parameter Name="searchString" Mode="In" Type="String" />
+          </FunctionImport>
+           <FunctionImport Name="SetICPresentationAttachedFileInfo" ReturnType="Collection(Int32)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="PresentationId" Mode="In" Type="Int64" />
+            <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="SetUploadFileInfo" ReturnType="Collection(Int32)">
             <Parameter Name="UserName" Mode="In" Type="String" />
@@ -1497,6 +1513,8 @@
           <FunctionImportMapping FunctionImportName="SetICPMeetingAttachedFileInfo" FunctionName="ICPresentationModel.Store.SetICPMeetingAttachedFileInfo" />
           <FunctionImportMapping FunctionImportName="SetICPMeetingPresentationStatus" FunctionName="ICPresentationModel.Store.SetICPMeetingPresentationStatus" />
           <FunctionImportMapping FunctionImportName="SetICPMeetingPresentationDate" FunctionName="ICPresentationModel.Store.SetICPMeetingPresentationDate" />
+          <FunctionImportMapping FunctionImportName="RetrieveICPresentationAttachedFileDetails" FunctionName="ICPresentationModel.Store.RetrieveICPresentationAttachedFileDetails" />
+          <FunctionImportMapping FunctionImportName="SetICPresentationAttachedFileInfo" FunctionName="ICPresentationModel.Store.SetICPresentationAttachedFileInfo" />
           <FunctionImportMapping FunctionImportName="GetDocumentsData" FunctionName="ICPresentationModel.Store.GetDocumentsData">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ICPresentationModel.DocumentsData">
