@@ -519,17 +519,17 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
-    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations.disco" />
-    <None Include="Service References\DocumentWorkSpaceDefinitions\configuration91.svcinfo" />
-    <None Include="Service References\DocumentWorkSpaceDefinitions\configuration.svcinfo" />
-    <None Include="Service References\DocumentWorkSpaceDefinitions\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
     <None Include="Service References\BenchmarkHoldingsDefinitions\BenchmarkHoldingsOperations.disco" />
     <None Include="Service References\BenchmarkHoldingsDefinitions\configuration91.svcinfo" />
     <None Include="Service References\BenchmarkHoldingsDefinitions\configuration.svcinfo" />
     <None Include="Service References\BenchmarkHoldingsDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations.disco" />
+    <None Include="Service References\DocumentWorkSpaceDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\DocumentWorkSpaceDefinitions\configuration.svcinfo" />
+    <None Include="Service References\DocumentWorkSpaceDefinitions\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
