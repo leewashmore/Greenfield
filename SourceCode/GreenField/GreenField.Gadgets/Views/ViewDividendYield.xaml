@@ -89,7 +89,8 @@
                                                                             SliderSelectionStart="0.0" SliderSelectionEnd="1.0"/>
                                         </telerik:ChartArea.ZoomScrollSettingsY>
                                         <telerikCharting:ChartArea.AxisX >
-                                            <telerikCharting:AxisX LabelRotationAngle="45">
+                                            <telerikCharting:AxisX Step="5"
+                                                               LabelStep="5" LabelRotationAngle="45">
                                                 <telerikCharting:AxisX.AxisStyles>
                                                     <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                 </telerikCharting:AxisX.AxisStyles>
