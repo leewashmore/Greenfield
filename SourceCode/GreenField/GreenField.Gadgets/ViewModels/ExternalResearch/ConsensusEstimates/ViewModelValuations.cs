@@ -442,7 +442,7 @@ namespace GreenField.Gadgets.ViewModels
                     Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName + " (" + EntitySelectionInfo.ShortName + " : " + EntitySelectionInfo.InstrumentID + ")");
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                BusyIndicatorNotification();
+               // BusyIndicatorNotification();
             }
             catch (Exception ex)
             {
@@ -539,7 +539,7 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             _dbInteractivity.RetrieveConsensusEstimatesValuationsData
                                 (IssuerReferenceInfo.IssuerId, SelectedPeriodType, SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
-                            BusyIndicatorNotification(true, "Retrieving data for the selected Security");
+                            BusyIndicatorNotification(true, "Updating information based on selected Security");
                         }
                     }
                 }

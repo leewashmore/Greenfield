@@ -52,7 +52,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private IEventAggregator _eventAggregator;
 
-        
+
 
         #endregion
 
@@ -487,7 +487,6 @@ namespace GreenField.Gadgets.ViewModels
                     Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName + " (" + EntitySelectionInfo.ShortName + " : " + EntitySelectionInfo.InstrumentID + ")");
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                BusyIndicatorNotification();
             }
             catch (Exception ex)
             {

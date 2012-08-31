@@ -107,6 +107,25 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<DCFTerminalValueCalculationsData> RetrieveTerminalValueCalculationsData(EntitySelectionData entitySelectionData)
+        {
+            List<DCFTerminalValueCalculationsData> result = new List<DCFTerminalValueCalculationsData>();
+
+            ExternalResearchEntities entity = new ExternalResearchEntities();
+            if (entitySelectionData == null)
+                return new List<DCFTerminalValueCalculationsData>();
+
+
+
+
+            return result;
+        }
+        
+
+
         /// <summary>
         /// Gets FreCashFlows Data
         /// </summary>
@@ -162,5 +181,9 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+
+
+
     }
 }
