@@ -59,6 +59,7 @@
                             <SolidColorBrush Color="#0000ff"/>
                             <SolidColorBrush Color="#9F1D21"/>
                             <SolidColorBrush Color="#213671"/>
+                            
                             <SolidColorBrush Color="#213671"/>
                         </telerik:RadChart.PaletteBrushes>
                         <telerikChart:RadChart.DefaultView>
@@ -72,6 +73,12 @@
                                     <telerikCharting:ChartArea SmartLabelsEnabled="False"
                                                             EnableAnimations="False" NoDataString="No Data Available" Margin="0,0,0,0" 
                                                             ItemOverlapPercent="0" ItemWidthPercent="100" LegendName="chPRevenueLegend">
+                                        <telerik:ChartArea.ZoomScrollSettingsX>
+                                            <telerik:ZoomScrollSettings MinZoomRange="0" RangeStart="0" RangeEnd="0.1" ScrollMode="ScrollOnly" SliderSelectionStart="0" SliderSelectionEnd="0.1"></telerik:ZoomScrollSettings>
+                                        </telerik:ChartArea.ZoomScrollSettingsX>
+                                        <telerik:ChartArea.ZoomScrollSettingsY>
+                                            <telerik:ZoomScrollSettings MinZoomRange="0" RangeStart="0" RangeEnd="0.1" ScrollMode="ScrollOnly" SliderSelectionStart="0" SliderSelectionEnd="0.1"></telerik:ZoomScrollSettings>
+                                        </telerik:ChartArea.ZoomScrollSettingsY>
                                         <telerikCharting:ChartArea.AxisX >
                                             <telerikCharting:AxisX LabelRotationAngle="45">
                                                 <telerikCharting:AxisX.AxisStyles>
@@ -103,8 +110,6 @@
                         </telerikChart:RadChart.DefaultView>
 
                         <telerik:RadChart.SeriesMappings>
-
-
                             <telerik:SeriesMapping LegendLabel="PRevenue">
 
                                 <telerik:SeriesMapping.SeriesDefinition>

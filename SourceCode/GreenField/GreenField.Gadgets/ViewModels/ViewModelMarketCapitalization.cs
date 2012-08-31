@@ -426,28 +426,33 @@ namespace GreenField.Gadgets.ViewModels
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
-            {               
-                    Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
-                    IsExCashSecurity = isExCashSec;
-                    if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)//&& _mktCapDataFilter != null)
-                    {
-                        CallingWebMethod();
-                        //if (MarketCapitalizationDataLoadEvent != null)
-                        //    MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        //    if(_mktCapDataFilter != null)
-                        //        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
-                        //    else
-                        //        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
+            {
+                Logging.LogMethodParameter(_logger, methodNamespace, isExCashSec, 1);
+                IsExCashSecurity = isExCashSec;
+                if (_effectiveDate != null && _portfolioSelectionData != null && IsActive)//&& _mktCapDataFilter != null)
+                {
+                    CallingWebMethod();
+                    //if (MarketCapitalizationDataLoadEvent != null)
+                    //    MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    //    if(_mktCapDataFilter != null)
+                    //        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), _mktCapDataFilter.Filtertype, _mktCapDataFilter.FilterValues, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
+                    //    else
+                    //        _dbInteractivity.RetrieveMarketCapitalizationData(PortfolioSelectionData, Convert.ToDateTime(EffectiveDate), null, null, IsExCashSecurity, EnableLookThru, RetrieveMarketCapitalizationDataCallbackMethod);
 
-                            
-                    }                    
-                
+
+                }
+
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            finally
+            {
+                MarketCapitalizationDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            }
+
             Logging.LogEndMethod(_logger, methodNamespace);
 
         }

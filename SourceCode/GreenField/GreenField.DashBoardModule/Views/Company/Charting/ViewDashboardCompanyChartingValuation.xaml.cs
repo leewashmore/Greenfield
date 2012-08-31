@@ -60,72 +60,133 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
+            //this.rtvDashboard.Items.Add(new RadTileViewItem
+            //{
                  
-                Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_BANK,
-                Content = null
-            });
+            //    Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_BANK,
+            //    Content = null
+            //});
 
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
+            //this.rtvDashboard.Items.Add(new RadTileViewItem
+            //{
                  
-                Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INDUSTRIAL,
-                Content = null
-            });
+            //    Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INDUSTRIAL,
+            //    Content = null
+            //});
 
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
+            //this.rtvDashboard.Items.Add(new RadTileViewItem
+            //{
                  
-                Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INSURANCE,
-                Content = null
-            });
+            //    Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_INSURANCE,
+            //    Content = null
+            //});
 
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
+            //this.rtvDashboard.Items.Add(new RadTileViewItem
+            //{
                  
-                Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_UTILITY,
-                Content = null
-            });
+            //    Header = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_UTILITY,
+            //    Content = null
+            //});
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PREVENUE, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PREVENUE,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize =
+                        12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                RestoredHeight = 300,
                 Content = new ViewPRevenue(new ViewModelPRevenue(param)) 
                 
             });
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_EVEBITDA, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_EVEBITDA,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize =
+                        12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                RestoredHeight = 300,
                 Content = new ViewEVEBITDA(new ViewModelEVEBITDA(param)) 
                 
             });
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PCE, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                //Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PCE, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PCE,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize =
+                        12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                RestoredHeight = 300,
                 Content = new ViewPCE(new ViewModelPCE(param)) 
                 
             });
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PE, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                //Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PE, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PE,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize =
+                        12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                RestoredHeight = 300,
                 Content = new ViewPE(new ViewModelPE(param))
                 
             });
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PBV, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                //Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PBV, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PBV,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize =
+                        12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                RestoredHeight = 300,
                 Content = new ViewPBV(new ViewModelPBV(param))
                 
             });
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_FCFYield, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                //Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_FCFYield, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_FCFYield,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize =
+                        12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                RestoredHeight = 300,
                 Content = new ViewFCFYield(new ViewModelFCFYield(param))
                 
             });
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_DividendYield, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                //Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_DividendYield, Foreground = new SolidColorBrush(Colors.Black), FontSize = 8, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_DividendYield,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize =
+                        12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                RestoredHeight = 300,
                 Content = new ViewDividendYield(new ViewModelDividendYield(param)) 
                 
             });

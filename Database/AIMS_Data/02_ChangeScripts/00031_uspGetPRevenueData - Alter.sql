@@ -358,7 +358,7 @@ order by ISSUER_ID, estimate_id, PERIOD_YEAR
 			into #RevenueSupport
 			from #RevenueValues a
 			left join #SupportData b on a.PERIOD_END_DATE = b.PRICE_DATE
-			order by b.SECURITY_ID, a.PERIOD_YEAR, a.PERIOD_TYPE
+			order by  a.PERIOD_YEAR, a.PERIOD_TYPE
 				
 				select * from #RevenueSupport
 				--Dropping above tables

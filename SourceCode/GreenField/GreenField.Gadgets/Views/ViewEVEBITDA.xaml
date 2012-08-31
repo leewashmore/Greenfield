@@ -72,6 +72,12 @@
                                     <telerikCharting:ChartArea SmartLabelsEnabled="False"
                                                             EnableAnimations="False" NoDataString="No Data Available" Margin="0,0,0,0" 
                                                             ItemOverlapPercent="0" ItemWidthPercent="100" LegendName="chEVEBITDALegend">
+                                        <telerik:ChartArea.ZoomScrollSettingsX>
+                                            <telerik:ZoomScrollSettings MinZoomRange="0" RangeStart="0" RangeEnd="0.1" ScrollMode="ScrollOnly" SliderSelectionStart="0" SliderSelectionEnd="0.1"></telerik:ZoomScrollSettings>
+                                        </telerik:ChartArea.ZoomScrollSettingsX>
+                                        <telerik:ChartArea.ZoomScrollSettingsY>
+                                            <telerik:ZoomScrollSettings MinZoomRange="0" RangeStart="0" RangeEnd="0.1" ScrollMode="ScrollOnly" SliderSelectionStart="0" SliderSelectionEnd="0.1"></telerik:ZoomScrollSettings>
+                                        </telerik:ChartArea.ZoomScrollSettingsY>
                                         <telerikCharting:ChartArea.AxisX >
                                             <telerikCharting:AxisX LabelRotationAngle="45">
                                                 <telerikCharting:AxisX.AxisStyles>

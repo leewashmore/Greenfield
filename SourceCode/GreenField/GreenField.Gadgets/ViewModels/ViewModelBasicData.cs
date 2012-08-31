@@ -212,6 +212,10 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            finally
+            {
+                BasicDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+            }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
