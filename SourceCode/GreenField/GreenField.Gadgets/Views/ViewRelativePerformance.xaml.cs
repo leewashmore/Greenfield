@@ -354,6 +354,7 @@ namespace GreenField.Gadgets.Views
                     {
                         Text = e.RelativePerformanceSectorInfo[i].SectorName,
                         FontWeight = FontWeights.Bold,
+                        FontFamily = new FontFamily("Arial"),
                         IsReadOnly = true,
                         Background = new SolidColorBrush(Color.FromArgb(255, 203, 212, 241)),
                         Foreground = new SolidColorBrush(Color.FromArgb(255, 0, 0, 0)),
@@ -374,7 +375,9 @@ namespace GreenField.Gadgets.Views
                         {
                             Text = securityName.SecurityName
                                 + " (" + securityName.SecurityAlpha + ")",
-                            FontSize = 9
+                            FontSize = 9,
+                            FontWeight = FontWeights.Normal,
+                            FontFamily = new FontFamily("Arial")
                         };
                         txtSecurityName.SetValue(Grid.ColumnProperty, sectorNum);
                         txtSecurityName.SetValue(Grid.RowProperty, securityNum);

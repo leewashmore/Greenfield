@@ -62,6 +62,10 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _isActive = value;
+                if (value)
+                {
+                    Initialize();
+                }
             }
         }
 

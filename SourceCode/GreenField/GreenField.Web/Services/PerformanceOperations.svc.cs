@@ -1184,7 +1184,6 @@ namespace GreenField.Web.Services
                                                                                         t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                                         t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                                         t.NODE_NAME == "Security ID" &&
-                                                                                        t.POR_RC_MARKET_VALUE != 0 &&
                                                                                         t.COUNTRY != null &&
                                                                                         t.GICS_LVL1 != null).ToList();
                 if (data.Count.Equals(0))
@@ -1230,7 +1229,6 @@ namespace GreenField.Web.Services
                 List<GF_PERF_DAILY_ATTRIBUTION> dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                    t.NODE_NAME == "Security ID" &&
-                                                                   t.POR_RC_MARKET_VALUE != 0 &&
                                                                    t.COUNTRY != null &&
                                                                    t.GICS_LVL1 != null &&
                                                                    t.SEC_INV_THEME == "EQUITY").ToList();
@@ -1352,7 +1350,6 @@ namespace GreenField.Web.Services
                     data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                        t.NODE_NAME == "Country" &&
-                                                                       t.POR_RC_MARKET_VALUE != 0 &&
                                                                        t.AGG_LVL_1 != null).ToList();
                 }
 
@@ -1361,7 +1358,6 @@ namespace GreenField.Web.Services
                     data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                         t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                         t.NODE_NAME == "Country" &&
-                                                                        t.POR_RC_MARKET_VALUE != 0 &&
                                                                         t.AGG_LVL_1 != null &&
                                                                         t.GICS_LVL1 == sectorID).ToList();
                 }
@@ -1371,7 +1367,6 @@ namespace GreenField.Web.Services
                     data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                        t.NODE_NAME == "Country" &&
-                                                                       t.POR_RC_MARKET_VALUE != 0 &&
                                                                        t.AGG_LVL_1 == countryID).ToList();
                 }
 
@@ -1380,7 +1375,6 @@ namespace GreenField.Web.Services
                     data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                        t.NODE_NAME == "Country" &&
-                                                                       t.POR_RC_MARKET_VALUE != 0 &&
                                                                        t.AGG_LVL_1 == countryID &&
                                                                        t.GICS_LVL1 == sectorID).ToList();
                 }
@@ -1474,7 +1468,6 @@ namespace GreenField.Web.Services
                     data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                        t.NODE_NAME == "GICS Level 1" &&
-                                                                       t.POR_RC_MARKET_VALUE != 0 &&
                                                                        t.AGG_LVL_1_LONG_NAME != "-" &&
                                                                        t.AGG_LVL_1_LONG_NAME != null).ToList();
                 }
@@ -1484,7 +1477,6 @@ namespace GreenField.Web.Services
                     data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                         t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                         t.NODE_NAME == "GICS Level 1" &&
-                                                                        t.POR_RC_MARKET_VALUE != 0 &&
                                                                         t.AGG_LVL_1_LONG_NAME == sectorID).ToList();
                 }
 
@@ -1493,7 +1485,6 @@ namespace GreenField.Web.Services
                     data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                        t.NODE_NAME == "GICS Level 1" &&
-                                                                       t.POR_RC_MARKET_VALUE != 0 &&
                                                                        t.AGG_LVL_1_LONG_NAME != "-" &&
                                                                        t.AGG_LVL_1_LONG_NAME != null &&
                                                                        t.COUNTRY == countryID).ToList();
@@ -1504,7 +1495,6 @@ namespace GreenField.Web.Services
                     data = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                        t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                        t.NODE_NAME == "GICS Level 1" &&
-                                                                       t.POR_RC_MARKET_VALUE != 0 &&
                                                                        t.AGG_LVL_1_LONG_NAME == sectorID &&
                                                                        t.COUNTRY == countryID).ToList();
                 }
@@ -1705,7 +1695,6 @@ namespace GreenField.Web.Services
                 dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                    t.NODE_NAME == "Security ID" &&
-                                                                   t.POR_RC_MARKET_VALUE != 0 &&
                                                                    t.AGG_LVL_1_LONG_NAME != null &&
                                                                    t.SEC_INV_THEME == "EQUITY").ToList();
             }
@@ -1715,7 +1704,6 @@ namespace GreenField.Web.Services
                 dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                     t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                     t.NODE_NAME == "Security ID" &&
-                                                                    t.POR_RC_MARKET_VALUE != 0 &&
                                                                     t.AGG_LVL_1_LONG_NAME != null &&
                                                                     t.SEC_INV_THEME == "EQUITY" &&
                                                                     t.GICS_LVL1 == sector).ToList();
@@ -1726,7 +1714,6 @@ namespace GreenField.Web.Services
                 dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                    t.NODE_NAME == "Security ID" &&
-                                                                   t.POR_RC_MARKET_VALUE != 0 &&
                                                                    t.AGG_LVL_1_LONG_NAME != null &&
                                                                    t.SEC_INV_THEME == "EQUITY" &&
                                                                    t.COUNTRY == country).ToList();
@@ -1737,7 +1724,6 @@ namespace GreenField.Web.Services
                 dailyData = entity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == portfolioSelectionData.PortfolioId &&
                                                                    t.TO_DATE == Convert.ToDateTime(effectiveDate) &&
                                                                    t.NODE_NAME == "Security ID" &&
-                                                                   t.POR_RC_MARKET_VALUE != 0 &&
                                                                    t.AGG_LVL_1_LONG_NAME != null &&
                                                                    t.SEC_INV_THEME == "EQUITY" &&
                                                                    t.COUNTRY == country &&

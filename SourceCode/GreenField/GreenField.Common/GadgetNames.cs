@@ -227,7 +227,7 @@ namespace GreenField.Common
 
         public static string ICPRESENTATION_METRICS_REPORT = "IC SRD 4.2.3";
 
-        public static string ICPRESENTATION_PRESENTATIONS = "INVETSMENT COMMITTEE(IC) PRESENTATIONS";
+        public static string ICPRESENTATION_PRESENTATIONS = "INVESTMENT COMMITTEE(IC) PRESENTATIONS";
 
         public static string ICPRESENTATION_UPLOAD_EDIT = "Investment Committee Presentation Upload/Edit";
 

@@ -31,8 +31,6 @@ namespace GreenField.DashboardModule.Views
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
         private IRegionManager _regionManager;
-        private ViewModelPresentationMeetingMinutes _viewModel;
-        private ViewPresentationMeetingMinutes _view;
         #endregion
 
         [ImportingConstructor]
@@ -64,9 +62,7 @@ namespace GreenField.DashboardModule.Views
                 RegionManager = _regionManager
             };
 
-            //_viewModel = new ViewModelPresentationMeetingMinutes(param);
-            //_view = new ViewPresentationMeetingMinutes(_viewModel);
-            this.cctrDashboardContent.Content = null;// _view;
+            this.cctrDashboardContent.Content = new ViewPresentationMeetingMinutes(new ViewModelPresentationMeetingMinutes(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -88,8 +84,7 @@ namespace GreenField.DashboardModule.Views
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
-                control.IsActive = true;
-                _viewModel.Initialize();
+                control.IsActive = true;                
             }
         }
     }
