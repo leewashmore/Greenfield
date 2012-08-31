@@ -114,8 +114,7 @@
                                                     DataMemberBinding="{Binding YearOne}" 
                                                     Width="Auto"
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"
-                                                    DataFormatString="{}{0:p2}"
+                                                    TextAlignment="Right"                                                    
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcYear2" 
@@ -123,8 +122,7 @@
                                                     DataMemberBinding="{Binding YearTwo}" 
                                                     Width="Auto"
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right" 
-                                                    DataFormatString="{}{0:p2}"
+                                                    TextAlignment="Right"                                                     
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
 
@@ -132,8 +130,7 @@
                                                     Header="Year3" 
                                                     DataMemberBinding="{Binding YearThree}" 
                                                     Width="Auto"
-                                                    HeaderTextAlignment="Right" 
-                                                    DataFormatString="{}{0:p2}"
+                                                    HeaderTextAlignment="Right"                                                    
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -142,8 +139,7 @@
                                                     Header="Year4" 
                                                     DataMemberBinding="{Binding YearFour}" 
                                                     Width="Auto"
-                                                    HeaderTextAlignment="Right" 
-                                                    DataFormatString="{}{0:p2}"
+                                                    HeaderTextAlignment="Right"                                                   
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -151,8 +147,7 @@
                                                     Header="Year5" 
                                                     DataMemberBinding="{Binding YearFive}" 
                                                     Width="Auto"
-                                                    HeaderTextAlignment="Right" 
-                                                    DataFormatString="{}{0:p2}"
+                                                    HeaderTextAlignment="Right"                                                   
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -160,8 +155,7 @@
                                                     Header="Year6" 
                                                     DataMemberBinding="{Binding YearSix}" 
                                                     Width="Auto"
-                                                    HeaderTextAlignment="Right" 
-                                                    DataFormatString="{}{0:p2}"
+                                                    HeaderTextAlignment="Right"                                                    
                                                     TextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
@@ -172,8 +166,7 @@
                                                     DataMemberBinding="{Binding FiveYearAvg}" 
                                                     Width="Auto"
                                                     HeaderTextAlignment="Right" 
-                                                    TextAlignment="Right"
-                                                    DataFormatString="{}{0:p2}"
+                                                    TextAlignment="Right"                                                 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"/>
                            
