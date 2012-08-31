@@ -95,15 +95,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _isActive = value;
-                if (_securitySelectionData != null && IsActive)
-                {
-                    if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
-                    {
-                        if (BasicDataLoadEvent != null)
-                            BasicDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveBasicData(_securitySelectionData, RetrieveBasicDataCallbackMethod);
-                    }
-                }
+                CallingWebMethod();
             }
         }
 
@@ -121,15 +113,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
             }
-            if (_securitySelectionData != null && IsActive)
-            {
-                if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
-                {
-                    if (BasicDataLoadEvent != null)
-                        BasicDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    _dbInteractivity.RetrieveBasicData(_securitySelectionData, RetrieveBasicDataCallbackMethod);
-                }
-            }
+            CallingWebMethod();
             
         }
 
@@ -159,12 +143,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
                     _securitySelectionData = entitySelectionData;
 
-                    if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
-                    {
-                        if (BasicDataLoadEvent != null)
-                            BasicDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveBasicData(entitySelectionData, RetrieveBasicDataCallbackMethod);
-                    }
+                    CallingWebMethod();
                 }
                 else
                 {
@@ -221,6 +200,21 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+        #region Web Method Call
+        private void CallingWebMethod()
+        {
+            if (_securitySelectionData != null && IsActive)
+            {
+                if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
+                {
+                    if (BasicDataLoadEvent != null)
+                        BasicDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    _dbInteractivity.RetrieveBasicData(_securitySelectionData, RetrieveBasicDataCallbackMethod);
+                }
+            }
+        }
+        #endregion
+
         #region EventUnSubscribe
 
         public void Dispose()
@@ -228,5 +222,6 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
         }
         #endregion
+
     }
 }

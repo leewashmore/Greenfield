@@ -72,9 +72,9 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            CallingWebMethod();
             if (_eventAggregator != null)
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe((HandleSecurityReferenceSet));
+                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
+            CallingWebMethod();
         }
         #endregion
 
