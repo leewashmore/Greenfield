@@ -32,9 +32,6 @@ namespace GreenField.DashboardModule.Views
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
         private IRegionManager _regionManager;
-        private ViewICPresentationNew _view;
-        private ViewModelICPresentationNew _viewModel;
-        
         #endregion
 
         [ImportingConstructor]
@@ -67,11 +64,7 @@ namespace GreenField.DashboardModule.Views
                 RegionManager = _regionManager
             };
 
-            //for accessing the gadgets data 
-            //_viewModel = new ViewModelICPresentationNew(param);
-            //_view = new ViewICPresentationNew(_viewModel);
-
-            this.cctrDashboardContent.Content = null;// new ViewICPresentationNew(new ViewModelICPresentationNew(param));
+            this.cctrDashboardContent.Content =  new ViewICPresentationNew(new ViewModelICPresentationNew(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

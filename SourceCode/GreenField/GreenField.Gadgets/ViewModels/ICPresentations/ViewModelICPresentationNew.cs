@@ -58,7 +58,20 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private ILoggerFacade _logger;
 
+       // private EntitySelectionData _entitySelectionData;
         private EntitySelectionData _entitySelectionData;
+        public EntitySelectionData EntitySelectionInfo
+        {
+            get { return _entitySelectionData; }
+            set 
+            {
+                if (_entitySelectionData != value)
+                {
+                    _entitySelectionData = value;
+                    RaisePropertyChanged(() => EntitySelectionInfo);
+                }
+            }
+        }        
 
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
@@ -73,6 +86,17 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _isActive = value;
+
+                if (value)
+                {
+                    Initialize();
+
+                    //EntitySelectionData handling
+                    if (_entitySelectionData != null)
+                    {
+                        HandleSecurityReferenceSet(_entitySelectionData);
+                    }
+                }
             }
         }
 
@@ -86,19 +110,16 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _regionManager = param.RegionManager;
 
-            FetchMeetingInfo();
-
             // _dbInteractivity.GetPresentations(GetPresentationsCallBackMethod);
             _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
 
             //Subscription to SecurityReferenceSet event
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
-
-            //EntitySelectionData handling
-            if (_entitySelectionData != null)
+            if (_eventAggregator != null)
             {
-                HandleSecurityReferenceSet(_entitySelectionData);
+                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet); 
             }
+
+            
 
         }
         #endregion
@@ -146,6 +167,10 @@ namespace GreenField.Gadgets.ViewModels
                         AcceptWithoutDiscussionFlag = true,
                         StatusType = StatusType.IN_PROGRESS,
                         Presenter = SessionManager.SESSION.UserName,
+                        CreatedBy = SessionManager.SESSION.UserName,
+                        CreatedOn = DateTime.UtcNow,
+                        ModifiedBy = SessionManager.SESSION.UserName,
+                        ModifiedOn = DateTime.UtcNow
                     };
                 }
                 return _iCPresentationOverviewInfo;
@@ -284,7 +309,7 @@ namespace GreenField.Gadgets.ViewModels
 
             BusyIndicatorIsBusy = showBusyIndicator;
         }
-        public void FetchMeetingInfo()
+        public void Initialize()
         {
             MeetingInfo meetingInfo = ICNavigation.Fetch(ICNavigationInfo.MeetingInfo) as MeetingInfo;
             if (meetingInfo != null)

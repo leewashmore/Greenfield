@@ -50,6 +50,10 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _isActive = value;
+                if (value)
+                {
+                    Initialize();
+                }
             }
         }
 
@@ -63,7 +67,7 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _regionManager = param.RegionManager;
 
-            FetchPresentationInfo();
+            
             //fetch presentation attached file info based on presentation id
            // RetrievePresentationAttachedDetails();
             //set PresentationAttachedFileInfo in callback
@@ -329,15 +333,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Helper Methods
 
-        public void FetchPresentationInfo()
-        {
-            ICPresentationOverviewData presentationInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
-            if (presentationInfo != null)
-            {
-                SelectedPresentationOverviewInfo = presentationInfo;
-            }
-        }
-
+        
         private Byte[] ReadFully(Stream input)
         {
             Byte[] buffer = new byte[16 * 1024];

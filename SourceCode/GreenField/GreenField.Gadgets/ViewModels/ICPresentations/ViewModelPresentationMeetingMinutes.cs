@@ -66,7 +66,14 @@ namespace GreenField.Gadgets.ViewModels
         public bool IsActive
         {
             get { return _isActive; }
-            set { _isActive = value; }
+            set
+            {
+                _isActive = value;
+                if (value)
+                {
+                    Initialize();
+                }
+            }
         }
 
         public List<String> AttendanceTypeInfo

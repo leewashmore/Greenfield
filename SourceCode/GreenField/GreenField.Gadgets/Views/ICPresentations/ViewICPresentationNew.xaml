@@ -32,7 +32,7 @@
 
                 <!--security name/ticker-->
 
-                <TextBlock Grid.Row="0" Grid.Column="0" FontSize="13" x:Name="txtSecurityName" TextAlignment="Center" FontWeight="Bold" Text="{Binding SecurityName}"/>
+                <TextBlock Grid.Row="0" Grid.Column="0" FontSize="13" x:Name="txtSecurityName" TextAlignment="Center" FontWeight="Bold" Text="{Binding ICPresentationOverviewInfo.SecurityName}"/>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock FontWeight="Bold" FontStyle="Italic">(</TextBlock>
                     <TextBlock x:Name="txtTicker" FontWeight="Bold" FontStyle="Italic" Text="{Binding SecurityTicker}"/>
