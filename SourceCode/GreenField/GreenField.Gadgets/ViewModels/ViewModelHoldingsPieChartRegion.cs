@@ -386,7 +386,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    HoldingsPercentageInfoForRegion = new ObservableCollection<HoldingsPercentageData>(result);
+                    HoldingsPercentageInfoForRegion = new ObservableCollection<HoldingsPercentageData>();
                     BenchmarkName = "";
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     holdingsPieChartForRegionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });

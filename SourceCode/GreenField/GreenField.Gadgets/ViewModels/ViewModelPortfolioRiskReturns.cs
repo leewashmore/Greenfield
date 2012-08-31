@@ -561,6 +561,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
+               
                 if (result != null && result.Count > 0)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
@@ -571,7 +572,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    PortfolioRiskReturnInfo = new List<PortfolioRiskReturnData>(result);
+                    PortfolioRiskReturnInfo = result;
                     SelectedPeriod = _selectedPeriod;
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
