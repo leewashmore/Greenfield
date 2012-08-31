@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d8be9ffb-706b-4ea4-ba70-1cd30438943c" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:59430/Services/DCFOperations.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="DCFOperations.xsd" MetadataType="Schema" ID="609ac001-0be8-4c0f-adc6-e581538b3e05" SourceId="1" SourceUrl="http://localhost:59430/Services/DCFOperations.svc?xsd=xsd4" />
+    <MetadataFile FileName="DCFOperations.wsdl" MetadataType="Wsdl" ID="30600906-afad-4705-9272-857abfa67bae" SourceId="1" SourceUrl="http://localhost:59430/Services/DCFOperations.svc?wsdl" />
+    <MetadataFile FileName="DCFOperations1.xsd" MetadataType="Schema" ID="7793000d-da49-4f13-a56e-ec43eedd1324" SourceId="1" SourceUrl="http://localhost:59430/Services/DCFOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="DCFOperations2.xsd" MetadataType="Schema" ID="1a230f54-69f1-417c-8fea-8db98c8e3591" SourceId="1" SourceUrl="http://localhost:59430/Services/DCFOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="DCFOperations.disco" MetadataType="Disco" ID="1582dd10-9060-4273-9205-29b15993ee14" SourceId="1" SourceUrl="http://localhost:59430/Services/DCFOperations.svc?disco" />
+    <MetadataFile FileName="DCFOperations3.xsd" MetadataType="Schema" ID="dafc7344-e017-4579-bbfc-c629bdff2785" SourceId="1" SourceUrl="http://localhost:59430/Services/DCFOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="DCFOperations4.xsd" MetadataType="Schema" ID="e2af1c1e-6773-4c05-b474-52fc81b73101" SourceId="1" SourceUrl="http://localhost:59430/Services/DCFOperations.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

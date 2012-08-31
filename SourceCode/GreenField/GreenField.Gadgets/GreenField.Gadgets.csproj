@@ -242,6 +242,9 @@
     <Compile Include="Views\Documents\ChildViewDocumentsUpload.xaml.cs">
       <DependentUpon>ChildViewDocumentsUpload.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Documents\ChildViewDocumentsEditDelete.xaml.cs">
+      <DependentUpon>ChildViewDocumentsEditDelete.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml.cs">
       <DependentUpon>ViewEstimates.xaml</DependentUpon>
     </Compile>
@@ -470,6 +473,10 @@
     <Page Include="Views\Documents\ChildViewDocumentsUpload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Documents\ChildViewDocumentsEditDelete.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml">
       <Generator>MSBuild:Compile</Generator>

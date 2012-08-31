@@ -267,5 +267,68 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<DocumentCatalogData> RetrieveDocumentsDataForUser(String userName)
+        {
+            try
+            {
+                List<DocumentCatalogData> result = new List<DocumentCatalogData>();
+                ICPresentationEntities entity = new ICPresentationEntities();
+                List<FileMaster> data = entity.FileMasters.Where(record => record.CreatedBy == userName).ToList();
+                if (data == null)
+                    return result;
+
+                foreach (FileMaster record in data)
+                {
+                    DocumentCatalogData resultNode = new DocumentCatalogData()
+                    {
+                        FileId = record.FileID,
+                        FileMetaTags = record.MetaTags,
+                        FileName = record.Name,
+                        FilePath = record.Location,
+                        FileUploadedBy = record.CreatedBy,
+                        FileUploadedOn = Convert.ToDateTime(record.CreatedOn)
+                    };
+
+                    result.Add(resultNode);
+                }
+
+                return result;
+                
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Inserts Comment on a file
+        /// </summary>
+        /// <param name="userName">user name</param>
+        /// <param name="fileId">file Id</param>
+        /// <param name="comment">comment</param>
+        /// <returns>True for successful insertion, else false</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean SetDocumentComment(String userName, Int64 fileId, String comment)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                Int32? result = entity.SetFileCommentInfo(userName, fileId, comment).FirstOrDefault();
+                return result == 0;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
     }
 }

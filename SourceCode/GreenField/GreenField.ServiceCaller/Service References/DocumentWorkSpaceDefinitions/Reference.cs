@@ -81,6 +81,21 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         System.IAsyncResult BeginGetDocumentsMetaTags(System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<string> EndGetDocumentsMetaTags(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataForUser", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataForUserRespon" +
+            "se")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataForUserServic" +
+            "eFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveDocumentsDataForUser(string userName, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> EndRetrieveDocumentsDataForUser(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentComment", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentCommentResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentCommentServiceFaultFaul" +
+            "t", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginSetDocumentComment(string userName, long fileId, string comment, System.AsyncCallback callback, object asyncState);
+        
+        bool EndSetDocumentComment(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -184,6 +199,44 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveDocumentsDataForUserCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveDocumentsDataForUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SetDocumentCommentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SetDocumentCommentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class DocumentWorkspaceOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations>, GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations {
         
         private BeginOperationDelegate onBeginUploadDocumentDelegate;
@@ -215,6 +268,18 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         private EndOperationDelegate onEndGetDocumentsMetaTagsDelegate;
         
         private System.Threading.SendOrPostCallback onGetDocumentsMetaTagsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveDocumentsDataForUserDelegate;
+        
+        private EndOperationDelegate onEndRetrieveDocumentsDataForUserDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveDocumentsDataForUserCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSetDocumentCommentDelegate;
+        
+        private EndOperationDelegate onEndSetDocumentCommentDelegate;
+        
+        private System.Threading.SendOrPostCallback onSetDocumentCommentCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -278,6 +343,10 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         public event System.EventHandler<SetUploadFileInfoCompletedEventArgs> SetUploadFileInfoCompleted;
         
         public event System.EventHandler<GetDocumentsMetaTagsCompletedEventArgs> GetDocumentsMetaTagsCompleted;
+        
+        public event System.EventHandler<RetrieveDocumentsDataForUserCompletedEventArgs> RetrieveDocumentsDataForUserCompleted;
+        
+        public event System.EventHandler<SetDocumentCommentCompletedEventArgs> SetDocumentCommentCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -527,6 +596,102 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             base.InvokeAsync(this.onBeginGetDocumentsMetaTagsDelegate, null, this.onEndGetDocumentsMetaTagsDelegate, this.onGetDocumentsMetaTagsCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginRetrieveDocumentsDataForUser(string userName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveDocumentsDataForUser(userName, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndRetrieveDocumentsDataForUser(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveDocumentsDataForUser(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveDocumentsDataForUser(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string userName = ((string)(inValues[0]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginRetrieveDocumentsDataForUser(userName, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveDocumentsDataForUser(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndRetrieveDocumentsDataForUser(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveDocumentsDataForUserCompleted(object state) {
+            if ((this.RetrieveDocumentsDataForUserCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveDocumentsDataForUserCompleted(this, new RetrieveDocumentsDataForUserCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveDocumentsDataForUserAsync(string userName) {
+            this.RetrieveDocumentsDataForUserAsync(userName, null);
+        }
+        
+        public void RetrieveDocumentsDataForUserAsync(string userName, object userState) {
+            if ((this.onBeginRetrieveDocumentsDataForUserDelegate == null)) {
+                this.onBeginRetrieveDocumentsDataForUserDelegate = new BeginOperationDelegate(this.OnBeginRetrieveDocumentsDataForUser);
+            }
+            if ((this.onEndRetrieveDocumentsDataForUserDelegate == null)) {
+                this.onEndRetrieveDocumentsDataForUserDelegate = new EndOperationDelegate(this.OnEndRetrieveDocumentsDataForUser);
+            }
+            if ((this.onRetrieveDocumentsDataForUserCompletedDelegate == null)) {
+                this.onRetrieveDocumentsDataForUserCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveDocumentsDataForUserCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveDocumentsDataForUserDelegate, new object[] {
+                        userName}, this.onEndRetrieveDocumentsDataForUserDelegate, this.onRetrieveDocumentsDataForUserCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginSetDocumentComment(string userName, long fileId, string comment, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetDocumentComment(userName, fileId, comment, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndSetDocumentComment(System.IAsyncResult result) {
+            return base.Channel.EndSetDocumentComment(result);
+        }
+        
+        private System.IAsyncResult OnBeginSetDocumentComment(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string userName = ((string)(inValues[0]));
+            long fileId = ((long)(inValues[1]));
+            string comment = ((string)(inValues[2]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginSetDocumentComment(userName, fileId, comment, callback, asyncState);
+        }
+        
+        private object[] OnEndSetDocumentComment(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndSetDocumentComment(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSetDocumentCommentCompleted(object state) {
+            if ((this.SetDocumentCommentCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SetDocumentCommentCompleted(this, new SetDocumentCommentCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SetDocumentCommentAsync(string userName, long fileId, string comment) {
+            this.SetDocumentCommentAsync(userName, fileId, comment, null);
+        }
+        
+        public void SetDocumentCommentAsync(string userName, long fileId, string comment, object userState) {
+            if ((this.onBeginSetDocumentCommentDelegate == null)) {
+                this.onBeginSetDocumentCommentDelegate = new BeginOperationDelegate(this.OnBeginSetDocumentComment);
+            }
+            if ((this.onEndSetDocumentCommentDelegate == null)) {
+                this.onEndSetDocumentCommentDelegate = new EndOperationDelegate(this.OnEndSetDocumentComment);
+            }
+            if ((this.onSetDocumentCommentCompletedDelegate == null)) {
+                this.onSetDocumentCommentCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetDocumentCommentCompleted);
+            }
+            base.InvokeAsync(this.onBeginSetDocumentCommentDelegate, new object[] {
+                        userName,
+                        fileId,
+                        comment}, this.onEndSetDocumentCommentDelegate, this.onSetDocumentCommentCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -672,6 +837,34 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             public System.Collections.Generic.List<string> EndGetDocumentsMetaTags(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<string> _result = ((System.Collections.Generic.List<string>)(base.EndInvoke("GetDocumentsMetaTags", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveDocumentsDataForUser(string userName, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = userName;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveDocumentsDataForUser", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> EndRetrieveDocumentsDataForUser(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData>)(base.EndInvoke("RetrieveDocumentsDataForUser", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSetDocumentComment(string userName, long fileId, string comment, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = userName;
+                _args[1] = fileId;
+                _args[2] = comment;
+                System.IAsyncResult _result = base.BeginInvoke("SetDocumentComment", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndSetDocumentComment(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("SetDocumentComment", _args, result)));
                 return _result;
             }
         }

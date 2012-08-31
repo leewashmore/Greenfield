@@ -33,51 +33,39 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
 
         /// <summary>
-        /// private member object of the IDBInteractivity for interaction with the Service Caller
-        /// </summary>
-        private IDBInteractivity _dbInteractivity;
-
-        /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
         private ILoggerFacade _logger;
 
         private ChildViewDocumentsUpload _uploadWindow;
+
+        
         #endregion       
 
         #region Constructor
         public ViewModelDocuments(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
+            DbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
-
-            if (_uploadWindow == null && IsActive)
-            {
-                _uploadWindow = new ChildViewDocumentsUpload(_dbInteractivity, _logger);
-                _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded); 
-            }                       
-
-            if (_dbInteractivity != null && IsActive)
-            {
-                _dbInteractivity.GetDocumentsMetaTags(GetDocumentsMetaTagsCallBack); 
-            }
         }
+        #endregion
 
         void _uploadWindow_Unloaded(object sender, RoutedEventArgs e)
         {
             if (_uploadWindow.DialogResult == true)
             {
-                if (_dbInteractivity != null)
+                if (DbInteractivity != null)
                 {
                     BusyIndicatorNotification(true, "Uploading Document...");
-                    _dbInteractivity.UploadDocument(_uploadWindow.UploadFileName, _uploadWindow.UploadFileByteStream, UploadDocumentCallbackMethod);
+                    DbInteractivity.UploadDocument(_uploadWindow.UploadFileName, _uploadWindow.UploadFileByteStream, UploadDocumentCallbackMethod);
                 }
             }
         }
 
-        #endregion
+        
 
+        #region Properties
         #region Busy Indicator Notification
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
@@ -106,9 +94,14 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion        
+        #endregion
 
+        /// <summary>
+        /// private member object of the IDBInteractivity for interaction with the Service Caller
+        /// </summary>
+        public IDBInteractivity DbInteractivity { get; set; }
 
+        #region Is Active Implementation
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -126,23 +119,28 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (_uploadWindow == null)
                     {
-                        _uploadWindow = new ChildViewDocumentsUpload(_dbInteractivity, _logger);
+                        _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger);
                         _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);
                     }
 
-                    if (_dbInteractivity != null && IsActive && MetaTagsInfo == null)
+                    if (DbInteractivity != null && IsActive && MetaTagsInfo == null)
                     {
-                        _dbInteractivity.GetDocumentsMetaTags(GetDocumentsMetaTagsCallBack);
+                        BusyIndicatorNotification(true, "Retrieving document meta-tag information...");
+                        DbInteractivity.GetDocumentsMetaTags(GetDocumentsMetaTagsCallBack);
                     }
+
+                    
                 }
             }
         }
+        #endregion
 
+        #region Documents Data
         private List<DocumentCategoricalData> _documentCategoricalInfo;
         public List<DocumentCategoricalData> DocumentCategoricalInfo
         {
             get { return _documentCategoricalInfo; }
-            set 
+            set
             {
                 if (_documentCategoricalInfo != value)
                 {
@@ -151,7 +149,9 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+        #endregion
 
+        #region Auto Complete Search Box
         /// <summary>
         /// Stores the list of metatags 
         /// </summary>
@@ -208,9 +208,9 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+        #endregion
 
-        public event ConstructDocumentSearchResultEventHandler ConstructDocumentSearchResultEvent;        
-
+        #region ICommands
         public ICommand DocumentSearchCommand
         {
             get { return new DelegateCommand<object>(DocumentSearchCommandMethod); }
@@ -221,25 +221,41 @@ namespace GreenField.Gadgets.ViewModels
             get { return new DelegateCommand<object>(DocumentUploadCommandMethod); }
         }
 
+        public ICommand DocumentEditDeleteCommand
+        {
+            get { return new DelegateCommand<object>(DocumentEditDeleteCommandMethod); }
+        }
+        #endregion 
+        #endregion
+
+        #region ICommand Methods
+        private void DocumentSearchCommandMethod(object param)
+        {
+            if (SearchStringText != null && DbInteractivity != null)
+            {
+                BusyIndicatorNotification(true, "Retrieving Search Results...");
+                DbInteractivity.RetrieveDocumentsData(SearchStringText, RetrieveDocumentsDataCallbackMethod);
+            }
+        }
+
         private void DocumentUploadCommandMethod(object param)
         {
             if (_uploadWindow == null)
             {
-                _uploadWindow = new ChildViewDocumentsUpload(_dbInteractivity, _logger); 
+                _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger);
             }
             _uploadWindow.Initialize();
-            _uploadWindow.Show();            
+            _uploadWindow.Show();
         }
 
-        private void DocumentSearchCommandMethod(object param)
+        private void DocumentEditDeleteCommandMethod(object param)
         {
-            if (SearchStringText != null && _dbInteractivity != null)
-            {
-                BusyIndicatorNotification(true, "Retrieving Search Results...");
-                _dbInteractivity.RetrieveDocumentsData(SearchStringText, RetrieveDocumentsDataCallbackMethod);
-            }
-        }
+            ChildViewDocumentsEditDelete editDeleteWindow = new ChildViewDocumentsEditDelete(DbInteractivity, _logger);
+            editDeleteWindow.Show();
+        } 
+        #endregion
 
+        #region Callback Methods
         private void UploadDocumentCallbackMethod(String result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -249,13 +265,13 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null && result != String.Empty)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (_dbInteractivity != null)
+                    if (DbInteractivity != null)
                     {
-                        _dbInteractivity.SetUploadFileInfo(UserSession.SessionManager.SESSION.UserName, _uploadWindow.UploadFileName
+                        DbInteractivity.SetUploadFileInfo(UserSession.SessionManager.SESSION.UserName, _uploadWindow.UploadFileName
                             , result, _uploadWindow.UploadFileCompanyInfo.Name, _uploadWindow.UploadFileCompanyInfo.Ticker
                             , EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(_uploadWindow.UploadFileType)
                             , _uploadWindow.UploadFileTags, _uploadWindow.UploadFileNotes, SetUploadFileInfoCallbackMethod);
-                    }                    
+                    }
                 }
                 else
                 {
@@ -281,10 +297,10 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (SearchStringText != null && _dbInteractivity != null)
+                    if (SearchStringText != null && DbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving Search Results...");
-                        _dbInteractivity.RetrieveDocumentsData(SearchStringText, RetrieveDocumentsDataCallbackMethod);
+                        DbInteractivity.RetrieveDocumentsData(SearchStringText, RetrieveDocumentsDataCallbackMethod);
                     }
                     else
                     {
@@ -332,7 +348,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogEndMethod(_logger, methodNamespace);
                 BusyIndicatorNotification();
             }
-        }
+        }         
 
         private void GetDocumentsMetaTagsCallBack(List<string> result)
         {
@@ -356,8 +372,36 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        } 
+        }
 
+        public void SetDocumentCommentCallbackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result == true)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    if (SearchStringText != null && DbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Updating Search Results...");
+                        DbInteractivity.RetrieveDocumentsData(SearchStringText, RetrieveDocumentsDataCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+        #endregion
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
@@ -365,6 +409,8 @@ namespace GreenField.Gadgets.ViewModels
 
             BusyIndicatorIsBusy = showBusyIndicator;
         }
+
+        public event ConstructDocumentSearchResultEventHandler ConstructDocumentSearchResultEvent;  
 
         #region EventUnSubscribe
         /// <summary>

@@ -29,6 +29,7 @@ namespace GreenField.Gadgets.Views
     {
         public Object CommentUpdationInfo { get; set; }
         public TextBox CommentUpdationInput { get; set; }
+        public Grid CommentInsertionGrid { get; set; }
         public RadComboBox CommentAlertInput { get; set; }
     }
 
@@ -102,7 +103,8 @@ namespace GreenField.Gadgets.Views
                 RadTreeViewItem categoryTreeViewItem = InsertTreeViewItem_Category(documentCategoryType);
                 
                 List<DocumentCategoricalData> categoryTypeFilteredData = data.Where(record =>
-                    record.DocumentCategoryType == documentCategoryType).ToList();
+                    record.DocumentCategoryType == documentCategoryType)
+                    .OrderByDescending(record => record.DocumentCatalogData.FileUploadedOn).ToList();
                 
                 foreach (DocumentCategoricalData record in categoryTypeFilteredData)
                 {
@@ -131,6 +133,11 @@ namespace GreenField.Gadgets.Views
             UpdateNotification();
         }
 
+        /// <summary>
+        /// Inserts categories to the root tree to create first level nodes
+        /// </summary>
+        /// <param name="documentCategoryType">DocumentCategoryType enumeration object</param>
+        /// <returns>RadTreeViewItem for specific DocumentCategoryType</returns>
         private RadTreeViewItem InsertTreeViewItem_Category(DocumentCategoryType documentCategoryType)
         {
             RadTreeViewItem item = new RadTreeViewItem();
@@ -139,24 +146,32 @@ namespace GreenField.Gadgets.Views
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
 
+            #region Category Name
             TextBlock headerCategoryName = new TextBlock()
-            {
-                Text = EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(documentCategoryType),
-                VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                TextWrapping = TextWrapping.Wrap
-            };
+                {
+                    Text = EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(documentCategoryType),
+                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                    TextWrapping = TextWrapping.Wrap,
+                    FontWeight = FontWeights.Bold,
+                    Style = (Style)(this.Resources["TextBlockStyle"])
+                };
 
-            headerCategoryName.SetValue(Grid.ColumnProperty, 0);
+            headerCategoryName.SetValue(Grid.ColumnProperty, 0); 
+            #endregion
 
+            #region Category Updation Notification
             TextBlock headerUpdateNotification = new TextBlock()
-            {
-                Text = "*NEW*",
-                Margin = new Thickness(2, 0, 0, 0),
-                Foreground = new SolidColorBrush(Colors.Red),
-                VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                TextWrapping = TextWrapping.Wrap,
-                Visibility = Visibility.Collapsed                
-            };
+                {
+                    Text = "*NEW*",
+                    Margin = new Thickness(2, 0, 0, 0),
+                    Foreground = new SolidColorBrush(Colors.Red),
+                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                    TextWrapping = TextWrapping.Wrap,
+                    Visibility = Visibility.Collapsed,
+                    FontWeight = FontWeights.Bold,
+                    Style = (Style)(this.Resources["TextBlockStyle"])
+                }; 
+            #endregion
 
             updateInfo.Add(new UpdationData()
             {
@@ -175,6 +190,11 @@ namespace GreenField.Gadgets.Views
             return item;
         }
 
+        /// <summary>
+        /// Inserts Content in the specific treeview node (category) specific to document type data
+        /// </summary>
+        /// <param name="data">DocumentCategoricalData</param>
+        /// <returns>RadTreeViewItem to be inserted in the category node</returns>
         private RadTreeViewItem InsertTreeViewItem_Document(DocumentCategoricalData data)
         {
             RadTreeViewItem documentTreeViewItem = new RadTreeViewItem() { HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch };
@@ -208,7 +228,8 @@ namespace GreenField.Gadgets.Views
                 Content = data.DocumentCatalogData.FileName,
                 NavigateUri = new Uri(data.DocumentCatalogData.FilePath, UriKind.RelativeOrAbsolute),
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                Foreground = new SolidColorBrush(Colors.Black)
+                Foreground = new SolidColorBrush(Colors.Black),
+                Style = (Style)(this.Resources["HyperlinkButtonStyle"])
             };
             fileNameHyperlink.SetValue(Grid.ColumnProperty, 0);
 
@@ -219,7 +240,8 @@ namespace GreenField.Gadgets.Views
                 Foreground = new SolidColorBrush(Colors.Red),
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
                 TextWrapping = TextWrapping.Wrap,
-                Visibility = Visibility.Collapsed
+                Visibility = Visibility.Collapsed,
+                Style = (Style)(this.Resources["TextBlockStyle"])
             };
 
             updateInfo.Add(new UpdationData()
@@ -241,7 +263,8 @@ namespace GreenField.Gadgets.Views
                     Text = data.DocumentCompanyName + " (" + data.DocumentCompanyTicker + ")",
                     Margin = new Thickness(5, 0, 0, 0),
                     VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                    TextWrapping = TextWrapping.Wrap
+                    TextWrapping = TextWrapping.Wrap,
+                    Style = (Style)(this.Resources["TextBlockStyle"])
                 };
             headerExpanderHeaderGridDocumentCompanyName.SetValue(Grid.ColumnProperty, 1);
             #endregion
@@ -252,7 +275,8 @@ namespace GreenField.Gadgets.Views
                     Text = data.DocumentCatalogData.FileUploadedBy,
                     Margin = new Thickness(5, 0, 0, 0),
                     VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                    TextWrapping = TextWrapping.Wrap
+                    TextWrapping = TextWrapping.Wrap,
+                    Style = (Style)(this.Resources["TextBlockStyle"])
                 };
             headerExpanderHeaderGridDocumentUploadedBy.SetValue(Grid.ColumnProperty, 2);
             #endregion
@@ -260,10 +284,11 @@ namespace GreenField.Gadgets.Views
             #region Document Uploaded On
             TextBlock headerExpanderHeaderGridDocumentUploadedOn = new TextBlock()
                 {
-                    Text = data.DocumentCatalogData.FileUploadedOn.ToLocalTime().ToShortDateString(),
+                    Text = data.DocumentCatalogData.FileUploadedOn.ToLocalTime().ToString("MMMM dd, yyyy"),
                     Margin = new Thickness(5, 0, 0, 0),
                     VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                    TextWrapping = TextWrapping.Wrap
+                    TextWrapping = TextWrapping.Wrap,
+                    Style = (Style)(this.Resources["TextBlockStyle"])
                 };
             headerExpanderHeaderGridDocumentUploadedOn.SetValue(Grid.ColumnProperty, 3);
             #endregion
@@ -291,41 +316,7 @@ namespace GreenField.Gadgets.Views
 
             foreach (CommentDetails comment in data.CommentDetails.OrderByDescending(record => record.CommentOn))
             {
-                if (comment.Comment != null)
-                {
-                    headerExpanderContentGridCommentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                    TextBlock commentOnTextBlock = new TextBlock()
-                    {
-                        Text = comment.CommentOn.ToLocalTime().ToShortDateString(),
-                        VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                        Margin = new Thickness(5, 0, 0, 0)
-                    };
-                    commentOnTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
-                    commentOnTextBlock.SetValue(Grid.ColumnProperty, 0);
-
-
-                    TextBlock commentByTextBlock = new TextBlock()
-                    {
-                        Text = comment.CommentBy,
-                        VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                        Margin = new Thickness(5, 0, 0, 0)
-                    };
-                    commentByTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
-                    commentByTextBlock.SetValue(Grid.ColumnProperty, 1);
-
-                    TextBlock commentTextBlock = new TextBlock()
-                    {
-                        Text = comment.Comment,
-                        VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                        Margin = new Thickness(5, 0, 5, 0)
-                    };
-                    commentTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
-                    commentTextBlock.SetValue(Grid.ColumnProperty, 2);
-
-                    headerExpanderContentGridCommentGrid.Children.Add(commentOnTextBlock);
-                    headerExpanderContentGridCommentGrid.Children.Add(commentByTextBlock);
-                    headerExpanderContentGridCommentGrid.Children.Add(commentTextBlock); 
-                }
+                InsertComment_Documents(comment, headerExpanderContentGridCommentGrid);                
             }
 
             headerExpanderContentGrid.Children.Add(headerExpanderContentGridCommentGrid);
@@ -339,35 +330,43 @@ namespace GreenField.Gadgets.Views
             headerExpanderContentGridUpdationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             headerExpanderContentGridUpdationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
+            #region Comment Box
             TextBox documentCommentUpdation = new TextBox()
-            {
-                Margin = new Thickness(5),
-                MinHeight = 15,
-                Height = 15
-            };
-            documentCommentUpdation.SetValue(Grid.ColumnProperty, 0);
+                {
+                    Margin = new Thickness(5),
+                    MaxLength = 255,
+                    Style = (Style)(this.Resources["TextBoxStyle"])
+                };
+            documentCommentUpdation.SetValue(Grid.ColumnProperty, 0); 
+            #endregion
 
+            #region Alert Label
             TextBlock alertLabel = new TextBlock()
-            {
-                Text = "Alert:",
-                Margin = new Thickness(5, 0, 0, 0),
-                VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                FontWeight = FontWeights.Bold
-            };
-            alertLabel.SetValue(Grid.ColumnProperty, 1);
+                {
+                    Text = "Alert:",
+                    Margin = new Thickness(5, 0, 0, 0),
+                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                    FontWeight = FontWeights.Bold,
+                    Style = (Style)(this.Resources["TextBlockStyle"])
+                };
+            alertLabel.SetValue(Grid.ColumnProperty, 1); 
+            #endregion
 
+            #region Alert User Listing
             RadComboBox userListingComboBox = new RadComboBox()
             {
                 Margin = new Thickness(5, 0, 0, 0),
-                MinHeight = 15,
-                Height = 15
+                Height = (Double)(this.Resources["DefaultControlMinHeight"]),
+                Style = (Style)(this.Resources["RadComboBoxStyle"])
             };
-            userListingComboBox.SetValue(Grid.ColumnProperty, 2);
+            userListingComboBox.SetValue(Grid.ColumnProperty, 2); 
+            #endregion
 
             CommentUpdationData commentUpdationTagInfo = new CommentUpdationData()
             {
                 CommentAlertInput = userListingComboBox,
                 CommentUpdationInput = documentCommentUpdation,
+                CommentInsertionGrid = headerExpanderContentGridCommentGrid,
                 CommentUpdationInfo = data
             };
 
@@ -375,9 +374,10 @@ namespace GreenField.Gadgets.Views
             {
                 Margin = new Thickness(5, 0, 5, 0),
                 Content = "+",
-                MinHeight = 15,
-                Height = 15,
-                Tag = commentUpdationTagInfo                
+                HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center,
+                Tag = commentUpdationTagInfo,
+                Height = (Double)(this.Resources["DefaultControlMinHeight"]),
+                Style = (Style)(this.Resources["RadButtonStyle"])
             };
 
             commentUpdationButton.SetValue(Grid.ColumnProperty, 3);
@@ -401,34 +401,6 @@ namespace GreenField.Gadgets.Views
 
         }
 
-        void DocumentCommentUpdation(object sender, RoutedEventArgs e)
-        {
-            RadButton element = sender as RadButton;
-            if (element != null)
-            {
-                CommentUpdationData commentUpdationData = element.Tag as CommentUpdationData;
-                if (commentUpdationData != null)
-                {
-                    DocumentCategoricalData data = commentUpdationData.CommentUpdationInfo as DocumentCategoricalData;
-                    if(data != null)
-                    {
-                        DocumentCategoricalData selectedDocument = documentCategoricalInfo.Where(record => record == data).FirstOrDefault();
-                        if(selectedDocument != null)
-                        {
-                            selectedDocument.CommentDetails.Add(new CommentDetails()
-                            {
-                                Comment = commentUpdationData.CommentUpdationInput.Text,
-                                CommentBy = SessionManager.SESSION.UserName,
-                                CommentOn = DateTime.Now
-                            });
-
-                            ConstructDocumentSearchResult(documentCategoricalInfo);
-                        }                        
-                    }                    
-                }
-            }            
-        }
-
         private RadTreeViewItem InsertTreeViewItem_Blog(DocumentCategoricalData data)
         {
             RadTreeViewItem blogTreeViewItem = new RadTreeViewItem() { HorizontalContentAlignment = System.Windows.HorizontalAlignment.Stretch };
@@ -442,7 +414,8 @@ namespace GreenField.Gadgets.Views
             {
                 Text = data.DocumentCompanyName + " (" + data.DocumentCompanyTicker + ")",
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                TextWrapping = TextWrapping.Wrap
+                TextWrapping = TextWrapping.Wrap,
+                Style = (Style)(this.Resources["TextBlockStyle"])
             };
 
             headerCompanyName.SetValue(Grid.ColumnProperty, 0);
@@ -454,7 +427,8 @@ namespace GreenField.Gadgets.Views
                 Foreground = new SolidColorBrush(Colors.Red),
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
                 TextWrapping = TextWrapping.Wrap,
-                Visibility = Visibility.Collapsed
+                Visibility = Visibility.Collapsed,
+                Style = (Style)(this.Resources["TextBlockStyle"])
             };
 
             updateInfo.Add(new UpdationData()
@@ -502,7 +476,8 @@ namespace GreenField.Gadgets.Views
                 {
                     Text = comment.CommentOn.ToLocalTime().ToShortDateString(),
                     VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                    Margin = new Thickness(5, 0, 0, 0)
+                    Margin = new Thickness(5, 0, 0, 0),
+                    Style = (Style)(this.Resources["TextBlockStyle"])
                 };
                 commentOnTextBlock.SetValue(Grid.RowProperty, blogSubTreeViewItemHeaderGridCommentGrid.RowDefinitions.Count - 1);
                 commentOnTextBlock.SetValue(Grid.ColumnProperty, 0);
@@ -512,7 +487,8 @@ namespace GreenField.Gadgets.Views
                 {
                     Text = comment.CommentBy,
                     VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                    Margin = new Thickness(5, 0, 0, 0)
+                    Margin = new Thickness(5, 0, 0, 0),
+                    Style = (Style)(this.Resources["TextBlockStyle"])
                 };
                 commentByTextBlock.SetValue(Grid.RowProperty, blogSubTreeViewItemHeaderGridCommentGrid.RowDefinitions.Count - 1);
                 commentByTextBlock.SetValue(Grid.ColumnProperty, 1);
@@ -521,7 +497,8 @@ namespace GreenField.Gadgets.Views
                 {
                     Text = comment.Comment,
                     VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                    Margin = new Thickness(5, 0, 5, 0)
+                    Margin = new Thickness(5, 0, 5, 0),
+                    Style = (Style)(this.Resources["TextBlockStyle"])
                 };
                 commentTextBlock.SetValue(Grid.RowProperty, blogSubTreeViewItemHeaderGridCommentGrid.RowDefinitions.Count - 1);
                 commentTextBlock.SetValue(Grid.ColumnProperty, 2);
@@ -545,8 +522,7 @@ namespace GreenField.Gadgets.Views
             TextBox documentCommentUpdation = new TextBox()
             {
                 Margin = new Thickness(5),
-                MinHeight = 15,
-                Height = 15
+                Style = (Style)(this.Resources["TextBoxStyle"])
             };
             documentCommentUpdation.SetValue(Grid.ColumnProperty, 0);
 
@@ -555,15 +531,15 @@ namespace GreenField.Gadgets.Views
                 Text = "Alert:",
                 Margin = new Thickness(5, 0, 0, 0),
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
-                FontWeight = FontWeights.Bold
+                FontWeight = FontWeights.Bold,
+                Style = (Style)(this.Resources["TextBlockStyle"])
             };
             alertLabel.SetValue(Grid.ColumnProperty, 1);
 
             RadComboBox userListingComboBox = new RadComboBox()
             {
                 Margin = new Thickness(5, 0, 0, 0),
-                MinHeight = 15,
-                Height = 15
+                Style = (Style)(this.Resources["RadComboBoxStyle"])
             };
             userListingComboBox.SetValue(Grid.ColumnProperty, 2);
 
@@ -571,8 +547,7 @@ namespace GreenField.Gadgets.Views
             {
                 Margin = new Thickness(5, 0, 5, 0),
                 Content = "+",
-                MinHeight = 15,
-                Height = 15
+                Style = (Style)(this.Resources["RadButtonStyle"])
             };
             commentUpdationButton.SetValue(Grid.ColumnProperty, 3);
 
@@ -592,6 +567,45 @@ namespace GreenField.Gadgets.Views
             #endregion
 
             return blogTreeViewItem;
+        }
+
+        private void DocumentCommentUpdation(object sender, RoutedEventArgs e)
+        {
+            RadButton element = sender as RadButton;
+            if (element != null)
+            {
+                CommentUpdationData commentUpdationData = element.Tag as CommentUpdationData;
+                if (commentUpdationData != null)
+                {
+                    DocumentCategoricalData data = commentUpdationData.CommentUpdationInfo as DocumentCategoricalData;
+                    if (data != null)
+                    {
+                        DocumentCategoricalData selectedDocument = documentCategoricalInfo.Where(record => record == data).FirstOrDefault();
+                        if (selectedDocument != null)
+                        {
+                            
+                            //CommentDetails InsertionCommentDetails = new CommentDetails()
+                            //{
+                            //    Comment = commentUpdationData.CommentUpdationInput.Text,
+                            //    CommentBy = SessionManager.SESSION.UserName,
+                            //    CommentOn = DateTime.Now
+                            //};
+                            //selectedDocument.CommentDetails.Add(InsertionCommentDetails);
+
+                            if (DataContextViewModelDocuments.DbInteractivity != null)
+                            {
+                                DataContextViewModelDocuments.BusyIndicatorNotification(true, "Updating comment to document...");
+                                DataContextViewModelDocuments.DbInteractivity.SetDocumentComment(UserSession.SessionManager.SESSION.UserName
+                                    , (Int64)selectedDocument.DocumentCatalogData.FileId, commentUpdationData.CommentUpdationInput.Text
+                                    , DataContextViewModelDocuments.SetDocumentCommentCallbackMethod);
+                            }
+                            //ConstructDocumentSearchResult(documentCategoricalInfo);
+
+                            //InsertComment_Documents(InsertionCommentDetails, commentUpdationData.CommentInsertionGrid);                            
+                        }
+                    }
+                }
+            }
         }
 
         private void UpdateNotification()
@@ -669,5 +683,56 @@ namespace GreenField.Gadgets.Views
                 }
             }
         }
+
+        private void InsertComment_Documents(CommentDetails comment, Grid headerExpanderContentGridCommentGrid)
+        {
+            if (comment.Comment != null)
+            {
+                headerExpanderContentGridCommentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+
+                #region Comment On
+                TextBlock commentOnTextBlock = new TextBlock()
+                {
+                    Text = comment.CommentOn.ToLocalTime().ToString("MMMM dd, yyyy"),
+                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                    Margin = new Thickness(5, 0, 0, 0),
+                    Style = (Style)(this.Resources["TextBlockStyle"])
+                };
+                commentOnTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
+                commentOnTextBlock.SetValue(Grid.ColumnProperty, 0);
+                #endregion
+
+                #region Comment By
+                TextBlock commentByTextBlock = new TextBlock()
+                {
+                    Text = comment.CommentBy,
+                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                    Margin = new Thickness(5, 0, 0, 0),
+                    Style = (Style)(this.Resources["TextBlockStyle"])
+                };
+                commentByTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
+                commentByTextBlock.SetValue(Grid.ColumnProperty, 1);
+                #endregion
+
+                #region Comment
+                TextBlock commentTextBlock = new TextBlock()
+                {
+                    Text = comment.Comment,
+                    VerticalAlignment = System.Windows.VerticalAlignment.Center,
+                    Margin = new Thickness(5, 0, 5, 0),
+                    Style = (Style)(this.Resources["TextBlockStyle"])
+                };
+                #endregion
+
+                commentTextBlock.SetValue(Grid.RowProperty, headerExpanderContentGridCommentGrid.RowDefinitions.Count - 1);
+                commentTextBlock.SetValue(Grid.ColumnProperty, 2);
+
+                headerExpanderContentGridCommentGrid.Children.Add(commentOnTextBlock);
+                headerExpanderContentGridCommentGrid.Children.Add(commentByTextBlock);
+                headerExpanderContentGridCommentGrid.Children.Add(commentTextBlock);
+            }
+        }
+
+        
     }
 }

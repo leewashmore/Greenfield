@@ -54,6 +54,24 @@
   <wsdl:message name="DocumentWorkspaceOperations_GetDocumentsMetaTags_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveDocumentsDataForUser" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveDocumentsDataForUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_SetDocumentComment_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetDocumentComment" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_SetDocumentComment_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetDocumentCommentResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_SetDocumentComment_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="DocumentWorkspaceOperations">
     <wsdl:operation name="UploadDocument">
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UploadDocument" message="tns:DocumentWorkspaceOperations_UploadDocument_InputMessage" />
@@ -79,6 +97,16 @@
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTags" message="tns:DocumentWorkspaceOperations_GetDocumentsMetaTags_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTagsResponse" message="tns:DocumentWorkspaceOperations_GetDocumentsMetaTags_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTagsServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_GetDocumentsMetaTags_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveDocumentsDataForUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataForUser" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataForUserResponse" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataForUserServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetDocumentComment">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentComment" message="tns:DocumentWorkspaceOperations_SetDocumentComment_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentCommentResponse" message="tns:DocumentWorkspaceOperations_SetDocumentComment_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentCommentServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_SetDocumentComment_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="DocumentWorkspaceOperations" type="tns:DocumentWorkspaceOperations">
@@ -133,6 +161,30 @@
     </wsdl:operation>
     <wsdl:operation name="GetDocumentsMetaTags">
       <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTags" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveDocumentsDataForUser">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataForUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="SetDocumentComment">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentComment" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

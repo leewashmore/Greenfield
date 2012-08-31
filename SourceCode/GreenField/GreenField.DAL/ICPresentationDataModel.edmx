@@ -381,6 +381,11 @@
           <Parameter Name="PresentationId" Type="bigint" Mode="In" />
         </Function>
         <Function Name="RetrieveICPresentationOverviewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="SetFileCommentInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="FileId" Type="bigint" Mode="In" />
+          <Parameter Name="Comment" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SetICPMeetingAttachedFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="MeetingId" Type="bigint" Mode="In" />
@@ -796,6 +801,11 @@
             <Parameter Name="Type" Mode="In" Type="String" />
             <Parameter Name="MetaTags" Mode="In" Type="String" />
             <Parameter Name="Comments" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SetFileCommentInfo" ReturnType="Collection(Int32)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="FileId" Mode="In" Type="Int64" />
+            <Parameter Name="Comment" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
@@ -1536,6 +1546,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SetUploadFileInfo" FunctionName="ICPresentationModel.Store.SetUploadFileInfo" />
+          <FunctionImportMapping FunctionImportName="SetFileCommentInfo" FunctionName="ICPresentationModel.Store.SetFileCommentInfo" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

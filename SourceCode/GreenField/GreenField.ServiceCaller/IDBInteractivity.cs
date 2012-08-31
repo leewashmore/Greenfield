@@ -236,7 +236,11 @@ namespace GreenField.ServiceCaller
         void SetUploadFileInfo(String userName, String Name, String Location, String SecurityName
             , String SecurityTicker, String Type, String MetaTags, String Comments, Action<Boolean?> callback);
 
-        void GetDocumentsMetaTags(Action<List<string>> callback);            
+        void GetDocumentsMetaTags(Action<List<string>> callback);
+
+        void RetrieveDocumentsDataForUser(String userName, Action<List<DocumentCatalogData>> callback);
+
+        void SetDocumentComment(String userName, Int64 fileId, String comment, Action<Boolean?> callback);
         #endregion
 
         #region Investment Committee
