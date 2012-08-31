@@ -1375,6 +1375,7 @@ namespace GreenField.Web.Services
 
                 int check = 1;
                 int checkBen = 1;
+                String benchmarkId = null;
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
 
@@ -1394,10 +1395,11 @@ namespace GreenField.Web.Services
                 if (dataPortfolio.Count() > 0)
                 {
                     distinctSecuritiesForPortfolio = dataPortfolio.Select(record => record.ISSUE_NAME).Distinct().ToList();
+                    benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
                 }
                
                 List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                    .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                    .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
                     .ToList();
 
                 if (dataBenchmark.Count() > 0)
@@ -1412,14 +1414,16 @@ namespace GreenField.Web.Services
                     if (securityDetails != null)
                     {
                         check = 0;
-                        issuerIDPortfolio.Append("," + securityDetails.ISSUER_ID);
-                        securityIDPortfolio.Append("," + securityDetails.SECURITY_ID);
+                        issuerIDPortfolio.Append(",'" + securityDetails.ISSUER_ID + "'");
+                        securityIDPortfolio.Append(",'" + securityDetails.SECURITY_ID + "'");
                         listForPortfolio.Add(securityDetails.SECURITY_ID.ToString(),securityDetails.ISSUE_NAME);
                     }
                 }
 
                 issuerIDPortfolio = check == 0 ? issuerIDPortfolio.Remove(0, 1) : null;
-                securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;              
+                securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
+                string a = issuerIDPortfolio.ToString();
+                string b = securityIDPortfolio.ToString();
 
                 foreach (String issueName in distinctSecuritiesForBenchmark)
                 {
@@ -1428,8 +1432,8 @@ namespace GreenField.Web.Services
                     if (securityDetails != null)
                     {
                         checkBen = 0;
-                        issuerIDBenchmark.Append("," + securityDetails.ISSUER_ID);
-                        securityIDBenchmark.Append("," + securityDetails.SECURITY_ID);
+                        issuerIDBenchmark.Append(",'" + securityDetails.ISSUER_ID + "'");
+                        securityIDBenchmark.Append(",'" + securityDetails.SECURITY_ID + "'");
                         listForBenchmark.Add(securityDetails.SECURITY_ID.ToString(),securityDetails.ISSUE_NAME);
                     }
                 }
