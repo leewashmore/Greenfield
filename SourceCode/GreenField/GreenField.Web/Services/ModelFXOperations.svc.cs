@@ -110,7 +110,7 @@ namespace GreenField.Web.Services
             List<RegionSelectionData> result = new List<RegionSelectionData>();
             ResearchEntities research = new ResearchEntities();
             List<Country_Master> countryData = new List<Country_Master>();
-            countryData = research.Country_Master.ToList();
+            countryData = research.Country_Master.Where(t => t.MACRO_ECON_DATA_CURRENT == "Y").ToList();
             for (int i = 0; i < countryData.Count; i++)
             {
                 RegionSelectionData entry = new RegionSelectionData();
