@@ -17,19 +17,14 @@ using System.Linq;
 using System.Xml.Serialization;
 using Microsoft.Practices.Prism.Regions;
 using System.ComponentModel.Composition;
-//using Ashmore.Emm.GreenField.BusinessLogic;
 using GreenField.ServiceCaller;
-//using Ashmore.Emm.GreenField.ICP.Meeting.Module.Model;
 using GreenField.Gadgets.Models;
-//using Ashmore.Emm.GreenField.Common;
 using GreenField.Common;
-//using Ashmore.Emm.GreenField.BusinessLogic.MeetingServiceReference;
 using GreenField.ServiceCaller.MeetingDefinitions;
 using System.Collections.Generic;
 using Microsoft.Practices.Prism.Events;
 using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Logging;
-//using GreenField.DataContracts;
 using GreenField.UserSession;
 using GreenField.DataContracts;
 
@@ -194,8 +189,8 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (_dbInteractivity != null)
             {
-                _dbInteractivity.CreatePresentation(UserSession.SessionManager.SESSION.UserName, ICPresentationOverviewInfo, CreatePresentationCallBackMethod);             
-            }           
+                _dbInteractivity.CreatePresentation(UserSession.SessionManager.SESSION.UserName, ICPresentationOverviewInfo, CreatePresentationCallBackMethod);
+            }
         }
 
         private bool SaveCommandValidationMethod(object param)
@@ -265,7 +260,6 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Event Handler
-
         /// <summary>
         /// Assigns UI Field Properties based on Entity Selection Data
         /// </summary>
@@ -284,7 +278,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (IsActive && _entitySelectionData != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving security reference data for '" + entitySelectionData.LongName + " (" + entitySelectionData.ShortName + ")'");
-                        _dbInteractivity.RetrieveSecurityDetails(entitySelectionData, ICPresentationOverviewInfo, RetrieveSecurityDetailsCallBackMethod);                        
+                        _dbInteractivity.RetrieveSecurityDetails(entitySelectionData, ICPresentationOverviewInfo, RetrieveSecurityDetailsCallBackMethod);
                     }
                 }
                 else
@@ -316,7 +310,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 ICPresentationOverviewInfo.MeetingDateTime = meetingInfo.MeetingDateTime;
                 ICPresentationOverviewInfo.MeetingClosedDateTime = meetingInfo.MeetingClosedDateTime;
-                ICPresentationOverviewInfo.MeetingVotingClosedDateTime = meetingInfo.MeetingVotingClosedDateTime;                
+                ICPresentationOverviewInfo.MeetingVotingClosedDateTime = meetingInfo.MeetingVotingClosedDateTime;
             }
         }
 

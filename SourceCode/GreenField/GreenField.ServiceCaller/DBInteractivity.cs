@@ -3827,13 +3827,13 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, string url, PresentationAttachedFileStreamData presentationAttachedFileStreamData, Action<Boolean?> callback)
+        public void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, FileMaster fileMasterInfo, Boolean deletionFlag, Action<Boolean?> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
-            client.UpdatePresentationAttachedFileStreamDataAsync(userName, presentationId, url, presentationAttachedFileStreamData);
+            client.UpdatePresentationAttachedFileStreamDataAsync(userName, presentationId, fileMasterInfo, deletionFlag);
             client.UpdatePresentationAttachedFileStreamDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -4148,7 +4148,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveDocumentsDataForUser(String userName, Action<List<DocumentCatalogData>> callback)
+        public void RetrieveDocumentsDataForUser(String userName, Action<List<DocumentCategoricalData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");

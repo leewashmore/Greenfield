@@ -88,7 +88,7 @@
   <xs:element name="RetrieveDocumentsDataForUserResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveDocumentsDataForUserResult" nillable="true" type="q3:ArrayOfDocumentCatalogData" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveDocumentsDataForUserResult" nillable="true" type="q3:ArrayOfDocumentCategoricalData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

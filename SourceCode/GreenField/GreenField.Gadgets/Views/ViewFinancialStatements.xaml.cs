@@ -155,7 +155,7 @@ namespace GreenField.Gadgets.Views
             (this.DataContext as ViewModelFinancialStatements).Dispose();
             this.DataContext = null;
         }
-        #endregion
+        #endregion       
     }
 
 

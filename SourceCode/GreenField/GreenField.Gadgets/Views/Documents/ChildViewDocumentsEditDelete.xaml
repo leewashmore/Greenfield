@@ -4,7 +4,7 @@
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
            xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" 
            xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
-           Width="600" Height="400" Title="Edit/Delete File">
+            Width="400" Title="Edit/Delete Documents" HasCloseButton="True">
     <controls:ChildWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -12,45 +12,87 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </controls:ChildWindow.Resources>
-    
-    <Grid x:Name="LayoutRoot" Margin="2">
-        <ScrollViewer>
-            <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" >
-                <telerik:RadGridView Name="dgEditDeleteFile" AutoGenerateColumns="False" 
-                                 CanUserSelect="False" CanUserReorderColumns="False" CanUserInsertRows="False"
-                                 CanUserDeleteRows="False" IsReadOnly="True" CanUserSortColumns="False" ScrollMode="RealTime"
-                                 RowIndicatorVisibility="Collapsed" ShowGroupPanel="False" UseLayoutRounding="True"
-                                 CanUserResizeColumns="False" EnableColumnVirtualization="False" EnableRowVirtualization="False"
-                                 ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}" AlternationCount="2" 
-                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                 GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}" 
-                                 GroupRowStyle="{StaticResource GridViewGroupRowStyle}">
-                                     <!--RowStyle="{StaticResource GridViewRowStyle}"                                  >-->
 
+    <telerik:RadBusyIndicator x:Name="biMeetingMinutes" BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+        <Grid x:Name="LayoutRoot" Margin="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-                    <telerik:RadGridView.Columns>
-                        <telerik:GridViewToggleRowDetailsColumn/>
-                        <telerik:GridViewDataColumn Header="File Name" HeaderTextAlignment="Left" TextAlignment="Left" 
-                                                DataMemberBinding="{Binding FileName}"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
-                                                CellStyle="{StaticResource GridViewCellStyle}" 
-                                                IsSortable="False"
-                                                IsFilterable="False" 
-                                                Width="200"/>
-                    </telerik:RadGridView.Columns>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Document Name:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Overwrite :" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Company :" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="3" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Type :" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="4" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Tags :" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="5" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Notes :" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="6" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Alert :" HorizontalAlignment="Right" VerticalAlignment="Center"/>
 
-                    <telerik:RadGridView.RowDetailsTemplate>
+                <!--User File List-->
+                <telerik:RadComboBox x:Name="cbUserFile" Grid.Column="1" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+                                     ItemsSource="{Binding DocumentBindedCatagoricalInfo}" Style="{StaticResource RadComboBoxStyle}"
+                                     Text="{Binding SearchStringText, Mode=TwoWay}" EmptyText="Search Document Name..." 
+                                     telerik:TextSearch.TextPath="DocumentCatalogData.FileName"
+                                     IsEditable="True" CanAutocompleteSelectItems="True" CanKeyboardNavigationSelectItems="False" 
+                                     OpenDropDownOnFocus="True" StaysOpenOnEdit="True" TextOptions.TextHintingMode="Fixed" IsTextSearchEnabled="False"
+                                     SelectedItem="{Binding SelectedDocumentCatagoricalInfo, Mode=TwoWay}">
+                    <telerik:RadComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </telerik:RadComboBox.ItemsPanel>
+                    <telerik:RadComboBox.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" Margin="5">
-                                <TextBlock Text="Metatag: " />
-                                <TextBlock Text="{Binding FileMetaTags}" />
-                            </StackPanel>
+                            <TextBlock Text="{Binding DocumentCatalogData.FileName, Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Center" 
+                                       Style="{StaticResource TextBlockStyle}"/>
                         </DataTemplate>
-                    </telerik:RadGridView.RowDetailsTemplate>
-                </telerik:RadGridView>
+                    </telerik:RadComboBox.ItemTemplate>
+                </telerik:RadComboBox>
+                <!--Overwrite-->
+                <Grid Grid.Row="1" Grid.Column="1" Margin="0,2,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="tboxFileName" IsEnabled="False" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource TextBoxStyle}"/>
+                    <telerik:RadButton x:Name="btnBrowse" Grid.Column="1" Margin="2,0,0,0" Content="Browse..." Style="{StaticResource RadButtonStyle}"/>
+                </Grid>
+                <telerik:RadComboBox x:Name="cbCompany" Style="{StaticResource RadComboBoxStyle}" Grid.Row="2" Grid.Column="1" Margin="0,2,0,0" 
+                                 VerticalAlignment="Center" HorizontalContentAlignment="Left" ItemsSource="{Binding CompanyInfo}"
+                                 SelectedValue="{Binding SelectedCompanyInfo, Mode=TwoWay}" DisplayMemberPath="Name"/>
+                <telerik:RadComboBox x:Name="cbType" Style="{StaticResource RadComboBoxStyle}" Grid.Row="3" Grid.Column="1" Margin="0,2,0,0" 
+                                 VerticalAlignment="Center" HorizontalContentAlignment="Left" ItemsSource="{Binding CategoryType}"
+                                 SelectedValue="{Binding SelectedCategoryType, Mode=TwoWay}"/>
+                <TextBox x:Name="tbTags" Grid.Row="4" Grid.Column="1" Margin="0,2,0,0" MaxLength="255" Style="{StaticResource TextBoxStyle}" 
+                     VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding DocumentMetags, Mode=TwoWay}"/>
+                <TextBox x:Name="tbNotes" Grid.Row="5" Grid.Column="1" Margin="0,2,0,0" Height="60" Style="{StaticResource TextBoxStyle}"
+                     VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding DocumentNotes, Mode=TwoWay}"/>
+                <telerik:RadComboBox Grid.Row="6" Grid.Column="1" Margin="0,2,0,0" Style="{StaticResource RadComboBoxStyle}"
+                                 VerticalAlignment="Center" HorizontalContentAlignment="Left"/>
+            </Grid>
 
-            </Border>
-        </ScrollViewer>
-    </Grid>
+
+            <Grid Grid.Row="1">
+                <telerik:RadButton x:Name="SaveButton" Content="Save" Style="{StaticResource RadButtonStyle}" Width="75"
+                               HorizontalAlignment="Right" Margin="0,5,0,0"/>
+                <telerik:RadButton x:Name="DeleteButton" Content="Delete" Style="{StaticResource RadButtonStyle}" Width="75"
+                               HorizontalAlignment="Right" Margin="0,5,79,0"/>
+            </Grid>
+        </Grid>
+    </telerik:RadBusyIndicator>
 </controls:ChildWindow>

@@ -34,12 +34,32 @@ namespace GreenField.Gadgets.ViewModels
     {
 
         #region Fields
-
         public IRegionManager _regionManager { private get; set; }
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
+        #endregion
 
+        #region Constructor
+        public ViewModelCreateUpdatePresentations(DashboardGadgetParam param)
+        {
+            _dbInteractivity = param.DBInteractivity;
+            _logger = param.LoggerFacade;
+            _eventAggregator = param.EventAggregator;
+            _regionManager = param.RegionManager;
+
+            //FetchPresentationInfo();
+            //fetch presentation attached file info based on presentation id
+           // RetrievePresentationAttachedDetails();
+            //set PresentationAttachedFileInfo in callback
+            //check enum for upload/edit
+            //if upload set visibility to false or empty text block
+            //if edit load the files in text blocks
+        }
+
+        #endregion       
+        
+        #region Properties
         private bool _isActive;
         public bool IsActive
         {
@@ -57,78 +77,78 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        #region Upload Document Type
+        /// <summary>
+        /// Stores the list of upload document type
+        /// </summary>
+        private List<String> _uploadDocumentInfo;
+        public List<String> UploadDocumentInfo
+        {
+            get
+            {
+                if (_uploadDocumentInfo == null)
+                {
+                    _uploadDocumentInfo = new List<string> 
+                    {
+                        UploadDocumentType.POWERPOINT_PRESENTATION, 
+                        UploadDocumentType.FINSTAT_REPORT, 
+                        UploadDocumentType.INVESTMENT_CONTEXT_REPORT, 
+                        UploadDocumentType.DCF_MODEL, 
+                        UploadDocumentType.ADDITIONAL_ATTACHMENT 
+                    };
+                }
+                return _uploadDocumentInfo;
+            }
+        }
+
+        /// <summary>
+        /// Stores selected upload document type
+        /// </summary>
+        private String _selectedUploadDocumentInfo;
+        public String SelectedUploadDocumentInfo
+        {
+            get { return _selectedUploadDocumentInfo; }
+            set
+            {
+                _selectedUploadDocumentInfo = value;
+                RaisePropertyChanged(() => this.SelectedUploadDocumentInfo);
+            }
+        } 
         #endregion
 
-        #region Constructor
-        public ViewModelCreateUpdatePresentations(DashboardGadgetParam param)
+        /// <summary>
+        /// Stores fileName of the browsed file
+        /// </summary>
+        private String _selectedUploadFileName;
+        public String SelectedUploadFileName
         {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _regionManager = param.RegionManager;
-
-            
-            //fetch presentation attached file info based on presentation id
-           // RetrievePresentationAttachedDetails();
-            //set PresentationAttachedFileInfo in callback
-            //check enum for upload/edit
-            //if upload set visibility to false or empty text block
-            //if edit load the files in text blocks
-            
-
+            get { return _selectedUploadFileName; }
+            set
+            {
+                _selectedUploadFileName = value;
+                RaisePropertyChanged(() => this.SelectedUploadDocumentInfo);
+            }
         }
 
-        #endregion       
+        /// <summary>
+        /// Stores Filemaster object for the upload file
+        /// </summary>
+        public FileMaster UploadFileData { get; set; }
+
+        /// <summary>
+        /// Stores Filemaster object for the deletion file
+        /// </summary>
+        public FileMaster DeleteFileData { get; set; }
+
+        /// <summary>
+        /// Stores fileStream object for the upload file
+        /// </summary>
+        public Byte[] UploadFileStreamData { get; set; }       
         
-        #region Properties
 
-        private FileMaster _selectedPresentationPowerPoint;
-        public FileMaster SelectedPresentationPowerPoint
-        {
-            get { return _selectedPresentationPowerPoint; }
-            set
-            {
-                _selectedPresentationPowerPoint = value;
-                RaisePropertyChanged(() => this.SelectedPresentationPowerPoint);
-            }
-        }
-
-        private FileMaster _selectedPresentationFinStatReport;
-        public FileMaster SelectedPresentationFinStatReport
-        {
-            get { return _selectedPresentationFinStatReport; }
-            set
-            {
-                _selectedPresentationFinStatReport = value;
-                RaisePropertyChanged(() => this.SelectedPresentationFinStatReport);
-            }
-        }
-
-        private FileMaster _selectedPresentationInvestmentContext;
-        public FileMaster SelectedPresentationInvestmentContext
-        {
-            get { return _selectedPresentationInvestmentContext; }
-            set
-            {
-                _selectedPresentationInvestmentContext = value;
-                RaisePropertyChanged(() => this.SelectedPresentationInvestmentContext);
-            }
-        }
-
-        private FileMaster _selectedPresentationDCFReports;
-        public FileMaster SelectedPresentationDCFReports
-        {
-            get { return _selectedPresentationDCFReports; }
-            set
-            {
-                _selectedPresentationDCFReports = value;
-                RaisePropertyChanged(() => this.SelectedPresentationDCFReports);
-            }
-        }
-
-        public PresentationAttachedFileStreamData SelectedPowerPointFileStreamData { get; set; }
-        public PresentationAttachedFileStreamData SelectedDeleteFileStreamData { get; set; }
-
+        /// <summary>
+        /// Stores information concerning selected presentation
+        /// </summary>
         private ICPresentationOverviewData _selectedPresentationOverviewInfo;
         public ICPresentationOverviewData SelectedPresentationOverviewInfo
         {
@@ -139,6 +159,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Stores documentation information concerning the selected presentation
+        /// </summary>
         private List<FileMaster> _selectedPresentationDocumentationInfo;
         public List<FileMaster> SelectedPresentationDocumentationInfo
         {
@@ -152,24 +175,20 @@ namespace GreenField.Gadgets.ViewModels
 
         #region ICommand
 
-        public ICommand BrowsePowerpointCommand
-        {
-            get { return new DelegateCommand<object>(BrowsePowerPointCommandMethod, BrowsePowerPointCommandValidationMethod); }
-        }
-
-        public ICommand PowerPointHyperlinkCommand
-        {
-            get { return new DelegateCommand<object>(PowerPointHyperlinkCommandMethod); }
-        }
-
+        /// <summary>
+        /// DeleteAttachedFile ICommand
+        /// </summary>
         public ICommand DeleteAttachedFileCommand
         {
             get { return new DelegateCommand<object>(DeleteAttachedFileCommandMethod); }
         }
 
-        public ICommand AddPowerPointCommand
+        /// <summary>
+        /// Upload Command
+        /// </summary>
+        public ICommand UploadCommand
         {
-            get { return new DelegateCommand<object>(AddPowerPointCommandCommandMethod, AddPowerPointCommandCommandValidationMethod); }
+            get { return new DelegateCommand<object>(UploadCommandMethod, UploadCommandMethodValidationMethod); }
         }
 
         public ICommand SubmitCommand
@@ -213,99 +232,41 @@ namespace GreenField.Gadgets.ViewModels
 
         #region ICommand Methods
 
-        private Boolean BrowsePowerPointCommandValidationMethod(object param)
-        {
-            return SelectedPresentationPowerPoint != null && (SelectedPresentationPowerPoint.Name != string.Empty);
-        }
-
-        private void PowerPointHyperlinkCommandMethod(object param)
-        {
-            try
-            {
-                _dbInteractivity.RetrieveDocument(SelectedPresentationPowerPoint.Location, RetrieveDocumentCallback);
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogLoginException(_logger, ex);
-            }
-        }
-
-        private void BrowsePowerPointCommandMethod(object param)
-        {
-            //DB update ppt
-            OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false };
-            if (dialog.ShowDialog() == true)
-            {
-                BusyIndicatorNotification(true, "Uploading file...");
-                if (SelectedPresentationDocumentationInfo != null)
-                {
-                    if (SelectedPresentationDocumentationInfo
-                                .Any(record => record.Name == dialog.File.Name))
-                    {
-                        Prompt.ShowDialog("File '" + dialog.File.Name + "' already exists as an attachment. Please change the name of the file and upload again.");
-                        BusyIndicatorNotification();
-                        return;
-                    }
-                }
-
-                FileMaster presentationAttachedFileData
-                    = new FileMaster()
-                    {
-                        Name = dialog.File.Name,
-                        SecurityName = SelectedPresentationOverviewInfo.SecurityName,
-                        SecurityTicker = SelectedPresentationOverviewInfo.SecurityTicker,
-                        Type = EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(DocumentCategoryType.IC_PRESENTATIONS),
-                        MetaTags = "Power Point Presentation;" + SelectedPresentationOverviewInfo.Presenter + SelectedPresentationOverviewInfo.MeetingDateTime
-                    };
-
-                FileStream fileStream = dialog.File.OpenRead();
-
-                SelectedPowerPointFileStreamData
-                    = new PresentationAttachedFileStreamData()
-                    {
-                        PresentationAttachedFileData = presentationAttachedFileData,
-                        FileStream = ReadFully(fileStream)
-                    };
-
-                SelectedPresentationPowerPoint.Name = dialog.File.Name;
-                //make a call to documnetworksaceoperations to get url
-                _dbInteractivity.UploadDocument(SelectedPresentationPowerPoint.Name, SelectedPowerPointFileStreamData.FileStream, UploadPowerPointPresentationCallbackMethod);
-
-                BusyIndicatorNotification();
-            }
-        }
-
         private void DeleteAttachedFileCommandMethod(object param)
         {
-            if (param is PresentationAttachedFileStreamData)
+            if (param is FileMaster)
             {
-                SelectedDeleteFileStreamData = param as PresentationAttachedFileStreamData;
+                DeleteFileData = param as FileMaster;
                 Prompt.ShowDialog(messageText: "This action will permanently delete attachment from system. Do you wish to continue?", buttonType: MessageBoxButton.OKCancel, messageBoxResult: (result) =>
                 {
                     if (result == MessageBoxResult.OK)
                     {
-                        _dbInteractivity.UpdatePresentationAttachedFileStreamData(GreenField.UserSession.SessionManager.SESSION.UserName
-                            , SelectedPresentationOverviewInfo.PresentationID, SelectedPowerPointFileStreamData.PresentationAttachedFileData.Location,
-                            SelectedPowerPointFileStreamData, UpdatePresentationAttachedFileStreamDataDeleteAttachedFileCallbackMethod);
+                        if (_dbInteractivity != null)
+                        {
+                            BusyIndicatorNotification(true, "Deleting document");
+                            _dbInteractivity.UpdatePresentationAttachedFileStreamData(UserSession.SessionManager.SESSION.UserName
+                                , SelectedPresentationOverviewInfo.PresentationID, DeleteFileData, true, UpdatePresentationAttachedFileStreamDataCallbackMethod);
+                        }                       
                     }
                 });     
             }
         }
 
-        private Boolean AddPowerPointCommandCommandValidationMethod(object param)
+        private Boolean UploadCommandMethodValidationMethod(object param)
         {
-            return SelectedPresentationPowerPoint != null && (SelectedPresentationPowerPoint.Name != string.Empty);
+            return UploadFileStreamData != null && UploadFileData != null;
         }
 
-        private void AddPowerPointCommandCommandMethod(object param)
+        /// <summary>
+        /// Icommand method for Upload Initialization
+        /// </summary>
+        /// <param name="param"></param>
+        private void UploadCommandMethod(object param)
         {
             if (_dbInteractivity != null)
             {
                 BusyIndicatorNotification(true, "Uploading document");
-
-                _dbInteractivity.UpdatePresentationAttachedFileStreamData(GreenField.UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo.PresentationID,
-                    SelectedPowerPointFileStreamData.PresentationAttachedFileData.Location, SelectedPowerPointFileStreamData, UpdatePresentationAttachedFileStreamDataCallback);
+                _dbInteractivity.UploadDocument(UploadFileData.Name, UploadFileStreamData, UploadDocumentCallbackMethod);
             }
         }
 
@@ -333,22 +294,6 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Helper Methods
 
-        
-        private Byte[] ReadFully(Stream input)
-        {
-            Byte[] buffer = new byte[16 * 1024];
-
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
-
         public void RetrievePresentationAttachedDetails()
         {
             _dbInteractivity.RetrievePresentationAttachedFileDetails(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationAttachedDetailsCallback);
@@ -357,13 +302,16 @@ namespace GreenField.Gadgets.ViewModels
 
         public void Initialize()
         {
+            UploadFileData = null;
+            UploadFileStreamData = null;
+            SelectedUploadFileName = null;
             ICPresentationOverviewData presentationInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
             if (presentationInfo != null)
             {
                 SelectedPresentationOverviewInfo = presentationInfo;
                 if (_dbInteractivity != null)
                 {
-                    BusyIndicatorNotification(true, "Retrieving Documentation...");
+                    BusyIndicatorNotification(true, "Retrieving updated upload documentation...");
                     _dbInteractivity.RetrievePresentationAttachedFileDetails(SelectedPresentationOverviewInfo.PresentationID, 
                         RetrievePresentationAttachedDetailsCallback);
                 }
@@ -386,7 +334,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Callback Methods
-
+        /// <summary>
+        /// Assigns SelectedPresentationDocumentationInfo with documentation info related to SelectedPresentationOverviewInfo
+        /// </summary>
+        /// <param name="result">List of FileMaster information</param>
         private void RetrievePresentationAttachedDetailsCallback(List<FileMaster> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -396,12 +347,11 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                 
                     SelectedPresentationDocumentationInfo = result;
-                    SelectedPresentationPowerPoint = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
-                    SelectedPresentationFinStatReport = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
-                    SelectedPresentationInvestmentContext = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
-                    SelectedPresentationDCFReports = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
+                    //SelectedPresentationPowerPoint = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
+                    //SelectedPresentationFinStatReport = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
+                    //SelectedPresentationInvestmentContext = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
+                    //SelectedPresentationDCFReports = result.Where(record => record.MetaTags.Contains("Power Point Presentation")).FirstOrDefault();
                 }
                 else
                 {
@@ -420,7 +370,11 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private void RetrieveDocumentCallback(Byte[] result)
+        /// <summary>
+        /// Callback method for UploadDocument service call
+        /// </summary>
+        /// <param name="result">Server location url. Empty String if unsuccessful</param>
+        private void UploadDocumentCallbackMethod(String result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -429,50 +383,15 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    SelectedPowerPointFileStreamData.FileStream = result;
-
-                    //open file for edit
-                    //file to be saved locally and then opened for edit
-                    //what happens when user edits and closes file, save? where? or call upload method?
-
-                    BusyIndicatorNotification();
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-        private void UploadPowerPointPresentationCallbackMethod(string result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (result != null)
-                    {  
-                        //set the url
-                        SelectedPowerPointFileStreamData.PresentationAttachedFileData.Location = result;
-
-                        //if (_dbInteractivity != null)
-                        //{
-                        //    BusyIndicatorNotification(true, "Uploading document");
-                            
-                        //    _dbInteractivity.UpdatePresentationAttachedFileStreamData(SelectedPresentationOverviewInfo.Presenter, SelectedPresentationOverviewInfo.PresentationID,
-                        //        SelectedPowerPointFileStreamData.PresentationAttachedFileData.Location, SelectedPowerPointFileStreamData, UpdatePresentationAttachedFileStreamDataCallback);                           
-                        //}
+                    if (result != String.Empty)
+                    {
+                        UploadFileData.Location = result;
+                        if (_dbInteractivity != null)
+                        {
+                            BusyIndicatorNotification(true, "Uploading document");
+                            _dbInteractivity.UpdatePresentationAttachedFileStreamData(UserSession.SessionManager.SESSION.UserName
+                                , SelectedPresentationOverviewInfo.PresentationID, UploadFileData, false, UpdatePresentationAttachedFileStreamDataCallbackMethod);
+                        }
                     }
                 }
                 else
@@ -490,20 +409,20 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        private void UpdatePresentationAttachedFileStreamDataCallback(Boolean? result)
+        /// <summary>
+        /// UpdatePresentationAttachedFileStreamData Callback Method
+        /// </summary>
+        /// <param name="result">True if successful else false</param>
+        private void UpdatePresentationAttachedFileStreamDataCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (result != null)
+                if (result == true)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (result == true)
-                    {  
-                        SelectedPresentationPowerPoint = null;
-                        SelectedPowerPointFileStreamData = null;
-                    }
+                    Initialize();
                 }
                 else
                 {
@@ -526,15 +445,9 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (result != null)
+                if (result == true)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (result == true)
-                    {
-                        SelectedPresentationDocumentationInfo = SelectedPresentationDocumentationInfo
-                            .Where(record => record != SelectedDeleteFileStreamData.PresentationAttachedFileData).ToList();
-                        SelectedDeleteFileStreamData = null;
-                    }
+                    Initialize();
                 }
                 else
                 {

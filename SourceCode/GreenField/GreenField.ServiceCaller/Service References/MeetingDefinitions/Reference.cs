@@ -834,6 +834,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     [System.Runtime.Serialization.DataContractAttribute(Name="FileMaster", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
     public partial class FileMaster : GreenField.ServiceCaller.MeetingDefinitions.EntityObject {
         
+        private string CategoryField;
+        
         private System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.CommentInfo> CommentInfoesField;
         
         private string CreatedByField;
@@ -861,6 +863,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         private string SecurityTickerField;
         
         private string TypeField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Category {
+            get {
+                return this.CategoryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CategoryField, value) != true)) {
+                    this.CategoryField = value;
+                    this.RaisePropertyChanged("Category");
+                }
+            }
+        }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.CommentInfo> CommentInfoes {
@@ -3310,12 +3325,11 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfPresentationInfojzQAem8p))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.EntitySelectionData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityKey))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.EntityKeyMember>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, System.Nullable<decimal>>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityKey))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.EntityKeyMember>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster>))]
@@ -3471,51 +3485,6 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PresentationAttachedFileStreamData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
-    public partial class PresentationAttachedFileStreamData : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private byte[] FileStreamField;
-        
-        private GreenField.ServiceCaller.MeetingDefinitions.FileMaster PresentationAttachedFileDataField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public byte[] FileStream {
-            get {
-                return this.FileStreamField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FileStreamField, value) != true)) {
-                    this.FileStreamField = value;
-                    this.RaisePropertyChanged("FileStream");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GreenField.ServiceCaller.MeetingDefinitions.FileMaster PresentationAttachedFileData {
-            get {
-                return this.PresentationAttachedFileDataField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PresentationAttachedFileDataField, value) != true)) {
-                    this.PresentationAttachedFileDataField = value;
-                    this.RaisePropertyChanged("PresentationAttachedFileData");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="MeetingAttachedFileStreamData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
     public partial class MeetingAttachedFileStreamData : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -3594,7 +3563,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             "onse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/UpdatePresentationAttachedFileStreamDataServ" +
             "iceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginUpdatePresentationAttachedFileStreamData(string userName, long presentationId, string url, GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginUpdatePresentationAttachedFileStreamData(string userName, long presentationId, GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo, bool deletionFlag, System.AsyncCallback callback, object asyncState);
         
         bool EndUpdatePresentationAttachedFileStreamData(System.IAsyncResult result);
         
@@ -4528,8 +4497,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginUpdatePresentationAttachedFileStreamData(string userName, long presentationId, string url, GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginUpdatePresentationAttachedFileStreamData(userName, presentationId, url, presentationAttachedFileStreamData, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginUpdatePresentationAttachedFileStreamData(string userName, long presentationId, GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo, bool deletionFlag, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdatePresentationAttachedFileStreamData(userName, presentationId, fileMasterInfo, deletionFlag, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4540,9 +4509,9 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         private System.IAsyncResult OnBeginUpdatePresentationAttachedFileStreamData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string userName = ((string)(inValues[0]));
             long presentationId = ((long)(inValues[1]));
-            string url = ((string)(inValues[2]));
-            GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData = ((GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData)(inValues[3]));
-            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginUpdatePresentationAttachedFileStreamData(userName, presentationId, url, presentationAttachedFileStreamData, callback, asyncState);
+            GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo = ((GreenField.ServiceCaller.MeetingDefinitions.FileMaster)(inValues[2]));
+            bool deletionFlag = ((bool)(inValues[3]));
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginUpdatePresentationAttachedFileStreamData(userName, presentationId, fileMasterInfo, deletionFlag, callback, asyncState);
         }
         
         private object[] OnEndUpdatePresentationAttachedFileStreamData(System.IAsyncResult result) {
@@ -4558,11 +4527,11 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             }
         }
         
-        public void UpdatePresentationAttachedFileStreamDataAsync(string userName, long presentationId, string url, GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData) {
-            this.UpdatePresentationAttachedFileStreamDataAsync(userName, presentationId, url, presentationAttachedFileStreamData, null);
+        public void UpdatePresentationAttachedFileStreamDataAsync(string userName, long presentationId, GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo, bool deletionFlag) {
+            this.UpdatePresentationAttachedFileStreamDataAsync(userName, presentationId, fileMasterInfo, deletionFlag, null);
         }
         
-        public void UpdatePresentationAttachedFileStreamDataAsync(string userName, long presentationId, string url, GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData, object userState) {
+        public void UpdatePresentationAttachedFileStreamDataAsync(string userName, long presentationId, GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo, bool deletionFlag, object userState) {
             if ((this.onBeginUpdatePresentationAttachedFileStreamDataDelegate == null)) {
                 this.onBeginUpdatePresentationAttachedFileStreamDataDelegate = new BeginOperationDelegate(this.OnBeginUpdatePresentationAttachedFileStreamData);
             }
@@ -4575,8 +4544,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             base.InvokeAsync(this.onBeginUpdatePresentationAttachedFileStreamDataDelegate, new object[] {
                         userName,
                         presentationId,
-                        url,
-                        presentationAttachedFileStreamData}, this.onEndUpdatePresentationAttachedFileStreamDataDelegate, this.onUpdatePresentationAttachedFileStreamDataCompletedDelegate, userState);
+                        fileMasterInfo,
+                        deletionFlag}, this.onEndUpdatePresentationAttachedFileStreamDataDelegate, this.onUpdatePresentationAttachedFileStreamDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5470,12 +5439,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginUpdatePresentationAttachedFileStreamData(string userName, long presentationId, string url, GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileStreamData presentationAttachedFileStreamData, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginUpdatePresentationAttachedFileStreamData(string userName, long presentationId, GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo, bool deletionFlag, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[4];
                 _args[0] = userName;
                 _args[1] = presentationId;
-                _args[2] = url;
-                _args[3] = presentationAttachedFileStreamData;
+                _args[2] = fileMasterInfo;
+                _args[3] = deletionFlag;
                 System.IAsyncResult _result = base.BeginInvoke("UpdatePresentationAttachedFileStreamData", _args, callback, asyncState);
                 return _result;
             }

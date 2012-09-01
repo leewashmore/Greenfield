@@ -139,6 +139,41 @@ namespace GreenField.Web.Services
             }
         }
 
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public String DeleteDocument(String fileName, Byte[] fileByteStream)
+        {
+            try
+            {
+                String resultUrl = String.Empty;
+                try
+                {
+                    String[] destinationUrl = { DocumentServerUrl + DocumentLibrary + "/" + fileName };
+
+                    
+                    DocumentCopyService.CopyResult[] cResultArray = { new DocumentCopyService.CopyResult() };
+                    DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };
+
+                    UInt32 copyResult = CopyService.CopyIntoItems(destinationUrl[0], destinationUrl, ffieldInfoArray, fileByteStream, out cResultArray);
+
+                    if (cResultArray[0].ErrorCode == CopyErrorCode.Success)
+                        resultUrl = cResultArray[0].DestinationUrl;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+                return resultUrl;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
         /// <summary>
         /// Retruns the bytes of the requested file
         /// </summary>
@@ -270,29 +305,48 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<DocumentCatalogData> RetrieveDocumentsDataForUser(String userName)
+        public List<DocumentCategoricalData> RetrieveDocumentsDataForUser(String userName)
         {
             try
             {
-                List<DocumentCatalogData> result = new List<DocumentCatalogData>();
+                List<DocumentCategoricalData> result = new List<DocumentCategoricalData>();
                 ICPresentationEntities entity = new ICPresentationEntities();
                 List<FileMaster> data = entity.FileMasters.Where(record => record.CreatedBy == userName).ToList();
                 if (data == null)
                     return result;
 
-                foreach (FileMaster record in data)
+                foreach (FileMaster fileMasterRecord in data)
                 {
-                    DocumentCatalogData resultNode = new DocumentCatalogData()
+                    DocumentCatalogData documentCatalogData = new DocumentCatalogData()
                     {
-                        FileId = record.FileID,
-                        FileMetaTags = record.MetaTags,
-                        FileName = record.Name,
-                        FilePath = record.Location,
-                        FileUploadedBy = record.CreatedBy,
-                        FileUploadedOn = Convert.ToDateTime(record.CreatedOn)
+                        FileId = fileMasterRecord.FileID,
+                        FileMetaTags = fileMasterRecord.MetaTags,
+                        FileName = fileMasterRecord.Name,
+                        FilePath = fileMasterRecord.Location,
+                        FileUploadedBy = fileMasterRecord.CreatedBy,
+                        FileUploadedOn = Convert.ToDateTime(fileMasterRecord.CreatedOn)
                     };
 
-                    result.Add(resultNode);
+                    List<CommentInfo> commentInfo = fileMasterRecord.CommentInfoes.ToList();
+                    List<CommentDetails> commentDetails = new List<CommentDetails>();
+                    foreach (CommentInfo info in commentInfo)
+                    {
+                        commentDetails.Add(new CommentDetails()
+                        {
+                            Comment = info.Comment,
+                            CommentBy = info.CommentBy,
+                            CommentOn = Convert.ToDateTime(info.CommentOn)
+                        });
+                    }
+
+                    result.Add(new DocumentCategoricalData()
+                    {
+                        CommentDetails = commentDetails,
+                        DocumentCatalogData = documentCatalogData,
+                        DocumentCategoryType = (DocumentCategoryType)EnumUtils.ToEnum(fileMasterRecord.Type, typeof(DocumentCategoryType)),
+                        DocumentCompanyName = fileMasterRecord.SecurityName,
+                        DocumentCompanyTicker = fileMasterRecord.SecurityTicker
+                    });
                 }
 
                 return result;

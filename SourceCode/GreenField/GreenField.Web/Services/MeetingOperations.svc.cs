@@ -199,31 +199,14 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public Boolean UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, String url, PresentationAttachedFileStreamData presentationAttachedFileStreamData)
+        public Boolean UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, FileMaster fileMasterInfo, Boolean deletionFlag)
         {
             try
             {
-                if (presentationAttachedFileStreamData.FileStream != null)
-                {
-                    //String filePath = @"\\10.101.13.146\IC Presentation Documents\" + presentationAttachedFileStreamData.PresentationAttachedFileData.Name;
-                    //File.WriteAllBytes(url, presentationAttachedFileStreamData.FileStream);
-                    //presentationAttachedFileStreamData.PresentationAttachedFileData.Location = @"\\10.101.13.146\IC Presentation Documents\";
-                    presentationAttachedFileStreamData.PresentationAttachedFileData.Location = url;
-                }
-                else
-                {
-                    String filePath = @"\\10.101.13.146\IC Presentation Documents\" + presentationAttachedFileStreamData.PresentationAttachedFileData.Name;
-                    if (File.Exists(filePath))
-                    {
-                        File.Delete(filePath);
-                    }
-                }
-
-                XDocument xmlDoc = GetEntityXml<FileMaster>(new List<FileMaster> { presentationAttachedFileStreamData.PresentationAttachedFileData }
-                    , strictlyInclusiveProperties: new List<string> { "FileID", "Name", "SecurityName", "SecurityTicker", "Location", "MetaTags", "Type" });
-                String xmlScript = xmlDoc.ToString();
                 ICPresentationEntities entity = new ICPresentationEntities();
-                entity.SetICPMeetingAttachedFileInfo(userName, presentationId, xmlScript);
+                entity.SetICPresentationAttachedFileInfo(userName, presentationId, fileMasterInfo.Name
+                    , fileMasterInfo.SecurityName, fileMasterInfo.SecurityTicker, fileMasterInfo.Location
+                    , fileMasterInfo.MetaTags, fileMasterInfo.Category, fileMasterInfo.Type, fileMasterInfo.FileID, deletionFlag);
                 return true;
             }
             catch (Exception ex)
@@ -233,7 +216,6 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
 
         //[OperationContract]
         //[FaultContract(typeof(ServiceFault))]
@@ -549,7 +531,7 @@ namespace GreenField.Web.Services
                 }
 
                 XDocument xmlDoc = GetEntityXml<FileMaster>(new List<FileMaster> { meetingAttachedFileStreamData.MeetingAttachedFileData }
-                    , strictlyInclusiveProperties: new List<string> { "FileID", "Name", "SecurityName", "SecurityTicker", "Location", "MetaTags", "Type" });
+                    , strictlyInclusiveProperties: new List<string> { "FileID", "Name", "SecurityName", "SecurityTicker", "Location", "MetaTags", "Category", "Type" });
                 String xmlScript = xmlDoc.ToString();
                 ICPresentationEntities entity = new ICPresentationEntities();
                 entity.SetICPMeetingAttachedFileInfo(userName, meetingId, xmlScript);

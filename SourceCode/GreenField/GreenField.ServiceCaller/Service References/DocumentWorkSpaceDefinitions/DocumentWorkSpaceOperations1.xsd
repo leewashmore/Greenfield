@@ -103,10 +103,4 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="DocumentCategoryType" nillable="true" type="tns:DocumentCategoryType" />
-  <xs:complexType name="ArrayOfDocumentCatalogData">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="DocumentCatalogData" nillable="true" type="tns:DocumentCatalogData" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfDocumentCatalogData" nillable="true" type="tns:ArrayOfDocumentCatalogData" />
 </xs:schema>

@@ -248,6 +248,15 @@ namespace GreenField.Common
         public static String IC_CHIEF_EXECUTIVE = "IC_CHIEF_EXECUTIVE";       
     }
 
+    public static class UploadDocumentType
+    {
+        public static String POWERPOINT_PRESENTATION = "Power Point presentation";
+        public static String FINSTAT_REPORT = "FinStat Report";
+        public static String INVESTMENT_CONTEXT_REPORT = "Investment Context Report";
+        public static String DCF_MODEL = "DCF Model";
+        public static String ADDITIONAL_ATTACHMENT = "Additional Attachment";
+    }
+
     public enum VIEWVOTEFLAG { VIEW, VOTE } ;
     public enum ViewPluginFlagEnumeration { Create, Upload, Update, View, Vote, Edit, ChangeDate };
     #endregion

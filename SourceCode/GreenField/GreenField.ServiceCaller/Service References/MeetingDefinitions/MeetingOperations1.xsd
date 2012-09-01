@@ -76,6 +76,7 @@
     <xs:complexContent mixed="false">
       <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:EntityObject">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Category" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CommentInfoes" nillable="true" type="tns:ArrayOfCommentInfo" />
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" nillable="true" type="xs:dateTime" />

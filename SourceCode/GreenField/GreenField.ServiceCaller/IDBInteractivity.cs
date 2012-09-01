@@ -238,7 +238,7 @@ namespace GreenField.ServiceCaller
 
         void GetDocumentsMetaTags(Action<List<string>> callback);
 
-        void RetrieveDocumentsDataForUser(String userName, Action<List<DocumentCatalogData>> callback);
+        void RetrieveDocumentsDataForUser(String userName, Action<List<DocumentCategoricalData>> callback);
 
         void SetDocumentComment(String userName, Int64 fileId, String comment, Action<Boolean?> callback);
         #endregion
@@ -287,7 +287,7 @@ namespace GreenField.ServiceCaller
 
       //  void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, string url, FileMaster presentationAttachedFileData, Action<Boolean?> callback);
 
-        void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, String url, PresentationAttachedFileStreamData presentationAttachedFileStreamData, Action<Boolean?> callback);
+        void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, FileMaster fileMasterInfo, Boolean deletionFlag, Action<Boolean?> callback);
         #endregion
 
         #region DCF

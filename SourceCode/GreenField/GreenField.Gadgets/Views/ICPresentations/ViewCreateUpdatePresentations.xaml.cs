@@ -12,6 +12,11 @@ using System.Windows.Shapes;
 using System.ComponentModel.Composition;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Gadgets.Helpers;
+using GreenField.ServiceCaller;
+using System.IO;
+using GreenField.ServiceCaller.MeetingDefinitions;
+using GreenField.Common;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.Views
 {
@@ -71,9 +76,63 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        private void btnBrowsePowerPoint_Click(object sender, RoutedEventArgs e)
+        private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false };
+            if (dialog.ShowDialog() == true)
+            {
+                DataContextViewModelCreateUpdatePresentations.BusyIndicatorNotification(true, "Reading file...");
 
+                Boolean uploadFileExists = DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT
+                    && DataContextViewModelCreateUpdatePresentations.SelectedPresentationDocumentationInfo
+                        .Any(record => record.Category == DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo);
+
+                if (uploadFileExists)
+                {
+                    FileMaster uploadDocumentInfo = DataContextViewModelCreateUpdatePresentations.SelectedPresentationDocumentationInfo
+                    .Where(record => record.Category == DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo).FirstOrDefault();
+
+                    if (uploadDocumentInfo != null)
+                    {
+                        DataContextViewModelCreateUpdatePresentations.UploadFileData = uploadDocumentInfo;
+                    }
+                }
+                else
+                {
+                    FileMaster presentationAttachedFileData = new FileMaster()
+                    {
+                        Name = dialog.File.Name,
+                        SecurityName = DataContextViewModelCreateUpdatePresentations.SelectedPresentationOverviewInfo.SecurityName,
+                        SecurityTicker = DataContextViewModelCreateUpdatePresentations.SelectedPresentationOverviewInfo.SecurityTicker,
+                        Type = EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(DocumentCategoryType.IC_PRESENTATIONS),
+                        Category = DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo
+                    };
+                    DataContextViewModelCreateUpdatePresentations.UploadFileData = presentationAttachedFileData;
+                }
+
+                FileStream fileStream = dialog.File.OpenRead();
+                DataContextViewModelCreateUpdatePresentations.UploadFileStreamData = ReadFully(fileStream);
+
+                DataContextViewModelCreateUpdatePresentations.SelectedUploadFileName = dialog.File.Name;
+                DataContextViewModelCreateUpdatePresentations.BusyIndicatorNotification();
+            }
         }
+
+        private Byte[] ReadFully(Stream input)
+        {
+            Byte[] buffer = new byte[16 * 1024];
+
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
+
+        
     }
 }

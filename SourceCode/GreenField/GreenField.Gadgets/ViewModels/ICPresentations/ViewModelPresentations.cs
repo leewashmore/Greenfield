@@ -48,8 +48,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Instance of LoggerFacade
         /// </summary>
-        private ILoggerFacade _logger;
+        private ILoggerFacade _logger;        
+        #endregion
 
+        #region Constructor
+        public ViewModelPresentations(DashboardGadgetParam param)
+        {
+            _dbInteractivity = param.DBInteractivity;
+            _logger = param.LoggerFacade;
+            _eventAggregator = param.EventAggregator;
+            _regionManager = param.RegionManager;
+        }
+        #endregion
+
+        #region Properties
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -66,19 +78,6 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-        #endregion
-
-        #region Constructor
-        public ViewModelPresentations(DashboardGadgetParam param)
-        {
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _eventAggregator = param.EventAggregator;
-            _regionManager = param.RegionManager;
-        }
-        #endregion
-
-        #region Properties
 
         #region Busy Indicator Notification
         /// <summary>

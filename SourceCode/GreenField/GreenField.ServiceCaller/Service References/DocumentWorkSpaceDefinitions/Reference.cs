@@ -88,7 +88,7 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             "eFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveDocumentsDataForUser(string userName, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> EndRetrieveDocumentsDataForUser(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData> EndRetrieveDocumentsDataForUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentComment", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentCommentResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentCommentServiceFaultFaul" +
@@ -208,10 +208,10 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData>)(this.results[0]));
             }
         }
     }
@@ -602,7 +602,7 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndRetrieveDocumentsDataForUser(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData> GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndRetrieveDocumentsDataForUser(System.IAsyncResult result) {
             return base.Channel.EndRetrieveDocumentsDataForUser(result);
         }
         
@@ -612,7 +612,7 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         }
         
         private object[] OnEndRetrieveDocumentsDataForUser(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndRetrieveDocumentsDataForUser(result);
+            System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData> retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndRetrieveDocumentsDataForUser(result);
             return new object[] {
                     retVal};
         }
@@ -847,9 +847,9 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> EndRetrieveDocumentsDataForUser(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData> EndRetrieveDocumentsDataForUser(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DocumentCatalogData>)(base.EndInvoke("RetrieveDocumentsDataForUser", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData>)(base.EndInvoke("RetrieveDocumentsDataForUser", _args, result)));
                 return _result;
             }
             

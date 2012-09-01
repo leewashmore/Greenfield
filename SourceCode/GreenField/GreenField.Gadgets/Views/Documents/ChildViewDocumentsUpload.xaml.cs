@@ -139,8 +139,9 @@ namespace GreenField.Gadgets.Views.Documents
 
         public void Initialize()
         {
-            //UploadFileByteStream = null;
-            //UploadFileName = null;            
+            //this.tboxFileName.Text = null;
+            //UploadFileByteStream = null;           
+            //UploadFileName = null;       
         }
 
         private void cbType_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)

@@ -64,7 +64,7 @@ namespace GreenField.DashboardModule.Views
                 RegionManager = _regionManager
             };
 
-            this.cctrDashboardContent.Content = null;// new ViewPresentations(new ViewModelPresentations(param));
+            this.cctrDashboardContent.Content = new ViewPresentations(new ViewModelPresentations(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -86,7 +86,7 @@ namespace GreenField.DashboardModule.Views
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
-                control.IsActive = true;               
+                control.IsActive = true;                
             }
         }
 
