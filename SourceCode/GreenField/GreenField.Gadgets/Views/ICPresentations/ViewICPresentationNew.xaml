@@ -35,7 +35,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" FontSize="13" x:Name="txtSecurityName" TextAlignment="Center" FontWeight="Bold" Text="{Binding ICPresentationOverviewInfo.SecurityName}"/>
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock FontWeight="Bold" FontStyle="Italic">(</TextBlock>
-                    <TextBlock x:Name="txtTicker" FontWeight="Bold" FontStyle="Italic" Text="{Binding SecurityTicker}"/>
+                    <TextBlock x:Name="txtTicker" FontWeight="Bold" FontStyle="Italic" Text="{Binding ICPresentationOverviewInfo.SecurityTicker}"/>
                     <TextBlock FontWeight="Bold" FontStyle="Italic">)</TextBlock>
                 </StackPanel>
 
@@ -71,7 +71,7 @@
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
                         <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityIndustry}"/>
                         <TextBlock Grid.Row="4" Grid.Column="0" Text="Mkt Cap :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
-                        <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtMktCap" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.MarketCap}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtMktCap" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityMarketCapitalization}"/>
                         <TextBlock Grid.Row="5" Grid.Column="0" Text="Price :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
                         <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtPrice" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.Price}"/>
                         <TextBlock Grid.Row="6" Grid.Column="0" Text="FV Calc :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
@@ -95,9 +95,9 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Total Current Holdings :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
-                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtTotalCurrentHoldings" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.TotalCurrentHoldings}"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Text="% of EMIF :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Current Holdings :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" />
+                        <TextBlock Grid.Row="0" Grid.Column="1" x:Name="txtTotalCurrentHoldings" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.CurrentHoldings}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="% of NAV :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
                         <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtEMIF" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.PercentEMIF}"/>
                         <TextBlock Grid.Row="2" Grid.Column="0" Text="BM Weight :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold"/>
                         <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtBMWeight" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityBMWeight}"/>

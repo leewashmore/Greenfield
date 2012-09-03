@@ -556,6 +556,9 @@
           <Parameter Name="fiscalType" Type="char" Mode="In" />
         </Function>
         <Function Name="GetMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetNewICPresentationSecurityData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="securityID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
@@ -727,6 +730,9 @@
             <Parameter Name="securityIdsForPortfolio" Mode="In" Type="String" />
             <Parameter Name="issuerIdsForBenchmark" Mode="In" Type="String" />
             <Parameter Name="securityIdsForBenchmark" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetNewICPresentationSecurityData" ReturnType="Collection(ExternalResearchModel.NewICPresentationSecurityData)">
+            <Parameter Name="securityID" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -1212,6 +1218,9 @@
           <Property Type="Decimal" Name="Amount" Nullable="false" />
           <Property Type="String" Name="AmountType" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="NewICPresentationSecurityData">
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+        </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -1662,6 +1671,13 @@
                 <ScalarProperty Name="Currency" ColumnName="Currency" />
                 <ScalarProperty Name="DataId" ColumnName="DataId" />
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetNewICPresentationSecurityData" FunctionName="ExternalResearchModel.Store.GetNewICPresentationSecurityData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.NewICPresentationSecurityData">
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

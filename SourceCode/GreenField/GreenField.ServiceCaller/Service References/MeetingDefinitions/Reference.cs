@@ -3324,6 +3324,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfMeetingInfojzQAem8p))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfPresentationInfojzQAem8p))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.EntitySelectionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.PortfolioSelectionData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, System.Nullable<decimal>>))]
@@ -3547,7 +3548,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/RetrieveSecurityDetails", ReplyAction="http://tempuri.org/MeetingOperations/RetrieveSecurityDetailsResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/RetrieveSecurityDetailsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveSecurityDetails(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveSecurityDetails(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, GreenField.DataContracts.PortfolioSelectionData portfolio, System.AsyncCallback callback, object asyncState);
         
         GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData EndRetrieveSecurityDetails(System.IAsyncResult result);
         
@@ -4403,8 +4404,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginRetrieveSecurityDetails(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveSecurityDetails(entitySelectionData, presentationOverviewData, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginRetrieveSecurityDetails(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, GreenField.DataContracts.PortfolioSelectionData portfolio, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveSecurityDetails(entitySelectionData, presentationOverviewData, portfolio, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -4415,7 +4416,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         private System.IAsyncResult OnBeginRetrieveSecurityDetails(object[] inValues, System.AsyncCallback callback, object asyncState) {
             GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
             GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData = ((GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData)(inValues[1]));
-            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginRetrieveSecurityDetails(entitySelectionData, presentationOverviewData, callback, asyncState);
+            GreenField.DataContracts.PortfolioSelectionData portfolio = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[2]));
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginRetrieveSecurityDetails(entitySelectionData, presentationOverviewData, portfolio, callback, asyncState);
         }
         
         private object[] OnEndRetrieveSecurityDetails(System.IAsyncResult result) {
@@ -4431,11 +4433,11 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             }
         }
         
-        public void RetrieveSecurityDetailsAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData) {
-            this.RetrieveSecurityDetailsAsync(entitySelectionData, presentationOverviewData, null);
+        public void RetrieveSecurityDetailsAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, GreenField.DataContracts.PortfolioSelectionData portfolio) {
+            this.RetrieveSecurityDetailsAsync(entitySelectionData, presentationOverviewData, portfolio, null);
         }
         
-        public void RetrieveSecurityDetailsAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, object userState) {
+        public void RetrieveSecurityDetailsAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, GreenField.DataContracts.PortfolioSelectionData portfolio, object userState) {
             if ((this.onBeginRetrieveSecurityDetailsDelegate == null)) {
                 this.onBeginRetrieveSecurityDetailsDelegate = new BeginOperationDelegate(this.OnBeginRetrieveSecurityDetails);
             }
@@ -4447,7 +4449,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             }
             base.InvokeAsync(this.onBeginRetrieveSecurityDetailsDelegate, new object[] {
                         entitySelectionData,
-                        presentationOverviewData}, this.onEndRetrieveSecurityDetailsDelegate, this.onRetrieveSecurityDetailsCompletedDelegate, userState);
+                        presentationOverviewData,
+                        portfolio}, this.onEndRetrieveSecurityDetailsDelegate, this.onRetrieveSecurityDetailsCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5412,10 +5415,11 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveSecurityDetails(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
+            public System.IAsyncResult BeginRetrieveSecurityDetails(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, GreenField.DataContracts.PortfolioSelectionData portfolio, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
                 _args[0] = entitySelectionData;
                 _args[1] = presentationOverviewData;
+                _args[2] = portfolio;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveSecurityDetails", _args, callback, asyncState);
                 return _result;
             }

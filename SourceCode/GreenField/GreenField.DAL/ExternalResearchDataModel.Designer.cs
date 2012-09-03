@@ -1334,7 +1334,6 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<Nullable<global::System.Decimal>>("RetrieveSecurityPFVMeasureCurrentPrice", securityIdParameter, pFVMeasureParameter);
         }
-
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1386,6 +1385,25 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<ValuationQualityGrowthData>("usp_GetDataForValuationQualityGrowth", issuerIdsForPortfolioParameter, securityIdsForPortfolioParameter, issuerIdsForBenchmarkParameter, securityIdsForBenchmarkParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="securityID">No Metadata Documentation available.</param>
+        public ObjectResult<NewICPresentationSecurityData> GetNewICPresentationSecurityData(global::System.String securityID)
+        {
+            ObjectParameter securityIDParameter;
+            if (securityID != null)
+            {
+                securityIDParameter = new ObjectParameter("securityID", securityID);
+            }
+            else
+            {
+                securityIDParameter = new ObjectParameter("securityID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<NewICPresentationSecurityData>("GetNewICPresentationSecurityData", securityIDParameter);
         }
 
         #endregion
@@ -9111,6 +9129,57 @@ namespace GreenField.DAL
         private global::System.String _MeanLabel;
         partial void OnMeanLabelChanging(global::System.String value);
         partial void OnMeanLabelChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="NewICPresentationSecurityData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class NewICPresentationSecurityData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new NewICPresentationSecurityData object.
+        /// </summary>
+        /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
+        public static NewICPresentationSecurityData CreateNewICPresentationSecurityData(global::System.Decimal aMOUNT)
+        {
+            NewICPresentationSecurityData newICPresentationSecurityData = new NewICPresentationSecurityData();
+            newICPresentationSecurityData.AMOUNT = aMOUNT;
+            return newICPresentationSecurityData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AMOUNT
+        {
+            get
+            {
+                return _AMOUNT;
+            }
+            set
+            {
+                OnAMOUNTChanging(value);
+                ReportPropertyChanging("AMOUNT");
+                _AMOUNT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AMOUNT");
+                OnAMOUNTChanged();
+            }
+        }
+        private global::System.Decimal _AMOUNT;
+        partial void OnAMOUNTChanging(global::System.Decimal value);
+        partial void OnAMOUNTChanged();
 
         #endregion
     }
