@@ -104,13 +104,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores selected upload document type
         /// </summary>
-        private String _selectedUploadDocumentInfo;
+        private String _selectedUploadDocumentInfo = UploadDocumentType.POWERPOINT_PRESENTATION;
         public String SelectedUploadDocumentInfo
         {
             get { return _selectedUploadDocumentInfo; }
             set
             {
                 _selectedUploadDocumentInfo = value;
+                UploadFileData = null;
+                UploadFileStreamData = null;
+                SelectedUploadFileName = null;
                 RaisePropertyChanged(() => this.SelectedUploadDocumentInfo);
             }
         } 
@@ -125,8 +128,9 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedUploadFileName; }
             set
             {
-                _selectedUploadFileName = value;
-                RaisePropertyChanged(() => this.SelectedUploadDocumentInfo);
+                _selectedUploadFileName = value;                
+                RaisePropertyChanged(() => this.SelectedUploadFileName);
+                RaisePropertyChanged(() => this.UploadCommand);
             }
         }
 

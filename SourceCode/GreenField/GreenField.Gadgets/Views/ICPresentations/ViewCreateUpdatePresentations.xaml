@@ -26,7 +26,7 @@
         <Grid x:Name="LayoutRoot">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <!-- Presentation Details -->
@@ -75,6 +75,11 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
                 <!--Upload Section-->
                 <Grid>
@@ -84,7 +89,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <telerik:RadComboBox x:Name="cbDocumentType" ItemsSource="{Binding UploadDocumentInfo}" SelectedIndex="0"
+                    <telerik:RadComboBox x:Name="cbDocumentType" ItemsSource="{Binding UploadDocumentInfo}"
                                          SelectedItem="{Binding SelectedUploadDocumentInfo, Mode=TwoWay}"
                                          HorizontalContentAlignment="Left" EmptyText="Select Document Type" HorizontalAlignment="Left"
                                          Height="{StaticResource DefaultControlMinHeight}" Width="130" VerticalAlignment="Center"
@@ -97,14 +102,14 @@
                                        Command="{Binding UploadCommand}"/>
                 </Grid>
                 <!--Powerpoint Section-->
-                <Grid Grid.Row="1" Margin="0,2,0,0">
+                <Grid Grid.Row="1" Margin="0,5,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="130"/>
                         <ColumnDefinition Width="*"/>                        
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="PowerPoint:" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                     <ItemsControl ItemsSource="{Binding SelectedPresentationDocumentationInfo, Converter={StaticResource DocumentCategoryConverter}
-                        , ConverterParameter='Power Point Presentation'}" Grid.Column="1" Margin="2,0,0,0">
+                        , ConverterParameter='Power Point Presentation'}" Grid.Column="1" Margin="2,0,0,0" MinHeight="{StaticResource DefaultGridViewRowHeight}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <toolkit:WrapPanel Orientation="Horizontal"/>
@@ -112,13 +117,13 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="2">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,2,0">
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                         <HyperlinkButton Margin="2" Content="{Binding Name}" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"
-                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}"/>
+                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}" TargetName = "_blank"/>
                                     </Grid>
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
-                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="20"
+                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
                                                            Command="{Binding DeleteAttachedFileCommand}" 
                                                            CommandParameter="{Binding}" IsEnabled="False"
                                                            Style="{StaticResource RadButtonStyle}"/>
@@ -126,17 +131,21 @@
                                 </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    </ItemsControl>                    
                 </Grid>
-                <!--Finstat Section-->
-                <Grid Grid.Row="2" Margin="0,2,0,0">
+                <Grid Grid.Row="2" Margin="0,2,0,2">
+                    <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6"/>
+                </Grid>
+                <!--Finstat Section-->                
+                <Grid Grid.Row="3" Margin="0,2,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="130"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="FinStat Report:" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                     <ItemsControl ItemsSource="{Binding SelectedPresentationDocumentationInfo, Converter={StaticResource DocumentCategoryConverter}
-                        , ConverterParameter='FinStat Report'}" Grid.Column="1" Margin="2,0,0,0">
+                        , ConverterParameter='FinStat Report'}" Grid.Column="1" Margin="2,0,0,0" MinHeight="{StaticResource DefaultGridViewRowHeight}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <toolkit:WrapPanel Orientation="Horizontal"/>
@@ -144,13 +153,13 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="2">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,2,0">
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                         <HyperlinkButton Margin="2" Content="{Binding Name}" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"
-                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}"/>
+                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}" TargetName = "_blank"/>
                                     </Grid>
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
-                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="20"
+                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
                                                            Command="{Binding DeleteAttachedFileCommand}" 
                                                            CommandParameter="{Binding}" IsEnabled="False"
                                                            Style="{StaticResource RadButtonStyle}"/>
@@ -159,16 +168,24 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6" Margin="0,5,0,0"/>
+                    <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Column="1"
+                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6" Margin="0,5,0,0"/>
+                </Grid>
+                <Grid Grid.Row="4" Margin="0,5,0,3">
+                    <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6"/>
                 </Grid>
                 <!--Investment Context Section-->
-                <Grid Grid.Row="3" Margin="0,2,0,0">
+                <Grid Grid.Row="5" Margin="0,2,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="130"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Investment Context:" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                     <ItemsControl ItemsSource="{Binding SelectedPresentationDocumentationInfo, Converter={StaticResource DocumentCategoryConverter}
-                        , ConverterParameter='Investment Context Report'}" Grid.Column="1" Margin="2,0,0,0">
+                        , ConverterParameter='Investment Context Report'}" Grid.Column="1" Margin="2,0,0,0" MinHeight="{StaticResource DefaultGridViewRowHeight}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <toolkit:WrapPanel Orientation="Horizontal"/>
@@ -176,13 +193,13 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="2">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,2,0">
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                         <HyperlinkButton Margin="2" Content="{Binding Name}" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"
-                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}"/>
+                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}" TargetName = "_blank"/>
                                     </Grid>
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
-                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="20"
+                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
                                                            Command="{Binding DeleteAttachedFileCommand}" 
                                                            CommandParameter="{Binding}" IsEnabled="False"
                                                            Style="{StaticResource RadButtonStyle}"/>
@@ -192,15 +209,19 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </Grid>
+                <Grid Grid.Row="6" Margin="0,2,0,2">
+                    <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6"/>
+                </Grid>
                 <!--DCF Section-->
-                <Grid Grid.Row="4" Margin="0,2,0,0">
+                <Grid Grid.Row="7" Margin="0,2,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="130"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="DCF:" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                     <ItemsControl ItemsSource="{Binding SelectedPresentationDocumentationInfo, Converter={StaticResource DocumentCategoryConverter}
-                        , ConverterParameter='DCF Model'}" Grid.Column="1" Margin="2,0,0,0">
+                        , ConverterParameter='DCF Model'}" Grid.Column="1" Margin="2,0,0,0" MinHeight="{StaticResource DefaultGridViewRowHeight}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <toolkit:WrapPanel Orientation="Horizontal"/>
@@ -208,13 +229,13 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="2">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,2,0">
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                         <HyperlinkButton Margin="2" Content="{Binding Name}" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"
-                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}"/>
+                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}" TargetName = "_blank"/>
                                     </Grid>
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
-                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="20"
+                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
                                                            Command="{Binding DeleteAttachedFileCommand}" 
                                                            CommandParameter="{Binding}" IsEnabled="False"
                                                            Style="{StaticResource RadButtonStyle}"/>
@@ -224,15 +245,19 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </Grid>
+                <Grid Grid.Row="8" Margin="0,2,0,2">
+                    <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6"/>
+                </Grid>
                 <!--Additional Attachment Section-->
-                <Grid Grid.Row="5" Margin="0,2,0,0">
+                <Grid Grid.Row="9" Margin="0,2,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="130"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Additional Attachments:" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
                     <ItemsControl ItemsSource="{Binding SelectedPresentationDocumentationInfo, Converter={StaticResource DocumentCategoryConverter}
-                        , ConverterParameter='Additional Attachment'}" Grid.Column="1" Margin="2,0,0,0">
+                        , ConverterParameter='Additional Attachment'}" Grid.Column="1" Margin="2,0,0,0" MinHeight="{StaticResource DefaultGridViewRowHeight}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <toolkit:WrapPanel Orientation="Horizontal"/>
@@ -240,13 +265,13 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="2">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,2,0">
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                         <HyperlinkButton Margin="2" Content="{Binding Name}" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"
-                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}"/>
+                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}" TargetName = "_blank"/>
                                     </Grid>
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
-                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="20"
+                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
                                                            Command="{Binding DeleteAttachedFileCommand}" 
                                                            CommandParameter="{Binding}"
                                                            Style="{StaticResource RadButtonStyle}"/>
@@ -255,6 +280,10 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                </Grid>
+                <Grid Grid.Row="10" Margin="0,2,0,2">
+                    <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6"/>
                 </Grid>
 
             </Grid>
@@ -265,9 +294,9 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <telerik:RadButton Content=" Preview" Grid.Column="0" Width="75" Style="{StaticResource RadButtonStyle}"
-                                   Command="{Binding PreviewCommand}"/>
-                <telerik:RadButton Content="Submit" Grid.Column="1" Width="100"  Style="{StaticResource RadButtonStyle}"
-                                   Command="{Binding SubmitCommand}"/>
+                                   Command="{Binding PreviewCommand}" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                <telerik:RadButton Content="Submit" Grid.Column="1" Width="75"  Style="{StaticResource RadButtonStyle}"
+                                   Command="{Binding SubmitCommand}" HorizontalAlignment="Left" Margin="10,0,0,0"/>
             </Grid>
         </Grid>
     </ScrollViewer>

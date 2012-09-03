@@ -78,7 +78,14 @@ namespace GreenField.Gadgets.Views
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false };
+            String filter = "All Files (*.*)|*.*";
+            if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.POWERPOINT_PRESENTATION)
+            {
+                filter = "Presentation Files (*.ppt*)|*.ppt*";
+            }
+
+            
+            OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false, Filter = filter };            
             if (dialog.ShowDialog() == true)
             {
                 DataContextViewModelCreateUpdatePresentations.BusyIndicatorNotification(true, "Reading file...");
@@ -114,6 +121,7 @@ namespace GreenField.Gadgets.Views
                 DataContextViewModelCreateUpdatePresentations.UploadFileStreamData = ReadFully(fileStream);
 
                 DataContextViewModelCreateUpdatePresentations.SelectedUploadFileName = dialog.File.Name;
+                fileStream.Dispose();
                 DataContextViewModelCreateUpdatePresentations.BusyIndicatorNotification();
             }
         }
