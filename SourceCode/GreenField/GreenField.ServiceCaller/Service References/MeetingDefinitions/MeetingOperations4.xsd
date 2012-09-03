@@ -11,4 +11,13 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
+  <xs:complexType name="PortfolioSelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BenchmarkId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioThemeSubGroupId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioThemeSubGroupName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="PortfolioSelectionData" nillable="true" type="tns:PortfolioSelectionData" />
 </xs:schema>

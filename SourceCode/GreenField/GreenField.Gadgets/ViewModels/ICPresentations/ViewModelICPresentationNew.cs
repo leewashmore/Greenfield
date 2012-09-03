@@ -53,48 +53,6 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private ILoggerFacade _logger;
 
-       // private EntitySelectionData _entitySelectionData;
-        private EntitySelectionData _entitySelectionData;
-        public EntitySelectionData EntitySelectionInfo
-        {
-            get { return _entitySelectionData; }
-            set 
-            {
-                if (_entitySelectionData != value)
-                {
-                    _entitySelectionData = value;
-                    RaisePropertyChanged(() => EntitySelectionInfo);
-                }
-            }
-        }        
-
-        /// <summary>
-        /// IsActive is true when parent control is displayed on UI
-        /// </summary>
-        private bool _isActive;
-        public bool IsActive
-        {
-            get
-            {
-                return _isActive;
-            }
-            set
-            {
-                _isActive = value;
-
-                if (value)
-                {
-                    Initialize();
-
-                    //EntitySelectionData handling
-                    if (_entitySelectionData != null)
-                    {
-                        HandleSecurityReferenceSet(_entitySelectionData);
-                    }
-                }
-            }
-        }
-
         #endregion
 
         #region Constructor
@@ -106,15 +64,15 @@ namespace GreenField.Gadgets.ViewModels
             _regionManager = param.RegionManager;
 
             // _dbInteractivity.GetPresentations(GetPresentationsCallBackMethod);
-            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            _entitySelectionInfo = param.DashboardGadgetPayload.EntitySelectionData;
+            _portfolioSelectionInfo = param.DashboardGadgetPayload.PortfolioSelectionData;
 
             //Subscription to SecurityReferenceSet event
             if (_eventAggregator != null)
             {
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet); 
-            }
-
-            
+                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
+                _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
+            }           
 
         }
         #endregion
@@ -176,8 +134,65 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.ICPresentationOverviewInfo);
             }
         }
-        #endregion
 
+        private EntitySelectionData _entitySelectionInfo;
+        public EntitySelectionData EntitySelectionInfo
+        {
+            get { return _entitySelectionInfo; }
+            set
+            {
+                if (_entitySelectionInfo != value)
+                {
+                    _entitySelectionInfo = value;
+                    RaisePropertyChanged(() => EntitySelectionInfo);
+                }
+            }
+        }
+
+        private PortfolioSelectionData _portfolioSelectionInfo;
+
+        public PortfolioSelectionData PortfolioSelectionInfo
+        {
+            get { return _portfolioSelectionInfo; }
+            set
+            {
+                if (_portfolioSelectionInfo != value)
+                {
+                    _portfolioSelectionInfo = value;
+                    RaisePropertyChanged(() => PortfolioSelectionInfo);
+                }
+            }
+        }        
+
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+
+                if (value)
+                {
+                    Initialize();
+
+                    //EntitySelectionData handling
+                    if (_entitySelectionInfo != null)
+                    {
+                        HandleSecurityReferenceSet(_entitySelectionInfo);
+                    }
+                }
+            }
+        }
+
+
+        #endregion
 
         public ICommand SaveCommand
         {
@@ -273,12 +288,11 @@ namespace GreenField.Gadgets.ViewModels
                 if (entitySelectionData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    _entitySelectionData = entitySelectionData;
+                    _entitySelectionInfo = entitySelectionData;
 
-                    if (IsActive && _entitySelectionData != null)
+                    if (IsActive && _entitySelectionInfo != null && PortfolioSelectionInfo != null)
                     {
-                        BusyIndicatorNotification(true, "Retrieving security reference data for '" + entitySelectionData.LongName + " (" + entitySelectionData.ShortName + ")'");
-                        _dbInteractivity.RetrieveSecurityDetails(entitySelectionData, ICPresentationOverviewInfo, RetrieveSecurityDetailsCallBackMethod);
+                        HandlePortfolioReferenceSet(PortfolioSelectionInfo);
                     }
                 }
                 else
@@ -292,6 +306,40 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Event handler for PortfolioSelection changed Event
+        /// </summary>
+        /// <param name="PortfolioSelectionData"></param>
+        public void HandlePortfolioReferenceSet(PortfolioSelectionData portfolioSelectionData)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (portfolioSelectionData != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, portfolioSelectionData, 1);
+                    _portfolioSelectionInfo = portfolioSelectionData;
+
+                    //Argument Null Exception
+                    if (IsActive && _entitySelectionInfo != null && PortfolioSelectionInfo != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving security reference data for '" + _entitySelectionInfo.LongName + " (" + _entitySelectionInfo.ShortName + ")'");
+                        _dbInteractivity.RetrieveSecurityDetails(_entitySelectionInfo, ICPresentationOverviewInfo, _portfolioSelectionInfo, RetrieveSecurityDetailsCallBackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
         }
         #endregion
 
@@ -325,9 +373,9 @@ namespace GreenField.Gadgets.ViewModels
         //        _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
 
         //        //EntitySelectionData handling
-        //        if (_entitySelectionData != null)
+        //        if (_entitySelectionInfo != null)
         //        {
-        //            HandleSecurityReferenceSet(_entitySelectionData);
+        //            HandleSecurityReferenceSet(_entitySelectionInfo);
         //        }
         //    }
         //}
@@ -340,7 +388,8 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-
+            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandlePortfolioReferenceSet);
         }
 
         #endregion

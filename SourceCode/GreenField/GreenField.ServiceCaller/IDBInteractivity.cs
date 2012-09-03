@@ -265,7 +265,7 @@ namespace GreenField.ServiceCaller
 
         void CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData, Action<Boolean?> callback);
 
-        void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData, Action<ICPresentationOverviewData> callback);
+        void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData,PortfolioSelectionData portfolioData, Action<ICPresentationOverviewData> callback);
 
         void GetAvailablePresentationDates(Action<List<MeetingInfo>> callback);
 

@@ -3459,13 +3459,13 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData, Action<ICPresentationOverviewData> callback)
+        public void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData, PortfolioSelectionData portfolioData, Action<ICPresentationOverviewData> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
-            client.RetrieveSecurityDetailsAsync(entitySelectionData, presentationOverviewData);
+            client.RetrieveSecurityDetailsAsync(entitySelectionData, presentationOverviewData,portfolioData);
             client.RetrieveSecurityDetailsCompleted += (se, e) =>
             {
                 if (e.Error == null)

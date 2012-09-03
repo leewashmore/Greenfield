@@ -114,20 +114,17 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public ICPresentationOverviewData RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData)
+        public ICPresentationOverviewData RetrieveSecurityDetails(EntitySelectionData entitySelectionData,ICPresentationOverviewData presentationOverviewData,PortfolioSelectionData portfolio)
         {
             try
             {
-                if (entitySelectionData == null)
-                    return presentationOverviewData;
-
                 DimensionEntitiesService.Entities entity = DimensionEntity;
+                ExternalResearchEntities externalResearchEntity = new ExternalResearchEntities();
 
-                ExternalResearchEntities research = new ExternalResearchEntities();
-                ObjectResult<Decimal?> queryResult = research.GetMarketCap();
-                List<Decimal?> resultCap = new List<Decimal?>();
-                resultCap = queryResult.ToList<Decimal?>();
-
+               // ExternalResearchEntities research = new ExternalResearchEntities();
+               // ObjectResult<Decimal?> queryResult = research.GetMarketCap();
+                //List<Decimal?> resultCap = new List<Decimal?>();
+                //resultCap = queryResult.ToList<Decimal?>();
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -135,35 +132,77 @@ namespace GreenField.Web.Services
                 if (!isServiceUp)
                     throw new Exception("Services are not available");
 
-                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == entitySelectionData.ShortName
                         && record.ISSUE_NAME == entitySelectionData.LongName
                         && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
                         && record.SECURITY_TYPE == entitySelectionData.SecurityType)
                     .FirstOrDefault();
 
+                //if (securityData == null)
+                //    return new ICPresentationOverviewData();
+                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> portfolioData = entity.GF_PORTFOLIO_HOLDINGS.Where(
+                                                                                            record => record.PORTFOLIO_ID == portfolio.PortfolioId
+                                                                                            && record.PORTFOLIO_DATE == Convert.ToDateTime(DateTime.Today.AddDays(-1)))
+                                                                                            .ToList();
 
-                if (data == null)
-                    return new ICPresentationOverviewData();
 
-                presentationOverviewData.SecurityTicker = data.TICKER;
-                presentationOverviewData.SecurityName = data.ISSUE_NAME;
-                presentationOverviewData.SecurityCountry = data.ISO_COUNTRY_CODE;
-                presentationOverviewData.SecurityIndustry = data.GICS_INDUSTRY_NAME;
-                presentationOverviewData.Analyst = data.ASHMOREEMM_PRIMARY_ANALYST;
-                presentationOverviewData.Price = data.CLOSING_PRICE.ToString();
+                decimal? sumDirtyValuePC = portfolioData.Sum(record => record.DIRTY_VALUE_PC);
+                GF_PORTFOLIO_HOLDINGS securityInPortfolio = portfolioData.Where(a => a.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID).FirstOrDefault();
+
+                string benchmarkID = portfolioData.Select(a => a.BENCHMARK_ID).FirstOrDefault();
+
+               DimensionEntitiesService.GF_BENCHMARK_HOLDINGS benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(
+                                                                                                record => record.BENCHMARK_ID == benchmarkID
+                                                                                                && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                                                                                                && record.PORTFOLIO_DATE == Convert.ToDateTime(DateTime.Today.AddDays(-1)))
+                                                                                                .FirstOrDefault();
+
+               List<NewICPresentationSecurityData> securityDetails = new List<NewICPresentationSecurityData>();
+               securityDetails = externalResearchEntity.GetNewICPresentationSecurityData(securityData.SECURITY_ID.ToString()).ToList();
+
+               decimal? tempNAV;
+                presentationOverviewData.SecurityTicker = securityData.TICKER;
+                presentationOverviewData.SecurityName = securityData.ISSUE_NAME;
+                presentationOverviewData.SecurityCountry = securityData.ASEC_SEC_COUNTRY_NAME;
+                presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
+                presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
+                presentationOverviewData.Price = securityData.CLOSING_PRICE.ToString() + securityData.TRADING_CURRENCY.ToString();
                 presentationOverviewData.FVCalc = String.Empty;//"3";
                 presentationOverviewData.SecurityBuySellvsCrnt = String.Empty; //"$16.50(8*2013PE)-$21.50(10.5*2013PE)";
-                presentationOverviewData.CurrentHoldings = String.Empty; //"$0mn";
-                presentationOverviewData.PercentEMIF = String.Empty; //"0%";
-                presentationOverviewData.SecurityBMWeight = String.Empty; //"1%";
-                presentationOverviewData.SecurityActiveWeight = String.Empty;// "Underweight";
+
+                if (securityInPortfolio != null && securityInPortfolio.DIRTY_VALUE_PC > 0)
+                {
+                    presentationOverviewData.CurrentHoldings = "YES";
+                    if (sumDirtyValuePC != 0)
+                        presentationOverviewData.PercentEMIF = (((securityInPortfolio.DIRTY_VALUE_PC / sumDirtyValuePC) * 100) + "%").ToString();
+                    tempNAV = ((securityInPortfolio.DIRTY_VALUE_PC / sumDirtyValuePC) * 100);
+                }
+                else
+                {
+                    presentationOverviewData.CurrentHoldings = "No";
+                    presentationOverviewData.PercentEMIF = "0%";
+                    tempNAV = 0;
+                }
+
+                if (benchmarkData != null)
+                {
+                    presentationOverviewData.SecurityBMWeight = benchmarkData.BENCHMARK_WEIGHT.ToString();
+                    tempNAV = (tempNAV - benchmarkData.BENCHMARK_WEIGHT);
+                }
+                else
+                {
+                    presentationOverviewData.SecurityBMWeight = "0%";
+                    tempNAV = tempNAV - 0;
+                }
+
+                presentationOverviewData.SecurityActiveWeight = tempNAV.ToString()+"%";
+
                 presentationOverviewData.YTDRet_Absolute = String.Empty; //"-3.5%";
                 presentationOverviewData.YTDRet_RELtoLOC = String.Empty;  //"+8%";
                 presentationOverviewData.YTDRet_RELtoEM = String.Empty;// "-2%";
                 presentationOverviewData.SecurityRecommendation = String.Empty; //"BUY";
-                presentationOverviewData.SecurityMarketCapitalization = 0;
-                
+                presentationOverviewData.SecurityMarketCapitalization = (float)(securityDetails[0].AMOUNT);                
 
                 return presentationOverviewData;
             }
