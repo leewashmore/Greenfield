@@ -15,6 +15,8 @@ using System.Net;
 using GreenField.Web.DocumentCopyService;
 using GreenField.DataContracts;
 using GreenField.DAL;
+using GreenField.Web.ListsDefinitions;
+using System.Xml;
 
 namespace GreenField.Web.Services
 {
@@ -71,7 +73,7 @@ namespace GreenField.Web.Services
             }
         }
 
-        public ResourceManager ServiceFaultResourceManager
+        private ResourceManager ServiceFaultResourceManager
         {
             get
             {
@@ -96,6 +98,26 @@ namespace GreenField.Web.Services
                 }
 
                 return _copyService;
+            }
+        }
+
+
+        /// <summary>
+        /// Instance of ListsWebService
+        /// </summary>
+        private Lists _listsService = null;
+        public Lists ListsService
+        {
+            get
+            {
+                if (_listsService == null)
+                {
+                    _listsService = new Lists();
+                    _listsService.Credentials = new NetworkCredential(UserName, Password, Domain);
+                    _listsService.Url = DocumentServiceUrl;
+                }
+
+                return _listsService;
             }
         }
 
@@ -141,30 +163,32 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public String DeleteDocument(String fileName, Byte[] fileByteStream)
+        public bool DeleteDocument(String fileName)
         {
+            bool fileDeleted = false;
             try
-            {
-                String resultUrl = String.Empty;
-                try
+            {                
+                string strBatch = "<Method ID='1' Cmd='Delete'>" +
+                    "<Field Name='ID'>3</Field>" +
+                    "<Field Name='FileRef'>" +
+                    fileName +
+                    "</Field>" +
+                    "</Method>";
+
+                XmlDocument xmlDoc = new XmlDocument();
+                System.Xml.XmlElement elBatch = xmlDoc.CreateElement("Batch");
+                elBatch.SetAttribute("OnError", "Continue");
+                elBatch.SetAttribute("PreCalc", "TRUE");
+                elBatch.SetAttribute("ListVersion", "0");
+                elBatch.SetAttribute("ViewName", String.Empty);
+                elBatch.InnerXml = strBatch;
+
+                XmlNode ndReturn = ListsService.UpdateListItems(DocumentLibrary, elBatch);
+
+                if (ndReturn.InnerText.ToLower() == "0x00000000".ToLower())
                 {
-                    String[] destinationUrl = { DocumentServerUrl + DocumentLibrary + "/" + fileName };
-
-                    
-                    DocumentCopyService.CopyResult[] cResultArray = { new DocumentCopyService.CopyResult() };
-                    DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };
-
-                    UInt32 copyResult = CopyService.CopyIntoItems(destinationUrl[0], destinationUrl, ffieldInfoArray, fileByteStream, out cResultArray);
-
-                    if (cResultArray[0].ErrorCode == CopyErrorCode.Success)
-                        resultUrl = cResultArray[0].DestinationUrl;
+                    fileDeleted = true;
                 }
-                catch (Exception)
-                {
-                    throw;
-                }
-
-                return resultUrl;
             }
             catch (Exception ex)
             {
@@ -172,6 +196,8 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
+
+            return fileDeleted;
         }
 
         /// <summary>

@@ -231,6 +231,8 @@ namespace GreenField.ServiceCaller
 
         void UploadDocument(String fileName, Byte[] fileByteStream, Action<String> callback);
 
+        void DeleteDocument(String fileName, Action<bool?> callback);
+
         void RetrieveDocument(String fileName, Action<Byte[]> callback);
 
         void SetUploadFileInfo(String userName, String Name, String Location, String SecurityName

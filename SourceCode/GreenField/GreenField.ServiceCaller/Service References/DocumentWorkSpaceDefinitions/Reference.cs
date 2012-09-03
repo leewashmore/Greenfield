@@ -55,6 +55,12 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         string EndUploadDocument(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/DeleteDocument", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/DeleteDocumentResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/DeleteDocumentServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginDeleteDocument(string fileName, System.AsyncCallback callback, object asyncState);
+        
+        bool EndDeleteDocument(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocument", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveDocument(string fileName, System.AsyncCallback callback, object asyncState);
@@ -117,6 +123,25 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class DeleteDocumentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public DeleteDocumentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }
@@ -245,6 +270,12 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         private System.Threading.SendOrPostCallback onUploadDocumentCompletedDelegate;
         
+        private BeginOperationDelegate onBeginDeleteDocumentDelegate;
+        
+        private EndOperationDelegate onEndDeleteDocumentDelegate;
+        
+        private System.Threading.SendOrPostCallback onDeleteDocumentCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRetrieveDocumentDelegate;
         
         private EndOperationDelegate onEndRetrieveDocumentDelegate;
@@ -336,6 +367,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         public event System.EventHandler<UploadDocumentCompletedEventArgs> UploadDocumentCompleted;
         
+        public event System.EventHandler<DeleteDocumentCompletedEventArgs> DeleteDocumentCompleted;
+        
         public event System.EventHandler<RetrieveDocumentCompletedEventArgs> RetrieveDocumentCompleted;
         
         public event System.EventHandler<RetrieveDocumentsDataCompletedEventArgs> RetrieveDocumentsDataCompleted;
@@ -398,6 +431,52 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             base.InvokeAsync(this.onBeginUploadDocumentDelegate, new object[] {
                         fileName,
                         fileByteStream}, this.onEndUploadDocumentDelegate, this.onUploadDocumentCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginDeleteDocument(string fileName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginDeleteDocument(fileName, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndDeleteDocument(System.IAsyncResult result) {
+            return base.Channel.EndDeleteDocument(result);
+        }
+        
+        private System.IAsyncResult OnBeginDeleteDocument(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string fileName = ((string)(inValues[0]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginDeleteDocument(fileName, callback, asyncState);
+        }
+        
+        private object[] OnEndDeleteDocument(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndDeleteDocument(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnDeleteDocumentCompleted(object state) {
+            if ((this.DeleteDocumentCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.DeleteDocumentCompleted(this, new DeleteDocumentCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void DeleteDocumentAsync(string fileName) {
+            this.DeleteDocumentAsync(fileName, null);
+        }
+        
+        public void DeleteDocumentAsync(string fileName, object userState) {
+            if ((this.onBeginDeleteDocumentDelegate == null)) {
+                this.onBeginDeleteDocumentDelegate = new BeginOperationDelegate(this.OnBeginDeleteDocument);
+            }
+            if ((this.onEndDeleteDocumentDelegate == null)) {
+                this.onEndDeleteDocumentDelegate = new EndOperationDelegate(this.OnEndDeleteDocument);
+            }
+            if ((this.onDeleteDocumentCompletedDelegate == null)) {
+                this.onDeleteDocumentCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDeleteDocumentCompleted);
+            }
+            base.InvokeAsync(this.onBeginDeleteDocumentDelegate, new object[] {
+                        fileName}, this.onEndDeleteDocumentDelegate, this.onDeleteDocumentCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -779,6 +858,19 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             public string EndUploadDocument(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 string _result = ((string)(base.EndInvoke("UploadDocument", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginDeleteDocument(string fileName, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = fileName;
+                System.IAsyncResult _result = base.BeginInvoke("DeleteDocument", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndDeleteDocument(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("DeleteDocument", _args, result)));
                 return _result;
             }
             

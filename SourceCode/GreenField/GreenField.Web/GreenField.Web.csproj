@@ -95,6 +95,7 @@
     <Content Include="Services\SessionOperations.svc" />
     <Content Include="Silverlight.js" />
     <None Include="Web References\DocumentCopyService\copy.disco" />
+    <None Include="Web References\ListsDefinitions\lists.disco" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -113,6 +114,11 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\DocumentCopyService\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\ListsDefinitions\lists.wsdl" />
+    <None Include="Web References\ListsDefinitions\Reference.map">
       <Generator>MSDiscoCodeGenerator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
@@ -199,6 +205,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="Web References\ListsDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GreenField.DAL\GreenField.DAL.csproj">
@@ -249,6 +260,17 @@
       </CachedDynamicPropName>
       <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
       <CachedSettingsPropName>GreenField_Web_DocumentCopyService_Copy</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://10.101.1.165:90/_vti_bin/lists.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\ListsDefinitions\</RelPath>
+      <UpdateFromURL>http://10.101.1.165:90/_vti_bin/lists.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>GreenField_Web_ListsDefinitions_Lists</CachedSettingsPropName>
     </WebReferenceUrl>
   </ItemGroup>
   <ItemGroup />
