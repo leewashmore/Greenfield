@@ -373,283 +373,292 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public List<FinstatDetailData> RetrieveFinstatData(string issuerId, string securityId, FinancialStatementDataSource dataSource, FinancialStatementFiscalType fiscalType, String currency, Int32 yearRangeStart)
         {
-            string _dataSource = EnumUtils.ToString(dataSource);
-            string _fiscalType = EnumUtils.ToString(fiscalType);
+            try
+            {
+                string _dataSource = EnumUtils.ToString(dataSource);
+                string _fiscalType = EnumUtils.ToString(fiscalType);
 
-            ExternalResearchEntities entity = new ExternalResearchEntities();
+                ExternalResearchEntities entity = new ExternalResearchEntities();
 
-            List<FinstatDetail> data = new List<FinstatDetail>();
-            List<FinstatDetailData> result = new List<FinstatDetailData>();
+                List<FinstatDetail> data = new List<FinstatDetail>();
+                List<FinstatDetailData> result = new List<FinstatDetailData>();
 
-            data = entity.GetFinstatDetail(issuerId, securityId, _dataSource, _fiscalType, currency).ToList();
-            if (data == null || data.Count() == 0)
+                data = entity.GetFinstatDetail(issuerId, securityId, _dataSource, _fiscalType, currency).ToList();
+                if (data == null || data.Count() == 0)
+                    return result;
+
+                #region DataSource group
+                List<int> distinctPeriodYear = data.Select(a => a.PERIOD_YEAR).Distinct().ToList();
+                List<FinstatDetail> distinctRootSource = data.Where(a => a.ROOT_SOURCE != null).OrderBy(a => a.PERIOD_YEAR).ThenBy(a => a.DATA_SOURCE).ToList();
+
+
+                foreach (int item in distinctPeriodYear)
+                {
+                    FinstatDetailData temp = new FinstatDetailData();
+                    temp.GroupDescription = "Data Source";
+                    temp.Description = "Source";
+                    temp.PeriodType = "A";
+                    temp.Amount = _dataSource;
+                    temp.RootSource = _dataSource;
+                    temp.RootSourceDate = DateTime.Now;
+                    temp.PeriodYear = item;
+                    temp.AmountType = "A";
+                    temp.BoldFont = "N";
+                    temp.IsPercentage = "N";
+                    result.Add(temp);
+
+                    FinstatDetailData tempData = new FinstatDetailData();
+                    tempData.GroupDescription = "Data Source";
+                    tempData.Description = "Root Source";
+                    tempData.PeriodType = "A";
+                    List<string> isRootSourceMixed = distinctRootSource.Where(a => a.PERIOD_YEAR == item).Select(a => a.ROOT_SOURCE).Distinct().ToList();
+                    tempData.Amount = (isRootSourceMixed.Count > 1) ? "MIXED" : _dataSource;
+                    tempData.RootSource = _dataSource;
+                    tempData.RootSourceDate = DateTime.Now;
+                    tempData.PeriodYear = item;
+                    tempData.AmountType = "A";
+                    tempData.BoldFont = "N";
+                    tempData.IsPercentage = "N";
+                    result.Add(tempData);
+                }
+
+                #endregion
+
+                #region Preparing display data for group names
+                for (int i = 0; i < data.Count(); i++)
+                {
+                    FinstatDetailData temp = new FinstatDetailData();
+                    temp.Amount = Convert.ToDecimal(data[i].AMOUNT * data[i].MULTIPLIER);
+                    temp.BoldFont = data[i].BOLD_FONT;
+                    temp.Description = data[i].DATA_DESC;
+                    temp.Decimals = data[i].DECIMALS;
+                    temp.GroupDescription = data[i].GROUP_NAME;
+                    temp.Harmonic = data[i].HARMONIC;
+                    temp.IsPercentage = data[i].PERCENTAGE;
+                    temp.PeriodYear = Convert.ToInt32(data[i].PERIOD_YEAR);
+                    temp.SortOrder = data[i].SORT_ORDER;
+                    temp.AmountType = "A";
+                    temp.PeriodType = "A";
+                    temp.RootSource = data[i].ROOT_SOURCE;
+                    temp.RootSourceDate = Convert.ToDateTime(data[i].ROOT_SOURCE_DATE);
+                    if (data[i].HARMONIC == "Y")
+                    {
+                        decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;
+
+                        decimal year1Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 3
+                                                                                && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                        year1 = (year1Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year1Value));
+
+                        decimal year2Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 2
+                                                                                && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                        year2 = (year2Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year2Value));
+
+                        decimal year3Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 1
+                                                                               && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                        year3 = (year3Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year3Value));
+
+                        decimal year4Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR
+                                                                               && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                        year4 = (year4Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year4Value));
+                        decimal year5Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 1
+                                                                               && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                        year5 = (year5Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year5Value));
+                        decimal year6Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 2
+                                                                               && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
+                        year6 = (year6Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year6Value));
+
+                        if (year1 != 0 && year2 != 0 && year3 != 0 && year1 != null && year2 != null && year3 != null)
+                            temp.HarmonicFirst = Convert.ToDecimal((1 / (year1 + year2 + year3)) * data[i].MULTIPLIER);
+                        if (year4 != 0 && year5 != 0 && year6 != 0 && year4 != null && year5 != null && year6 != null)
+                            temp.HarmonicSecond = Convert.ToDecimal((1 / (year4 + year5 + year6)) * data[i].MULTIPLIER);
+                    }
+                    result.Add(temp);
+                }
+                #endregion
+
+                #region Economic & Market Data
+                List<FinstatEconomicMarketData> economicData = entity.GetFinstatEconomicMarketData(issuerId, securityId, _dataSource, _fiscalType, currency).ToList();
+
+                //Preparing Exchange Rates
+                List<string> distinctYears = economicData.Select(a => a.PERIOD_YEAR).Distinct().ToList();
+                foreach (string item in distinctYears)
+                {
+                    FinstatDetailData tempData = new FinstatDetailData();
+                    tempData.GroupDescription = "Economic & Market Data";
+                    tempData.Description = "Exchange Rate (Year-End)";
+                    tempData.PeriodYear = Convert.ToInt32(item);
+                    tempData.AmountType = "A";
+                    tempData.PeriodType = "A";
+                    tempData.BoldFont = "N";
+                    tempData.IsPercentage = "N";
+                    tempData.RootSource = _dataSource;
+                    tempData.RootSourceDate = DateTime.Now;
+                    tempData.Amount = Convert.ToDecimal(economicData.Where(a => a.PERIOD_YEAR == item).Select(a => a.FX_RATE).FirstOrDefault());
+                    result.Add(tempData);
+
+                    FinstatDetailData temp = new FinstatDetailData();
+                    temp.GroupDescription = "Economic & Market Data";
+                    temp.Description = "Exchange Rate (Average)";
+                    temp.PeriodYear = Convert.ToInt32(item);
+                    temp.AmountType = "A";
+                    temp.PeriodType = "A";
+                    temp.BoldFont = "N";
+                    temp.IsPercentage = "N";
+                    temp.RootSource = _dataSource;
+                    temp.RootSourceDate = DateTime.Now;
+                    temp.Amount = Convert.ToDecimal(economicData.Where(a => a.PERIOD_YEAR == item).Select(a => a.AVG12MonthRATE).FirstOrDefault());
+                    result.Add(temp);
+                }
+
+                //Preparing Inflation and ST Interest Rate
+                foreach (FinstatEconomicMarketData item in economicData)
+                {
+                    FinstatDetailData tempData = new FinstatDetailData();
+                    tempData.GroupDescription = "Economic & Market Data";
+                    tempData.Description = Convert.ToString(item.FIELD);
+                    tempData.PeriodYear = Convert.ToInt32(item.YEAR1);
+                    tempData.AmountType = "A";
+                    tempData.PeriodType = "A";
+                    tempData.BoldFont = "N";
+                    tempData.IsPercentage = "Y";
+                    tempData.RootSource = _dataSource;
+                    tempData.RootSourceDate = DateTime.Now;
+                    tempData.Amount = Math.Round((Convert.ToDecimal(item.VALUE) * 100), 1);
+                    result.Add(tempData);
+                }
+                #endregion
+
+                #region Relative Analysis Data
+                List<FinstatRelativeAnalysisData> relativeData = entity.GetFinstatRelativeAnalysisData(issuerId, securityId, _dataSource, _fiscalType).ToList();
+
+                #region direct data
+                foreach (FinstatRelativeAnalysisData item in relativeData)
+                {
+                    FinstatDetailData tempData = new FinstatDetailData();
+                    tempData.GroupDescription = "Relative Analysis (in USD)";
+                    tempData.PeriodYear = item.PERIOD_YEAR;
+                    tempData.Amount = Convert.ToDecimal(item.AMOUNT * item.MULTIPLIER);
+                    tempData.AmountType = "A";
+                    tempData.PeriodType = "A";
+                    tempData.RootSource = _dataSource;
+                    tempData.RootSourceDate = DateTime.Now;
+                    tempData.Decimals = item.DECIMALS;
+                    //tempData.Multiplier = item.MULTIPLIER;
+                    tempData.IsPercentage = item.PERCENTAGE;
+                    if (item.VALUE == "step1")
+                    {
+                        tempData.BoldFont = "Y";
+                        tempData.Description = item.DATA_ID == 44 ? "Net Income" :
+                                                   item.DATA_ID == 166 ? "P/E" : item.DATA_ID == 164 ? "P/BV" : item.DATA_ID == 133 ? "ROE" : "";
+                    }
+                    else if (item.VALUE == "step2")
+                    {
+                        tempData.BoldFont = "N";
+                        tempData.Description = item.DATA_ID == 11 ? "Consensus Net Income" :
+                                                   item.DATA_ID == 166 ? "Consensus P/E" : item.DATA_ID == 164 ? "Consensus P/BV" : item.DATA_ID == 19 ? "Consensus ROE" : "";
+                    }
+                    else if (item.VALUE == "step3")
+                    {
+                        tempData.BoldFont = "N";
+                        tempData.Description = item.DATA_ID == 166 ? "Country P/E" :
+                                                   item.DATA_ID == 164 ? "Country P/BV" : item.DATA_ID == 133 ? "Country ROE" : "";
+                    }
+                    else if (item.VALUE == "step5")
+                    {
+                        tempData.BoldFont = "N";
+                        tempData.Description = item.DATA_ID == 166 ? "Industry P/E" :
+                                                   item.DATA_ID == 164 ? "Industry P/BV" : item.DATA_ID == 133 ? "Industry ROE" : "";
+                    }
+                    result.Add(tempData);
+                }
+                #endregion
+
+                //remaining data
+                List<FinstatRelativeAnalysisData> step1Data = new List<FinstatRelativeAnalysisData>();
+                step1Data = relativeData.Where(a => a.VALUE == "step1" && a.DATA_ID != 44).ToList();
+
+                foreach (FinstatRelativeAnalysisData item in step1Data)
+                {
+                    FinstatDetailData record = new FinstatDetailData();
+                    record.GroupDescription = "Relative Analysis (in USD)";
+                    record.AmountType = "A";
+                    record.PeriodType = "A";
+                    record.RootSource = _dataSource;
+                    record.RootSourceDate = DateTime.Now;
+                    record.BoldFont = "N";
+                    record.IsPercentage = "N";
+                    record.PeriodYear = item.PERIOD_YEAR;
+                    switch (item.DATA_ID)
+                    {
+                        case 166:
+                            record.Description = "Relative Country P/E";
+                            decimal countryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 166).Select(a => a.AMOUNT).FirstOrDefault());
+                            if (countryPE != 0)
+                                record.Amount = Math.Round((item.AMOUNT / countryPE), 2);
+                            break;
+                        case 164:
+                            record.Description = "Relative Country P/BV";
+                            decimal countryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 164).Select(a => a.AMOUNT).FirstOrDefault());
+                            if (countryPBV != 0)
+                                record.Amount = Math.Round((item.AMOUNT / countryPBV), 2);
+                            break;
+                        case 133:
+                            record.Description = "Relative Country ROE";
+                            decimal countryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 133).Select(a => a.AMOUNT).FirstOrDefault());
+                            if (countryROE != 0)
+                                record.Amount = Math.Round((item.AMOUNT / countryROE), 2);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                foreach (FinstatRelativeAnalysisData item in step1Data)
+                {
+                    FinstatDetailData record = new FinstatDetailData();
+                    record.GroupDescription = "Relative Analysis (in USD)";
+                    record.PeriodYear = item.PERIOD_YEAR;
+                    record.AmountType = "A";
+                    record.PeriodType = "A";
+                    record.BoldFont = "N";
+                    record.IsPercentage = "N";
+                    record.RootSource = _dataSource;
+                    record.RootSourceDate = DateTime.Now;
+                    switch (item.DATA_ID)
+                    {
+                        case 166:
+                            record.Description = "Relative Industry P/E";
+                            decimal industryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 166).Select(a => a.AMOUNT).FirstOrDefault());
+                            if (industryPE != 0)
+                                record.Amount = Math.Round((item.AMOUNT / industryPE), 2);
+                            break;
+                        case 164:
+                            record.Description = "Relative Industry P/BV";
+                            decimal industryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 164).Select(a => a.AMOUNT).FirstOrDefault());
+                            if (industryPBV != 0)
+                                record.Amount = Math.Round((item.AMOUNT / industryPBV), 2);
+                            break;
+                        case 133:
+                            record.Description = "Relative Industry ROE";
+                            decimal industryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 133).Select(a => a.AMOUNT).FirstOrDefault());
+                            if (industryROE != 0)
+                                record.Amount = Math.Round((item.AMOUNT / industryROE), 2);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                #endregion
+
                 return result;
-
-            #region DataSource group
-            List<int> distinctPeriodYear = data.Select(a => a.PERIOD_YEAR).Distinct().ToList();
-            List<FinstatDetail> distinctRootSource = data.Where(a => a.ROOT_SOURCE != null).OrderBy(a => a.PERIOD_YEAR).ThenBy(a => a.DATA_SOURCE).ToList();
-
-
-            foreach (int item in distinctPeriodYear)
-            {
-                FinstatDetailData temp = new FinstatDetailData();
-                temp.GroupDescription = "Data Source";
-                temp.Description = "Source";
-                temp.PeriodType = "A";
-                temp.Amount = _dataSource;
-                temp.RootSource = _dataSource;
-                temp.RootSourceDate = DateTime.Now;
-                temp.PeriodYear = item;
-                temp.AmountType = "A";
-                temp.BoldFont = "N";
-                temp.IsPercentage = "N";
-                result.Add(temp);
-
-                FinstatDetailData tempData = new FinstatDetailData();
-                tempData.GroupDescription = "Data Source";
-                tempData.Description = "Root Source";
-                tempData.PeriodType = "A";
-                List<string> isRootSourceMixed = distinctRootSource.Where(a => a.PERIOD_YEAR == item).Select(a => a.ROOT_SOURCE).Distinct().ToList();
-                tempData.Amount = (isRootSourceMixed.Count > 1) ? "MIXED" : _dataSource;
-                tempData.RootSource = _dataSource;
-                tempData.RootSourceDate = DateTime.Now;
-                tempData.PeriodYear = item;
-                tempData.AmountType = "A";
-                tempData.BoldFont = "N";
-                tempData.IsPercentage = "N";
-                result.Add(tempData);
             }
-
-            #endregion
-
-            #region Preparing display data for group names
-            for (int i = 0; i < data.Count(); i++)
+            catch (Exception ex)
             {
-                FinstatDetailData temp = new FinstatDetailData();
-                temp.Amount = Convert.ToDecimal(data[i].AMOUNT * data[i].MULTIPLIER);
-                temp.BoldFont = data[i].BOLD_FONT;
-                temp.Description = data[i].DATA_DESC;
-                temp.Decimals = data[i].DECIMALS;
-                temp.GroupDescription = data[i].GROUP_NAME;
-                temp.Harmonic = data[i].HARMONIC;
-                temp.IsPercentage = data[i].PERCENTAGE;
-                temp.PeriodYear = Convert.ToInt32(data[i].PERIOD_YEAR);
-                temp.SortOrder = data[i].SORT_ORDER;
-                temp.AmountType = "A";
-                temp.PeriodType = "A";
-                temp.RootSource = data[i].ROOT_SOURCE;
-                temp.RootSourceDate = Convert.ToDateTime(data[i].ROOT_SOURCE_DATE);
-                if (data[i].HARMONIC == "Y")
-                {
-                    decimal? year1 = 0, year2 = 0, year3 = 0, year4 = 0, year5 = 0, year6 = 0;
-
-                    decimal year1Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 3
-                                                                            && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
-                    year1 = (year1Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year1Value));
-
-                    decimal year2Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 2
-                                                                            && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
-                    year2 = (year2Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year2Value));
-
-                    decimal year3Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR - 1
-                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
-                    year3 = (year3Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year3Value));
-
-                    decimal year4Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR
-                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
-                    year4 = (year4Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year4Value));
-                    decimal year5Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 1
-                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
-                    year5 = (year5Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year5Value));
-                    decimal year6Value = Convert.ToDecimal(data.Where(a => a.PERIOD_YEAR == data[i].PERIOD_YEAR + 2
-                                                                           && a.DATA_DESC == data[i].DATA_DESC && a.GROUP_NAME == data[i].GROUP_NAME).Select(a => a.AMOUNT).FirstOrDefault());
-                    year6 = (year6Value == 0) ? 0 : (Convert.ToDecimal(1.0 / 3.0) * ((decimal)1 / year6Value));
-
-                    if (year1 != 0 && year2 != 0 && year3 != 0 && year1 != null && year2 != null && year3 != null)
-                        temp.HarmonicFirst = Convert.ToDecimal((1 / (year1 + year2 + year3)) * data[i].MULTIPLIER);
-                    if (year4 != 0 && year5 != 0 && year6 != 0 && year4 != null && year5 != null && year6 != null)
-                        temp.HarmonicSecond = Convert.ToDecimal((1 / (year4 + year5 + year6)) * data[i].MULTIPLIER);
-                }
-                result.Add(temp);
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-            #endregion
-
-            #region Economic & Market Data
-            List<FinstatEconomicMarketData> economicData = entity.GetFinstatEconomicMarketData(issuerId, securityId, _dataSource, _fiscalType, currency).ToList();
-
-            //Preparing Exchange Rates
-            List<string> distinctYears = economicData.Select(a => a.PERIOD_YEAR).Distinct().ToList();
-            foreach (string item in distinctYears)
-            {
-                FinstatDetailData tempData = new FinstatDetailData();
-                tempData.GroupDescription = "Economic & Market Data";
-                tempData.Description = "Exchange Rate (Year-End)";
-                tempData.PeriodYear = Convert.ToInt32(item);
-                tempData.AmountType = "A";
-                tempData.PeriodType = "A";
-                tempData.BoldFont = "N";
-                tempData.IsPercentage = "N";
-                tempData.RootSource = _dataSource;
-                tempData.RootSourceDate = DateTime.Now;
-                tempData.Amount = Convert.ToDecimal(economicData.Where(a => a.PERIOD_YEAR == item).Select(a => a.FX_RATE).FirstOrDefault());
-                result.Add(tempData);
-
-                FinstatDetailData temp = new FinstatDetailData();
-                temp.GroupDescription = "Economic & Market Data";
-                temp.Description = "Exchange Rate (Average)";
-                temp.PeriodYear = Convert.ToInt32(item);
-                temp.AmountType = "A";
-                temp.PeriodType = "A";
-                temp.BoldFont = "N";
-                temp.IsPercentage = "N";
-                temp.RootSource = _dataSource;
-                temp.RootSourceDate = DateTime.Now;
-                temp.Amount = Convert.ToDecimal(economicData.Where(a => a.PERIOD_YEAR == item).Select(a => a.AVG12MonthRATE).FirstOrDefault());
-                result.Add(temp);
-            }
-
-            //Preparing Inflation and ST Interest Rate
-            foreach (FinstatEconomicMarketData item in economicData)
-            {
-                FinstatDetailData tempData = new FinstatDetailData();
-                tempData.GroupDescription = "Economic & Market Data";
-                tempData.Description = Convert.ToString(item.FIELD);
-                tempData.PeriodYear = Convert.ToInt32(item.YEAR1);
-                tempData.AmountType = "A";
-                tempData.PeriodType = "A";
-                tempData.BoldFont = "N";
-                tempData.IsPercentage = "Y";
-                tempData.RootSource = _dataSource;
-                tempData.RootSourceDate = DateTime.Now;
-                tempData.Amount = Math.Round((Convert.ToDecimal(item.VALUE) * 100), 1);
-                result.Add(tempData);
-            }
-            #endregion
-
-            #region Relative Analysis Data
-            List<FinstatRelativeAnalysisData> relativeData = entity.GetFinstatRelativeAnalysisData(issuerId, securityId, _dataSource, _fiscalType).ToList();
-
-            #region direct data
-            foreach (FinstatRelativeAnalysisData item in relativeData)
-            {
-                FinstatDetailData tempData = new FinstatDetailData();
-                tempData.GroupDescription = "Relative Analysis (in USD)";
-                tempData.PeriodYear = item.PERIOD_YEAR;
-                tempData.Amount = Convert.ToDecimal(item.AMOUNT * item.MULTIPLIER);
-                tempData.AmountType = "A";
-                tempData.PeriodType = "A";
-                tempData.RootSource = _dataSource;
-                tempData.RootSourceDate = DateTime.Now;
-                tempData.Decimals = item.DECIMALS;
-                //tempData.Multiplier = item.MULTIPLIER;
-                tempData.IsPercentage = item.PERCENTAGE;
-                if (item.VALUE == "step1")
-                {
-                    tempData.BoldFont = "Y";
-                    tempData.Description = item.DATA_ID == 44 ? "Net Income" :
-                                               item.DATA_ID == 166 ? "P/E" : item.DATA_ID == 164 ? "P/BV" : item.DATA_ID == 133 ? "ROE" : "";
-                }
-                else if (item.VALUE == "step2")
-                {
-                    tempData.BoldFont = "N";
-                    tempData.Description = item.DATA_ID == 11 ? "Consensus Net Income" :
-                                               item.DATA_ID == 166 ? "Consensus P/E" : item.DATA_ID == 164 ? "Consensus P/BV" : item.DATA_ID == 19 ? "Consensus ROE" : "";
-                }
-                else if (item.VALUE == "step3")
-                {
-                    tempData.BoldFont = "N";
-                    tempData.Description = item.DATA_ID == 166 ? "Country P/E" :
-                                               item.DATA_ID == 164 ? "Country P/BV" : item.DATA_ID == 133 ? "Country ROE" : "";
-                }
-                else if (item.VALUE == "step5")
-                {
-                    tempData.BoldFont = "N";
-                    tempData.Description = item.DATA_ID == 166 ? "Industry P/E" :
-                                               item.DATA_ID == 164 ? "Industry P/BV" : item.DATA_ID == 133 ? "Industry ROE" : "";
-                }
-                result.Add(tempData);
-            }
-            #endregion
-
-            //remaining data
-            List<FinstatRelativeAnalysisData> step1Data = new List<FinstatRelativeAnalysisData>();
-            step1Data = relativeData.Where(a => a.VALUE == "step1" && a.DATA_ID != 44).ToList();
-
-            foreach (FinstatRelativeAnalysisData item in step1Data)
-            {
-                FinstatDetailData record = new FinstatDetailData();
-                record.GroupDescription = "Relative Analysis (in USD)";
-                record.AmountType = "A";
-                record.PeriodType = "A";
-                record.RootSource = _dataSource;
-                record.RootSourceDate = DateTime.Now;
-                record.BoldFont = "N";
-                record.IsPercentage = "N";
-                record.PeriodYear = item.PERIOD_YEAR;
-                switch (item.DATA_ID)
-                {
-                    case 166:
-                        record.Description = "Relative Country P/E";
-                        decimal countryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 166).Select(a => a.AMOUNT).FirstOrDefault());
-                        if (countryPE != 0)
-                            record.Amount = Math.Round((item.AMOUNT / countryPE), 2);
-                        break;
-                    case 164:
-                        record.Description = "Relative Country P/BV";
-                        decimal countryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 164).Select(a => a.AMOUNT).FirstOrDefault());
-                        if (countryPBV != 0)
-                            record.Amount = Math.Round((item.AMOUNT / countryPBV), 2);
-                        break;
-                    case 133:
-                        record.Description = "Relative Country ROE";
-                        decimal countryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step3" && a.DATA_ID == 133).Select(a => a.AMOUNT).FirstOrDefault());
-                        if (countryROE != 0)
-                            record.Amount = Math.Round((item.AMOUNT / countryROE), 2);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            foreach (FinstatRelativeAnalysisData item in step1Data)
-            {
-                FinstatDetailData record = new FinstatDetailData();
-                record.GroupDescription = "Relative Analysis (in USD)";
-                record.PeriodYear = item.PERIOD_YEAR;
-                record.AmountType = "A";
-                record.PeriodType = "A";
-                record.BoldFont = "N";
-                record.IsPercentage = "N";
-                record.RootSource = _dataSource;
-                record.RootSourceDate = DateTime.Now;
-                switch (item.DATA_ID)
-                {
-                    case 166:
-                        record.Description = "Relative Industry P/E";
-                        decimal industryPE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 166).Select(a => a.AMOUNT).FirstOrDefault());
-                        if (industryPE != 0)
-                            record.Amount = Math.Round((item.AMOUNT / industryPE), 2);
-                        break;
-                    case 164:
-                        record.Description = "Relative Industry P/BV";
-                        decimal industryPBV = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 164).Select(a => a.AMOUNT).FirstOrDefault());
-                        if (industryPBV != 0)
-                            record.Amount = Math.Round((item.AMOUNT / industryPBV), 2);
-                        break;
-                    case 133:
-                        record.Description = "Relative Industry ROE";
-                        decimal industryROE = Convert.ToDecimal(relativeData.Where(a => a.VALUE == "step5" && a.DATA_ID == 133).Select(a => a.AMOUNT).FirstOrDefault());
-                        if (industryROE != 0)
-                            record.Amount = Math.Round((item.AMOUNT / industryROE), 2);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            #endregion
-
-            return result;
         }
 
         /// <summary>
