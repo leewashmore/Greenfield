@@ -202,7 +202,12 @@ namespace GreenField.Web.Services
                 presentationOverviewData.YTDRet_RELtoLOC = String.Empty;  //"+8%";
                 presentationOverviewData.YTDRet_RELtoEM = String.Empty;// "-2%";
                 presentationOverviewData.SecurityRecommendation = String.Empty; //"BUY";
-                presentationOverviewData.SecurityMarketCapitalization = (float)(securityDetails[0].AMOUNT);                
+                if (securityDetails != null && securityDetails.Count > 0)
+                {
+                    presentationOverviewData.SecurityMarketCapitalization = (float)(securityDetails[0].AMOUNT);
+                }
+                else
+                    presentationOverviewData.SecurityMarketCapitalization = null;
 
                 return presentationOverviewData;
             }

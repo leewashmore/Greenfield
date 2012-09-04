@@ -5,5 +5,8 @@
     <Setting Name="GreenField_Web_DocumentCopyService_Copy" Type="(Web Service URL)" Scope="Application">
       <Value Profile="(Default)">http://10.101.1.165:90/_vti_bin/copy.asmx</Value>
     </Setting>
+    <Setting Name="GreenField_Web_ListsDefinitions_Lists" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://10.101.1.165:90/_vti_bin/lists.asmx</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

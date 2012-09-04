@@ -32,5 +32,15 @@ namespace GreenField.Web.Properties {
                 return ((string)(this["GreenField_Web_DocumentCopyService_Copy"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.WebServiceUrl)]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://10.101.1.165:90/_vti_bin/lists.asmx")]
+        public string GreenField_Web_ListsDefinitions_Lists {
+            get {
+                return ((string)(this["GreenField_Web_ListsDefinitions_Lists"]));
+            }
+        }
     }
 }
