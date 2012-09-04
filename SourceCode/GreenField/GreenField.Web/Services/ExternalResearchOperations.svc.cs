@@ -1413,10 +1413,13 @@ namespace GreenField.Web.Services
                                 dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
                                 .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ASHEMM_PROP_REGION_CODE == filterValue)
                                 .ToList();
-                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
-                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ASHEMM_PROP_REGION_CODE == filterValue)
-                               .ToList();
+                                if (dataPortfolio != null && dataPortfolio.Count > 0)
+                                {
+                                    benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                    dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                                   .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ASHEMM_PROP_REGION_CODE == filterValue)
+                                   .ToList();
+                                }
                             }
                             break;
 
@@ -1425,10 +1428,13 @@ namespace GreenField.Web.Services
                                 dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
                                 .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ISO_COUNTRY_CODE == filterValue)
                                 .ToList();
-                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
-                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ISO_COUNTRY_CODE == filterValue)
-                               .ToList();
+                                if (dataPortfolio != null && dataPortfolio.Count > 0)
+                                {
+                                    benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                    dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                                   .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ISO_COUNTRY_CODE == filterValue)
+                                   .ToList();
+                                }
                             }
                             break;
 
@@ -1437,10 +1443,13 @@ namespace GreenField.Web.Services
                                 dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
                                 .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_INDUSTRY_NAME == filterValue)
                                 .ToList();
-                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
-                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_INDUSTRY_NAME == filterValue)
-                               .ToList();
+                                if (dataPortfolio != null && dataPortfolio.Count > 0)
+                                {
+                                    benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                    dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                                   .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_INDUSTRY_NAME == filterValue)
+                                   .ToList();
+                                }
                             }
                             break;
 
@@ -1449,10 +1458,13 @@ namespace GreenField.Web.Services
                                 dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
                                 .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_SECTOR_NAME == filterValue)
                                 .ToList();
-                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
-                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_SECTOR_NAME == filterValue)
-                               .ToList();
+                                if (dataPortfolio != null && dataPortfolio.Count > 0)
+                                {
+                                    benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                    dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                                   .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_SECTOR_NAME == filterValue)
+                                   .ToList();
+                                }
                             }
                             break;
 
@@ -1461,23 +1473,26 @@ namespace GreenField.Web.Services
                                 dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
                                 .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
                                 .ToList();
-                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
-                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
-                               .ToList();
+                                if (dataPortfolio != null && dataPortfolio.Count > 0)
+                                {
+                                    benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                    dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                                   .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                                   .ToList();
+                                }
                             }
                             break;
                         default:
                             break;
                     }
 
-                    if (dataPortfolio.Count() > 0)
+                    if (dataPortfolio != null && dataPortfolio.Count() > 0)
                     {
                         distinctSecuritiesForPortfolio = dataPortfolio.Select(record => record.ISSUE_NAME).Distinct().ToList();
                     }
 
 
-                    if (dataBenchmark.Count() > 0)
+                    if (dataBenchmark != null && dataBenchmark.Count() > 0)
                     {
                         distinctSecuritiesForBenchmark = dataBenchmark.Select(record => record.ISSUE_NAME).Distinct().ToList();
                     }
@@ -1497,8 +1512,7 @@ namespace GreenField.Web.Services
 
                     issuerIDPortfolio = check == 0 ? issuerIDPortfolio.Remove(0, 1) : null;
                     securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
-                    string a = issuerIDPortfolio.ToString();
-                    string b = securityIDPortfolio.ToString();
+                
 
                     foreach (String issueName in distinctSecuritiesForBenchmark)
                     {
@@ -1532,7 +1546,7 @@ namespace GreenField.Web.Services
                     List<String> dinstinctIssuerIdsForBenchmark = new List<String>();
                     List<String> dinstinctSecurityIdsForBenchmark = new List<String>();
 
-                    if (storedProcResult.Count() > 0)
+                    if (storedProcResult != null && storedProcResult.Count() > 0)
                     {
                         dinstinctIssuerIdsForPortfolio = storedProcResult.Where(t => t.AmountType == "Portfolio").Select(t => t.IssuerId).Distinct().ToList();
                         dinstinctSecurityIdsForPortfolio = storedProcResult.Where(t => t.AmountType == "Portfolio").Select(t => t.SecurityId).Distinct().ToList();
@@ -1622,10 +1636,13 @@ namespace GreenField.Web.Services
                                 dataPortfolioLookThruDis = entity.GF_PORTFOLIO_LTHOLDINGS
                                 .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ASHEMM_PROP_REGION_CODE == filterValue)
                                 .ToList();
-                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
-                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ASHEMM_PROP_REGION_CODE == filterValue)
-                               .ToList();
+                                if (dataPortfolioLookThruDis !=null && dataPortfolioLookThruDis.Count > 0)
+                                {
+                                    benchmarkId = dataPortfolioLookThruDis.FirstOrDefault().BENCHMARK_ID.ToString();
+                                    dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                                   .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ASHEMM_PROP_REGION_CODE == filterValue)
+                                   .ToList();
+                                }
                             }
                             break;
 
@@ -1634,10 +1651,13 @@ namespace GreenField.Web.Services
                                 dataPortfolioLookThruDis = entity.GF_PORTFOLIO_LTHOLDINGS
                                 .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ISO_COUNTRY_CODE == filterValue)
                                 .ToList();
-                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
-                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ISO_COUNTRY_CODE == filterValue)
-                               .ToList();
+                                if (dataPortfolioLookThruDis != null && dataPortfolioLookThruDis.Count > 0)
+                                {
+                                    benchmarkId = dataPortfolioLookThruDis.FirstOrDefault().BENCHMARK_ID.ToString();
+                                    dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                                   .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ISO_COUNTRY_CODE == filterValue)
+                                   .ToList();
+                                }
                             }
                             break;
 
@@ -1646,10 +1666,13 @@ namespace GreenField.Web.Services
                                 dataPortfolioLookThruDis = entity.GF_PORTFOLIO_LTHOLDINGS
                                 .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_INDUSTRY_NAME == filterValue)
                                 .ToList();
-                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
-                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_INDUSTRY_NAME == filterValue)
-                               .ToList();
+                                if (dataPortfolioLookThruDis != null && dataPortfolioLookThruDis.Count > 0)
+                                {
+                                    benchmarkId = dataPortfolioLookThruDis.FirstOrDefault().BENCHMARK_ID.ToString();
+                                    dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                                   .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_INDUSTRY_NAME == filterValue)
+                                   .ToList();
+                                }
                             }
                             break;
 
@@ -1658,10 +1681,13 @@ namespace GreenField.Web.Services
                                 dataPortfolioLookThruDis = entity.GF_PORTFOLIO_LTHOLDINGS
                                 .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_SECTOR_NAME == filterValue)
                                 .ToList();
-                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
-                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_SECTOR_NAME == filterValue)
-                               .ToList();
+                                if (dataPortfolioLookThruDis != null && dataPortfolioLookThruDis.Count > 0)
+                                {
+                                    benchmarkId = dataPortfolioLookThruDis.FirstOrDefault().BENCHMARK_ID.ToString();
+                                    dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                                   .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_SECTOR_NAME == filterValue)
+                                   .ToList();
+                                }
                             }
                             break;
 
@@ -1670,23 +1696,26 @@ namespace GreenField.Web.Services
                                 dataPortfolioLookThruDis = entity.GF_PORTFOLIO_LTHOLDINGS
                                 .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
                                 .ToList();
-                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
-                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
-                               .ToList();
+                                if (dataPortfolioLookThruDis != null && dataPortfolioLookThruDis.Count > 0)
+                                {
+                                    benchmarkId = dataPortfolioLookThruDis.FirstOrDefault().BENCHMARK_ID.ToString();
+                                    dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                                   .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                                   .ToList();
+                                }
                             }
                             break;
                         default:
                             break;
                     }
 
-                    if (dataPortfolioLookThruDis.Count() > 0)
+                    if (dataPortfolioLookThruDis != null && dataPortfolioLookThruDis.Count() > 0)
                     {
                         distinctSecuritiesForPortfolio = dataPortfolioLookThruDis.Select(record => record.ISSUE_NAME).Distinct().ToList();
                     }
 
 
-                    if (dataBenchmark.Count() > 0)
+                    if (dataBenchmark !=null && dataBenchmark.Count() > 0)
                     {
                         distinctSecuritiesForBenchmark = dataBenchmark.Select(record => record.ISSUE_NAME).Distinct().ToList();
                     }
@@ -1706,8 +1735,7 @@ namespace GreenField.Web.Services
 
                     issuerIDPortfolio = check == 0 ? issuerIDPortfolio.Remove(0, 1) : null;
                     securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
-                    string a = issuerIDPortfolio.ToString();
-                    string b = securityIDPortfolio.ToString();
+                 
 
                     foreach (String issueName in distinctSecuritiesForBenchmark)
                     {
@@ -1741,7 +1769,7 @@ namespace GreenField.Web.Services
                     List<String> dinstinctIssuerIdsForBenchmark = new List<String>();
                     List<String> dinstinctSecurityIdsForBenchmark = new List<String>();
 
-                    if (storedProcResult.Count() > 0)
+                    if (storedProcResult !=null && storedProcResult.Count() > 0)
                     {
                         dinstinctIssuerIdsForPortfolio = storedProcResult.Where(t => t.AmountType == "Portfolio").Select(t => t.IssuerId).Distinct().ToList();
                         dinstinctSecurityIdsForPortfolio = storedProcResult.Where(t => t.AmountType == "Portfolio").Select(t => t.SecurityId).Distinct().ToList();
@@ -1819,9 +1847,9 @@ namespace GreenField.Web.Services
                     }
                     #endregion
                     #endregion
-                } 
+                }
 
-                if (valuesPortForAllDataIds.Count() > 0)
+                if (valuesPortForAllDataIds != null && valuesPortForAllDataIds.Count() > 0)
                 {
                     valuesPortForPRevenue = valuesPortForAllDataIds.Where(t => t.DataId == 197).ToList();
                     valuesPortForEVEBITDA = valuesPortForAllDataIds.Where(t => t.DataId == 198).ToList();
@@ -1833,7 +1861,7 @@ namespace GreenField.Web.Services
                     valuesPortForRevGrowth = valuesPortForAllDataIds.Where(t => t.DataId == 201).ToList();
                     valuesPortForNetGrowth = valuesPortForAllDataIds.Where(t => t.DataId == 202).ToList();
                 }
-                if (valuesBenchForAllDataIds.Count() > 0)
+                if (valuesBenchForAllDataIds != null && valuesBenchForAllDataIds.Count() > 0)
                 {
                     valuesBenchForPRevenue = valuesBenchForAllDataIds.Where(t => t.DataId == 197).ToList();
                     valuesBenchForEVEBITDA = valuesBenchForAllDataIds.Where(t => t.DataId == 198).ToList();
