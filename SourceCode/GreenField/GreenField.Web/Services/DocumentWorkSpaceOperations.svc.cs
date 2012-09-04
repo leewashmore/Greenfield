@@ -114,7 +114,7 @@ namespace GreenField.Web.Services
                 String resultUrl = String.Empty;
                 try
                 {                   
-                    String[] destinationUrl = { DocumentServerUrl + DocumentLibrary + "/" + fileName };                    
+                    String[] destinationUrl = { DocumentServerUrl + DocumentLibrary + "/" + fileName };
 
                     DocumentCopyService.CopyResult[] cResultArray = { new DocumentCopyService.CopyResult() };
                     DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };

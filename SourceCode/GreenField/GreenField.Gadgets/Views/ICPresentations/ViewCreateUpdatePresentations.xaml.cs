@@ -81,7 +81,7 @@ namespace GreenField.Gadgets.Views
             String filter = "All Files (*.*)|*.*";
             if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.POWERPOINT_PRESENTATION)
             {
-                filter = "Presentation Files (*.ppt*)|*.ppt*";
+                filter = "PowerPoint Presentation (*.pptx)|*.pptx|PowerPoint 97-2003 Presentation (*.ppt)|*.ppt";
             }
 
             
@@ -92,7 +92,7 @@ namespace GreenField.Gadgets.Views
 
                 Boolean uploadFileExists = DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT
                     && DataContextViewModelCreateUpdatePresentations.SelectedPresentationDocumentationInfo
-                        .Any(record => record.Category == DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo);
+                        .Any(record => record.Category.ToUpper() == DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo.ToUpper());
 
                 if (uploadFileExists)
                 {
@@ -101,7 +101,7 @@ namespace GreenField.Gadgets.Views
 
                     if (uploadDocumentInfo != null)
                     {
-                        DataContextViewModelCreateUpdatePresentations.UploadFileData = uploadDocumentInfo;
+                        DataContextViewModelCreateUpdatePresentations.UploadFileData = uploadDocumentInfo;                        
                     }
                 }
                 else

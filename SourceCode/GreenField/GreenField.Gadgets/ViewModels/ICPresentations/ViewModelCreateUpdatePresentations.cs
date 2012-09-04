@@ -132,7 +132,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SelectedUploadFileName);
                 RaisePropertyChanged(() => this.UploadCommand);
             }
-        }
+        }        
 
         /// <summary>
         /// Stores Filemaster object for the upload file
@@ -392,6 +392,11 @@ namespace GreenField.Gadgets.ViewModels
                         UploadFileData.Location = result;
                         if (_dbInteractivity != null)
                         {
+                            if (SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT)
+                            {
+                                UploadFileData.Name = SelectedUploadFileName;
+                            }
+
                             BusyIndicatorNotification(true, "Uploading document");
                             _dbInteractivity.UpdatePresentationAttachedFileStreamData(UserSession.SessionManager.SESSION.UserName
                                 , SelectedPresentationOverviewInfo.PresentationID, UploadFileData, false, UpdatePresentationAttachedFileStreamDataCallbackMethod);
