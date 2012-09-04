@@ -50,6 +50,17 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private DateTime? _effectiveDate;
 
+        /// <summary>
+        /// Private member containing the Key Value Pair
+        /// </summary>
+        private FilterSelectionData _holdingDataFilter;
+
+        /// <summary>
+        /// Private member to store info about look thru enabled or not
+        /// </summary>
+        private bool _lookThruEnabled;
+
+
         #endregion
 
         #region Constructor
@@ -65,18 +76,27 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _PortfolioSelectionData = param.DashboardGadgetPayload.PortfolioSelectionData;
             _effectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-           // _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "", "", true,RetrieveValuationQualityGrowthCallbackMethod);
-
+            _holdingDataFilter = param.DashboardGadgetPayload.FilterSelectionData;
+            _lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
+          
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);
-                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);                
+                _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
+                _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Subscribe(HandleFilterReferenceSetEvent);
+                _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Subscribe(HandleLookThruReferenceSetEvent);
             }
 
-            if (_effectiveDate != null && _PortfolioSelectionData != null  && IsActive)
+            if (_effectiveDate != null && _PortfolioSelectionData != null  && _holdingDataFilter != null && IsActive)
             {
-                _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "", "", true, RetrieveValuationQualityGrowthCallbackMethod);
+                _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
             }
+
+            if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+            {
+                _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+            }
+ 
         }
 
         private bool _isActive;
@@ -92,11 +112,18 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _isActive = value;
-                if (_effectiveDate != null && _PortfolioSelectionData != null  && _isActive)
+                if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
                 {
                     if (null != valuationQualityGrowthDataLoadedEvent)
                         valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                    _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "", "", true, RetrieveValuationQualityGrowthCallbackMethod);
+                    _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                }
+
+                if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                {
+                    if (null != valuationQualityGrowthDataLoadedEvent)
+                        valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
                 }
             }
         }
@@ -165,12 +192,20 @@ namespace GreenField.Gadgets.ViewModels
                 if (PortfolioSelectionData != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, PortfolioSelectionData, 1);
-                    _PortfolioSelectionData = PortfolioSelectionData;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null && IsActive)
+                    _PortfolioSelectionData = PortfolioSelectionData;                   
+
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
                     {
                         if (null != valuationQualityGrowthDataLoadedEvent)
                             valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "", "", true, RetrieveValuationQualityGrowthCallbackMethod);
+                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                    }
+
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                    {
+                        if (null != valuationQualityGrowthDataLoadedEvent)
+                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
                     }
                 }
                 else
@@ -200,17 +235,102 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, effectiveDate, 1);
                     _effectiveDate = effectiveDate;
-                    if (_effectiveDate != null && _PortfolioSelectionData != null  && IsActive)
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
                     {
                         if (null != valuationQualityGrowthDataLoadedEvent)
                             valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "", "", true, RetrieveValuationQualityGrowthCallbackMethod);
+                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                    }
+
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                    {
+                        if (null != valuationQualityGrowthDataLoadedEvent)
+                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
                     }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Assigns UI Field Properties based on Holding Filter reference
+        /// </summary>
+        /// <param name="filterSelectionData">Key value pais consisting of the Filter Type and Filter Value selected by the user </param>
+        public void HandleFilterReferenceSetEvent(FilterSelectionData filterSelectionData)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (filterSelectionData != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, filterSelectionData, 1);
+                    _holdingDataFilter = filterSelectionData;
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+                    {
+                        if (null != valuationQualityGrowthDataLoadedEvent)
+                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                    }
+
+                    if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                    {
+                        if (null != valuationQualityGrowthDataLoadedEvent)
+                            valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                        _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Event Handler for LookThru Status
+        /// </summary>
+        /// <param name="enableLookThru">True: LookThru Enabled/False: LookThru Disabled</param>
+        public void HandleLookThruReferenceSetEvent(bool enableLookThru)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+
+                Logging.LogMethodParameter(_logger, methodNamespace, enableLookThru, 1);
+                _lookThruEnabled = enableLookThru;
+
+                if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter != null && IsActive)
+                {
+                    if (null != valuationQualityGrowthDataLoadedEvent)
+                        valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, _holdingDataFilter.Filtertype, _holdingDataFilter.FilterValues, _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                }
+
+                if (_effectiveDate != null && _PortfolioSelectionData != null && _holdingDataFilter == null && IsActive)
+                {
+                    if (null != valuationQualityGrowthDataLoadedEvent)
+                        valuationQualityGrowthDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
+                    _dbInteractivity.RetrieveValuationGrowthData(_PortfolioSelectionData, _effectiveDate, "Show Everything", " ", _lookThruEnabled, RetrieveValuationQualityGrowthCallbackMethod);
+                }
+
             }
             catch (Exception ex)
             {
@@ -226,6 +346,21 @@ namespace GreenField.Gadgets.ViewModels
         /// Event for the notification of Data Load Completion
         /// </summary>
         public event DataRetrievalProgressIndicatorEventHandler valuationQualityGrowthDataLoadedEvent;
+        #endregion
+
+        #region EventUnSubscribe
+        /// <summary>
+        /// Method that disposes the events
+        /// </summary>
+        public void Dispose()
+        {
+            _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Unsubscribe(HandleFundReferenceSet);
+            _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Unsubscribe(HandleEffectiveDateSet);
+            _eventAggregator.GetEvent<HoldingFilterReferenceSetEvent>().Unsubscribe(HandleFilterReferenceSetEvent);
+            _eventAggregator.GetEvent<LookThruFilterReferenceSetEvent>().Unsubscribe(HandleLookThruReferenceSetEvent);
+
+        }
+
         #endregion
 
     }

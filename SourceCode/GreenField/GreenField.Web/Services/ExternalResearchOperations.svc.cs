@@ -1339,10 +1339,8 @@ namespace GreenField.Web.Services
         {
             try
             {
-                if (selectedPortfolio == null)
-                    return new List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>();
-                if (effectiveDate == null)
-                    return new List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>();
+                if (selectedPortfolio == null || effectiveDate == null || filterType == null || filterValue == null)
+                    return new List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>();               
                 StringBuilder issuerIDPortfolio = new StringBuilder();
                 StringBuilder securityIDPortfolio = new StringBuilder();
                 StringBuilder issuerIDBenchmark = new StringBuilder();
@@ -1351,6 +1349,13 @@ namespace GreenField.Web.Services
                 List<String> distinctSecuritiesForBenchmark = new List<String>();
                 Dictionary<String, String> listForPortfolio = new Dictionary<string, string>();
                 Dictionary<String, String> listForBenchmark = new Dictionary<string, string>();
+
+                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dataPortfolio = new List<GF_PORTFOLIO_HOLDINGS>();
+                List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> dataBenchmark = new List<GF_BENCHMARK_HOLDINGS>();
+
+                List<DimensionEntitiesService.GF_PORTFOLIO_LTHOLDINGS> dataPortfolioLookThruDis = new List<GF_PORTFOLIO_LTHOLDINGS>();
+                //List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> dataBenchmark = new List<GF_BENCHMARK_HOLDINGS>();
+
 
                 List<CalculatedValuesForValuation> valuesPortForAllDataIds = new List<CalculatedValuesForValuation>();
                 List<CalculatedValuesForValuation> valuesBenchForAllDataIds = new List<CalculatedValuesForValuation>();
@@ -1385,157 +1390,427 @@ namespace GreenField.Web.Services
                 if (!isServiceUp)
                     throw new Exception("Services are not available");
 
-                #region Calling Stored Proc for all securities in Benchmark and Portfolio Holdings
+
                 List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData> result = new List<GreenField.DataContracts.DataContracts.ValuationQualityGrowthData>();
                 List<GreenField.DAL.ValuationQualityGrowthData> storedProcResult = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
-                    .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
-                    .ToList();
 
-                if (dataPortfolio.Count() > 0)
+                if (lookThruEnabled == false)
                 {
-                    distinctSecuritiesForPortfolio = dataPortfolio.Select(record => record.ISSUE_NAME).Distinct().ToList();
-                    benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
-                }
-               
-                List<DimensionEntitiesService.GF_BENCHMARK_HOLDINGS> dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
-                    .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
-                    .ToList();
-
-                if (dataBenchmark.Count() > 0)
-                {
-                     distinctSecuritiesForBenchmark = dataBenchmark.Select(record => record.ISSUE_NAME).Distinct().ToList();
-                }                
-
-                foreach (String issueName in distinctSecuritiesForPortfolio)
-                {
-                    GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
-                     .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
-                    if (securityDetails != null)
+                    #region Look Thru Disabled
+                    switch (filterType)
                     {
-                        check = 0;
-                        issuerIDPortfolio.Append(",'" + securityDetails.ISSUER_ID + "'");
-                        securityIDPortfolio.Append(",'" + securityDetails.SECURITY_ID + "'");
-                        listForPortfolio.Add(securityDetails.SECURITY_ID.ToString(),securityDetails.ISSUE_NAME);
+                        case "Region":
+                            {
+                                dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
+                                .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ASHEMM_PROP_REGION_CODE == filterValue)
+                                .ToList();
+                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ASHEMM_PROP_REGION_CODE == filterValue)
+                               .ToList();
+                            }
+                            break;
+
+                        case "Country":
+                            {
+                                dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
+                                .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ISO_COUNTRY_CODE == filterValue)
+                                .ToList();
+                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ISO_COUNTRY_CODE == filterValue)
+                               .ToList();
+                            }
+                            break;
+
+                        case "Industry":
+                            {
+                                dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
+                                .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_INDUSTRY_NAME == filterValue)
+                                .ToList();
+                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_INDUSTRY_NAME == filterValue)
+                               .ToList();
+                            }
+                            break;
+
+                        case "Sector":
+                            {
+                                dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
+                                .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_SECTOR_NAME == filterValue)
+                                .ToList();
+                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_SECTOR_NAME == filterValue)
+                               .ToList();
+                            }
+                            break;
+
+                        case "Show Everything":
+                            {
+                                dataPortfolio = entity.GF_PORTFOLIO_HOLDINGS
+                                .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                                .ToList();
+                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                               .ToList();
+                            }
+                            break;
+                        default:
+                            break;
                     }
-                }
 
-                issuerIDPortfolio = check == 0 ? issuerIDPortfolio.Remove(0, 1) : null;
-                securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
-                string a = issuerIDPortfolio.ToString();
-                string b = securityIDPortfolio.ToString();
-
-                foreach (String issueName in distinctSecuritiesForBenchmark)
-                {
-                    GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
-                     .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
-                    if (securityDetails != null)
+                    if (dataPortfolio.Count() > 0)
                     {
-                        checkBen = 0;
-                        issuerIDBenchmark.Append(",'" + securityDetails.ISSUER_ID + "'");
-                        securityIDBenchmark.Append(",'" + securityDetails.SECURITY_ID + "'");
-                        listForBenchmark.Add(securityDetails.SECURITY_ID.ToString(),securityDetails.ISSUE_NAME);
+                        distinctSecuritiesForPortfolio = dataPortfolio.Select(record => record.ISSUE_NAME).Distinct().ToList();
                     }
-                }
 
-                issuerIDBenchmark = checkBen == 0 ? issuerIDBenchmark.Remove(0, 1) : null;
-                securityIDBenchmark = checkBen == 0 ? securityIDBenchmark.Remove(0, 1) : null;
 
-                string _issuerIDPortfolio = issuerIDPortfolio == null ? null : issuerIDPortfolio.ToString();
-                string _issuerIDBenchmark = issuerIDBenchmark == null ? null : issuerIDBenchmark.ToString();
-                string _securityIDBenchmark = securityIDBenchmark == null ? null : securityIDBenchmark.ToString();
-                string _securityIDPortfolio = securityIDPortfolio == null ? null : securityIDPortfolio.ToString();             
-
-                ExternalResearchEntities research = new ExternalResearchEntities();
-                storedProcResult = research.usp_GetDataForValuationQualityGrowth(_issuerIDPortfolio, _securityIDPortfolio, _issuerIDBenchmark, _securityIDBenchmark).ToList();
-                #endregion
-
-               
-                #region Calculating values for all Data Id's for Portfolio View and Benchmark View 
-                //******************Combining Portfolio weight and Benchmark weight for all securities from Portfolio View,Benchmark View and Amount from Data Base****************
-                List<String> dinstinctIssuerIdsForPortfolio = new List<String>();
-                List<String> dinstinctSecurityIdsForPortfolio = new List<String>();
-                List<String> dinstinctIssuerIdsForBenchmark = new List<String>();
-                List<String> dinstinctSecurityIdsForBenchmark = new List<String>();
-
-                if (storedProcResult.Count() > 0)
-                {
-                    dinstinctIssuerIdsForPortfolio = storedProcResult.Where(t=>t.AmountType == "Portfolio").Select(t => t.IssuerId).Distinct().ToList();
-                    dinstinctSecurityIdsForPortfolio = storedProcResult.Where(t=>t.AmountType == "Portfolio").Select(t => t.SecurityId).Distinct().ToList();
-                    dinstinctIssuerIdsForBenchmark = storedProcResult.Where(t => t.AmountType == "Benchmark").Select(t => t.IssuerId).Distinct().ToList();
-                    dinstinctSecurityIdsForBenchmark = storedProcResult.Where(t => t.AmountType == "Benchmark").Select(t => t.SecurityId).Distinct().ToList();
-                }
-                List<String> distinctSecurityNamesForPortfolio = new List<string>();
-                List<String> distinctSecurityNamesForBenchmark = new List<string>();
-
-                foreach (String secId in  dinstinctSecurityIdsForPortfolio)
-                {
-                    if (listForPortfolio.ContainsKey(secId))
-                    distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
-                }
-                foreach (String secId in dinstinctSecurityIdsForBenchmark)
-                {
-                    if (listForBenchmark.ContainsKey(secId))
-                        distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
-                }
-
-                foreach (String s in dinstinctIssuerIdsForPortfolio)
-                {
-                    foreach (GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUER_ID == s).ToList())
-                    {                       
-                        CalculatedValuesForValuation objPort= new CalculatedValuesForValuation();
-                        objPort.IssuerId = s;                       
-                        objPort.SecurityId = listForPortfolio.FirstOrDefault(t => t.Value == row.ISSUE_NAME).Key;
-                        objPort.DataId = storedProcResult.Where(t=>t.IssuerId == s).Select(t=>t.DataId).FirstOrDefault();
-                        objPort.Amount = storedProcResult.Where(t=>t.IssuerId == s).Select(t=>t.Amount).FirstOrDefault();
-                        objPort.PortfolioPercent = row.DIRTY_VALUE_PC;
-                        valuesPortForAllDataIds.Add(objPort);
-                    }
-                }
-
-                foreach (String s in distinctSecurityNamesForPortfolio)
-                {
-                    foreach (GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUE_NAME == s).ToList())
-                    {                     
-                        CalculatedValuesForValuation objPort= new CalculatedValuesForValuation();
-                        objPort.SecurityId = listForPortfolio.FirstOrDefault(t => t.Value == s).Key;
-                        objPort.IssuerId = row.ISSUER_ID;
-                        objPort.DataId = storedProcResult.Where(t => t.SecurityId == (listForPortfolio.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.DataId).FirstOrDefault();
-                        objPort.Amount = storedProcResult.Where(t => t.SecurityId == (listForPortfolio.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.Amount).FirstOrDefault();
-                        objPort.PortfolioPercent = row.DIRTY_VALUE_PC;
-                        valuesPortForAllDataIds.Add(objPort);
-                    }                   
-                }
-
-                foreach (String s in dinstinctIssuerIdsForBenchmark)
-                {
-                    foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUER_ID == s).ToList())
+                    if (dataBenchmark.Count() > 0)
                     {
-                        CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
-                        objPort.IssuerId = s;
-                        objPort.SecurityId = listForBenchmark.FirstOrDefault(t => t.Value == row.ISSUE_NAME).Key;
-                        objPort.DataId = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.DataId).FirstOrDefault();
-                        objPort.Amount = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.Amount).FirstOrDefault();
-                        objPort.PortfolioPercent = row.BENCHMARK_WEIGHT;
-                        valuesBenchForAllDataIds.Add(objPort);
+                        distinctSecuritiesForBenchmark = dataBenchmark.Select(record => record.ISSUE_NAME).Distinct().ToList();
                     }
-                }
 
-                foreach (String s in distinctSecurityNamesForBenchmark)
-                {
-                    foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUE_NAME == s).ToList())
+                    foreach (String issueName in distinctSecuritiesForPortfolio)
                     {
-                        CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
-                        objPort.SecurityId = listForBenchmark.FirstOrDefault(t => t.Value == s).Key;
-                        objPort.IssuerId = row.ISSUER_ID;
-                        objPort.DataId = storedProcResult.Where(t => t.SecurityId == (listForBenchmark.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.DataId).FirstOrDefault();
-                        objPort.Amount = storedProcResult.Where(t => t.SecurityId == (listForBenchmark.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.Amount).FirstOrDefault();
-                        objPort.PortfolioPercent = row.BENCHMARK_WEIGHT;
-                        valuesBenchForAllDataIds.Add(objPort);
+                        GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
+                         .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
+                        if (securityDetails != null)
+                        {
+                            check = 0;
+                            issuerIDPortfolio.Append(",'" + securityDetails.ISSUER_ID + "'");
+                            securityIDPortfolio.Append(",'" + securityDetails.SECURITY_ID + "'");
+                            listForPortfolio.Add(securityDetails.SECURITY_ID.ToString(), securityDetails.ISSUE_NAME);
+                        }
                     }
+
+                    issuerIDPortfolio = check == 0 ? issuerIDPortfolio.Remove(0, 1) : null;
+                    securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
+                    string a = issuerIDPortfolio.ToString();
+                    string b = securityIDPortfolio.ToString();
+
+                    foreach (String issueName in distinctSecuritiesForBenchmark)
+                    {
+                        GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
+                         .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
+                        if (securityDetails != null)
+                        {
+                            checkBen = 0;
+                            issuerIDBenchmark.Append(",'" + securityDetails.ISSUER_ID + "'");
+                            securityIDBenchmark.Append(",'" + securityDetails.SECURITY_ID + "'");
+                            listForBenchmark.Add(securityDetails.SECURITY_ID.ToString(), securityDetails.ISSUE_NAME);
+                        }
+                    }
+
+                    issuerIDBenchmark = checkBen == 0 ? issuerIDBenchmark.Remove(0, 1) : null;
+                    securityIDBenchmark = checkBen == 0 ? securityIDBenchmark.Remove(0, 1) : null;
+
+                    string _issuerIDPortfolio = issuerIDPortfolio == null ? null : issuerIDPortfolio.ToString();
+                    string _issuerIDBenchmark = issuerIDBenchmark == null ? null : issuerIDBenchmark.ToString();
+                    string _securityIDBenchmark = securityIDBenchmark == null ? null : securityIDBenchmark.ToString();
+                    string _securityIDPortfolio = securityIDPortfolio == null ? null : securityIDPortfolio.ToString();
+
+                    ExternalResearchEntities research = new ExternalResearchEntities();
+                    storedProcResult = research.usp_GetDataForValuationQualityGrowth(_issuerIDPortfolio, _securityIDPortfolio, _issuerIDBenchmark, _securityIDBenchmark).ToList();
+
+
+                    #region Calculating values for all Data Id's for Portfolio View and Benchmark View
+                    //******************Combining Portfolio weight and Benchmark weight for all securities from Portfolio View,Benchmark View and Amount from Data Base****************
+                    List<String> dinstinctIssuerIdsForPortfolio = new List<String>();
+                    List<String> dinstinctSecurityIdsForPortfolio = new List<String>();
+                    List<String> dinstinctIssuerIdsForBenchmark = new List<String>();
+                    List<String> dinstinctSecurityIdsForBenchmark = new List<String>();
+
+                    if (storedProcResult.Count() > 0)
+                    {
+                        dinstinctIssuerIdsForPortfolio = storedProcResult.Where(t => t.AmountType == "Portfolio").Select(t => t.IssuerId).Distinct().ToList();
+                        dinstinctSecurityIdsForPortfolio = storedProcResult.Where(t => t.AmountType == "Portfolio").Select(t => t.SecurityId).Distinct().ToList();
+                        dinstinctIssuerIdsForBenchmark = storedProcResult.Where(t => t.AmountType == "Benchmark").Select(t => t.IssuerId).Distinct().ToList();
+                        dinstinctSecurityIdsForBenchmark = storedProcResult.Where(t => t.AmountType == "Benchmark").Select(t => t.SecurityId).Distinct().ToList();
+                    }
+                    List<String> distinctSecurityNamesForPortfolio = new List<string>();
+                    List<String> distinctSecurityNamesForBenchmark = new List<string>();
+
+                    foreach (String secId in dinstinctSecurityIdsForPortfolio)
+                    {
+                        if (listForPortfolio.ContainsKey(secId))
+                            distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
+                    }
+                    foreach (String secId in dinstinctSecurityIdsForBenchmark)
+                    {
+                        if (listForBenchmark.ContainsKey(secId))
+                            distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
+                    }
+
+                    foreach (String s in dinstinctIssuerIdsForPortfolio)
+                    {
+                        foreach (GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUER_ID == s).ToList())
+                        {
+                            CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
+                            objPort.IssuerId = s;
+                            objPort.SecurityId = listForPortfolio.FirstOrDefault(t => t.Value == row.ISSUE_NAME).Key;
+                            objPort.DataId = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.DataId).FirstOrDefault();
+                            objPort.Amount = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.Amount).FirstOrDefault();
+                            objPort.PortfolioPercent = row.DIRTY_VALUE_PC;
+                            valuesPortForAllDataIds.Add(objPort);
+                        }
+                    }
+
+                    foreach (String s in distinctSecurityNamesForPortfolio)
+                    {
+                        foreach (GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUE_NAME == s).ToList())
+                        {
+                            CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
+                            objPort.SecurityId = listForPortfolio.FirstOrDefault(t => t.Value == s).Key;
+                            objPort.IssuerId = row.ISSUER_ID;
+                            objPort.DataId = storedProcResult.Where(t => t.SecurityId == (listForPortfolio.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.DataId).FirstOrDefault();
+                            objPort.Amount = storedProcResult.Where(t => t.SecurityId == (listForPortfolio.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.Amount).FirstOrDefault();
+                            objPort.PortfolioPercent = row.DIRTY_VALUE_PC;
+                            valuesPortForAllDataIds.Add(objPort);
+                        }
+                    }
+
+                    foreach (String s in dinstinctIssuerIdsForBenchmark)
+                    {
+                        foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUER_ID == s).ToList())
+                        {
+                            CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
+                            objPort.IssuerId = s;
+                            objPort.SecurityId = listForBenchmark.FirstOrDefault(t => t.Value == row.ISSUE_NAME).Key;
+                            objPort.DataId = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.DataId).FirstOrDefault();
+                            objPort.Amount = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.Amount).FirstOrDefault();
+                            objPort.PortfolioPercent = row.BENCHMARK_WEIGHT;
+                            valuesBenchForAllDataIds.Add(objPort);
+                        }
+                    }
+
+                    foreach (String s in distinctSecurityNamesForBenchmark)
+                    {
+                        foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUE_NAME == s).ToList())
+                        {
+                            CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
+                            objPort.SecurityId = listForBenchmark.FirstOrDefault(t => t.Value == s).Key;
+                            objPort.IssuerId = row.ISSUER_ID;
+                            objPort.DataId = storedProcResult.Where(t => t.SecurityId == (listForBenchmark.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.DataId).FirstOrDefault();
+                            objPort.Amount = storedProcResult.Where(t => t.SecurityId == (listForBenchmark.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.Amount).FirstOrDefault();
+                            objPort.PortfolioPercent = row.BENCHMARK_WEIGHT;
+                            valuesBenchForAllDataIds.Add(objPort);
+                        }
+                    }
+                    #endregion
+                    #endregion
                 }
 
-                #endregion
+                else
+                {
+                    #region Look Thru Enabled
+                    switch (filterType)
+                    {
+                        case "Region":
+                            {
+                                dataPortfolioLookThruDis = entity.GF_PORTFOLIO_LTHOLDINGS
+                                .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ASHEMM_PROP_REGION_CODE == filterValue)
+                                .ToList();
+                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ASHEMM_PROP_REGION_CODE == filterValue)
+                               .ToList();
+                            }
+                            break;
+
+                        case "Country":
+                            {
+                                dataPortfolioLookThruDis = entity.GF_PORTFOLIO_LTHOLDINGS
+                                .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ISO_COUNTRY_CODE == filterValue)
+                                .ToList();
+                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.ISO_COUNTRY_CODE == filterValue)
+                               .ToList();
+                            }
+                            break;
+
+                        case "Industry":
+                            {
+                                dataPortfolioLookThruDis = entity.GF_PORTFOLIO_LTHOLDINGS
+                                .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_INDUSTRY_NAME == filterValue)
+                                .ToList();
+                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_INDUSTRY_NAME == filterValue)
+                               .ToList();
+                            }
+                            break;
+
+                        case "Sector":
+                            {
+                                dataPortfolioLookThruDis = entity.GF_PORTFOLIO_LTHOLDINGS
+                                .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_SECTOR_NAME == filterValue)
+                                .ToList();
+                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date && t.GICS_SECTOR_NAME == filterValue)
+                               .ToList();
+                            }
+                            break;
+
+                        case "Show Everything":
+                            {
+                                dataPortfolioLookThruDis = entity.GF_PORTFOLIO_LTHOLDINGS
+                                .Where(t => t.PORTFOLIO_ID == selectedPortfolio.PortfolioId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                                .ToList();
+                                benchmarkId = dataPortfolio.FirstOrDefault().BENCHMARK_ID.ToString();
+                                dataBenchmark = entity.GF_BENCHMARK_HOLDINGS
+                               .Where(t => t.BENCHMARK_ID == benchmarkId && t.PORTFOLIO_DATE == effectiveDate.Value.Date)
+                               .ToList();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (dataPortfolioLookThruDis.Count() > 0)
+                    {
+                        distinctSecuritiesForPortfolio = dataPortfolioLookThruDis.Select(record => record.ISSUE_NAME).Distinct().ToList();
+                    }
+
+
+                    if (dataBenchmark.Count() > 0)
+                    {
+                        distinctSecuritiesForBenchmark = dataBenchmark.Select(record => record.ISSUE_NAME).Distinct().ToList();
+                    }
+
+                    foreach (String issueName in distinctSecuritiesForPortfolio)
+                    {
+                        GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
+                         .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
+                        if (securityDetails != null)
+                        {
+                            check = 0;
+                            issuerIDPortfolio.Append(",'" + securityDetails.ISSUER_ID + "'");
+                            securityIDPortfolio.Append(",'" + securityDetails.SECURITY_ID + "'");
+                            listForPortfolio.Add(securityDetails.SECURITY_ID.ToString(), securityDetails.ISSUE_NAME);
+                        }
+                    }
+
+                    issuerIDPortfolio = check == 0 ? issuerIDPortfolio.Remove(0, 1) : null;
+                    securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
+                    string a = issuerIDPortfolio.ToString();
+                    string b = securityIDPortfolio.ToString();
+
+                    foreach (String issueName in distinctSecuritiesForBenchmark)
+                    {
+                        GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
+                         .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
+                        if (securityDetails != null)
+                        {
+                            checkBen = 0;
+                            issuerIDBenchmark.Append(",'" + securityDetails.ISSUER_ID + "'");
+                            securityIDBenchmark.Append(",'" + securityDetails.SECURITY_ID + "'");
+                            listForBenchmark.Add(securityDetails.SECURITY_ID.ToString(), securityDetails.ISSUE_NAME);
+                        }
+                    }
+
+                    issuerIDBenchmark = checkBen == 0 ? issuerIDBenchmark.Remove(0, 1) : null;
+                    securityIDBenchmark = checkBen == 0 ? securityIDBenchmark.Remove(0, 1) : null;
+
+                    string _issuerIDPortfolio = issuerIDPortfolio == null ? null : issuerIDPortfolio.ToString();
+                    string _issuerIDBenchmark = issuerIDBenchmark == null ? null : issuerIDBenchmark.ToString();
+                    string _securityIDBenchmark = securityIDBenchmark == null ? null : securityIDBenchmark.ToString();
+                    string _securityIDPortfolio = securityIDPortfolio == null ? null : securityIDPortfolio.ToString();
+
+                    ExternalResearchEntities research = new ExternalResearchEntities();
+                    storedProcResult = research.usp_GetDataForValuationQualityGrowth(_issuerIDPortfolio, _securityIDPortfolio, _issuerIDBenchmark, _securityIDBenchmark).ToList();
+
+
+                    #region Calculating values for all Data Id's for Portfolio View and Benchmark View
+                    //******************Combining Portfolio weight and Benchmark weight for all securities from Portfolio View,Benchmark View and Amount from Data Base****************
+                    List<String> dinstinctIssuerIdsForPortfolio = new List<String>();
+                    List<String> dinstinctSecurityIdsForPortfolio = new List<String>();
+                    List<String> dinstinctIssuerIdsForBenchmark = new List<String>();
+                    List<String> dinstinctSecurityIdsForBenchmark = new List<String>();
+
+                    if (storedProcResult.Count() > 0)
+                    {
+                        dinstinctIssuerIdsForPortfolio = storedProcResult.Where(t => t.AmountType == "Portfolio").Select(t => t.IssuerId).Distinct().ToList();
+                        dinstinctSecurityIdsForPortfolio = storedProcResult.Where(t => t.AmountType == "Portfolio").Select(t => t.SecurityId).Distinct().ToList();
+                        dinstinctIssuerIdsForBenchmark = storedProcResult.Where(t => t.AmountType == "Benchmark").Select(t => t.IssuerId).Distinct().ToList();
+                        dinstinctSecurityIdsForBenchmark = storedProcResult.Where(t => t.AmountType == "Benchmark").Select(t => t.SecurityId).Distinct().ToList();
+                    }
+                    List<String> distinctSecurityNamesForPortfolio = new List<string>();
+                    List<String> distinctSecurityNamesForBenchmark = new List<string>();
+
+                    foreach (String secId in dinstinctSecurityIdsForPortfolio)
+                    {
+                        if (listForPortfolio.ContainsKey(secId))
+                            distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
+                    }
+                    foreach (String secId in dinstinctSecurityIdsForBenchmark)
+                    {
+                        if (listForBenchmark.ContainsKey(secId))
+                            distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
+                    }
+
+                    foreach (String s in dinstinctIssuerIdsForPortfolio)
+                    {
+                        foreach (GF_PORTFOLIO_LTHOLDINGS row in dataPortfolioLookThruDis.Where(t => t.ISSUER_ID == s).ToList())
+                        {
+                            CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
+                            objPort.IssuerId = s;
+                            objPort.SecurityId = listForPortfolio.FirstOrDefault(t => t.Value == row.ISSUE_NAME).Key;
+                            objPort.DataId = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.DataId).FirstOrDefault();
+                            objPort.Amount = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.Amount).FirstOrDefault();
+                            objPort.PortfolioPercent = row.DIRTY_VALUE_PC;
+                            valuesPortForAllDataIds.Add(objPort);
+                        }
+                    }
+
+                    foreach (String s in distinctSecurityNamesForPortfolio)
+                    {
+                        foreach (GF_PORTFOLIO_LTHOLDINGS row in dataPortfolioLookThruDis.Where(t => t.ISSUE_NAME == s).ToList())
+                        {
+                            CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
+                            objPort.SecurityId = listForPortfolio.FirstOrDefault(t => t.Value == s).Key;
+                            objPort.IssuerId = row.ISSUER_ID;
+                            objPort.DataId = storedProcResult.Where(t => t.SecurityId == (listForPortfolio.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.DataId).FirstOrDefault();
+                            objPort.Amount = storedProcResult.Where(t => t.SecurityId == (listForPortfolio.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.Amount).FirstOrDefault();
+                            objPort.PortfolioPercent = row.DIRTY_VALUE_PC;
+                            valuesPortForAllDataIds.Add(objPort);
+                        }
+                    }
+
+                    foreach (String s in dinstinctIssuerIdsForBenchmark)
+                    {
+                        foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUER_ID == s).ToList())
+                        {
+                            CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
+                            objPort.IssuerId = s;
+                            objPort.SecurityId = listForBenchmark.FirstOrDefault(t => t.Value == row.ISSUE_NAME).Key;
+                            objPort.DataId = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.DataId).FirstOrDefault();
+                            objPort.Amount = storedProcResult.Where(t => t.IssuerId == s).Select(t => t.Amount).FirstOrDefault();
+                            objPort.PortfolioPercent = row.BENCHMARK_WEIGHT;
+                            valuesBenchForAllDataIds.Add(objPort);
+                        }
+                    }
+
+                    foreach (String s in distinctSecurityNamesForBenchmark)
+                    {
+                        foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUE_NAME == s).ToList())
+                        {
+                            CalculatedValuesForValuation objPort = new CalculatedValuesForValuation();
+                            objPort.SecurityId = listForBenchmark.FirstOrDefault(t => t.Value == s).Key;
+                            objPort.IssuerId = row.ISSUER_ID;
+                            objPort.DataId = storedProcResult.Where(t => t.SecurityId == (listForBenchmark.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.DataId).FirstOrDefault();
+                            objPort.Amount = storedProcResult.Where(t => t.SecurityId == (listForBenchmark.FirstOrDefault(m => m.Value == s).Key)).Select(t => t.Amount).FirstOrDefault();
+                            objPort.PortfolioPercent = row.BENCHMARK_WEIGHT;
+                            valuesBenchForAllDataIds.Add(objPort);
+                        }
+                    }
+                    #endregion
+                    #endregion
+                } 
 
                 if (valuesPortForAllDataIds.Count() > 0)
                 {
