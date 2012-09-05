@@ -34,8 +34,8 @@ namespace GreenField.DashboardModule.Views
         #endregion
 
         [ImportingConstructor]
-       public ViewDashboardInvestmentCommitteeVote(ILoggerFacade logger, IEventAggregator eventAggregator,
-            IDBInteractivity dbInteractivity, IRegionManager regionManager)
+        public ViewDashboardInvestmentCommitteeVote(ILoggerFacade logger, IEventAggregator eventAggregator,
+             IDBInteractivity dbInteractivity, IRegionManager regionManager)
         {
             InitializeComponent();
 
@@ -66,7 +66,7 @@ namespace GreenField.DashboardModule.Views
             //_viewModel = new ViewModelPresentationVote(param);
             //_view = new ViewPresentationVote(_viewModel);           
 
-            this.cctrDashboardContent.Content = new ViewPresentationVote(new ViewModelPresentationVote(param));
+            this.cctrDashboardContent.Content = null;// new ViewPresentationVote(new ViewModelPresentationVote(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -88,7 +88,7 @@ namespace GreenField.DashboardModule.Views
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {
-                control.IsActive = true;                
+                control.IsActive = true;
             }
         }
     }
