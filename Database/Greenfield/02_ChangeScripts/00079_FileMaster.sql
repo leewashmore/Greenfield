@@ -15,24 +15,9 @@ end
 
 GO
 
-ALTER TABLE [dbo].[FileMaster](
-	[FileID] [bigint] IDENTITY(1,1) NOT NULL,
-	[Name] [varchar](255) NULL,
-	[SecurityName] [varchar](255) NULL,
-	[SecurityTicker] [varchar](50) NULL,
-	[Location] [varchar](255) NULL,
-	[MetaTags] [varchar](255) NULL,
-	[Type] [varchar](50) NULL,
-	[Category] [varchar](50) NULL,
-	[CreatedBy] [varchar](50) NULL,
-	[CreatedOn] [datetime] NULL,
-	[ModifiedBy] [varchar](50) NULL,
-	[ModifiedOn] [datetime] NULL,
- CONSTRAINT [PK_FileMaster] PRIMARY KEY CLUSTERED 
-(
-	[FileID] ASC
-)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
-) ON [PRIMARY]
+ALTER TABLE [dbo].[FileMaster]
+ADD [Category] [varchar](50) NULL
+	
 
 GO
 
