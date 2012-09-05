@@ -174,7 +174,7 @@
             <telerik:RadPanelBarItem Header="Screening" x:Name="pbItemScreening" Style="{StaticResource PanelBarItemStyle}">
                 <telerik:RadMenu x:Name="radMenuScreening" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
-                    <telerik:RadMenuItem x:Name="rmItemStock" Header="Stock"
+                    <telerik:RadMenuItem x:Name="rmItemStock" Header="Stock" Command="{Binding DashboardCustomScreeningToolCommand}"
                                                />
                     <telerik:RadMenuItem x:Name="rmItemQuarterlyComparison" Header="Quarterly Comparison"
                                          Command="{Binding DashboardQuarterlyResultsComparisonCommand}"

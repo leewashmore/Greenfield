@@ -13,6 +13,7 @@ using GreenField.Common;
 using Microsoft.Practices.Prism.Events;
 using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
+using System.Collections.Generic;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -28,11 +29,23 @@ namespace GreenField.Gadgets.ViewModels
        
         #endregion
 
+        #region Constructor
         public ViewModelCustomScreeningTool(DashboardGadgetParam param)
         {
             _logger = param.LoggerFacade;
             _dbInteractivity = param.DBInteractivity;
             _eventAggregator = param.EventAggregator;          
         }
+        #endregion
+
+        #region Properties
+        public List<String> SecuritySelectionInfo
+        {
+            get
+            {
+                { return new List<String> { "Portfolio", "Benchmark", "Custom"}; }
+            }
+        }
+        #endregion
     }
 }

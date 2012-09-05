@@ -1638,6 +1638,13 @@ namespace GreenField.App.ViewModel
             get { return new DelegateCommand<object>(DashboardQuarterlyResultsComparisonCommandMethod); }
         }
         #endregion
+
+        #region Stock
+        public ICommand DashboardCustomScreeningToolCommand
+        {
+            get { return new DelegateCommand<object>(DashboardCustomScreeningToolCommandMethod); }
+        }
+        #endregion
         #endregion
 
         #region Investment Committee
@@ -2714,6 +2721,27 @@ namespace GreenField.App.ViewModel
             Logging.LogEndMethod(_logger, methodNamespace);
 
         }
+
+        private void DashboardCustomScreeningToolCommandMethod(object param)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                _eventAggregator.GetEvent<DashboardGadgetLoad>().Publish(SelectorPayload);
+                ToolBoxSelecter.SetToolBoxItemVisibility(DashboardCategoryType.SCREENING_STOCK);
+                UpdateToolBoxSelectorVisibility();
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
+        }
+
         #endregion
 
         #region ToolBox
