@@ -33,10 +33,29 @@
       <xs:element minOccurs="0" name="StockSpecificDiscount" type="xs:decimal" />
       <xs:element minOccurs="0" name="WACC" type="xs:decimal" />
       <xs:element minOccurs="0" name="WeightOfEquity" type="xs:decimal" />
-      <xs:element minOccurs="0" name="X" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DCFAnalysisSummaryData" nillable="true" type="tns:DCFAnalysisSummaryData" />
+  <xs:complexType name="ArrayOfDCFTerminalValueCalculationsData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DCFTerminalValueCalculationsData" nillable="true" type="tns:DCFTerminalValueCalculationsData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDCFTerminalValueCalculationsData" nillable="true" type="tns:ArrayOfDCFTerminalValueCalculationsData" />
+  <xs:complexType name="DCFTerminalValueCalculationsData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CashFlow2020" type="xs:decimal" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LongTermNominalGDPGrowth" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SustainableDividendPayoutRatio" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SustainableROIC" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TerminalGrowthRate" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TerminalValueNominal" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TerminalValuePresent" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DCFTerminalValueCalculationsData" nillable="true" type="tns:DCFTerminalValueCalculationsData" />
   <xs:complexType name="ArrayOfFreeCashFlowsData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="FreeCashFlowsData" nillable="true" type="tns:FreeCashFlowsData" />

@@ -50,7 +50,9 @@ namespace GreenField.Gadgets.ViewModels
 
             //FetchPresentationInfo();
             //fetch presentation attached file info based on presentation id
-           // RetrievePresentationAttachedDetails();
+
+           // RetrievePresentationAttachedDetails(); 
+
             //set PresentationAttachedFileInfo in callback
             //check enum for upload/edit
             //if upload set visibility to false or empty text block

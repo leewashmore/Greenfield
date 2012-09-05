@@ -289,6 +289,12 @@
     <None Include="Service References\DCFDefinitions\DCFOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\DCFDefinitions\GreenField.ServiceCaller.DCFDefinitions.DCFTerminalValueCalculationsData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DCFDefinitions\GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkspaceOperations.wsdl" />
     <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations.xsd">
       <SubType>Designer</SubType>

@@ -18,6 +18,15 @@
   <wsdl:message name="DCFOperations_RetrieveDCFAnalysisData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q1:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="DCFOperations_RetrieveTerminalValueCalculationsData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveTerminalValueCalculationsData" />
+  </wsdl:message>
+  <wsdl:message name="DCFOperations_RetrieveTerminalValueCalculationsData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveTerminalValueCalculationsDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="DCFOperations_RetrieveTerminalValueCalculationsData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="DCFOperations_RetrieveFreCashFlowsData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveFreCashFlowsData" />
   </wsdl:message>
@@ -25,13 +34,18 @@
     <wsdl:part name="parameters" element="tns:RetrieveFreCashFlowsDataResponse" />
   </wsdl:message>
   <wsdl:message name="DCFOperations_RetrieveFreCashFlowsData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="DCFOperations">
     <wsdl:operation name="RetrieveDCFAnalysisData">
       <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveDCFAnalysisData" message="tns:DCFOperations_RetrieveDCFAnalysisData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/RetrieveDCFAnalysisDataResponse" message="tns:DCFOperations_RetrieveDCFAnalysisData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/RetrieveDCFAnalysisDataServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_RetrieveDCFAnalysisData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveTerminalValueCalculationsData">
+      <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveTerminalValueCalculationsData" message="tns:DCFOperations_RetrieveTerminalValueCalculationsData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/RetrieveTerminalValueCalculationsDataResponse" message="tns:DCFOperations_RetrieveTerminalValueCalculationsData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/RetrieveTerminalValueCalculationsDataServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_RetrieveTerminalValueCalculationsData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveFreCashFlowsData">
       <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsData" message="tns:DCFOperations_RetrieveFreCashFlowsData_InputMessage" />
@@ -43,6 +57,18 @@
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="RetrieveDCFAnalysisData">
       <soap:operation soapAction="http://tempuri.org/DCFOperations/RetrieveDCFAnalysisData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveTerminalValueCalculationsData">
+      <soap:operation soapAction="http://tempuri.org/DCFOperations/RetrieveTerminalValueCalculationsData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

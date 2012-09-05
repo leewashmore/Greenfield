@@ -260,4 +260,15 @@ namespace GreenField.Common
     public enum VIEWVOTEFLAG { VIEW, VOTE } ;
     public enum ViewPluginFlagEnumeration { Create, Upload, Update, View, Vote, Edit, ChangeDate };
     #endregion
+    
+    #region Custom Screening Tool
+    
+    public static class SecuritySelectionType
+    {
+        public static String PORTFOLIO = "Portfolio";
+        public static String BENCHMARK = "Benchmark";
+        public static String CUSTOM = "Custom";
+    }
+   
+    #endregion
 }

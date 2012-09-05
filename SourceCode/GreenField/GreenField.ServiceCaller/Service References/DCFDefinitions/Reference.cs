@@ -45,6 +45,276 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DCFTerminalValueCalculationsData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts")]
+    public partial class DCFTerminalValueCalculationsData : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private decimal CashFlow2020Field;
+        
+        private string IssuerIdField;
+        
+        private decimal LongTermNominalGDPGrowthField;
+        
+        private string SecurityIdField;
+        
+        private decimal SustainableDividendPayoutRatioField;
+        
+        private decimal SustainableROICField;
+        
+        private decimal TerminalGrowthRateField;
+        
+        private decimal TerminalValueNominalField;
+        
+        private decimal TerminalValuePresentField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal CashFlow2020 {
+            get {
+                return this.CashFlow2020Field;
+            }
+            set {
+                if ((this.CashFlow2020Field.Equals(value) != true)) {
+                    this.CashFlow2020Field = value;
+                    this.RaisePropertyChanged("CashFlow2020");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IssuerId {
+            get {
+                return this.IssuerIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IssuerIdField, value) != true)) {
+                    this.IssuerIdField = value;
+                    this.RaisePropertyChanged("IssuerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal LongTermNominalGDPGrowth {
+            get {
+                return this.LongTermNominalGDPGrowthField;
+            }
+            set {
+                if ((this.LongTermNominalGDPGrowthField.Equals(value) != true)) {
+                    this.LongTermNominalGDPGrowthField = value;
+                    this.RaisePropertyChanged("LongTermNominalGDPGrowth");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityId {
+            get {
+                return this.SecurityIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityIdField, value) != true)) {
+                    this.SecurityIdField = value;
+                    this.RaisePropertyChanged("SecurityId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal SustainableDividendPayoutRatio {
+            get {
+                return this.SustainableDividendPayoutRatioField;
+            }
+            set {
+                if ((this.SustainableDividendPayoutRatioField.Equals(value) != true)) {
+                    this.SustainableDividendPayoutRatioField = value;
+                    this.RaisePropertyChanged("SustainableDividendPayoutRatio");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal SustainableROIC {
+            get {
+                return this.SustainableROICField;
+            }
+            set {
+                if ((this.SustainableROICField.Equals(value) != true)) {
+                    this.SustainableROICField = value;
+                    this.RaisePropertyChanged("SustainableROIC");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal TerminalGrowthRate {
+            get {
+                return this.TerminalGrowthRateField;
+            }
+            set {
+                if ((this.TerminalGrowthRateField.Equals(value) != true)) {
+                    this.TerminalGrowthRateField = value;
+                    this.RaisePropertyChanged("TerminalGrowthRate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal TerminalValueNominal {
+            get {
+                return this.TerminalValueNominalField;
+            }
+            set {
+                if ((this.TerminalValueNominalField.Equals(value) != true)) {
+                    this.TerminalValueNominalField = value;
+                    this.RaisePropertyChanged("TerminalValueNominal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal TerminalValuePresent {
+            get {
+                return this.TerminalValuePresentField;
+            }
+            set {
+                if ((this.TerminalValuePresentField.Equals(value) != true)) {
+                    this.TerminalValuePresentField = value;
+                    this.RaisePropertyChanged("TerminalValuePresent");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="FreeCashFlowsData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts")]
+    public partial class FreeCashFlowsData : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private System.Collections.Generic.List<decimal> CapexField;
+        
+        private System.Collections.Generic.List<decimal> ChangeInWCField;
+        
+        private System.Collections.Generic.List<decimal> EBITDAField;
+        
+        private System.Collections.Generic.List<decimal> EBITDAMarginsField;
+        
+        private System.Collections.Generic.List<decimal> FreeCashFlowField;
+        
+        private System.Collections.Generic.List<decimal> RevenueGrowthField;
+        
+        private System.Collections.Generic.List<decimal> TaxesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<decimal> Capex {
+            get {
+                return this.CapexField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CapexField, value) != true)) {
+                    this.CapexField = value;
+                    this.RaisePropertyChanged("Capex");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<decimal> ChangeInWC {
+            get {
+                return this.ChangeInWCField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChangeInWCField, value) != true)) {
+                    this.ChangeInWCField = value;
+                    this.RaisePropertyChanged("ChangeInWC");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<decimal> EBITDA {
+            get {
+                return this.EBITDAField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EBITDAField, value) != true)) {
+                    this.EBITDAField = value;
+                    this.RaisePropertyChanged("EBITDA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<decimal> EBITDAMargins {
+            get {
+                return this.EBITDAMarginsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EBITDAMarginsField, value) != true)) {
+                    this.EBITDAMarginsField = value;
+                    this.RaisePropertyChanged("EBITDAMargins");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<decimal> FreeCashFlow {
+            get {
+                return this.FreeCashFlowField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FreeCashFlowField, value) != true)) {
+                    this.FreeCashFlowField = value;
+                    this.RaisePropertyChanged("FreeCashFlow");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<decimal> RevenueGrowth {
+            get {
+                return this.RevenueGrowthField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RevenueGrowthField, value) != true)) {
+                    this.RevenueGrowthField = value;
+                    this.RaisePropertyChanged("RevenueGrowth");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<decimal> Taxes {
+            get {
+                return this.TaxesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TaxesField, value) != true)) {
+                    this.TaxesField = value;
+                    this.RaisePropertyChanged("Taxes");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="DCFDefinitions.DCFOperations")]
     public interface DCFOperations {
@@ -55,11 +325,18 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         
         System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData> EndRetrieveDCFAnalysisData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DCFOperations/RetrieveTerminalValueCalculationsData", ReplyAction="http://tempuri.org/DCFOperations/RetrieveTerminalValueCalculationsDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault), Action="http://tempuri.org/DCFOperations/RetrieveTerminalValueCalculationsDataServiceFaul" +
+            "tFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveTerminalValueCalculationsData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFTerminalValueCalculationsData> EndRetrieveTerminalValueCalculationsData(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsData", ReplyAction="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault), Action="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveFreCashFlowsData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> EndRetrieveFreCashFlowsData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> EndRetrieveFreCashFlowsData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -87,6 +364,25 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveTerminalValueCalculationsDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveTerminalValueCalculationsDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFTerminalValueCalculationsData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFTerminalValueCalculationsData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveFreCashFlowsDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -96,10 +392,10 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> Result {
+        public System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData>)(this.results[0]));
             }
         }
     }
@@ -113,6 +409,12 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         private EndOperationDelegate onEndRetrieveDCFAnalysisDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveDCFAnalysisDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveTerminalValueCalculationsDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveTerminalValueCalculationsDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveTerminalValueCalculationsDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrieveFreCashFlowsDataDelegate;
         
@@ -175,6 +477,8 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         
         public event System.EventHandler<RetrieveDCFAnalysisDataCompletedEventArgs> RetrieveDCFAnalysisDataCompleted;
         
+        public event System.EventHandler<RetrieveTerminalValueCalculationsDataCompletedEventArgs> RetrieveTerminalValueCalculationsDataCompleted;
+        
         public event System.EventHandler<RetrieveFreCashFlowsDataCompletedEventArgs> RetrieveFreCashFlowsDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
@@ -228,12 +532,58 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DCFDefinitions.DCFOperations.BeginRetrieveTerminalValueCalculationsData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveTerminalValueCalculationsData(entitySelectionData, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFTerminalValueCalculationsData> GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveTerminalValueCalculationsData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveTerminalValueCalculationsData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveTerminalValueCalculationsData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            return ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).BeginRetrieveTerminalValueCalculationsData(entitySelectionData, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveTerminalValueCalculationsData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFTerminalValueCalculationsData> retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveTerminalValueCalculationsData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveTerminalValueCalculationsDataCompleted(object state) {
+            if ((this.RetrieveTerminalValueCalculationsDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveTerminalValueCalculationsDataCompleted(this, new RetrieveTerminalValueCalculationsDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveTerminalValueCalculationsDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData) {
+            this.RetrieveTerminalValueCalculationsDataAsync(entitySelectionData, null);
+        }
+        
+        public void RetrieveTerminalValueCalculationsDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, object userState) {
+            if ((this.onBeginRetrieveTerminalValueCalculationsDataDelegate == null)) {
+                this.onBeginRetrieveTerminalValueCalculationsDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveTerminalValueCalculationsData);
+            }
+            if ((this.onEndRetrieveTerminalValueCalculationsDataDelegate == null)) {
+                this.onEndRetrieveTerminalValueCalculationsDataDelegate = new EndOperationDelegate(this.OnEndRetrieveTerminalValueCalculationsData);
+            }
+            if ((this.onRetrieveTerminalValueCalculationsDataCompletedDelegate == null)) {
+                this.onRetrieveTerminalValueCalculationsDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveTerminalValueCalculationsDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveTerminalValueCalculationsDataDelegate, new object[] {
+                        entitySelectionData}, this.onEndRetrieveTerminalValueCalculationsDataDelegate, this.onRetrieveTerminalValueCalculationsDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.DCFDefinitions.DCFOperations.BeginRetrieveFreCashFlowsData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveFreCashFlowsData(entitySelectionData, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveFreCashFlowsData(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveFreCashFlowsData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveFreCashFlowsData(result);
         }
         
@@ -243,7 +593,7 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         }
         
         private object[] OnEndRetrieveFreCashFlowsData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveFreCashFlowsData(result);
+            System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveFreCashFlowsData(result);
             return new object[] {
                     retVal};
         }
@@ -362,6 +712,19 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
                 return _result;
             }
             
+            public System.IAsyncResult BeginRetrieveTerminalValueCalculationsData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = entitySelectionData;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveTerminalValueCalculationsData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFTerminalValueCalculationsData> EndRetrieveTerminalValueCalculationsData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFTerminalValueCalculationsData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFTerminalValueCalculationsData>)(base.EndInvoke("RetrieveTerminalValueCalculationsData", _args, result)));
+                return _result;
+            }
+            
             public System.IAsyncResult BeginRetrieveFreCashFlowsData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = entitySelectionData;
@@ -369,9 +732,9 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> EndRetrieveFreCashFlowsData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> EndRetrieveFreCashFlowsData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData>)(base.EndInvoke("RetrieveFreCashFlowsData", _args, result)));
+                System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.FreeCashFlowsData>)(base.EndInvoke("RetrieveFreCashFlowsData", _args, result)));
                 return _result;
             }
         }
