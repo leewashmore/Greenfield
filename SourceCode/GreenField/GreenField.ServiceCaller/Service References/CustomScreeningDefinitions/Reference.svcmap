@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="0b3eebb9-57cc-4ab1-bc08-8ea5f73a6fdd" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings>
+      <CollectionMapping TypeName="System.Collections.Generic.List`1" Category="List" />
+    </CollectionMappings>
+    <GenerateSerializableTypes>false</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:59430/Services/CustomScreeningToolOperations.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CustomScreeningToolOperations.wsdl" MetadataType="Wsdl" ID="14cc4b64-307d-4ce6-9978-610da40ca179" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?wsdl" />
+    <MetadataFile FileName="CustomScreeningToolOperations.xsd" MetadataType="Schema" ID="de533c00-fc99-41da-a9ba-862dfc7e856c" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd3" />
+    <MetadataFile FileName="CustomScreeningToolOperations1.xsd" MetadataType="Schema" ID="515ca309-ad9b-4492-81f1-481d69743665" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd0" />
+    <MetadataFile FileName="CustomScreeningToolOperations2.xsd" MetadataType="Schema" ID="89364f0e-b6f0-4c11-acda-6cfd24c748b4" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd1" />
+    <MetadataFile FileName="CustomScreeningToolOperations3.xsd" MetadataType="Schema" ID="a19f7c76-4d12-48f0-b2d8-581ddce30fdd" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd2" />
+    <MetadataFile FileName="CustomScreeningToolOperations.disco" MetadataType="Disco" ID="fb574e9a-9c5f-40eb-8ebc-8a1b393f8793" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

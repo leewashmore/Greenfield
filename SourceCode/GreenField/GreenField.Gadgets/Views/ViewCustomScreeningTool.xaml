@@ -11,7 +11,7 @@
         <Grid x:Name="gSecuritySelection">            
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -20,6 +20,12 @@
         <TextBlock Text="Security Selection Criteria" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0" />
         <telerik:RadComboBox x:Name="cmbSecuritySelection" Margin="5,0,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0"
                                      HorizontalAlignment="Stretch" 
-                                     ItemsSource="{Binding SecuritySelectionInfo}" SelectedValue="{Binding SelectedCriteria, Mode=TwoWay}"/>    </Grid>
+                                     ItemsSource="{Binding SecuritySelectionInfo}" SelectedValue="{Binding SelectedCriteria, Mode=TwoWay}"/>
+            <TextBlock Text="Select Portfolio" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1" />
+            <telerik:RadComboBox x:Name="cmbPortfolioSelection" Margin="5,0,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
+                                     HorizontalAlignment="Stretch" 
+                                     ItemsSource="{Binding SecuritySelectionInfo}" SelectedValue="{Binding SelectedCriteria, Mode=TwoWay}"/>
+
+        </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>
