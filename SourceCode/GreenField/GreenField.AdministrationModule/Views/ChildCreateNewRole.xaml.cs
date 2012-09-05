@@ -54,6 +54,12 @@ namespace GreenField.AdministrationModule.Views
         public ChildCreateNewRole()
         {
             InitializeComponent();
+
+            if (Roles == null)
+            {
+                Roles = new ObservableCollection<string>();
+            }
+
             invalidFieldPopup.Child = new ErrorMessage(invalidRoleError);
             recurrentFieldPopup.Child = new ErrorMessage(recurrentRoleError);
 
