@@ -73,6 +73,14 @@ namespace GreenField.Web.Services
             }
         }
 
+        private String ListsWebServiceUrl
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings.Get("ListsWebServiceUrl");
+            }
+        }
+
         private ResourceManager ServiceFaultResourceManager
         {
             get
@@ -114,7 +122,7 @@ namespace GreenField.Web.Services
                 {
                     _listsService = new Lists();
                     _listsService.Credentials = new NetworkCredential(UserName, Password, Domain);
-                    _listsService.Url = DocumentServiceUrl;
+                    _listsService.Url = ListsWebServiceUrl;
                 }
 
                 return _listsService;
