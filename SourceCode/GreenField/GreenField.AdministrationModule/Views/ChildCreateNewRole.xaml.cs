@@ -55,11 +55,6 @@ namespace GreenField.AdministrationModule.Views
         {
             InitializeComponent();
 
-            if (Roles == null)
-            {
-                Roles = new ObservableCollection<string>();
-            }
-
             invalidFieldPopup.Child = new ErrorMessage(invalidRoleError);
             recurrentFieldPopup.Child = new ErrorMessage(recurrentRoleError);
 
@@ -69,6 +64,11 @@ namespace GreenField.AdministrationModule.Views
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
+            if (Roles == null)
+            {
+                Roles = new ObservableCollection<string>();
+            }
+
             RecurrentRoleValidation = !(Roles.Contains(txtEnterValue.Text.ToLower()));
             if (RecurrentRoleValidation)
                 this.DialogResult = true;
