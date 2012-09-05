@@ -143,8 +143,8 @@ namespace GreenField.Web.Services
             {
                 String resultUrl = String.Empty;
                 try
-                {                   
-                    String[] destinationUrl = { DocumentServerUrl + DocumentLibrary + "/" + fileName };
+                {
+                    String[] destinationUrl = { DocumentServerUrl + DocumentLibrary + "/" + "[" + DateTime.UtcNow.ToString("ddMMyyyy") + "]" + fileName };
 
                     DocumentCopyService.CopyResult[] cResultArray = { new DocumentCopyService.CopyResult() };
                     DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };
@@ -168,6 +168,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]

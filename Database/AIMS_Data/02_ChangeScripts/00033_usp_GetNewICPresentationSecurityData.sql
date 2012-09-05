@@ -19,8 +19,8 @@ end
 
 GO
 
-IF OBJECT_ID ('[dbo].[usp_GetDataForValuationQualityGrowth]') IS NOT NULL
-	DROP PROCEDURE [dbo].[usp_GetDataForValuationQualityGrowth]
+IF OBJECT_ID ('[dbo].[GetNewICPresentationSecurityData]') IS NOT NULL
+	DROP PROCEDURE [dbo].[GetNewICPresentationSecurityData]
 GO
 
 SET ANSI_NULLS ON
