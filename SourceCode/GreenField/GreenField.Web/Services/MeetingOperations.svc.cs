@@ -22,6 +22,9 @@ using System.Xml.Linq;
 using System.Reflection;
 using System.IO;
 using System.Web.Security;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Presentation;
 
 namespace GreenField.Web.Services
 {
@@ -95,14 +98,94 @@ namespace GreenField.Web.Services
                         XElement element = new XElement("VotingUser", user);
                         xmlDoc.Root.Add(element);
                     }
-
                 }
 
                 String xmlScript = xmlDoc.ToString();
-                Int32? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();              
+                Int64? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();              
 
+                if (result < 0)
+                    return false;
 
-                return result == 0;
+                if (!File.Exists(System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx"))
+                    throw new Exception("Missing IC Presentation Template file");
+
+                String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
+                String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
+                File.Copy(presentationFile, copiedFilePath, true);
+
+                try
+                {
+                    using (PresentationDocument presentationDocument = PresentationDocument.Open(copiedFilePath, true))
+                    {
+                        //byte[] photo = File.ReadAllBytes(imageFile);
+                        PresentationPart presentatioPart = presentationDocument.PresentationPart;
+                        OpenXmlElementList slideIds = presentatioPart.Presentation.SlideIdList.ChildElements;
+
+                        string relId = (slideIds[0] as SlideId).RelationshipId;
+
+                        // Get the slide part from the relationship ID.
+                        SlidePart slide = (SlidePart)presentatioPart.GetPartById(relId);
+
+                        //get Security Information    
+                        DocumentFormat.OpenXml.Drawing.Table tblSecurityOverview = slide.Slide
+                            .Descendants<DocumentFormat.OpenXml.Drawing.Table>().FirstOrDefault();
+
+                        SwapPlaceholderText(tblSecurityOverview, 0, 2, presentationOverviewData.SecurityName);
+                        SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.SecurityRecommendation);
+                        SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.Analyst);
+                        SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.CurrentHoldings);
+                        SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityCountry);
+                        SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.Price);
+                        SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.SecurityIndustry);
+                        SwapPlaceholderText(tblSecurityOverview, 3, 4, presentationOverviewData.SecurityBMWeight);
+                        SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
+                        SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.SecurityActiveWeight);
+                        SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.Price);
+                        SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_Absolute);
+                        SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.FVCalc);
+                        SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoLOC);
+                        //SwapPlaceholderText(tblSecurityOverview, 7, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
+                        //    presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
+                        SwapPlaceholderText(tblSecurityOverview, 7, 2, String.Empty);
+                        SwapPlaceholderText(tblSecurityOverview, 7, 4, presentationOverviewData.YTDRet_RELtoEM);
+
+                        //save the Slide and Presentation
+                        slide.Slide.Save();
+                        presentatioPart.Presentation.Save();
+
+                    }
+                }
+                catch
+                {
+                    throw new Exception("Exception occurred while opening powerpoint presentation!!!");
+                }
+
+                Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
+                String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToShortDateString() : String.Empty) + ".pptx";
+
+                DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
+                String url = documentWorkspaceOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath));
+
+                if(url == String.Empty)
+                    throw new Exception("Exception occurred while uploading template powerpoint presentation!!!");
+
+                File.Delete(copiedFilePath);
+
+                FileMaster fileMaster = new FileMaster()
+                {
+                    Category = "Power Point Presentation",
+                    Location = url,
+                    Name = presentationOverviewData.SecurityName + "_" + presentationOverviewData.MeetingDateTime.ToString() + ".pptx",
+                    SecurityName = presentationOverviewData.SecurityName,
+                    SecurityTicker = presentationOverviewData.SecurityTicker,
+                    Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),                    
+                    CreatedBy = userName,
+                    CreatedOn = DateTime.UtcNow,
+                    ModifiedBy = userName,
+                    ModifiedOn = DateTime.UtcNow
+                };
+                return UpdatePresentationAttachedFileStreamData(userName, Convert.ToInt64(result), fileMaster, false);
             }
             catch (Exception ex)
             {
@@ -110,6 +193,14 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
+        }
+
+        private void SwapPlaceholderText(DocumentFormat.OpenXml.Drawing.Table tbl, int rowNum, int columnNum, string value)
+        {
+            DocumentFormat.OpenXml.Drawing.TableRow row = tbl.Descendants<DocumentFormat.OpenXml.Drawing.TableRow>().ElementAt(rowNum);
+            DocumentFormat.OpenXml.Drawing.TableCell cell = row.Descendants<DocumentFormat.OpenXml.Drawing.TableCell>().ElementAt(columnNum - 1);
+            DocumentFormat.OpenXml.Drawing.Text text = cell.Descendants<DocumentFormat.OpenXml.Drawing.Text>().FirstOrDefault();
+            text.Text = value;
         }
 
         [OperationContract]
@@ -165,6 +256,7 @@ namespace GreenField.Web.Services
                 presentationOverviewData.SecurityTicker = securityData.TICKER;
                 presentationOverviewData.SecurityName = securityData.ISSUE_NAME;
                 presentationOverviewData.SecurityCountry = securityData.ASEC_SEC_COUNTRY_NAME;
+                presentationOverviewData.SecurityCountryCode = securityData.ISO_COUNTRY_CODE;
                 presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
                 presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
                 presentationOverviewData.Price = securityData.CLOSING_PRICE.ToString() + securityData.TRADING_CURRENCY.ToString();
@@ -217,7 +309,10 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        } 
+        }
+
+        
+
         #endregion
 
         #region UploadEdit Presentation Documents
@@ -357,9 +452,9 @@ namespace GreenField.Web.Services
 
                     result.Add(new MeetingInfo()
                     {
-                        MeetingDateTime = meetingDateTime,
-                        MeetingClosedDateTime = tempPresentationDeadline,
-                        MeetingVotingClosedDateTime = tempPreMeetingVotingDeadline
+                        MeetingDateTime = meetingDateTime.ToUniversalTime(),
+                        MeetingClosedDateTime = tempPresentationDeadline.ToUniversalTime(),
+                        MeetingVotingClosedDateTime = tempPreMeetingVotingDeadline.ToUniversalTime()
                     });
                 }
                 return result;

@@ -62,6 +62,7 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
+        #region IsActive
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -77,7 +78,8 @@ namespace GreenField.Gadgets.ViewModels
                     Initialize();
                 }
             }
-        }
+        } 
+        #endregion
 
         #region Busy Indicator Notification
         /// <summary>
@@ -109,13 +111,14 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion        
 
+        #region Binded
         private List<ICPresentationOverviewData> _iCPresentationOverviewInfo;
         public List<ICPresentationOverviewData> ICPresentationOverviewInfo
         {
             get { return _iCPresentationOverviewInfo; }
-            set 
+            set
             {
-                _iCPresentationOverviewInfo = value; 
+                _iCPresentationOverviewInfo = value;
                 RaisePropertyChanged(() => this.ICPresentationOverviewInfo);
             }
         }
@@ -128,7 +131,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedPresentationOverviewInfo = value;
                 RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
-                ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, value);                
+                ICNavigation.Update(ICNavigationInfo.PresentationOverviewInfo, value);
                 SelectionRaisePropertyChanged();
             }
         }
@@ -142,7 +145,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (value != null)
                 {
                     _meetingInfoDates = value;
-                    RaisePropertyChanged(() => this.MeetingInfoDates);                    
+                    RaisePropertyChanged(() => this.MeetingInfoDates);
                 }
             }
         }
@@ -157,10 +160,12 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _selectedMeetingInfoDate = value;
                     RaisePropertyChanged(() => this.SelectedMeetingInfoDate);
+                    RaisePropertyChanged(() => this.NewCommand);
                     ICNavigation.Update(ICNavigationInfo.MeetingInfo, value);
                 }
             }
-        }        
+        }         
+        #endregion
 
         #region ICommand Properties
         public ICommand ChangeDateCommand
@@ -195,7 +200,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public ICommand NewCommand
         {
-            get { return new DelegateCommand<object>(NewCommandMethod); }
+            get { return new DelegateCommand<object>(NewCommandMethod, NewCommandValidationMethod); }
         }
         #endregion        
 
@@ -370,6 +375,11 @@ namespace GreenField.Gadgets.ViewModels
             _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardInvestmentCommitteeVote", UriKind.Relative));
         }
 
+        private bool NewCommandValidationMethod(object param)
+        {
+            return SelectedMeetingInfoDate != null;
+        }
+
         private void NewCommandMethod(object param)
         {
             ICNavigation.Update(ICNavigationInfo.ViewPluginFlagEnumerationInfo, ViewPluginFlagEnumeration.Create);
@@ -382,6 +392,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public void Initialize()
         {
+            SelectionRaisePropertyChanged();
             if (_dbInteractivity != null && IsActive)
             {
                 BusyIndicatorNotification(true, "Retrieving Presentation Overview Information...");

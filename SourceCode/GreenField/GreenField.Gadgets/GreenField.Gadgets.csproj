@@ -286,9 +286,6 @@
     <Compile Include="Views\ICPresentations\ViewICPresentationNew.xaml.cs">
       <DependentUpon>ViewICPresentationNew.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ViewCreateUpdateMeetings.xaml.cs">
-      <DependentUpon>ViewCreateUpdateMeetings.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ICPresentations\ViewCreateUpdatePresentations.xaml.cs">
       <DependentUpon>ViewCreateUpdatePresentations.xaml</DependentUpon>
     </Compile>
@@ -523,10 +520,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ICPresentations\ViewICPresentationNew.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ICPresentations\ViewCreateUpdateMeetings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

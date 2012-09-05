@@ -35,9 +35,7 @@ namespace GreenField.Gadgets.ViewModels
     {
 
         #region Fields
-
-        public IRegionManager _regionManager { private get; set; }
-
+        private IRegionManager _regionManager { get; set; }
         /// <summary>
         /// Event Aggregator
         /// </summary>
@@ -52,7 +50,6 @@ namespace GreenField.Gadgets.ViewModels
         /// Instance of LoggerFacade
         /// </summary>
         private ILoggerFacade _logger;
-
         #endregion
 
         #region Constructor
@@ -72,12 +69,40 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandlePortfolioReferenceSet);
-            }           
-
+            }
         }
         #endregion
 
         #region Properties
+        #region IsActive
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private bool _isActive;
+        public bool IsActive
+        {
+            get
+            {
+                return _isActive;
+            }
+            set
+            {
+                _isActive = value;
+
+                if (value)
+                {
+                    Initialize();
+
+                    //EntitySelectionData handling
+                    if (_entitySelectionInfo != null)
+                    {
+                        HandleSecurityReferenceSet(_entitySelectionInfo);
+                    }
+                }
+            }
+        } 
+        #endregion
+
         #region Busy Indicator Notification
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
@@ -108,6 +133,7 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region Binded
         private ICPresentationOverviewData _iCPresentationOverviewInfo;
         public ICPresentationOverviewData ICPresentationOverviewInfo
         {
@@ -162,55 +188,31 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => PortfolioSelectionInfo);
                 }
             }
-        }        
+        } 
+        #endregion
 
-        /// <summary>
-        /// IsActive is true when parent control is displayed on UI
-        /// </summary>
-        private bool _isActive;
-        public bool IsActive
+        #region ICommand
+        public ICommand SubmitCommand
         {
-            get
-            {
-                return _isActive;
-            }
-            set
-            {
-                _isActive = value;
-
-                if (value)
-                {
-                    Initialize();
-
-                    //EntitySelectionData handling
-                    if (_entitySelectionInfo != null)
-                    {
-                        HandleSecurityReferenceSet(_entitySelectionInfo);
-                    }
-                }
-            }
-        }
-
+            get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
+        } 
+        #endregion
 
         #endregion
 
-        public ICommand SaveCommand
-        {
-            get { return new DelegateCommand<object>(SaveCommandMethod, SaveCommandValidationMethod); }
-        }
-
         #region ICommand Methods
-        private void SaveCommandMethod(object param)
+        private void SubmitCommandMethod(object param)
         {
             if (_dbInteractivity != null)
             {
+                BusyIndicatorNotification(true, "Setting up presentation details..");
                 _dbInteractivity.CreatePresentation(UserSession.SessionManager.SESSION.UserName, ICPresentationOverviewInfo, CreatePresentationCallBackMethod);
             }
         }
 
-        private bool SaveCommandValidationMethod(object param)
+        private bool SubmitCommandValidationMethod(object param)
         {
-            return true;
+            return _entitySelectionInfo != null && _portfolioSelectionInfo != null;
         }
         #endregion
 
@@ -221,21 +223,25 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (result != null)
+                if (result == true)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (result == true)
-                    {
-                        Prompt.ShowDialog("Presentation successfully created");
-                        _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-                    }
+
+                    _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
+                    _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                    BusyIndicatorNotification();
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -252,7 +258,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);                    
                     ICPresentationOverviewInfo = result;
                 }
                 else
@@ -292,6 +298,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     if (IsActive && _entitySelectionInfo != null && PortfolioSelectionInfo != null)
                     {
+                        RaisePropertyChanged(() => this.SubmitCommand);
                         HandlePortfolioReferenceSet(PortfolioSelectionInfo);
                     }
                 }
@@ -326,6 +333,7 @@ namespace GreenField.Gadgets.ViewModels
                     //Argument Null Exception
                     if (IsActive && _entitySelectionInfo != null && PortfolioSelectionInfo != null)
                     {
+                        RaisePropertyChanged(() => this.SubmitCommand);
                         BusyIndicatorNotification(true, "Retrieving security reference data for '" + _entitySelectionInfo.LongName + " (" + _entitySelectionInfo.ShortName + ")'");
                         _dbInteractivity.RetrieveSecurityDetails(_entitySelectionInfo, ICPresentationOverviewInfo, _portfolioSelectionInfo, RetrieveSecurityDetailsCallBackMethod);
                     }
@@ -360,25 +368,7 @@ namespace GreenField.Gadgets.ViewModels
                 ICPresentationOverviewInfo.MeetingClosedDateTime = meetingInfo.MeetingClosedDateTime;
                 ICPresentationOverviewInfo.MeetingVotingClosedDateTime = meetingInfo.MeetingVotingClosedDateTime;
             }
-        }
-
-        //public void Initialize()
-        //{
-        //    if (_dbInteractivity != null && IsActive)
-        //    {
-        //        BusyIndicatorNotification(true, "Retrieving Presentation Overview Information...");
-        //        FetchMeetingInfo();                
-
-        //        //Subscription to SecurityReferenceSet event
-        //        _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
-
-        //        //EntitySelectionData handling
-        //        if (_entitySelectionInfo != null)
-        //        {
-        //            HandleSecurityReferenceSet(_entitySelectionInfo);
-        //        }
-        //    }
-        //}
+        }        
 
         #endregion
 

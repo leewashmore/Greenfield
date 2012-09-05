@@ -712,7 +712,7 @@
           </FunctionImport>
           <EntitySet Name="MeetingConfigurationSchedules" EntityType="ICPresentationModel.MeetingConfigurationSchedule" />
           <FunctionImport Name="GetMeetingConfigSchedule" ReturnType="Collection(ICPresentationModel.MeetingConfigScheduleData)" />
-          <FunctionImport Name="SetPresentationInfo" ReturnType="Collection(Int32)">
+          <FunctionImport Name="SetPresentationInfo" ReturnType="Collection(Int64)">
             <Parameter Name="userName" Mode="In" Type="String" />
             <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>

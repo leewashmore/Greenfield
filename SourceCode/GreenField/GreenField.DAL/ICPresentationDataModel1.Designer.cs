@@ -1526,7 +1526,7 @@ namespace GreenField.DAL
         /// </summary>
         /// <param name="userName">No Metadata Documentation available.</param>
         /// <param name="xmlScript">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> SetPresentationInfo(global::System.String userName, global::System.String xmlScript)
+        public ObjectResult<Nullable<global::System.Int64>> SetPresentationInfo(global::System.String userName, global::System.String xmlScript)
         {
             ObjectParameter userNameParameter;
             if (userName != null)
@@ -1548,7 +1548,7 @@ namespace GreenField.DAL
                 xmlScriptParameter = new ObjectParameter("xmlScript", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetPresentationInfo", userNameParameter, xmlScriptParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int64>>("SetPresentationInfo", userNameParameter, xmlScriptParameter);
         }
     
         /// <summary>
