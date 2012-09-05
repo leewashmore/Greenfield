@@ -43,7 +43,7 @@ namespace GreenField.DashBoardModule.Views.Screening
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
             this.tbHeader.Text = GadgetNames.CUSTOM_SCREENING_TOOL;
-            
+
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
@@ -59,8 +59,8 @@ namespace GreenField.DashBoardModule.Views.Screening
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(param));
-            
+            this.cctrDashboardContent.Content = null;// new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(param));
+
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
