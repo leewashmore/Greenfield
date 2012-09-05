@@ -1624,12 +1624,9 @@ namespace GreenField.Web.Services
         /// Filtering data filtering based on ISO_COUNTRY_CODE, GICS_SECTOR and record restriction handled through optional arguments
         /// </summary>
         /// <param name="fundSelectionData">PortfolioSelectionData object</param>
-        /// <param name="benchmarkSelectionData">BenchmarkSelectionData object</param>
         /// <param name="effectiveDate">Effective date</param>
         /// <param name="countryID">(optional) ISO_COUNTRY_CODE; By default Null</param>
         /// <param name="sectorID">(optional) GICS_SECTOR; By default Null</param>
-        /// <param name="order">(optional)1 for Ascending - data ordering - By default descending</param>
-        /// <param name="maxRecords">(optional) Maximum number of records to be retrieved - By default Null</param>
         /// <returns>List of RetrieveRelativePerformanceSecurityData objects</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]

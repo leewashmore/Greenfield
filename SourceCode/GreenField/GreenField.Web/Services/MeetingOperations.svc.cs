@@ -401,7 +401,6 @@ namespace GreenField.Web.Services
 
         #endregion
 
-
         #region Meeting Configuration Schedule
 
         [OperationContract]
