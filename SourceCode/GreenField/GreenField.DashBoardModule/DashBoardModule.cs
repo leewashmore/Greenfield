@@ -16,6 +16,7 @@ using GreenField.Common;
 using Microsoft.Practices.Prism.Modularity;
 using GreenField.Gadgets.Views;
 using GreenField.DashBoardModule.Views.Screening;
+using GreenField.DashBoardModule;
 
 namespace GreenField.DashboardModule
 {
@@ -119,6 +120,10 @@ namespace GreenField.DashboardModule
             #region Screening
             #region Quarterly Comparison
             _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardQuarterlyResultsComparison));
+            #endregion
+
+            #region Stock
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCustomScreeningTool));           
             #endregion
             #endregion
 

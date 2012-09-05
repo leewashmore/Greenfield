@@ -212,6 +212,9 @@ namespace GreenField.Common
         #region Quarterly Comparison
         public static string QUARTERLY_RESULTS_COMPARISON = "Quarterly Results Comparison"; 
         #endregion
+        #region Stock
+        public static string CUSTOM_SCREENING_TOOL = "Custom Screening Tool";
+        #endregion
         #endregion
 
         #region Investment Committee
