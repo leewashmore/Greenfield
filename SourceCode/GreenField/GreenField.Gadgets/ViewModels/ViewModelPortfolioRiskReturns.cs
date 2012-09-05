@@ -120,7 +120,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
 
-        private List<String> periodInfo;
+      
         public List<String> PeriodInfo
         {
             get

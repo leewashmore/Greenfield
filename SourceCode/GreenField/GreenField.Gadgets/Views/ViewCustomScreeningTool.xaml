@@ -1,0 +1,26 @@
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewCustomScreeningTool"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"                        
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"                             
+    d:DesignHeight="300" d:DesignWidth="400">    
+    <Grid x:Name="LayoutRoot" Background="White">
+        <Grid x:Name="gSecuritySelection">            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Security Selection Criteria" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="0" Grid.Row="0" />
+        <telerik:RadComboBox x:Name="cmbTime" Margin="5,0,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0"
+                                     HorizontalAlignment="Stretch" 
+                                     ItemsSource="{Binding TimeRange}" SelectedValue="{Binding SelectedTimeRange, Mode=TwoWay}"/>
+    </Grid>
+    </Grid>
+</helpers:ViewBaseUserControl>

@@ -197,6 +197,7 @@
     <Compile Include="ViewModels\ViewModelCommodityIndex.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimatesDetails.cs" />
     <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
+    <Compile Include="ViewModels\ViewModelCustomScreeningTool.cs" />
     <Compile Include="ViewModels\ViewModelFinancialStatements.cs" />
     <Compile Include="ViewModels\ViewModelDividendYield.cs" />
     <Compile Include="ViewModels\ViewModelEVEBITDA.cs" />
@@ -315,6 +316,9 @@
     </Compile>
     <Compile Include="Views\ViewCommodityIndex.xaml.cs">
       <DependentUpon>ViewCommodityIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewCustomScreeningTool.xaml.cs">
+      <DependentUpon>ViewCustomScreeningTool.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewEVEBITDA.xaml.cs">
       <DependentUpon>ViewEVEBITDA.xaml</DependentUpon>
@@ -563,6 +567,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewCommodityIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewCustomScreeningTool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

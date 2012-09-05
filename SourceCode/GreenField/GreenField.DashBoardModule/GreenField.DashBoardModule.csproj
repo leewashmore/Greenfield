@@ -222,6 +222,9 @@
     <Compile Include="Views\Company\Financials\ViewDashboardCompanyFinancialsSummary.xaml.cs">
       <DependentUpon>ViewDashboardCompanyFinancialsSummary.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Screening\ViewDashboardCustomScreeningTool.xaml.cs">
+      <DependentUpon>ViewDashboardCustomScreeningTool.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Screening\ViewDashboardQuarterlyResultsComparison.xaml.cs">
       <DependentUpon>ViewDashboardQuarterlyResultsComparison.xaml</DependentUpon>
     </Compile>
@@ -424,6 +427,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Company\Financials\ViewDashboardCompanyFinancialsSummary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Screening\ViewDashboardCustomScreeningTool.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
