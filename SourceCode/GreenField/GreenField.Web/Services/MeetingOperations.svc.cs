@@ -33,7 +33,7 @@ namespace GreenField.Web.Services
     /// </summary>
     [ServiceContract]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class MeetingOperations 
+    public class MeetingOperations
     {
         private Entities dimensionEntity;
         public Entities DimensionEntity
@@ -68,7 +68,7 @@ namespace GreenField.Web.Services
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
-                return entity.RetrieveICPresentationOverviewData().ToList();                
+                return entity.RetrieveICPresentationOverviewData().ToList();
             }
             catch (Exception ex)
             {
@@ -101,7 +101,7 @@ namespace GreenField.Web.Services
                 }
 
                 String xmlScript = xmlDoc.ToString();
-                Int64? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();              
+                Int64? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();
 
                 if (result < 0)
                     return false;
@@ -167,7 +167,7 @@ namespace GreenField.Web.Services
                 DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
                 String url = documentWorkspaceOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath));
 
-                if(url == String.Empty)
+                if (url == String.Empty)
                     throw new Exception("Exception occurred while uploading template powerpoint presentation!!!");
 
                 File.Delete(copiedFilePath);
@@ -179,7 +179,7 @@ namespace GreenField.Web.Services
                     Name = presentationOverviewData.SecurityName + "_" + presentationOverviewData.MeetingDateTime.ToString() + ".pptx",
                     SecurityName = presentationOverviewData.SecurityName,
                     SecurityTicker = presentationOverviewData.SecurityTicker,
-                    Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),                    
+                    Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),
                     CreatedBy = userName,
                     CreatedOn = DateTime.UtcNow,
                     ModifiedBy = userName,
@@ -205,15 +205,15 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public ICPresentationOverviewData RetrieveSecurityDetails(EntitySelectionData entitySelectionData,ICPresentationOverviewData presentationOverviewData,PortfolioSelectionData portfolio)
+        public ICPresentationOverviewData RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData, PortfolioSelectionData portfolio)
         {
             try
             {
                 DimensionEntitiesService.Entities entity = DimensionEntity;
                 ExternalResearchEntities externalResearchEntity = new ExternalResearchEntities();
 
-               // ExternalResearchEntities research = new ExternalResearchEntities();
-               // ObjectResult<Decimal?> queryResult = research.GetMarketCap();
+                // ExternalResearchEntities research = new ExternalResearchEntities();
+                // ObjectResult<Decimal?> queryResult = research.GetMarketCap();
                 //List<Decimal?> resultCap = new List<Decimal?>();
                 //resultCap = queryResult.ToList<Decimal?>();
 
@@ -230,12 +230,18 @@ namespace GreenField.Web.Services
                         && record.SECURITY_TYPE == entitySelectionData.SecurityType)
                     .FirstOrDefault();
 
+                DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
+
+                GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                if (lastBusinessRecord != null)
+                    if (lastBusinessRecord.PORTFOLIO_DATE != null)
+                        lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+
                 //if (securityData == null)
                 //    return new ICPresentationOverviewData();
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> portfolioData = entity.GF_PORTFOLIO_HOLDINGS.Where(
-                                                                                            record => record.PORTFOLIO_ID == portfolio.PortfolioId
-                                                                                            && record.PORTFOLIO_DATE == Convert.ToDateTime(DateTime.Today.AddDays(-1)))
-                                                                                            .ToList();
+                    record => record.PORTFOLIO_ID == portfolio.PortfolioId && record.PORTFOLIO_DATE == lastBusinessDate)
+                    .ToList();
 
 
                 decimal? sumDirtyValuePC = portfolioData.Sum(record => record.DIRTY_VALUE_PC);
@@ -243,23 +249,25 @@ namespace GreenField.Web.Services
 
                 string benchmarkID = portfolioData.Select(a => a.BENCHMARK_ID).FirstOrDefault();
 
-               DimensionEntitiesService.GF_BENCHMARK_HOLDINGS benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(
-                                                                                                record => record.BENCHMARK_ID == benchmarkID
-                                                                                                && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
-                                                                                                && record.PORTFOLIO_DATE == Convert.ToDateTime(DateTime.Today.AddDays(-1)))
-                                                                                                .FirstOrDefault();
+                DimensionEntitiesService.GF_BENCHMARK_HOLDINGS benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(
+                                                                                                 record => record.BENCHMARK_ID == benchmarkID
+                                                                                                 && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                                                                                                 && record.PORTFOLIO_DATE == Convert.ToDateTime(DateTime.Today.AddDays(-1)))
+                                                                                                 .FirstOrDefault();
 
-               List<NewICPresentationSecurityData> securityDetails = new List<NewICPresentationSecurityData>();
-               securityDetails = externalResearchEntity.GetNewICPresentationSecurityData(securityData.SECURITY_ID.ToString()).ToList();
+                List<NewICPresentationSecurityData> securityDetails = new List<NewICPresentationSecurityData>();
+                securityDetails = externalResearchEntity.GetNewICPresentationSecurityData(securityData.SECURITY_ID.ToString()).ToList();
 
-               decimal? tempNAV;
+                decimal? tempNAV;
+
                 presentationOverviewData.SecurityTicker = securityData.TICKER;
                 presentationOverviewData.SecurityName = securityData.ISSUE_NAME;
                 presentationOverviewData.SecurityCountry = securityData.ASEC_SEC_COUNTRY_NAME;
                 presentationOverviewData.SecurityCountryCode = securityData.ISO_COUNTRY_CODE;
                 presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
                 presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
-                presentationOverviewData.Price = securityData.CLOSING_PRICE.ToString() + securityData.TRADING_CURRENCY.ToString();
+                presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : securityData.CLOSING_PRICE.ToString()) 
+                    + " " + securityData.TRADING_CURRENCY.ToString();
                 presentationOverviewData.FVCalc = String.Empty;//"3";
                 presentationOverviewData.SecurityBuySellvsCrnt = String.Empty; //"$16.50(8*2013PE)-$21.50(10.5*2013PE)";
 
@@ -288,7 +296,7 @@ namespace GreenField.Web.Services
                     tempNAV = tempNAV - 0;
                 }
 
-                presentationOverviewData.SecurityActiveWeight = tempNAV.ToString()+"%";
+                presentationOverviewData.SecurityActiveWeight = tempNAV.ToString() + "%";
 
                 presentationOverviewData.YTDRet_Absolute = String.Empty; //"-3.5%";
                 presentationOverviewData.YTDRet_RELtoLOC = String.Empty;  //"+8%";
@@ -311,7 +319,7 @@ namespace GreenField.Web.Services
             }
         }
 
-        
+
 
         #endregion
 
@@ -488,8 +496,8 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        } 
-        #endregion        
+        }
+        #endregion
 
         #region Decision Entry
         /// <summary>
@@ -534,7 +542,7 @@ namespace GreenField.Web.Services
                     Decimal? pfvTypeCurrentPrice = entity.RetrieveSecurityPFVMeasureCurrentPrice(securityId, pfvType).FirstOrDefault();
                     if (!result.Any(record => record.Key == pfvType))
                     {
-                        result.Add(pfvType, pfvTypeCurrentPrice); 
+                        result.Add(pfvType, pfvTypeCurrentPrice);
                     }
                 }
 
@@ -746,7 +754,7 @@ namespace GreenField.Web.Services
 
 
             return xmlDoc;
-        }  
+        }
         #endregion
 
         #region Presentation Vote
@@ -790,7 +798,7 @@ namespace GreenField.Web.Services
         public Boolean UpdatePreMeetingVoteDetails(String userName, List<VoterInfo> voterInfo)
         {
             try
-            {               
+            {
                 XDocument xmlDoc = GetEntityXml<VoterInfo>(parameters: voterInfo, strictlyInclusiveProperties: new List<string> { "VoterID",
                     "VoterPFVMeasure", "VoterBuyRange", "VoterSellRange", "VoteType", "Notes", "DiscussionFlag"});
                 String xmlScript = xmlDoc.ToString();
