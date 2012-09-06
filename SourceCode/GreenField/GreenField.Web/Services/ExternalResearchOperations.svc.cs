@@ -1556,17 +1556,17 @@ namespace GreenField.Web.Services
                     List<String> distinctSecurityNamesForPortfolio = new List<string>();
                     List<String> distinctSecurityNamesForBenchmark = new List<string>();
 
-                    //foreach (String secId in dinstinctSecurityIdsForPortfolio)
-                    //{
-                    //    if (listForPortfolio.ContainsKey(secId))
-                    //        distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
-                    //}
+                    foreach (String secId in dinstinctSecurityIdsForPortfolio)
+                    {
+                        if (listForPortfolio.ContainsKey(secId))
+                            distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
+                    }
 
-                    //foreach (String secId in dinstinctSecurityIdsForBenchmark)
-                    //{
-                    //    if (listForBenchmark.ContainsKey(secId))
-                    //        distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
-                    //}
+                    foreach (String secId in dinstinctSecurityIdsForBenchmark)
+                    {
+                        if (listForBenchmark.ContainsKey(secId))
+                            distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
+                    }
 
                     foreach (String s in dinstinctIssuerIdsForPortfolio)
                     {
@@ -1582,27 +1582,27 @@ namespace GreenField.Web.Services
                         }
                     }
 
-                    if (valuesPortForAllDataIds != null && valuesPortForAllDataIds.Count > 0)
-                    {
-                        foreach (String secId in dinstinctSecurityIdsForPortfolio)
-                        {
-                            if (valuesPortForAllDataIds.Select(t => t.SecurityId).ToList().Contains(secId))
-                                continue;
-                            else
-                            {
-                                if (listForPortfolio.ContainsKey(secId))
-                                    distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (String secId in dinstinctSecurityIdsForPortfolio)
-                        {  
-                            if (listForPortfolio.ContainsKey(secId))
-                                    distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);                            
-                        }
-                    }
+                    //if (valuesPortForAllDataIds != null && valuesPortForAllDataIds.Count > 0)
+                    //{
+                    //    foreach (String secId in dinstinctSecurityIdsForPortfolio)
+                    //    {
+                    //        if (valuesPortForAllDataIds.Select(t => t.SecurityId).ToList().Contains(secId))
+                    //            continue;
+                    //        else
+                    //        {
+                    //            if (listForPortfolio.ContainsKey(secId))
+                    //                distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
+                    //        }
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    foreach (String secId in dinstinctSecurityIdsForPortfolio)
+                    //    {  
+                    //        if (listForPortfolio.ContainsKey(secId))
+                    //                distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);                            
+                    //    }
+                    //}
 
 
                     foreach (String s in distinctSecurityNamesForPortfolio)
@@ -1633,27 +1633,27 @@ namespace GreenField.Web.Services
                         }
                     }
 
-                    if (valuesBenchForAllDataIds != null && valuesBenchForAllDataIds.Count > 0)
-                    {
-                        foreach (String secId in dinstinctSecurityIdsForBenchmark)
-                        {
-                            if (valuesBenchForAllDataIds.Select(t => t.SecurityId).ToList().Contains(secId))
-                                continue;
-                            else
-                            {
-                                if (listForBenchmark.ContainsKey(secId))
-                                    distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (String secId in dinstinctSecurityIdsForBenchmark)
-                        {
-                            if (listForBenchmark.ContainsKey(secId))
-                                distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
-                        }
-                    }
+                    //if (valuesBenchForAllDataIds != null && valuesBenchForAllDataIds.Count > 0)
+                    //{
+                    //    foreach (String secId in dinstinctSecurityIdsForBenchmark)
+                    //    {
+                    //        if (valuesBenchForAllDataIds.Select(t => t.SecurityId).ToList().Contains(secId))
+                    //            continue;
+                    //        else
+                    //        {
+                    //            if (listForBenchmark.ContainsKey(secId))
+                    //                distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
+                    //        }
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    foreach (String secId in dinstinctSecurityIdsForBenchmark)
+                    //    {
+                    //        if (listForBenchmark.ContainsKey(secId))
+                    //            distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
+                    //    }
+                    //}
 
 
                     foreach (String s in distinctSecurityNamesForBenchmark)
@@ -1826,16 +1826,16 @@ namespace GreenField.Web.Services
                     List<String> distinctSecurityNamesForPortfolio = new List<string>();
                     List<String> distinctSecurityNamesForBenchmark = new List<string>();
 
-                    //foreach (String secId in dinstinctSecurityIdsForPortfolio)
-                    //{
-                    //    if (listForPortfolio.ContainsKey(secId))
-                    //        distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
-                    //}
-                    //foreach (String secId in dinstinctSecurityIdsForBenchmark)
-                    //{
-                    //    if (listForBenchmark.ContainsKey(secId))
-                    //        distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
-                    //}
+                    foreach (String secId in dinstinctSecurityIdsForPortfolio)
+                    {
+                        if (listForPortfolio.ContainsKey(secId))
+                            distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
+                    }
+                    foreach (String secId in dinstinctSecurityIdsForBenchmark)
+                    {
+                        if (listForBenchmark.ContainsKey(secId))
+                            distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
+                    }
 
                     foreach (String s in dinstinctIssuerIdsForPortfolio)
                     {
@@ -1851,27 +1851,27 @@ namespace GreenField.Web.Services
                         }
                     }
 
-                    if (valuesPortForAllDataIds != null && valuesPortForAllDataIds.Count > 0)
-                    {
-                        foreach (String secId in dinstinctSecurityIdsForPortfolio)
-                        {
-                            if (valuesPortForAllDataIds.Select(t => t.SecurityId).ToList().Contains(secId))
-                                continue;
-                            else
-                            {
-                                if (listForPortfolio.ContainsKey(secId))
-                                    distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (String secId in dinstinctSecurityIdsForPortfolio)
-                        {
-                            if (listForPortfolio.ContainsKey(secId))
-                                distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
-                        }
-                    }
+                    //if (valuesPortForAllDataIds != null && valuesPortForAllDataIds.Count > 0)
+                    //{
+                    //    foreach (String secId in dinstinctSecurityIdsForPortfolio)
+                    //    {
+                    //        if (valuesPortForAllDataIds.Select(t => t.SecurityId).ToList().Contains(secId))
+                    //            continue;
+                    //        else
+                    //        {
+                    //            if (listForPortfolio.ContainsKey(secId))
+                    //                distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
+                    //        }
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    foreach (String secId in dinstinctSecurityIdsForPortfolio)
+                    //    {
+                    //        if (listForPortfolio.ContainsKey(secId))
+                    //            distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
+                    //    }
+                    //}
 
                     foreach (String s in distinctSecurityNamesForPortfolio)
                     {
@@ -1902,27 +1902,27 @@ namespace GreenField.Web.Services
                     }
 
 
-                    if (valuesBenchForAllDataIds != null && valuesBenchForAllDataIds.Count > 0)
-                    {
-                        foreach (String secId in dinstinctSecurityIdsForBenchmark)
-                        {
-                            if (valuesBenchForAllDataIds.Select(t => t.SecurityId).ToList().Contains(secId))
-                                continue;
-                            else
-                            {
-                                if (listForBenchmark.ContainsKey(secId))
-                                    distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        foreach (String secId in dinstinctSecurityIdsForBenchmark)
-                        {
-                            if (listForBenchmark.ContainsKey(secId))
-                                distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
-                        }
-                    }
+                    //if (valuesBenchForAllDataIds != null && valuesBenchForAllDataIds.Count > 0)
+                    //{
+                    //    foreach (String secId in dinstinctSecurityIdsForBenchmark)
+                    //    {
+                    //        if (valuesBenchForAllDataIds.Select(t => t.SecurityId).ToList().Contains(secId))
+                    //            continue;
+                    //        else
+                    //        {
+                    //            if (listForBenchmark.ContainsKey(secId))
+                    //                distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
+                    //        }
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    foreach (String secId in dinstinctSecurityIdsForBenchmark)
+                    //    {
+                    //        if (listForBenchmark.ContainsKey(secId))
+                    //            distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
+                    //    }
+                    //}
 
                     foreach (String s in distinctSecurityNamesForBenchmark)
                     {
