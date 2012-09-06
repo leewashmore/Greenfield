@@ -24,6 +24,7 @@ using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.ServiceLocation;
 using GreenField.Gadgets.Helpers;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -373,5 +374,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
+
     }
 }

@@ -30,7 +30,10 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition Width="80"/>
+            </Grid.ColumnDefinitions>
             <TextBlock x:Name="tblkCustomControlSelection" Text="Security Selection Criteria" HorizontalAlignment="Right" VerticalAlignment="Center" 
                        Grid.Column="0" Grid.Row="0" 
                        Style="{StaticResource TextBlockStyle}"/>
@@ -155,6 +158,15 @@
                                    HorizontalAlignment="Center"
                                    Content="OK" Grid.Column="0" />
 
+            <TextBlock x:Name="txtSector" Text="Select Sector" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="0" Grid.Row="3"/>
+            <telerik:RadComboBox x:Name="cmbSectorSelection" Margin="5,0,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="3"
+                                     HorizontalAlignment="Stretch" 
+                                     ItemsSource="{Binding PortfolioData}" SelectedValue="{Binding SelectedPortfolio, Mode=TwoWay}"/>
+
+            <TextBlock x:Name="txtIndustry" Text="Select Industry" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="0" Grid.Row="1" />
+            <telerik:RadComboBox x:Name="cmbIndustrySelection" Margin="5,0,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
+                                     HorizontalAlignment="Stretch" 
+                                     ItemsSource="{Binding PortfolioData}" SelectedValue="{Binding SelectedPortfolio, Mode=TwoWay}" />
         </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>
