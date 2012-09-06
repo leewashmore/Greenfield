@@ -59,7 +59,7 @@ namespace GreenField.DashBoardModule.Views.Screening
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = null;// new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(param));
+            this.cctrDashboardContent.Content = new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(param));
 
         }
 
