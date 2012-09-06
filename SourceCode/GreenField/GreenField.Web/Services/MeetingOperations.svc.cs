@@ -117,7 +117,6 @@ namespace GreenField.Web.Services
                 {
                     using (PresentationDocument presentationDocument = PresentationDocument.Open(copiedFilePath, true))
                     {
-                        //byte[] photo = File.ReadAllBytes(imageFile);
                         PresentationPart presentatioPart = presentationDocument.PresentationPart;
                         OpenXmlElementList slideIds = presentatioPart.Presentation.SlideIdList.ChildElements;
 
@@ -162,7 +161,7 @@ namespace GreenField.Web.Services
 
                 Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
                 String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
-                    ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToShortDateString() : String.Empty) + ".pptx";
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
 
                 DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
                 String url = documentWorkspaceOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath));
@@ -176,7 +175,7 @@ namespace GreenField.Web.Services
                 {
                     Category = "Power Point Presentation",
                     Location = url,
-                    Name = presentationOverviewData.SecurityName + "_" + presentationOverviewData.MeetingDateTime.ToString() + ".pptx",
+                    Name = presentationOverviewData.SecurityName + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
                     SecurityName = presentationOverviewData.SecurityName,
                     SecurityTicker = presentationOverviewData.SecurityTicker,
                     Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),
@@ -194,6 +193,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
 
         private void SwapPlaceholderText(DocumentFormat.OpenXml.Drawing.Table tbl, int rowNum, int columnNum, string value)
         {
@@ -400,7 +400,6 @@ namespace GreenField.Web.Services
 
 
         #endregion
-
 
         #region Meeting Configuration Schedule
 

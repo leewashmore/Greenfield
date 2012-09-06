@@ -162,6 +162,11 @@ namespace GreenField.AdministrationModule.ViewModels
                                         Logging.LogMethodParameter(_logger, createRoleMethodNamespace, result, 1);
                                         if ((bool)result)
                                         {
+                                            if (AllRoles == null)
+                                            {
+                                                AllRoles = new ObservableCollection<string>();
+                                            }
+
                                             AllRoles.Add(NewRoleName);
                                             Logging.LogRoleCreate(_logger, NewRoleName);
                                         }

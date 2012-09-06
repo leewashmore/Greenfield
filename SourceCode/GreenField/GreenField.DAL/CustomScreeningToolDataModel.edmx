@@ -1,0 +1,504 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CustomScreeningToolModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="CustomScreeningToolModelStoreContainer">
+          <EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_CURRENT" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_CURRENT">
+            <DefiningQuery>SELECT 
+      [SCREENING_DISPLAY_CURRENT].[SCREENING_ID] AS [SCREENING_ID], 
+      [SCREENING_DISPLAY_CURRENT].[DATA_ID] AS [DATA_ID], 
+      [SCREENING_DISPLAY_CURRENT].[ESTIMATE_ID] AS [ESTIMATE_ID], 
+      [SCREENING_DISPLAY_CURRENT].[MULTIPLIER] AS [MULTIPLIER], 
+      [SCREENING_DISPLAY_CURRENT].[DECIMAL] AS [DECIMAL], 
+      [SCREENING_DISPLAY_CURRENT].[PERCENTAGE] AS [PERCENTAGE]
+      FROM [dbo].[SCREENING_DISPLAY_CURRENT] AS [SCREENING_DISPLAY_CURRENT]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_FAIRVALUE" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_FAIRVALUE">
+            <DefiningQuery>SELECT 
+      [SCREENING_DISPLAY_FAIRVALUE].[SCREENING_ID] AS [SCREENING_ID], 
+      [SCREENING_DISPLAY_FAIRVALUE].[DATA_DESC] AS [DATA_DESC], 
+      [SCREENING_DISPLAY_FAIRVALUE].[SHORT_COLUMN_DESC] AS [SHORT_COLUMN_DESC], 
+      [SCREENING_DISPLAY_FAIRVALUE].[LONG_DESC] AS [LONG_DESC], 
+      [SCREENING_DISPLAY_FAIRVALUE].[TABLE_COLUMN] AS [TABLE_COLUMN], 
+      [SCREENING_DISPLAY_FAIRVALUE].[DATA_TYPE] AS [DATA_TYPE], 
+      [SCREENING_DISPLAY_FAIRVALUE].[MULTIPLIER] AS [MULTIPLIER], 
+      [SCREENING_DISPLAY_FAIRVALUE].[DECIMAL] AS [DECIMAL], 
+      [SCREENING_DISPLAY_FAIRVALUE].[PERCENTAGE] AS [PERCENTAGE]
+      FROM [dbo].[SCREENING_DISPLAY_FAIRVALUE] AS [SCREENING_DISPLAY_FAIRVALUE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_PERIOD" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_PERIOD">
+            <DefiningQuery>SELECT 
+      [SCREENING_DISPLAY_PERIOD].[SCREENING_ID] AS [SCREENING_ID], 
+      [SCREENING_DISPLAY_PERIOD].[DATA_ID] AS [DATA_ID], 
+      [SCREENING_DISPLAY_PERIOD].[ESTIMATE_ID] AS [ESTIMATE_ID], 
+      [SCREENING_DISPLAY_PERIOD].[MULTIPLIER] AS [MULTIPLIER], 
+      [SCREENING_DISPLAY_PERIOD].[DECIMAL] AS [DECIMAL], 
+      [SCREENING_DISPLAY_PERIOD].[PERCENTAGE] AS [PERCENTAGE]
+      FROM [dbo].[SCREENING_DISPLAY_PERIOD] AS [SCREENING_DISPLAY_PERIOD]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_REFERENCE" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_REFERENCE">
+            <DefiningQuery>SELECT 
+      [SCREENING_DISPLAY_REFERENCE].[SCREENING_ID] AS [SCREENING_ID], 
+      [SCREENING_DISPLAY_REFERENCE].[DATA_DESC] AS [DATA_DESC], 
+      [SCREENING_DISPLAY_REFERENCE].[SHORT_COLUMN_DESC] AS [SHORT_COLUMN_DESC], 
+      [SCREENING_DISPLAY_REFERENCE].[LONG_DESC] AS [LONG_DESC], 
+      [SCREENING_DISPLAY_REFERENCE].[TABLE_COLUMN] AS [TABLE_COLUMN], 
+      [SCREENING_DISPLAY_REFERENCE].[DATA_TYPE] AS [DATA_TYPE], 
+      [SCREENING_DISPLAY_REFERENCE].[MULTIPLIER] AS [MULTIPLIER], 
+      [SCREENING_DISPLAY_REFERENCE].[DECIMAL] AS [DECIMAL], 
+      [SCREENING_DISPLAY_REFERENCE].[PERCENTAGE] AS [PERCENTAGE]
+      FROM [dbo].[SCREENING_DISPLAY_REFERENCE] AS [SCREENING_DISPLAY_REFERENCE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UserCustomisedListInfo" EntityType="CustomScreeningToolModel.Store.UserCustomisedListInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserListDataPointMappingInfo" EntityType="CustomScreeningToolModel.Store.UserListDataPointMappingInfo" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.Store.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+            <End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfo" />
+            <End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfo" />
+          </AssociationSet>
+        </EntityContainer>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.BENCHMARK_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.BENCHMARK_NODE_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.FINANCIAL_GRIDS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.FINSTAT_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.FX_RATES_OLD' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.GF_PRICING_BASEVIEW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.GF_SECURITY_BASEVIEW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.GF_SECURITY_BASEVIEW2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.GRID_TYPES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.INTERNAL_DATA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.INTERNAL_STATEMENT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.PORTFOLIO_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_CURRENT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SCREENING_DISPLAY_CURRENT">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="ESTIMATE_ID" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
+          <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DECIMAL" Type="int" />
+          <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_FAIRVALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SCREENING_DISPLAY_FAIRVALUE">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_DESC" />
+            <PropertyRef Name="SHORT_COLUMN_DESC" />
+            <PropertyRef Name="LONG_DESC" />
+            <PropertyRef Name="TABLE_COLUMN" />
+            <PropertyRef Name="DATA_TYPE" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="SHORT_COLUMN_DESC" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="LONG_DESC" Type="varchar(max)" Nullable="false" />
+          <Property Name="TABLE_COLUMN" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DECIMAL" Type="int" />
+          <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_PERIOD' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SCREENING_DISPLAY_PERIOD">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="ESTIMATE_ID" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
+          <Property Name="MULTIPLIER" Type="real" />
+          <Property Name="DECIMAL" Type="real" />
+          <Property Name="PERCENTAGE" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_REFERENCE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="SCREENING_DISPLAY_REFERENCE">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_DESC" />
+            <PropertyRef Name="SHORT_COLUMN_DESC" />
+            <PropertyRef Name="LONG_DESC" />
+            <PropertyRef Name="TABLE_COLUMN" />
+            <PropertyRef Name="DATA_TYPE" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="SHORT_COLUMN_DESC" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="LONG_DESC" Type="varchar(max)" Nullable="false" />
+          <Property Name="TABLE_COLUMN" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DECIMAL" Type="int" />
+          <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.STATEMENT_CONSENSUS_MAPPING' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data0608.dbo.tblCompanyInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="UserCustomisedListInfo">
+          <Key>
+            <PropertyRef Name="ListId" />
+          </Key>
+          <Property Name="ListId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ListName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Accessibilty" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserListDataPointMappingInfo">
+          <Key>
+            <PropertyRef Name="DataPointId" />
+          </Key>
+          <Property Name="DataPointId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ListId" Type="bigint" Nullable="false" />
+          <Property Name="ScreeningId" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DataSource" Type="varbinary" MaxLength="10" />
+          <Property Name="PeriodType" Type="char" MaxLength="2" />
+          <Property Name="PeriodYear" Type="int" />
+          <Property Name="FiscalType" Type="char" MaxLength="8" />
+          <Property Name="FromDate" Type="int" />
+          <Property Name="ToDate" Type="int" />
+          <Property Name="DataPointsOrder" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+          <End Role="UserCustomisedListInfo" Type="CustomScreeningToolModel.Store.UserCustomisedListInfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserListDataPointMappingInfo" Type="CustomScreeningToolModel.Store.UserListDataPointMappingInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserCustomisedListInfo">
+              <PropertyRef Name="ListId" />
+            </Principal>
+            <Dependent Role="UserListDataPointMappingInfo">
+              <PropertyRef Name="ListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CustomScreeningToolModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="CustomScreeningToolEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" />
+          <EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" />
+          <EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" />
+          <EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" />
+          <EntitySet Name="UserCustomisedListInfoes" EntityType="CustomScreeningToolModel.UserCustomisedListInfo" />
+          <EntitySet Name="UserListDataPointMappingInfoes" EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" />
+          <AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+            <End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfoes" />
+            <End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfoes" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="SCREENING_DISPLAY_CURRENT">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="ESTIMATE_ID" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+          <Property Name="ESTIMATE_ID" Type="Int32" Nullable="false" />
+          <Property Name="MULTIPLIER" Type="Decimal" Precision="32" Scale="6" />
+          <Property Name="DECIMAL" Type="Int32" />
+          <Property Name="PERCENTAGE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="SCREENING_DISPLAY_FAIRVALUE">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_DESC" />
+            <PropertyRef Name="SHORT_COLUMN_DESC" />
+            <PropertyRef Name="LONG_DESC" />
+            <PropertyRef Name="TABLE_COLUMN" />
+            <PropertyRef Name="DATA_TYPE" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_DESC" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="SHORT_COLUMN_DESC" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="LONG_DESC" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="TABLE_COLUMN" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_TYPE" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="MULTIPLIER" Type="Decimal" Precision="32" Scale="6" />
+          <Property Name="DECIMAL" Type="Int32" />
+          <Property Name="PERCENTAGE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="SCREENING_DISPLAY_PERIOD">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="ESTIMATE_ID" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+          <Property Name="ESTIMATE_ID" Type="Int32" Nullable="false" />
+          <Property Name="MULTIPLIER" Type="Single" />
+          <Property Name="DECIMAL" Type="Single" />
+          <Property Name="PERCENTAGE" Type="String" MaxLength="1" Unicode="false" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="SCREENING_DISPLAY_REFERENCE">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_DESC" />
+            <PropertyRef Name="SHORT_COLUMN_DESC" />
+            <PropertyRef Name="LONG_DESC" />
+            <PropertyRef Name="TABLE_COLUMN" />
+            <PropertyRef Name="DATA_TYPE" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_DESC" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+          <Property Name="SHORT_COLUMN_DESC" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="LONG_DESC" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+          <Property Name="TABLE_COLUMN" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_TYPE" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="MULTIPLIER" Type="Decimal" Precision="32" Scale="6" />
+          <Property Name="DECIMAL" Type="Int32" />
+          <Property Name="PERCENTAGE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+        </EntityType>
+        <EntityType Name="UserCustomisedListInfo">
+          <Key>
+            <PropertyRef Name="ListId" />
+          </Key>
+          <Property Name="ListId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ListName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Accessibilty" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="DateTime" Nullable="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="UserListDataPointMappingInfoes" Relationship="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" FromRole="UserCustomisedListInfo" ToRole="UserListDataPointMappingInfo" />
+        </EntityType>
+        <EntityType Name="UserListDataPointMappingInfo">
+          <Key>
+            <PropertyRef Name="DataPointId" />
+          </Key>
+          <Property Name="DataPointId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ListId" Type="Int64" Nullable="false" />
+          <Property Name="ScreeningId" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DataSource" Type="Binary" MaxLength="10" FixedLength="false" />
+          <Property Name="PeriodType" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="PeriodYear" Type="Int32" />
+          <Property Name="FiscalType" Type="String" MaxLength="8" Unicode="false" FixedLength="true" />
+          <Property Name="FromDate" Type="Int32" />
+          <Property Name="ToDate" Type="Int32" />
+          <Property Name="DataPointsOrder" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="UserCustomisedListInfo" Relationship="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" FromRole="UserListDataPointMappingInfo" ToRole="UserCustomisedListInfo" />
+        </EntityType>
+        <Association Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+          <End Role="UserCustomisedListInfo" Type="CustomScreeningToolModel.UserCustomisedListInfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserListDataPointMappingInfo" Type="CustomScreeningToolModel.UserListDataPointMappingInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserCustomisedListInfo">
+              <PropertyRef Name="ListId" />
+            </Principal>
+            <Dependent Role="UserListDataPointMappingInfo">
+              <PropertyRef Name="ListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CustomScreeningToolModelStoreContainer" CdmEntityContainer="CustomScreeningToolEntities">
+          <EntitySetMapping Name="SCREENING_DISPLAY_CURRENT"><EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT"><MappingFragment StoreEntitySet="SCREENING_DISPLAY_CURRENT">
+            <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+            <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+            <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+            <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+            <ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
+            <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SCREENING_DISPLAY_FAIRVALUE"><EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE"><MappingFragment StoreEntitySet="SCREENING_DISPLAY_FAIRVALUE">
+            <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+            <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+            <ScalarProperty Name="SHORT_COLUMN_DESC" ColumnName="SHORT_COLUMN_DESC" />
+            <ScalarProperty Name="LONG_DESC" ColumnName="LONG_DESC" />
+            <ScalarProperty Name="TABLE_COLUMN" ColumnName="TABLE_COLUMN" />
+            <ScalarProperty Name="DATA_TYPE" ColumnName="DATA_TYPE" />
+            <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+            <ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
+            <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SCREENING_DISPLAY_PERIOD"><EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD"><MappingFragment StoreEntitySet="SCREENING_DISPLAY_PERIOD">
+            <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+            <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+            <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+            <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+            <ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
+            <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="SCREENING_DISPLAY_REFERENCE"><EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE"><MappingFragment StoreEntitySet="SCREENING_DISPLAY_REFERENCE">
+            <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+            <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+            <ScalarProperty Name="SHORT_COLUMN_DESC" ColumnName="SHORT_COLUMN_DESC" />
+            <ScalarProperty Name="LONG_DESC" ColumnName="LONG_DESC" />
+            <ScalarProperty Name="TABLE_COLUMN" ColumnName="TABLE_COLUMN" />
+            <ScalarProperty Name="DATA_TYPE" ColumnName="DATA_TYPE" />
+            <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+            <ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
+            <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UserCustomisedListInfoes"><EntityTypeMapping TypeName="CustomScreeningToolModel.UserCustomisedListInfo"><MappingFragment StoreEntitySet="UserCustomisedListInfo">
+            <ScalarProperty Name="ListId" ColumnName="ListId" />
+            <ScalarProperty Name="UserName" ColumnName="UserName" />
+            <ScalarProperty Name="ListName" ColumnName="ListName" />
+            <ScalarProperty Name="Accessibilty" ColumnName="Accessibilty" />
+            <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+            <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+            <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="UserListDataPointMappingInfoes"><EntityTypeMapping TypeName="CustomScreeningToolModel.UserListDataPointMappingInfo"><MappingFragment StoreEntitySet="UserListDataPointMappingInfo">
+            <ScalarProperty Name="DataPointId" ColumnName="DataPointId" />
+            <ScalarProperty Name="ListId" ColumnName="ListId" />
+            <ScalarProperty Name="ScreeningId" ColumnName="ScreeningId" />
+            <ScalarProperty Name="DataSource" ColumnName="DataSource" />
+            <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+            <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+            <ScalarProperty Name="FiscalType" ColumnName="FiscalType" />
+            <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+            <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+            <ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
+            <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+            <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+            <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+            <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="CustomScreeningToolDataModel" ZoomLevel="97">
+        <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" Width="2.375" PointX="0.5" PointY="4.75" Height="2.1725878906250102" IsExpanded="true" />
+        <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" Width="2.375" PointX="5.375" PointY="0.5" Height="2.7494921875000102" IsExpanded="true" />
+        <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" Width="2.5" PointX="8.125" PointY="1" Height="2.1725878906250102" IsExpanded="true" />
+        <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" Width="2.875" PointX="5.25" PointY="3.5" Height="2.7494921875000102" IsExpanded="true" />
+        <EntityTypeShape EntityType="CustomScreeningToolModel.UserCustomisedListInfo" Width="1.5" PointX="0.75" PointY="1.75" Height="2.5571907552083242" IsExpanded="true" />
+        <EntityTypeShape EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" Width="1.5" PointX="3" PointY="1" Height="3.903300781249996" IsExpanded="true" />
+        <AssociationConnector Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="3.0285953776041623" />
+          <ConnectorPoint PointX="3" PointY="3.0285953776041623" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

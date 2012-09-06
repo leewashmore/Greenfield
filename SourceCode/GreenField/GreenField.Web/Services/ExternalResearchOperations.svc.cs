@@ -2103,5 +2103,28 @@ namespace GreenField.Web.Services
             }
         }
 
+        ///// <summary>
+        ///// Get data for Consensus Estimate Detailed gadget
+        ///// </summary>
+        ///// <param name="issuerId"></param>
+        ///// <param name="periodType"></param>
+        ///// <param name="currency"></param>
+        ///// <returns></returns>
+        //[OperationContract]
+        //[FaultContract(typeof(ServiceFault))]
+        //public List<SecurityOverviewData> GetSecurityUniverse(PortfolioSelectionData portfolio, BenchmarkSelectionData benchmark, String currency)
+        //{
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ExceptionTrace.LogException(ex);
+        //        string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+        //        throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+        //    }
+        //}
+
     }
 }

@@ -82,7 +82,7 @@ namespace GreenField.DashboardModule.Views
             //{               
             //    this.cctrDashboardContent.Content = _view;
             //}
-            this.cctrDashboardContent.Content = null; //new ViewMeetingConfigurationSchedule(new ViewModelMeetingConfigSchedule(param));
+            this.cctrDashboardContent.Content = new ViewMeetingConfigurationSchedule(new ViewModelMeetingConfigSchedule(param));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
