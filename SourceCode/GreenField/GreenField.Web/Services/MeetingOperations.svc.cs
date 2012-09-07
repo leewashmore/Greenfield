@@ -227,7 +227,7 @@ namespace GreenField.Web.Services
             SwapPlaceholderText(tblSecurityOverview, 0, 2, presentationOverviewData.Analyst);
             SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.CurrentHoldings);
             SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.SecurityCountry);
-            SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.Price);
+            SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.PercentEMIF);
             SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityIndustry);
             SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.SecurityBMWeight);
             SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
@@ -496,7 +496,10 @@ namespace GreenField.Web.Services
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
                 DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
-                documentWorkspaceOperations.DeleteDocument(fileMasterInfo.Location);
+                if (deletionFlag)
+                {
+                    documentWorkspaceOperations.DeleteDocument(fileMasterInfo.Location); 
+                }
 
                 entity.SetICPresentationAttachedFileInfo(userName, presentationId, fileMasterInfo.Name
                     , fileMasterInfo.SecurityName, fileMasterInfo.SecurityTicker, fileMasterInfo.Location

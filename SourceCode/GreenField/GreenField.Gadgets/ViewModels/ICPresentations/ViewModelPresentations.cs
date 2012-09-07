@@ -145,6 +145,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _meetingInfoDates = value;
                     RaisePropertyChanged(() => this.MeetingInfoDates);
+                    RaisePropertyChanged(() => this.NewCommand);
                 }
             }
         }
@@ -155,11 +156,12 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedMeetingInfoDate; }
             set
             {
+                _selectedMeetingInfoDate = value;
+                RaisePropertyChanged(() => this.SelectedMeetingInfoDate);
+                RaisePropertyChanged(() => this.NewCommand);
+
                 if (value != null)
-                {
-                    _selectedMeetingInfoDate = value;
-                    RaisePropertyChanged(() => this.SelectedMeetingInfoDate);
-                    RaisePropertyChanged(() => this.NewCommand);
+                {                    
                     ICNavigation.Update(ICNavigationInfo.MeetingInfo, value);
                 }
             }

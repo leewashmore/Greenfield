@@ -42,6 +42,12 @@ namespace GreenField.Gadgets.Views
                 _isActive = value;
                 if (DataContextViewModelICPresentationNew != null) //DataContext instance
                     DataContextViewModelICPresentationNew.IsActive = _isActive;
+                if (value)
+                {
+                    this.txtbYTDAbsolute.Text = "0.0000";
+                    this.txtbYTDReltoLoc.Text = "0.0000";
+                    this.txtbYTDReltoEM.Text = "0.0000";
+                }
             }
         }
         #endregion        
@@ -89,7 +95,7 @@ namespace GreenField.Gadgets.Views
             Decimal valueYTDReltoLoc;
             if (!Decimal.TryParse(this.txtbYTDReltoLoc.Text, out valueYTDReltoLoc))
             {
-                this.txtbYTDAbsolute.Text = _valueYTDReltoLoc.ToString();
+                this.txtbYTDReltoLoc.Text = _valueYTDReltoLoc.ToString();
                 return;
             }
             _valueYTDReltoLoc = valueYTDReltoLoc;
@@ -97,7 +103,7 @@ namespace GreenField.Gadgets.Views
             Decimal valueYTDReltoEM;
             if (!Decimal.TryParse(this.txtbYTDReltoEM.Text, out valueYTDReltoEM))
             {
-                this.txtbYTDAbsolute.Text = _valueYTDReltoEM.ToString();
+                this.txtbYTDReltoEM.Text = _valueYTDReltoEM.ToString();
                 return;
             }
             _valueYTDReltoEM = valueYTDReltoEM;

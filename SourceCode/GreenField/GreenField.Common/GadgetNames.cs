@@ -218,7 +218,7 @@ namespace GreenField.Common
         #endregion
 
         #region Investment Committee
-        public static string ICPRESENTATION_CREATE_EDIT = "IC SRD 4.1.1.2.2 - 4.1.1.2.3";
+        public static string ICPRESENTATION_CREATE_EDIT = "Investment Committee Presentation Upload/Edit";
 
         public static string ICPRESENTATION_VOTE = "Investment Committee Presentation Voting Screen";
 
@@ -230,13 +230,11 @@ namespace GreenField.Common
 
         public static string ICPRESENTATION_METRICS_REPORT = "IC SRD 4.2.3";
 
-        public static string ICPRESENTATION_PRESENTATIONS = "INVESTMENT COMMITTEE(IC) PRESENTATIONS";
+        public static string ICPRESENTATION_PRESENTATIONS = "Investment Committee(IC) Presentation Overview";
 
         public static string ICPRESENTATION_UPLOAD_EDIT = "Investment Committee Presentation Upload/Edit";
 
-        public static string ICPRESENTATION_PRESENTATIONS_NEW = "IC PRESENTATION - NEW";
-
-        public static string ICPRESENTATION_PRESENTATIONS_CHANGE_DATE = "Investment Committee Presentation Change Date";
+        public static string ICPRESENTATION_PRESENTATIONS_NEW = "Investment Committee Presenation - New";
 
         public static string ICPRESENTATION_PRESENTATIONS_DECISION_ENTRY = "IC Admin Decision Entry Screen";
         
