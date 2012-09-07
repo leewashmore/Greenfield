@@ -159,12 +159,12 @@ namespace GreenField.Web.Services
                 String resultUrl = String.Empty;
                 try
                 {
-                    //if (deleteFileUrl != String.Empty)
-                    //{
-                    //    DeleteDocument(deleteFileUrl);
-                    //}
+                    if (deleteFileUrl != String.Empty)
+                    {
+                        DeleteDocument(deleteFileUrl);
+                    }
 
-                    String[] destinationUrl = { DocumentServerUrl + DocumentLibrary + "/" + "[" + DateTime.UtcNow.ToString("ddMMyyyyhhmmssffff") + "]" + fileName };
+                    String[] destinationUrl = { DocumentServerUrl + "/" + "[" + DateTime.UtcNow.ToString("ddMMyyyyhhmmssffff") + "]" + fileName };
 
                     DocumentCopyService.CopyResult[] cResultArray = { new DocumentCopyService.CopyResult() };
                     DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };
@@ -241,7 +241,7 @@ namespace GreenField.Web.Services
             Byte[] result = null;
             try
             {
-                String sourceUrl = DocumentServerUrl + DocumentLibrary + "/" + fileName;
+                String sourceUrl = DocumentServerUrl + "/" + fileName;
                 DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };
                 UInt32 retrieveResult = CopyService.GetItem(sourceUrl, out ffieldInfoArray, out result);
 

@@ -163,6 +163,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedPresentationDocumentationInfo = value;
                 RaisePropertyChanged(() => this.SelectedPresentationDocumentationInfo);
+                RaisePropertyChanged(() => this.SubmitCommand);
             }
         }
 
@@ -186,7 +187,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public ICommand SubmitCommand
         {
-            get { return new DelegateCommand<object>(SubmitCommandMethod); }
+            get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
         }
 
         #endregion
@@ -269,6 +270,16 @@ namespace GreenField.Gadgets.ViewModels
                 _dbInteractivity.UploadDocument(UploadFileData.Name, UploadFileStreamData
                     , deleteUrl, UploadDocumentCallbackMethod);
             }
+        }
+
+        private Boolean SubmitCommandValidationMethod(object param)
+        {
+            if (SelectedPresentationDocumentationInfo == null)
+                return false;
+            return SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.POWERPOINT_PRESENTATION).Count() == 1
+                && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.INVESTMENT_CONTEXT_REPORT).Count() == 1
+                && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.FINSTAT_REPORT).Count() == 1
+                && SelectedPresentationDocumentationInfo.Where(record => record.Category == UploadDocumentType.DCF_MODEL).Count() == 1;
         }
 
         private void SubmitCommandMethod(object param)

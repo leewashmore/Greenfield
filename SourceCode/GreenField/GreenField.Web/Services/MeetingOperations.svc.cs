@@ -89,6 +89,7 @@ namespace GreenField.Web.Services
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
 
+                #region Creation of PresentationInfo and VoterInfo objects
                 XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverviewData });
                 String[] votingUsers = Roles.GetUsersInRole("IC_MEMBER_VOTING");
                 foreach (String user in votingUsers)
@@ -104,12 +105,14 @@ namespace GreenField.Web.Services
                 Int64? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();
 
                 if (result < 0)
-                    return false;
-
-                if (!File.Exists(System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx"))
-                    throw new Exception("Missing IC Presentation Template file");
+                    return false; 
+                #endregion
 
                 String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
+
+                if (!File.Exists(presentationFile))
+                    throw new Exception("Missing IC Presentation Template file");
+                
                 String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
                 File.Copy(presentationFile, copiedFilePath, true);
 
@@ -123,49 +126,13 @@ namespace GreenField.Web.Services
                         string relId = (slideIds[0] as SlideId).RelationshipId;
 
                         // Get the slide part from the relationship ID.
-                        SlidePart slide = (SlidePart)presentatioPart.GetPartById(relId);
+                        SlidePart slidePart = (SlidePart)presentatioPart.GetPartById(relId);
 
-                        //get Security Information    
-                        DocumentFormat.OpenXml.Drawing.Table tblSecurityOverview = slide.Slide
-                            .Descendants<DocumentFormat.OpenXml.Drawing.Table>().FirstOrDefault();
-
-                        //SwapPlaceholderText(tblSecurityOverview, 0, 2, presentationOverviewData.SecurityName);
-                        //SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.SecurityRecommendation);
-                        //SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.Analyst);
-                        //SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.CurrentHoldings);
-                        //SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityCountry);
-                        //SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.Price);
-                        //SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.SecurityIndustry);
-                        //SwapPlaceholderText(tblSecurityOverview, 3, 4, presentationOverviewData.SecurityBMWeight);
-                        //SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
-                        //SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.SecurityActiveWeight);
-                        //SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.Price);
-                        //SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_Absolute);
-                        //SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.FVCalc);
-                        //SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoLOC);
-                        //SwapPlaceholderText(tblSecurityOverview, 7, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
-                        //    presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
-                        //SwapPlaceholderText(tblSecurityOverview, 7, 4, presentationOverviewData.YTDRet_RELtoEM);
-
-                        SwapPlaceholderText(tblSecurityOverview, 0, 2, presentationOverviewData.Analyst);
-                        SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.CurrentHoldings);
-                        SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.SecurityCountry);
-                        SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.Price);
-                        SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityIndustry);
-                        SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.SecurityBMWeight);
-                        SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
-                        SwapPlaceholderText(tblSecurityOverview, 3, 4, presentationOverviewData.SecurityActiveWeight);
-                        SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.Price);
-                        SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.YTDRet_Absolute);
-                        SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.FVCalc);
-                        SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_RELtoLOC);
-                        SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
-                            presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
-                        SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoEM);
-
+                        SetSlideTitle(slidePart, presentationOverviewData);
+                        SetSlideContent(slidePart, presentationOverviewData);
 
                         //save the Slide and Presentation
-                        slide.Slide.Save();
+                        slidePart.Slide.Save();
                         presentatioPart.Presentation.Save();
 
                     }
@@ -209,6 +176,93 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+               
+
+        // Get the title string of the slide.
+        private void SetSlideTitle(SlidePart slidePart, ICPresentationOverviewData presentationOverviewData)
+        {
+            if (slidePart == null)
+            {
+                throw new ArgumentNullException("presentationDocument");
+            }
+
+            // Declare a paragraph separator.
+            string paragraphSeparator = null;
+
+            if (slidePart.Slide != null)
+            {
+                // Find all the title shapes.
+                var shapes = from shape in slidePart.Slide.Descendants<Shape>()
+                             where IsTitleShape(shape)
+                             select shape;
+
+                StringBuilder paragraphText = new StringBuilder();
+
+                foreach (var shape in shapes)
+                {
+                    // Get the text in each paragraph in this shape.
+                    foreach (var paragraph in shape.TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>())
+                    {
+                        // Add a line break.
+                        paragraphText.Append(paragraphSeparator);
+
+                        foreach (var text in paragraph.Descendants<DocumentFormat.OpenXml.Drawing.Text>())
+                        {
+                            text.Text = presentationOverviewData.SecurityName + " - " + presentationOverviewData.SecurityRecommendation;
+                        }
+
+                        paragraphSeparator = "\n";
+                    }
+                }
+            }
+        }
+
+        // Get the title string of the slide.
+        private void SetSlideContent(SlidePart slidePart, ICPresentationOverviewData presentationOverviewData)
+        {
+            //get Security Information    
+            DocumentFormat.OpenXml.Drawing.Table tblSecurityOverview = slidePart.Slide
+                .Descendants<DocumentFormat.OpenXml.Drawing.Table>().FirstOrDefault();
+
+            SwapPlaceholderText(tblSecurityOverview, 0, 2, presentationOverviewData.Analyst);
+            SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.CurrentHoldings);
+            SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.SecurityCountry);
+            SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.Price);
+            SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityIndustry);
+            SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.SecurityBMWeight);
+            SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
+            SwapPlaceholderText(tblSecurityOverview, 3, 4, presentationOverviewData.SecurityActiveWeight);
+            SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.Price);
+            SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.YTDRet_Absolute);
+            SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.FVCalc);
+            SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_RELtoLOC);
+            SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
+                presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
+            SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoEM);
+        }
+
+        // Determines whether the shape is a title shape.
+        private static bool IsTitleShape(Shape shape)
+        {
+            var placeholderShape = shape.NonVisualShapeProperties.ApplicationNonVisualDrawingProperties.GetFirstChild<PlaceholderShape>();
+            if (placeholderShape != null && placeholderShape.Type != null && placeholderShape.Type.HasValue)
+            {
+                switch ((PlaceholderValues)placeholderShape.Type)
+                {
+                    // Any title shape.
+                    case PlaceholderValues.Title:
+
+                    // A centered title.
+                    case PlaceholderValues.CenteredTitle:
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+            return false;
+        }
+
 
 
         [OperationContract]
@@ -324,7 +378,7 @@ namespace GreenField.Web.Services
 
                 if (benchmarkData != null)
                 {
-                    presentationOverviewData.SecurityBMWeight = String.Format("{0:n4}", benchmarkData.BENCHMARK_WEIGHT);
+                    presentationOverviewData.SecurityBMWeight = String.Format("{0:n4}%", benchmarkData.BENCHMARK_WEIGHT);
                     tempNAV = (tempNAV - benchmarkData.BENCHMARK_WEIGHT);
                     presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
                 }
@@ -336,8 +390,9 @@ namespace GreenField.Web.Services
                 #endregion
 
                 #region FAIR_VALUE Info
+                String securityId = securityData.SECURITY_ID == null ? null : securityData.SECURITY_ID.ToString();
                 FAIR_VALUE fairValueRecord = externalResearchEntity.FAIR_VALUE.Where(record => record.VALUE_TYPE == "PRIMARY"
-                            && record.SECURITY_ID == securityData.ASEC_SEC_SHORT_NAME).FirstOrDefault();
+                            && record.SECURITY_ID == securityId).FirstOrDefault();
 
                 if (fairValueRecord != null)
                 {
@@ -370,12 +425,15 @@ namespace GreenField.Web.Services
                             presentationOverviewData.CommitteeRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= lowerLimit
                                 ? "Buy" : "Watch";
                         }
-                        
 
-                        presentationOverviewData.FVCalc = dataMasterRecord.DATA_DESC + " " + securityData.TRADING_CURRENCY + " " +
-                            ((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE).ToString() +
-                            "- " + securityData.TRADING_CURRENCY + " " +
-                            ((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE).ToString();
+
+                        if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
+                        {
+                            presentationOverviewData.FVCalc = dataMasterRecord.DATA_DESC + " " + securityData.TRADING_CURRENCY + " " +
+                                String.Format("{0:n4}",((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)) +
+                                "- " + securityData.TRADING_CURRENCY + " " +
+                                String.Format("{0:n4}",((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)); 
+                        }
 
                         String securityID = securityData.SECURITY_ID.ToString();
 
@@ -437,6 +495,9 @@ namespace GreenField.Web.Services
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
+                DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
+                documentWorkspaceOperations.DeleteDocument(fileMasterInfo.Location);
+
                 entity.SetICPresentationAttachedFileInfo(userName, presentationId, fileMasterInfo.Name
                     , fileMasterInfo.SecurityName, fileMasterInfo.SecurityTicker, fileMasterInfo.Location
                     , fileMasterInfo.MetaTags, fileMasterInfo.Category, fileMasterInfo.Type, fileMasterInfo.FileID, deletionFlag);

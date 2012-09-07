@@ -384,7 +384,10 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool NewCommandValidationMethod(object param)
         {
-            return SelectedMeetingInfoDate != null;
+            if (UserSession.SessionManager.SESSION == null)
+                return false;
+
+            return SelectedMeetingInfoDate != null && (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN));
         }
 
         private void NewCommandMethod(object param)

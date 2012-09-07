@@ -35,13 +35,13 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Fields
         private Boolean calculationFlag = false;
-        private DateTime SUNDAY = new DateTime(2012, 1, 1);
-        private DateTime MONDAY = new DateTime(2012, 1, 2);
-        private DateTime TUESDAY = new DateTime(2012, 1, 3);
-        private DateTime WEDNESDAY = new DateTime(2012, 1, 4);
-        private DateTime THURSDAY = new DateTime(2012, 1, 5);
-        private DateTime FRIDAY = new DateTime(2012, 1, 6);
-        private DateTime SATURDAY = new DateTime(2012, 1, 7);
+        private DateTime SUNDAY = new DateTime(2012, 1, 1, 0, 0, 0, DateTimeKind.Local);
+        private DateTime MONDAY = new DateTime(2012, 1, 2, 0, 0, 0, DateTimeKind.Local);
+        private DateTime TUESDAY = new DateTime(2012, 1, 3, 0, 0, 0, DateTimeKind.Local);
+        private DateTime WEDNESDAY = new DateTime(2012, 1, 4, 0, 0, 0, DateTimeKind.Local);
+        private DateTime THURSDAY = new DateTime(2012, 1, 5, 0, 0, 0, DateTimeKind.Local);
+        private DateTime FRIDAY = new DateTime(2012, 1, 6, 0, 0, 0, DateTimeKind.Local);
+        private DateTime SATURDAY = new DateTime(2012, 1, 7, 0, 0, 0, DateTimeKind.Local);
 
         // private ManageMeetings _manageMeetings;
         /// <summary>
@@ -82,7 +82,6 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-
         #endregion
 
         #region Constructor
@@ -92,6 +91,17 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
+
+            while(SUNDAY.DayOfWeek != DayOfWeek.Sunday)
+            {
+                SUNDAY = SUNDAY.AddDays(1);
+                MONDAY = MONDAY.AddDays(1);
+                TUESDAY = TUESDAY.AddDays(1);
+                WEDNESDAY = WEDNESDAY.AddDays(1);
+                THURSDAY = THURSDAY.AddDays(1);
+                FRIDAY = FRIDAY.AddDays(1);
+                SATURDAY = SATURDAY.AddDays(1);
+            }
         }
 
         #endregion
@@ -128,42 +138,6 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-
-        //private Int32 _presentationDateTimeHours;
-        //public Int32 PresentationDateTimeHours
-        //{
-        //    get { return _presentationDateTimeHours; }
-        //    set
-        //    {
-        //        _presentationDateTimeHours = value;
-        //        RaisePropertyChanged(() => this.PresentationDateTimeHours);
-        //        SelectedPresentationDateTime = SelectedPresentationDateTime.AddHours
-        //            ((PresentationDateTimeNotation == "AM" ? value : (value * 2)) - SelectedPresentationDateTime.Hour)
-        //    }
-        //}
-
-        //private Int32 _presentationDateTimeMinutes;
-        //public Int32 PresentationDateTimeMinutes
-        //{
-        //    get { return _presentationDateTimeMinutes; }
-        //    set
-        //    {
-        //        _presentationDateTimeMinutes = value;
-        //        RaisePropertyChanged(() => this.PresentationDateTimeMinutes);
-        //        time = time.AddMinutes(value);
-        //    }
-        //}
-
-        //private String _presentationDateTimeNotation;
-        //public String PresentationDateTimeNotation
-        //{
-        //    get { return _presentationDateTimeNotation; }
-        //    set
-        //    {
-        //        _presentationDateTimeNotation = value;
-        //        RaisePropertyChanged(() => this.PresentationDateTimeNotation);
-        //    }
-        //}        
 
         private DateTime? _selectedPresentationDateTime;
         public DateTime? SelectedPresentationDateTime
@@ -203,20 +177,6 @@ namespace GreenField.Gadgets.ViewModels
                 _configPreMeetingVotingDeadLine = value;
             }
         }
-
-        //private DateTime _selectedTime;
-        //public DateTime SelectedTime
-        //{
-        //    get { return _selectedTime; }
-        //    set
-        //    {
-        //        if (_selectedTime != value)
-        //        {
-        //            _selectedTime = value;
-        //            RaisePropertyChanged(() => this.SelectedTime);
-        //        }
-        //    }
-        //}
 
         public List<string> PresentationTimeZone
         {
@@ -315,10 +275,10 @@ namespace GreenField.Gadgets.ViewModels
         private void MeetingConfigurationSaveItem(object param)
         {
             MeetingConfigurationSchedule config = new MeetingConfigurationSchedule();
-            config.PresentationDateTime = Convert.ToDateTime(SelectedPresentationDateTime);
-            config.PresentationTimeZone = SelectedTimeZone;
-            config.PresentationDeadline = PresentationDeadline;
-            config.PreMeetingVotingDeadline = PreMeetingVotingDeadline;
+            config.PresentationDateTime = Convert.ToDateTime(SelectedPresentationDateTime).ToUniversalTime();
+            config.PresentationTimeZone = "UTC";//SelectedTimeZone;
+            config.PresentationDeadline = PresentationDeadline.ToUniversalTime();
+            config.PreMeetingVotingDeadline = PreMeetingVotingDeadline.ToUniversalTime();
             config.CreatedBy = "System";
             config.CreatedOn = DateTime.UtcNow;
             config.ModifiedBy = "System";
