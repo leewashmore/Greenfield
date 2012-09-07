@@ -358,18 +358,18 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         bool EndSetDocumentComment(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEData", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEDataResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveCEData(string issuerID, string currency, System.AsyncCallback callback, object asyncState);
-        
-        System.Collections.Generic.List<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ModelConsensusEstimatesData> EndRetrieveCEData(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveStatementData", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveStatementDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveStatementDataServiceFaultF" +
             "ault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveStatementData(GreenField.DataContracts.EntitySelectionData selectedSecurity, System.AsyncCallback callback, object asyncState);
         
         byte[] EndRetrieveStatementData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEData", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveCEData(string issuerID, string currency, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ModelConsensusEstimatesData> EndRetrieveCEData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -530,25 +530,6 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RetrieveCEDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        public RetrieveCEDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        public System.Collections.Generic.List<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ModelConsensusEstimatesData> Result {
-            get {
-                base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ModelConsensusEstimatesData>)(this.results[0]));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveStatementDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -562,6 +543,25 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((byte[])(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveCEDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveCEDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ModelConsensusEstimatesData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ModelConsensusEstimatesData>)(this.results[0]));
             }
         }
     }
@@ -618,17 +618,17 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         private System.Threading.SendOrPostCallback onSetDocumentCommentCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRetrieveCEDataDelegate;
-        
-        private EndOperationDelegate onEndRetrieveCEDataDelegate;
-        
-        private System.Threading.SendOrPostCallback onRetrieveCEDataCompletedDelegate;
-        
         private BeginOperationDelegate onBeginRetrieveStatementDataDelegate;
         
         private EndOperationDelegate onEndRetrieveStatementDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveStatementDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveCEDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveCEDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveCEDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -699,9 +699,9 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         public event System.EventHandler<SetDocumentCommentCompletedEventArgs> SetDocumentCommentCompleted;
         
-        public event System.EventHandler<RetrieveCEDataCompletedEventArgs> RetrieveCEDataCompleted;
-        
         public event System.EventHandler<RetrieveStatementDataCompletedEventArgs> RetrieveStatementDataCompleted;
+        
+        public event System.EventHandler<RetrieveCEDataCompletedEventArgs> RetrieveCEDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -1096,6 +1096,52 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginRetrieveStatementData(GreenField.DataContracts.EntitySelectionData selectedSecurity, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveStatementData(selectedSecurity, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        byte[] GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndRetrieveStatementData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveStatementData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveStatementData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.EntitySelectionData selectedSecurity = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginRetrieveStatementData(selectedSecurity, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveStatementData(System.IAsyncResult result) {
+            byte[] retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndRetrieveStatementData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveStatementDataCompleted(object state) {
+            if ((this.RetrieveStatementDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveStatementDataCompleted(this, new RetrieveStatementDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveStatementDataAsync(GreenField.DataContracts.EntitySelectionData selectedSecurity) {
+            this.RetrieveStatementDataAsync(selectedSecurity, null);
+        }
+        
+        public void RetrieveStatementDataAsync(GreenField.DataContracts.EntitySelectionData selectedSecurity, object userState) {
+            if ((this.onBeginRetrieveStatementDataDelegate == null)) {
+                this.onBeginRetrieveStatementDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveStatementData);
+            }
+            if ((this.onEndRetrieveStatementDataDelegate == null)) {
+                this.onEndRetrieveStatementDataDelegate = new EndOperationDelegate(this.OnEndRetrieveStatementData);
+            }
+            if ((this.onRetrieveStatementDataCompletedDelegate == null)) {
+                this.onRetrieveStatementDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveStatementDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveStatementDataDelegate, new object[] {
+                        selectedSecurity}, this.onEndRetrieveStatementDataDelegate, this.onRetrieveStatementDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginRetrieveCEData(string issuerID, string currency, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveCEData(issuerID, currency, callback, asyncState);
         }
@@ -1141,52 +1187,6 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             base.InvokeAsync(this.onBeginRetrieveCEDataDelegate, new object[] {
                         issuerID,
                         currency}, this.onEndRetrieveCEDataDelegate, this.onRetrieveCEDataCompletedDelegate, userState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginRetrieveStatementData(GreenField.DataContracts.EntitySelectionData selectedSecurity, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveStatementData(selectedSecurity, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        byte[] GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndRetrieveStatementData(System.IAsyncResult result) {
-            return base.Channel.EndRetrieveStatementData(result);
-        }
-        
-        private System.IAsyncResult OnBeginRetrieveStatementData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            GreenField.DataContracts.EntitySelectionData selectedSecurity = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
-            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginRetrieveStatementData(selectedSecurity, callback, asyncState);
-        }
-        
-        private object[] OnEndRetrieveStatementData(System.IAsyncResult result) {
-            byte[] retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndRetrieveStatementData(result);
-            return new object[] {
-                    retVal};
-        }
-        
-        private void OnRetrieveStatementDataCompleted(object state) {
-            if ((this.RetrieveStatementDataCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RetrieveStatementDataCompleted(this, new RetrieveStatementDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RetrieveStatementDataAsync(GreenField.DataContracts.EntitySelectionData selectedSecurity) {
-            this.RetrieveStatementDataAsync(selectedSecurity, null);
-        }
-        
-        public void RetrieveStatementDataAsync(GreenField.DataContracts.EntitySelectionData selectedSecurity, object userState) {
-            if ((this.onBeginRetrieveStatementDataDelegate == null)) {
-                this.onBeginRetrieveStatementDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveStatementData);
-            }
-            if ((this.onEndRetrieveStatementDataDelegate == null)) {
-                this.onEndRetrieveStatementDataDelegate = new EndOperationDelegate(this.OnEndRetrieveStatementData);
-            }
-            if ((this.onRetrieveStatementDataCompletedDelegate == null)) {
-                this.onRetrieveStatementDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveStatementDataCompleted);
-            }
-            base.InvokeAsync(this.onBeginRetrieveStatementDataDelegate, new object[] {
-                        selectedSecurity}, this.onEndRetrieveStatementDataDelegate, this.onRetrieveStatementDataCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -1379,6 +1379,19 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
                 return _result;
             }
             
+            public System.IAsyncResult BeginRetrieveStatementData(GreenField.DataContracts.EntitySelectionData selectedSecurity, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = selectedSecurity;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveStatementData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public byte[] EndRetrieveStatementData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                byte[] _result = ((byte[])(base.EndInvoke("RetrieveStatementData", _args, result)));
+                return _result;
+            }
+            
             public System.IAsyncResult BeginRetrieveCEData(string issuerID, string currency, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[2];
                 _args[0] = issuerID;
@@ -1390,19 +1403,6 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             public System.Collections.Generic.List<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ModelConsensusEstimatesData> EndRetrieveCEData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ModelConsensusEstimatesData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ModelConsensusEstimatesData>)(base.EndInvoke("RetrieveCEData", _args, result)));
-                return _result;
-            }
-            
-            public System.IAsyncResult BeginRetrieveStatementData(GreenField.DataContracts.EntitySelectionData selectedSecurity, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
-                _args[0] = selectedSecurity;
-                System.IAsyncResult _result = base.BeginInvoke("RetrieveStatementData", _args, callback, asyncState);
-                return _result;
-            }
-            
-            public byte[] EndRetrieveStatementData(System.IAsyncResult result) {
-                object[] _args = new object[0];
-                byte[] _result = ((byte[])(base.EndInvoke("RetrieveStatementData", _args, result)));
                 return _result;
             }
         }

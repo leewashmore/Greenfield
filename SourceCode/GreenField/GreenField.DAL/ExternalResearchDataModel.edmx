@@ -550,6 +550,14 @@
           <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
+        <Function Name="Get_Statement_Models" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+        </Function>
         <Function Name="GetConsensusEstimatesMedian" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
@@ -590,6 +598,13 @@
           <Parameter Name="fiscalType" Type="char" Mode="In" />
         </Function>
         <Function Name="GetMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetModelConsensusEstimates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+        </Function>
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
@@ -714,7 +729,6 @@
             <Parameter Name="dataSource" Mode="In" Type="String" />
             <Parameter Name="fiscalType" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="External_Country_Master" EntityType="ExternalResearchModel.External_Country_Master" />
           <FunctionImport Name="GetMarketCap" ReturnType="Collection(Decimal)" />
           <FunctionImport Name="GetBrokerDetail" ReturnType="Collection(ExternalResearchModel.BrokerDetailData)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
@@ -771,6 +785,7 @@
             <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="External_Country_Master" EntityType="ExternalResearchModel.External_Country_Master" />
           <EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.FAIR_VALUE" />
 
 
@@ -1203,22 +1218,6 @@
           <Property Type="String" Name="PERCENTAGE" Nullable="false" />
           <Property Type="String" Name="VALUE" Nullable="false" />
         </ComplexType>
-        <EntityType Name="External_Country_Master">
-          <Key>
-            <PropertyRef Name="COUNTRY_CODE" />
-            <PropertyRef Name="COUNTRY_NAME" />
-            <PropertyRef Name="CURRENCY_CODE" />
-            <PropertyRef Name="CURRENCY_NAME" />
-            <PropertyRef Name="MACRO_ECON_DATA_CURRENT" />
-          </Key>
-          <Property Type="String" Name="COUNTRY_CODE" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="COUNTRY_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CURRENCY_CODE" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="CURRENCY_NAME" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="MACRO_ECON_DATA_CURRENT" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_NAME" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
         <ComplexType Name="BrokerDetailData">
           <Property Type="String" Name="broker_name" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="EstimateType" Nullable="false" MaxLength="20" />
@@ -1284,6 +1283,22 @@
           <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
           <Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23" />
         </ComplexType>
+        <EntityType Name="External_Country_Master">
+          <Key>
+            <PropertyRef Name="COUNTRY_CODE" />
+            <PropertyRef Name="COUNTRY_NAME" />
+            <PropertyRef Name="CURRENCY_CODE" />
+            <PropertyRef Name="CURRENCY_NAME" />
+            <PropertyRef Name="MACRO_ECON_DATA_CURRENT" />
+          </Key>
+          <Property Type="String" Name="COUNTRY_CODE" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="COUNTRY_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CURRENCY_CODE" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CURRENCY_NAME" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MACRO_ECON_DATA_CURRENT" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_NAME" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="20" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="FAIR_VALUE">
           <Key>
             <PropertyRef Name="VALUE_TYPE" />
@@ -1635,19 +1650,6 @@
 					</FunctionImportMapping>
           
            <FunctionImportMapping FunctionImportName="GetMarketCap" FunctionName="ExternalResearchModel.Store.GetMarketCap" />
-          <EntitySetMapping Name="External_Country_Master">
-            <EntityTypeMapping TypeName="ExternalResearchModel.External_Country_Master">
-              <MappingFragment StoreEntitySet="Country_Master">
-                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
-                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_NAME" ColumnName="ASHEMM_PROPRIETARY_REGION_NAME" />
-                <ScalarProperty Name="MACRO_ECON_DATA_CURRENT" ColumnName="MACRO_ECON_DATA_CURRENT" />
-                <ScalarProperty Name="CURRENCY_NAME" ColumnName="CURRENCY_NAME" />
-                <ScalarProperty Name="CURRENCY_CODE" ColumnName="CURRENCY_CODE" />
-                <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
-                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
 
 
           
@@ -1709,6 +1711,60 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetModelConsensusEstimates" FunctionName="ExternalResearchModel.Store.GetModelConsensusEstimates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.ModelConsensusEstimatesData">
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+                <ScalarProperty Name="ESTIMATE_DESC" ColumnName="ESTIMATE_DESC" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
+                <ScalarProperty Name="HIGH" ColumnName="HIGH" />
+                <ScalarProperty Name="LOW" ColumnName="LOW" />
+                <ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
+                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+                <ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Get_Statement_Models" FunctionName="ExternalResearchModel.Store.Get_Statement_Models">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementData">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AmountType" ColumnName="AmountType" />
+                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+                <ScalarProperty Name="IsConsensus" ColumnName="IsConsensus" />
+                <ScalarProperty Name="DataId" ColumnName="DataId" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="BoldFont" ColumnName="BoldFont" />
+                <ScalarProperty Name="Decimals" ColumnName="Decimals" />
+                <ScalarProperty Name="RootSource" ColumnName="RootSource" />
+                <ScalarProperty Name="RootSourceDate" ColumnName="RootSourceDate" />
+                <ScalarProperty Name="CalculationDiagram" ColumnName="CalculationDiagram" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="External_Country_Master">
+            <EntityTypeMapping TypeName="ExternalResearchModel.External_Country_Master">
+              <MappingFragment StoreEntitySet="Country_Master">
+                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
+                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_NAME" ColumnName="ASHEMM_PROPRIETARY_REGION_NAME" />
+                <ScalarProperty Name="MACRO_ECON_DATA_CURRENT" ColumnName="MACRO_ECON_DATA_CURRENT" />
+                <ScalarProperty Name="CURRENCY_NAME" ColumnName="CURRENCY_NAME" />
+                <ScalarProperty Name="CURRENCY_CODE" ColumnName="CURRENCY_CODE" />
+                <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
+                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="FAIR_VALUE">
             <EntityTypeMapping TypeName="ExternalResearchModel.FAIR_VALUE">
               <MappingFragment StoreEntitySet="FAIR_VALUE">

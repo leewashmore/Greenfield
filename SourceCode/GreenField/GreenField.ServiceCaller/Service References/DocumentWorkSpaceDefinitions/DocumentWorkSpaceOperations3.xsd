@@ -124,6 +124,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveStatementData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="selectedSecurity" nillable="true" type="q4:EntitySelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveStatementDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RetrieveStatementDataResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="RetrieveCEData">
     <xs:complexType>
       <xs:sequence>
@@ -135,21 +149,7 @@
   <xs:element name="RetrieveCEDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveCEDataResult" nillable="true" type="q4:ArrayOfModelConsensusEstimatesData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveStatementData">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="selectedSecurity" nillable="true" type="q5:EntitySelectionData" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="RetrieveStatementDataResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="RetrieveStatementDataResult" nillable="true" type="xs:base64Binary" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveCEDataResult" nillable="true" type="q5:ArrayOfModelConsensusEstimatesData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

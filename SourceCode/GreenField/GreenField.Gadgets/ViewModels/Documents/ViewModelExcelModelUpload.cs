@@ -96,6 +96,70 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Stores the list of EntitySelectionData for all entity Types
+        /// </summary>
+        private List<EntitySelectionData> _entitySelectionInfo;
+        public List<EntitySelectionData> EntitySelectionInfo
+        {
+            get
+            {
+                if (_entitySelectionInfo == null)
+                    _entitySelectionInfo = new List<EntitySelectionData>();
+                return _entitySelectionInfo;
+            }
+            set
+            {
+                _entitySelectionInfo = value;
+                RaisePropertyChanged(() => this.EntitySelectionInfo);
+
+                SecuritySelectorInfo = value
+                    .Where(record => record.Type == EntityType.SECURITY)
+                    .ToList();
+            }
+        }
+
+        /// <summary>
+        /// Stores the list of EntitySelectionData for entity type - SECURITY
+        /// </summary>
+        private List<EntitySelectionData> _securitySelectorInfo;
+        public List<EntitySelectionData> SecuritySelectorInfo
+        {
+            get { return _securitySelectorInfo; }
+            set
+            {
+                _securitySelectorInfo = value;
+                RaisePropertyChanged(() => this.SecuritySelectorInfo);
+            }
+        }
+
+        /// <summary>
+        /// Stores search text entered by user - Refines SecuritySelectionInfo based on the text entered
+        /// </summary>
+        private string _securitySearchText;
+        public string SecuritySearchText
+        {
+            get { return _securitySearchText; }
+            set
+            {
+                _securitySearchText = value;
+                RaisePropertyChanged(() => this.SecuritySearchText);
+                if (value != null)
+                {
+                    if (value != String.Empty && EntitySelectionInfo != null)
+                        SecuritySelectorInfo = EntitySelectionInfo
+                                    .Where(
+                                    record => record.Type == EntityType.SECURITY &&
+                                    (record.LongName.ToLower().Contains(value.ToLower())
+                                        || record.ShortName.ToLower().Contains(value.ToLower())
+                                        || record.InstrumentID.ToLower().Contains(value.ToLower())))
+                                    .ToList();
+                    else
+                        SecuritySelectorInfo = EntitySelectionInfo.Where(record => record.Type == EntityType.SECURITY).ToList();
+                }
+            }
+        }
+
         #region Issuer Details
 
         /// <summary>
@@ -323,27 +387,17 @@ namespace GreenField.Gadgets.ViewModels
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
+
             try
             {
                 if (result != null)
                 {
-                    SeriesReference = new CollectionViewSource();
-                    SeriesReferenceSource = new ObservableCollection<EntitySelectionData>(result.Where(a => a.Type == "SECURITY").ToList());
-                    SeriesReference.GroupDescriptions.Add(new PropertyGroupDescription("Type"));
-                    SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
-                    {
-                        PropertyName = "SortOrder",
-                        Direction = System.ComponentModel.ListSortDirection.Ascending
-                    });
-                    SeriesReference.SortDescriptions.Add(new System.ComponentModel.SortDescription
-                    {
-                        PropertyName = "LongName",
-                        Direction = System.ComponentModel.ListSortDirection.Ascending
-                    });
-                    SeriesReference.Source = SeriesReferenceSource;
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    EntitySelectionInfo = result.OrderBy(t => t.LongName).ToList();
                 }
                 else
                 {
+                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
             }
@@ -351,6 +405,10 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorNotification();
             }
         }
 

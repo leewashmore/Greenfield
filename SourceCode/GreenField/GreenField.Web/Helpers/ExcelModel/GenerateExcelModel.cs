@@ -26,7 +26,7 @@ namespace GreenField.Web.Helpers
             for (int i = 1; i <= 12; i++)
             {
                 myworkbook.Sheets.Add(Type.Missing, Type.Missing, 1, Type.Missing);
-                Excel._Worksheet oSheet = (Excel._Worksheet)mysheets.get_Item(i);
+                Excel.Worksheet oSheet = (Excel.Worksheet)mysheets.get_Item(i);
                 oSheet.Name = i.ToString();
                 oSheet.Cells[1, 1] = "Date" + i.ToString();
             }
@@ -83,8 +83,8 @@ namespace GreenField.Web.Helpers
                 int lastYear = financialData.Select(a => a.PeriodYear).OrderByDescending(a => a).FirstOrDefault();
                 int numberOfYears = lastYear - firstYear;
 
-                Excel._Worksheet workSheetReuters;
-                Excel._Worksheet workSheetConsensus;
+                Excel.Worksheet workSheetReuters;
+                Excel.Worksheet workSheetConsensus;
                 //Sheets xlsheets = null;
                 //xlsheets = workBook.Sheets;
 
@@ -93,10 +93,14 @@ namespace GreenField.Web.Helpers
                 //mySheets = workBook.Worksheets;
 
                 //workSheetReuters = (Worksheet)xlsheets.Add(xlsheets[1], Type.Missing, Type.Missing, Type.Missing);
-                //workSheetReuters = (_Worksheet)mySheets.get_Item(1);
+                //workSheetReuters = (Worksheet)mySheets.get_Item(1);
 
-                
-                workSheetReuters = workBook.ActiveSheet as Excel._Worksheet;
+                //workBook.Sheets.Delete();
+
+                int abv = workBook.Sheets.Count;
+                workSheetReuters = (Excel.Worksheet)workBook.Sheets[1];
+                //workBook.Sheets.Add(Type.Missing, Type.Missing, 1, Type.Missing);
+                //excelApp.Workbook(workSheetReuters).Activate();
                 workSheetReuters = GenerateReutersColumnHeaders(workSheetReuters, firstYear, lastYear);
                 workSheetReuters = DisplayReutersData(workSheetReuters, financialData);
                 workSheetReuters.Name = "Reuters Reported";
@@ -104,14 +108,18 @@ namespace GreenField.Web.Helpers
                 //xlsheets = workBook.Sheets;
                 //workSheetConsensus = (Worksheet)xlsheets.Add(xlsheets[1], Type.Missing, Type.Missing, Type.Missing);
 
+                firstYear = consensusData.Select(a => a.PERIOD_YEAR).OrderBy(a => a).FirstOrDefault();
+                lastYear = consensusData.Select(a => a.PERIOD_YEAR).OrderByDescending(a => a).FirstOrDefault();
 
 
-                workSheetConsensus = workBook.Sheets.Add(Type.Missing, Type.Missing, 1, Type.Missing);
-                workSheetConsensus = GenerateConsensusColumnHeaders(workSheetReuters, firstYear, lastYear);
-                workSheetConsensus = DisplayConsensusData(workSheetReuters, consensusData);
+
+                workSheetConsensus = (Excel.Worksheet)workBook.Sheets[2];
+                //workBook.Sheets.Add(Type.Missing, Type.Missing, 1, Type.Missing);
+                workSheetConsensus = GenerateConsensusColumnHeaders(workSheetConsensus, firstYear, lastYear);
+                workSheetConsensus = DisplayConsensusData(workSheetConsensus, consensusData);
                 workSheetConsensus.Name = "Consensus Reported";
 
-                
+
 
 
 
@@ -119,7 +127,7 @@ namespace GreenField.Web.Helpers
                 string fileName = GetFileName();
 
 
-                
+
 
 
 
@@ -163,7 +171,7 @@ namespace GreenField.Web.Helpers
         /// <param name="firstYear">First Year in the Data-Set</param>
         /// <param name="lastYear">Last Period year in the Data-Set</param>
         /// <returns>The Worksheet with Column Headers</returns>
-        private static _Worksheet GenerateReutersColumnHeaders(_Worksheet workSheet, int firstYear, int lastYear)
+        private static Worksheet GenerateReutersColumnHeaders(Worksheet workSheet, int firstYear, int lastYear)
         {
             try
             {
@@ -195,7 +203,7 @@ namespace GreenField.Web.Helpers
         /// <param name="worksheet">Current Excel Worksheet</param>
         /// <param name="financialData">list of type FinancialStatementData</param>
         /// <returns>The Worksheet with Pivoted Data</returns>
-        private static Excel._Worksheet DisplayReutersData(Excel._Worksheet worksheet, List<FinancialStatementData> financialData)
+        private static Excel.Worksheet DisplayReutersData(Excel.Worksheet worksheet, List<FinancialStatementData> financialData)
         {
             try
             {
@@ -251,7 +259,7 @@ namespace GreenField.Web.Helpers
         /// <param name="firstYear"></param>
         /// <param name="lastYear"></param>
         /// <returns>The Worksheet with Column Headers</returns>
-        private static _Worksheet GenerateConsensusColumnHeaders(_Worksheet workSheet, int firstYear, int lastYear)
+        private static Worksheet GenerateConsensusColumnHeaders(Worksheet workSheet, int firstYear, int lastYear)
         {
             try
             {
@@ -283,7 +291,7 @@ namespace GreenField.Web.Helpers
         /// <param name="worksheet">Current Excel Worksheet</param>
         /// <param name="financialData">List of type ModelConsensusEstimatesData</param>
         /// <returns>The Worksheet with Pivoted Data</returns>
-        private static _Worksheet DisplayConsensusData(_Worksheet worksheet, List<ModelConsensusEstimatesData> consensusData)
+        private static Worksheet DisplayConsensusData(Worksheet worksheet, List<ModelConsensusEstimatesData> consensusData)
         {
             try
             {

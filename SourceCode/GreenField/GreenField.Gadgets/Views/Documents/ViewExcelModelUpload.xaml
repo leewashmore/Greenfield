@@ -15,7 +15,7 @@
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml" x:Name="BaseStyles"/>
                 <ResourceDictionary x:Name="GadgetSpecificStyles">
                     <helpers:DataContextProxy x:Key="DataContextProxy"/>
-                    <helpers:FlattenGroupConverter x:Key="FlattenGroupConverter"/>
+                    <helpers:FlattenGroupConverter x:Key="FlattenGroupConverter" />
                     <helpers:ItemStyleSelector x:Key="ItemStyleSelector">
                         <helpers:ItemStyleSelector.GroupStyle>
                             <Style TargetType="ContentControl">
@@ -24,7 +24,7 @@
                                 <Setter Property="ContentTemplate">
                                     <Setter.Value>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Name}" />
+                                            <TextBlock Text="{Binding Name}"/>
                                         </DataTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -35,12 +35,9 @@
                                 <Setter Property="ContentTemplate">
                                     <Setter.Value>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock FontWeight="Bold" FontSize="12" FontFamily="Arial" Text="{Binding LongName}" />
-                                                <TextBlock Text=" (" FontSize="12" FontFamily="Arial" />
-                                                <TextBlock Text="{Binding ShortName}" FontSize="12" FontFamily="Arial" />
-                                                <TextBlock Text=")" FontSize="12" FontFamily="Arial" />
-                                            </StackPanel>
+                                            <CheckBox Content="{Binding Path=DisplayText}"
+                                          IsChecked="{Binding Path=IsSelected,Mode=TwoWay}"
+                                          Height="16" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" />
                                         </DataTemplate>
                                     </Setter.Value>
                                 </Setter>
@@ -89,28 +86,38 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="Select Security" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"/>
-            <telerik:RadComboBox Grid.Column="1" Grid.Row="0" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5,0,0,0" HorizontalContentAlignment="Center"
-                                             Name="cmbAddSeries"
-                                             ItemsSource="{Binding SeriesReference.View.Groups, Converter={StaticResource FlattenGroupConverter}}"
-                                             IsEditable="True" 
-                                             telerik:TextSearch.TextPath="ShortName"
-                                             Width="150"
-                                             CanAutocompleteSelectItems="True"
-                                             CanKeyboardNavigationSelectItems="False"
-                                             OpenDropDownOnFocus="True" 
-                                             StaysOpenOnEdit="True"
-                                             TextOptions.TextHintingMode="Fixed"
-                                             Text="{Binding SeriesEnteredText, Mode=TwoWay}" 
+            <telerik:RadComboBox x:Name="cbsecuritySelector" Grid.Row="0" Grid.Column="1"
+                                             ItemsSource="{Binding SecuritySelectorInfo}"
                                              SelectedItem="{Binding SelectedSecurity, Mode=TwoWay}"
-                                             ItemContainerStyleSelector="{StaticResource ItemStyleSelector}" 
-                                             TextSearchMode="Contains"
-                                             IsTextSearchEnabled="False"
-                                             Style="{StaticResource RadComboBoxStyle}">
-                <!--<telerik:RadComboBox.ItemsPanel>
+                                             Text="{Binding SecuritySearchText, Mode=TwoWay}"
+                                             EmptyText="Search Security..." 
+                                             telerik:TextSearch.TextPath="LongName"
+                                             Width="150" 
+                                             Margin="5,0,0,0"
+                                             IsEditable="True"
+                                             CanAutocompleteSelectItems="True" 
+                                             CanKeyboardNavigationSelectItems="False" 
+                                             HorizontalAlignment="Left"
+                                             OpenDropDownOnFocus="True"
+                                             StaysOpenOnEdit="True"
+                                             Style="{StaticResource RadComboBoxStyle}"
+                                             TextOptions.TextHintingMode="Fixed"
+                                             IsTextSearchEnabled="False">
+                <telerik:RadComboBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <VirtualizingStackPanel />
                     </ItemsPanelTemplate>
-                </telerik:RadComboBox.ItemsPanel>-->
+                </telerik:RadComboBox.ItemsPanel>
+                <telerik:RadComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding LongName}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Text="{Binding ShortName, StringFormat=' (\{0\}, '}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Text="{Binding SecurityType, StringFormat='\{0\}:'}" Style="{StaticResource TextBlockStyle}"/>
+                            <TextBlock Text="{Binding InstrumentID, StringFormat='\{0\})'}" Style="{StaticResource TextBlockStyle}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </telerik:RadComboBox.ItemTemplate>
             </telerik:RadComboBox>
 
             <Button x:Name="btnDownload" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"  Content="Download Model" HorizontalContentAlignment="Center"
