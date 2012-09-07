@@ -558,6 +558,9 @@
           <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
+        <Function Name="GetBasicData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SecurityID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetConsensusEstimatesMedian" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
@@ -605,8 +608,18 @@
           <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
+        <Function Name="GetNewICPresentationSecurityData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="securityID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="RetrieveRatioComparisonData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="securityBucketXML" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="RetrieveSecurityPFVMeasureCurrentPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SecurityId" Type="varchar" Mode="In" />
+          <Parameter Name="PFVMeasure" Type="varchar" Mode="In" />
         </Function>
         <Function Name="usp_GetDataForPeriodGadgets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cSource" Type="varchar" Mode="In" />
@@ -614,6 +627,12 @@
           <Parameter Name="cCurrency" Type="varchar" Mode="In" />
           <Parameter Name="cIssuerID" Type="varchar" Mode="In" />
           <Parameter Name="cSecurityID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="usp_GetDataForValuationQualityGrowth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="issuerIdsForPortfolio" Type="varchar(max)" Mode="In" />
+          <Parameter Name="securityIdsForPortfolio" Type="varchar(max)" Mode="In" />
+          <Parameter Name="issuerIdsForBenchmark" Type="varchar(max)" Mode="In" />
+          <Parameter Name="securityIdsForBenchmark" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="usp_GetQuarterlyResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DataId" Type="int" Mode="In" />
@@ -638,18 +657,18 @@
 					<EntitySet Name="PERIOD_FINANCIALS_DISPLAY" EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" />
 					<EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.REUTERS_XREF" />
 					<FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
-						<Parameter Name="SecurityID" Mode="In" Type="String" />
-					</FunctionImport>
+					<Parameter Name="SecurityID" Mode="In" Type="String" />
+          </FunctionImport>
 					<FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
           <Parameter Name="XRef" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetConsensusEstimatesSummaryData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimatesSummaryData)">
-						<Parameter Name="Security" Mode="In" Type="String" />
-					</FunctionImport>
+          <Parameter Name="Security" Mode="In" Type="String" />
+          </FunctionImport>
 					<FunctionImport Name="usp_GetQuarterlyResults" ReturnType="Collection(ExternalResearchModel.QuarterlyResults)">
 						<Parameter Name="DataId" Mode="In" Type="Int32" />
-						<Parameter Name="PeriodYear" Mode="In" Type="Int32" />
-					</FunctionImport>
+            <Parameter Name="PeriodYear" Mode="In" Type="Int32" />
+          </FunctionImport>
 					<FunctionImport Name="GetConsensusEstimateData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateMedianData)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
@@ -758,7 +777,7 @@
           </FunctionImport>
           
            <FunctionImport Name="GetNewICPresentationSecurityData" ReturnType="Collection(ExternalResearchModel.NewICPresentationSecurityData)">
-            <Parameter Name="securityID" Mode="In" Type="String" />
+          <Parameter Name="securityID" Mode="In" Type="String" />
           </FunctionImport>
 
           
@@ -1779,6 +1798,89 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetConsensusEstimatesSummaryData" FunctionName="ExternalResearchModel.Store.GetConsensusEstimatesSummaryData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimatesSummaryData">
+                <ScalarProperty Name="NetIncome" ColumnName="NetIncome" />
+                <ScalarProperty Name="YEAR1" ColumnName="YEAR1" />
+                <ScalarProperty Name="YEAR2" ColumnName="YEAR2" />
+                <ScalarProperty Name="YEAR3" ColumnName="YEAR3" />
+                <ScalarProperty Name="YEAR4" ColumnName="YEAR4" />
+                <ScalarProperty Name="YEAR5" ColumnName="YEAR5" />
+                <ScalarProperty Name="currency" ColumnName="currency" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBasicData" FunctionName="ExternalResearchModel.Store.GetBasicData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.GetBasicData_Result">
+                <ScalarProperty Name="MARKET_CAPITALIZATION" ColumnName="MARKET_CAPITALIZATION" />
+                <ScalarProperty Name="ENTERPRISE_VALUE" ColumnName="ENTERPRISE_VALUE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetNewICPresentationSecurityData" FunctionName="ExternalResearchModel.Store.GetNewICPresentationSecurityData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.NewICPresentationSecurityData">
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveRatioComparisonData" FunctionName="ExternalResearchModel.Store.RetrieveRatioComparisonData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.RatioComparisonData">
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+                <ScalarProperty Name="FINANCIAL" ColumnName="FINANCIAL" />
+                <ScalarProperty Name="VALUATION" ColumnName="VALUATION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveSecurityPFVMeasureCurrentPrice" FunctionName="ExternalResearchModel.Store.RetrieveSecurityPFVMeasureCurrentPrice" />
+          <FunctionImportMapping FunctionImportName="usp_GetDataForValuationQualityGrowth" FunctionName="ExternalResearchModel.Store.usp_GetDataForValuationQualityGrowth">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.ValuationQualityGrowthData">
+                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
+                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
+                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="DataId" ColumnName="DataId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="AmountType" ColumnName="AmountType" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetQuarterlyResults" FunctionName="ExternalResearchModel.Store.usp_GetQuarterlyResults">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.QuarterlyResults">
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
+                <ScalarProperty Name="Region" ColumnName="Region" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Sector" ColumnName="Sector" />
+                <ScalarProperty Name="Industry" ColumnName="Industry" />
+                <ScalarProperty Name="Currency" ColumnName="Currency" />
+                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+                <ScalarProperty Name="Q1" ColumnName="Q1" />
+                <ScalarProperty Name="Q2" ColumnName="Q2" />
+                <ScalarProperty Name="Q3" ColumnName="Q3" />
+                <ScalarProperty Name="Q4" ColumnName="Q4" />
+                <ScalarProperty Name="Annual" ColumnName="Annual" />
+                <ScalarProperty Name="QuarterlySum" ColumnName="QuarterlySum" />
+                <ScalarProperty Name="QuarterlySumPercentage" ColumnName="QuarterlySumPercentage" />
+                <ScalarProperty Name="Consensus" ColumnName="Consensus" />
+                <ScalarProperty Name="ConsensusPercentage" ColumnName="ConsensusPercentage" />
+                <ScalarProperty Name="High" ColumnName="High" />
+                <ScalarProperty Name="Low" ColumnName="Low" />
+                <ScalarProperty Name="Brokers" ColumnName="Brokers" />
+                <ScalarProperty Name="EstimateId" ColumnName="EstimateId" />
+                <ScalarProperty Name="ConsensusUpdate" ColumnName="ConsensusUpdate" />
+                <ScalarProperty Name="XREF" ColumnName="XREF" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
