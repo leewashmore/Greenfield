@@ -102,7 +102,7 @@
                                                  DataFormatString="{}{0:n2}"
                                                 TextAlignment="Right"/>
                         <telerik:GridViewDataColumn x:Name="dgBenchMarkValue" 
-                                                 Header="BenchMark" 
+                                                 Header="Benchmark" 
                                                  DataMemberBinding="{Binding BenchmarkValue}" 
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
