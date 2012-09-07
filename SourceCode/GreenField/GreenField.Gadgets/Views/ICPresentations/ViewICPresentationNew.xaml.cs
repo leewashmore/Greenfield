@@ -42,6 +42,12 @@ namespace GreenField.Gadgets.Views
                 _isActive = value;
                 if (DataContextViewModelICPresentationNew != null) //DataContext instance
                     DataContextViewModelICPresentationNew.IsActive = _isActive;
+                if (value)
+                {
+                    this.txtbYTDAbsolute.Text = "0.0000";
+                    this.txtbYTDReltoLoc.Text = "0.0000";
+                    this.txtbYTDReltoEM.Text = "0.0000";
+                }
             }
         }
         #endregion        
@@ -70,5 +76,54 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+
+        private Decimal _valueYTDAbs;
+        private Decimal _valueYTDReltoLoc;
+        private Decimal _valueYTDReltoEM;
+
+        private void RaiseICPresentationOverviewInfoChanged()
+        {
+            Decimal valueYTDAbs;
+            if (!Decimal.TryParse(this.txtbYTDAbsolute.Text, out valueYTDAbs))
+            {
+                this.txtbYTDAbsolute.Text = _valueYTDAbs.ToString();
+                return;
+            }
+            _valueYTDAbs = valueYTDAbs;
+
+            Decimal valueYTDReltoLoc;
+            if (!Decimal.TryParse(this.txtbYTDReltoLoc.Text, out valueYTDReltoLoc))
+            {
+                this.txtbYTDReltoLoc.Text = _valueYTDReltoLoc.ToString();
+                return;
+            }
+            _valueYTDReltoLoc = valueYTDReltoLoc;
+
+            Decimal valueYTDReltoEM;
+            if (!Decimal.TryParse(this.txtbYTDReltoEM.Text, out valueYTDReltoEM))
+            {
+                this.txtbYTDReltoEM.Text = _valueYTDReltoEM.ToString();
+                return;
+            }
+            _valueYTDReltoEM = valueYTDReltoEM;
+
+            DataContextViewModelICPresentationNew.RaiseICPresentationOverviewInfoChanged(_valueYTDAbs, _valueYTDReltoLoc, _valueYTDReltoEM);
+        }
+
+        private void txtbYTDAbsolute_LostFocus(object sender, RoutedEventArgs e)
+        {
+            RaiseICPresentationOverviewInfoChanged();
+        }
+
+        private void txtbYTDReltoLoc_LostFocus(object sender, RoutedEventArgs e)
+        {
+            RaiseICPresentationOverviewInfoChanged();
+        }
+
+        private void txtbYTDReltoEM_LostFocus(object sender, RoutedEventArgs e)
+        {
+            RaiseICPresentationOverviewInfoChanged();
+        } 
     }
 }

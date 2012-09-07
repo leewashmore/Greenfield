@@ -490,15 +490,25 @@ namespace GreenField.Web.Services
             try
             {
                 bool addRolesValidation = true;
+                string[] userRoles = Roles.GetRolesForUser(userName);
                 if (addRoleNames.Count() > 0)
                 {
-                    Roles.AddUserToRoles(userName, addRoleNames);
+                    foreach (string addRole in addRoleNames)
+                    {
+                        if(userRoles.Contains(addRole))
+                            continue;
+                        Roles.AddUserToRoles(userName, new string[] { addRole });
+                    }                    
                 }
 
                 bool deleteRolesValidation = true;
                 if (deleteRoleNames.Count() > 0)
                 {
-                    Roles.RemoveUserFromRoles(userName, deleteRoleNames);
+                    foreach (string deleteRole in deleteRoleNames)
+                    {
+                        if(userRoles.Contains(deleteRole))
+                            Roles.RemoveUserFromRoles(userName, new string[] { deleteRole });
+                    }                         
                 }
 
                 return addRolesValidation && deleteRolesValidation;

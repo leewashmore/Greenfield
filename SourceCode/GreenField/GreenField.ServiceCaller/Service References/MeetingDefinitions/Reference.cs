@@ -3546,6 +3546,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         bool EndCreatePresentation(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/SetICPPresentationStatus", ReplyAction="http://tempuri.org/MeetingOperations/SetICPPresentationStatusResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/SetICPPresentationStatusServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginSetICPPresentationStatus(string userName, long presentationId, string status, System.AsyncCallback callback, object asyncState);
+        
+        bool EndSetICPPresentationStatus(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/RetrieveSecurityDetails", ReplyAction="http://tempuri.org/MeetingOperations/RetrieveSecurityDetailsResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/RetrieveSecurityDetailsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveSecurityDetails(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, GreenField.DataContracts.PortfolioSelectionData portfolio, System.AsyncCallback callback, object asyncState);
@@ -3709,6 +3715,25 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         private object[] results;
         
         public CreatePresentationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SetICPPresentationStatusCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SetICPPresentationStatusCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -4098,6 +4123,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private System.Threading.SendOrPostCallback onCreatePresentationCompletedDelegate;
         
+        private BeginOperationDelegate onBeginSetICPPresentationStatusDelegate;
+        
+        private EndOperationDelegate onEndSetICPPresentationStatusDelegate;
+        
+        private System.Threading.SendOrPostCallback onSetICPPresentationStatusCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRetrieveSecurityDetailsDelegate;
         
         private EndOperationDelegate onEndRetrieveSecurityDetailsDelegate;
@@ -4269,6 +4300,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         public event System.EventHandler<CreatePresentationCompletedEventArgs> CreatePresentationCompleted;
         
+        public event System.EventHandler<SetICPPresentationStatusCompletedEventArgs> SetICPPresentationStatusCompleted;
+        
         public event System.EventHandler<RetrieveSecurityDetailsCompletedEventArgs> RetrieveSecurityDetailsCompleted;
         
         public event System.EventHandler<RetrievePresentationAttachedFileDetailsCompletedEventArgs> RetrievePresentationAttachedFileDetailsCompleted;
@@ -4401,6 +4434,56 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             base.InvokeAsync(this.onBeginCreatePresentationDelegate, new object[] {
                         userName,
                         presentationOverviewData}, this.onEndCreatePresentationDelegate, this.onCreatePresentationCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginSetICPPresentationStatus(string userName, long presentationId, string status, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetICPPresentationStatus(userName, presentationId, status, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndSetICPPresentationStatus(System.IAsyncResult result) {
+            return base.Channel.EndSetICPPresentationStatus(result);
+        }
+        
+        private System.IAsyncResult OnBeginSetICPPresentationStatus(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string userName = ((string)(inValues[0]));
+            long presentationId = ((long)(inValues[1]));
+            string status = ((string)(inValues[2]));
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginSetICPPresentationStatus(userName, presentationId, status, callback, asyncState);
+        }
+        
+        private object[] OnEndSetICPPresentationStatus(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndSetICPPresentationStatus(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSetICPPresentationStatusCompleted(object state) {
+            if ((this.SetICPPresentationStatusCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SetICPPresentationStatusCompleted(this, new SetICPPresentationStatusCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SetICPPresentationStatusAsync(string userName, long presentationId, string status) {
+            this.SetICPPresentationStatusAsync(userName, presentationId, status, null);
+        }
+        
+        public void SetICPPresentationStatusAsync(string userName, long presentationId, string status, object userState) {
+            if ((this.onBeginSetICPPresentationStatusDelegate == null)) {
+                this.onBeginSetICPPresentationStatusDelegate = new BeginOperationDelegate(this.OnBeginSetICPPresentationStatus);
+            }
+            if ((this.onEndSetICPPresentationStatusDelegate == null)) {
+                this.onEndSetICPPresentationStatusDelegate = new EndOperationDelegate(this.OnEndSetICPPresentationStatus);
+            }
+            if ((this.onSetICPPresentationStatusCompletedDelegate == null)) {
+                this.onSetICPPresentationStatusCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSetICPPresentationStatusCompleted);
+            }
+            base.InvokeAsync(this.onBeginSetICPPresentationStatusDelegate, new object[] {
+                        userName,
+                        presentationId,
+                        status}, this.onEndSetICPPresentationStatusDelegate, this.onSetICPPresentationStatusCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5412,6 +5495,21 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             public bool EndCreatePresentation(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("CreatePresentation", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSetICPPresentationStatus(string userName, long presentationId, string status, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = userName;
+                _args[1] = presentationId;
+                _args[2] = status;
+                System.IAsyncResult _result = base.BeginInvoke("SetICPPresentationStatus", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndSetICPPresentationStatus(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("SetICPPresentationStatus", _args, result)));
                 return _result;
             }
             

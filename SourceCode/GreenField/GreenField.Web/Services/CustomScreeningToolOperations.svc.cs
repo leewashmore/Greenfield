@@ -19,9 +19,8 @@ namespace GreenField.Web.Services
     [ServiceContract]
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple)]
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-	// NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "CustomScreeningToolOperations" in code, svc and config file together.
-	public class CustomScreeningToolOperations
-	{
+    public class CustomScreeningToolOperations
+    {
         private Entities dimensionEntity;
         public Entities DimensionEntity
         {
@@ -62,20 +61,28 @@ namespace GreenField.Web.Services
                 List<string> result = new List<string>();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-
+              
                 switch (parameter)
                 {
                     case "Region":
-                        result = entity.GF_SECURITY_BASEVIEW.Select(record => record.ASEC_SEC_COUNTRY_ZONE_NAME).Distinct().ToList();
+                        result = (from iry in entity.GF_SECURITY_BASEVIEW
+                                  select new { ASEC_SEC_COUNTRY_ZONE_NAME = iry.ASEC_SEC_COUNTRY_ZONE_NAME }).AsEnumerable().Select(t => t.ASEC_SEC_COUNTRY_ZONE_NAME).Distinct()
+                                  .ToList();
                         break;
                     case "Country":
-                        result = entity.GF_SECURITY_BASEVIEW.Select(record => record.ASEC_SEC_COUNTRY_NAME).Distinct().ToList();
+                        result = (from iry in entity.GF_SECURITY_BASEVIEW
+                                  select new { ASEC_SEC_COUNTRY_ZONE_NAME = iry.ASEC_SEC_COUNTRY_NAME }).AsEnumerable().Select(t => t.ASEC_SEC_COUNTRY_ZONE_NAME).Distinct()
+                                  .ToList();
                         break;
                     case "Sector":
-                        result = entity.GF_SECURITY_BASEVIEW.Select(record => record.GICS_SECTOR_NAME).Distinct().ToList();
+                        result = (from iry in entity.GF_SECURITY_BASEVIEW
+                                  select new { ASEC_SEC_COUNTRY_ZONE_NAME = iry.GICS_SECTOR_NAME }).AsEnumerable().Select(t => t.ASEC_SEC_COUNTRY_ZONE_NAME).Distinct()
+                                  .ToList();
                         break;
                     case "Industry":
-                        result = entity.GF_SECURITY_BASEVIEW.Select(record => record.GICS_INDUSTRY_NAME).Distinct().ToList();
+                        result = (from iry in entity.GF_SECURITY_BASEVIEW
+                                  select new { ASEC_SEC_COUNTRY_ZONE_NAME = iry.GICS_INDUSTRY_NAME }).AsEnumerable().Select(t => t.ASEC_SEC_COUNTRY_ZONE_NAME).Distinct()
+                                  .ToList();
                         break;
                     default:
                         break;

@@ -46,7 +46,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -177,13 +176,17 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateMedian.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimatesValuations.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.CountrySelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.CustomScreeningSecurityData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.COASpecificData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.CustomScreeningSecurityData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.CustomSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.PRevenueData1.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.QuarterlyResultsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.RegionSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.ValuationQualityGrowthData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DCFAnalysisSummaryData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DCFTerminalValueCalculationsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCatalogData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCategoricalData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.EntitySelectionData.datasource" />
@@ -260,8 +263,11 @@
     <None Include="Service References\CustomScreeningDefinitions\CustomScreeningToolOperations3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\CustomScreeningDefinitions\GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
+    <None Include="Service References\CustomScreeningDefinitions\CustomScreeningToolOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomScreeningDefinitions\CustomScreeningToolOperations41.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Service References\DashboardDefinitions\DashboardOperations.disco" />
     <None Include="Service References\DashboardDefinitions\configuration91.svcinfo" />
@@ -310,6 +316,15 @@
     </None>
     <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations4.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ModelConsensusEstimatesData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.wsdl" />
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.xsd">

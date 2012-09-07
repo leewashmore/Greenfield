@@ -14,7 +14,7 @@ namespace GreenField.Gadgets.Models
     /// <summary>
     /// Class to Show DCF Analysis Summary Data
     /// </summary>
-    public class DCFAnalysisSummaryDisplayData
+    public class DCFDisplayData
     {
         public string PropertyName { get; set; }
 

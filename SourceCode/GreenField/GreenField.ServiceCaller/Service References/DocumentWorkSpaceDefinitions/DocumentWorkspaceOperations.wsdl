@@ -7,6 +7,8 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
       <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="DocumentWorkspaceOperations_UploadDocument_InputMessage">
@@ -81,6 +83,24 @@
   <wsdl:message name="DocumentWorkspaceOperations_SetDocumentComment_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveStatementData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveStatementData" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveStatementData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveStatementDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveStatementData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveCEData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCEData" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveCEData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCEDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_RetrieveCEData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="DocumentWorkspaceOperations">
     <wsdl:operation name="UploadDocument">
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UploadDocument" message="tns:DocumentWorkspaceOperations_UploadDocument_InputMessage" />
@@ -121,6 +141,16 @@
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentComment" message="tns:DocumentWorkspaceOperations_SetDocumentComment_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentCommentResponse" message="tns:DocumentWorkspaceOperations_SetDocumentComment_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentCommentServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_SetDocumentComment_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveStatementData">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveStatementData" message="tns:DocumentWorkspaceOperations_RetrieveStatementData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveStatementDataResponse" message="tns:DocumentWorkspaceOperations_RetrieveStatementData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveStatementDataServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_RetrieveStatementData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCEData">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEData" message="tns:DocumentWorkspaceOperations_RetrieveCEData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEDataResponse" message="tns:DocumentWorkspaceOperations_RetrieveCEData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEDataServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_RetrieveCEData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="DocumentWorkspaceOperations" type="tns:DocumentWorkspaceOperations">
@@ -211,6 +241,30 @@
     </wsdl:operation>
     <wsdl:operation name="SetDocumentComment">
       <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentComment" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveStatementData">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveStatementData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCEData">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

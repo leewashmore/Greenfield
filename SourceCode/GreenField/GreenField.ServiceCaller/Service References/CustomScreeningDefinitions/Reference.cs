@@ -17,81 +17,6 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CustomSelectionData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts")]
-    public partial class CustomSelectionData : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string CountryField;
-        
-        private string IndustryField;
-        
-        private string RegionField;
-        
-        private string SectorField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Country {
-            get {
-                return this.CountryField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CountryField, value) != true)) {
-                    this.CountryField = value;
-                    this.RaisePropertyChanged("Country");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Industry {
-            get {
-                return this.IndustryField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IndustryField, value) != true)) {
-                    this.IndustryField = value;
-                    this.RaisePropertyChanged("Industry");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Region {
-            get {
-                return this.RegionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RegionField, value) != true)) {
-                    this.RegionField = value;
-                    this.RaisePropertyChanged("Region");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Sector {
-            get {
-                return this.SectorField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SectorField, value) != true)) {
-                    this.SectorField = value;
-                    this.RaisePropertyChanged("Sector");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
     public partial class ServiceFault : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -124,13 +49,55 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="CustomScreeningDefinitions.CustomScreeningToolOperations")]
     public interface CustomScreeningToolOperations {
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomSelectionData", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomSelectionDataRespo" +
-            "nse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomSelectionDataServi" +
-            "ceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveCustomSelectionData(System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomControlsList", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomControlsListRespon" +
+            "se")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomControlsListServic" +
+            "eFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveCustomControlsList(string parameter, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> EndRetrieveCustomSelectionData(System.IAsyncResult result);
+        System.Collections.Generic.List<string> EndRetrieveCustomControlsList(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityReferenceTabData" +
+            "Points", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityReferenceTabData" +
+            "PointsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityReferenceTabData" +
+            "PointsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveSecurityReferenceTabDataPoints(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrievePeriodFinancialsTabDataP" +
+            "oints", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrievePeriodFinancialsTabDataP" +
+            "ointsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrievePeriodFinancialsTabDataP" +
+            "ointsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrievePeriodFinancialsTabDataPoints(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCurrentFinancialsTabData" +
+            "Points", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveCurrentFinancialsTabData" +
+            "PointsResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCurrentFinancialsTabData" +
+            "PointsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveCurrentFinancialsTabDataPoints(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabDataPoints", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabDataPointsRe" +
+            "sponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabDataPointsSe" +
+            "rviceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveFairValueTabDataPoints(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveFairValueTabDataPoints(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityData", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataServiceFault" +
+            "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> EndRetrieveSecurityData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -139,19 +106,114 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class RetrieveCustomSelectionDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+    public partial class RetrieveCustomControlsListCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
         
-        public RetrieveCustomSelectionDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+        public RetrieveCustomControlsListCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> Result {
+        public System.Collections.Generic.List<string> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData>)(this.results[0]));
+                return ((System.Collections.Generic.List<string>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveSecurityReferenceTabDataPointsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveSecurityReferenceTabDataPointsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrievePeriodFinancialsTabDataPointsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrievePeriodFinancialsTabDataPointsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveCurrentFinancialsTabDataPointsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveCurrentFinancialsTabDataPointsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveFairValueTabDataPointsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveFairValueTabDataPointsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveSecurityDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveSecurityDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData>)(this.results[0]));
             }
         }
     }
@@ -160,11 +222,41 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class CustomScreeningToolOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations>, GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations {
         
-        private BeginOperationDelegate onBeginRetrieveCustomSelectionDataDelegate;
+        private BeginOperationDelegate onBeginRetrieveCustomControlsListDelegate;
         
-        private EndOperationDelegate onEndRetrieveCustomSelectionDataDelegate;
+        private EndOperationDelegate onEndRetrieveCustomControlsListDelegate;
         
-        private System.Threading.SendOrPostCallback onRetrieveCustomSelectionDataCompletedDelegate;
+        private System.Threading.SendOrPostCallback onRetrieveCustomControlsListCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveSecurityReferenceTabDataPointsDelegate;
+        
+        private EndOperationDelegate onEndRetrieveSecurityReferenceTabDataPointsDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveSecurityReferenceTabDataPointsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrievePeriodFinancialsTabDataPointsDelegate;
+        
+        private EndOperationDelegate onEndRetrievePeriodFinancialsTabDataPointsDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrievePeriodFinancialsTabDataPointsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveCurrentFinancialsTabDataPointsDelegate;
+        
+        private EndOperationDelegate onEndRetrieveCurrentFinancialsTabDataPointsDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveCurrentFinancialsTabDataPointsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveFairValueTabDataPointsDelegate;
+        
+        private EndOperationDelegate onEndRetrieveFairValueTabDataPointsDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveFairValueTabDataPointsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveSecurityDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveSecurityDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveSecurityDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -219,54 +311,298 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             }
         }
         
-        public event System.EventHandler<RetrieveCustomSelectionDataCompletedEventArgs> RetrieveCustomSelectionDataCompleted;
+        public event System.EventHandler<RetrieveCustomControlsListCompletedEventArgs> RetrieveCustomControlsListCompleted;
+        
+        public event System.EventHandler<RetrieveSecurityReferenceTabDataPointsCompletedEventArgs> RetrieveSecurityReferenceTabDataPointsCompleted;
+        
+        public event System.EventHandler<RetrievePeriodFinancialsTabDataPointsCompletedEventArgs> RetrievePeriodFinancialsTabDataPointsCompleted;
+        
+        public event System.EventHandler<RetrieveCurrentFinancialsTabDataPointsCompletedEventArgs> RetrieveCurrentFinancialsTabDataPointsCompleted;
+        
+        public event System.EventHandler<RetrieveFairValueTabDataPointsCompletedEventArgs> RetrieveFairValueTabDataPointsCompleted;
+        
+        public event System.EventHandler<RetrieveSecurityDataCompletedEventArgs> RetrieveSecurityDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveCustomSelectionData(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveCustomSelectionData(callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveCustomControlsList(string parameter, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveCustomControlsList(parameter, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveCustomSelectionData(System.IAsyncResult result) {
-            return base.Channel.EndRetrieveCustomSelectionData(result);
+        System.Collections.Generic.List<string> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveCustomControlsList(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveCustomControlsList(result);
         }
         
-        private System.IAsyncResult OnBeginRetrieveCustomSelectionData(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrieveCustomSelectionData(callback, asyncState);
+        private System.IAsyncResult OnBeginRetrieveCustomControlsList(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string parameter = ((string)(inValues[0]));
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrieveCustomControlsList(parameter, callback, asyncState);
         }
         
-        private object[] OnEndRetrieveCustomSelectionData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveCustomSelectionData(result);
+        private object[] OnEndRetrieveCustomControlsList(System.IAsyncResult result) {
+            System.Collections.Generic.List<string> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveCustomControlsList(result);
             return new object[] {
                     retVal};
         }
         
-        private void OnRetrieveCustomSelectionDataCompleted(object state) {
-            if ((this.RetrieveCustomSelectionDataCompleted != null)) {
+        private void OnRetrieveCustomControlsListCompleted(object state) {
+            if ((this.RetrieveCustomControlsListCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RetrieveCustomSelectionDataCompleted(this, new RetrieveCustomSelectionDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+                this.RetrieveCustomControlsListCompleted(this, new RetrieveCustomControlsListCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RetrieveCustomSelectionDataAsync() {
-            this.RetrieveCustomSelectionDataAsync(null);
+        public void RetrieveCustomControlsListAsync(string parameter) {
+            this.RetrieveCustomControlsListAsync(parameter, null);
         }
         
-        public void RetrieveCustomSelectionDataAsync(object userState) {
-            if ((this.onBeginRetrieveCustomSelectionDataDelegate == null)) {
-                this.onBeginRetrieveCustomSelectionDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveCustomSelectionData);
+        public void RetrieveCustomControlsListAsync(string parameter, object userState) {
+            if ((this.onBeginRetrieveCustomControlsListDelegate == null)) {
+                this.onBeginRetrieveCustomControlsListDelegate = new BeginOperationDelegate(this.OnBeginRetrieveCustomControlsList);
             }
-            if ((this.onEndRetrieveCustomSelectionDataDelegate == null)) {
-                this.onEndRetrieveCustomSelectionDataDelegate = new EndOperationDelegate(this.OnEndRetrieveCustomSelectionData);
+            if ((this.onEndRetrieveCustomControlsListDelegate == null)) {
+                this.onEndRetrieveCustomControlsListDelegate = new EndOperationDelegate(this.OnEndRetrieveCustomControlsList);
             }
-            if ((this.onRetrieveCustomSelectionDataCompletedDelegate == null)) {
-                this.onRetrieveCustomSelectionDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveCustomSelectionDataCompleted);
+            if ((this.onRetrieveCustomControlsListCompletedDelegate == null)) {
+                this.onRetrieveCustomControlsListCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveCustomControlsListCompleted);
             }
-            base.InvokeAsync(this.onBeginRetrieveCustomSelectionDataDelegate, null, this.onEndRetrieveCustomSelectionDataDelegate, this.onRetrieveCustomSelectionDataCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginRetrieveCustomControlsListDelegate, new object[] {
+                        parameter}, this.onEndRetrieveCustomControlsListDelegate, this.onRetrieveCustomControlsListCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveSecurityReferenceTabDataPoints(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveSecurityReferenceTabDataPoints(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveSecurityReferenceTabDataPoints(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveSecurityReferenceTabDataPoints(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrieveSecurityReferenceTabDataPoints(callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveSecurityReferenceTabDataPoints(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveSecurityReferenceTabDataPointsCompleted(object state) {
+            if ((this.RetrieveSecurityReferenceTabDataPointsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveSecurityReferenceTabDataPointsCompleted(this, new RetrieveSecurityReferenceTabDataPointsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveSecurityReferenceTabDataPointsAsync() {
+            this.RetrieveSecurityReferenceTabDataPointsAsync(null);
+        }
+        
+        public void RetrieveSecurityReferenceTabDataPointsAsync(object userState) {
+            if ((this.onBeginRetrieveSecurityReferenceTabDataPointsDelegate == null)) {
+                this.onBeginRetrieveSecurityReferenceTabDataPointsDelegate = new BeginOperationDelegate(this.OnBeginRetrieveSecurityReferenceTabDataPoints);
+            }
+            if ((this.onEndRetrieveSecurityReferenceTabDataPointsDelegate == null)) {
+                this.onEndRetrieveSecurityReferenceTabDataPointsDelegate = new EndOperationDelegate(this.OnEndRetrieveSecurityReferenceTabDataPoints);
+            }
+            if ((this.onRetrieveSecurityReferenceTabDataPointsCompletedDelegate == null)) {
+                this.onRetrieveSecurityReferenceTabDataPointsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveSecurityReferenceTabDataPointsCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveSecurityReferenceTabDataPointsDelegate, null, this.onEndRetrieveSecurityReferenceTabDataPointsDelegate, this.onRetrieveSecurityReferenceTabDataPointsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrievePeriodFinancialsTabDataPoints(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrievePeriodFinancialsTabDataPoints(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
+            return base.Channel.EndRetrievePeriodFinancialsTabDataPoints(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrievePeriodFinancialsTabDataPoints(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrievePeriodFinancialsTabDataPoints(callback, asyncState);
+        }
+        
+        private object[] OnEndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrievePeriodFinancialsTabDataPoints(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrievePeriodFinancialsTabDataPointsCompleted(object state) {
+            if ((this.RetrievePeriodFinancialsTabDataPointsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrievePeriodFinancialsTabDataPointsCompleted(this, new RetrievePeriodFinancialsTabDataPointsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrievePeriodFinancialsTabDataPointsAsync() {
+            this.RetrievePeriodFinancialsTabDataPointsAsync(null);
+        }
+        
+        public void RetrievePeriodFinancialsTabDataPointsAsync(object userState) {
+            if ((this.onBeginRetrievePeriodFinancialsTabDataPointsDelegate == null)) {
+                this.onBeginRetrievePeriodFinancialsTabDataPointsDelegate = new BeginOperationDelegate(this.OnBeginRetrievePeriodFinancialsTabDataPoints);
+            }
+            if ((this.onEndRetrievePeriodFinancialsTabDataPointsDelegate == null)) {
+                this.onEndRetrievePeriodFinancialsTabDataPointsDelegate = new EndOperationDelegate(this.OnEndRetrievePeriodFinancialsTabDataPoints);
+            }
+            if ((this.onRetrievePeriodFinancialsTabDataPointsCompletedDelegate == null)) {
+                this.onRetrievePeriodFinancialsTabDataPointsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrievePeriodFinancialsTabDataPointsCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrievePeriodFinancialsTabDataPointsDelegate, null, this.onEndRetrievePeriodFinancialsTabDataPointsDelegate, this.onRetrievePeriodFinancialsTabDataPointsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveCurrentFinancialsTabDataPoints(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveCurrentFinancialsTabDataPoints(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveCurrentFinancialsTabDataPoints(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveCurrentFinancialsTabDataPoints(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrieveCurrentFinancialsTabDataPoints(callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveCurrentFinancialsTabDataPoints(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveCurrentFinancialsTabDataPointsCompleted(object state) {
+            if ((this.RetrieveCurrentFinancialsTabDataPointsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveCurrentFinancialsTabDataPointsCompleted(this, new RetrieveCurrentFinancialsTabDataPointsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveCurrentFinancialsTabDataPointsAsync() {
+            this.RetrieveCurrentFinancialsTabDataPointsAsync(null);
+        }
+        
+        public void RetrieveCurrentFinancialsTabDataPointsAsync(object userState) {
+            if ((this.onBeginRetrieveCurrentFinancialsTabDataPointsDelegate == null)) {
+                this.onBeginRetrieveCurrentFinancialsTabDataPointsDelegate = new BeginOperationDelegate(this.OnBeginRetrieveCurrentFinancialsTabDataPoints);
+            }
+            if ((this.onEndRetrieveCurrentFinancialsTabDataPointsDelegate == null)) {
+                this.onEndRetrieveCurrentFinancialsTabDataPointsDelegate = new EndOperationDelegate(this.OnEndRetrieveCurrentFinancialsTabDataPoints);
+            }
+            if ((this.onRetrieveCurrentFinancialsTabDataPointsCompletedDelegate == null)) {
+                this.onRetrieveCurrentFinancialsTabDataPointsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveCurrentFinancialsTabDataPointsCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveCurrentFinancialsTabDataPointsDelegate, null, this.onEndRetrieveCurrentFinancialsTabDataPointsDelegate, this.onRetrieveCurrentFinancialsTabDataPointsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveFairValueTabDataPoints(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveFairValueTabDataPoints(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveFairValueTabDataPoints(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveFairValueTabDataPoints(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrieveFairValueTabDataPoints(callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveFairValueTabDataPoints(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveFairValueTabDataPointsCompleted(object state) {
+            if ((this.RetrieveFairValueTabDataPointsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveFairValueTabDataPointsCompleted(this, new RetrieveFairValueTabDataPointsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveFairValueTabDataPointsAsync() {
+            this.RetrieveFairValueTabDataPointsAsync(null);
+        }
+        
+        public void RetrieveFairValueTabDataPointsAsync(object userState) {
+            if ((this.onBeginRetrieveFairValueTabDataPointsDelegate == null)) {
+                this.onBeginRetrieveFairValueTabDataPointsDelegate = new BeginOperationDelegate(this.OnBeginRetrieveFairValueTabDataPoints);
+            }
+            if ((this.onEndRetrieveFairValueTabDataPointsDelegate == null)) {
+                this.onEndRetrieveFairValueTabDataPointsDelegate = new EndOperationDelegate(this.OnEndRetrieveFairValueTabDataPoints);
+            }
+            if ((this.onRetrieveFairValueTabDataPointsCompletedDelegate == null)) {
+                this.onRetrieveFairValueTabDataPointsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveFairValueTabDataPointsCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveFairValueTabDataPointsDelegate, null, this.onEndRetrieveFairValueTabDataPointsDelegate, this.onRetrieveFairValueTabDataPointsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveSecurityData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveSecurityData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveSecurityData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.PortfolioSelectionData portfolio = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
+            GreenField.DataContracts.BenchmarkSelectionData benchmark = ((GreenField.DataContracts.BenchmarkSelectionData)(inValues[1]));
+            string region = ((string)(inValues[2]));
+            string country = ((string)(inValues[3]));
+            string sector = ((string)(inValues[4]));
+            string industry = ((string)(inValues[5]));
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveSecurityData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveSecurityData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveSecurityDataCompleted(object state) {
+            if ((this.RetrieveSecurityDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveSecurityDataCompleted(this, new RetrieveSecurityDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry) {
+            this.RetrieveSecurityDataAsync(portfolio, benchmark, region, country, sector, industry, null);
+        }
+        
+        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, object userState) {
+            if ((this.onBeginRetrieveSecurityDataDelegate == null)) {
+                this.onBeginRetrieveSecurityDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveSecurityData);
+            }
+            if ((this.onEndRetrieveSecurityDataDelegate == null)) {
+                this.onEndRetrieveSecurityDataDelegate = new EndOperationDelegate(this.OnEndRetrieveSecurityData);
+            }
+            if ((this.onRetrieveSecurityDataCompletedDelegate == null)) {
+                this.onRetrieveSecurityDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveSecurityDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveSecurityDataDelegate, new object[] {
+                        portfolio,
+                        benchmark,
+                        region,
+                        country,
+                        sector,
+                        industry}, this.onEndRetrieveSecurityDataDelegate, this.onRetrieveSecurityDataCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -345,15 +681,82 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginRetrieveCustomSelectionData(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
-                System.IAsyncResult _result = base.BeginInvoke("RetrieveCustomSelectionData", _args, callback, asyncState);
+            public System.IAsyncResult BeginRetrieveCustomControlsList(string parameter, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = parameter;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveCustomControlsList", _args, callback, asyncState);
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> EndRetrieveCustomSelectionData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<string> EndRetrieveCustomControlsList(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData>)(base.EndInvoke("RetrieveCustomSelectionData", _args, result)));
+                System.Collections.Generic.List<string> _result = ((System.Collections.Generic.List<string>)(base.EndInvoke("RetrieveCustomControlsList", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveSecurityReferenceTabDataPoints(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveSecurityReferenceTabDataPoints", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveSecurityReferenceTabDataPoints", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrievePeriodFinancialsTabDataPoints(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("RetrievePeriodFinancialsTabDataPoints", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrievePeriodFinancialsTabDataPoints", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveCurrentFinancialsTabDataPoints(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveCurrentFinancialsTabDataPoints", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveCurrentFinancialsTabDataPoints", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveFairValueTabDataPoints(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveFairValueTabDataPoints", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveFairValueTabDataPoints", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[6];
+                _args[0] = portfolio;
+                _args[1] = benchmark;
+                _args[2] = region;
+                _args[3] = country;
+                _args[4] = sector;
+                _args[5] = industry;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveSecurityData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> EndRetrieveSecurityData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData>)(base.EndInvoke("RetrieveSecurityData", _args, result)));
                 return _result;
             }
         }

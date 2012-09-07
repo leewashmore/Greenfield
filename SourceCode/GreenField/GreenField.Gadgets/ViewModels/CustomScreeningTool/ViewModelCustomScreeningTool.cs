@@ -37,6 +37,7 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
+        private PortfolioSelectionData _portfolioSelectionData;
        
         #endregion
 
@@ -44,41 +45,143 @@ namespace GreenField.Gadgets.ViewModels
         public ViewModelCustomScreeningTool(DashboardGadgetParam param)
         {
             _logger = param.LoggerFacade;
+            //param.DashboardGadgetPayload.EntitySelectionData
             _dbInteractivity = param.DBInteractivity;
-            _eventAggregator = param.EventAggregator;          
+            _eventAggregator = param.EventAggregator;
+           
+            //fetch PortfolioId list 
+            _dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
+
+            //fetch Benchmark list
+            _dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
+
+            //retrieve custom selection data
+            RetrieveCustomSelectionData();
         }
         #endregion
 
         #region Properties
-        public List<String> SecuritySelectionInfo
+
+        public List<String> _securitySelectionCriteria;
+        public List<String> SecuritySelectionCriteria
         {
             get
             {
-                { return new List<String> { "Portfolio", "Benchmark", "Custom"}; }
+                { return _securitySelectionCriteria = new List<String> { "Portfolio", "Benchmark", "Custom"}; }
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _securitySelectionCriteria = value;
+                    RaisePropertyChanged(() => this.SecuritySelectionCriteria);
+                }
             }
         }
 
+
+        public List<String> _portfolioSelectionInfo;
         public List<String> PortfolioSelectionInfo
         {
             get
             {
-                { return new List<String> { "Portfolio1", "Portfolio2", "Portfolio3" }; }
+                return _portfolioSelectionInfo;
+               // { return new List<String> { "Portfolio1", "Portfolio2", "Portfolio3" }; }
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _portfolioSelectionInfo = value;
+                    RaisePropertyChanged(() => this.PortfolioSelectionInfo);
+                }
             }
         }
 
+        public List<String> _benchmarkSelectionInfo;
         public List<String> BenchmarkSelectionInfo
         {
             get
             {
-                { return new List<String> { "Benchmark1", "Benchmark2", "Benchmark3" }; }
+                return _benchmarkSelectionInfo;
+                 //return new List<String> { "Benchmark1", "Benchmark2", "Benchmark3" }; 
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _benchmarkSelectionInfo = value;
+                    RaisePropertyChanged(() => this.BenchmarkSelectionInfo);
+                }
             }
         }
 
-        public List<String> CustomSelectionInfo // to be changed to a complex type with all regions,sectors,industry, country
+        public List<String> _customSelectionRegionInfo;
+        public List<String> CustomSelectionRegionInfo
         {
             get
             {
-                { return new List<String> { "Region1", "Region2", "Region3" }; }
+                return _customSelectionRegionInfo;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _customSelectionRegionInfo = value;
+                    RaisePropertyChanged(() => this.CustomSelectionRegionInfo);
+                }
+            }
+        }
+
+
+        public List<String> _customSelectionSectorInfo;
+        public List<String> CustomSelectionSectorInfo
+        {
+            get
+            {
+                return _customSelectionSectorInfo;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _customSelectionSectorInfo = value;
+                    RaisePropertyChanged(() => this.CustomSelectionSectorInfo);
+                }
+            }
+        }
+
+        public List<String> _customSelectionCountryInfo;
+        public List<String> CustomSelectionCountryInfo
+        {
+            get
+            {
+                return _customSelectionCountryInfo;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _customSelectionCountryInfo = value;
+                    RaisePropertyChanged(() => this.CustomSelectionCountryInfo);
+                }
+            }
+        }
+
+        public List<String> _customSelectionIndustryInfo;
+        public List<String> CustomSelectionIndustryInfo
+        {
+            get
+            {
+                return _customSelectionIndustryInfo;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _customSelectionIndustryInfo = value;
+                    RaisePropertyChanged(() => this.CustomSelectionIndustryInfo);
+                }
             }
         }
 
@@ -96,17 +199,29 @@ namespace GreenField.Gadgets.ViewModels
                     if (SelectedCriteria == SecuritySelectionType.PORTFOLIO)
                     {
                         PortfolioSelectionVisibility = Visibility.Visible;
+                        BenchmarkSelectionVisibility = Visibility.Collapsed;
+                        CustomSelectionVisibility = Visibility.Collapsed;
                         RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
+                        RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
+                        RaisePropertyChanged(() => this.CustomSelectionVisibility);
                     }
                     else if (SelectedCriteria == SecuritySelectionType.BENCHMARK)
                     {
                         BenchmarkSelectionVisibility = Visibility.Visible;
+                        PortfolioSelectionVisibility = Visibility.Collapsed;
+                        CustomSelectionVisibility = Visibility.Collapsed;
                         RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
+                        RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
+                        RaisePropertyChanged(() => this.CustomSelectionVisibility);
                     }
                     else if (SelectedCriteria == SecuritySelectionType.CUSTOM)
                     {
                         CustomSelectionVisibility = Visibility.Visible;
+                        PortfolioSelectionVisibility = Visibility.Collapsed;
+                        BenchmarkSelectionVisibility = Visibility.Collapsed;
                         RaisePropertyChanged(() => this.CustomSelectionVisibility);
+                        RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
+                        RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
                     }                    
                 }
             }
@@ -122,6 +237,20 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _selectedPortfolio = value;
                     RaisePropertyChanged(() =>this.SelectedPortfolio);
+                }
+            }
+        }
+
+        public String _selectedBenchmark;
+        public String SelectedBenchmark
+        {
+            get { return _selectedBenchmark; }
+            set
+            {
+                if (value != null)
+                {
+                    _selectedBenchmark = value;
+                    RaisePropertyChanged(() => this.SelectedBenchmark);
                 }
             }
         }
@@ -194,7 +323,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             set
             {
-                _portfolioSelectionVisibility = Visibility.Visible;
+                _portfolioSelectionVisibility = value;
             }
         }
 
@@ -208,7 +337,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             set
             {
-                _benchmarkSelectionVisibility = Visibility.Visible;
+                _benchmarkSelectionVisibility = value;
             }
         }
 
@@ -222,7 +351,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             set
             {
-                _customSelectionVisibility = Visibility.Visible;
+                _customSelectionVisibility = value;
             }
         }
 
@@ -375,6 +504,198 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+        #region Callback Methods
+        private void PortfolioSelectionDataCallbackMethod(List<PortfolioSelectionData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
 
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+
+                    PortfolioSelectionInfo = result.Select(o => o.PortfolioId).ToList();
+
+                }
+                else
+                {
+                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+              
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+
+        private void EntitySelectionDataCallbackMethod(List<EntitySelectionData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+
+                    List<string> res = new List<string>();
+                    BenchmarkSelectionInfo = result.Where(a => a.Type.Equals("BENCHMARK")).Select(a => a.LongName).ToList();
+                    //res = result.Where(a => a.Type.Equals("BENCHMARK")).Select(a => a.LongName).ToList();
+
+                }
+                else
+                {
+                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+              
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void CustomControlsListRegionCallbackMethod(List<string> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    CustomSelectionRegionInfo = result;
+                    
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                //BusyIndicatorNotification();
+            }      
+        }
+
+        private void CustomControlsListCountryCallbackMethod(List<string> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    CustomSelectionCountryInfo = result;
+
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                //BusyIndicatorNotification();
+            }
+        }
+
+        private void CustomControlsListSectorCallbackMethod(List<string> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    CustomSelectionSectorInfo = result;
+
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                //BusyIndicatorNotification();
+            }
+        }
+
+        private void CustomControlsListIndustryCallbackMethod(List<string> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    CustomSelectionIndustryInfo = result;
+
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                //BusyIndicatorNotification();
+            }
+        }
+
+        #endregion
+
+        #region Helpers
+
+        public void RetrieveCustomSelectionData()
+        {
+            if (_dbInteractivity != null)
+            {
+                _dbInteractivity.RetrieveCustomControlsList("Region", CustomControlsListRegionCallbackMethod);
+                _dbInteractivity.RetrieveCustomControlsList("Country", CustomControlsListCountryCallbackMethod);
+                _dbInteractivity.RetrieveCustomControlsList("Sector", CustomControlsListSectorCallbackMethod);
+                _dbInteractivity.RetrieveCustomControlsList("Industry", CustomControlsListIndustryCallbackMethod);
+            }
+        }
+        #endregion
     }
 }

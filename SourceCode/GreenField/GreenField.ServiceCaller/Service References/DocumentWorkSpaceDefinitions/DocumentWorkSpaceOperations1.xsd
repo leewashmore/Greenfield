@@ -103,4 +103,15 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="DocumentCategoryType" nillable="true" type="tns:DocumentCategoryType" />
+  <xs:complexType name="EntitySelectionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LongName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
+      <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
 </xs:schema>

@@ -2,11 +2,13 @@
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
   <xs:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd4" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
   <xs:element name="UploadDocument">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="fileName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="fileByteStream" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="deleteFileUrl" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -119,6 +121,35 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="SetDocumentCommentResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveStatementData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="selectedSecurity" nillable="true" type="q4:EntitySelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveStatementDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="RetrieveStatementDataResult" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveCEData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="issuerID" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="currency" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveCEDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveCEDataResult" nillable="true" type="q5:ArrayOfModelConsensusEstimatesData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

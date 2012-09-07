@@ -77,14 +77,13 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>                        
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Analyst :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
@@ -93,14 +92,14 @@
                     <TextBlock Grid.Row="1" Grid.Column="1" x:Name="txtCountry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityCountry}" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Industry :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtIndustry" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityIndustry}" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Mkt Cap :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtMktCap" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityMarketCapitalization}" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Mkt Cap :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold" Style="{StaticResource TextBlockStyle}" Margin="59,0,0,0" />
+                    <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtMktCap" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityMarketCapitalization, StringFormat=c}" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Price :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtPrice" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.Price}" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="FV Calc :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtFVCalc" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.FVCalc}" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Buy/Sell vs Crnt :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="6" Grid.Column="1" x:Name="txtBuySell" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityBuySellvsCrnt}" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Recommendation :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Grid.Row="6" Grid.Column="1" x:Name="txtRecommendation" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityRecommendation}" Style="{StaticResource TextBlockStyle}"/>
                 </Grid>
                 <Grid Grid.Column="1">
                     <Grid.ColumnDefinitions>
@@ -108,10 +107,10 @@
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                        <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -125,12 +124,27 @@
                     <TextBlock Grid.Row="2" Grid.Column="1" x:Name="txtBMWeight" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityBMWeight}" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Active Weight :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
                     <TextBlock Grid.Row="3" Grid.Column="1" x:Name="txtActiveWeight" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.SecurityActiveWeight}" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="0" Text="YTD Ret - Absolute :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="1" x:Name="txtYTDAbsulute" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.YTDRet_Absolute}" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="0" Text="YTD Ret - Rel to Loc :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="1" x:Name="txtYTDReltoLoc" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.YTDRet_RELtoLOC}" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="YTD Ret - Rel to EM :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Row="6" Grid.Column="1" x:Name="txtYTDReltoEM" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0" Text="{Binding ICPresentationOverviewInfo.YTDRet_RELtoEM}" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Margin="0,2,0,0" Grid.Row="4" Grid.Column="0" Text="YTD Ret - Absolute :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" Margin="5,2,0,0">
+                        <TextBox Width="50" HorizontalAlignment="Left" x:Name="txtbYTDAbsolute" TextWrapping="Wrap" VerticalAlignment="Center" 
+                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtbYTDAbsolute_LostFocus" Text="0.0000"/>
+                        <TextBlock Text="%" Margin="2,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"
+                                   FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    </StackPanel>
+                    <TextBlock Margin="0,2,0,0" Grid.Row="5" Grid.Column="0" Text="YTD Ret - Rel to Loc :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" Margin="5,2,0,0">
+                        <TextBox Width="50" HorizontalAlignment="Left" x:Name="txtbYTDReltoLoc" TextWrapping="Wrap" VerticalAlignment="Center" 
+                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtbYTDReltoLoc_LostFocus" Text="0.0000"/>
+                        <TextBlock Text="%" Margin="2,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"
+                                   FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    </StackPanel>                    
+                    <TextBlock Margin="0,2,0,0" Grid.Row="6" Grid.Column="0" Text="YTD Ret - Rel to EM :" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Right" FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal" Margin="5,2,0,0">
+                        <TextBox Width="50" HorizontalAlignment="Left" x:Name="txtbYTDReltoEM" TextWrapping="Wrap" VerticalAlignment="Center" 
+                                 Style="{StaticResource TextBoxStyle}" LostFocus="txtbYTDReltoEM_LostFocus" Text="0.0000"/>
+                        <TextBlock Text="%" Margin="2,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Left"
+                                   FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
+                    </StackPanel>                    
                 </Grid>
             </Grid>
             <Grid Grid.Row="4" Margin="0,2,0,2">

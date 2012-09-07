@@ -83,6 +83,14 @@ namespace GreenField.Gadgets.Views
             {
                 filter = "PowerPoint Presentation (*.pptx)|*.pptx|PowerPoint 97-2003 Presentation (*.ppt)|*.ppt";
             }
+            else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
+            {
+                filter = "PDF (*.pdf)|*.pdf|JPEG Picture (*.jpeg)|*.ppt";
+            }
+            else
+            {
+                filter = "PDF (*.pdf)|*.pdf";
+            }
 
             
             OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false, Filter = filter };            

@@ -52,11 +52,10 @@ namespace GreenField.Gadgets.Views
             {
                 _isActive = value;
                 if (DataContextSource != null)
-                    DataContextSource.IsActive = _isActive;
+                    DataContextSource.IsActive = value;
             }
         }
-
-
+        
         #endregion
 
         #region Constructor
@@ -194,6 +193,7 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region GridEditingMethods
 
         /// <summary>
         /// Validating the Contents of the Edited Cell.
@@ -218,5 +218,8 @@ namespace GreenField.Gadgets.Views
                 }
             }
         }
+        
+        #endregion
+
     }
 }

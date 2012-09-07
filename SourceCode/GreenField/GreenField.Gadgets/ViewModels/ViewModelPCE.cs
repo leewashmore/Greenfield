@@ -336,11 +336,11 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
+
+                _securitySelectionData = entitySelectionData; 
                 if (entitySelectionData != null && IsActive)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    _securitySelectionData = entitySelectionData;
-
                     CallingWebMethod();
                 }
                 else

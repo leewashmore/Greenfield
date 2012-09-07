@@ -229,7 +229,7 @@ namespace GreenField.ServiceCaller
         #region PortalEnhancements
         void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback);
 
-        void UploadDocument(String fileName, Byte[] fileByteStream, Action<String> callback);
+        void UploadDocument(String fileName, Byte[] fileByteStream, String deleteFileUrl, Action<String> callback);
 
         void DeleteDocument(String fileName, Action<bool?> callback);
 
@@ -287,18 +287,35 @@ namespace GreenField.ServiceCaller
 
         void RetrievePresentationAttachedFileDetails(Int64? presentationID, Action<List<FileMaster>> callback);
 
-      //  void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, string url, FileMaster presentationAttachedFileData, Action<Boolean?> callback);
+        //  void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, string url, FileMaster presentationAttachedFileData, Action<Boolean?> callback);
 
         void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, FileMaster fileMasterInfo, Boolean deletionFlag, Action<Boolean?> callback);
+
+        void SetICPPresentationStatus(String userName, Int64 presentationId, String status, Action<Boolean?> callback);
         #endregion
 
         #region DCF
 
         void RetrieveDCFAnalysisData(EntitySelectionData entitySelectionData, Action<List<DCFAnalysisSummaryData>> callback);
-        
+
+        void RetrieveDCFTerminalValueCalculationsData(EntitySelectionData entitySelectionData, Action<List<DCFTerminalValueCalculationsData>> callback);
 
         #endregion
 
         void RetrieveCompanyData(Action<List<tblCompanyInfo>> callback);
+
+        #region Custom Screening Tool
+        
+        void RetrieveCustomControlsList(string parameter, Action<List<string>> callback);
+
+        #endregion
+
+        #region Documents
+
+        void RetrieveDocumentsData(EntitySelectionData selectedSecurity, Action<byte[]> callback);
+
+        #endregion
+
+
     }
 }

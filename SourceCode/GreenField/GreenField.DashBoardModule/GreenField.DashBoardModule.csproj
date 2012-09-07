@@ -120,6 +120,9 @@
     <Compile Include="Views\Admin\InvestmentCommittee\EditDate\ViewDashboardAdminInvestmentCommitteeChangeDate.xaml.cs">
       <DependentUpon>ViewDashboardAdminInvestmentCommitteeChangeDate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Company\Documents\ViewDashboardCompanyDocumentsLoad.xaml.cs">
+      <DependentUpon>ViewDashboardCompanyDocumentsLoad.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Investment_Committee\ViewDashboardInvestmentCommitteeDecisionEntry.xaml.cs">
       <DependentUpon>ViewDashboardInvestmentCommitteeDecisionEntry.xaml</DependentUpon>
     </Compile>
@@ -291,6 +294,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Admin\InvestmentCommittee\EditDate\ViewDashboardAdminInvestmentCommitteeChangeDate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Company\Documents\ViewDashboardCompanyDocumentsLoad.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

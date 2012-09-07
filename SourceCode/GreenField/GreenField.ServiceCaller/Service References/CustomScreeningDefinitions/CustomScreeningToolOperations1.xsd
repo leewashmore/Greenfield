@@ -1,15 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import schemaLocation="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" />
-  <xs:element name="RetrieveCustomSelectionData">
+  <xs:import schemaLocation="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" />
+  <xs:import schemaLocation="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
+  <xs:element name="RetrieveCustomControlsList">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="parameter" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveCustomControlsListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RetrieveCustomControlsListResult" nillable="true" type="q1:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSecurityReferenceTabDataPoints">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveCustomSelectionDataResponse">
+  <xs:element name="RetrieveSecurityReferenceTabDataPointsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveCustomSelectionDataResult" nillable="true" type="q1:ArrayOfCustomSelectionData" />
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveSecurityReferenceTabDataPointsResult" nillable="true" type="q2:ArrayOfCustomSelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePeriodFinancialsTabDataPoints">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrievePeriodFinancialsTabDataPointsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrievePeriodFinancialsTabDataPointsResult" nillable="true" type="q3:ArrayOfCustomSelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveCurrentFinancialsTabDataPoints">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveCurrentFinancialsTabDataPointsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveCurrentFinancialsTabDataPointsResult" nillable="true" type="q4:ArrayOfCustomSelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveFairValueTabDataPoints">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveFairValueTabDataPointsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveFairValueTabDataPointsResult" nillable="true" type="q5:ArrayOfCustomSelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSecurityData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolio" nillable="true" type="q6:PortfolioSelectionData" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="benchmark" nillable="true" type="q7:BenchmarkSelectionData" />
+        <xs:element minOccurs="0" name="region" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="country" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="sector" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="industry" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSecurityDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveSecurityDataResult" nillable="true" type="q8:ArrayOfCustomScreeningSecurityData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

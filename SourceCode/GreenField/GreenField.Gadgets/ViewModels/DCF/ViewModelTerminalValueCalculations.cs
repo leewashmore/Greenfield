@@ -14,8 +14,11 @@ using GreenField.DataContracts;
 using System.Linq;
 using GreenField.Gadgets.Models;
 
-namespace GreenField.Gadgets.ViewModels.DCF
+namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View-Model for TerminalValueCalculations
+    /// </summary>
     public class ViewModelTerminalValueCalculations : NotificationObject
     {
         #region PrivateVariables
@@ -29,11 +32,6 @@ namespace GreenField.Gadgets.ViewModels.DCF
         /// Instance of Service Caller Class
         /// </summary>
         private IDBInteractivity _dbInteractivity;
-
-        /// <summary>
-        /// Instance of LoggerFacade
-        /// </summary>
-        private ILoggerFacade _logger;
 
         #endregion
 
@@ -83,7 +81,7 @@ namespace GreenField.Gadgets.ViewModels.DCF
                 this.RaisePropertyChanged(() => this.EntitySelectionData);
             }
         }
-        
+
         #endregion
 
         #region Dashboard
@@ -104,9 +102,9 @@ namespace GreenField.Gadgets.ViewModels.DCF
                 this.RaisePropertyChanged(() => this.IsActive);
             }
         }
-        
+
         #endregion
-        
+
         #region Busy Indicator
 
         /// <summary>
@@ -138,6 +136,137 @@ namespace GreenField.Gadgets.ViewModels.DCF
         }
         #endregion
 
+        #region DataGrid
+
+        /// <summary>
+        /// List of Type TerminalValueCalculationsData
+        /// </summary>
+        private List<DCFTerminalValueCalculationsData> _terminalValueCalculationsData;
+        public List<DCFTerminalValueCalculationsData> TerminalValueCalculationsData
+        {
+            get
+            {
+                return _terminalValueCalculationsData;
+            }
+            set
+            {
+                _terminalValueCalculationsData = value;
+                this.RaisePropertyChanged(() => this.TerminalValueCalculationsData);
+            }
+        }
+
+        /// <summary>
+        /// List of type TerminalValueCalculationsDisplayData to show in the Grid
+        /// </summary>
+        private List<DCFDisplayData> _terminalValueCalculationsDisplayData;
+        public List<DCFDisplayData> TerminalValueCalculationsDisplayData
+        {
+            get
+            {
+                return _terminalValueCalculationsDisplayData;
+            }
+            set
+            {
+                _terminalValueCalculationsDisplayData = value;
+                this.RaisePropertyChanged(() => this.TerminalValueCalculationsDisplayData);
+            }
+        }
+
+        /// <summary>
+        /// FreeCashFlow for Year9
+        /// </summary>
+        private decimal _freeCashFlowY9;
+        public decimal FreeCashFlowY9
+        {
+            get 
+            {
+                return _freeCashFlowY9; 
+            }
+            set
+            {
+                _freeCashFlowY9 = value; 
+            }
+        }
+        
+
+        #endregion
+
+        #region LoggerFacade
+
+        /// <summary>
+        /// Public property for LoggerFacade _logger
+        /// </summary>
+        private ILoggerFacade _logger;
+        public ILoggerFacade Logger
+        {
+            get
+            {
+                return _logger;
+            }
+            set
+            {
+                _logger = value;
+            }
+        }
+
+        #endregion
+
+        #region Calculations
+
+        /// <summary>
+        /// TerminalGrowthRate from FreeCashFlows
+        /// </summary>
+        private decimal? _terminalGrowthRate;
+        public decimal? TerminalGrowthRate
+        {
+            get 
+            {
+                return _terminalGrowthRate; 
+            }
+            set
+            {
+                _terminalGrowthRate = value;
+                this.RaisePropertyChanged(() => this.TerminalGrowthRate);
+            }
+        }
+
+        /// <summary>
+        /// TerminalValuePresent
+        /// </summary>
+        private decimal? _terminalValuePresent;
+        public decimal? TerminalValuePresent
+        {
+            get 
+            {
+                return _terminalValuePresent; 
+            }
+            set
+            {
+                _terminalValuePresent = value;
+                this.RaisePropertyChanged(() => this.TerminalValuePresent);
+            }
+        }
+
+        /// <summary>
+        /// TerminalValueNominal
+        /// </summary>
+        private decimal? _terminalValueNominal;
+        public decimal? TerminalValueNominal
+        {
+            get 
+            {
+                return _terminalValueNominal; 
+            }
+            set
+            {
+                _terminalValueNominal = value;
+                this.RaisePropertyChanged(() => this.TerminalValueNominal);
+            }
+        }
+        
+
+        #endregion
+        
         #endregion
 
         #region EventHandlers
@@ -160,7 +289,7 @@ namespace GreenField.Gadgets.ViewModels.DCF
                     EntitySelectionData = entitySelectionData;
                     if (IsActive && EntitySelectionData != null)
                     {
-                        _dbInteractivity.RetrieveDCFAnalysisData(EntitySelectionData, RetrieveDCFAnalysisDataCallbackMethod);
+                        _dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
                     }
                 }
                 else
@@ -176,7 +305,6 @@ namespace GreenField.Gadgets.ViewModels.DCF
             }
         }
 
-
         #endregion
 
         #region CallbackMethods
@@ -185,7 +313,7 @@ namespace GreenField.Gadgets.ViewModels.DCF
         /// Consensus Estimate Data callback Method
         /// </summary>
         /// <param name="result"></param>
-        public void RetrieveDCFAnalysisDataCallbackMethod(List<DCFAnalysisSummaryData> result)
+        public void RetrieveDCFTerminalValueCalculationsDataCallbackMethod(List<DCFTerminalValueCalculationsData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);

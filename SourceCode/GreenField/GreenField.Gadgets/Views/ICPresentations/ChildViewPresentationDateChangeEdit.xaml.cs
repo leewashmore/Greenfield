@@ -34,6 +34,11 @@ namespace GreenField.Gadgets.Views
             this.dpPresentationDate.FirstDayOfWeek = DayOfWeek.Monday;
             //this.dpPresentationDate.BlackoutDates = inValidDates.Where(g => ! validPresentationDates.Contains(g));
             this.DataContext = BlackoutDates;
+            this.dpPresentationDate.Loaded += (se, e) =>
+            {
+                this.dpPresentationDate.BlackoutDates = inValidDates.Where(g => !validPresentationDates.Contains(g));
+            };
+
             this.dpPresentationDate.DisplayDateChanged += (se, e) =>
             {
                 this.dpPresentationDate.BlackoutDates = inValidDates.Where(g => !validPresentationDates.Contains(g));

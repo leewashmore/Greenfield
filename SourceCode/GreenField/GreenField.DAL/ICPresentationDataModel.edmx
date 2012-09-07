@@ -409,6 +409,11 @@
           <Parameter Name="MeetingId" Type="bigint" Mode="In" />
           <Parameter Name="Status" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="SetICPPresentationStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="PresentationId" Type="bigint" Mode="In" />
+          <Parameter Name="Status" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SetICPresentationAttachedFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="PresentationId" Type="bigint" Mode="In" />
@@ -824,6 +829,11 @@
             <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
             <End Role="PresentationAttachedFileInfo" EntitySet="PresentationAttachedFileInfoes" />
           </AssociationSet>
+          <FunctionImport Name="SetICPPresentationStatus" ReturnType="Collection(Int32)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="PresentationId" Mode="In" Type="Int64" />
+            <Parameter Name="Status" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
           <Property Type="Int64" Name="VoterID" Nullable="false" />
@@ -1566,6 +1576,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SetICPPresentationStatus" FunctionName="ICPresentationModel.Store.SetICPPresentationStatus" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

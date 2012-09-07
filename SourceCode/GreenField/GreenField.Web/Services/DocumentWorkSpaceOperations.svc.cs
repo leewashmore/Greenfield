@@ -17,6 +17,7 @@ using GreenField.DataContracts;
 using GreenField.DAL;
 using GreenField.Web.ListsDefinitions;
 using System.Xml;
+using GreenField.Web.DimensionEntitiesService;
 
 namespace GreenField.Web.Services
 {
@@ -89,6 +90,20 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Dimension Service Entity
+        /// </summary>
+        private Entities dimensionEntity;
+        public Entities DimensionEntity
+        {
+            get
+            {
+                if (null == dimensionEntity)
+                    dimensionEntity = new Entities(new Uri(ConfigurationManager.AppSettings["DimensionWebService"]));
+
+                return dimensionEntity;
+            }
+        }
 
         /// <summary>
         /// Instance of CopyWebService
@@ -102,7 +117,7 @@ namespace GreenField.Web.Services
                 {
                     _copyService = new Copy();
                     _copyService.Credentials = new NetworkCredential(UserName, Password, Domain);
-                    _copyService.Url = DocumentServiceUrl; 
+                    _copyService.Url = DocumentServiceUrl;
                 }
 
                 return _copyService;
@@ -137,14 +152,19 @@ namespace GreenField.Web.Services
         /// <returns>file url is upload is successful;empty otherwise</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public String UploadDocument(String fileName, Byte[] fileByteStream)
+        public String UploadDocument(String fileName, Byte[] fileByteStream, String deleteFileUrl)
         {
             try
             {
                 String resultUrl = String.Empty;
                 try
                 {
-                    String[] destinationUrl = { DocumentServerUrl + DocumentLibrary + "/" + "[" + DateTime.UtcNow.ToString("ddMMyyyy") + "]" + fileName };
+                    if (deleteFileUrl != String.Empty)
+                    {
+                        DeleteDocument(deleteFileUrl);
+                    }
+
+                    String[] destinationUrl = { DocumentServerUrl + "/" + "[" + DateTime.UtcNow.ToString("ddMMyyyyhhmmssffff") + "]" + fileName };
 
                     DocumentCopyService.CopyResult[] cResultArray = { new DocumentCopyService.CopyResult() };
                     DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };
@@ -176,7 +196,7 @@ namespace GreenField.Web.Services
         {
             bool fileDeleted = false;
             try
-            {                
+            {
                 string strBatch = "<Method ID='1' Cmd='Delete'>" +
                     "<Field Name='ID'>3</Field>" +
                     "<Field Name='FileRef'>" +
@@ -220,8 +240,8 @@ namespace GreenField.Web.Services
         {
             Byte[] result = null;
             try
-            {                
-                String sourceUrl = DocumentServerUrl + DocumentLibrary + "/" + fileName;
+            {
+                String sourceUrl = DocumentServerUrl + "/" + fileName;
                 DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };
                 UInt32 retrieveResult = CopyService.GetItem(sourceUrl, out ffieldInfoArray, out result);
 
@@ -229,7 +249,7 @@ namespace GreenField.Web.Services
             catch (Exception)
             {
                 throw;
-            }           
+            }
 
             return result;
         }
@@ -241,7 +261,7 @@ namespace GreenField.Web.Services
             try
             {
                 List<DocumentCategoricalData> result = new List<DocumentCategoricalData>();
-                
+
                 ICPresentationEntities entity = new ICPresentationEntities();
                 List<DocumentsData> documentsDataInfo = entity.GetDocumentsData(searchString).ToList();
 
@@ -283,7 +303,7 @@ namespace GreenField.Web.Services
                                FileUploadedOn = Convert.ToDateTime(distinctInfo.CreatedOn)
                            },
                            CommentDetails = commentsDetails
-                       });                    
+                       });
                 }
                 return result;
             }
@@ -326,9 +346,9 @@ namespace GreenField.Web.Services
                 metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityName).Distinct().ToList());
                 metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityTicker).Distinct().ToList());
 
-                
+
                 return metaTagsInfo;
-                
+
             }
             catch (Exception ex)
             {
@@ -385,7 +405,7 @@ namespace GreenField.Web.Services
                 }
 
                 return result;
-                
+
             }
             catch (Exception ex)
             {
@@ -419,5 +439,141 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+        #region ExcelModelUpload
+
+        /// <summary>
+        /// Get Reuters Data 
+        /// </summary>
+        /// <param name="issuerID">issuerId of Selected Security</param>
+        /// <param name="currency">Currency</param>
+        /// <returns>Collection of FinancialStatementsData</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public byte[] RetrieveStatementData(EntitySelectionData selectedSecurity)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                if (selectedSecurity == null)
+                    return new byte[1];
+
+                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.ASEC_SEC_SHORT_NAME == selectedSecurity.InstrumentID &&
+                        record.ISSUE_NAME == selectedSecurity.LongName &&
+                        record.TICKER == selectedSecurity.ShortName).FirstOrDefault();
+                if (securityDetails == null)
+                {
+                    return new byte[1];
+                }
+                External_Country_Master countryDetails = entity.External_Country_Master
+                .Where(record => record.COUNTRY_CODE == securityDetails.ISO_COUNTRY_CODE &&
+                 record.COUNTRY_NAME == securityDetails.ASEC_SEC_COUNTRY_NAME)
+                .FirstOrDefault();
+
+                string issuerID = securityDetails.ISSUER_ID;
+                string currency = countryDetails.CURRENCY_CODE;
+
+                if (issuerID == null)
+                {
+                    return new byte[1];
+                }
+
+                List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
+                List<FinancialStatementData> resultReuters = new List<FinancialStatementData>();
+                List<FinancialStatementData> resultStatement = new List<FinancialStatementData>();
+                List<FinancialStatementType> statementType = new List<FinancialStatementType>() { FinancialStatementType.INCOME_STATEMENT, FinancialStatementType.BALANCE_SHEET, FinancialStatementType.CASH_FLOW_STATEMENT };
+
+                List<FinancialStatementPeriodType> periodType = new List<FinancialStatementPeriodType>() { FinancialStatementPeriodType.ANNUAL, FinancialStatementPeriodType.QUARTERLY };
+
+
+                foreach (FinancialStatementType item in statementType)
+                {
+                    string statement = EnumUtils.ToString(item);
+                    foreach (FinancialStatementPeriodType period in periodType)
+                    {
+                        if (currency != null)
+                        {
+                            resultStatement = entity.Get_Statement_Models(issuerID, "REUTERS", EnumUtils.ToString(period).Substring(0, 1), "FISCAL", statement, currency).ToList();
+                        }
+                        if (resultStatement == null || resultStatement.Count == 0)
+                        {
+                            if (currency != "USD")
+                            {
+                                resultStatement = entity.Get_Statement_Models(issuerID, "REUTERS", EnumUtils.ToString(period).Substring(0, 1), "FISCAL", statement, "USD").ToList();
+                            }
+                        }
+
+                        if (resultStatement != null)
+                        {
+                            resultReuters.AddRange(resultStatement);
+                        }
+                    }
+                }
+                resultReuters = resultReuters.Where(a => a.PeriodYear != 2300).ToList();
+
+                List<ModelConsensusEstimatesData> data = new List<ModelConsensusEstimatesData>();
+
+                foreach (FinancialStatementPeriodType item in periodType)
+                {
+                    if (currency != null)
+                    {
+                        data = entity.GetModelConsensusEstimates(issuerID, "REUTERS", EnumUtils.ToString(item).Substring(0, 1), "FISCAL", currency).ToList();
+                    }
+                    if (data == null || data.Count == 0)
+                    {
+                        if (currency != "USD")
+                        {
+                            data = entity.GetModelConsensusEstimates(issuerID, "REUTERS", EnumUtils.ToString(item).Substring(0, 1), "FISCAL", "USD").ToList();
+                        }
+                    }
+                    if (data != null)
+                    {
+                        resultConsensus.AddRange(data);
+                    }
+                }
+
+                resultConsensus = resultConsensus.Where(a => a.PERIOD_YEAR != null).ToList();
+                return GenerateExcelModel.GenerateExcel(resultReuters, resultConsensus);
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Get CE Data 
+        /// </summary>
+        /// <param name="issuerID">issuerId of Selected Security</param>
+        /// <param name="currency">Currency</param>
+        /// <returns>Collection of FinancialStatementsData</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<ModelConsensusEstimatesData> RetrieveCEData(string issuerID, String currency)
+        {
+            List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
+
+            List<FinancialStatementPeriodType> periodType = new List<FinancialStatementPeriodType>() { FinancialStatementPeriodType.ANNUAL, FinancialStatementPeriodType.QUARTERLY };
+            ExternalResearchEntities entity = new ExternalResearchEntities();
+            List<ModelConsensusEstimatesData> data = new List<ModelConsensusEstimatesData>();
+
+            foreach (FinancialStatementPeriodType item in periodType)
+            {
+                data = entity.GetModelConsensusEstimates(issuerID, "REUTERS", EnumUtils.ToString(item), "FISCAL", currency).ToList();
+                if (data == null || data.Count == 0)
+                {
+                    data = entity.GetModelConsensusEstimates(issuerID, "REUTERS", EnumUtils.ToString(item), "FISCAL", "USD").ToList();
+                }
+                resultConsensus.AddRange(data);
+            }
+
+            return resultConsensus;
+        }
+
+        #endregion
+
     }
 }

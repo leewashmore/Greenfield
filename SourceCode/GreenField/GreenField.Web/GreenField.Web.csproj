@@ -38,6 +38,11 @@
       <HintPath>..\Lib\DocumentFormat.OpenXml.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=14.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+      <HintPath>..\Lib\Microsoft.Office.Interop.Excel.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Runtime.Serialization" />
@@ -139,6 +144,8 @@
     <Compile Include="Services\CustomScreeningToolOperations.svc.cs">
       <DependentUpon>CustomScreeningToolOperations.svc</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ExcelModel\GenerateExcelModel.cs" />
+    <Compile Include="Helpers\ExcelModel\test.cs" />
     <Compile Include="Services\DocumentWorkSpaceOperations.svc.cs">
       <DependentUpon>DocumentWorkSpaceOperations.svc</DependentUpon>
     </Compile>

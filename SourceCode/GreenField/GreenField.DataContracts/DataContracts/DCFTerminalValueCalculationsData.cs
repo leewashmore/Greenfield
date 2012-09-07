@@ -20,7 +20,7 @@ namespace GreenField.DataContracts
         public decimal CashFlow2020 { get; set; }
 
         [DataMember]
-        public decimal SustainableROIC { get; set; }
+        public decimal? SustainableROIC { get; set; }
 
         [DataMember]
         public decimal SustainableDividendPayoutRatio { get; set; }

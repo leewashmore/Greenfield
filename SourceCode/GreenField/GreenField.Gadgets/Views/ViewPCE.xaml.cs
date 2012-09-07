@@ -123,10 +123,9 @@ namespace GreenField.Gadgets.Views
 
                 if (chPCE.Visibility == Visibility.Visible)
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_CE, Element = this.chPCE, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+
                 else if (dgPCE.Visibility == Visibility.Visible)
-                {
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_CE_DATA, Element = this.chPCE, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
-                }
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.P_CE_DATA, Element = this.dgPCE, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_PCE);
                 childExportOptions.Show();
