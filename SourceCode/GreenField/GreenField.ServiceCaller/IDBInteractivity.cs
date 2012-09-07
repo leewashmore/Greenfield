@@ -307,6 +307,9 @@ namespace GreenField.ServiceCaller
         #region Custom Screening Tool
         
         void RetrieveCustomControlsList(string parameter, Action<List<string>> callback);
+
+        #endregion
+
         #region Documents
 
         void RetrieveDocumentsData(EntitySelectionData selectedSecurity, Action<byte[]> callback);
