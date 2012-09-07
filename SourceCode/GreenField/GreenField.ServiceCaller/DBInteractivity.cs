@@ -3861,6 +3861,40 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        public void SetICPPresentationStatus(String userName, Int64 presentationId, String status, Action<Boolean?> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            MeetingOperationsClient client = new MeetingOperationsClient();
+            client.SetICPPresentationStatusAsync(userName, presentationId, status);
+            client.SetICPPresentationStatusCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
         #endregion
 
         #region Slice-7 DCF
@@ -3987,13 +4021,13 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void UploadDocument(String fileName, Byte[] fileByteStream, Action<String> callback)
+        public void UploadDocument(String fileName, Byte[] fileByteStream, String deleteFileUrl, Action<String> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
-            client.UploadDocumentAsync(fileName, fileByteStream);
+            client.UploadDocumentAsync(fileName, fileByteStream, deleteFileUrl);
             client.UploadDocumentCompleted += (se, e) =>
             {
                 if (e.Error == null)

@@ -31,7 +31,6 @@ namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelPresentations : NotificationObject
     {
-
         #region Fields
         private IRegionManager _regionManager;
        // private ManageMeetings _manageMeetings;
@@ -213,8 +212,9 @@ namespace GreenField.Gadgets.ViewModels
                 || SelectedPresentationOverviewInfo == null)
                 return false;
 
-            return UserSession.SessionManager.SESSION.Roles.Contains("IC_ADMIN")
-                || UserSession.SessionManager.SESSION.Roles.Contains("CHIEF_EXECUTIVE");
+            return (UserSession.SessionManager.SESSION.Roles.Contains("IC_ADMIN")
+                || UserSession.SessionManager.SESSION.Roles.Contains("CHIEF_EXECUTIVE"))
+                && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN;
         }
 
         private void ChangeDateCommandMethod(object param)
@@ -348,7 +348,14 @@ namespace GreenField.Gadgets.ViewModels
 
         private void WithdrawCommandMethod(object param)
         {
-            Prompt.ShowDialog("Please confirm withdrawal","Confirmation", MessageBoxButton.OK);
+            Prompt.ShowDialog("Please confirm withdrawal of selected presentation", "Confirmation", MessageBoxButton.OKCancel, (result) =>
+            {
+                if (_dbInteractivity != null)
+                {
+                    _dbInteractivity.SetICPPresentationStatus(UserSession.SessionManager.SESSION.UserName,
+                               SelectedPresentationOverviewInfo.PresentationID, StatusType.WITHDRAWN, SetICPPresentationStatusCallbackMethod); 
+                }
+            });
             
         }   
 
@@ -392,6 +399,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public void Initialize()
         {
+            SelectedMeetingInfoDate = null;
             SelectionRaisePropertyChanged();
             if (_dbInteractivity != null && IsActive)
             {
@@ -517,6 +525,40 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Logging.LogEndMethod(_logger, methodNamespace);                
             }
+        }
+
+        private void SetICPPresentationStatusCallbackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    if (result == true)
+                    {
+                        Prompt.ShowDialog("Presentation was successfully withdrawn");
+                        Initialize();
+                    }
+                }
+                else
+                {
+                    Prompt.ShowDialog("An Error ocurred while updating presentation date");
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+            }
         }        
         #endregion
 
@@ -529,8 +571,6 @@ namespace GreenField.Gadgets.ViewModels
            
         }
 
-        #endregion   
-
-        
+        #endregion           
     }
 }

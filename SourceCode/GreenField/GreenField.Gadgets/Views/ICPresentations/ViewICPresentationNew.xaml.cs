@@ -70,5 +70,54 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
+
+
+        private Decimal _valueYTDAbs;
+        private Decimal _valueYTDReltoLoc;
+        private Decimal _valueYTDReltoEM;
+
+        private void RaiseICPresentationOverviewInfoChanged()
+        {
+            Decimal valueYTDAbs;
+            if (!Decimal.TryParse(this.txtbYTDAbsolute.Text, out valueYTDAbs))
+            {
+                this.txtbYTDAbsolute.Text = _valueYTDAbs.ToString();
+                return;
+            }
+            _valueYTDAbs = valueYTDAbs;
+
+            Decimal valueYTDReltoLoc;
+            if (!Decimal.TryParse(this.txtbYTDReltoLoc.Text, out valueYTDReltoLoc))
+            {
+                this.txtbYTDAbsolute.Text = _valueYTDReltoLoc.ToString();
+                return;
+            }
+            _valueYTDReltoLoc = valueYTDReltoLoc;
+
+            Decimal valueYTDReltoEM;
+            if (!Decimal.TryParse(this.txtbYTDReltoEM.Text, out valueYTDReltoEM))
+            {
+                this.txtbYTDAbsolute.Text = _valueYTDReltoEM.ToString();
+                return;
+            }
+            _valueYTDReltoEM = valueYTDReltoEM;
+
+            DataContextViewModelICPresentationNew.RaiseICPresentationOverviewInfoChanged(_valueYTDAbs, _valueYTDReltoLoc, _valueYTDReltoEM);
+        }
+
+        private void txtbYTDAbsolute_LostFocus(object sender, RoutedEventArgs e)
+        {
+            RaiseICPresentationOverviewInfoChanged();
+        }
+
+        private void txtbYTDReltoLoc_LostFocus(object sender, RoutedEventArgs e)
+        {
+            RaiseICPresentationOverviewInfoChanged();
+        }
+
+        private void txtbYTDReltoEM_LostFocus(object sender, RoutedEventArgs e)
+        {
+            RaiseICPresentationOverviewInfoChanged();
+        } 
     }
 }

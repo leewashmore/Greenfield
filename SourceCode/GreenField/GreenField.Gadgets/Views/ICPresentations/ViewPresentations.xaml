@@ -46,7 +46,7 @@
                                        Style="{StaticResource TextBlockStyle}"/>
                             </DataTemplate>
                         </telerik:RadComboBox.ItemTemplate>
-                    </telerik:RadComboBox>                    
+                    </telerik:RadComboBox>
                 </StackPanel>
             </Grid>
 
@@ -124,8 +124,8 @@
                                             DataMemberBinding="{Binding StatusType}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Right"
-                                            TextAlignment="Right"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListPresenter"
                                             Width="Auto"
@@ -133,8 +133,8 @@
                                             DataMemberBinding="{Binding Presenter}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Right"
-                                            TextAlignment="Right"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListCompany"
                                             Width="Auto"
@@ -142,8 +142,8 @@
                                             DataMemberBinding="{Binding SecurityName}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Right"
-                                            TextAlignment="Right"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListTicker"
                                             Width="Auto"
@@ -151,8 +151,8 @@
                                             DataMemberBinding="{Binding SecurityTicker}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Right"
-                                            TextAlignment="Right"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListCountry"
                                             Width="Auto"
@@ -160,8 +160,8 @@
                                             DataMemberBinding="{Binding SecurityCountry}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Right"
-                                            TextAlignment="Right"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
                                             IsFilterable="True"/>
                     <telerik:GridViewDataColumn x:Name="dgcICPPresentationsListIndustru"
                                             Width="Auto"
@@ -169,8 +169,8 @@
                                             DataMemberBinding="{Binding SecurityIndustry}"
                                             HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                             CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Right"
-                                            TextAlignment="Right"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
                                             IsFilterable="True"/>
                 </telerik:RadGridView.Columns>
             </telerik:RadGridView>
@@ -189,7 +189,7 @@
                 <telerik:RadButton x:Name="btnICPPresentationsListChangeDate"
                                    Command="{Binding ChangeDateCommand}"
                                    VerticalAlignment="Center"
-                                   Width="75"
+                                   Width="100"
                                    Visibility="Visible"
                                    HorizontalAlignment="Right"
                                    Content="CHANGE DATE"/>
@@ -197,7 +197,7 @@
                                    x:Name="btnICPPresentationsListNew"
                                    Command="{Binding NewCommand}"
                                    VerticalAlignment="Center"
-                                   Width="75"
+                                   Width="100"
                                    Margin="5,0,0,0"
                                    Visibility="Visible"
                                    HorizontalAlignment="Right"
@@ -206,34 +206,34 @@
                                    x:Name="btnICPPresentationsListUpload"
                                    Command="{Binding UploadCommand}" 
                                    Margin="5,0,0,0"
-                                   Width="75"
+                                   Width="100"
                                    Visibility="Visible"                        
                                    VerticalAlignment="Center"
                                    Content="UPLOAD"/>
                 <telerik:RadButton Grid.Column="3"
                                    x:Name="btnICPPresentationsListEdit"
-                        Command="{Binding EditCommand}"
-                        Margin="5,0,0,0"
-                        Width="75"
-                        VerticalAlignment="Center"
-                        Content="EDIT"/>
+                                    Command="{Binding EditCommand}"
+                                    Margin="5,0,0,0"
+                                    Width="100"
+                                    VerticalAlignment="Center"
+                                    Content="EDIT"/>
                 <telerik:RadButton Grid.Column="4" x:Name="btnICPPresentationsListView"
-                        Command="{Binding ViewCommand}"
-                        Margin="5,0,0,0"
-                        Width="75"
-                        VerticalAlignment="Center"
-                        Content="VIEW/VOTE"/>
+                                    Command="{Binding ViewCommand}"
+                                    Margin="5,0,0,0"
+                                    Width="100"
+                                    VerticalAlignment="Center"
+                                    Content="VIEW/VOTE"/>
                 <telerik:RadButton Grid.Column="5" x:Name="btnICPPresentationsListRequest"
                         Command="{Binding WithdrawCommand}"
                         Margin="5,0,0,0"
-                        Width="75"
+                        Width="100"
                         VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                         Content="WITHDRAW"/>
                 <telerik:RadButton Grid.Column="6" x:Name="btnICPPresentationsListDecisionEntry"
                         Command="{Binding DecisionEntryCommand}"
                         Margin="5,0,0,0"
-                        Width="75"
+                        Width="100"
                         VerticalAlignment="Center"
                                    HorizontalAlignment="Left"
                         Content="DECISION ENTRY"/>

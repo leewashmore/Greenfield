@@ -2242,6 +2242,47 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("SetFileCommentInfo", userNameParameter, fileIdParameter, commentParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userName">No Metadata Documentation available.</param>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        /// <param name="status">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> SetICPPresentationStatus(global::System.String userName, Nullable<global::System.Int64> presentationId, global::System.String status)
+        {
+            ObjectParameter userNameParameter;
+            if (userName != null)
+            {
+                userNameParameter = new ObjectParameter("UserName", userName);
+            }
+            else
+            {
+                userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
+            }
+    
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter statusParameter;
+            if (status != null)
+            {
+                statusParameter = new ObjectParameter("Status", status);
+            }
+            else
+            {
+                statusParameter = new ObjectParameter("Status", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetICPPresentationStatus", userNameParameter, presentationIdParameter, statusParameter);
+        }
 
         #endregion
     }

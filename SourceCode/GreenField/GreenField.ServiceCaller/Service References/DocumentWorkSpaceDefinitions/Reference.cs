@@ -306,7 +306,7 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/UploadDocument", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/UploadDocumentResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/UploadDocumentServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginUploadDocument(string fileName, byte[] fileByteStream, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginUploadDocument(string fileName, byte[] fileByteStream, string deleteFileUrl, System.AsyncCallback callback, object asyncState);
         
         string EndUploadDocument(System.IAsyncResult result);
         
@@ -708,8 +708,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginUploadDocument(string fileName, byte[] fileByteStream, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginUploadDocument(fileName, fileByteStream, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginUploadDocument(string fileName, byte[] fileByteStream, string deleteFileUrl, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUploadDocument(fileName, fileByteStream, deleteFileUrl, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -720,7 +720,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         private System.IAsyncResult OnBeginUploadDocument(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string fileName = ((string)(inValues[0]));
             byte[] fileByteStream = ((byte[])(inValues[1]));
-            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginUploadDocument(fileName, fileByteStream, callback, asyncState);
+            string deleteFileUrl = ((string)(inValues[2]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginUploadDocument(fileName, fileByteStream, deleteFileUrl, callback, asyncState);
         }
         
         private object[] OnEndUploadDocument(System.IAsyncResult result) {
@@ -736,11 +737,11 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             }
         }
         
-        public void UploadDocumentAsync(string fileName, byte[] fileByteStream) {
-            this.UploadDocumentAsync(fileName, fileByteStream, null);
+        public void UploadDocumentAsync(string fileName, byte[] fileByteStream, string deleteFileUrl) {
+            this.UploadDocumentAsync(fileName, fileByteStream, deleteFileUrl, null);
         }
         
-        public void UploadDocumentAsync(string fileName, byte[] fileByteStream, object userState) {
+        public void UploadDocumentAsync(string fileName, byte[] fileByteStream, string deleteFileUrl, object userState) {
             if ((this.onBeginUploadDocumentDelegate == null)) {
                 this.onBeginUploadDocumentDelegate = new BeginOperationDelegate(this.OnBeginUploadDocument);
             }
@@ -752,7 +753,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             }
             base.InvokeAsync(this.onBeginUploadDocumentDelegate, new object[] {
                         fileName,
-                        fileByteStream}, this.onEndUploadDocumentDelegate, this.onUploadDocumentCompletedDelegate, userState);
+                        fileByteStream,
+                        deleteFileUrl}, this.onEndUploadDocumentDelegate, this.onUploadDocumentCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1263,10 +1265,11 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
                     base(client) {
             }
             
-            public System.IAsyncResult BeginUploadDocument(string fileName, byte[] fileByteStream, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[2];
+            public System.IAsyncResult BeginUploadDocument(string fileName, byte[] fileByteStream, string deleteFileUrl, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
                 _args[0] = fileName;
                 _args[1] = fileByteStream;
+                _args[2] = deleteFileUrl;
                 System.IAsyncResult _result = base.BeginInvoke("UploadDocument", _args, callback, asyncState);
                 return _result;
             }

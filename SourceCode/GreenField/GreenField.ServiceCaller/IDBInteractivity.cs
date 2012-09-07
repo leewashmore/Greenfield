@@ -229,7 +229,7 @@ namespace GreenField.ServiceCaller
         #region PortalEnhancements
         void RetrieveDocumentsData(String searchString, Action<List<DocumentCategoricalData>> callback);
 
-        void UploadDocument(String fileName, Byte[] fileByteStream, Action<String> callback);
+        void UploadDocument(String fileName, Byte[] fileByteStream, String deleteFileUrl, Action<String> callback);
 
         void DeleteDocument(String fileName, Action<bool?> callback);
 
@@ -290,6 +290,8 @@ namespace GreenField.ServiceCaller
         //  void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, string url, FileMaster presentationAttachedFileData, Action<Boolean?> callback);
 
         void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, FileMaster fileMasterInfo, Boolean deletionFlag, Action<Boolean?> callback);
+
+        void SetICPPresentationStatus(String userName, Int64 presentationId, String status, Action<Boolean?> callback);
         #endregion
 
         #region DCF

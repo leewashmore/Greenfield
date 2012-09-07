@@ -58,7 +58,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (DbInteractivity != null)
                 {
                     BusyIndicatorNotification(true, "Uploading Document...");
-                    DbInteractivity.UploadDocument(_uploadWindow.UploadFileName, _uploadWindow.UploadFileByteStream, UploadDocumentCallbackMethod);
+                    DbInteractivity.UploadDocument(_uploadWindow.UploadFileName, _uploadWindow.UploadFileByteStream,
+                        String.Empty, UploadDocumentCallbackMethod);
                 }
             }
         }

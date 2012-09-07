@@ -72,6 +72,14 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _isActive = value;
+                if (value)
+                {
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Investment Committee Meeting configuration details...");
+                        _dbInteractivity.GetMeetingConfigSchedule(GetMeetingConfigScheduleCallbackMethod);
+                    }
+                }
             }
         }
 
@@ -80,16 +88,11 @@ namespace GreenField.Gadgets.ViewModels
         #region Constructor
         public ViewModelMeetingConfigSchedule(DashboardGadgetParam param)
         {
-            
+
             _dbInteractivity = param.DBInteractivity;
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
-            BusyIndicatorNotification(true, "Retrieving data for system configuration");
-            //Make service call to fetch default values
-            _dbInteractivity.GetMeetingConfigSchedule(GetMeetingConfigScheduleCallbackMethod);
-            BusyIndicatorNotification();
         }
-        
 
         #endregion
 
@@ -99,7 +102,7 @@ namespace GreenField.Gadgets.ViewModels
         public List<DateTime> PresentationDay
         {
             get
-            {                
+            {
                 List<DateTime> _presentationDay = new List<DateTime>();
                 _presentationDay.Add(MONDAY);
                 _presentationDay.Add(TUESDAY);
@@ -109,7 +112,7 @@ namespace GreenField.Gadgets.ViewModels
                 return _presentationDay;
             }
         }
-        
+
         private DateTime _selectedPresentationDay;
         public DateTime SelectedPresentationDay
         {
@@ -121,10 +124,10 @@ namespace GreenField.Gadgets.ViewModels
                 if (calculationFlag && SelectedPresentationDateTime != null)
                 {
                     SelectedPresentationDateTime = SelectedPresentationDay.Add(
-                        Convert.ToDateTime(SelectedPresentationDateTime).TimeOfDay); 
+                        Convert.ToDateTime(SelectedPresentationDateTime).TimeOfDay);
                 }
             }
-        }       
+        }
 
         //private Int32 _presentationDateTimeHours;
         //public Int32 PresentationDateTimeHours
@@ -176,7 +179,7 @@ namespace GreenField.Gadgets.ViewModels
 
                 if (calculationFlag)
                 {
-                    CalculateDeadlines(); 
+                    CalculateDeadlines();
                 }
             }
         }
@@ -237,7 +240,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SelectedTimeZone);
                 if (calculationFlag)
                 {
-                    CalculateDeadlines(); 
+                    CalculateDeadlines();
                 }
             }
         }
@@ -300,7 +303,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public ICommand SubmitCommand
         {
-            get { return new DelegateCommand<object>(MeetingConfigurationSaveItem, SelectionValidation); }
+            get { return new DelegateCommand<object>(MeetingConfigurationSaveItem); }
         }
         #endregion
 
@@ -316,19 +319,20 @@ namespace GreenField.Gadgets.ViewModels
             config.PresentationTimeZone = SelectedTimeZone;
             config.PresentationDeadline = PresentationDeadline;
             config.PreMeetingVotingDeadline = PreMeetingVotingDeadline;
-            config.CreatedBy = "Sneha";
-            config.CreatedOn = System.DateTime.Now;
-            config.ModifiedBy = "Sneha";
-            config.ModifiedOn = System.DateTime.Now;
+            config.CreatedBy = "System";
+            config.CreatedOn = DateTime.UtcNow;
+            config.ModifiedBy = "System";
+            config.ModifiedOn = DateTime.UtcNow;
 
-           // _dbInteractivity.CreateMeetingConfigSchedule(config, (msg) => { MessageBox.Show(msg); });
-            _dbInteractivity.UpdateMeetingConfigSchedule(UserSession.SessionManager.SESSION.UserName, config, UpdateMeetingConfigCallback);
+            // _dbInteractivity.CreateMeetingConfigSchedule(config, (msg) => { MessageBox.Show(msg); });
+            if (_dbInteractivity != null)
+            {
+                BusyIndicatorNotification(true, "Updating Investment Committee Meeting Schedule...");
+                _dbInteractivity.UpdateMeetingConfigSchedule(UserSession.SessionManager.SESSION.UserName, config, UpdateMeetingConfigCallback);
+            }
         }
 
-        private bool SelectionValidation(object param)
-        {
-            return true;
-        }
+        
 
         #endregion
 
@@ -343,10 +347,10 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (SelectedPresentationDateTime == null)
                 return;
-           
+
             PresentationDeadline = CalcPresentationDeadline((Convert.ToDateTime(SelectedPresentationDateTime)), ConfigPresentationDeadline);
 
-            PreMeetingVotingDeadline = Convert.ToDateTime(SelectedPresentationDateTime).AddHours(0-ConfigPreMeetingVotingDeadLine);
+            PreMeetingVotingDeadline = Convert.ToDateTime(SelectedPresentationDateTime).AddHours(0 - ConfigPreMeetingVotingDeadLine);
         }
 
         public DateTime CalcPresentationDeadline(DateTime dt, float duration)
@@ -403,14 +407,12 @@ namespace GreenField.Gadgets.ViewModels
         #region CallBack Methods
         private void GetMeetingConfigScheduleCallbackMethod(MeetingConfigurationSchedule val)
         {
-            BusyIndicatorNotification(true, "Retrieve data for Sytem Config");
-
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
                 if (val != null)
-                {                    
+                {
                     SelectedPresentationDay = val.PresentationDateTime.Date;
                     SelectedPresentationDateTime = val.PresentationDateTime;
                     SelectedTimeZone = val.PresentationTimeZone;
@@ -424,12 +426,17 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-               BusyIndicatorNotification();
+
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
             }
         }
 
@@ -442,21 +449,24 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-
+                    Prompt.ShowDialog("Investment Committee Schedule has been successfully updated");
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
+                    Prompt.ShowDialog("An error occurred while updating Investment Committee Schedule");                    
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(_logger, ex);                
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
                 BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
         }
         #endregion
 

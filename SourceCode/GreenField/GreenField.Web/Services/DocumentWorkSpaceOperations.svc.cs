@@ -152,14 +152,19 @@ namespace GreenField.Web.Services
         /// <returns>file url is upload is successful;empty otherwise</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public String UploadDocument(String fileName, Byte[] fileByteStream)
+        public String UploadDocument(String fileName, Byte[] fileByteStream, String deleteFileUrl)
         {
             try
             {
                 String resultUrl = String.Empty;
                 try
                 {
-                    String[] destinationUrl = { DocumentServerUrl + DocumentLibrary + "/" + "[" + DateTime.UtcNow.ToString("ddMMyyyy") + "]" + fileName };
+                    //if (deleteFileUrl != String.Empty)
+                    //{
+                    //    DeleteDocument(deleteFileUrl);
+                    //}
+
+                    String[] destinationUrl = { DocumentServerUrl + DocumentLibrary + "/" + "[" + DateTime.UtcNow.ToString("ddMMyyyyhhmmssffff") + "]" + fileName };
 
                     DocumentCopyService.CopyResult[] cResultArray = { new DocumentCopyService.CopyResult() };
                     DocumentCopyService.FieldInformation[] ffieldInfoArray = { new DocumentCopyService.FieldInformation() };

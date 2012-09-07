@@ -100,7 +100,7 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 }
             }
-        } 
+        }
         #endregion
 
         #region Busy Indicator Notification
@@ -188,14 +188,14 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => PortfolioSelectionInfo);
                 }
             }
-        } 
+        }
         #endregion
 
         #region ICommand
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
-        } 
+        }
         #endregion
 
         #endregion
@@ -212,7 +212,20 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool SubmitCommandValidationMethod(object param)
         {
-            return _entitySelectionInfo != null && _portfolioSelectionInfo != null;
+            Boolean selectionValidation = _entitySelectionInfo != null && _portfolioSelectionInfo != null;
+            Boolean dataValidation = ICPresentationOverviewInfo.SecurityBuyRange != null
+                && ICPresentationOverviewInfo.SecurityPFVMeasure != String.Empty
+                && ICPresentationOverviewInfo.SecuritySellRange != null
+                && ICPresentationOverviewInfo.SecurityRecommendation != null
+                && ICPresentationOverviewInfo.SecurityRecommendation != String.Empty
+                && ICPresentationOverviewInfo.YTDRet_Absolute != null
+                && ICPresentationOverviewInfo.YTDRet_Absolute.Count() > 1
+                && ICPresentationOverviewInfo.YTDRet_RELtoEM != null
+                && ICPresentationOverviewInfo.YTDRet_RELtoEM.Count() > 1
+                && ICPresentationOverviewInfo.YTDRet_RELtoLOC != null
+                && ICPresentationOverviewInfo.YTDRet_RELtoLOC.Count() > 1;
+
+            return selectionValidation && dataValidation;
         }
         #endregion
 
@@ -229,21 +242,22 @@ namespace GreenField.Gadgets.ViewModels
 
                     _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
                     _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-                    BusyIndicatorNotification();
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
                 BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         /// <summary>
@@ -258,8 +272,9 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);                    
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     ICPresentationOverviewInfo = result;
+                    RaisePropertyChanged(() => this.SubmitCommand);
                 }
                 else
                 {
@@ -273,9 +288,10 @@ namespace GreenField.Gadgets.ViewModels
             }
             finally
             {
+                Logging.LogEndMethod(_logger, methodNamespace);
                 BusyIndicatorNotification();
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            
         }
 
         #endregion
@@ -368,7 +384,15 @@ namespace GreenField.Gadgets.ViewModels
                 ICPresentationOverviewInfo.MeetingClosedDateTime = meetingInfo.MeetingClosedDateTime;
                 ICPresentationOverviewInfo.MeetingVotingClosedDateTime = meetingInfo.MeetingVotingClosedDateTime;
             }
-        }        
+        }
+
+        public void RaiseICPresentationOverviewInfoChanged(Decimal valueYTDAbs, Decimal valueYTDReltoLoc, Decimal valueYTDReltoEM)
+        {
+            ICPresentationOverviewInfo.YTDRet_Absolute = String.Format("{0:n4}", valueYTDAbs) + "%";
+            ICPresentationOverviewInfo.YTDRet_RELtoEM = String.Format("{0:n4}", valueYTDReltoLoc) + "%";
+            ICPresentationOverviewInfo.YTDRet_RELtoLOC = String.Format("{0:n4}", valueYTDReltoEM) + "%";
+            RaisePropertyChanged(() => this.SubmitCommand);
+        }
 
         #endregion
 

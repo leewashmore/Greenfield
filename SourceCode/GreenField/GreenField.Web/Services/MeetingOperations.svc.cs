@@ -129,24 +129,40 @@ namespace GreenField.Web.Services
                         DocumentFormat.OpenXml.Drawing.Table tblSecurityOverview = slide.Slide
                             .Descendants<DocumentFormat.OpenXml.Drawing.Table>().FirstOrDefault();
 
-                        SwapPlaceholderText(tblSecurityOverview, 0, 2, presentationOverviewData.SecurityName);
-                        SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.SecurityRecommendation);
-                        SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.Analyst);
-                        SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.CurrentHoldings);
-                        SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityCountry);
-                        SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.Price);
-                        SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.SecurityIndustry);
-                        SwapPlaceholderText(tblSecurityOverview, 3, 4, presentationOverviewData.SecurityBMWeight);
-                        SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
-                        SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.SecurityActiveWeight);
-                        SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.Price);
-                        SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_Absolute);
-                        SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.FVCalc);
-                        SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoLOC);
+                        //SwapPlaceholderText(tblSecurityOverview, 0, 2, presentationOverviewData.SecurityName);
+                        //SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.SecurityRecommendation);
+                        //SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.Analyst);
+                        //SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.CurrentHoldings);
+                        //SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityCountry);
+                        //SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.Price);
+                        //SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.SecurityIndustry);
+                        //SwapPlaceholderText(tblSecurityOverview, 3, 4, presentationOverviewData.SecurityBMWeight);
+                        //SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
+                        //SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.SecurityActiveWeight);
+                        //SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.Price);
+                        //SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_Absolute);
+                        //SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.FVCalc);
+                        //SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoLOC);
                         //SwapPlaceholderText(tblSecurityOverview, 7, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
                         //    presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
-                        SwapPlaceholderText(tblSecurityOverview, 7, 2, String.Empty);
-                        SwapPlaceholderText(tblSecurityOverview, 7, 4, presentationOverviewData.YTDRet_RELtoEM);
+                        //SwapPlaceholderText(tblSecurityOverview, 7, 4, presentationOverviewData.YTDRet_RELtoEM);
+
+                        SwapPlaceholderText(tblSecurityOverview, 0, 2, presentationOverviewData.Analyst);
+                        SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.CurrentHoldings);
+                        SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.SecurityCountry);
+                        SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.Price);
+                        SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityIndustry);
+                        SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.SecurityBMWeight);
+                        SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
+                        SwapPlaceholderText(tblSecurityOverview, 3, 4, presentationOverviewData.SecurityActiveWeight);
+                        SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.Price);
+                        SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.YTDRet_Absolute);
+                        SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.FVCalc);
+                        SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_RELtoLOC);
+                        SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
+                            presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
+                        SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoEM);
+
 
                         //save the Slide and Presentation
                         slide.Slide.Save();
@@ -164,7 +180,7 @@ namespace GreenField.Web.Services
                     ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
 
                 DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
-                String url = documentWorkspaceOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath));
+                String url = documentWorkspaceOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath), String.Empty);
 
                 if (url == String.Empty)
                     throw new Exception("Exception occurred while uploading template powerpoint presentation!!!");
@@ -195,6 +211,24 @@ namespace GreenField.Web.Services
         }
 
 
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean SetICPPresentationStatus(String userName, Int64 presentationId, String status)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                Int32? result = entity.SetICPPresentationStatus(userName, presentationId, status).FirstOrDefault();
+                return result == 0;                
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
         private void SwapPlaceholderText(DocumentFormat.OpenXml.Drawing.Table tbl, int rowNum, int columnNum, string value)
         {
             DocumentFormat.OpenXml.Drawing.TableRow row = tbl.Descendants<DocumentFormat.OpenXml.Drawing.TableRow>().ElementAt(rowNum);
@@ -223,42 +257,18 @@ namespace GreenField.Web.Services
                 if (!isServiceUp)
                     throw new Exception("Services are not available");
 
+                //Manual inputs
+                presentationOverviewData.YTDRet_Absolute = "0.0000%";
+                presentationOverviewData.YTDRet_RELtoLOC = "0.0000%";
+                presentationOverviewData.YTDRet_RELtoEM = "0.0000%";
+
+                #region GF_SECURITY_BASEVIEW info
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
-                    .Where(record => record.TICKER == entitySelectionData.ShortName
-                        && record.ISSUE_NAME == entitySelectionData.LongName
-                        && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
-                        && record.SECURITY_TYPE == entitySelectionData.SecurityType)
-                    .FirstOrDefault();
-
-                DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
-
-                GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
-                if (lastBusinessRecord != null)
-                    if (lastBusinessRecord.PORTFOLIO_DATE != null)
-                        lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
-
-                //if (securityData == null)
-                //    return new ICPresentationOverviewData();
-                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> portfolioData = entity.GF_PORTFOLIO_HOLDINGS.Where(
-                    record => record.PORTFOLIO_ID == portfolio.PortfolioId && record.PORTFOLIO_DATE == lastBusinessDate)
-                    .ToList();
-
-
-                decimal? sumDirtyValuePC = portfolioData.Sum(record => record.DIRTY_VALUE_PC);
-                GF_PORTFOLIO_HOLDINGS securityInPortfolio = portfolioData.Where(a => a.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID).FirstOrDefault();
-
-                string benchmarkID = portfolioData.Select(a => a.BENCHMARK_ID).FirstOrDefault();
-
-                DimensionEntitiesService.GF_BENCHMARK_HOLDINGS benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(
-                                                                                                 record => record.BENCHMARK_ID == benchmarkID
-                                                                                                 && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
-                                                                                                 && record.PORTFOLIO_DATE == Convert.ToDateTime(DateTime.Today.AddDays(-1)))
-                                                                                                 .FirstOrDefault();
-
-                List<NewICPresentationSecurityData> securityDetails = new List<NewICPresentationSecurityData>();
-                securityDetails = externalResearchEntity.GetNewICPresentationSecurityData(securityData.SECURITY_ID.ToString()).ToList();
-
-                decimal? tempNAV;
+                            .Where(record => record.TICKER == entitySelectionData.ShortName
+                                && record.ISSUE_NAME == entitySelectionData.LongName
+                                && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                                && record.SECURITY_TYPE == entitySelectionData.SecurityType)
+                            .FirstOrDefault();
 
                 presentationOverviewData.SecurityTicker = securityData.TICKER;
                 presentationOverviewData.SecurityName = securityData.ISSUE_NAME;
@@ -266,48 +276,127 @@ namespace GreenField.Web.Services
                 presentationOverviewData.SecurityCountryCode = securityData.ISO_COUNTRY_CODE;
                 presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
                 presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
-                presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : securityData.CLOSING_PRICE.ToString()) 
-                    + " " + securityData.TRADING_CURRENCY.ToString();
-                presentationOverviewData.FVCalc = String.Empty;//"3";
-                presentationOverviewData.SecurityBuySellvsCrnt = String.Empty; //"$16.50(8*2013PE)-$21.50(10.5*2013PE)";
+                presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : securityData.CLOSING_PRICE.ToString())
+                    + " " + (securityData.TRADING_CURRENCY == null ? "" : securityData.TRADING_CURRENCY.ToString()); 
+                #endregion
 
-                if (securityInPortfolio != null && securityInPortfolio.DIRTY_VALUE_PC > 0)
+                #region GF_PORTFOLIO_HOLDINGS info
+                DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
+                GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                if (lastBusinessRecord != null)
+                    if (lastBusinessRecord.PORTFOLIO_DATE != null)
+                        lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+
+                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> portfolioData = entity.GF_PORTFOLIO_HOLDINGS.Where(
+                    record => record.PORTFOLIO_ID == portfolio.PortfolioId && record.PORTFOLIO_DATE == lastBusinessDate)
+                    .ToList();
+                decimal? sumDirtyValuePC = portfolioData.Sum(record => record.DIRTY_VALUE_PC);
+                decimal? tempNAV;
+
+                List<GF_PORTFOLIO_HOLDINGS> securityInPortfolio = portfolioData
+                    .Where(a => a.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID 
+                        && a.PORTFOLIO_ID == portfolio.PortfolioId
+                        && a.PORTFOLIO_DATE == lastBusinessDate).ToList();
+                decimal? sumSecurityDirtyValuePC = securityInPortfolio.Sum(record => record.DIRTY_VALUE_PC);
+
+                if (securityInPortfolio != null && sumSecurityDirtyValuePC > 0)
                 {
                     presentationOverviewData.CurrentHoldings = "YES";
                     if (sumDirtyValuePC != 0)
-                        presentationOverviewData.PercentEMIF = (((securityInPortfolio.DIRTY_VALUE_PC / sumDirtyValuePC) * 100) + "%").ToString();
-                    tempNAV = ((securityInPortfolio.DIRTY_VALUE_PC / sumDirtyValuePC) * 100);
+                        presentationOverviewData.PercentEMIF = String.Format("{0:n4}%", ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100));
+                    tempNAV = ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100);
                 }
                 else
                 {
                     presentationOverviewData.CurrentHoldings = "No";
                     presentationOverviewData.PercentEMIF = "0%";
                     tempNAV = 0;
-                }
+                } 
+                #endregion
+
+                #region GF_BENCHMARK_HOLDINGS Info
+                string benchmarkID = portfolioData.Select(a => a.BENCHMARK_ID).FirstOrDefault();
+                DimensionEntitiesService.GF_BENCHMARK_HOLDINGS benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(
+                    record => record.BENCHMARK_ID == benchmarkID
+                        && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                        && record.PORTFOLIO_DATE == lastBusinessDate)
+                    .FirstOrDefault();
 
                 if (benchmarkData != null)
                 {
-                    presentationOverviewData.SecurityBMWeight = benchmarkData.BENCHMARK_WEIGHT.ToString();
+                    presentationOverviewData.SecurityBMWeight = String.Format("{0:n4}", benchmarkData.BENCHMARK_WEIGHT);
                     tempNAV = (tempNAV - benchmarkData.BENCHMARK_WEIGHT);
+                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
                 }
                 else
                 {
                     presentationOverviewData.SecurityBMWeight = "0%";
-                    tempNAV = tempNAV - 0;
-                }
+                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
+                } 
+                #endregion
 
-                presentationOverviewData.SecurityActiveWeight = tempNAV.ToString() + "%";
+                #region FAIR_VALUE Info
+                FAIR_VALUE fairValueRecord = externalResearchEntity.FAIR_VALUE.Where(record => record.VALUE_TYPE == "PRIMARY"
+                            && record.SECURITY_ID == securityData.ASEC_SEC_SHORT_NAME).FirstOrDefault();
 
-                presentationOverviewData.YTDRet_Absolute = String.Empty; //"-3.5%";
-                presentationOverviewData.YTDRet_RELtoLOC = String.Empty;  //"+8%";
-                presentationOverviewData.YTDRet_RELtoEM = String.Empty;// "-2%";
-                presentationOverviewData.SecurityRecommendation = String.Empty; //"BUY";
-                if (securityDetails != null && securityDetails.Count > 0)
+                if (fairValueRecord != null)
                 {
-                    presentationOverviewData.SecurityMarketCapitalization = (float)(securityDetails[0].AMOUNT);
-                }
-                else
-                    presentationOverviewData.SecurityMarketCapitalization = null;
+                    DATA_MASTER dataMasterRecord = externalResearchEntity.DATA_MASTER
+                        .Where(record => record.DATA_ID == fairValueRecord.FV_MEASURE).FirstOrDefault();
+
+                    if (dataMasterRecord != null)
+                    {
+                        presentationOverviewData.SecurityPFVMeasure = dataMasterRecord.DATA_DESC;
+                        presentationOverviewData.SecurityBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
+                        presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
+
+                        presentationOverviewData.CommitteePFVMeasure = dataMasterRecord.DATA_DESC;
+                        presentationOverviewData.CommitteeBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
+                        presentationOverviewData.CommitteeSellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
+
+                        Decimal upperLimit = fairValueRecord.FV_BUY >= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
+                        Decimal lowerLimit = fairValueRecord.FV_BUY <= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
+                        if (presentationOverviewData.CurrentHoldings == "YES")
+                        {
+                            presentationOverviewData.SecurityRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= upperLimit
+                                ? "Hold" : "Sell";
+                            presentationOverviewData.CommitteeRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= upperLimit
+                                ? "Hold" : "Sell";
+                        }
+                        else
+                        {
+                            presentationOverviewData.SecurityRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= lowerLimit
+                                ? "Buy" : "Watch";
+                            presentationOverviewData.CommitteeRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= lowerLimit
+                                ? "Buy" : "Watch";
+                        }
+                        
+
+                        presentationOverviewData.FVCalc = dataMasterRecord.DATA_DESC + " " + securityData.TRADING_CURRENCY + " " +
+                            ((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE).ToString() +
+                            "- " + securityData.TRADING_CURRENCY + " " +
+                            ((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE).ToString();
+
+                        String securityID = securityData.SECURITY_ID.ToString();
+
+                        PERIOD_FINANCIALS periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS
+                            .Where(record => record.SECURITY_ID == securityID
+                                && record.DATA_ID == dataMasterRecord.DATA_ID
+                                && record.CURRENCY == "USD"
+                                && record.PERIOD_TYPE == "C").FirstOrDefault();
+
+                        if (periodFinancialRecord != null)
+                        {
+                            presentationOverviewData.SecurityMarketCapitalization = Convert.ToSingle(periodFinancialRecord.AMOUNT);
+                        }
+
+                    }                    
+                } 
+                #endregion
+
+                presentationOverviewData.SecurityBuySellvsCrnt = String.Empty; //"$16.50(8*2013PE)-$21.50(10.5*2013PE)";
+
+                
 
                 return presentationOverviewData;
             }
@@ -318,9 +407,6 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
-
-
         #endregion
 
         #region UploadEdit Presentation Documents
@@ -461,7 +547,11 @@ namespace GreenField.Web.Services
                     {
                         MeetingDateTime = meetingDateTime.ToUniversalTime(),
                         MeetingClosedDateTime = tempPresentationDeadline.ToUniversalTime(),
-                        MeetingVotingClosedDateTime = tempPreMeetingVotingDeadline.ToUniversalTime()
+                        MeetingVotingClosedDateTime = tempPreMeetingVotingDeadline.ToUniversalTime(),
+                        CreatedBy = "System",
+                        CreatedOn = DateTime.UtcNow,
+                        ModifiedBy = "System",
+                        ModifiedOn = DateTime.UtcNow
                     });
                 }
                 return result;
