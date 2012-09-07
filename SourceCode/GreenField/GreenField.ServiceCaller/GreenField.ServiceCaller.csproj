@@ -46,6 +46,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -178,6 +179,8 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.CountrySelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.COASpecificData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.CustomScreeningSecurityData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.CustomSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.PRevenueData1.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.QuarterlyResultsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.RegionSelectionData.datasource" />
@@ -265,12 +268,6 @@
     </None>
     <None Include="Service References\CustomScreeningDefinitions\CustomScreeningToolOperations41.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\CustomScreeningDefinitions\GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningSecurityData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\CustomScreeningDefinitions\GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\DashboardDefinitions\DashboardOperations.disco" />
     <None Include="Service References\DashboardDefinitions\configuration91.svcinfo" />

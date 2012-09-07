@@ -96,7 +96,7 @@
       <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_RetrieveSecurityData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="BasicHttpBinding_CustomScreeningToolOperations" type="tns:CustomScreeningToolOperations">
+  <wsdl:binding name="CustomScreeningToolOperations" type="tns:CustomScreeningToolOperations">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
     <wsdl:operation name="RetrieveCustomControlsList">
       <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomControlsList" style="document" />
@@ -172,7 +172,7 @@
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="CustomScreeningToolOperations">
-    <wsdl:port name="BasicHttpBinding_CustomScreeningToolOperations" binding="tns:BasicHttpBinding_CustomScreeningToolOperations">
+    <wsdl:port name="CustomScreeningToolOperations" binding="tns:CustomScreeningToolOperations">
       <soap:address location="http://localhost:59430/Services/CustomScreeningToolOperations.svc" />
     </wsdl:port>
   </wsdl:service>

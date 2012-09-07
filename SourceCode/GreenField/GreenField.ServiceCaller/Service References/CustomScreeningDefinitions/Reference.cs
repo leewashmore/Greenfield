@@ -45,358 +45,6 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CustomSelectionData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts")]
-    public partial class CustomSelectionData : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string AnnualField;
-        
-        private string DataDescriptionField;
-        
-        private string LongDescriptionField;
-        
-        private string QuaterlyField;
-        
-        private string ScreeningIdField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Annual {
-            get {
-                return this.AnnualField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AnnualField, value) != true)) {
-                    this.AnnualField = value;
-                    this.RaisePropertyChanged("Annual");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DataDescription {
-            get {
-                return this.DataDescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DataDescriptionField, value) != true)) {
-                    this.DataDescriptionField = value;
-                    this.RaisePropertyChanged("DataDescription");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string LongDescription {
-            get {
-                return this.LongDescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LongDescriptionField, value) != true)) {
-                    this.LongDescriptionField = value;
-                    this.RaisePropertyChanged("LongDescription");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Quaterly {
-            get {
-                return this.QuaterlyField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.QuaterlyField, value) != true)) {
-                    this.QuaterlyField = value;
-                    this.RaisePropertyChanged("Quaterly");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ScreeningId {
-            get {
-                return this.ScreeningIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ScreeningIdField, value) != true)) {
-                    this.ScreeningIdField = value;
-                    this.RaisePropertyChanged("ScreeningId");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CustomScreeningSecurityData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts")]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.PortfolioSelectionData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.BenchmarkSelectionData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningSecurityData>))]
-    public partial class CustomScreeningSecurityData : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private object AmountField;
-        
-        private int DataIdField;
-        
-        private string DataSourceField;
-        
-        private int DecimalsField;
-        
-        private int EstimateIdField;
-        
-        private string IsPercentageField;
-        
-        private string IssueNameField;
-        
-        private string IssuerIdField;
-        
-        private string PeriodTypeField;
-        
-        private int PeriodYearField;
-        
-        private string SecurityIdField;
-        
-        private string SecurityNameField;
-        
-        private string SecurityTickerField;
-        
-        private string TypeField;
-        
-        private string ValueField;
-        
-        private string YearTypeField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public object Amount {
-            get {
-                return this.AmountField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AmountField, value) != true)) {
-                    this.AmountField = value;
-                    this.RaisePropertyChanged("Amount");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DataId {
-            get {
-                return this.DataIdField;
-            }
-            set {
-                if ((this.DataIdField.Equals(value) != true)) {
-                    this.DataIdField = value;
-                    this.RaisePropertyChanged("DataId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DataSource {
-            get {
-                return this.DataSourceField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DataSourceField, value) != true)) {
-                    this.DataSourceField = value;
-                    this.RaisePropertyChanged("DataSource");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Decimals {
-            get {
-                return this.DecimalsField;
-            }
-            set {
-                if ((this.DecimalsField.Equals(value) != true)) {
-                    this.DecimalsField = value;
-                    this.RaisePropertyChanged("Decimals");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int EstimateId {
-            get {
-                return this.EstimateIdField;
-            }
-            set {
-                if ((this.EstimateIdField.Equals(value) != true)) {
-                    this.EstimateIdField = value;
-                    this.RaisePropertyChanged("EstimateId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IsPercentage {
-            get {
-                return this.IsPercentageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IsPercentageField, value) != true)) {
-                    this.IsPercentageField = value;
-                    this.RaisePropertyChanged("IsPercentage");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IssueName {
-            get {
-                return this.IssueNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IssueNameField, value) != true)) {
-                    this.IssueNameField = value;
-                    this.RaisePropertyChanged("IssueName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IssuerId {
-            get {
-                return this.IssuerIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IssuerIdField, value) != true)) {
-                    this.IssuerIdField = value;
-                    this.RaisePropertyChanged("IssuerId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PeriodType {
-            get {
-                return this.PeriodTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PeriodTypeField, value) != true)) {
-                    this.PeriodTypeField = value;
-                    this.RaisePropertyChanged("PeriodType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int PeriodYear {
-            get {
-                return this.PeriodYearField;
-            }
-            set {
-                if ((this.PeriodYearField.Equals(value) != true)) {
-                    this.PeriodYearField = value;
-                    this.RaisePropertyChanged("PeriodYear");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SecurityId {
-            get {
-                return this.SecurityIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SecurityIdField, value) != true)) {
-                    this.SecurityIdField = value;
-                    this.RaisePropertyChanged("SecurityId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SecurityName {
-            get {
-                return this.SecurityNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SecurityNameField, value) != true)) {
-                    this.SecurityNameField = value;
-                    this.RaisePropertyChanged("SecurityName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string SecurityTicker {
-            get {
-                return this.SecurityTickerField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.SecurityTickerField, value) != true)) {
-                    this.SecurityTickerField = value;
-                    this.RaisePropertyChanged("SecurityTicker");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Type {
-            get {
-                return this.TypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TypeField, value) != true)) {
-                    this.TypeField = value;
-                    this.RaisePropertyChanged("Type");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Value {
-            get {
-                return this.ValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
-                    this.ValueField = value;
-                    this.RaisePropertyChanged("Value");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string YearType {
-            get {
-                return this.YearTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.YearTypeField, value) != true)) {
-                    this.YearTypeField = value;
-                    this.RaisePropertyChanged("YearType");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="CustomScreeningDefinitions.CustomScreeningToolOperations")]
     public interface CustomScreeningToolOperations {
@@ -416,7 +64,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             "PointsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveSecurityReferenceTabDataPoints(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrievePeriodFinancialsTabDataP" +
             "oints", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrievePeriodFinancialsTabDataP" +
@@ -425,7 +73,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             "ointsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrievePeriodFinancialsTabDataPoints(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCurrentFinancialsTabData" +
             "Points", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveCurrentFinancialsTabData" +
@@ -434,7 +82,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             "PointsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveCurrentFinancialsTabDataPoints(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabDataPoints", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabDataPointsRe" +
             "sponse")]
@@ -442,14 +90,14 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             "rviceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveFairValueTabDataPoints(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> EndRetrieveFairValueTabDataPoints(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveFairValueTabDataPoints(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityData", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataServiceFault" +
             "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningSecurityData> EndRetrieveSecurityData(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomScreeningSecurityData> EndRetrieveSecurityData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -486,10 +134,10 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
             }
         }
     }
@@ -505,10 +153,10 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
             }
         }
     }
@@ -524,10 +172,10 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
             }
         }
     }
@@ -543,10 +191,10 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
             }
         }
     }
@@ -562,10 +210,10 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningSecurityData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomScreeningSecurityData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningSecurityData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomScreeningSecurityData>)(this.results[0]));
             }
         }
     }
@@ -731,7 +379,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
             return base.Channel.EndRetrieveSecurityReferenceTabDataPoints(result);
         }
         
@@ -740,7 +388,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         private object[] OnEndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveSecurityReferenceTabDataPoints(result);
+            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveSecurityReferenceTabDataPoints(result);
             return new object[] {
                     retVal};
         }
@@ -775,7 +423,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
             return base.Channel.EndRetrievePeriodFinancialsTabDataPoints(result);
         }
         
@@ -784,7 +432,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         private object[] OnEndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrievePeriodFinancialsTabDataPoints(result);
+            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrievePeriodFinancialsTabDataPoints(result);
             return new object[] {
                     retVal};
         }
@@ -819,7 +467,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
             return base.Channel.EndRetrieveCurrentFinancialsTabDataPoints(result);
         }
         
@@ -828,7 +476,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         private object[] OnEndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveCurrentFinancialsTabDataPoints(result);
+            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveCurrentFinancialsTabDataPoints(result);
             return new object[] {
                     retVal};
         }
@@ -863,7 +511,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
             return base.Channel.EndRetrieveFairValueTabDataPoints(result);
         }
         
@@ -872,7 +520,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         private object[] OnEndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveFairValueTabDataPoints(result);
+            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveFairValueTabDataPoints(result);
             return new object[] {
                     retVal};
         }
@@ -907,7 +555,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningSecurityData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveSecurityData(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomScreeningSecurityData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveSecurityData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveSecurityData(result);
         }
         
@@ -922,7 +570,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         private object[] OnEndRetrieveSecurityData(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningSecurityData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveSecurityData(result);
+            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomScreeningSecurityData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveSecurityData(result);
             return new object[] {
                     retVal};
         }
@@ -1052,9 +700,9 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData>)(base.EndInvoke("RetrieveSecurityReferenceTabDataPoints", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveSecurityReferenceTabDataPoints", _args, result)));
                 return _result;
             }
             
@@ -1064,9 +712,9 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData>)(base.EndInvoke("RetrievePeriodFinancialsTabDataPoints", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrievePeriodFinancialsTabDataPoints", _args, result)));
                 return _result;
             }
             
@@ -1076,9 +724,9 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData>)(base.EndInvoke("RetrieveCurrentFinancialsTabDataPoints", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveCurrentFinancialsTabDataPoints", _args, result)));
                 return _result;
             }
             
@@ -1088,9 +736,9 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> EndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData>)(base.EndInvoke("RetrieveFairValueTabDataPoints", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveFairValueTabDataPoints", _args, result)));
                 return _result;
             }
             
@@ -1106,9 +754,9 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningSecurityData> EndRetrieveSecurityData(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomScreeningSecurityData> EndRetrieveSecurityData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningSecurityData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningSecurityData>)(base.EndInvoke("RetrieveSecurityData", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomScreeningSecurityData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomScreeningSecurityData>)(base.EndInvoke("RetrieveSecurityData", _args, result)));
                 return _result;
             }
         }

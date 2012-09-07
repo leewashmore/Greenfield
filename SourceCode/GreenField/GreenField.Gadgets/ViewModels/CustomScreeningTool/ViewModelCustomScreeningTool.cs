@@ -202,6 +202,8 @@ namespace GreenField.Gadgets.ViewModels
                         BenchmarkSelectionVisibility = Visibility.Collapsed;
                         CustomSelectionVisibility = Visibility.Collapsed;
                         RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
+                        RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
+                        RaisePropertyChanged(() => this.CustomSelectionVisibility);
                     }
                     else if (SelectedCriteria == SecuritySelectionType.BENCHMARK)
                     {
@@ -209,6 +211,8 @@ namespace GreenField.Gadgets.ViewModels
                         PortfolioSelectionVisibility = Visibility.Collapsed;
                         CustomSelectionVisibility = Visibility.Collapsed;
                         RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
+                        RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
+                        RaisePropertyChanged(() => this.CustomSelectionVisibility);
                     }
                     else if (SelectedCriteria == SecuritySelectionType.CUSTOM)
                     {
@@ -216,6 +220,8 @@ namespace GreenField.Gadgets.ViewModels
                         PortfolioSelectionVisibility = Visibility.Collapsed;
                         BenchmarkSelectionVisibility = Visibility.Collapsed;
                         RaisePropertyChanged(() => this.CustomSelectionVisibility);
+                        RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
+                        RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
                     }                    
                 }
             }
