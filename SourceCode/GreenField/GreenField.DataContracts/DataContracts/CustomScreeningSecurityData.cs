@@ -2,7 +2,7 @@
 using System.Net;
 using System.Runtime.Serialization;
 
-namespace GreenField.DataContracts.DataContracts
+namespace GreenField.DataContracts
 {
      [DataContract]
     public class CustomScreeningSecurityData

@@ -80,7 +80,7 @@
   <xs:element name="RetrieveSecurityDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="RetrieveSecurityDataResult" nillable="true" type="q8:ArrayOfCustomScreeningSecurityData" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveSecurityDataResult" nillable="true" type="q8:ArrayOfCustomScreeningSecurityData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
