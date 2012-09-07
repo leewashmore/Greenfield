@@ -78,7 +78,7 @@
                                 </telerikCharting:ChartDefaultView.ChartTitle>
 
                                 <telerikCharting:ChartDefaultView.ChartArea>
-                                    <telerikCharting:ChartArea SmartLabelsEnabled="False"
+                                    <telerikCharting:ChartArea SmartLabelsEnabled="False" LabelFormatBehavior="HumanReadable"
                                                             EnableAnimations="False" NoDataString="No Data Available" Margin="0,0,0,0" 
                                                             ItemOverlapPercent="0" ItemWidthPercent="100" LegendName="chPRevenueLegend">
                                         <telerik:ChartArea.ZoomScrollSettingsX>
