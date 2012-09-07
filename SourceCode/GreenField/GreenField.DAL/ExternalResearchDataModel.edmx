@@ -516,6 +516,14 @@
           <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
+        <Function Name="Get_Statement_Models" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+        </Function>
         <Function Name="GetConsensusEstimatesMedian" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
@@ -534,6 +542,14 @@
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
           <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
           <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetDCF_ROIC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="YEAR" Type="int" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
         <Function Name="GetFinstatDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="issuerID" Type="varchar" Mode="In" />
@@ -555,9 +571,18 @@
           <Parameter Name="dataSource" Type="varchar" Mode="In" />
           <Parameter Name="fiscalType" Type="char" Mode="In" />
         </Function>
-        <Function Name="GetMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetNewICPresentationSecurityData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+         <Function Name="GetNewICPresentationSecurityData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityID" Type="varchar" Mode="In" />
+        </Function>
+
+        
+        <Function Name="GetMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetModelConsensusEstimates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
@@ -731,8 +756,34 @@
             <Parameter Name="issuerIdsForBenchmark" Mode="In" Type="String" />
             <Parameter Name="securityIdsForBenchmark" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetNewICPresentationSecurityData" ReturnType="Collection(ExternalResearchModel.NewICPresentationSecurityData)">
+          
+           <FunctionImport Name="GetNewICPresentationSecurityData" ReturnType="Collection(ExternalResearchModel.NewICPresentationSecurityData)">
             <Parameter Name="securityID" Mode="In" Type="String" />
+          </FunctionImport>
+
+          
+          <FunctionImport Name="GetDCF_ROIC" ReturnType="Collection(ExternalResearchModel.DCF_ROICResult)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="YEAR" Mode="In" Type="Int32" />
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetModelConsensusEstimates" ReturnType="Collection(ExternalResearchModel.ModelConsensusEstimatesData)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Get_Statement_Models" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+            <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -1218,8 +1269,33 @@
           <Property Type="Decimal" Name="Amount" Nullable="false" />
           <Property Type="String" Name="AmountType" Nullable="false" />
         </ComplexType>
-        <ComplexType Name="NewICPresentationSecurityData">
+        
+         <ComplexType Name="NewICPresentationSecurityData">
           <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+        </ComplexType>
+
+        
+        
+        <ComplexType Name="DCF_ROICResult">
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="ModelConsensusEstimatesData">
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="ESTIMATE_ID" Nullable="false" />
+          <Property Type="String" Name="ESTIMATE_DESC" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Period" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="NUMBER_OF_ESTIMATES" Nullable="false" />
+          <Property Type="Decimal" Name="HIGH" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="LOW" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="STANDARD_DEVIATION" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
+          <Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23" />
         </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -1674,10 +1750,63 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          
           <FunctionImportMapping FunctionImportName="GetNewICPresentationSecurityData" FunctionName="ExternalResearchModel.Store.GetNewICPresentationSecurityData">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.NewICPresentationSecurityData">
                 <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+
+          
+          
+          <FunctionImportMapping FunctionImportName="GetDCF_ROIC" FunctionName="ExternalResearchModel.Store.GetDCF_ROIC" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.DCF_ROICResult">
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetModelConsensusEstimates" FunctionName="ExternalResearchModel.Store.GetModelConsensusEstimates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.ModelConsensusEstimatesData">
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+                <ScalarProperty Name="ESTIMATE_DESC" ColumnName="ESTIMATE_DESC" />
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
+                <ScalarProperty Name="HIGH" ColumnName="HIGH" />
+                <ScalarProperty Name="LOW" ColumnName="LOW" />
+                <ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
+                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+                <ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Get_Statement_Models" FunctionName="ExternalResearchModel.Store.Get_Statement_Models">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementData">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AmountType" ColumnName="AmountType" />
+                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+                <ScalarProperty Name="IsConsensus" ColumnName="IsConsensus" />
+                <ScalarProperty Name="DataId" ColumnName="DataId" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="BoldFont" ColumnName="BoldFont" />
+                <ScalarProperty Name="Decimals" ColumnName="Decimals" />
+                <ScalarProperty Name="RootSource" ColumnName="RootSource" />
+                <ScalarProperty Name="RootSourceDate" ColumnName="RootSourceDate" />
+                <ScalarProperty Name="CalculationDiagram" ColumnName="CalculationDiagram" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

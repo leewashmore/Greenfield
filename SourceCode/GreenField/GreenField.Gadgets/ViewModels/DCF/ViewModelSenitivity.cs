@@ -13,8 +13,12 @@ using System.Collections.ObjectModel;
 using GreenField.DataContracts;
 using System.Linq;
 using GreenField.Gadgets.Models;
-namespace GreenField.Gadgets.ViewModels.DCF
+
+namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View-Model Sensitivity
+    /// </summary>
     public class ViewModelSenitivity:NotificationObject
     {
         #region PrivateVariables

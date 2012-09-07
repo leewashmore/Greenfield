@@ -142,9 +142,12 @@
                         <telerik:RadMenuItem x:Name="rmItemDCF" Header="Discounted Cash Flows" Command="{Binding DashboardCompanyValuationDiscountedCashFlowCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                     </telerik:RadMenuItem>
-
-                    <telerik:RadMenuItem x:Name="rmItemDocuments" Header="Documents" Command="{Binding DashboardCompanyDocumentsCommand}"/>
-
+                    <telerik:RadMenuItem Header="Documents" x:Name="rmItemDocument">
+                        <telerik:RadMenuItem x:Name="rmItemDocuments" Header="Documents" Command="{Binding DashboardCompanyDocumentsCommand}"
+                                             Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <telerik:RadMenuItem x:Name="rmItemLoadModel" Header="Load Models" Command="{Binding DashboardCompanyDocumentsLoadModelCommand}"
+                                             Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                    </telerik:RadMenuItem>
                     <telerik:RadMenuItem x:Name="rmItemCharting" Header="Charting">
                         <telerik:RadMenuItem Header="Price/Comparison" x:Name="rmItemPriceComparison"
                                              Command="{Binding DashboardCompanyChartingClosingPriceCommand}"

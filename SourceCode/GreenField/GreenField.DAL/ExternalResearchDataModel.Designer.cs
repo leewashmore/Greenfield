@@ -20,51 +20,54 @@ using System.Runtime.Serialization;
 namespace GreenField.DAL
 {
     #region Contexts
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
     public partial class ExternalResearchEntities : ObjectContext
     {
         #region Constructors
-    
+
         /// <summary>
         /// Initializes a new ExternalResearchEntities object using the connection string found in the 'ExternalResearchEntities' section of the application configuration file.
         /// </summary>
-        public ExternalResearchEntities() : base("name=ExternalResearchEntities", "ExternalResearchEntities")
+        public ExternalResearchEntities()
+            : base("name=ExternalResearchEntities", "ExternalResearchEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
-    
+
         /// <summary>
         /// Initialize a new ExternalResearchEntities object.
         /// </summary>
-        public ExternalResearchEntities(string connectionString) : base(connectionString, "ExternalResearchEntities")
+        public ExternalResearchEntities(string connectionString)
+            : base(connectionString, "ExternalResearchEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
-    
+
         /// <summary>
         /// Initialize a new ExternalResearchEntities object.
         /// </summary>
-        public ExternalResearchEntities(EntityConnection connection) : base(connection, "ExternalResearchEntities")
+        public ExternalResearchEntities(EntityConnection connection)
+            : base(connection, "ExternalResearchEntities")
         {
             this.ContextOptions.LazyLoadingEnabled = true;
             OnContextCreated();
         }
-    
+
         #endregion
-    
+
         #region Partial Methods
-    
+
         partial void OnContextCreated();
-    
+
         #endregion
-    
+
         #region ObjectSet Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -80,7 +83,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<CURRENT_CONSENSUS_ESTIMATES> _CURRENT_CONSENSUS_ESTIMATES;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -96,7 +99,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<DATA_MASTER> _DATA_MASTER;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -112,7 +115,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<FX_RATES> _FX_RATES;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -128,7 +131,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<INTERNAL_ISSUER> _INTERNAL_ISSUER;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -144,7 +147,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<ISSUER_SHARES> _ISSUER_SHARES;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -160,7 +163,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<ISSUER_SHARES_COMPOSITION> _ISSUER_SHARES_COMPOSITION;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -176,7 +179,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<Macroeconomic_Data> _Macroeconomic_Data;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -192,7 +195,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<Macroeconomic_Display> _Macroeconomic_Display;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -208,7 +211,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<PERIOD_FINANCIALS> _PERIOD_FINANCIALS;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -224,7 +227,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<PERIOD_FINANCIALS_DISPLAY> _PERIOD_FINANCIALS_DISPLAY;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -240,7 +243,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<REUTERS_XREF> _REUTERS_XREF;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -256,7 +259,7 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<PRICE> _PRICES;
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -275,7 +278,7 @@ namespace GreenField.DAL
 
         #endregion
         #region AddTo Methods
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the CURRENT_CONSENSUS_ESTIMATES EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -283,7 +286,7 @@ namespace GreenField.DAL
         {
             base.AddObject("CURRENT_CONSENSUS_ESTIMATES", cURRENT_CONSENSUS_ESTIMATES);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the DATA_MASTER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -291,7 +294,7 @@ namespace GreenField.DAL
         {
             base.AddObject("DATA_MASTER", dATA_MASTER);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the FX_RATES EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -299,7 +302,7 @@ namespace GreenField.DAL
         {
             base.AddObject("FX_RATES", fX_RATES);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the INTERNAL_ISSUER EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -307,7 +310,7 @@ namespace GreenField.DAL
         {
             base.AddObject("INTERNAL_ISSUER", iNTERNAL_ISSUER);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the ISSUER_SHARES EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -315,7 +318,7 @@ namespace GreenField.DAL
         {
             base.AddObject("ISSUER_SHARES", iSSUER_SHARES);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the ISSUER_SHARES_COMPOSITION EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -323,7 +326,7 @@ namespace GreenField.DAL
         {
             base.AddObject("ISSUER_SHARES_COMPOSITION", iSSUER_SHARES_COMPOSITION);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the Macroeconomic_Data EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -331,7 +334,7 @@ namespace GreenField.DAL
         {
             base.AddObject("Macroeconomic_Data", macroeconomic_Data);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the Macroeconomic_Display EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -339,7 +342,7 @@ namespace GreenField.DAL
         {
             base.AddObject("Macroeconomic_Display", macroeconomic_Display);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the PERIOD_FINANCIALS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -347,7 +350,7 @@ namespace GreenField.DAL
         {
             base.AddObject("PERIOD_FINANCIALS", pERIOD_FINANCIALS);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the PERIOD_FINANCIALS_DISPLAY EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -355,7 +358,7 @@ namespace GreenField.DAL
         {
             base.AddObject("PERIOD_FINANCIALS_DISPLAY", pERIOD_FINANCIALS_DISPLAY);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the REUTERS_XREF EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -363,7 +366,7 @@ namespace GreenField.DAL
         {
             base.AddObject("REUTERS_XREF", rEUTERS_XREF);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the PRICES EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -371,7 +374,7 @@ namespace GreenField.DAL
         {
             base.AddObject("PRICES", pRICE);
         }
-    
+
         /// <summary>
         /// Deprecated Method for adding a new object to the External_Country_Master EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
@@ -382,7 +385,7 @@ namespace GreenField.DAL
 
         #endregion
         #region Function Imports
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -398,10 +401,10 @@ namespace GreenField.DAL
             {
                 securityIDParameter = new ObjectParameter("SecurityID", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<GetBasicData_Result>("GetBasicData", securityIDParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -417,10 +420,10 @@ namespace GreenField.DAL
             {
                 xRefParameter = new ObjectParameter("XRef", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<GetTargetPrice_Result>("GetTargetPrice", xRefParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -436,10 +439,10 @@ namespace GreenField.DAL
             {
                 securityParameter = new ObjectParameter("Security", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<ConsensusEstimatesSummaryData>("GetConsensusEstimatesSummaryData", securityParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -456,7 +459,7 @@ namespace GreenField.DAL
             {
                 dataIdParameter = new ObjectParameter("DataId", typeof(global::System.Int32));
             }
-    
+
             ObjectParameter periodYearParameter;
             if (periodYear.HasValue)
             {
@@ -466,10 +469,10 @@ namespace GreenField.DAL
             {
                 periodYearParameter = new ObjectParameter("PeriodYear", typeof(global::System.Int32));
             }
-    
+
             return base.ExecuteFunction<QuarterlyResults>("usp_GetQuarterlyResults", dataIdParameter, periodYearParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -489,7 +492,7 @@ namespace GreenField.DAL
             {
                 iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
             }
-    
+
             ObjectParameter dATA_SOURCEParameter;
             if (dATA_SOURCE != null)
             {
@@ -499,7 +502,7 @@ namespace GreenField.DAL
             {
                 dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
             }
-    
+
             ObjectParameter pERIOD_TYPEParameter;
             if (pERIOD_TYPE != null)
             {
@@ -509,7 +512,7 @@ namespace GreenField.DAL
             {
                 pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter fISCAL_TYPEParameter;
             if (fISCAL_TYPE != null)
             {
@@ -519,7 +522,7 @@ namespace GreenField.DAL
             {
                 fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter cURRENCYParameter;
             if (cURRENCY != null)
             {
@@ -529,10 +532,10 @@ namespace GreenField.DAL
             {
                 cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<ConsensusEstimateMedianData>("GetConsensusEstimateData", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -554,7 +557,7 @@ namespace GreenField.DAL
             {
                 iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
             }
-    
+
             ObjectParameter dATA_SOURCEParameter;
             if (dATA_SOURCE != null)
             {
@@ -564,7 +567,7 @@ namespace GreenField.DAL
             {
                 dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
             }
-    
+
             ObjectParameter pERIOD_TYPEParameter;
             if (pERIOD_TYPE != null)
             {
@@ -574,7 +577,7 @@ namespace GreenField.DAL
             {
                 pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter fISCAL_TYPEParameter;
             if (fISCAL_TYPE != null)
             {
@@ -584,7 +587,7 @@ namespace GreenField.DAL
             {
                 fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter cURRENCYParameter;
             if (cURRENCY != null)
             {
@@ -594,7 +597,7 @@ namespace GreenField.DAL
             {
                 cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
             }
-    
+
             ObjectParameter eSTIMATE_IDParameter;
             if (eSTIMATE_ID.HasValue)
             {
@@ -604,7 +607,7 @@ namespace GreenField.DAL
             {
                 eSTIMATE_IDParameter = new ObjectParameter("ESTIMATE_ID", typeof(global::System.Int32));
             }
-    
+
             ObjectParameter pERIOD_YEARParameter;
             if (pERIOD_YEAR.HasValue)
             {
@@ -614,10 +617,10 @@ namespace GreenField.DAL
             {
                 pERIOD_YEARParameter = new ObjectParameter("PERIOD_YEAR", typeof(global::System.Int32));
             }
-    
+
             return base.ExecuteFunction<ConsensusEstimateValuation>("Get_ConsensusEstimatesValuation", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter, eSTIMATE_IDParameter, pERIOD_YEARParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -639,7 +642,7 @@ namespace GreenField.DAL
             {
                 iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
             }
-    
+
             ObjectParameter dATA_SOURCEParameter;
             if (dATA_SOURCE != null)
             {
@@ -649,7 +652,7 @@ namespace GreenField.DAL
             {
                 dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
             }
-    
+
             ObjectParameter pERIOD_TYPEParameter;
             if (pERIOD_TYPE != null)
             {
@@ -659,7 +662,7 @@ namespace GreenField.DAL
             {
                 pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter fISCAL_TYPEParameter;
             if (fISCAL_TYPE != null)
             {
@@ -669,7 +672,7 @@ namespace GreenField.DAL
             {
                 fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter cURRENCYParameter;
             if (cURRENCY != null)
             {
@@ -679,7 +682,7 @@ namespace GreenField.DAL
             {
                 cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
             }
-    
+
             ObjectParameter eSTIMATE_IDParameter;
             if (eSTIMATE_ID.HasValue)
             {
@@ -689,7 +692,7 @@ namespace GreenField.DAL
             {
                 eSTIMATE_IDParameter = new ObjectParameter("ESTIMATE_ID", typeof(global::System.Int32));
             }
-    
+
             ObjectParameter pERIOD_YEARParameter;
             if (pERIOD_YEAR.HasValue)
             {
@@ -699,10 +702,10 @@ namespace GreenField.DAL
             {
                 pERIOD_YEARParameter = new ObjectParameter("PERIOD_YEAR", typeof(global::System.Int32));
             }
-    
+
             return base.ExecuteFunction<ConsensusEstimateValuation>("GetConsensusEstimatesValuation", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter, eSTIMATE_IDParameter, pERIOD_YEARParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -722,7 +725,7 @@ namespace GreenField.DAL
             {
                 iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
             }
-    
+
             ObjectParameter dATA_SOURCEParameter;
             if (dATA_SOURCE != null)
             {
@@ -732,7 +735,7 @@ namespace GreenField.DAL
             {
                 dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
             }
-    
+
             ObjectParameter pERIOD_TYPEParameter;
             if (pERIOD_TYPE != null)
             {
@@ -742,7 +745,7 @@ namespace GreenField.DAL
             {
                 pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter fISCAL_TYPEParameter;
             if (fISCAL_TYPE != null)
             {
@@ -752,7 +755,7 @@ namespace GreenField.DAL
             {
                 fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter cURRENCYParameter;
             if (cURRENCY != null)
             {
@@ -762,10 +765,10 @@ namespace GreenField.DAL
             {
                 cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<ConsensusEstimateDetailData>("GetConsensusDetail", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -783,7 +786,7 @@ namespace GreenField.DAL
             {
                 securityIdParameter = new ObjectParameter("securityId", typeof(global::System.String));
             }
-    
+
             ObjectParameter issuerIdParameter;
             if (issuerId != null)
             {
@@ -793,7 +796,7 @@ namespace GreenField.DAL
             {
                 issuerIdParameter = new ObjectParameter("issuerId", typeof(global::System.String));
             }
-    
+
             ObjectParameter chartTitleParameter;
             if (chartTitle != null)
             {
@@ -803,10 +806,10 @@ namespace GreenField.DAL
             {
                 chartTitleParameter = new ObjectParameter("chartTitle", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<GetPRevenueData_Result>("Get_PRevenue", securityIdParameter, issuerIdParameter, chartTitleParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -827,7 +830,7 @@ namespace GreenField.DAL
             {
                 iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
             }
-    
+
             ObjectParameter dATA_SOURCEParameter;
             if (dATA_SOURCE != null)
             {
@@ -837,7 +840,7 @@ namespace GreenField.DAL
             {
                 dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
             }
-    
+
             ObjectParameter pERIOD_TYPEParameter;
             if (pERIOD_TYPE != null)
             {
@@ -847,7 +850,7 @@ namespace GreenField.DAL
             {
                 pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter fISCAL_TYPEParameter;
             if (fISCAL_TYPE != null)
             {
@@ -857,7 +860,7 @@ namespace GreenField.DAL
             {
                 fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter sTATEMENT_TYPEParameter;
             if (sTATEMENT_TYPE != null)
             {
@@ -867,7 +870,7 @@ namespace GreenField.DAL
             {
                 sTATEMENT_TYPEParameter = new ObjectParameter("STATEMENT_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter cURRENCYParameter;
             if (cURRENCY != null)
             {
@@ -877,10 +880,10 @@ namespace GreenField.DAL
             {
                 cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<FinancialStatementData>("Get_Statement", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, sTATEMENT_TYPEParameter, cURRENCYParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -900,7 +903,7 @@ namespace GreenField.DAL
             {
                 cSourceParameter = new ObjectParameter("cSource", typeof(global::System.String));
             }
-    
+
             ObjectParameter cFiscalTypeParameter;
             if (cFiscalType != null)
             {
@@ -910,7 +913,7 @@ namespace GreenField.DAL
             {
                 cFiscalTypeParameter = new ObjectParameter("cFiscalType", typeof(global::System.String));
             }
-    
+
             ObjectParameter cCurrencyParameter;
             if (cCurrency != null)
             {
@@ -920,7 +923,7 @@ namespace GreenField.DAL
             {
                 cCurrencyParameter = new ObjectParameter("cCurrency", typeof(global::System.String));
             }
-    
+
             ObjectParameter cIssuerIDParameter;
             if (cIssuerID != null)
             {
@@ -930,7 +933,7 @@ namespace GreenField.DAL
             {
                 cIssuerIDParameter = new ObjectParameter("cIssuerID", typeof(global::System.String));
             }
-    
+
             ObjectParameter cSecurityIDParameter;
             if (cSecurityID != null)
             {
@@ -940,10 +943,10 @@ namespace GreenField.DAL
             {
                 cSecurityIDParameter = new ObjectParameter("cSecurityID", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<COASpecificData>("GetDataForPeriodGadgets", cSourceParameter, cFiscalTypeParameter, cCurrencyParameter, cIssuerIDParameter, cSecurityIDParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -963,7 +966,7 @@ namespace GreenField.DAL
             {
                 issuerIDParameter = new ObjectParameter("issuerID", typeof(global::System.String));
             }
-    
+
             ObjectParameter securityIdParameter;
             if (securityId != null)
             {
@@ -973,7 +976,7 @@ namespace GreenField.DAL
             {
                 securityIdParameter = new ObjectParameter("securityId", typeof(global::System.String));
             }
-    
+
             ObjectParameter dataSourceParameter;
             if (dataSource != null)
             {
@@ -983,7 +986,7 @@ namespace GreenField.DAL
             {
                 dataSourceParameter = new ObjectParameter("dataSource", typeof(global::System.String));
             }
-    
+
             ObjectParameter fiscalTypeParameter;
             if (fiscalType != null)
             {
@@ -993,7 +996,7 @@ namespace GreenField.DAL
             {
                 fiscalTypeParameter = new ObjectParameter("fiscalType", typeof(global::System.String));
             }
-    
+
             ObjectParameter currencyParameter;
             if (currency != null)
             {
@@ -1003,10 +1006,10 @@ namespace GreenField.DAL
             {
                 currencyParameter = new ObjectParameter("currency", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<FinstatDetail>("GetFinstatDetail", issuerIDParameter, securityIdParameter, dataSourceParameter, fiscalTypeParameter, currencyParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -1024,7 +1027,7 @@ namespace GreenField.DAL
             {
                 securityIdParameter = new ObjectParameter("securityId", typeof(global::System.String));
             }
-    
+
             ObjectParameter issuerIdParameter;
             if (issuerId != null)
             {
@@ -1034,7 +1037,7 @@ namespace GreenField.DAL
             {
                 issuerIdParameter = new ObjectParameter("issuerId", typeof(global::System.String));
             }
-    
+
             ObjectParameter chartTitleParameter;
             if (chartTitle != null)
             {
@@ -1044,10 +1047,10 @@ namespace GreenField.DAL
             {
                 chartTitleParameter = new ObjectParameter("chartTitle", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<GetEV_EBITDAData_Result>("Get_EV_EBITDA", securityIdParameter, issuerIdParameter, chartTitleParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -1067,7 +1070,7 @@ namespace GreenField.DAL
             {
                 issuerIDParameter = new ObjectParameter("issuerID", typeof(global::System.String));
             }
-    
+
             ObjectParameter securityIdParameter;
             if (securityId != null)
             {
@@ -1077,7 +1080,7 @@ namespace GreenField.DAL
             {
                 securityIdParameter = new ObjectParameter("securityId", typeof(global::System.String));
             }
-    
+
             ObjectParameter dataSourceParameter;
             if (dataSource != null)
             {
@@ -1087,7 +1090,7 @@ namespace GreenField.DAL
             {
                 dataSourceParameter = new ObjectParameter("dataSource", typeof(global::System.String));
             }
-    
+
             ObjectParameter fiscalTypeParameter;
             if (fiscalType != null)
             {
@@ -1097,7 +1100,7 @@ namespace GreenField.DAL
             {
                 fiscalTypeParameter = new ObjectParameter("fiscalType", typeof(global::System.String));
             }
-    
+
             ObjectParameter currencyParameter;
             if (currency != null)
             {
@@ -1107,10 +1110,10 @@ namespace GreenField.DAL
             {
                 currencyParameter = new ObjectParameter("currency", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<FinstatEconomicMarketData>("GetFinstatEconomicMarketData", issuerIDParameter, securityIdParameter, dataSourceParameter, fiscalTypeParameter, currencyParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -1129,7 +1132,7 @@ namespace GreenField.DAL
             {
                 issuerIDParameter = new ObjectParameter("issuerID", typeof(global::System.String));
             }
-    
+
             ObjectParameter securityIdParameter;
             if (securityId != null)
             {
@@ -1139,7 +1142,7 @@ namespace GreenField.DAL
             {
                 securityIdParameter = new ObjectParameter("securityId", typeof(global::System.String));
             }
-    
+
             ObjectParameter dataSourceParameter;
             if (dataSource != null)
             {
@@ -1149,7 +1152,7 @@ namespace GreenField.DAL
             {
                 dataSourceParameter = new ObjectParameter("dataSource", typeof(global::System.String));
             }
-    
+
             ObjectParameter fiscalTypeParameter;
             if (fiscalType != null)
             {
@@ -1159,10 +1162,10 @@ namespace GreenField.DAL
             {
                 fiscalTypeParameter = new ObjectParameter("fiscalType", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<FinstatRelativeAnalysisData>("GetFinstatRelativeAnalysisData", issuerIDParameter, securityIdParameter, dataSourceParameter, fiscalTypeParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -1170,7 +1173,7 @@ namespace GreenField.DAL
         {
             return base.ExecuteFunction<Nullable<global::System.Decimal>>("GetMarketCap");
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -1189,7 +1192,7 @@ namespace GreenField.DAL
             {
                 iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
             }
-    
+
             ObjectParameter eSTIMATE_TYPEParameter;
             if (eSTIMATE_TYPE != null)
             {
@@ -1199,7 +1202,7 @@ namespace GreenField.DAL
             {
                 eSTIMATE_TYPEParameter = new ObjectParameter("ESTIMATE_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter pERIOD_TYPEParameter;
             if (pERIOD_TYPE != null)
             {
@@ -1209,7 +1212,7 @@ namespace GreenField.DAL
             {
                 pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter cURRENCYParameter;
             if (cURRENCY != null)
             {
@@ -1219,10 +1222,10 @@ namespace GreenField.DAL
             {
                 cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<BrokerDetailData>("GetBrokerDetail", iSSUER_IDParameter, eSTIMATE_TYPEParameter, pERIOD_TYPEParameter, cURRENCYParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -1238,10 +1241,10 @@ namespace GreenField.DAL
             {
                 securityBucketXMLParameter = new ObjectParameter("securityBucketXML", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<RatioComparisonData>("RetrieveRatioComparisonData", securityBucketXMLParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -1261,7 +1264,7 @@ namespace GreenField.DAL
             {
                 iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
             }
-    
+
             ObjectParameter dATA_SOURCEParameter;
             if (dATA_SOURCE != null)
             {
@@ -1271,7 +1274,7 @@ namespace GreenField.DAL
             {
                 dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
             }
-    
+
             ObjectParameter pERIOD_TYPEParameter;
             if (pERIOD_TYPE != null)
             {
@@ -1281,7 +1284,7 @@ namespace GreenField.DAL
             {
                 pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter fISCAL_TYPEParameter;
             if (fISCAL_TYPE != null)
             {
@@ -1291,7 +1294,7 @@ namespace GreenField.DAL
             {
                 fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
             }
-    
+
             ObjectParameter cURRENCYParameter;
             if (cURRENCY != null)
             {
@@ -1301,10 +1304,10 @@ namespace GreenField.DAL
             {
                 cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<DCFAnalysisSummaryData_Result>("RetrieveDCFAnalysisSummaryData", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -1321,7 +1324,7 @@ namespace GreenField.DAL
             {
                 securityIdParameter = new ObjectParameter("SecurityId", typeof(global::System.String));
             }
-    
+
             ObjectParameter pFVMeasureParameter;
             if (pFVMeasure != null)
             {
@@ -1331,10 +1334,10 @@ namespace GreenField.DAL
             {
                 pFVMeasureParameter = new ObjectParameter("PFVMeasure", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<Nullable<global::System.Decimal>>("RetrieveSecurityPFVMeasureCurrentPrice", securityIdParameter, pFVMeasureParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -1353,7 +1356,7 @@ namespace GreenField.DAL
             {
                 issuerIdsForPortfolioParameter = new ObjectParameter("issuerIdsForPortfolio", typeof(global::System.String));
             }
-    
+
             ObjectParameter securityIdsForPortfolioParameter;
             if (securityIdsForPortfolio != null)
             {
@@ -1363,7 +1366,7 @@ namespace GreenField.DAL
             {
                 securityIdsForPortfolioParameter = new ObjectParameter("securityIdsForPortfolio", typeof(global::System.String));
             }
-    
+
             ObjectParameter issuerIdsForBenchmarkParameter;
             if (issuerIdsForBenchmark != null)
             {
@@ -1373,7 +1376,7 @@ namespace GreenField.DAL
             {
                 issuerIdsForBenchmarkParameter = new ObjectParameter("issuerIdsForBenchmark", typeof(global::System.String));
             }
-    
+
             ObjectParameter securityIdsForBenchmarkParameter;
             if (securityIdsForBenchmark != null)
             {
@@ -1383,10 +1386,10 @@ namespace GreenField.DAL
             {
                 securityIdsForBenchmarkParameter = new ObjectParameter("securityIdsForBenchmark", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<ValuationQualityGrowthData>("usp_GetDataForValuationQualityGrowth", issuerIdsForPortfolioParameter, securityIdsForPortfolioParameter, issuerIdsForBenchmarkParameter, securityIdsForBenchmarkParameter);
         }
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
@@ -1402,28 +1405,241 @@ namespace GreenField.DAL
             {
                 securityIDParameter = new ObjectParameter("securityID", typeof(global::System.String));
             }
-    
+
             return base.ExecuteFunction<NewICPresentationSecurityData>("GetNewICPresentationSecurityData", securityIDParameter);
+        }
+
+
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="yEAR">No Metadata Documentation available.</param>
+        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
+        /// <param name="fISCAL_TYPE">No Metadata Documentation available.</param>
+        /// <param name="cURRENCY">No Metadata Documentation available.</param>
+        public ObjectResult<DCF_ROICResult> GetDCF_ROIC(global::System.String iSSUER_ID, Nullable<global::System.Int32> yEAR, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String cURRENCY)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+
+            ObjectParameter yEARParameter;
+            if (yEAR.HasValue)
+            {
+                yEARParameter = new ObjectParameter("YEAR", yEAR);
+            }
+            else
+            {
+                yEARParameter = new ObjectParameter("YEAR", typeof(global::System.Int32));
+            }
+
+            ObjectParameter dATA_SOURCEParameter;
+            if (dATA_SOURCE != null)
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
+            }
+            else
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
+            }
+
+            ObjectParameter pERIOD_TYPEParameter;
+            if (pERIOD_TYPE != null)
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
+            }
+            else
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
+            }
+
+            ObjectParameter fISCAL_TYPEParameter;
+            if (fISCAL_TYPE != null)
+            {
+                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", fISCAL_TYPE);
+            }
+            else
+            {
+                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
+            }
+
+            ObjectParameter cURRENCYParameter;
+            if (cURRENCY != null)
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", cURRENCY);
+            }
+            else
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
+            }
+
+            return base.ExecuteFunction<DCF_ROICResult>("GetDCF_ROIC", iSSUER_IDParameter, yEARParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter);
+        }
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
+        /// <param name="fISCAL_TYPE">No Metadata Documentation available.</param>
+        /// <param name="cURRENCY">No Metadata Documentation available.</param>
+        public ObjectResult<ModelConsensusEstimatesData> GetModelConsensusEstimates(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String cURRENCY)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+
+            ObjectParameter dATA_SOURCEParameter;
+            if (dATA_SOURCE != null)
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
+            }
+            else
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
+            }
+
+            ObjectParameter pERIOD_TYPEParameter;
+            if (pERIOD_TYPE != null)
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
+            }
+            else
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
+            }
+
+            ObjectParameter fISCAL_TYPEParameter;
+            if (fISCAL_TYPE != null)
+            {
+                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", fISCAL_TYPE);
+            }
+            else
+            {
+                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
+            }
+
+            ObjectParameter cURRENCYParameter;
+            if (cURRENCY != null)
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", cURRENCY);
+            }
+            else
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
+            }
+
+            return base.ExecuteFunction<ModelConsensusEstimatesData>("GetModelConsensusEstimates", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter);
+        }
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
+        /// <param name="fISCAL_TYPE">No Metadata Documentation available.</param>
+        /// <param name="sTATEMENT_TYPE">No Metadata Documentation available.</param>
+        /// <param name="cURRENCY">No Metadata Documentation available.</param>
+        public ObjectResult<FinancialStatementData> Get_Statement_Models(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String sTATEMENT_TYPE, global::System.String cURRENCY)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+
+            ObjectParameter dATA_SOURCEParameter;
+            if (dATA_SOURCE != null)
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
+            }
+            else
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
+            }
+
+            ObjectParameter pERIOD_TYPEParameter;
+            if (pERIOD_TYPE != null)
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
+            }
+            else
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
+            }
+
+            ObjectParameter fISCAL_TYPEParameter;
+            if (fISCAL_TYPE != null)
+            {
+                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", fISCAL_TYPE);
+            }
+            else
+            {
+                fISCAL_TYPEParameter = new ObjectParameter("FISCAL_TYPE", typeof(global::System.String));
+            }
+
+            ObjectParameter sTATEMENT_TYPEParameter;
+            if (sTATEMENT_TYPE != null)
+            {
+                sTATEMENT_TYPEParameter = new ObjectParameter("STATEMENT_TYPE", sTATEMENT_TYPE);
+            }
+            else
+            {
+                sTATEMENT_TYPEParameter = new ObjectParameter("STATEMENT_TYPE", typeof(global::System.String));
+            }
+
+            ObjectParameter cURRENCYParameter;
+            if (cURRENCY != null)
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", cURRENCY);
+            }
+            else
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
+            }
+
+            return base.ExecuteFunction<FinancialStatementData>("Get_Statement_Models", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, sTATEMENT_TYPEParameter, cURRENCYParameter);
         }
 
         #endregion
     }
-    
+
 
     #endregion
-    
+
     #region Entities
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="CURRENT_CONSENSUS_ESTIMATES")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "CURRENT_CONSENSUS_ESTIMATES")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class CURRENT_CONSENSUS_ESTIMATES : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new CURRENT_CONSENSUS_ESTIMATES object.
         /// </summary>
@@ -1469,11 +1685,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -1496,11 +1712,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SECURITY_ID
         {
@@ -1523,11 +1739,11 @@ namespace GreenField.DAL
         private global::System.String _SECURITY_ID;
         partial void OnSECURITY_IDChanging(global::System.String value);
         partial void OnSECURITY_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DATA_SOURCE
         {
@@ -1550,11 +1766,11 @@ namespace GreenField.DAL
         private global::System.String _DATA_SOURCE;
         partial void OnDATA_SOURCEChanging(global::System.String value);
         partial void OnDATA_SOURCEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime DATA_SOURCE_DATE
         {
@@ -1577,11 +1793,11 @@ namespace GreenField.DAL
         private global::System.DateTime _DATA_SOURCE_DATE;
         partial void OnDATA_SOURCE_DATEChanging(global::System.DateTime value);
         partial void OnDATA_SOURCE_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PERIOD_TYPE
         {
@@ -1604,11 +1820,11 @@ namespace GreenField.DAL
         private global::System.String _PERIOD_TYPE;
         partial void OnPERIOD_TYPEChanging(global::System.String value);
         partial void OnPERIOD_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 PERIOD_YEAR
         {
@@ -1631,11 +1847,11 @@ namespace GreenField.DAL
         private global::System.Int32 _PERIOD_YEAR;
         partial void OnPERIOD_YEARChanging(global::System.Int32 value);
         partial void OnPERIOD_YEARChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime PERIOD_END_DATE
         {
@@ -1658,11 +1874,11 @@ namespace GreenField.DAL
         private global::System.DateTime _PERIOD_END_DATE;
         partial void OnPERIOD_END_DATEChanging(global::System.DateTime value);
         partial void OnPERIOD_END_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String FISCAL_TYPE
         {
@@ -1685,11 +1901,11 @@ namespace GreenField.DAL
         private global::System.String _FISCAL_TYPE;
         partial void OnFISCAL_TYPEChanging(global::System.String value);
         partial void OnFISCAL_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 ESTIMATE_ID
         {
@@ -1712,11 +1928,11 @@ namespace GreenField.DAL
         private global::System.Int32 _ESTIMATE_ID;
         partial void OnESTIMATE_IDChanging(global::System.Int32 value);
         partial void OnESTIMATE_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String CURRENCY
         {
@@ -1739,11 +1955,11 @@ namespace GreenField.DAL
         private global::System.String _CURRENCY;
         partial void OnCURRENCYChanging(global::System.String value);
         partial void OnCURRENCYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal AMOUNT
         {
@@ -1766,11 +1982,11 @@ namespace GreenField.DAL
         private global::System.Decimal _AMOUNT;
         partial void OnAMOUNTChanging(global::System.Decimal value);
         partial void OnAMOUNTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 NUMBER_OF_ESTIMATES
         {
@@ -1793,11 +2009,11 @@ namespace GreenField.DAL
         private global::System.Int32 _NUMBER_OF_ESTIMATES;
         partial void OnNUMBER_OF_ESTIMATESChanging(global::System.Int32 value);
         partial void OnNUMBER_OF_ESTIMATESChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal HIGH
         {
@@ -1820,11 +2036,11 @@ namespace GreenField.DAL
         private global::System.Decimal _HIGH;
         partial void OnHIGHChanging(global::System.Decimal value);
         partial void OnHIGHChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal LOW
         {
@@ -1847,11 +2063,11 @@ namespace GreenField.DAL
         private global::System.Decimal _LOW;
         partial void OnLOWChanging(global::System.Decimal value);
         partial void OnLOWChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SOURCE_CURRENCY
         {
@@ -1874,11 +2090,11 @@ namespace GreenField.DAL
         private global::System.String _SOURCE_CURRENCY;
         partial void OnSOURCE_CURRENCYChanging(global::System.String value);
         partial void OnSOURCE_CURRENCYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal STANDARD_DEVIATION
         {
@@ -1901,11 +2117,11 @@ namespace GreenField.DAL
         private global::System.Decimal _STANDARD_DEVIATION;
         partial void OnSTANDARD_DEVIATIONChanging(global::System.Decimal value);
         partial void OnSTANDARD_DEVIATIONChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String AMOUNT_TYPE
         {
@@ -1930,19 +2146,19 @@ namespace GreenField.DAL
         partial void OnAMOUNT_TYPEChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="DATA_MASTER")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "DATA_MASTER")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class DATA_MASTER : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new DATA_MASTER object.
         /// </summary>
@@ -1972,11 +2188,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 DATA_ID
         {
@@ -1999,11 +2215,11 @@ namespace GreenField.DAL
         private global::System.Int32 _DATA_ID;
         partial void OnDATA_IDChanging(global::System.Int32 value);
         partial void OnDATA_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String COA
         {
@@ -2023,11 +2239,11 @@ namespace GreenField.DAL
         private global::System.String _COA;
         partial void OnCOAChanging(global::System.String value);
         partial void OnCOAChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String FX_CONV_TYPE
         {
@@ -2050,11 +2266,11 @@ namespace GreenField.DAL
         private global::System.String _FX_CONV_TYPE;
         partial void OnFX_CONV_TYPEChanging(global::System.String value);
         partial void OnFX_CONV_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String CALENDARIZE
         {
@@ -2077,11 +2293,11 @@ namespace GreenField.DAL
         private global::System.String _CALENDARIZE;
         partial void OnCALENDARIZEChanging(global::System.String value);
         partial void OnCALENDARIZEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String INDUSTRIAL
         {
@@ -2104,11 +2320,11 @@ namespace GreenField.DAL
         private global::System.String _INDUSTRIAL;
         partial void OnINDUSTRIALChanging(global::System.String value);
         partial void OnINDUSTRIALChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String BANK
         {
@@ -2131,11 +2347,11 @@ namespace GreenField.DAL
         private global::System.String _BANK;
         partial void OnBANKChanging(global::System.String value);
         partial void OnBANKChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String INSURANCE
         {
@@ -2158,11 +2374,11 @@ namespace GreenField.DAL
         private global::System.String _INSURANCE;
         partial void OnINSURANCEChanging(global::System.String value);
         partial void OnINSURANCEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String UTILITY
         {
@@ -2185,11 +2401,11 @@ namespace GreenField.DAL
         private global::System.String _UTILITY;
         partial void OnUTILITYChanging(global::System.String value);
         partial void OnUTILITYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String QUARTERLY
         {
@@ -2212,11 +2428,11 @@ namespace GreenField.DAL
         private global::System.String _QUARTERLY;
         partial void OnQUARTERLYChanging(global::System.String value);
         partial void OnQUARTERLYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DATA_DESC
         {
@@ -2239,11 +2455,11 @@ namespace GreenField.DAL
         private global::System.String _DATA_DESC;
         partial void OnDATA_DESCChanging(global::System.String value);
         partial void OnDATA_DESCChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String COA_TYPE
         {
@@ -2263,11 +2479,11 @@ namespace GreenField.DAL
         private global::System.String _COA_TYPE;
         partial void OnCOA_TYPEChanging(global::System.String value);
         partial void OnCOA_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String ANNUAL
         {
@@ -2287,11 +2503,11 @@ namespace GreenField.DAL
         private global::System.String _ANNUAL;
         partial void OnANNUALChanging(global::System.String value);
         partial void OnANNUALChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String CURRENT
         {
@@ -2311,11 +2527,11 @@ namespace GreenField.DAL
         private global::System.String _CURRENT;
         partial void OnCURRENTChanging(global::System.String value);
         partial void OnCURRENTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String STATEMENT_TYPE
         {
@@ -2337,19 +2553,19 @@ namespace GreenField.DAL
         partial void OnSTATEMENT_TYPEChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="External_Country_Master")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "External_Country_Master")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class External_Country_Master : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new External_Country_Master object.
         /// </summary>
@@ -2371,11 +2587,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String COUNTRY_CODE
         {
@@ -2398,11 +2614,11 @@ namespace GreenField.DAL
         private global::System.String _COUNTRY_CODE;
         partial void OnCOUNTRY_CODEChanging(global::System.String value);
         partial void OnCOUNTRY_CODEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String COUNTRY_NAME
         {
@@ -2425,11 +2641,11 @@ namespace GreenField.DAL
         private global::System.String _COUNTRY_NAME;
         partial void OnCOUNTRY_NAMEChanging(global::System.String value);
         partial void OnCOUNTRY_NAMEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String CURRENCY_CODE
         {
@@ -2452,11 +2668,11 @@ namespace GreenField.DAL
         private global::System.String _CURRENCY_CODE;
         partial void OnCURRENCY_CODEChanging(global::System.String value);
         partial void OnCURRENCY_CODEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String CURRENCY_NAME
         {
@@ -2479,11 +2695,11 @@ namespace GreenField.DAL
         private global::System.String _CURRENCY_NAME;
         partial void OnCURRENCY_NAMEChanging(global::System.String value);
         partial void OnCURRENCY_NAMEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String MACRO_ECON_DATA_CURRENT
         {
@@ -2506,11 +2722,11 @@ namespace GreenField.DAL
         private global::System.String _MACRO_ECON_DATA_CURRENT;
         partial void OnMACRO_ECON_DATA_CURRENTChanging(global::System.String value);
         partial void OnMACRO_ECON_DATA_CURRENTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String ASHEMM_PROPRIETARY_REGION_NAME
         {
@@ -2530,11 +2746,11 @@ namespace GreenField.DAL
         private global::System.String _ASHEMM_PROPRIETARY_REGION_NAME;
         partial void OnASHEMM_PROPRIETARY_REGION_NAMEChanging(global::System.String value);
         partial void OnASHEMM_PROPRIETARY_REGION_NAMEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String ASHEMM_PROPRIETARY_REGION_CODE
         {
@@ -2556,19 +2772,19 @@ namespace GreenField.DAL
         partial void OnASHEMM_PROPRIETARY_REGION_CODEChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="FX_RATES")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "FX_RATES")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class FX_RATES : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new FX_RATES object.
         /// </summary>
@@ -2586,11 +2802,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String CURRENCY
         {
@@ -2613,11 +2829,11 @@ namespace GreenField.DAL
         private global::System.String _CURRENCY;
         partial void OnCURRENCYChanging(global::System.String value);
         partial void OnCURRENCYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime FX_DATE
         {
@@ -2640,11 +2856,11 @@ namespace GreenField.DAL
         private global::System.DateTime _FX_DATE;
         partial void OnFX_DATEChanging(global::System.DateTime value);
         partial void OnFX_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal FX_RATE
         {
@@ -2667,11 +2883,11 @@ namespace GreenField.DAL
         private global::System.Decimal _FX_RATE;
         partial void OnFX_RATEChanging(global::System.Decimal value);
         partial void OnFX_RATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> AVG90DAYRATE
         {
@@ -2691,11 +2907,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _AVG90DAYRATE;
         partial void OnAVG90DAYRATEChanging(Nullable<global::System.Decimal> value);
         partial void OnAVG90DAYRATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> AVG12MonthRATE
         {
@@ -2717,19 +2933,19 @@ namespace GreenField.DAL
         partial void OnAVG12MonthRATEChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="INTERNAL_ISSUER")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "INTERNAL_ISSUER")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class INTERNAL_ISSUER : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new INTERNAL_ISSUER object.
         /// </summary>
@@ -2745,11 +2961,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -2772,11 +2988,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String COA_TYPE
         {
@@ -2799,11 +3015,11 @@ namespace GreenField.DAL
         private global::System.String _COA_TYPE;
         partial void OnCOA_TYPEChanging(global::System.String value);
         partial void OnCOA_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.DateTime> LastPrimaryModelLoad
         {
@@ -2823,11 +3039,11 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _LastPrimaryModelLoad;
         partial void OnLastPrimaryModelLoadChanging(Nullable<global::System.DateTime> value);
         partial void OnLastPrimaryModelLoadChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.DateTime> LastIndustryModelLoad
         {
@@ -2849,19 +3065,19 @@ namespace GreenField.DAL
         partial void OnLastIndustryModelLoadChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="ISSUER_SHARES")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "ISSUER_SHARES")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class ISSUER_SHARES : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new ISSUER_SHARES object.
         /// </summary>
@@ -2879,11 +3095,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -2906,11 +3122,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime SHARES_DATE
         {
@@ -2933,11 +3149,11 @@ namespace GreenField.DAL
         private global::System.DateTime _SHARES_DATE;
         partial void OnSHARES_DATEChanging(global::System.DateTime value);
         partial void OnSHARES_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 SHARES_OUTSTANDING
         {
@@ -2962,19 +3178,19 @@ namespace GreenField.DAL
         partial void OnSHARES_OUTSTANDINGChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="ISSUER_SHARES_COMPOSITION")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "ISSUER_SHARES_COMPOSITION")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class ISSUER_SHARES_COMPOSITION : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new ISSUER_SHARES_COMPOSITION object.
         /// </summary>
@@ -2990,11 +3206,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -3017,11 +3233,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SECURITY_ID
         {
@@ -3046,19 +3262,19 @@ namespace GreenField.DAL
         partial void OnSECURITY_IDChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="Macroeconomic_Data")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "Macroeconomic_Data")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class Macroeconomic_Data : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new Macroeconomic_Data object.
         /// </summary>
@@ -3080,11 +3296,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String COUNTRY_CODE
         {
@@ -3107,11 +3323,11 @@ namespace GreenField.DAL
         private global::System.String _COUNTRY_CODE;
         partial void OnCOUNTRY_CODEChanging(global::System.String value);
         partial void OnCOUNTRY_CODEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String FIELD
         {
@@ -3134,11 +3350,11 @@ namespace GreenField.DAL
         private global::System.String _FIELD;
         partial void OnFIELDChanging(global::System.String value);
         partial void OnFIELDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 YEAR1
         {
@@ -3161,11 +3377,11 @@ namespace GreenField.DAL
         private global::System.Int32 _YEAR1;
         partial void OnYEAR1Changing(global::System.Int32 value);
         partial void OnYEAR1Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> VALUE
         {
@@ -3185,11 +3401,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _VALUE;
         partial void OnVALUEChanging(Nullable<global::System.Decimal> value);
         partial void OnVALUEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime UPDATE_DATE
         {
@@ -3212,11 +3428,11 @@ namespace GreenField.DAL
         private global::System.DateTime _UPDATE_DATE;
         partial void OnUPDATE_DATEChanging(global::System.DateTime value);
         partial void OnUPDATE_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String UPDATE_SOURCE
         {
@@ -3241,19 +3457,19 @@ namespace GreenField.DAL
         partial void OnUPDATE_SOURCEChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="Macroeconomic_Display")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "Macroeconomic_Display")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class Macroeconomic_Display : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new Macroeconomic_Display object.
         /// </summary>
@@ -3277,11 +3493,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DISPLAY_TYPE
         {
@@ -3304,11 +3520,11 @@ namespace GreenField.DAL
         private global::System.String _DISPLAY_TYPE;
         partial void OnDISPLAY_TYPEChanging(global::System.String value);
         partial void OnDISPLAY_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String FIELD
         {
@@ -3331,11 +3547,11 @@ namespace GreenField.DAL
         private global::System.String _FIELD;
         partial void OnFIELDChanging(global::System.String value);
         partial void OnFIELDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String CATEGORY_NAME
         {
@@ -3358,11 +3574,11 @@ namespace GreenField.DAL
         private global::System.String _CATEGORY_NAME;
         partial void OnCATEGORY_NAMEChanging(global::System.String value);
         partial void OnCATEGORY_NAMEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String FIELD_DESC
         {
@@ -3385,11 +3601,11 @@ namespace GreenField.DAL
         private global::System.String _FIELD_DESC;
         partial void OnFIELD_DESCChanging(global::System.String value);
         partial void OnFIELD_DESCChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DATATYPE
         {
@@ -3412,11 +3628,11 @@ namespace GreenField.DAL
         private global::System.String _DATATYPE;
         partial void OnDATATYPEChanging(global::System.String value);
         partial void OnDATATYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Int32> DECIMALS
         {
@@ -3436,11 +3652,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _DECIMALS;
         partial void OnDECIMALSChanging(Nullable<global::System.Int32> value);
         partial void OnDECIMALSChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 SORT_ORDER
         {
@@ -3463,11 +3679,11 @@ namespace GreenField.DAL
         private global::System.Int32 _SORT_ORDER;
         partial void OnSORT_ORDERChanging(global::System.Int32 value);
         partial void OnSORT_ORDERChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String HELP_TEXT
         {
@@ -3489,19 +3705,19 @@ namespace GreenField.DAL
         partial void OnHELP_TEXTChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="PERIOD_FINANCIALS")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "PERIOD_FINANCIALS")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class PERIOD_FINANCIALS : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new PERIOD_FINANCIALS object.
         /// </summary>
@@ -3543,11 +3759,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -3570,11 +3786,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SECURITY_ID
         {
@@ -3597,11 +3813,11 @@ namespace GreenField.DAL
         private global::System.String _SECURITY_ID;
         partial void OnSECURITY_IDChanging(global::System.String value);
         partial void OnSECURITY_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String COA_TYPE
         {
@@ -3624,11 +3840,11 @@ namespace GreenField.DAL
         private global::System.String _COA_TYPE;
         partial void OnCOA_TYPEChanging(global::System.String value);
         partial void OnCOA_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DATA_SOURCE
         {
@@ -3651,11 +3867,11 @@ namespace GreenField.DAL
         private global::System.String _DATA_SOURCE;
         partial void OnDATA_SOURCEChanging(global::System.String value);
         partial void OnDATA_SOURCEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ROOT_SOURCE
         {
@@ -3678,11 +3894,11 @@ namespace GreenField.DAL
         private global::System.String _ROOT_SOURCE;
         partial void OnROOT_SOURCEChanging(global::System.String value);
         partial void OnROOT_SOURCEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime ROOT_SOURCE_DATE
         {
@@ -3705,11 +3921,11 @@ namespace GreenField.DAL
         private global::System.DateTime _ROOT_SOURCE_DATE;
         partial void OnROOT_SOURCE_DATEChanging(global::System.DateTime value);
         partial void OnROOT_SOURCE_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PERIOD_TYPE
         {
@@ -3732,11 +3948,11 @@ namespace GreenField.DAL
         private global::System.String _PERIOD_TYPE;
         partial void OnPERIOD_TYPEChanging(global::System.String value);
         partial void OnPERIOD_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 PERIOD_YEAR
         {
@@ -3759,11 +3975,11 @@ namespace GreenField.DAL
         private global::System.Int32 _PERIOD_YEAR;
         partial void OnPERIOD_YEARChanging(global::System.Int32 value);
         partial void OnPERIOD_YEARChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime PERIOD_END_DATE
         {
@@ -3786,11 +4002,11 @@ namespace GreenField.DAL
         private global::System.DateTime _PERIOD_END_DATE;
         partial void OnPERIOD_END_DATEChanging(global::System.DateTime value);
         partial void OnPERIOD_END_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String FISCAL_TYPE
         {
@@ -3813,11 +4029,11 @@ namespace GreenField.DAL
         private global::System.String _FISCAL_TYPE;
         partial void OnFISCAL_TYPEChanging(global::System.String value);
         partial void OnFISCAL_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String CURRENCY
         {
@@ -3840,11 +4056,11 @@ namespace GreenField.DAL
         private global::System.String _CURRENCY;
         partial void OnCURRENCYChanging(global::System.String value);
         partial void OnCURRENCYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 DATA_ID
         {
@@ -3867,11 +4083,11 @@ namespace GreenField.DAL
         private global::System.Int32 _DATA_ID;
         partial void OnDATA_IDChanging(global::System.Int32 value);
         partial void OnDATA_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal AMOUNT
         {
@@ -3894,11 +4110,11 @@ namespace GreenField.DAL
         private global::System.Decimal _AMOUNT;
         partial void OnAMOUNTChanging(global::System.Decimal value);
         partial void OnAMOUNTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String CALCULATION_DIAGRAM
         {
@@ -3918,11 +4134,11 @@ namespace GreenField.DAL
         private global::System.String _CALCULATION_DIAGRAM;
         partial void OnCALCULATION_DIAGRAMChanging(global::System.String value);
         partial void OnCALCULATION_DIAGRAMChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SOURCE_CURRENCY
         {
@@ -3945,11 +4161,11 @@ namespace GreenField.DAL
         private global::System.String _SOURCE_CURRENCY;
         partial void OnSOURCE_CURRENCYChanging(global::System.String value);
         partial void OnSOURCE_CURRENCYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String AMOUNT_TYPE
         {
@@ -3974,19 +4190,19 @@ namespace GreenField.DAL
         partial void OnAMOUNT_TYPEChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="PERIOD_FINANCIALS_DISPLAY")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "PERIOD_FINANCIALS_DISPLAY")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class PERIOD_FINANCIALS_DISPLAY : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new PERIOD_FINANCIALS_DISPLAY object.
         /// </summary>
@@ -4014,11 +4230,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 DATA_ID
         {
@@ -4041,11 +4257,11 @@ namespace GreenField.DAL
         private global::System.Int32 _DATA_ID;
         partial void OnDATA_IDChanging(global::System.Int32 value);
         partial void OnDATA_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DATA_DESC
         {
@@ -4068,11 +4284,11 @@ namespace GreenField.DAL
         private global::System.String _DATA_DESC;
         partial void OnDATA_DESCChanging(global::System.String value);
         partial void OnDATA_DESCChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String STATEMENT_TYPE
         {
@@ -4092,11 +4308,11 @@ namespace GreenField.DAL
         private global::System.String _STATEMENT_TYPE;
         partial void OnSTATEMENT_TYPEChanging(global::System.String value);
         partial void OnSTATEMENT_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String COA_TYPE
         {
@@ -4119,11 +4335,11 @@ namespace GreenField.DAL
         private global::System.String _COA_TYPE;
         partial void OnCOA_TYPEChanging(global::System.String value);
         partial void OnCOA_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 SORT_ORDER
         {
@@ -4146,11 +4362,11 @@ namespace GreenField.DAL
         private global::System.Int32 _SORT_ORDER;
         partial void OnSORT_ORDERChanging(global::System.Int32 value);
         partial void OnSORT_ORDERChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String GROUP_NAME
         {
@@ -4173,11 +4389,11 @@ namespace GreenField.DAL
         private global::System.String _GROUP_NAME;
         partial void OnGROUP_NAMEChanging(global::System.String value);
         partial void OnGROUP_NAMEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String BOLD_FONT
         {
@@ -4200,11 +4416,11 @@ namespace GreenField.DAL
         private global::System.String _BOLD_FONT;
         partial void OnBOLD_FONTChanging(global::System.String value);
         partial void OnBOLD_FONTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 DECIMALS
         {
@@ -4227,11 +4443,11 @@ namespace GreenField.DAL
         private global::System.Int32 _DECIMALS;
         partial void OnDECIMALSChanging(global::System.Int32 value);
         partial void OnDECIMALSChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal MULTIPLIER
         {
@@ -4256,19 +4472,19 @@ namespace GreenField.DAL
         partial void OnMULTIPLIERChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="PRICE")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "PRICE")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class PRICE : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new PRICE object.
         /// </summary>
@@ -4290,11 +4506,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SECURITY_ID
         {
@@ -4317,11 +4533,11 @@ namespace GreenField.DAL
         private global::System.String _SECURITY_ID;
         partial void OnSECURITY_IDChanging(global::System.String value);
         partial void OnSECURITY_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime PRICE_DATE
         {
@@ -4344,11 +4560,11 @@ namespace GreenField.DAL
         private global::System.DateTime _PRICE_DATE;
         partial void OnPRICE_DATEChanging(global::System.DateTime value);
         partial void OnPRICE_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal PRICE1
         {
@@ -4371,11 +4587,11 @@ namespace GreenField.DAL
         private global::System.Decimal _PRICE1;
         partial void OnPRICE1Changing(global::System.Decimal value);
         partial void OnPRICE1Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal FX_RATE
         {
@@ -4398,11 +4614,11 @@ namespace GreenField.DAL
         private global::System.Decimal _FX_RATE;
         partial void OnFX_RATEChanging(global::System.Decimal value);
         partial void OnFX_RATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal ADR_CONV
         {
@@ -4427,19 +4643,19 @@ namespace GreenField.DAL
         partial void OnADR_CONVChanged();
 
         #endregion
-    
+
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="REUTERS_XREF")]
+    [EdmEntityTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "REUTERS_XREF")]
     [Serializable()]
-    [DataContractAttribute(IsReference=true)]
+    [DataContractAttribute(IsReference = true)]
     public partial class REUTERS_XREF : EntityObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new REUTERS_XREF object.
         /// </summary>
@@ -4457,11 +4673,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ReportNumber
         {
@@ -4484,11 +4700,11 @@ namespace GreenField.DAL
         private global::System.String _ReportNumber;
         partial void OnReportNumberChanging(global::System.String value);
         partial void OnReportNumberChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String Xref
         {
@@ -4508,11 +4724,11 @@ namespace GreenField.DAL
         private global::System.String _Xref;
         partial void OnXrefChanging(global::System.String value);
         partial void OnXrefChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -4535,11 +4751,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String SECURITY_ID
         {
@@ -4559,11 +4775,11 @@ namespace GreenField.DAL
         private global::System.String _SECURITY_ID;
         partial void OnSECURITY_IDChanging(global::System.String value);
         partial void OnSECURITY_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String ASEC_SEC_SHORT_NAME
         {
@@ -4583,11 +4799,11 @@ namespace GreenField.DAL
         private global::System.String _ASEC_SEC_SHORT_NAME;
         partial void OnASEC_SEC_SHORT_NAMEChanging(global::System.String value);
         partial void OnASEC_SEC_SHORT_NAMEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String NAME
         {
@@ -4607,11 +4823,11 @@ namespace GreenField.DAL
         private global::System.String _NAME;
         partial void OnNAMEChanging(global::System.String value);
         partial void OnNAMEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = true, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PROVIDER
         {
@@ -4636,22 +4852,22 @@ namespace GreenField.DAL
         partial void OnPROVIDERChanged();
 
         #endregion
-    
+
     }
 
     #endregion
     #region ComplexTypes
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="BrokerDetailData")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "BrokerDetailData")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class BrokerDetailData : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new BrokerDetailData object.
         /// </summary>
@@ -4669,11 +4885,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String broker_name
         {
@@ -4693,11 +4909,11 @@ namespace GreenField.DAL
         private global::System.String _broker_name;
         partial void Onbroker_nameChanging(global::System.String value);
         partial void Onbroker_nameChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String EstimateType
         {
@@ -4717,11 +4933,11 @@ namespace GreenField.DAL
         private global::System.String _EstimateType;
         partial void OnEstimateTypeChanging(global::System.String value);
         partial void OnEstimateTypeChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String fPeriodEnd
         {
@@ -4741,11 +4957,11 @@ namespace GreenField.DAL
         private global::System.String _fPeriodEnd;
         partial void OnfPeriodEndChanging(global::System.String value);
         partial void OnfPeriodEndChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Single> Amount
         {
@@ -4765,11 +4981,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Single> _Amount;
         partial void OnAmountChanging(Nullable<global::System.Single> value);
         partial void OnAmountChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime StartDate
         {
@@ -4789,11 +5005,11 @@ namespace GreenField.DAL
         private global::System.DateTime _StartDate;
         partial void OnStartDateChanging(global::System.DateTime value);
         partial void OnStartDateChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime Last_Update_Date
         {
@@ -4813,11 +5029,11 @@ namespace GreenField.DAL
         private global::System.DateTime _Last_Update_Date;
         partial void OnLast_Update_DateChanging(global::System.DateTime value);
         partial void OnLast_Update_DateChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String Reported_Currency
         {
@@ -4840,17 +5056,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="COASpecificData")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "COASpecificData")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class COASpecificData : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new COASpecificData object.
         /// </summary>
@@ -4884,11 +5100,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 GridId
         {
@@ -4908,11 +5124,11 @@ namespace GreenField.DAL
         private global::System.Int32 _GridId;
         partial void OnGridIdChanging(global::System.Int32 value);
         partial void OnGridIdChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String ShowGrid
         {
@@ -4932,11 +5148,11 @@ namespace GreenField.DAL
         private global::System.String _ShowGrid;
         partial void OnShowGridChanging(global::System.String value);
         partial void OnShowGridChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String GridDesc
         {
@@ -4956,11 +5172,11 @@ namespace GreenField.DAL
         private global::System.String _GridDesc;
         partial void OnGridDescChanging(global::System.String value);
         partial void OnGridDescChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal Amount
         {
@@ -4980,11 +5196,11 @@ namespace GreenField.DAL
         private global::System.Decimal _Amount;
         partial void OnAmountChanging(global::System.Decimal value);
         partial void OnAmountChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String AmountType
         {
@@ -5004,11 +5220,11 @@ namespace GreenField.DAL
         private global::System.String _AmountType;
         partial void OnAmountTypeChanging(global::System.String value);
         partial void OnAmountTypeChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String Description
         {
@@ -5028,11 +5244,11 @@ namespace GreenField.DAL
         private global::System.String _Description;
         partial void OnDescriptionChanging(global::System.String value);
         partial void OnDescriptionChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DataSource
         {
@@ -5052,11 +5268,11 @@ namespace GreenField.DAL
         private global::System.String _DataSource;
         partial void OnDataSourceChanging(global::System.String value);
         partial void OnDataSourceChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 Decimals
         {
@@ -5076,11 +5292,11 @@ namespace GreenField.DAL
         private global::System.Int32 _Decimals;
         partial void OnDecimalsChanging(global::System.Int32 value);
         partial void OnDecimalsChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String IsPercentage
         {
@@ -5100,11 +5316,11 @@ namespace GreenField.DAL
         private global::System.String _IsPercentage;
         partial void OnIsPercentageChanging(global::System.String value);
         partial void OnIsPercentageChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String RootSource
         {
@@ -5124,11 +5340,11 @@ namespace GreenField.DAL
         private global::System.String _RootSource;
         partial void OnRootSourceChanging(global::System.String value);
         partial void OnRootSourceChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 SortOrder
         {
@@ -5148,11 +5364,11 @@ namespace GreenField.DAL
         private global::System.Int32 _SortOrder;
         partial void OnSortOrderChanging(global::System.Int32 value);
         partial void OnSortOrderChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String Period_Type
         {
@@ -5172,11 +5388,11 @@ namespace GreenField.DAL
         private global::System.String _Period_Type;
         partial void OnPeriod_TypeChanging(global::System.String value);
         partial void OnPeriod_TypeChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 PeriodYear
         {
@@ -5199,17 +5415,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="ConsensusEstimateDetailData")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "ConsensusEstimateDetailData")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class ConsensusEstimateDetailData : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new ConsensusEstimateDetailData object.
         /// </summary>
@@ -5251,11 +5467,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -5275,11 +5491,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 ESTIMATE_ID
         {
@@ -5299,11 +5515,11 @@ namespace GreenField.DAL
         private global::System.Int32 _ESTIMATE_ID;
         partial void OnESTIMATE_IDChanging(global::System.Int32 value);
         partial void OnESTIMATE_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ESTIMATE_DESC
         {
@@ -5323,11 +5539,11 @@ namespace GreenField.DAL
         private global::System.String _ESTIMATE_DESC;
         partial void OnESTIMATE_DESCChanging(global::System.String value);
         partial void OnESTIMATE_DESCChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String Period
         {
@@ -5347,11 +5563,11 @@ namespace GreenField.DAL
         private global::System.String _Period;
         partial void OnPeriodChanging(global::System.String value);
         partial void OnPeriodChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String AMOUNT_TYPE
         {
@@ -5371,11 +5587,11 @@ namespace GreenField.DAL
         private global::System.String _AMOUNT_TYPE;
         partial void OnAMOUNT_TYPEChanging(global::System.String value);
         partial void OnAMOUNT_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 PERIOD_YEAR
         {
@@ -5395,11 +5611,11 @@ namespace GreenField.DAL
         private global::System.Int32 _PERIOD_YEAR;
         partial void OnPERIOD_YEARChanging(global::System.Int32 value);
         partial void OnPERIOD_YEARChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PERIOD_TYPE
         {
@@ -5419,11 +5635,11 @@ namespace GreenField.DAL
         private global::System.String _PERIOD_TYPE;
         partial void OnPERIOD_TYPEChanging(global::System.String value);
         partial void OnPERIOD_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal AMOUNT
         {
@@ -5443,11 +5659,11 @@ namespace GreenField.DAL
         private global::System.Decimal _AMOUNT;
         partial void OnAMOUNTChanging(global::System.Decimal value);
         partial void OnAMOUNTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> ASHMOREEMM_AMOUNT
         {
@@ -5467,11 +5683,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _ASHMOREEMM_AMOUNT;
         partial void OnASHMOREEMM_AMOUNTChanging(Nullable<global::System.Decimal> value);
         partial void OnASHMOREEMM_AMOUNTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 NUMBER_OF_ESTIMATES
         {
@@ -5491,11 +5707,11 @@ namespace GreenField.DAL
         private global::System.Int32 _NUMBER_OF_ESTIMATES;
         partial void OnNUMBER_OF_ESTIMATESChanging(global::System.Int32 value);
         partial void OnNUMBER_OF_ESTIMATESChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal HIGH
         {
@@ -5515,11 +5731,11 @@ namespace GreenField.DAL
         private global::System.Decimal _HIGH;
         partial void OnHIGHChanging(global::System.Decimal value);
         partial void OnHIGHChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal LOW
         {
@@ -5539,11 +5755,11 @@ namespace GreenField.DAL
         private global::System.Decimal _LOW;
         partial void OnLOWChanging(global::System.Decimal value);
         partial void OnLOWChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal STANDARD_DEVIATION
         {
@@ -5563,11 +5779,11 @@ namespace GreenField.DAL
         private global::System.Decimal _STANDARD_DEVIATION;
         partial void OnSTANDARD_DEVIATIONChanging(global::System.Decimal value);
         partial void OnSTANDARD_DEVIATIONChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SOURCE_CURRENCY
         {
@@ -5587,11 +5803,11 @@ namespace GreenField.DAL
         private global::System.String _SOURCE_CURRENCY;
         partial void OnSOURCE_CURRENCYChanging(global::System.String value);
         partial void OnSOURCE_CURRENCYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DATA_SOURCE
         {
@@ -5611,11 +5827,11 @@ namespace GreenField.DAL
         private global::System.String _DATA_SOURCE;
         partial void OnDATA_SOURCEChanging(global::System.String value);
         partial void OnDATA_SOURCEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime DATA_SOURCE_DATE
         {
@@ -5635,11 +5851,11 @@ namespace GreenField.DAL
         private global::System.DateTime _DATA_SOURCE_DATE;
         partial void OnDATA_SOURCE_DATEChanging(global::System.DateTime value);
         partial void OnDATA_SOURCE_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> ACTUAL
         {
@@ -5662,17 +5878,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="ConsensusEstimateMedianData")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "ConsensusEstimateMedianData")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class ConsensusEstimateMedianData : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new ConsensusEstimateMedianData object.
         /// </summary>
@@ -5714,11 +5930,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -5738,11 +5954,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 ESTIMATE_ID
         {
@@ -5762,11 +5978,11 @@ namespace GreenField.DAL
         private global::System.Int32 _ESTIMATE_ID;
         partial void OnESTIMATE_IDChanging(global::System.Int32 value);
         partial void OnESTIMATE_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ESTIMATE_DESC
         {
@@ -5786,11 +6002,11 @@ namespace GreenField.DAL
         private global::System.String _ESTIMATE_DESC;
         partial void OnESTIMATE_DESCChanging(global::System.String value);
         partial void OnESTIMATE_DESCChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String Period
         {
@@ -5810,11 +6026,11 @@ namespace GreenField.DAL
         private global::System.String _Period;
         partial void OnPeriodChanging(global::System.String value);
         partial void OnPeriodChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String AMOUNT_TYPE
         {
@@ -5834,11 +6050,11 @@ namespace GreenField.DAL
         private global::System.String _AMOUNT_TYPE;
         partial void OnAMOUNT_TYPEChanging(global::System.String value);
         partial void OnAMOUNT_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 PERIOD_YEAR
         {
@@ -5858,11 +6074,11 @@ namespace GreenField.DAL
         private global::System.Int32 _PERIOD_YEAR;
         partial void OnPERIOD_YEARChanging(global::System.Int32 value);
         partial void OnPERIOD_YEARChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PERIOD_TYPE
         {
@@ -5882,11 +6098,11 @@ namespace GreenField.DAL
         private global::System.String _PERIOD_TYPE;
         partial void OnPERIOD_TYPEChanging(global::System.String value);
         partial void OnPERIOD_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal AMOUNT
         {
@@ -5906,11 +6122,11 @@ namespace GreenField.DAL
         private global::System.Decimal _AMOUNT;
         partial void OnAMOUNTChanging(global::System.Decimal value);
         partial void OnAMOUNTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> ASHMOREEMM_AMOUNT
         {
@@ -5930,11 +6146,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _ASHMOREEMM_AMOUNT;
         partial void OnASHMOREEMM_AMOUNTChanging(Nullable<global::System.Decimal> value);
         partial void OnASHMOREEMM_AMOUNTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 NUMBER_OF_ESTIMATES
         {
@@ -5954,11 +6170,11 @@ namespace GreenField.DAL
         private global::System.Int32 _NUMBER_OF_ESTIMATES;
         partial void OnNUMBER_OF_ESTIMATESChanging(global::System.Int32 value);
         partial void OnNUMBER_OF_ESTIMATESChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal HIGH
         {
@@ -5978,11 +6194,11 @@ namespace GreenField.DAL
         private global::System.Decimal _HIGH;
         partial void OnHIGHChanging(global::System.Decimal value);
         partial void OnHIGHChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal LOW
         {
@@ -6002,11 +6218,11 @@ namespace GreenField.DAL
         private global::System.Decimal _LOW;
         partial void OnLOWChanging(global::System.Decimal value);
         partial void OnLOWChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal STANDARD_DEVIATION
         {
@@ -6026,11 +6242,11 @@ namespace GreenField.DAL
         private global::System.Decimal _STANDARD_DEVIATION;
         partial void OnSTANDARD_DEVIATIONChanging(global::System.Decimal value);
         partial void OnSTANDARD_DEVIATIONChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SOURCE_CURRENCY
         {
@@ -6050,11 +6266,11 @@ namespace GreenField.DAL
         private global::System.String _SOURCE_CURRENCY;
         partial void OnSOURCE_CURRENCYChanging(global::System.String value);
         partial void OnSOURCE_CURRENCYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DATA_SOURCE
         {
@@ -6074,11 +6290,11 @@ namespace GreenField.DAL
         private global::System.String _DATA_SOURCE;
         partial void OnDATA_SOURCEChanging(global::System.String value);
         partial void OnDATA_SOURCEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime DATA_SOURCE_DATE
         {
@@ -6098,11 +6314,11 @@ namespace GreenField.DAL
         private global::System.DateTime _DATA_SOURCE_DATE;
         partial void OnDATA_SOURCE_DATEChanging(global::System.DateTime value);
         partial void OnDATA_SOURCE_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> ACTUAL
         {
@@ -6125,17 +6341,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="ConsensusEstimatesSummaryData")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "ConsensusEstimatesSummaryData")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class ConsensusEstimatesSummaryData : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new ConsensusEstimatesSummaryData object.
         /// </summary>
@@ -6149,11 +6365,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String NetIncome
         {
@@ -6173,11 +6389,11 @@ namespace GreenField.DAL
         private global::System.String _NetIncome;
         partial void OnNetIncomeChanging(global::System.String value);
         partial void OnNetIncomeChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String YEAR1
         {
@@ -6197,11 +6413,11 @@ namespace GreenField.DAL
         private global::System.String _YEAR1;
         partial void OnYEAR1Changing(global::System.String value);
         partial void OnYEAR1Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String YEAR2
         {
@@ -6221,11 +6437,11 @@ namespace GreenField.DAL
         private global::System.String _YEAR2;
         partial void OnYEAR2Changing(global::System.String value);
         partial void OnYEAR2Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String YEAR3
         {
@@ -6245,11 +6461,11 @@ namespace GreenField.DAL
         private global::System.String _YEAR3;
         partial void OnYEAR3Changing(global::System.String value);
         partial void OnYEAR3Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String YEAR4
         {
@@ -6269,11 +6485,11 @@ namespace GreenField.DAL
         private global::System.String _YEAR4;
         partial void OnYEAR4Changing(global::System.String value);
         partial void OnYEAR4Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String YEAR5
         {
@@ -6293,11 +6509,11 @@ namespace GreenField.DAL
         private global::System.String _YEAR5;
         partial void OnYEAR5Changing(global::System.String value);
         partial void OnYEAR5Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String currency
         {
@@ -6320,17 +6536,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="ConsensusEstimateValuation")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "ConsensusEstimateValuation")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class ConsensusEstimateValuation : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new ConsensusEstimateValuation object.
         /// </summary>
@@ -6372,11 +6588,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -6396,11 +6612,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 ESTIMATE_ID
         {
@@ -6420,11 +6636,11 @@ namespace GreenField.DAL
         private global::System.Int32 _ESTIMATE_ID;
         partial void OnESTIMATE_IDChanging(global::System.Int32 value);
         partial void OnESTIMATE_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ESTIMATE_DESC
         {
@@ -6444,11 +6660,11 @@ namespace GreenField.DAL
         private global::System.String _ESTIMATE_DESC;
         partial void OnESTIMATE_DESCChanging(global::System.String value);
         partial void OnESTIMATE_DESCChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String Period
         {
@@ -6468,11 +6684,11 @@ namespace GreenField.DAL
         private global::System.String _Period;
         partial void OnPeriodChanging(global::System.String value);
         partial void OnPeriodChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String AMOUNT_TYPE
         {
@@ -6492,11 +6708,11 @@ namespace GreenField.DAL
         private global::System.String _AMOUNT_TYPE;
         partial void OnAMOUNT_TYPEChanging(global::System.String value);
         partial void OnAMOUNT_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 PERIOD_YEAR
         {
@@ -6516,11 +6732,11 @@ namespace GreenField.DAL
         private global::System.Int32 _PERIOD_YEAR;
         partial void OnPERIOD_YEARChanging(global::System.Int32 value);
         partial void OnPERIOD_YEARChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PERIOD_TYPE
         {
@@ -6540,11 +6756,11 @@ namespace GreenField.DAL
         private global::System.String _PERIOD_TYPE;
         partial void OnPERIOD_TYPEChanging(global::System.String value);
         partial void OnPERIOD_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal AMOUNT
         {
@@ -6564,11 +6780,11 @@ namespace GreenField.DAL
         private global::System.Decimal _AMOUNT;
         partial void OnAMOUNTChanging(global::System.Decimal value);
         partial void OnAMOUNTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> ASHMOREEMM_AMOUNT
         {
@@ -6588,11 +6804,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _ASHMOREEMM_AMOUNT;
         partial void OnASHMOREEMM_AMOUNTChanging(Nullable<global::System.Decimal> value);
         partial void OnASHMOREEMM_AMOUNTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 NUMBER_OF_ESTIMATES
         {
@@ -6612,11 +6828,11 @@ namespace GreenField.DAL
         private global::System.Int32 _NUMBER_OF_ESTIMATES;
         partial void OnNUMBER_OF_ESTIMATESChanging(global::System.Int32 value);
         partial void OnNUMBER_OF_ESTIMATESChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal HIGH
         {
@@ -6636,11 +6852,11 @@ namespace GreenField.DAL
         private global::System.Decimal _HIGH;
         partial void OnHIGHChanging(global::System.Decimal value);
         partial void OnHIGHChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal LOW
         {
@@ -6660,11 +6876,11 @@ namespace GreenField.DAL
         private global::System.Decimal _LOW;
         partial void OnLOWChanging(global::System.Decimal value);
         partial void OnLOWChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal STANDARD_DEVIATION
         {
@@ -6684,11 +6900,11 @@ namespace GreenField.DAL
         private global::System.Decimal _STANDARD_DEVIATION;
         partial void OnSTANDARD_DEVIATIONChanging(global::System.Decimal value);
         partial void OnSTANDARD_DEVIATIONChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SOURCE_CURRENCY
         {
@@ -6708,11 +6924,11 @@ namespace GreenField.DAL
         private global::System.String _SOURCE_CURRENCY;
         partial void OnSOURCE_CURRENCYChanging(global::System.String value);
         partial void OnSOURCE_CURRENCYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DATA_SOURCE
         {
@@ -6732,11 +6948,11 @@ namespace GreenField.DAL
         private global::System.String _DATA_SOURCE;
         partial void OnDATA_SOURCEChanging(global::System.String value);
         partial void OnDATA_SOURCEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime DATA_SOURCE_DATE
         {
@@ -6756,11 +6972,11 @@ namespace GreenField.DAL
         private global::System.DateTime _DATA_SOURCE_DATE;
         partial void OnDATA_SOURCE_DATEChanging(global::System.DateTime value);
         partial void OnDATA_SOURCE_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> ACTUAL
         {
@@ -6783,17 +6999,94 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="DCFAnalysisSummaryData_Result")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "DCF_ROICResult")]
+    [DataContractAttribute(IsReference = true)]
+    [Serializable()]
+    public partial class DCF_ROICResult : ComplexObject
+    {
+        #region Factory Method
+
+        /// <summary>
+        /// Create a new DCF_ROICResult object.
+        /// </summary>
+        /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
+        /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
+        public static DCF_ROICResult CreateDCF_ROICResult(global::System.Decimal aMOUNT, global::System.Int32 dATA_ID)
+        {
+            DCF_ROICResult dCF_ROICResult = new DCF_ROICResult();
+            dCF_ROICResult.AMOUNT = aMOUNT;
+            dCF_ROICResult.DATA_ID = dATA_ID;
+            return dCF_ROICResult;
+        }
+
+        #endregion
+        #region Primitive Properties
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AMOUNT
+        {
+            get
+            {
+                return _AMOUNT;
+            }
+            set
+            {
+                OnAMOUNTChanging(value);
+                ReportPropertyChanging("AMOUNT");
+                _AMOUNT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AMOUNT");
+                OnAMOUNTChanged();
+            }
+        }
+        private global::System.Decimal _AMOUNT;
+        partial void OnAMOUNTChanging(global::System.Decimal value);
+        partial void OnAMOUNTChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DATA_ID
+        {
+            get
+            {
+                return _DATA_ID;
+            }
+            set
+            {
+                OnDATA_IDChanging(value);
+                ReportPropertyChanging("DATA_ID");
+                _DATA_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DATA_ID");
+                OnDATA_IDChanged();
+            }
+        }
+        private global::System.Int32 _DATA_ID;
+        partial void OnDATA_IDChanging(global::System.Int32 value);
+        partial void OnDATA_IDChanged();
+
+        #endregion
+    }
+
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "DCFAnalysisSummaryData_Result")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class DCFAnalysisSummaryData_Result : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new DCFAnalysisSummaryData_Result object.
         /// </summary>
@@ -6835,11 +7128,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -6859,11 +7152,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SECURITY_ID
         {
@@ -6883,11 +7176,11 @@ namespace GreenField.DAL
         private global::System.String _SECURITY_ID;
         partial void OnSECURITY_IDChanging(global::System.String value);
         partial void OnSECURITY_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String COA_TYPE
         {
@@ -6907,11 +7200,11 @@ namespace GreenField.DAL
         private global::System.String _COA_TYPE;
         partial void OnCOA_TYPEChanging(global::System.String value);
         partial void OnCOA_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DATA_SOURCE
         {
@@ -6931,11 +7224,11 @@ namespace GreenField.DAL
         private global::System.String _DATA_SOURCE;
         partial void OnDATA_SOURCEChanging(global::System.String value);
         partial void OnDATA_SOURCEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String ROOT_SOURCE
         {
@@ -6955,11 +7248,11 @@ namespace GreenField.DAL
         private global::System.String _ROOT_SOURCE;
         partial void OnROOT_SOURCEChanging(global::System.String value);
         partial void OnROOT_SOURCEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime ROOT_SOURCE_DATE
         {
@@ -6979,11 +7272,11 @@ namespace GreenField.DAL
         private global::System.DateTime _ROOT_SOURCE_DATE;
         partial void OnROOT_SOURCE_DATEChanging(global::System.DateTime value);
         partial void OnROOT_SOURCE_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PERIOD_TYPE
         {
@@ -7003,11 +7296,11 @@ namespace GreenField.DAL
         private global::System.String _PERIOD_TYPE;
         partial void OnPERIOD_TYPEChanging(global::System.String value);
         partial void OnPERIOD_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 PERIOD_YEAR
         {
@@ -7027,11 +7320,11 @@ namespace GreenField.DAL
         private global::System.Int32 _PERIOD_YEAR;
         partial void OnPERIOD_YEARChanging(global::System.Int32 value);
         partial void OnPERIOD_YEARChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime PERIOD_END_DATE
         {
@@ -7051,11 +7344,11 @@ namespace GreenField.DAL
         private global::System.DateTime _PERIOD_END_DATE;
         partial void OnPERIOD_END_DATEChanging(global::System.DateTime value);
         partial void OnPERIOD_END_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String FISCAL_TYPE
         {
@@ -7075,11 +7368,11 @@ namespace GreenField.DAL
         private global::System.String _FISCAL_TYPE;
         partial void OnFISCAL_TYPEChanging(global::System.String value);
         partial void OnFISCAL_TYPEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String CURRENCY
         {
@@ -7099,11 +7392,11 @@ namespace GreenField.DAL
         private global::System.String _CURRENCY;
         partial void OnCURRENCYChanging(global::System.String value);
         partial void OnCURRENCYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 DATA_ID
         {
@@ -7123,11 +7416,11 @@ namespace GreenField.DAL
         private global::System.Int32 _DATA_ID;
         partial void OnDATA_IDChanging(global::System.Int32 value);
         partial void OnDATA_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal AMOUNT
         {
@@ -7147,11 +7440,11 @@ namespace GreenField.DAL
         private global::System.Decimal _AMOUNT;
         partial void OnAMOUNTChanging(global::System.Decimal value);
         partial void OnAMOUNTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String CALCULATION_DIAGRAM
         {
@@ -7171,11 +7464,11 @@ namespace GreenField.DAL
         private global::System.String _CALCULATION_DIAGRAM;
         partial void OnCALCULATION_DIAGRAMChanging(global::System.String value);
         partial void OnCALCULATION_DIAGRAMChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SOURCE_CURRENCY
         {
@@ -7195,11 +7488,11 @@ namespace GreenField.DAL
         private global::System.String _SOURCE_CURRENCY;
         partial void OnSOURCE_CURRENCYChanging(global::System.String value);
         partial void OnSOURCE_CURRENCYChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String AMOUNT_TYPE
         {
@@ -7222,17 +7515,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="FinancialStatementData")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "FinancialStatementData")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class FinancialStatementData : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new FinancialStatementData object.
         /// </summary>
@@ -7254,11 +7547,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 SortOrder
         {
@@ -7278,11 +7571,11 @@ namespace GreenField.DAL
         private global::System.Int32 _SortOrder;
         partial void OnSortOrderChanging(global::System.Int32 value);
         partial void OnSortOrderChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String Description
         {
@@ -7302,11 +7595,11 @@ namespace GreenField.DAL
         private global::System.String _Description;
         partial void OnDescriptionChanging(global::System.String value);
         partial void OnDescriptionChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String AmountType
         {
@@ -7326,11 +7619,11 @@ namespace GreenField.DAL
         private global::System.String _AmountType;
         partial void OnAmountTypeChanging(global::System.String value);
         partial void OnAmountTypeChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PeriodType
         {
@@ -7350,11 +7643,11 @@ namespace GreenField.DAL
         private global::System.String _PeriodType;
         partial void OnPeriodTypeChanging(global::System.String value);
         partial void OnPeriodTypeChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Amount
         {
@@ -7374,11 +7667,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _Amount;
         partial void OnAmountChanging(Nullable<global::System.Decimal> value);
         partial void OnAmountChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 PeriodYear
         {
@@ -7398,11 +7691,11 @@ namespace GreenField.DAL
         private global::System.Int32 _PeriodYear;
         partial void OnPeriodYearChanging(global::System.Int32 value);
         partial void OnPeriodYearChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String IsConsensus
         {
@@ -7422,11 +7715,11 @@ namespace GreenField.DAL
         private global::System.String _IsConsensus;
         partial void OnIsConsensusChanging(global::System.String value);
         partial void OnIsConsensusChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Int32> DataId
         {
@@ -7446,11 +7739,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _DataId;
         partial void OnDataIdChanging(Nullable<global::System.Int32> value);
         partial void OnDataIdChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String GroupName
         {
@@ -7470,11 +7763,11 @@ namespace GreenField.DAL
         private global::System.String _GroupName;
         partial void OnGroupNameChanging(global::System.String value);
         partial void OnGroupNameChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String BoldFont
         {
@@ -7494,11 +7787,11 @@ namespace GreenField.DAL
         private global::System.String _BoldFont;
         partial void OnBoldFontChanging(global::System.String value);
         partial void OnBoldFontChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Int32> Decimals
         {
@@ -7518,11 +7811,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _Decimals;
         partial void OnDecimalsChanging(Nullable<global::System.Int32> value);
         partial void OnDecimalsChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String RootSource
         {
@@ -7542,11 +7835,11 @@ namespace GreenField.DAL
         private global::System.String _RootSource;
         partial void OnRootSourceChanging(global::System.String value);
         partial void OnRootSourceChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.DateTime> RootSourceDate
         {
@@ -7566,11 +7859,11 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _RootSourceDate;
         partial void OnRootSourceDateChanging(Nullable<global::System.DateTime> value);
         partial void OnRootSourceDateChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String CalculationDiagram
         {
@@ -7593,17 +7886,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="FinstatDetail")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "FinstatDetail")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class FinstatDetail : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new FinstatDetail object.
         /// </summary>
@@ -7633,11 +7926,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String DATA_SOURCE
         {
@@ -7657,11 +7950,11 @@ namespace GreenField.DAL
         private global::System.String _DATA_SOURCE;
         partial void OnDATA_SOURCEChanging(global::System.String value);
         partial void OnDATA_SOURCEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String ROOT_SOURCE
         {
@@ -7681,11 +7974,11 @@ namespace GreenField.DAL
         private global::System.String _ROOT_SOURCE;
         partial void OnROOT_SOURCEChanging(global::System.String value);
         partial void OnROOT_SOURCEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.DateTime> ROOT_SOURCE_DATE
         {
@@ -7705,11 +7998,11 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _ROOT_SOURCE_DATE;
         partial void OnROOT_SOURCE_DATEChanging(Nullable<global::System.DateTime> value);
         partial void OnROOT_SOURCE_DATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Int32> ESTIMATE_ID
         {
@@ -7729,11 +8022,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _ESTIMATE_ID;
         partial void OnESTIMATE_IDChanging(Nullable<global::System.Int32> value);
         partial void OnESTIMATE_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 PERIOD_YEAR
         {
@@ -7753,11 +8046,11 @@ namespace GreenField.DAL
         private global::System.Int32 _PERIOD_YEAR;
         partial void OnPERIOD_YEARChanging(global::System.Int32 value);
         partial void OnPERIOD_YEARChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Int32> DATA_ID
         {
@@ -7777,11 +8070,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _DATA_ID;
         partial void OnDATA_IDChanging(Nullable<global::System.Int32> value);
         partial void OnDATA_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> AMOUNT
         {
@@ -7801,11 +8094,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _AMOUNT;
         partial void OnAMOUNTChanging(Nullable<global::System.Decimal> value);
         partial void OnAMOUNTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal MULTIPLIER
         {
@@ -7825,11 +8118,11 @@ namespace GreenField.DAL
         private global::System.Decimal _MULTIPLIER;
         partial void OnMULTIPLIERChanging(global::System.Decimal value);
         partial void OnMULTIPLIERChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 DECIMALS
         {
@@ -7849,11 +8142,11 @@ namespace GreenField.DAL
         private global::System.Int32 _DECIMALS;
         partial void OnDECIMALSChanging(global::System.Int32 value);
         partial void OnDECIMALSChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PERCENTAGE
         {
@@ -7873,11 +8166,11 @@ namespace GreenField.DAL
         private global::System.String _PERCENTAGE;
         partial void OnPERCENTAGEChanging(global::System.String value);
         partial void OnPERCENTAGEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String BOLD_FONT
         {
@@ -7897,11 +8190,11 @@ namespace GreenField.DAL
         private global::System.String _BOLD_FONT;
         partial void OnBOLD_FONTChanging(global::System.String value);
         partial void OnBOLD_FONTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String GROUP_NAME
         {
@@ -7921,11 +8214,11 @@ namespace GreenField.DAL
         private global::System.String _GROUP_NAME;
         partial void OnGROUP_NAMEChanging(global::System.String value);
         partial void OnGROUP_NAMEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 SORT_ORDER
         {
@@ -7945,11 +8238,11 @@ namespace GreenField.DAL
         private global::System.Int32 _SORT_ORDER;
         partial void OnSORT_ORDERChanging(global::System.Int32 value);
         partial void OnSORT_ORDERChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String HARMONIC
         {
@@ -7969,11 +8262,11 @@ namespace GreenField.DAL
         private global::System.String _HARMONIC;
         partial void OnHARMONICChanging(global::System.String value);
         partial void OnHARMONICChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DATA_DESC
         {
@@ -7996,17 +8289,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="FinstatEconomicMarketData")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "FinstatEconomicMarketData")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class FinstatEconomicMarketData : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new FinstatEconomicMarketData object.
         /// </summary>
@@ -8024,11 +8317,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal FX_RATE
         {
@@ -8048,11 +8341,11 @@ namespace GreenField.DAL
         private global::System.Decimal _FX_RATE;
         partial void OnFX_RATEChanging(global::System.Decimal value);
         partial void OnFX_RATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal AVG12MonthRATE
         {
@@ -8072,11 +8365,11 @@ namespace GreenField.DAL
         private global::System.Decimal _AVG12MonthRATE;
         partial void OnAVG12MonthRATEChanging(global::System.Decimal value);
         partial void OnAVG12MonthRATEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PERIOD_YEAR
         {
@@ -8096,11 +8389,11 @@ namespace GreenField.DAL
         private global::System.String _PERIOD_YEAR;
         partial void OnPERIOD_YEARChanging(global::System.String value);
         partial void OnPERIOD_YEARChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String FIELD
         {
@@ -8120,11 +8413,11 @@ namespace GreenField.DAL
         private global::System.String _FIELD;
         partial void OnFIELDChanging(global::System.String value);
         partial void OnFIELDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Int32> YEAR1
         {
@@ -8144,11 +8437,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _YEAR1;
         partial void OnYEAR1Changing(Nullable<global::System.Int32> value);
         partial void OnYEAR1Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> VALUE
         {
@@ -8171,17 +8464,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="FinstatRelativeAnalysisData")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "FinstatRelativeAnalysisData")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class FinstatRelativeAnalysisData : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new FinstatRelativeAnalysisData object.
         /// </summary>
@@ -8207,11 +8500,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 DATA_ID
         {
@@ -8231,11 +8524,11 @@ namespace GreenField.DAL
         private global::System.Int32 _DATA_ID;
         partial void OnDATA_IDChanging(global::System.Int32 value);
         partial void OnDATA_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 PERIOD_YEAR
         {
@@ -8255,11 +8548,11 @@ namespace GreenField.DAL
         private global::System.Int32 _PERIOD_YEAR;
         partial void OnPERIOD_YEARChanging(global::System.Int32 value);
         partial void OnPERIOD_YEARChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal AMOUNT
         {
@@ -8279,11 +8572,11 @@ namespace GreenField.DAL
         private global::System.Decimal _AMOUNT;
         partial void OnAMOUNTChanging(global::System.Decimal value);
         partial void OnAMOUNTChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 DECIMALS
         {
@@ -8303,11 +8596,11 @@ namespace GreenField.DAL
         private global::System.Int32 _DECIMALS;
         partial void OnDECIMALSChanging(global::System.Int32 value);
         partial void OnDECIMALSChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal MULTIPLIER
         {
@@ -8327,11 +8620,11 @@ namespace GreenField.DAL
         private global::System.Decimal _MULTIPLIER;
         partial void OnMULTIPLIERChanging(global::System.Decimal value);
         partial void OnMULTIPLIERChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PERCENTAGE
         {
@@ -8351,11 +8644,11 @@ namespace GreenField.DAL
         private global::System.String _PERCENTAGE;
         partial void OnPERCENTAGEChanging(global::System.String value);
         partial void OnPERCENTAGEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String VALUE
         {
@@ -8378,21 +8671,21 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="GetBasicData_Result")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "GetBasicData_Result")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class GetBasicData_Result : ComplexObject
     {
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> MARKET_CAPITALIZATION
         {
@@ -8412,11 +8705,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _MARKET_CAPITALIZATION;
         partial void OnMARKET_CAPITALIZATIONChanging(Nullable<global::System.Decimal> value);
         partial void OnMARKET_CAPITALIZATIONChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> ENTERPRISE_VALUE
         {
@@ -8439,17 +8732,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="GetEV_EBITDAData_Result")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "GetEV_EBITDAData_Result")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class GetEV_EBITDAData_Result : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new GetEV_EBITDAData_Result object.
         /// </summary>
@@ -8465,11 +8758,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PeriodLabel
         {
@@ -8489,11 +8782,11 @@ namespace GreenField.DAL
         private global::System.String _PeriodLabel;
         partial void OnPeriodLabelChanging(global::System.String value);
         partial void OnPeriodLabelChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.DateTime Period_End_Date
         {
@@ -8513,11 +8806,11 @@ namespace GreenField.DAL
         private global::System.DateTime _Period_End_Date;
         partial void OnPeriod_End_DateChanging(global::System.DateTime value);
         partial void OnPeriod_End_DateChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> EBITDA
         {
@@ -8537,11 +8830,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _EBITDA;
         partial void OnEBITDAChanging(Nullable<global::System.Decimal> value);
         partial void OnEBITDAChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> NetDebt
         {
@@ -8561,11 +8854,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _NetDebt;
         partial void OnNetDebtChanging(Nullable<global::System.Decimal> value);
         partial void OnNetDebtChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> USDPrice
         {
@@ -8585,11 +8878,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _USDPrice;
         partial void OnUSDPriceChanging(Nullable<global::System.Decimal> value);
         partial void OnUSDPriceChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Shares_Outstanding
         {
@@ -8612,21 +8905,21 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="GetPRevenueData_Result")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "GetPRevenueData_Result")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class GetPRevenueData_Result : ComplexObject
     {
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String PeriodLabel
         {
@@ -8646,11 +8939,11 @@ namespace GreenField.DAL
         private global::System.String _PeriodLabel;
         partial void OnPeriodLabelChanging(global::System.String value);
         partial void OnPeriodLabelChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.DateTime> Period_End_Date
         {
@@ -8670,11 +8963,11 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _Period_End_Date;
         partial void OnPeriod_End_DateChanging(Nullable<global::System.DateTime> value);
         partial void OnPeriod_End_DateChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Amount
         {
@@ -8694,11 +8987,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _Amount;
         partial void OnAmountChanging(Nullable<global::System.Decimal> value);
         partial void OnAmountChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String Period_Type
         {
@@ -8718,11 +9011,11 @@ namespace GreenField.DAL
         private global::System.String _Period_Type;
         partial void OnPeriod_TypeChanging(global::System.String value);
         partial void OnPeriod_TypeChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Int32> Period_Year
         {
@@ -8742,11 +9035,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _Period_Year;
         partial void OnPeriod_YearChanging(Nullable<global::System.Int32> value);
         partial void OnPeriod_YearChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> USDPrice
         {
@@ -8766,11 +9059,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _USDPrice;
         partial void OnUSDPriceChanging(Nullable<global::System.Decimal> value);
         partial void OnUSDPriceChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Shares_Outstanding
         {
@@ -8793,17 +9086,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="GetTargetPrice_Result")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "GetTargetPrice_Result")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class GetTargetPrice_Result : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new GetTargetPrice_Result object.
         /// </summary>
@@ -8817,11 +9110,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String Xref
         {
@@ -8841,11 +9134,11 @@ namespace GreenField.DAL
         private global::System.String _Xref;
         partial void OnXrefChanging(global::System.String value);
         partial void OnXrefChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String Ticker
         {
@@ -8865,11 +9158,11 @@ namespace GreenField.DAL
         private global::System.String _Ticker;
         partial void OnTickerChanging(global::System.String value);
         partial void OnTickerChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Single> CurrentPrice
         {
@@ -8889,11 +9182,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Single> _CurrentPrice;
         partial void OnCurrentPriceChanging(Nullable<global::System.Single> value);
         partial void OnCurrentPriceChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.DateTime> CurrentPriceDate
         {
@@ -8913,11 +9206,11 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _CurrentPriceDate;
         partial void OnCurrentPriceDateChanging(Nullable<global::System.DateTime> value);
         partial void OnCurrentPriceDateChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String Currency
         {
@@ -8937,11 +9230,11 @@ namespace GreenField.DAL
         private global::System.String _Currency;
         partial void OnCurrencyChanging(global::System.String value);
         partial void OnCurrencyChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.DateTime> StartDate
         {
@@ -8961,11 +9254,11 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _StartDate;
         partial void OnStartDateChanging(Nullable<global::System.DateTime> value);
         partial void OnStartDateChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Single> Median
         {
@@ -8985,11 +9278,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Single> _Median;
         partial void OnMedianChanging(Nullable<global::System.Single> value);
         partial void OnMedianChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String TargetCurrency
         {
@@ -9009,11 +9302,11 @@ namespace GreenField.DAL
         private global::System.String _TargetCurrency;
         partial void OnTargetCurrencyChanging(global::System.String value);
         partial void OnTargetCurrencyChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Int32> NumOfEsts
         {
@@ -9033,11 +9326,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _NumOfEsts;
         partial void OnNumOfEstsChanging(Nullable<global::System.Int32> value);
         partial void OnNumOfEstsChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Single> High
         {
@@ -9057,11 +9350,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Single> _High;
         partial void OnHighChanging(Nullable<global::System.Single> value);
         partial void OnHighChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Single> Low
         {
@@ -9081,11 +9374,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Single> _Low;
         partial void OnLowChanging(Nullable<global::System.Single> value);
         partial void OnLowChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Single> StdDev
         {
@@ -9105,11 +9398,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Single> _StdDev;
         partial void OnStdDevChanging(Nullable<global::System.Single> value);
         partial void OnStdDevChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String MeanLabel
         {
@@ -9132,17 +9425,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="NewICPresentationSecurityData")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "NewICPresentationSecurityData")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class NewICPresentationSecurityData : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new NewICPresentationSecurityData object.
         /// </summary>
@@ -9154,13 +9447,10 @@ namespace GreenField.DAL
             return newICPresentationSecurityData;
         }
 
-        #endregion
-        #region Primitive Properties
-    
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal AMOUNT
         {
@@ -9183,21 +9473,434 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="QuarterlyResults")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "ModelConsensusEstimatesData")]
+    [DataContractAttribute(IsReference = true)]
+    [Serializable()]
+    public partial class ModelConsensusEstimatesData : ComplexObject
+    {
+        #region Factory Method
+
+        /// <summary>
+        /// Create a new ModelConsensusEstimatesData object.
+        /// </summary>
+        /// <param name="iSSUER_ID">Initial value of the ISSUER_ID property.</param>
+        /// <param name="eSTIMATE_ID">Initial value of the ESTIMATE_ID property.</param>
+        /// <param name="eSTIMATE_DESC">Initial value of the ESTIMATE_DESC property.</param>
+        /// <param name="aMOUNT_TYPE">Initial value of the AMOUNT_TYPE property.</param>
+        /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
+        /// <param name="pERIOD_TYPE">Initial value of the PERIOD_TYPE property.</param>
+        /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
+        /// <param name="nUMBER_OF_ESTIMATES">Initial value of the NUMBER_OF_ESTIMATES property.</param>
+        /// <param name="hIGH">Initial value of the HIGH property.</param>
+        /// <param name="lOW">Initial value of the LOW property.</param>
+        /// <param name="sTANDARD_DEVIATION">Initial value of the STANDARD_DEVIATION property.</param>
+        /// <param name="sOURCE_CURRENCY">Initial value of the SOURCE_CURRENCY property.</param>
+        /// <param name="dATA_SOURCE">Initial value of the DATA_SOURCE property.</param>
+        /// <param name="dATA_SOURCE_DATE">Initial value of the DATA_SOURCE_DATE property.</param>
+        public static ModelConsensusEstimatesData CreateModelConsensusEstimatesData(global::System.String iSSUER_ID, global::System.Int32 eSTIMATE_ID, global::System.String eSTIMATE_DESC, global::System.String aMOUNT_TYPE, global::System.Int32 pERIOD_YEAR, global::System.String pERIOD_TYPE, global::System.Decimal aMOUNT, global::System.Int32 nUMBER_OF_ESTIMATES, global::System.Decimal hIGH, global::System.Decimal lOW, global::System.Decimal sTANDARD_DEVIATION, global::System.String sOURCE_CURRENCY, global::System.String dATA_SOURCE, global::System.DateTime dATA_SOURCE_DATE)
+        {
+            ModelConsensusEstimatesData modelConsensusEstimatesData = new ModelConsensusEstimatesData();
+            modelConsensusEstimatesData.ISSUER_ID = iSSUER_ID;
+            modelConsensusEstimatesData.ESTIMATE_ID = eSTIMATE_ID;
+            modelConsensusEstimatesData.ESTIMATE_DESC = eSTIMATE_DESC;
+            modelConsensusEstimatesData.AMOUNT_TYPE = aMOUNT_TYPE;
+            modelConsensusEstimatesData.PERIOD_YEAR = pERIOD_YEAR;
+            modelConsensusEstimatesData.PERIOD_TYPE = pERIOD_TYPE;
+            modelConsensusEstimatesData.AMOUNT = aMOUNT;
+            modelConsensusEstimatesData.NUMBER_OF_ESTIMATES = nUMBER_OF_ESTIMATES;
+            modelConsensusEstimatesData.HIGH = hIGH;
+            modelConsensusEstimatesData.LOW = lOW;
+            modelConsensusEstimatesData.STANDARD_DEVIATION = sTANDARD_DEVIATION;
+            modelConsensusEstimatesData.SOURCE_CURRENCY = sOURCE_CURRENCY;
+            modelConsensusEstimatesData.DATA_SOURCE = dATA_SOURCE;
+            modelConsensusEstimatesData.DATA_SOURCE_DATE = dATA_SOURCE_DATE;
+            return modelConsensusEstimatesData;
+        }
+
+        #endregion
+        #region Primitive Properties
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.String ISSUER_ID
+        {
+            get
+            {
+                return _ISSUER_ID;
+            }
+            set
+            {
+                OnISSUER_IDChanging(value);
+                ReportPropertyChanging("ISSUER_ID");
+                _ISSUER_ID = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ISSUER_ID");
+                OnISSUER_IDChanged();
+            }
+        }
+        private global::System.String _ISSUER_ID;
+        partial void OnISSUER_IDChanging(global::System.String value);
+        partial void OnISSUER_IDChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ESTIMATE_ID
+        {
+            get
+            {
+                return _ESTIMATE_ID;
+            }
+            set
+            {
+                OnESTIMATE_IDChanging(value);
+                ReportPropertyChanging("ESTIMATE_ID");
+                _ESTIMATE_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ESTIMATE_ID");
+                OnESTIMATE_IDChanged();
+            }
+        }
+        private global::System.Int32 _ESTIMATE_ID;
+        partial void OnESTIMATE_IDChanging(global::System.Int32 value);
+        partial void OnESTIMATE_IDChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.String ESTIMATE_DESC
+        {
+            get
+            {
+                return _ESTIMATE_DESC;
+            }
+            set
+            {
+                OnESTIMATE_DESCChanging(value);
+                ReportPropertyChanging("ESTIMATE_DESC");
+                _ESTIMATE_DESC = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ESTIMATE_DESC");
+                OnESTIMATE_DESCChanged();
+            }
+        }
+        private global::System.String _ESTIMATE_DESC;
+        partial void OnESTIMATE_DESCChanging(global::System.String value);
+        partial void OnESTIMATE_DESCChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
+        [DataMemberAttribute()]
+        public global::System.String Period
+        {
+            get
+            {
+                return _Period;
+            }
+            set
+            {
+                OnPeriodChanging(value);
+                ReportPropertyChanging("Period");
+                _Period = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Period");
+                OnPeriodChanged();
+            }
+        }
+        private global::System.String _Period;
+        partial void OnPeriodChanging(global::System.String value);
+        partial void OnPeriodChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.String AMOUNT_TYPE
+        {
+            get
+            {
+                return _AMOUNT_TYPE;
+            }
+            set
+            {
+                OnAMOUNT_TYPEChanging(value);
+                ReportPropertyChanging("AMOUNT_TYPE");
+                _AMOUNT_TYPE = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("AMOUNT_TYPE");
+                OnAMOUNT_TYPEChanged();
+            }
+        }
+        private global::System.String _AMOUNT_TYPE;
+        partial void OnAMOUNT_TYPEChanging(global::System.String value);
+        partial void OnAMOUNT_TYPEChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PERIOD_YEAR
+        {
+            get
+            {
+                return _PERIOD_YEAR;
+            }
+            set
+            {
+                OnPERIOD_YEARChanging(value);
+                ReportPropertyChanging("PERIOD_YEAR");
+                _PERIOD_YEAR = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PERIOD_YEAR");
+                OnPERIOD_YEARChanged();
+            }
+        }
+        private global::System.Int32 _PERIOD_YEAR;
+        partial void OnPERIOD_YEARChanging(global::System.Int32 value);
+        partial void OnPERIOD_YEARChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.String PERIOD_TYPE
+        {
+            get
+            {
+                return _PERIOD_TYPE;
+            }
+            set
+            {
+                OnPERIOD_TYPEChanging(value);
+                ReportPropertyChanging("PERIOD_TYPE");
+                _PERIOD_TYPE = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("PERIOD_TYPE");
+                OnPERIOD_TYPEChanged();
+            }
+        }
+        private global::System.String _PERIOD_TYPE;
+        partial void OnPERIOD_TYPEChanging(global::System.String value);
+        partial void OnPERIOD_TYPEChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AMOUNT
+        {
+            get
+            {
+                return _AMOUNT;
+            }
+            set
+            {
+                OnAMOUNTChanging(value);
+                ReportPropertyChanging("AMOUNT");
+                _AMOUNT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AMOUNT");
+                OnAMOUNTChanged();
+            }
+        }
+        private global::System.Decimal _AMOUNT;
+        partial void OnAMOUNTChanging(global::System.Decimal value);
+        partial void OnAMOUNTChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NUMBER_OF_ESTIMATES
+        {
+            get
+            {
+                return _NUMBER_OF_ESTIMATES;
+            }
+            set
+            {
+                OnNUMBER_OF_ESTIMATESChanging(value);
+                ReportPropertyChanging("NUMBER_OF_ESTIMATES");
+                _NUMBER_OF_ESTIMATES = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NUMBER_OF_ESTIMATES");
+                OnNUMBER_OF_ESTIMATESChanged();
+            }
+        }
+        private global::System.Int32 _NUMBER_OF_ESTIMATES;
+        partial void OnNUMBER_OF_ESTIMATESChanging(global::System.Int32 value);
+        partial void OnNUMBER_OF_ESTIMATESChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal HIGH
+        {
+            get
+            {
+                return _HIGH;
+            }
+            set
+            {
+                OnHIGHChanging(value);
+                ReportPropertyChanging("HIGH");
+                _HIGH = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("HIGH");
+                OnHIGHChanged();
+            }
+        }
+        private global::System.Decimal _HIGH;
+        partial void OnHIGHChanging(global::System.Decimal value);
+        partial void OnHIGHChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal LOW
+        {
+            get
+            {
+                return _LOW;
+            }
+            set
+            {
+                OnLOWChanging(value);
+                ReportPropertyChanging("LOW");
+                _LOW = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("LOW");
+                OnLOWChanged();
+            }
+        }
+        private global::System.Decimal _LOW;
+        partial void OnLOWChanging(global::System.Decimal value);
+        partial void OnLOWChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal STANDARD_DEVIATION
+        {
+            get
+            {
+                return _STANDARD_DEVIATION;
+            }
+            set
+            {
+                OnSTANDARD_DEVIATIONChanging(value);
+                ReportPropertyChanging("STANDARD_DEVIATION");
+                _STANDARD_DEVIATION = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("STANDARD_DEVIATION");
+                OnSTANDARD_DEVIATIONChanged();
+            }
+        }
+        private global::System.Decimal _STANDARD_DEVIATION;
+        partial void OnSTANDARD_DEVIATIONChanging(global::System.Decimal value);
+        partial void OnSTANDARD_DEVIATIONChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.String SOURCE_CURRENCY
+        {
+            get
+            {
+                return _SOURCE_CURRENCY;
+            }
+            set
+            {
+                OnSOURCE_CURRENCYChanging(value);
+                ReportPropertyChanging("SOURCE_CURRENCY");
+                _SOURCE_CURRENCY = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("SOURCE_CURRENCY");
+                OnSOURCE_CURRENCYChanged();
+            }
+        }
+        private global::System.String _SOURCE_CURRENCY;
+        partial void OnSOURCE_CURRENCYChanging(global::System.String value);
+        partial void OnSOURCE_CURRENCYChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.String DATA_SOURCE
+        {
+            get
+            {
+                return _DATA_SOURCE;
+            }
+            set
+            {
+                OnDATA_SOURCEChanging(value);
+                ReportPropertyChanging("DATA_SOURCE");
+                _DATA_SOURCE = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("DATA_SOURCE");
+                OnDATA_SOURCEChanged();
+            }
+        }
+        private global::System.String _DATA_SOURCE;
+        partial void OnDATA_SOURCEChanging(global::System.String value);
+        partial void OnDATA_SOURCEChanged();
+
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime DATA_SOURCE_DATE
+        {
+            get
+            {
+                return _DATA_SOURCE_DATE;
+            }
+            set
+            {
+                OnDATA_SOURCE_DATEChanging(value);
+                ReportPropertyChanging("DATA_SOURCE_DATE");
+                _DATA_SOURCE_DATE = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DATA_SOURCE_DATE");
+                OnDATA_SOURCE_DATEChanged();
+            }
+        }
+        private global::System.DateTime _DATA_SOURCE_DATE;
+        partial void OnDATA_SOURCE_DATEChanging(global::System.DateTime value);
+        partial void OnDATA_SOURCE_DATEChanged();
+
+        #endregion
+    }
+
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "QuarterlyResults")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class QuarterlyResults : ComplexObject
     {
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -9217,11 +9920,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String IssuerName
         {
@@ -9241,11 +9944,11 @@ namespace GreenField.DAL
         private global::System.String _IssuerName;
         partial void OnIssuerNameChanging(global::System.String value);
         partial void OnIssuerNameChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String Region
         {
@@ -9265,11 +9968,11 @@ namespace GreenField.DAL
         private global::System.String _Region;
         partial void OnRegionChanging(global::System.String value);
         partial void OnRegionChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String Country
         {
@@ -9289,11 +9992,11 @@ namespace GreenField.DAL
         private global::System.String _Country;
         partial void OnCountryChanging(global::System.String value);
         partial void OnCountryChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String Sector
         {
@@ -9313,11 +10016,11 @@ namespace GreenField.DAL
         private global::System.String _Sector;
         partial void OnSectorChanging(global::System.String value);
         partial void OnSectorChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String Industry
         {
@@ -9337,11 +10040,11 @@ namespace GreenField.DAL
         private global::System.String _Industry;
         partial void OnIndustryChanging(global::System.String value);
         partial void OnIndustryChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String Currency
         {
@@ -9361,11 +10064,11 @@ namespace GreenField.DAL
         private global::System.String _Currency;
         partial void OnCurrencyChanging(global::System.String value);
         partial void OnCurrencyChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.DateTime> LastUpdate
         {
@@ -9385,11 +10088,11 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _LastUpdate;
         partial void OnLastUpdateChanging(Nullable<global::System.DateTime> value);
         partial void OnLastUpdateChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Q1
         {
@@ -9409,11 +10112,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _Q1;
         partial void OnQ1Changing(Nullable<global::System.Decimal> value);
         partial void OnQ1Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Q2
         {
@@ -9433,11 +10136,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _Q2;
         partial void OnQ2Changing(Nullable<global::System.Decimal> value);
         partial void OnQ2Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Q3
         {
@@ -9457,11 +10160,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _Q3;
         partial void OnQ3Changing(Nullable<global::System.Decimal> value);
         partial void OnQ3Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Q4
         {
@@ -9481,11 +10184,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _Q4;
         partial void OnQ4Changing(Nullable<global::System.Decimal> value);
         partial void OnQ4Changed();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Annual
         {
@@ -9505,11 +10208,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _Annual;
         partial void OnAnnualChanging(Nullable<global::System.Decimal> value);
         partial void OnAnnualChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.DateTime> QuarterlySum
         {
@@ -9529,11 +10232,11 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _QuarterlySum;
         partial void OnQuarterlySumChanging(Nullable<global::System.DateTime> value);
         partial void OnQuarterlySumChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> QuarterlySumPercentage
         {
@@ -9553,11 +10256,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _QuarterlySumPercentage;
         partial void OnQuarterlySumPercentageChanging(Nullable<global::System.Decimal> value);
         partial void OnQuarterlySumPercentageChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Consensus
         {
@@ -9577,11 +10280,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _Consensus;
         partial void OnConsensusChanging(Nullable<global::System.Decimal> value);
         partial void OnConsensusChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> ConsensusPercentage
         {
@@ -9601,11 +10304,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _ConsensusPercentage;
         partial void OnConsensusPercentageChanging(Nullable<global::System.Decimal> value);
         partial void OnConsensusPercentageChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> High
         {
@@ -9625,11 +10328,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _High;
         partial void OnHighChanging(Nullable<global::System.Decimal> value);
         partial void OnHighChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> Low
         {
@@ -9649,11 +10352,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _Low;
         partial void OnLowChanging(Nullable<global::System.Decimal> value);
         partial void OnLowChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Int32> Brokers
         {
@@ -9673,11 +10376,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _Brokers;
         partial void OnBrokersChanging(Nullable<global::System.Int32> value);
         partial void OnBrokersChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Int32> EstimateId
         {
@@ -9697,11 +10400,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _EstimateId;
         partial void OnEstimateIdChanging(Nullable<global::System.Int32> value);
         partial void OnEstimateIdChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.DateTime> ConsensusUpdate
         {
@@ -9721,11 +10424,11 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _ConsensusUpdate;
         partial void OnConsensusUpdateChanging(Nullable<global::System.DateTime> value);
         partial void OnConsensusUpdateChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Double> XREF
         {
@@ -9748,21 +10451,21 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="RatioComparisonData")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "RatioComparisonData")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class RatioComparisonData : ComplexObject
     {
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String SECURITY_ID
         {
@@ -9782,11 +10485,11 @@ namespace GreenField.DAL
         private global::System.String _SECURITY_ID;
         partial void OnSECURITY_IDChanging(global::System.String value);
         partial void OnSECURITY_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String ISSUER_ID
         {
@@ -9806,11 +10509,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUER_ID;
         partial void OnISSUER_IDChanging(global::System.String value);
         partial void OnISSUER_IDChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public global::System.String ISSUE_NAME
         {
@@ -9830,11 +10533,11 @@ namespace GreenField.DAL
         private global::System.String _ISSUE_NAME;
         partial void OnISSUE_NAMEChanging(global::System.String value);
         partial void OnISSUE_NAMEChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> FINANCIAL
         {
@@ -9854,11 +10557,11 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _FINANCIAL;
         partial void OnFINANCIALChanging(Nullable<global::System.Decimal> value);
         partial void OnFINANCIALChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = true)]
         [DataMemberAttribute()]
         public Nullable<global::System.Decimal> VALUATION
         {
@@ -9881,17 +10584,17 @@ namespace GreenField.DAL
 
         #endregion
     }
-    
+
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
-    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="ValuationQualityGrowthData")]
-    [DataContractAttribute(IsReference=true)]
+    [EdmComplexTypeAttribute(NamespaceName = "ExternalResearchModel", Name = "ValuationQualityGrowthData")]
+    [DataContractAttribute(IsReference = true)]
     [Serializable()]
     public partial class ValuationQualityGrowthData : ComplexObject
     {
         #region Factory Method
-    
+
         /// <summary>
         /// Create a new ValuationQualityGrowthData object.
         /// </summary>
@@ -9919,11 +10622,11 @@ namespace GreenField.DAL
 
         #endregion
         #region Primitive Properties
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String IssuerId
         {
@@ -9943,11 +10646,11 @@ namespace GreenField.DAL
         private global::System.String _IssuerId;
         partial void OnIssuerIdChanging(global::System.String value);
         partial void OnIssuerIdChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String SecurityId
         {
@@ -9967,11 +10670,11 @@ namespace GreenField.DAL
         private global::System.String _SecurityId;
         partial void OnSecurityIdChanging(global::System.String value);
         partial void OnSecurityIdChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String DataSource
         {
@@ -9991,11 +10694,11 @@ namespace GreenField.DAL
         private global::System.String _DataSource;
         partial void OnDataSourceChanging(global::System.String value);
         partial void OnDataSourceChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String PeriodType
         {
@@ -10015,11 +10718,11 @@ namespace GreenField.DAL
         private global::System.String _PeriodType;
         partial void OnPeriodTypeChanging(global::System.String value);
         partial void OnPeriodTypeChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String Currency
         {
@@ -10039,11 +10742,11 @@ namespace GreenField.DAL
         private global::System.String _Currency;
         partial void OnCurrencyChanging(global::System.String value);
         partial void OnCurrencyChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Int32 DataId
         {
@@ -10063,11 +10766,11 @@ namespace GreenField.DAL
         private global::System.Int32 _DataId;
         partial void OnDataIdChanging(global::System.Int32 value);
         partial void OnDataIdChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.Decimal Amount
         {
@@ -10087,11 +10790,11 @@ namespace GreenField.DAL
         private global::System.Decimal _Amount;
         partial void OnAmountChanging(global::System.Decimal value);
         partial void OnAmountChanged();
-    
+
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty = false, IsNullable = false)]
         [DataMemberAttribute()]
         public global::System.String AmountType
         {
@@ -10114,7 +10817,7 @@ namespace GreenField.DAL
 
         #endregion
     }
-
-    #endregion
-    
 }
+    #endregion
+
+

@@ -46,7 +46,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -184,6 +183,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.RegionSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.ValuationQualityGrowthData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DCFAnalysisSummaryData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DCFTerminalValueCalculationsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCatalogData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCategoricalData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.EntitySelectionData.datasource" />
@@ -310,6 +310,15 @@
     </None>
     <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations4.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DocumentWorkSpaceDefinitions\GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ModelConsensusEstimatesData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.wsdl" />
     <None Include="Service References\ExternalResearchDefinitions\ExternalResearchOperations.xsd">

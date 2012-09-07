@@ -287,7 +287,7 @@ namespace GreenField.ServiceCaller
 
         void RetrievePresentationAttachedFileDetails(Int64? presentationID, Action<List<FileMaster>> callback);
 
-      //  void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, string url, FileMaster presentationAttachedFileData, Action<Boolean?> callback);
+        //  void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, string url, FileMaster presentationAttachedFileData, Action<Boolean?> callback);
 
         void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, FileMaster fileMasterInfo, Boolean deletionFlag, Action<Boolean?> callback);
         #endregion
@@ -295,10 +295,19 @@ namespace GreenField.ServiceCaller
         #region DCF
 
         void RetrieveDCFAnalysisData(EntitySelectionData entitySelectionData, Action<List<DCFAnalysisSummaryData>> callback);
-        
+
+        void RetrieveDCFTerminalValueCalculationsData(EntitySelectionData entitySelectionData, Action<List<DCFTerminalValueCalculationsData>> callback);
 
         #endregion
 
         void RetrieveCompanyData(Action<List<tblCompanyInfo>> callback);
+
+        #region Documents
+
+        void RetrieveDocumentsData(EntitySelectionData selectedSecurity, Action<byte[]> callback);
+
+        #endregion
+
+
     }
 }

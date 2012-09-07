@@ -3904,6 +3904,44 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        /// <summary>
+        /// Service Caller Method for DCFTerminalValueCalculations
+        /// </summary>
+        /// <param name="entitySelectionData">SelectedSecurity</param>
+        /// <param name="callback">List of type DCFTerminalValueCalculationsData</param>
+        public void RetrieveDCFTerminalValueCalculationsData(EntitySelectionData entitySelectionData, Action<List<DCFTerminalValueCalculationsData>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            DCFOperationsClient client = new DCFOperationsClient();
+            client.RetrieveTerminalValueCalculationsDataAsync(entitySelectionData);
+            client.RetrieveTerminalValueCalculationsDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault> fault
+                      = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
 
         #endregion
 
@@ -4263,6 +4301,49 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
+        #endregion
+
+        #region Documents
+
+        /// <summary>
+        /// Service Caller to retrieve Data for Excel Model-Download
+        /// </summary>
+        /// <param name="selectedSecurity">The Selected Security in Control</param>
+        /// <param name="callback">Returns the Excel file as byte Array</param>
+        public void RetrieveDocumentsData(EntitySelectionData selectedSecurity, Action<byte[]> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.RetrieveStatementDataAsync(selectedSecurity);
+            client.RetrieveStatementDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault> fault
+                      = e.Error as FaultException<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
         #endregion
 
     }

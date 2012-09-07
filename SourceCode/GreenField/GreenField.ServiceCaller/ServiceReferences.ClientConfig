@@ -75,12 +75,8 @@
     <binding name="DCFOperations1" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
- <binding name="ExternalResearchOperations1" maxBufferSize="2147483647"
+    <binding name="ExternalResearchOperations1" maxBufferSize="2147483647"
      maxReceivedMessageSize="2147483647">
-     <security mode="None" />
-    </binding>
-    <binding name="BasicHttpBinding_CustomScreeningToolOperations"
-     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
    </basicHttpBinding>
@@ -133,10 +129,6 @@
     binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations"
     contract="ExternalResearchDefinitions.ExternalResearchOperations"
     name="ExternalResearchOperations" />
-   <endpoint address="http://localhost:59430/Services/CustomScreeningToolOperations.svc"
-    binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_CustomScreeningToolOperations"
-    contract="CustomScreeningDefinitions.CustomScreeningToolOperations"
-    name="BasicHttpBinding_CustomScreeningToolOperations" />
   </client>
 	</system.serviceModel>
 </configuration>

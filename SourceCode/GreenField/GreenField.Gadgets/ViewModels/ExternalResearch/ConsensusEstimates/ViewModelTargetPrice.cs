@@ -18,6 +18,7 @@ using GreenField.Gadgets.Helpers;
 using System.Collections.Generic;
 using System.Collections;
 using System.Linq;
+using GreenField.ServiceCaller.ExternalResearchDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
