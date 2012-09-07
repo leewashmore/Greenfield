@@ -23,12 +23,14 @@
     <MetadataSource Address="http://localhost:59430/Services/CustomScreeningToolOperations.svc" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
+    <MetadataFile FileName="CustomScreeningToolOperations4.xsd" MetadataType="Schema" ID="bf13f91f-7359-483a-a1cd-3b19f2608ae6" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd5" />
     <MetadataFile FileName="CustomScreeningToolOperations.wsdl" MetadataType="Wsdl" ID="14cc4b64-307d-4ce6-9978-610da40ca179" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?wsdl" />
     <MetadataFile FileName="CustomScreeningToolOperations.xsd" MetadataType="Schema" ID="de533c00-fc99-41da-a9ba-862dfc7e856c" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd3" />
     <MetadataFile FileName="CustomScreeningToolOperations1.xsd" MetadataType="Schema" ID="515ca309-ad9b-4492-81f1-481d69743665" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd0" />
     <MetadataFile FileName="CustomScreeningToolOperations2.xsd" MetadataType="Schema" ID="89364f0e-b6f0-4c11-acda-6cfd24c748b4" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd1" />
     <MetadataFile FileName="CustomScreeningToolOperations3.xsd" MetadataType="Schema" ID="a19f7c76-4d12-48f0-b2d8-581ddce30fdd" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd2" />
     <MetadataFile FileName="CustomScreeningToolOperations.disco" MetadataType="Disco" ID="fb574e9a-9c5f-40eb-8ebc-8a1b393f8793" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?disco" />
+    <MetadataFile FileName="CustomScreeningToolOperations41.xsd" MetadataType="Schema" ID="0dbe6fc2-c319-4b79-9463-5ce2260f0410" SourceId="1" SourceUrl="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd4" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

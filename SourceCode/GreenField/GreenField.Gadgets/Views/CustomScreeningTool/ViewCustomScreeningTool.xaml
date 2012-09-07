@@ -40,7 +40,7 @@
         
             <telerik:RadComboBox x:Name="cmbSecuritySelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0"
                                      HorizontalAlignment="Left" 
-                                     ItemsSource="{Binding SecuritySelectionInfo}" SelectedValue="{Binding SelectedCriteria, Mode=TwoWay}"
+                                     ItemsSource="{Binding SecuritySelectionCriteria}" SelectedValue="{Binding SelectedCriteria, Mode=TwoWay}"
                                      EmptyText="Select Criteria" Width="150"                               
                                      Style="{StaticResource RadComboBoxStyle}"/>
 
@@ -72,7 +72,7 @@
 
             <telerik:RadComboBox x:Name="cmbCustomRegionSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
                                      HorizontalAlignment="Left" 
-                                     ItemsSource="{Binding CustomSelectionInfo.Region}" SelectedValue="{Binding SelectedRegion, Mode=TwoWay}"
+                                     ItemsSource="{Binding CustomSelectionRegionInfo}" SelectedValue="{Binding SelectedRegion, Mode=TwoWay}"
                                      EmptyText="Select Region" Width="150"
                                      Visibility="{Binding CustomSelectionVisibility}"
                                      Style="{StaticResource RadComboBoxStyle}"/>
@@ -84,7 +84,7 @@
 
             <telerik:RadComboBox x:Name="cmbCustomCountrySelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2"
                                      HorizontalAlignment="Left" 
-                                     ItemsSource="{Binding CustomSelectionInfo.Country}" SelectedValue="{Binding SelectedCountry, Mode=TwoWay}"
+                                     ItemsSource="{Binding CustomSelectionCountryInfo}" SelectedValue="{Binding SelectedCountry, Mode=TwoWay}"
                                      EmptyText="Select Country" Width="150"
                                      Visibility="{Binding CustomSelectionVisibility}"
                                      Style="{StaticResource RadComboBoxStyle}"/>
@@ -95,7 +95,7 @@
 
             <telerik:RadComboBox x:Name="cmbCustomSectorSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="3"
                                      HorizontalAlignment="Left" 
-                                     ItemsSource="{Binding CustomSelectionInfo.Sector}" SelectedValue="{Binding SelectedSector, Mode=TwoWay}"
+                                     ItemsSource="{Binding CustomSelectionSectorInfo}" SelectedValue="{Binding SelectedSector, Mode=TwoWay}"
                                      EmptyText="Select Sector" Width="150"
                                      Visibility="{Binding CustomSelectionVisibility}"
                                      Style="{StaticResource RadComboBoxStyle}"/>
@@ -106,7 +106,7 @@
 
             <telerik:RadComboBox x:Name="cmbCustomIndustrySelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4"
                                      HorizontalAlignment="Left" 
-                                     ItemsSource="{Binding CustomSelectionInfo.Industry}" SelectedValue="{Binding SelectedIndustry, Mode=TwoWay}"
+                                     ItemsSource="{Binding CustomSelectionIndustryInfo}" SelectedValue="{Binding SelectedIndustry, Mode=TwoWay}"
                                      EmptyText="Select Industry" Width="150"
                                      Visibility="{Binding CustomSelectionVisibility}"
                                      Style="{StaticResource RadComboBoxStyle}"/>

@@ -37,8 +37,8 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10,10,10,10">
-                <RadioButton Content="Private" Margin="5,0,0,0" IsChecked="{Binding RbtnPublic, Mode=TwoWay}"/>
-                <RadioButton Content="Public" Margin="5,0,0,0" IsChecked="{Binding RbtnPrivate, Mode=TwoWay}"/>
+                <RadioButton Content="Private" Margin="5,0,0,0" GroupName="SelectedAccessbitlity" IsChecked="{Binding RbtnPublic, Mode=TwoWay}"/>
+                <RadioButton Content="Public" Margin="5,0,0,0" GroupName="SelectedAccessbitlity" IsChecked="{Binding RbtnPrivate, Mode=TwoWay}"/>
             </StackPanel>
 
         </Grid>

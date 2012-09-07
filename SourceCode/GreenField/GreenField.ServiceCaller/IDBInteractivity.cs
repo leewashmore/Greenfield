@@ -304,6 +304,9 @@ namespace GreenField.ServiceCaller
 
         void RetrieveCompanyData(Action<List<tblCompanyInfo>> callback);
 
+        #region Custom Screening Tool
+        
+        void RetrieveCustomControlsList(string parameter, Action<List<string>> callback);
         #region Documents
 
         void RetrieveDocumentsData(EntitySelectionData selectedSecurity, Action<byte[]> callback);

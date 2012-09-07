@@ -5,29 +5,161 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" />
       <xsd:import schemaLocation="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/CustomScreeningToolOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="CustomScreeningToolOperations_RetrieveCustomSelectionData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveCustomSelectionData" />
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveCustomControlsList_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCustomControlsList" />
   </wsdl:message>
-  <wsdl:message name="CustomScreeningToolOperations_RetrieveCustomSelectionData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveCustomSelectionDataResponse" />
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveCustomControlsList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCustomControlsListResponse" />
   </wsdl:message>
-  <wsdl:message name="CustomScreeningToolOperations_RetrieveCustomSelectionData_ServiceFaultFault_FaultMessage">
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveCustomControlsList_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q1:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveSecurityReferenceTabDataPoints_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSecurityReferenceTabDataPoints" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveSecurityReferenceTabDataPoints_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSecurityReferenceTabDataPointsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveSecurityReferenceTabDataPoints_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrievePeriodFinancialsTabDataPoints_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePeriodFinancialsTabDataPoints" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrievePeriodFinancialsTabDataPoints_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrievePeriodFinancialsTabDataPointsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrievePeriodFinancialsTabDataPoints_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveCurrentFinancialsTabDataPoints_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCurrentFinancialsTabDataPoints" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveCurrentFinancialsTabDataPoints_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCurrentFinancialsTabDataPointsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveCurrentFinancialsTabDataPoints_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q4:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveFairValueTabDataPoints_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveFairValueTabDataPoints" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveFairValueTabDataPoints_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveFairValueTabDataPointsResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveFairValueTabDataPoints_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q5:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveSecurityData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSecurityData" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveSecurityData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSecurityDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveSecurityData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="CustomScreeningToolOperations">
-    <wsdl:operation name="RetrieveCustomSelectionData">
-      <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomSelectionData" message="tns:CustomScreeningToolOperations_RetrieveCustomSelectionData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomSelectionDataResponse" message="tns:CustomScreeningToolOperations_RetrieveCustomSelectionData_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomSelectionDataServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_RetrieveCustomSelectionData_ServiceFaultFault_FaultMessage" />
+    <wsdl:operation name="RetrieveCustomControlsList">
+      <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomControlsList" message="tns:CustomScreeningToolOperations_RetrieveCustomControlsList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomControlsListResponse" message="tns:CustomScreeningToolOperations_RetrieveCustomControlsList_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomControlsListServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_RetrieveCustomControlsList_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSecurityReferenceTabDataPoints">
+      <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityReferenceTabDataPoints" message="tns:CustomScreeningToolOperations_RetrieveSecurityReferenceTabDataPoints_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityReferenceTabDataPointsResponse" message="tns:CustomScreeningToolOperations_RetrieveSecurityReferenceTabDataPoints_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityReferenceTabDataPointsServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_RetrieveSecurityReferenceTabDataPoints_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePeriodFinancialsTabDataPoints">
+      <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrievePeriodFinancialsTabDataPoints" message="tns:CustomScreeningToolOperations_RetrievePeriodFinancialsTabDataPoints_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrievePeriodFinancialsTabDataPointsResponse" message="tns:CustomScreeningToolOperations_RetrievePeriodFinancialsTabDataPoints_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrievePeriodFinancialsTabDataPointsServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_RetrievePeriodFinancialsTabDataPoints_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCurrentFinancialsTabDataPoints">
+      <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCurrentFinancialsTabDataPoints" message="tns:CustomScreeningToolOperations_RetrieveCurrentFinancialsTabDataPoints_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCurrentFinancialsTabDataPointsResponse" message="tns:CustomScreeningToolOperations_RetrieveCurrentFinancialsTabDataPoints_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCurrentFinancialsTabDataPointsServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_RetrieveCurrentFinancialsTabDataPoints_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveFairValueTabDataPoints">
+      <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabDataPoints" message="tns:CustomScreeningToolOperations_RetrieveFairValueTabDataPoints_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabDataPointsResponse" message="tns:CustomScreeningToolOperations_RetrieveFairValueTabDataPoints_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabDataPointsServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_RetrieveFairValueTabDataPoints_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSecurityData">
+      <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityData" message="tns:CustomScreeningToolOperations_RetrieveSecurityData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataResponse" message="tns:CustomScreeningToolOperations_RetrieveSecurityData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_RetrieveSecurityData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_CustomScreeningToolOperations" type="tns:CustomScreeningToolOperations">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="RetrieveCustomSelectionData">
-      <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomSelectionData" style="document" />
+    <wsdl:operation name="RetrieveCustomControlsList">
+      <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomControlsList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSecurityReferenceTabDataPoints">
+      <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityReferenceTabDataPoints" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrievePeriodFinancialsTabDataPoints">
+      <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/RetrievePeriodFinancialsTabDataPoints" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCurrentFinancialsTabDataPoints">
+      <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveCurrentFinancialsTabDataPoints" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveFairValueTabDataPoints">
+      <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabDataPoints" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSecurityData">
+      <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

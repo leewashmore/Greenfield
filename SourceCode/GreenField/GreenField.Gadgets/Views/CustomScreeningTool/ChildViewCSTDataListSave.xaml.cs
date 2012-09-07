@@ -24,11 +24,19 @@ namespace GreenField.Gadgets.Views
     public partial class ChildViewCSTDataListSave : ChildWindow
     {
         
+
         #region Fields
         
         private DateTime _presentationDate { get; set; }        
         IDBInteractivity _dBInteractivity;
         ILoggerFacade _logger;
+
+        public enum AccessbitlityMode
+        {
+            Private,
+            Public
+        }
+
         #endregion
 
         #region Constructor
@@ -46,7 +54,10 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Properties
-        private bool? _rbtnPublic = false;
+
+        public AccessbitlityMode SelectedAccessbitlity {get;  set; }
+
+        private bool? _rbtnPublic = true;
         public bool? RbtnPublic
         {
             get { return _rbtnPublic; }

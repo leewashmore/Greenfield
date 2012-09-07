@@ -260,6 +260,15 @@
     <None Include="Service References\CustomScreeningDefinitions\CustomScreeningToolOperations3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\CustomScreeningDefinitions\CustomScreeningToolOperations4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomScreeningDefinitions\CustomScreeningToolOperations41.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CustomScreeningDefinitions\GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningSecurityData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\CustomScreeningDefinitions\GreenField.ServiceCaller.CustomScreeningDefinitions.CustomSelectionData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
