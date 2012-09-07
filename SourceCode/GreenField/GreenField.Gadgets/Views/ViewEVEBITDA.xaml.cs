@@ -124,8 +124,9 @@ namespace GreenField.Gadgets.Views
 
                 if (chEVEBITDA.Visibility == Visibility.Visible)
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.EV_EBITDA, Element = this.chEVEBITDA, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
+
                 else if (dgEVEBITDA.Visibility == Visibility.Visible)
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.EV_EBITDA_DATA, Element = this.chEVEBITDA, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.EV_EBITDA_DATA, Element = this.dgEVEBITDA, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_EVEBITDA);
                 childExportOptions.Show();
