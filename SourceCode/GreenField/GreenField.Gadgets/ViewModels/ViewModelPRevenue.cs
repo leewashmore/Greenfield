@@ -74,7 +74,8 @@ namespace GreenField.Gadgets.ViewModels
             _securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
             if (_eventAggregator != null)
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
-            CallingWebMethod();
+            if (_securitySelectionData != null)
+                HandleSecurityReferenceSet(_securitySelectionData);
         }
         #endregion
 
@@ -341,10 +342,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
+                _securitySelectionData = entitySelectionData;
                 if (entitySelectionData != null && IsActive)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    _securitySelectionData = entitySelectionData;
+                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);                    
                     CallingWebMethod();
                 }
                 else

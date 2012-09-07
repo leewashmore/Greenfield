@@ -72,10 +72,8 @@
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
-    <binding name="DCFOperations1" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-     <security mode="None" />
-    </binding>
-    <binding name="ExternalResearchOperations1" maxBufferSize="2147483647"
+    <binding name="CustomScreeningToolOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
