@@ -67,7 +67,7 @@
     <Compile Include="DataContracts\ConsensusEstimateMedian.cs" />
     <Compile Include="DataContracts\ConsensusEstimatesSummaryData.cs" />
     <Compile Include="DataContracts\ConsensusEstimatesValuations.cs" />
-    <Compile Include="DataContracts\CustomScreeningToolData.cs" />
+    <Compile Include="DataContracts\CustomScreeningSecurityData.cs" />
     <Compile Include="DataContracts\CustomSelectionData.cs" />
     <Compile Include="DataContracts\DCFAnalysisSummaryData.cs" />
     <Compile Include="DataContracts\DCFTerminalValueCalculationsData.cs" />

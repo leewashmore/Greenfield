@@ -218,6 +218,28 @@ namespace GreenField.DAL
         }
 
         #endregion
+        #region Function Imports
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="tabName">No Metadata Documentation available.</param>
+        public ObjectResult<FinancialTabDataDescriptions> GetFinancialTabDataDescriptions(global::System.String tabName)
+        {
+            ObjectParameter tabNameParameter;
+            if (tabName != null)
+            {
+                tabNameParameter = new ObjectParameter("tabName", tabName);
+            }
+            else
+            {
+                tabNameParameter = new ObjectParameter("tabName", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FinancialTabDataDescriptions>("GetFinancialTabDataDescriptions", tabNameParameter);
+        }
+
+        #endregion
     }
     
 
@@ -1793,6 +1815,138 @@ namespace GreenField.DAL
                 }
             }
         }
+
+        #endregion
+    }
+
+    #endregion
+    #region ComplexTypes
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="CustomScreeningToolModel", Name="FinancialTabDataDescriptions")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class FinancialTabDataDescriptions : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new FinancialTabDataDescriptions object.
+        /// </summary>
+        /// <param name="sCREENING_ID">Initial value of the SCREENING_ID property.</param>
+        /// <param name="dATA_DESC">Initial value of the DATA_DESC property.</param>
+        /// <param name="qUARTERLY">Initial value of the QUARTERLY property.</param>
+        /// <param name="aNNUAL">Initial value of the ANNUAL property.</param>
+        public static FinancialTabDataDescriptions CreateFinancialTabDataDescriptions(global::System.String sCREENING_ID, global::System.String dATA_DESC, global::System.String qUARTERLY, global::System.String aNNUAL)
+        {
+            FinancialTabDataDescriptions financialTabDataDescriptions = new FinancialTabDataDescriptions();
+            financialTabDataDescriptions.SCREENING_ID = sCREENING_ID;
+            financialTabDataDescriptions.DATA_DESC = dATA_DESC;
+            financialTabDataDescriptions.QUARTERLY = qUARTERLY;
+            financialTabDataDescriptions.ANNUAL = aNNUAL;
+            return financialTabDataDescriptions;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String SCREENING_ID
+        {
+            get
+            {
+                return _SCREENING_ID;
+            }
+            set
+            {
+                OnSCREENING_IDChanging(value);
+                ReportPropertyChanging("SCREENING_ID");
+                _SCREENING_ID = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("SCREENING_ID");
+                OnSCREENING_IDChanged();
+            }
+        }
+        private global::System.String _SCREENING_ID;
+        partial void OnSCREENING_IDChanging(global::System.String value);
+        partial void OnSCREENING_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DATA_DESC
+        {
+            get
+            {
+                return _DATA_DESC;
+            }
+            set
+            {
+                OnDATA_DESCChanging(value);
+                ReportPropertyChanging("DATA_DESC");
+                _DATA_DESC = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("DATA_DESC");
+                OnDATA_DESCChanged();
+            }
+        }
+        private global::System.String _DATA_DESC;
+        partial void OnDATA_DESCChanging(global::System.String value);
+        partial void OnDATA_DESCChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String QUARTERLY
+        {
+            get
+            {
+                return _QUARTERLY;
+            }
+            set
+            {
+                OnQUARTERLYChanging(value);
+                ReportPropertyChanging("QUARTERLY");
+                _QUARTERLY = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("QUARTERLY");
+                OnQUARTERLYChanged();
+            }
+        }
+        private global::System.String _QUARTERLY;
+        partial void OnQUARTERLYChanging(global::System.String value);
+        partial void OnQUARTERLYChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ANNUAL
+        {
+            get
+            {
+                return _ANNUAL;
+            }
+            set
+            {
+                OnANNUALChanging(value);
+                ReportPropertyChanging("ANNUAL");
+                _ANNUAL = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ANNUAL");
+                OnANNUALChanged();
+            }
+        }
+        private global::System.String _ANNUAL;
+        partial void OnANNUALChanging(global::System.String value);
+        partial void OnANNUALChanged();
 
         #endregion
     }

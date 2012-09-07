@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CustomScreeningToolModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="CustomScreeningToolModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="CustomScreeningToolModelStoreContainer">
           <EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_CURRENT" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_CURRENT">
             <DefiningQuery>SELECT 
@@ -59,90 +59,6 @@
             <End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfo" />
           </AssociationSet>
         </EntityContainer>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.BENCHMARK_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.BENCHMARK_NODE_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.FINANCIAL_GRIDS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.FINSTAT_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.FX_RATES_OLD' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.GF_PRICING_BASEVIEW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.GF_SECURITY_BASEVIEW' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.GF_SECURITY_BASEVIEW2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.GRID_TYPES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.INTERNAL_DATA' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.INTERNAL_ISSUER_QUARTERLY_DISTRIBUTION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.INTERNAL_STATEMENT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.PORTFOLIO_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_CURRENT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
@@ -219,12 +135,6 @@
           <Property Name="DECIMAL" Type="int" />
           <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.STATEMENT_CONSENSUS_MAPPING' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'AIMS_Data0608.dbo.tblCompanyInfo' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
         <EntityType Name="UserCustomisedListInfo">
           <Key>
             <PropertyRef Name="ListId" />
@@ -270,8 +180,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+        <Function Name="GetFinancialTabDataDescriptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tabName" Type="nvarchar" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CustomScreeningToolModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -286,6 +198,9 @@
             <End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfoes" />
             <End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfoes" />
           </AssociationSet>
+          <FunctionImport Name="GetFinancialTabDataDescriptions" ReturnType="Collection(CustomScreeningToolModel.FinancialTabDataDescriptions)">
+            <Parameter Name="tabName" Mode="In" Type="String" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="SCREENING_DISPLAY_CURRENT">
           <Key>
@@ -398,6 +313,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="FinancialTabDataDescriptions" >
+          <Property Type="String" Name="SCREENING_ID" Nullable="false" />
+          <Property Type="String" Name="DATA_DESC" Nullable="false" />
+          <Property Type="String" Name="QUARTERLY" Nullable="false" />
+          <Property Type="String" Name="ANNUAL" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -467,6 +388,16 @@
             <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
             <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetFinancialTabDataDescriptions" FunctionName="CustomScreeningToolModel.Store.GetFinancialTabDataDescriptions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CustomScreeningToolModel.FinancialTabDataDescriptions">
+                <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+                <ScalarProperty Name="QUARTERLY" ColumnName="QUARTERLY" />
+                <ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

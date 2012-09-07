@@ -8,15 +8,18 @@ namespace GreenField.DataContracts.DataContracts
     public class CustomSelectionData
     {
         [DataMember]
-        public string Country { get; set; }
+        public string ScreeningId { get; set; }
 
         [DataMember]
-        public string Region { get; set; }
+        public string DataDescription { get; set; }
 
         [DataMember]
-        public string Sector { get; set; }
+        public string LongDescription { get; set; }
 
         [DataMember]
-        public string Industry { get; set; }
+        public string Quaterly { get; set; }
+
+        [DataMember]
+        public string Annual { get; set; }
     }
 }

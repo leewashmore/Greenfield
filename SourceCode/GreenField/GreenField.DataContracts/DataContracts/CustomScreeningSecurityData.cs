@@ -5,13 +5,22 @@ using System.Runtime.Serialization;
 namespace GreenField.DataContracts.DataContracts
 {
      [DataContract]
-    public class CustomScreeningToolData
+    public class CustomScreeningSecurityData
     {
         [DataMember]
         public string SecurityName { get; set; }
 
         [DataMember]
         public string SecurityTicker { get; set; }
+
+        [DataMember]
+        public string SecurityId { get; set; }
+
+        [DataMember]
+        public string IssuerId { get; set; }
+
+        [DataMember]
+        public string IssueName { get; set; }
 
         [DataMember]
         public string Type { get; set; }
