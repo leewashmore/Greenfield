@@ -1388,16 +1388,16 @@ namespace GreenField.Web.Services
                 List<CalculatedValuesForValuation> valuesBenchForNetGrowth = new List<CalculatedValuesForValuation>();
 
 
-                List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPRevenue = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForEVEBITDA = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPE = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPCE = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForROE = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForDividendYield = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForRevGrowth = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForNetGrowth = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPBV = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                  List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForAll = new List<GreenField.DAL.ValuationQualityGrowthData>();
+                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPRevenue = new List<GreenField.DAL.ValuationQualityGrowthData>();
+                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForEVEBITDA = new List<GreenField.DAL.ValuationQualityGrowthData>();
+                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPE = new List<GreenField.DAL.ValuationQualityGrowthData>();
+                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPCE = new List<GreenField.DAL.ValuationQualityGrowthData>();
+                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForROE = new List<GreenField.DAL.ValuationQualityGrowthData>();
+                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForDividendYield = new List<GreenField.DAL.ValuationQualityGrowthData>();
+                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForRevGrowth = new List<GreenField.DAL.ValuationQualityGrowthData>();
+                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForNetGrowth = new List<GreenField.DAL.ValuationQualityGrowthData>();
+                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPBV = new List<GreenField.DAL.ValuationQualityGrowthData>();
+                //  List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForAll = new List<GreenField.DAL.ValuationQualityGrowthData>();
 
              
 
@@ -2019,7 +2019,10 @@ namespace GreenField.Web.Services
                 {
                     if(initialSumDirtyValuePC != 0 )
                     row.PortfolioPercent = (row.PortfolioPercent / initialSumDirtyValuePC);
-                    row.InverseAmount = 1 / row.Amount;
+                    if (row.Amount != 0)
+                    {
+                        row.InverseAmount = 1 / row.Amount;
+                    }
                     row.MultipliedValue = row.PortfolioPercent * row.InverseAmount;
                     harmonicMeanPortfolio = harmonicMeanPortfolio + row.MultipliedValue;
                 }
@@ -2070,7 +2073,10 @@ namespace GreenField.Web.Services
             {
                 if (initialSumBenchmarkWeight != 0)
                     row.PortfolioPercent = (row.PortfolioPercent / initialSumBenchmarkWeight);
-                row.InverseAmount = 1 / row.Amount;
+                if (row.Amount != 0)
+                {
+                    row.InverseAmount = 1 / row.Amount;
+                }
                 row.MultipliedValue = row.PortfolioPercent * row.InverseAmount;
                 harmonicMeanBenchmark = harmonicMeanBenchmark + row.MultipliedValue;
             }
@@ -2119,7 +2125,10 @@ namespace GreenField.Web.Services
             {
                 if (initialSumDirtyValuePC != 0)
                     row.PortfolioPercent = (row.PortfolioPercent / initialSumDirtyValuePC);
-                row.InverseAmount = 1 / row.Amount;
+                if (row.Amount != 0)
+                {
+                    row.InverseAmount = 1 / row.Amount;
+                }
                 row.MultipliedValue = row.PortfolioPercent * row.Amount;
                 harmonicMeanPortfolio = harmonicMeanPortfolio + row.MultipliedValue;
             }
@@ -2142,7 +2151,10 @@ namespace GreenField.Web.Services
             {
                 if (initialSumBenchmarkWeight != 0)
                     row.PortfolioPercent = (row.PortfolioPercent / initialSumBenchmarkWeight);
-                row.InverseAmount = 1 / row.Amount;
+                if (row.Amount != 0)
+                {
+                    row.InverseAmount = 1 / row.Amount;
+                }
                 row.MultipliedValue = row.PortfolioPercent * row.Amount;
                 harmonicMeanBenchmark = harmonicMeanBenchmark + row.MultipliedValue;
             }
