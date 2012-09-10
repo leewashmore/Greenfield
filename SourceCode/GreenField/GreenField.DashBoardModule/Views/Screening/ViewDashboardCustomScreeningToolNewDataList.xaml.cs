@@ -23,7 +23,7 @@ using GreenField.Gadgets.Helpers;
 namespace GreenField.DashBoardModule.Views.Screening
 {
     [Export]
-    public partial class ViewDashboardCustomScreeningTool : UserControl, INavigationAware
+    public partial class ViewDashboardCustomScreeningToolNewDataList : UserControl, INavigationAware
     {
         #region Fields
         private IEventAggregator _eventAggregator;
@@ -33,8 +33,8 @@ namespace GreenField.DashBoardModule.Views.Screening
         #endregion
 
         [ImportingConstructor]
-        public ViewDashboardCustomScreeningTool(ILoggerFacade logger, IEventAggregator eventAggregator,
-            IDBInteractivity dbInteractivity,IRegionManager regionManager)
+        public ViewDashboardCustomScreeningToolNewDataList(ILoggerFacade logger, IEventAggregator eventAggregator,
+            IDBInteractivity dbInteractivity, IRegionManager regionManager)
         {
             InitializeComponent();
             _eventAggregator = eventAggregator;
@@ -61,7 +61,7 @@ namespace GreenField.DashBoardModule.Views.Screening
                 RegionManager = _regionManager
             };
 
-            this.cctrDashboardContent.Content = null;//new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(param));
+            this.cctrDashboardContent.Content = null;//new ViewCSTDataFieldSelector(new ViewModelCSTDataFieldSelector(param));
 
         }
 

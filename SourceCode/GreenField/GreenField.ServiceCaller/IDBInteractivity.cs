@@ -308,6 +308,15 @@ namespace GreenField.ServiceCaller
         
         void RetrieveCustomControlsList(string parameter, Action<List<string>> callback);
 
+        void RetrieveSecurityReferenceTabDataPoints(Action<List<CustomSelectionData>> callback);
+
+        void RetrievePeriodFinancialsTabDataPoints(Action<List<CustomSelectionData>> callback);
+
+        void RetrieveCurrentFinancialsTabDataPoints(Action<List<CustomSelectionData>> callback);
+
+        void RetrieveFairValueTabDataPoints(Action<List<CustomSelectionData>> callback);
+        
+
         #endregion
 
         #region Documents

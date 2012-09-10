@@ -124,7 +124,8 @@ namespace GreenField.DashboardModule
             #endregion
 
             #region Stock
-            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCustomScreeningTool));           
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCustomScreeningTool));
+            _regionManager.RegisterViewWithRegion(RegionNames.MAIN_REGION, typeof(ViewDashboardCustomScreeningToolNewDataList));           
             #endregion
             #endregion
 
