@@ -29,17 +29,17 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveFreCashFlowsData">
+  <xs:element name="RetrieveFreeCashFlowsData">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q5:EntitySelectionData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveFreCashFlowsDataResponse">
+  <xs:element name="RetrieveFreeCashFlowsDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveFreCashFlowsDataResult" nillable="true" type="q6:ArrayOfFreeCashFlowsData" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveFreeCashFlowsDataResult" nillable="true" type="q6:ArrayOfFreeCashFlowsData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

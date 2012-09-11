@@ -304,6 +304,8 @@ namespace GreenField.ServiceCaller
 
         void RetrieveDCFTerminalValueCalculationsData(EntitySelectionData entitySelectionData, Action<List<DCFTerminalValueCalculationsData>> callback);
 
+        void RetrieveDCFFreeCashFlowsData(EntitySelectionData entitySelectionData, Action<List<FreeCashFlowsData>> callback);
+
         #endregion
 
         void RetrieveCompanyData(Action<List<tblCompanyInfo>> callback);

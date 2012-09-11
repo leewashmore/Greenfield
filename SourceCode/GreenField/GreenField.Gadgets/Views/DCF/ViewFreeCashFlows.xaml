@@ -1,12 +1,12 @@
 ﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewFreeCashFlows"
-    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
-    mc:Ignorable="d"
-    d:DesignHeight="300" d:DesignWidth="400">
+    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="400">
     
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
@@ -16,209 +16,141 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="White"  Visibility="{Binding DCF_FreeCashFlowsVisibility, Mode=TwoWay}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-            <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-            <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-            <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-            <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-            <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-            <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-            <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-            <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+    <telerik:RadBusyIndicator x:Name="chartBusyIndicator" IsIndeterminate="True" IsEnabled="True" Style="{StaticResource BusyIndicatorStyle}"
+                                              DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}">
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
 
-            <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.2*"/>
-            <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.1*"/>
-            <ColumnDefinition Width="0.1*"/>
-        </Grid.ColumnDefinitions>
-        <!--header section -->
-        <!--Row 1-->
-        <Border Grid.Row="0" Grid.Column="0">
-            <TextBlock  Margin="2,0,0,0" Text=""  HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource TextBlockStyle}"  FontWeight="Bold" />
-        </Border>
-        <Border Grid.Row="0" Grid.Column="1">
-            <TextBlock  Margin="2,0,0,0" Text="{Binding }" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource TextBlockStyle}"   FontWeight="Bold"  />               
-        </Border>
-        <Border Grid.Row="0" Grid.Column="2">
-            <TextBlock  Margin="2,0,0,0" Text="{Binding }" HorizontalAlignment="Center" VerticalAlignment="Bottom" Style="{StaticResource TextBlockStyle}"   FontWeight="Bold"  />
-        </Border>
-        <Border Grid.Row="0" Grid.Column="3">
-            <TextBlock  Margin="2,0,0,0" Text="{Binding }" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Style="{StaticResource TextBlockStyle}"  FontWeight="Bold"   />
-        </Border>
-        <Border Grid.Row="0" Grid.Column="4">
-            <TextBlock  Margin="2,0,0,0" Text="{Binding }" HorizontalAlignment="Center" VerticalAlignment="Bottom"   Style="{StaticResource TextBlockStyle}"   FontWeight="Bold"  />
-        </Border>
-        <Border Grid.Row="0" Grid.Column="5">
-            <TextBlock  Margin="2,0,0,0" Text="{Binding }" HorizontalAlignment="Center" VerticalAlignment="Bottom"  Style="{StaticResource TextBlockStyle}"   FontWeight="Bold"  />
-        </Border>
-        <!--header section -->
-        <!--Row2-->
-        <Border Grid.Row="1" Grid.Column="0">
-            <TextBlock  Margin="2,0,0,0" Text=""  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"    FontWeight="Bold"  />
-        </Border>
-        <Border Grid.Row="1" Grid.Column="1">
-            <TextBlock  Margin="2,0,0,0" Text="Y1"  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   FontWeight="Bold"  />
-        </Border>
-        <Border Grid.Row="1" Grid.Column="2">
-            <TextBlock  Margin="2,0,0,0" Text="Y2"  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   FontWeight="Bold"  />
-        </Border>
-        <Border Grid.Row="1" Grid.Column="3">
-            <TextBlock  Margin="2,0,0,0" Text="Y3"  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   FontWeight="Bold"  />
-        </Border>
-        <Border Grid.Row="1" Grid.Column="4">
-            <TextBlock  Margin="2,0,0,0" Text="Y4"  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   FontWeight="Bold"   />
-        </Border>
-        <Border Grid.Row="1" Grid.Column="5">
-            <TextBlock  Margin="2,0,0,0" Text="Y5"  HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   FontWeight="Bold"  />
-        </Border>
-        <!-- Revenue Growth-->
-        <Border Grid.Row="2" Grid.Column="0">
-            <TextBlock  Margin="2,0,0,0" Text="Revenue Growth"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="2" Grid.Column="1">
-            <TextBlock  Margin="2,0,0,0" Text="21.4%"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="2" Grid.Column="2">
-            <TextBlock  Margin="2,0,0,0" Text="4.1%"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-        </Border>
-        <Border Grid.Row="2" Grid.Column="3">
-            <TextBlock  Margin="2,0,0,0" Text="-4.3%"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="2" Grid.Column="4">
-            <TextBlock  Margin="2,0,0,0" Text="6.0%"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="2" Grid.Column="5">
-            <TextBlock  Margin="2,0,0,0" Text="1.9%"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <!--EBITDA Margins-->
-        <Border Grid.Row="3" Grid.Column="0">
-            <TextBlock  Margin="2,0,0,0" Text="EBITDA Margins"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="3" Grid.Column="1">
-            <TextBlock  Margin="2,0,0,0" Text="21.4%"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="3" Grid.Column="2">
-            <TextBlock  Margin="2,0,0,0" Text="4.1%"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-        </Border>
-        <Border Grid.Row="3" Grid.Column="3">
-            <TextBlock  Margin="2,0,0,0" Text="-4.3%"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="3" Grid.Column="4">
-            <TextBlock  Margin="2,0,0,0" Text="6.0%"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="3" Grid.Column="5">
-            <TextBlock  Margin="2,0,0,0" Text="1.9%"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <!--EBITDA-->
-        <Border Grid.Row="4" Grid.Column="0">
-            <TextBlock  Margin="2,0,0,0" Text="EBITDA"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="4" Grid.Column="1">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="4" Grid.Column="2">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-        </Border>
-        <Border Grid.Row="4" Grid.Column="3">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="4" Grid.Column="4">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="4" Grid.Column="5">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <!--(-) Taxes-->
-        <Border Grid.Row="5" Grid.Column="0">
-            <TextBlock  Margin="2,0,0,0" Text=" (-) Taxes"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="5" Grid.Column="1">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="5" Grid.Column="2">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-        </Border>
-        <Border Grid.Row="5" Grid.Column="3">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="5" Grid.Column="4">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="5" Grid.Column="5">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <!--(+/-) Change in WC-->
-        <Border Grid.Row="6" Grid.Column="0">
-            <TextBlock  Margin="2,0,0,0" Text="(+/-) Change in WC"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="6" Grid.Column="1">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="6" Grid.Column="2">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-        </Border>
-        <Border Grid.Row="6" Grid.Column="3">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="6" Grid.Column="4">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="6" Grid.Column="5">
-            <TextBlock  Margin="2,0,0,0" Text="214"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <!--(-) Capex-->
-        <Border Grid.Row="7" Grid.Column="0">
-            <TextBlock  Margin="2,0,0,0" Text=" (-) Capex"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="7" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" >
-            <TextBlock  Margin="2,0,0,0" Text="6,767"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="7" Grid.Column="2">
-            <TextBlock  Margin="2,0,0,0" Text="6,767"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="7" Grid.Column="3">
-            <TextBlock  Margin="2,0,0,0" Text="6,767"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="7" Grid.Column="4">
-            <TextBlock  Margin="2,0,0,0" Text="6,767"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="7" Grid.Column="5">
-            <TextBlock  Margin="2,0,0,0" Text="6,767"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <!--Blank Row-->
-        <Border Grid.Row="8" Grid.Column="0"></Border>
-        <Border Grid.Row="8" Grid.Column="1"></Border>
-        <Border Grid.Row="8" Grid.Column="2"></Border>
-        <Border Grid.Row="8" Grid.Column="3"></Border>
-        <Border Grid.Row="8" Grid.Column="4"></Border>
-        <Border Grid.Row="8" Grid.Column="5"></Border>
+            <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-        <!--(=) Free Cash Flow-->
-        <Border Grid.Row="9" Grid.Column="0">
-            <TextBlock  Margin="2,0,0,0" Text=" (=) Free Cash Flow"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" />
-        </Border>
-        <Border Grid.Row="9" Grid.Column="1">
-            <TextBlock  Margin="2,0,0,0" Text="6,767"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="9" Grid.Column="2">
-            <TextBlock  Margin="2,0,0,0" Text="6,767"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="9" Grid.Column="3">
-            <TextBlock  Margin="2,0,0,0" Text="6,767"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="9" Grid.Column="4">
-            <TextBlock  Margin="2,0,0,0" Text="6,767"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>
-        <Border Grid.Row="9" Grid.Column="5">
-            <TextBlock  Margin="2,0,0,0" Text="6,767"  HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"  />
-        </Border>       
+                <Button Height="15" Width="15" Grid.Column="0"
+                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                        Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
+                    <Image Source="/Greenfield\Gadgets;component\Images\ExportExcel.png" />
+                </Button>
+                <Button Height="15" Width="15" Grid.Column="1"
+                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnExportPDF"
+                        Margin="5,0,0,0" Click="btnExportPDF_Click">
+                    <Image Source="../Images/PDF.png" />
+                </Button>
+                <Button Height="15" Width="15" Grid.Column="2"
+                        BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
+                        Margin="5,0,0,0" Click="btnPrint_Click">
+                    <Image Source="../Images/Print.png" />
+                </Button>
 
-    </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                    <telerik:RadGridView Name="dgFreeCashFlows" 
+                                     AutoGenerateColumns="false" 
+                                     ItemsSource="{Binding FreeCashFlowsOutputData}" 
+                                     CanUserSelect="False" 
+                                     CanUserReorderColumns="False" 
+                                     CanUserInsertRows="False" 
+                                     telerik:StyleManager.Theme="Metro"
+                                     CanUserDeleteRows="False" 
+                                     IsReadOnly="True" 
+                                     CanUserSortColumns="False" 
+                                     ScrollMode="Deferred"
+                                     RowIndicatorVisibility="Collapsed" 
+                                     ShowGroupPanel="False" 
+                                     UseLayoutRounding="True"                                     
+                                     GroupPanelBackground="#e4e5e5"
+                                     HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                     GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                     RowStyle="{StaticResource GridViewRowStyle}"                                    
+                                     AlternationCount="2"
+                                     GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                     AlternateRowStyle ="{StaticResource GridViewAlternateRowStyle}">
+                        <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding FieldName}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Left" 
+                                                        TextAlignment="Left"/>
+                        <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY0}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY1}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY2}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY3}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY4}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY5}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY6}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY7}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY8}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                        <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY9}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+                </Border>
+            </Grid>
+            <telerik:RadRichTextBox Grid.Row="2" x:Name="RichTextBox" >
+
+            </telerik:RadRichTextBox>
+        </Grid>
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

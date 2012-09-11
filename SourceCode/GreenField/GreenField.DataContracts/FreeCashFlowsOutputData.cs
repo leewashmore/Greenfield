@@ -3,18 +3,12 @@ using System.Net;
 using System.Runtime.Serialization;
 
 namespace GreenField.DataContracts
-{   
+{
     [DataContract]
-    public class FreeCashFlowsData
+    public class FreeCashFlowsOutputData
     {
         [DataMember]
         public string FieldName { get; set; }
-
-        [DataMember]
-        public decimal? Amount { get; set; }
-
-        [DataMember]
-        public int PeriodYear { get; set; }
 
         [DataMember]
         public string ValueY0 { get; set; }

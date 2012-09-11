@@ -27,13 +27,13 @@
   <wsdl:message name="DCFOperations_RetrieveTerminalValueCalculationsData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
   </wsdl:message>
-  <wsdl:message name="DCFOperations_RetrieveFreCashFlowsData_InputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveFreCashFlowsData" />
+  <wsdl:message name="DCFOperations_RetrieveFreeCashFlowsData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveFreeCashFlowsData" />
   </wsdl:message>
-  <wsdl:message name="DCFOperations_RetrieveFreCashFlowsData_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RetrieveFreCashFlowsDataResponse" />
+  <wsdl:message name="DCFOperations_RetrieveFreeCashFlowsData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveFreeCashFlowsDataResponse" />
   </wsdl:message>
-  <wsdl:message name="DCFOperations_RetrieveFreCashFlowsData_ServiceFaultFault_FaultMessage">
+  <wsdl:message name="DCFOperations_RetrieveFreeCashFlowsData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="DCFOperations">
@@ -47,10 +47,10 @@
       <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/RetrieveTerminalValueCalculationsDataResponse" message="tns:DCFOperations_RetrieveTerminalValueCalculationsData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/RetrieveTerminalValueCalculationsDataServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_RetrieveTerminalValueCalculationsData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RetrieveFreCashFlowsData">
-      <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsData" message="tns:DCFOperations_RetrieveFreCashFlowsData_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsDataResponse" message="tns:DCFOperations_RetrieveFreCashFlowsData_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsDataServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_RetrieveFreCashFlowsData_ServiceFaultFault_FaultMessage" />
+    <wsdl:operation name="RetrieveFreeCashFlowsData">
+      <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveFreeCashFlowsData" message="tns:DCFOperations_RetrieveFreeCashFlowsData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/RetrieveFreeCashFlowsDataResponse" message="tns:DCFOperations_RetrieveFreeCashFlowsData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/RetrieveFreeCashFlowsDataServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_RetrieveFreeCashFlowsData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="DCFOperations" type="tns:DCFOperations">
@@ -79,8 +79,8 @@
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="RetrieveFreCashFlowsData">
-      <soap:operation soapAction="http://tempuri.org/DCFOperations/RetrieveFreCashFlowsData" style="document" />
+    <wsdl:operation name="RetrieveFreeCashFlowsData">
+      <soap:operation soapAction="http://tempuri.org/DCFOperations/RetrieveFreeCashFlowsData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

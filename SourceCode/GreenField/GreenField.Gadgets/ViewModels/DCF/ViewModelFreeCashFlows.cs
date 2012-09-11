@@ -16,6 +16,7 @@ using GreenField.DataContracts;
 using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
+using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -37,12 +38,12 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        private ILoggerFacade _logger;
+        public ILoggerFacade _logger;
         
         /// <summary>
         /// Private member to store basic data
         /// </summary>
-        private FreeCashFlowsData _freeCashFlowsDataInfo;       
+        private RangeObservableCollection<FreeCashFlowsData> _freeCashFlowsDataInfo;       
 
         /// <summary>
         /// Private member to store basic data gadget visibilty
@@ -58,20 +59,75 @@ namespace GreenField.Gadgets.ViewModels
         #region PROPERTIES
 
         /// <summary>
-        /// Stores data for Basic data grid
+        /// Stores data for fcf
         /// </summary>
-        public FreeCashFlowsData FreeCashFlowsDataInfo
+        public RangeObservableCollection<FreeCashFlowsData> FreeCashFlowsDataInfo
         {
             get { return _freeCashFlowsDataInfo; }
             set
             {
-                if (_freeCashFlowsDataInfo != value)
+                if (_freeCashFlowsDataInfo == null)
                 {
-                    _freeCashFlowsDataInfo = value;
-                    RaisePropertyChanged(() => this.FreeCashFlowsDataInfo);
+                    _freeCashFlowsDataInfo = new RangeObservableCollection<FreeCashFlowsData>();                   
                 }
+               RaisePropertyChanged(() => this.FreeCashFlowsDataInfo);
             }
         }
+        
+        /// <summary>
+        /// Stores fcf arranged data
+        /// </summary>
+        private List<FreeCashFlowsData> _freeCashFlowsOutputData = null;
+        public List<FreeCashFlowsData> FreeCashFlowsOutputData
+        {
+            get
+            {
+                return _freeCashFlowsOutputData;
+            }
+            set
+            {
+                _freeCashFlowsOutputData = value;
+                RaisePropertyChanged(() => this.FreeCashFlowsOutputData);
+            }
+        }
+
+       
+        ///// Collection of type DCFAnalysisSummaryData bound to the Data-Grid
+        ///// </summary>
+        //private RangeObservableCollection<DCFAnalysisSummaryData> _analysisSummaryData;
+        //public RangeObservableCollection<DCFAnalysisSummaryData> AnalysisSummaryData
+        //{
+        //    get
+        //    {
+        //        if (_analysisSummaryData == null)
+        //            _analysisSummaryData = new RangeObservableCollection<DCFAnalysisSummaryData>();
+        //        return _analysisSummaryData;
+        //    }
+        //    set
+        //    {
+        //        _analysisSummaryData = value;
+        //        this.RaisePropertyChanged(() => this.AnalysisSummaryData);
+        //    }
+        //}
+
+        ///// <summary>
+        ///// Default Display Data
+        ///// </summary>
+        //private RangeObservableCollection<DCFDisplayData> _analysisSummaryDisplayData;
+        //public RangeObservableCollection<DCFDisplayData> AnalysisSummaryDisplayData
+        //{
+        //    get
+        //    {
+        //        if (_analysisSummaryDisplayData == null)
+        //            _analysisSummaryDisplayData = SetDefaultAnalysisDisplayData();
+        //        return _analysisSummaryDisplayData;
+        //    }
+        //    set
+        //    {
+        //        this._analysisSummaryDisplayData = value;
+        //        this.RaisePropertyChanged(() => this.AnalysisSummaryDisplayData);
+        //    }
+        //}
         public Visibility FreeCashFlowGadgetVisibility
         {
             get { return _freeCashFlowGadgetVisibility; }
@@ -101,7 +157,22 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
-
+        /// <summary>
+        /// Busy Indicator Status
+        /// </summary>
+        private bool _busyIndicatorStatus;
+        public bool BusyIndicatorStatus
+        {
+            get
+            {
+                return _busyIndicatorStatus;
+            }
+            set
+            {
+                _busyIndicatorStatus = value;
+                this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
+            }
+        }
         #endregion
 
         #region CONSTRUCTOR
@@ -126,17 +197,13 @@ namespace GreenField.Gadgets.ViewModels
             
         }
 
-        #endregion
-
-        #region EVENTS
-        /// <summary>
-        /// event to handle data retrieval progress indicator
-        /// </summary>
-        public event DataRetrievalProgressIndicatorEventHandler FreeCashFlowsDataLoadEvent;
-
-        #endregion
+        #endregion       
 
         #region EVENTHANDLERS
+        /// <summary>
+        /// event to handle data
+        /// </summary>
+        public event RetrieveFreeCashFlowsDataCompletedEventHandler RetrieveFreeCashFlowsDataCompleteEvent;
         /// <summary>
         /// Event Handler to subscribed event 'SecurityReferenceSet'
         /// </summary>
@@ -189,24 +256,168 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     FreeCashFlowGadgetVisibility = Visibility.Visible;
                     Logging.LogMethodParameter(_logger, methodNamespace, freeCashFlowsData, 1);
-                    FreeCashFlowsDataInfo = freeCashFlowsData.FirstOrDefault();
-                    this.RaisePropertyChanged(() => this.FreeCashFlowsDataInfo);
+                    //FreeCashFlowsDataInfo = freeCashFlowsData.FirstOrDefault();
+                    FreeCashFlowsDataInfo.Clear();
+                    FreeCashFlowsDataInfo.AddRange(freeCashFlowsData);
+                    FreeCashFlowsOutputData = ReArrangingData(FreeCashFlowsDataInfo);
+                    RetrieveFreeCashFlowsDataCompleteEvent(new RetrieveFreeCashFlowsDataCompleteEventArs() { FreeCashFlowsInfo = FreeCashFlowsOutputData });
+                    
+                    
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-                if (FreeCashFlowsDataLoadEvent != null)
-                    FreeCashFlowsDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+            finally { BusyIndicatorStatus = false; }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        #endregion
+
+        #region Helper Methods
+        public List<FreeCashFlowsData> ReArrangingData(RangeObservableCollection<FreeCashFlowsData> FreeCashFlowsData)
+        {
+            List<FreeCashFlowsData> result = new List<FreeCashFlowsData>();
+            if (FreeCashFlowsData != null && FreeCashFlowsData.Count > 0)
+            {
+                //*************  TO DO SEEMA : Chnage System.DateTime.Now.Year - 1 to System.DateTime.Now.Year + 1   ******************//
+
+                List<FreeCashFlowsData> data = new List<FreeCashFlowsData>(FreeCashFlowsData);
+                //Revenue Growth
+                data = FreeCashFlowsData.Where(a => a.FieldName == "Revenue Growth").ToList();
+                result.Add(new FreeCashFlowsData()
+                {
+                    FieldName = "Revenue Growth"                   
+                    ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                });
+
+                //EBITDA Margins
+                data = FreeCashFlowsData.Where(a => a.FieldName == "EBITDA Margins").ToList();
+                    result.Add(new FreeCashFlowsData()
+                    {
+                     FieldName = "EBITDA Margins"                                          
+                    ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    });
+               
+                //EBITDA 
+                data = FreeCashFlowsData.Where(a => a.FieldName == "EBITDA").ToList();
+                
+                    result.Add(new FreeCashFlowsData()
+                    {
+                        FieldName = "EBITDA"
+                    ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    });
+                
+                //(-) Taxes
+                data = FreeCashFlowsData.Where(a => a.FieldName == "Taxes").ToList();
+                result.Add(new FreeCashFlowsData()
+                    {
+                        FieldName = "(-) Taxes"               
+                    ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    });
+                
+                //(+/-) Change in WC
+
+                data = FreeCashFlowsData.Where(a => a.FieldName == "Change in WC").ToList();
+                 result.Add(new FreeCashFlowsData()
+                    {
+                        FieldName = "(+/-) Change in WC"
+                    ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    });
+
+                //(-) Capex
+                data = FreeCashFlowsData.Where(a => a.FieldName == "Capex").ToList();
+                
+                    result.Add(new FreeCashFlowsData()
+                    {
+                        FieldName = "(-) Capex"                  
+                    ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    });
+
+                //Blank Row
+                result.Add(new FreeCashFlowsData() { });
+               
+                //(=) Free Cash Flow
+                data = FreeCashFlowsData.Where(a => a.FieldName == "Free Cash Flow").ToList();
+                result.Add(new FreeCashFlowsData()
+                    {
+                        FieldName = "(=) Free Cash Flow"             
+                    ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    });
+               
+
+            }
+            return result;
+        }
         #endregion
 
         #region SERVICE CALL METOHD
@@ -215,10 +426,11 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private void CallingWebMethod()
         {
-            if (FreeCashFlowsDataLoadEvent != null)
-                            FreeCashFlowsDataLoadEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                        //_dbInteractivity.RetrieveFreeCashFlowsData(_securitySelectionData, RetrieveFreeCashFlowsDataCallbackMethod);
-            
+            if (_securitySelectionData != null && IsActive)
+            {
+                _dbInteractivity.RetrieveDCFFreeCashFlowsData(_securitySelectionData, RetrieveFreeCashFlowsDataCallbackMethod);
+                BusyIndicatorStatus = true;
+            }            
 
         }
         #endregion  

@@ -181,13 +181,14 @@ namespace GreenField.Web.Services
         /// <returns>FreCashFlows data</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<FreeCashFlowsData> RetrieveFreCashFlowsData(EntitySelectionData entitySelectionData)
+        public List<FreeCashFlowsData> RetrieveFreeCashFlowsData(EntitySelectionData entitySelectionData)
         {
             try
             {
                 List<FreeCashFlowsData> result = new List<FreeCashFlowsData>();
-                //List<GetFreeCashFlowsData_Result> resultDB = new List<GetFreeCashFlowsData_Result>();
-                ExternalResearchEntities extResearch = new ExternalResearchEntities();
+                List<GetFreeCashFlows_Result> resultDB = new List<GetFreeCashFlows_Result>();
+                DCFEntities dcf_FreeCashFlows = new DCFEntities();
+
                 if (entitySelectionData == null)
                     return null;
 
@@ -210,16 +211,32 @@ namespace GreenField.Web.Services
                 if (data == null)
                     return null;
 
-                FreeCashFlowsData FreeCashFlowsData = new FreeCashFlowsData();
-
+                //data.ISSUER_ID = "920028";
                 ////Retrieving data from Period Financials table
-                //resultDB = extResearch.ExecuteStoreQuery<GetFreeCashFlowsData_Result>("exec GetFreeCashFlowsData @IssuerID={0}", Convert.ToString(data.ISSUER_ID)).ToList();
+                resultDB = dcf_FreeCashFlows.ExecuteStoreQuery<GetFreeCashFlows_Result>("exec GetFreeCashFlows @IssuerID={0}", "920028").ToList();
+
+                foreach (GetFreeCashFlows_Result record in resultDB)
+                {
+                    FreeCashFlowsData item = new FreeCashFlowsData();
+                    item.FieldName = record.FIELD_NAME;
+                    item.PeriodYear = record.PERIOD_YEAR;
+                    item.Amount = record.AMOUNT;
+                    result.Add(item);
+                }
+                    //decimal? amount ;
+                    //item.FieldName = "Revenue Growth";
+                    //amount = Convert.ToDecimal(resultDB.Where(a => (a.PERIOD_YEAR == DateTime.Now.Year && a.FIELD_NAME == "Revenue Growth")).Select(a => a.AMOUNT));
+                    //if(amount != null)
+                    //item.ValueY0 = Convert.ToString(amount) + "%";
+
+                    //amount = Convert.ToDecimal(resultDB.Where(a => (a.PERIOD_YEAR == DateTime.Now.Year && a.FIELD_NAME == "Revenue Growth")).Select(a => a.AMOUNT));
+                    //if (amount != null)
+                    //    item.ValueY0 = Convert.ToString(amount) + "%";
+                 
 
 
-
-
-                //result.Add(FreeCashFlowsData);
-
+                //    result.Add(item);
+                //}
                 return result;
             }
             catch (Exception ex)

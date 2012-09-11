@@ -49,7 +49,7 @@
       <xs:element minOccurs="0" name="LongTermNominalGDPGrowth" type="xs:decimal" />
       <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SustainableDividendPayoutRatio" type="xs:decimal" />
-      <xs:element minOccurs="0" name="SustainableROIC" type="xs:decimal" />
+      <xs:element minOccurs="0" name="SustainableROIC" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="TerminalGrowthRate" type="xs:decimal" />
       <xs:element minOccurs="0" name="TerminalValueNominal" type="xs:decimal" />
       <xs:element minOccurs="0" name="TerminalValuePresent" type="xs:decimal" />
