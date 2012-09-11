@@ -188,7 +188,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stock Specific Discount
         /// </summary>
-        private decimal? _stockSpecificDiscount;
+        private decimal? _stockSpecificDiscount = 0;
         public decimal? StockSpecificDiscount
         {
             get
@@ -236,6 +236,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (IsActive && EntitySelectionData != null)
                     {
                         _dbInteractivity.RetrieveDCFAnalysisData(EntitySelectionData, RetrieveDCFAnalysisDataCallbackMethod);
+                        BusyIndicatorNotification(true, "Fetching Data for Selected Security");
                     }
                 }
                 else
@@ -325,7 +326,7 @@ namespace GreenField.Gadgets.ViewModels
 
                 result.Add(new DCFDisplayData() { PropertyName = "Market Risk Premium", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) + "%" });
                 result.Add(new DCFDisplayData() { PropertyName = "Beta (*)", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()) + "%" });
-                result.Add(new DCFDisplayData() { PropertyName = "Risk Free Rate", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
+                result.Add(new DCFDisplayData() { PropertyName = "Risk Free Rate", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault()) });
                 result.Add(new DCFDisplayData()
                 {
                     PropertyName = "Stock Specific Discount",
@@ -346,7 +347,7 @@ namespace GreenField.Gadgets.ViewModels
                 result.Add(new DCFDisplayData() { PropertyName = "Cost of Debt", Value = Convert.ToString(costOfDebt) + "%" });
 
 
-                result.Add(new DCFDisplayData() { PropertyName = "Market Cap", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
+                result.Add(new DCFDisplayData() { PropertyName = "Market Cap", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) });
                 result.Add(new DCFDisplayData() { PropertyName = "Gross Debt", Value = Convert.ToString(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) });
                 if ((Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()) == 0))
                 {
@@ -363,6 +364,11 @@ namespace GreenField.Gadgets.ViewModels
 
                 AnalysisSummaryDisplayData = result;
                 this.RaisePropertyChanged(() => this.AnalysisSummaryDisplayData);
+
+                if (WACC != null)
+                {
+                    _eventAggregator.GetEvent<DCF_WACCSetEvent>().Publish(WACC);
+                }
             }
             catch (Exception ex)
             {

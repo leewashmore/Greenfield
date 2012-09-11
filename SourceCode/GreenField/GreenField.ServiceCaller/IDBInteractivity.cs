@@ -13,6 +13,7 @@ using GreenField.DataContracts.DataContracts;
 using GreenField.ServiceCaller.MeetingDefinitions;
 using GreenField.ServiceCaller.AlertDefinitions;
 using GreenField.ServiceCaller.DocumentWorkSpaceDefinitions;
+using GreenField.ServiceCaller.DCFDefinitions;
 
 
 namespace GreenField.ServiceCaller
@@ -267,7 +268,7 @@ namespace GreenField.ServiceCaller
 
         void CreatePresentation(String userName, ICPresentationOverviewData presentationOverviewData, Action<Boolean?> callback);
 
-        void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData,PortfolioSelectionData portfolioData, Action<ICPresentationOverviewData> callback);
+        void RetrieveSecurityDetails(EntitySelectionData entitySelectionData, ICPresentationOverviewData presentationOverviewData, PortfolioSelectionData portfolioData, Action<ICPresentationOverviewData> callback);
 
         void GetAvailablePresentationDates(Action<List<MeetingInfo>> callback);
 
@@ -304,14 +305,19 @@ namespace GreenField.ServiceCaller
 
         void RetrieveDCFTerminalValueCalculationsData(EntitySelectionData entitySelectionData, Action<List<DCFTerminalValueCalculationsData>> callback);
 
+        void RetrieveCashFlows(EntitySelectionData entitySelectionData, Action<List<DCFCashFlowData>> callback);
         void RetrieveDCFFreeCashFlowsData(EntitySelectionData entitySelectionData, Action<List<FreeCashFlowsData>> callback);
+
+        void RetrieveDCFSummaryData(EntitySelectionData entitySelectionData, Action<List<DCFSummaryData>> callback);
+
+        void RetrieveDCFCurrentPrice(EntitySelectionData entitySelectionData, Action<decimal?> callback);
 
         #endregion
 
         void RetrieveCompanyData(Action<List<tblCompanyInfo>> callback);
 
         #region Custom Screening Tool
-        
+
         void RetrieveCustomControlsList(string parameter, Action<List<string>> callback);
 
         void RetrieveSecurityReferenceTabDataPoints(Action<List<CustomSelectionData>> callback);

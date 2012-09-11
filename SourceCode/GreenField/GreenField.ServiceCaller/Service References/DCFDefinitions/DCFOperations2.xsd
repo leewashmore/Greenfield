@@ -74,4 +74,26 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="FreeCashFlowsData" nillable="true" type="tns:FreeCashFlowsData" />
+  <xs:complexType name="ArrayOfDCFSummaryData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DCFSummaryData" nillable="true" type="tns:DCFSummaryData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDCFSummaryData" nillable="true" type="tns:ArrayOfDCFSummaryData" />
+  <xs:complexType name="DCFSummaryData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Cash" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DCFvaluePerShare" type="xs:decimal" />
+      <xs:element minOccurs="0" name="EquityValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FVInvestments" type="xs:decimal" />
+      <xs:element minOccurs="0" name="FVMinorities" type="xs:decimal" />
+      <xs:element minOccurs="0" name="GrossDebt" type="xs:decimal" />
+      <xs:element minOccurs="0" name="NumberOfShares" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PresentValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TerminalValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="TotalEnterpriseValue" type="xs:decimal" />
+      <xs:element minOccurs="0" name="UpsideDownSide" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DCFSummaryData" nillable="true" type="tns:DCFSummaryData" />
 </xs:schema>

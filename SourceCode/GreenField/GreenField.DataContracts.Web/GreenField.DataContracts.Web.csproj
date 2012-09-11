@@ -89,6 +89,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\DCFAnalysisSummaryData.cs">
       <Link>DataContracts\DCFAnalysisSummaryData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\DCFSummary.cs">
+      <Link>DataContracts\DCFSummary.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\DCFTerminalValueCalculationsData.cs">
       <Link>DataContracts\DCFTerminalValueCalculationsData.cs</Link>
     </Compile>

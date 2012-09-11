@@ -288,6 +288,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<FAIR_VALUE> _FAIR_VALUE;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<MODEL_INPUTS_CTY> MODEL_INPUTS_CTY
+        {
+            get
+            {
+                if ((_MODEL_INPUTS_CTY == null))
+                {
+                    _MODEL_INPUTS_CTY = base.CreateObjectSet<MODEL_INPUTS_CTY>("MODEL_INPUTS_CTY");
+                }
+                return _MODEL_INPUTS_CTY;
+            }
+        }
+        private ObjectSet<MODEL_INPUTS_CTY> _MODEL_INPUTS_CTY;
 
         #endregion
         #region AddTo Methods
@@ -402,6 +418,14 @@ namespace GreenField.DAL
         public void AddToFAIR_VALUE(FAIR_VALUE fAIR_VALUE)
         {
             base.AddObject("FAIR_VALUE", fAIR_VALUE);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the MODEL_INPUTS_CTY EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToMODEL_INPUTS_CTY(MODEL_INPUTS_CTY mODEL_INPUTS_CTY)
+        {
+            base.AddObject("MODEL_INPUTS_CTY", mODEL_INPUTS_CTY);
         }
 
         #endregion
@@ -1639,6 +1663,120 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<FinancialStatementData>("Get_Statement_Models", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, sTATEMENT_TYPEParameter, cURRENCYParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="cOUNTRY_CODE">No Metadata Documentation available.</param>
+        public ObjectResult<MODEL_INPUTS_CTY> GetDCFRiskFreeRate(global::System.String cOUNTRY_CODE)
+        {
+            ObjectParameter cOUNTRY_CODEParameter;
+            if (cOUNTRY_CODE != null)
+            {
+                cOUNTRY_CODEParameter = new ObjectParameter("COUNTRY_CODE", cOUNTRY_CODE);
+            }
+            else
+            {
+                cOUNTRY_CODEParameter = new ObjectParameter("COUNTRY_CODE", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<MODEL_INPUTS_CTY>("GetDCFRiskFreeRate", cOUNTRY_CODEParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="cOUNTRY_CODE">No Metadata Documentation available.</param>
+        public ObjectResult<MODEL_INPUTS_CTY> GetDCFRiskFreeRate(global::System.String cOUNTRY_CODE, MergeOption mergeOption)
+        {
+            ObjectParameter cOUNTRY_CODEParameter;
+            if (cOUNTRY_CODE != null)
+            {
+                cOUNTRY_CODEParameter = new ObjectParameter("COUNTRY_CODE", cOUNTRY_CODE);
+            }
+            else
+            {
+                cOUNTRY_CODEParameter = new ObjectParameter("COUNTRY_CODE", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<MODEL_INPUTS_CTY>("GetDCFRiskFreeRate", mergeOption, cOUNTRY_CODEParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="sECURITY_ID">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Decimal>> GetDCFMarketCap(global::System.String sECURITY_ID)
+        {
+            ObjectParameter sECURITY_IDParameter;
+            if (sECURITY_ID != null)
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", sECURITY_ID);
+            }
+            else
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Decimal>>("GetDCFMarketCap", sECURITY_IDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        public ObjectResult<DCFCashFlowData> GetDCFCashFlow(global::System.String iSSUER_ID)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<DCFCashFlowData>("GetDCFCashFlow", iSSUER_IDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        public ObjectResult<DCFSummaryDBData> GetDCFSummaryData(global::System.String iSSUER_ID)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<DCFSummaryDBData>("GetDCFSummaryData", iSSUER_IDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="sECURITY_ID">No Metadata Documentation available.</param>
+        public ObjectResult<DCFSummaryDBData> GetDCF_NumberOfShares(global::System.String sECURITY_ID)
+        {
+            ObjectParameter sECURITY_IDParameter;
+            if (sECURITY_ID != null)
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", sECURITY_ID);
+            }
+            else
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<DCFSummaryDBData>("GetDCF_NumberOfShares", sECURITY_IDParameter);
         }
 
         #endregion
@@ -3975,6 +4113,148 @@ namespace GreenField.DAL
         private global::System.String _HELP_TEXT;
         partial void OnHELP_TEXTChanging(global::System.String value);
         partial void OnHELP_TEXTChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="MODEL_INPUTS_CTY")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class MODEL_INPUTS_CTY : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new MODEL_INPUTS_CTY object.
+        /// </summary>
+        /// <param name="cOUNTRY_CODE">Initial value of the COUNTRY_CODE property.</param>
+        /// <param name="rISK_PREM">Initial value of the RISK_PREM property.</param>
+        /// <param name="rISK_FREE_RATE">Initial value of the RISK_FREE_RATE property.</param>
+        /// <param name="lONG_TERM_GDP_GR">Initial value of the LONG_TERM_GDP_GR property.</param>
+        public static MODEL_INPUTS_CTY CreateMODEL_INPUTS_CTY(global::System.String cOUNTRY_CODE, global::System.Decimal rISK_PREM, global::System.Decimal rISK_FREE_RATE, global::System.Decimal lONG_TERM_GDP_GR)
+        {
+            MODEL_INPUTS_CTY mODEL_INPUTS_CTY = new MODEL_INPUTS_CTY();
+            mODEL_INPUTS_CTY.COUNTRY_CODE = cOUNTRY_CODE;
+            mODEL_INPUTS_CTY.RISK_PREM = rISK_PREM;
+            mODEL_INPUTS_CTY.RISK_FREE_RATE = rISK_FREE_RATE;
+            mODEL_INPUTS_CTY.LONG_TERM_GDP_GR = lONG_TERM_GDP_GR;
+            return mODEL_INPUTS_CTY;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String COUNTRY_CODE
+        {
+            get
+            {
+                return _COUNTRY_CODE;
+            }
+            set
+            {
+                if (_COUNTRY_CODE != value)
+                {
+                    OnCOUNTRY_CODEChanging(value);
+                    ReportPropertyChanging("COUNTRY_CODE");
+                    _COUNTRY_CODE = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("COUNTRY_CODE");
+                    OnCOUNTRY_CODEChanged();
+                }
+            }
+        }
+        private global::System.String _COUNTRY_CODE;
+        partial void OnCOUNTRY_CODEChanging(global::System.String value);
+        partial void OnCOUNTRY_CODEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal RISK_PREM
+        {
+            get
+            {
+                return _RISK_PREM;
+            }
+            set
+            {
+                if (_RISK_PREM != value)
+                {
+                    OnRISK_PREMChanging(value);
+                    ReportPropertyChanging("RISK_PREM");
+                    _RISK_PREM = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("RISK_PREM");
+                    OnRISK_PREMChanged();
+                }
+            }
+        }
+        private global::System.Decimal _RISK_PREM;
+        partial void OnRISK_PREMChanging(global::System.Decimal value);
+        partial void OnRISK_PREMChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal RISK_FREE_RATE
+        {
+            get
+            {
+                return _RISK_FREE_RATE;
+            }
+            set
+            {
+                if (_RISK_FREE_RATE != value)
+                {
+                    OnRISK_FREE_RATEChanging(value);
+                    ReportPropertyChanging("RISK_FREE_RATE");
+                    _RISK_FREE_RATE = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("RISK_FREE_RATE");
+                    OnRISK_FREE_RATEChanged();
+                }
+            }
+        }
+        private global::System.Decimal _RISK_FREE_RATE;
+        partial void OnRISK_FREE_RATEChanging(global::System.Decimal value);
+        partial void OnRISK_FREE_RATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal LONG_TERM_GDP_GR
+        {
+            get
+            {
+                return _LONG_TERM_GDP_GR;
+            }
+            set
+            {
+                if (_LONG_TERM_GDP_GR != value)
+                {
+                    OnLONG_TERM_GDP_GRChanging(value);
+                    ReportPropertyChanging("LONG_TERM_GDP_GR");
+                    _LONG_TERM_GDP_GR = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("LONG_TERM_GDP_GR");
+                    OnLONG_TERM_GDP_GRChanged();
+                }
+            }
+        }
+        private global::System.Decimal _LONG_TERM_GDP_GR;
+        partial void OnLONG_TERM_GDP_GRChanging(global::System.Decimal value);
+        partial void OnLONG_TERM_GDP_GRChanged();
 
         #endregion
     
@@ -7784,6 +8064,186 @@ namespace GreenField.DAL
         private global::System.String _AMOUNT_TYPE;
         partial void OnAMOUNT_TYPEChanging(global::System.String value);
         partial void OnAMOUNT_TYPEChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="DCFCashFlowData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class DCFCashFlowData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new DCFCashFlowData object.
+        /// </summary>
+        /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
+        /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
+        /// <param name="dISCOUNTING_FACTOR">Initial value of the DISCOUNTING_FACTOR property.</param>
+        public static DCFCashFlowData CreateDCFCashFlowData(global::System.Decimal aMOUNT, global::System.Int32 pERIOD_YEAR, global::System.Decimal dISCOUNTING_FACTOR)
+        {
+            DCFCashFlowData dCFCashFlowData = new DCFCashFlowData();
+            dCFCashFlowData.AMOUNT = aMOUNT;
+            dCFCashFlowData.PERIOD_YEAR = pERIOD_YEAR;
+            dCFCashFlowData.DISCOUNTING_FACTOR = dISCOUNTING_FACTOR;
+            return dCFCashFlowData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AMOUNT
+        {
+            get
+            {
+                return _AMOUNT;
+            }
+            set
+            {
+                OnAMOUNTChanging(value);
+                ReportPropertyChanging("AMOUNT");
+                _AMOUNT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AMOUNT");
+                OnAMOUNTChanged();
+            }
+        }
+        private global::System.Decimal _AMOUNT;
+        partial void OnAMOUNTChanging(global::System.Decimal value);
+        partial void OnAMOUNTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PERIOD_YEAR
+        {
+            get
+            {
+                return _PERIOD_YEAR;
+            }
+            set
+            {
+                OnPERIOD_YEARChanging(value);
+                ReportPropertyChanging("PERIOD_YEAR");
+                _PERIOD_YEAR = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PERIOD_YEAR");
+                OnPERIOD_YEARChanged();
+            }
+        }
+        private global::System.Int32 _PERIOD_YEAR;
+        partial void OnPERIOD_YEARChanging(global::System.Int32 value);
+        partial void OnPERIOD_YEARChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal DISCOUNTING_FACTOR
+        {
+            get
+            {
+                return _DISCOUNTING_FACTOR;
+            }
+            set
+            {
+                OnDISCOUNTING_FACTORChanging(value);
+                ReportPropertyChanging("DISCOUNTING_FACTOR");
+                _DISCOUNTING_FACTOR = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DISCOUNTING_FACTOR");
+                OnDISCOUNTING_FACTORChanged();
+            }
+        }
+        private global::System.Decimal _DISCOUNTING_FACTOR;
+        partial void OnDISCOUNTING_FACTORChanging(global::System.Decimal value);
+        partial void OnDISCOUNTING_FACTORChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="DCFSummaryDBData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class DCFSummaryDBData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new DCFSummaryDBData object.
+        /// </summary>
+        /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
+        /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
+        public static DCFSummaryDBData CreateDCFSummaryDBData(global::System.Decimal aMOUNT, global::System.Int32 dATA_ID)
+        {
+            DCFSummaryDBData dCFSummaryDBData = new DCFSummaryDBData();
+            dCFSummaryDBData.AMOUNT = aMOUNT;
+            dCFSummaryDBData.DATA_ID = dATA_ID;
+            return dCFSummaryDBData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal AMOUNT
+        {
+            get
+            {
+                return _AMOUNT;
+            }
+            set
+            {
+                OnAMOUNTChanging(value);
+                ReportPropertyChanging("AMOUNT");
+                _AMOUNT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AMOUNT");
+                OnAMOUNTChanged();
+            }
+        }
+        private global::System.Decimal _AMOUNT;
+        partial void OnAMOUNTChanging(global::System.Decimal value);
+        partial void OnAMOUNTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DATA_ID
+        {
+            get
+            {
+                return _DATA_ID;
+            }
+            set
+            {
+                OnDATA_IDChanging(value);
+                ReportPropertyChanging("DATA_ID");
+                _DATA_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DATA_ID");
+                OnDATA_IDChanged();
+            }
+        }
+        private global::System.Int32 _DATA_ID;
+        partial void OnDATA_IDChanging(global::System.Int32 value);
+        partial void OnDATA_IDChanged();
 
         #endregion
     }

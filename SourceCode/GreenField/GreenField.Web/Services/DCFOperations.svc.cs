@@ -62,6 +62,8 @@ namespace GreenField.Web.Services
                 string issuerId;
                 List<DCFAnalysisSummaryData> result = new List<DCFAnalysisSummaryData>();
                 List<DCFAnalysisSummaryData_Result> dbResult;
+                MODEL_INPUTS_CTY modelData = new MODEL_INPUTS_CTY();
+                decimal marketCap;
 
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
@@ -88,6 +90,8 @@ namespace GreenField.Web.Services
                     return new List<DCFAnalysisSummaryData>();
 
                 dbResult = entity.RetrieveDCFAnalysisSummaryData(issuerId, "PRIMARY", "A", "FISCAL", "USD").ToList();
+                modelData = entity.GetDCFRiskFreeRate(Convert.ToString(securityDetails.ISO_COUNTRY_CODE)).FirstOrDefault();
+                marketCap = Convert.ToDecimal(entity.GetDCFMarketCap(Convert.ToString(securityDetails.SECURITY_ID)).FirstOrDefault());
 
                 DCFAnalysisSummaryData data = new DCFAnalysisSummaryData();
 
@@ -98,7 +102,13 @@ namespace GreenField.Web.Services
                 data.CostOfDebt = Convert.ToDecimal(securityDetails.WACC_COST_DEBT);
                 data.MarginalTaxRate = dbResult.Where(a => a.DATA_ID == 232).Select(a => a.AMOUNT).FirstOrDefault();
                 data.GrossDebt = dbResult.Where(a => a.DATA_ID == 90).Select(a => a.AMOUNT).FirstOrDefault();
+                data.MarketCap = Convert.ToDecimal(marketCap);
 
+                if (modelData != null)
+                {
+                    data.RiskFreeRate = (modelData.RISK_FREE_RATE != null ? modelData.RISK_FREE_RATE : 0);
+                    data.MarketRiskPremium = (modelData.RISK_PREM != null ? modelData.RISK_PREM : 0);
+                }
                 result.Add(data);
                 return result;
             }
@@ -117,16 +127,19 @@ namespace GreenField.Web.Services
         /// <summary>
         /// Terminal Value Calculations
         /// </summary>
-        /// <param name="entitySelectionData"></param>
-        /// <returns></returns>
+        /// <param name="entitySelectionData">Selected Security</param>
+        /// <returns>List of DCFTerminalValueCalculationsData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<DCFTerminalValueCalculationsData> RetrieveTerminalValueCalculationsData(EntitySelectionData entitySelectionData)
         {
             List<DCFTerminalValueCalculationsData> result = new List<DCFTerminalValueCalculationsData>();
             Dictionary<string, decimal> dataROIC_SDPR = new Dictionary<string, decimal>();
+            List<DCFCashFlowData> cashFlowResult = new List<DCFCashFlowData>();
             string issuerId;
+
             ExternalResearchEntities entity = new ExternalResearchEntities();
+
             if (entitySelectionData == null)
                 return new List<DCFTerminalValueCalculationsData>();
 
@@ -149,6 +162,9 @@ namespace GreenField.Web.Services
             if (issuerId == null)
                 return new List<DCFTerminalValueCalculationsData>();
 
+            cashFlowResult = entity.GetDCFCashFlow(issuerId).ToList();
+
+
             DCFTerminalValueCalculationsData data = new DCFTerminalValueCalculationsData();
 
             dataROIC_SDPR = GetROIC(issuerId);
@@ -161,13 +177,6 @@ namespace GreenField.Web.Services
             {
                 data.SustainableROIC = dataROIC_SDPR.Where(a => a.Key == "SDPR").Select(a => a.Value).FirstOrDefault();
             }
-
-
-
-
-
-
-
 
             return new List<DCFTerminalValueCalculationsData>();
         }
@@ -246,6 +255,162 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+        /// <summary>
+        /// Service Method to Retrieve Cash Flow Values
+        /// </summary>
+        /// <param name="entitySelectionData">Selected Security</param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<DCFCashFlowData> RetrieveCashFlows(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                List<DCFCashFlowData> result = new List<DCFCashFlowData>();
+
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+
+                if (entitySelectionData == null)
+                    return new List<DCFCashFlowData>();
+
+                #region ServiceAvailabilityChecker
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                #endregion
+
+                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
+                        record.ISSUE_NAME == entitySelectionData.LongName &&
+                        record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
+
+                string issuerId = securityDetails.ISSUER_ID;
+                if (issuerId == null)
+                    return new List<DCFCashFlowData>();
+
+                result = entity.GetDCFCashFlow(issuerId).OrderBy(a => a.PERIOD_YEAR).ToList();
+
+                int currentYear = DateTime.Today.Year;
+                decimal average = result.Where(a => a.PERIOD_YEAR < currentYear + 5).Select(a => a.AMOUNT).Average();
+                foreach (DCFCashFlowData item in result)
+                {
+                    if (item.PERIOD_YEAR > currentYear + 4)
+                    {
+                        item.AMOUNT = average * Convert.ToDecimal(Math.Pow((0.99), Convert.ToDouble(item.PERIOD_YEAR - (currentYear + 4))));
+                    }
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Retrieve data for DCFSummaryData 
+        /// </summary>
+        /// <param name="entitySelectionData">Selected Security</param>
+        /// <returns>List of DCFSummaryData</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<DCFSummaryData> RetrieveSummaryData(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                List<DCFSummaryData> result = new List<DCFSummaryData>();
+                List<DCFSummaryDBData> dbResult = new List<DCFSummaryDBData>();
+                List<DCFSummaryDBData> dbResultShares = new List<DCFSummaryDBData>();
+
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+
+                if (entitySelectionData == null)
+                    return new List<DCFSummaryData>();
+
+                #region ServiceAvailabilityChecker
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                #endregion
+
+                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
+                        record.ISSUE_NAME == entitySelectionData.LongName &&
+                        record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
+
+                string issuerId = securityDetails.ISSUER_ID;
+                if (issuerId == null)
+                    return new List<DCFSummaryData>();
+
+                dbResult = entity.GetDCFSummaryData(issuerId).ToList();
+                dbResultShares = entity.GetDCF_NumberOfShares(Convert.ToString(securityDetails.SECURITY_ID)).ToList();
+
+                DCFSummaryData data = new DCFSummaryData();
+
+                data.Cash = dbResult.Where(a => a.DATA_ID == 255).Select(a => a.AMOUNT).FirstOrDefault();
+                data.FVInvestments = dbResult.Where(a => a.DATA_ID == 258).Select(a => a.AMOUNT).FirstOrDefault();
+                data.GrossDebt = dbResult.Where(a => a.DATA_ID == 256).Select(a => a.AMOUNT).FirstOrDefault();
+                data.FVMinorities = dbResult.Where(a => a.DATA_ID == 257).Select(a => a.AMOUNT).FirstOrDefault();
+                data.NumberOfShares = dbResult.Select(a => a.AMOUNT).FirstOrDefault();
+                result.Add(data);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public decimal? RetrieveCurrentPriceData(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                if (entitySelectionData == null)
+                    return 0;
+
+                #region ServiceAvailabilityChecker
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                #endregion
+
+                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
+                        record.ISSUE_NAME == entitySelectionData.LongName &&
+                        record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
+                if (securityDetails == null)
+                    return 0;
+
+                return Convert.ToDecimal(securityDetails.CLOSING_PRICE);
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
 
         #region HelperMethods
 

@@ -14,13 +14,14 @@ using GreenField.DataContracts;
 using System.Linq;
 using GreenField.Gadgets.Models;
 using GreenField.ServiceCaller.DCFDefinitions;
+using Greenfield.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.ViewModels
 {
     /// <summary>
-    /// View-Model for TerminalValueCalculations
+    /// View-Model for DCFSummary
     /// </summary>
-    public class ViewModelTerminalValueCalculations : NotificationObject
+    public class ViewModelDCFSummary : NotificationObject
     {
         #region PrivateVariables
 
@@ -38,11 +39,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Constructor
 
-        /// <summary>
-        /// Constructor that initialises the class
-        /// </summary>
-        /// <param name="param">DashboardGadgetParam- Contains Singleton instances of Private Variables</param>
-        public ViewModelTerminalValueCalculations(DashboardGadgetParam param)
+        public ViewModelDCFSummary(DashboardGadgetParam param)
         {
             _eventAggregator = param.EventAggregator;
             _dbInteractivity = param.DBInteractivity;
@@ -53,6 +50,8 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
                 _eventAggregator.GetEvent<DCF_WACCSetEvent>().Subscribe(HandleWACCReferenceSetEvent);
+                _eventAggregator.GetEvent<DCFYearlyDataSetEvent>().Subscribe(HandleYearlyDataSetEvent);
+                _eventAggregator.GetEvent<DCFTerminalValuepresent>().Subscribe(HandleTerminalValueSetEvent);
             }
 
             if (EntitySelectionData != null)
@@ -64,6 +63,26 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region PropertyDeclaration
+
+        #region LoggerFacade
+
+        /// <summary>
+        /// Public property for LoggerFacade _logger
+        /// </summary>
+        private ILoggerFacade _logger;
+        public ILoggerFacade Logger
+        {
+            get
+            {
+                return _logger;
+            }
+            set
+            {
+                _logger = value;
+            }
+        }
+
+        #endregion
 
         #region SelectedSecurity
 
@@ -81,27 +100,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _entitySelectionData = value;
                 this.RaisePropertyChanged(() => this.EntitySelectionData);
-            }
-        }
-
-        #endregion
-
-        #region Dashboard
-
-        /// <summary>
-        /// Bool to check whether the Current Dashboard is Selected or Not
-        /// </summary>
-        private bool _isActive;
-        public bool IsActive
-        {
-            get
-            {
-                return _isActive;
-            }
-            set
-            {
-                _isActive = value;
-                this.RaisePropertyChanged(() => this.IsActive);
             }
         }
 
@@ -139,76 +137,22 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        #region DataGrid
+        #region Dashboard
 
         /// <summary>
-        /// List of Type TerminalValueCalculationsData
+        /// Bool to check whether the Current Dashboard is Selected or Not
         /// </summary>
-        private List<DCFTerminalValueCalculationsData> _terminalValueCalculationsData;
-        public List<DCFTerminalValueCalculationsData> TerminalValueCalculationsData
+        private bool _isActive;
+        public bool IsActive
         {
             get
             {
-                return _terminalValueCalculationsData;
+                return _isActive;
             }
             set
             {
-                _terminalValueCalculationsData = value;
-                this.RaisePropertyChanged(() => this.TerminalValueCalculationsData);
-            }
-        }
-
-        /// <summary>
-        /// List of type TerminalValueCalculationsDisplayData to show in the Grid
-        /// </summary>
-        private List<DCFDisplayData> _terminalValueCalculationsDisplayData;
-        public List<DCFDisplayData> TerminalValueCalculationsDisplayData
-        {
-            get
-            {
-                return _terminalValueCalculationsDisplayData;
-            }
-            set
-            {
-                _terminalValueCalculationsDisplayData = value;
-                this.RaisePropertyChanged(() => this.TerminalValueCalculationsDisplayData);
-            }
-        }
-
-        /// <summary>
-        /// FreeCashFlow for Year9
-        /// </summary>
-        private decimal _freeCashFlowY9;
-        public decimal FreeCashFlowY9
-        {
-            get
-            {
-                return _freeCashFlowY9;
-            }
-            set
-            {
-                _freeCashFlowY9 = value;
-            }
-        }
-
-
-        #endregion
-
-        #region LoggerFacade
-
-        /// <summary>
-        /// Public property for LoggerFacade _logger
-        /// </summary>
-        private ILoggerFacade _logger;
-        public ILoggerFacade Logger
-        {
-            get
-            {
-                return _logger;
-            }
-            set
-            {
-                _logger = value;
+                _isActive = value;
+                this.RaisePropertyChanged(() => this.IsActive);
             }
         }
 
@@ -217,19 +161,19 @@ namespace GreenField.Gadgets.ViewModels
         #region Calculations
 
         /// <summary>
-        /// TerminalGrowthRate from FreeCashFlows
+        /// Current Market Price
         /// </summary>
-        private decimal? _terminalGrowthRate;
-        public decimal? TerminalGrowthRate
+        private decimal? _currentMarketPrice;
+        public decimal? CurrentMarketPrice
         {
             get
             {
-                return _terminalGrowthRate;
+                return _currentMarketPrice;
             }
             set
             {
-                _terminalGrowthRate = value;
-                this.RaisePropertyChanged(() => this.TerminalGrowthRate);
+                _currentMarketPrice = value;
+                this.RaisePropertyChanged(() => this.CurrentMarketPrice);
             }
         }
 
@@ -250,34 +194,21 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        /// <summary>
-        /// Value of WACC
-        /// </summary>
-        private decimal _WACC;
-        public decimal WACC
+        private decimal _presentValueExplicitForecast;
+        public decimal PresentValueExplicitForecast
         {
-            get
-            {
-                return _WACC;
-            }
+            get { return _presentValueExplicitForecast; }
             set
             {
-                _WACC = value;
-                this.RaisePropertyChanged(() => this.WACC);
+                _presentValueExplicitForecast = value;
+                this.RaisePropertyChanged(() => this.PresentValueExplicitForecast);
             }
         }
 
-
-        /// <summary>
-        /// TerminalValuePresent
-        /// </summary>
-        private decimal? _terminalValuePresent;
-        public decimal? TerminalValuePresent
+        private decimal _terminalValuePresent;
+        public decimal TerminalValuePresent
         {
-            get
-            {
-                return _terminalValuePresent;
-            }
+            get { return _terminalValuePresent; }
             set
             {
                 _terminalValuePresent = value;
@@ -285,23 +216,36 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+
+        #endregion
+
+        #region DataGrid
+
         /// <summary>
-        /// TerminalValueNominal
+        /// Data Returned from Service
         /// </summary>
-        private decimal? _terminalValueNominal;
-        public decimal? TerminalValueNominal
+        private List<DCFSummaryData> _summaryData;
+        public List<DCFSummaryData> SummaryData
         {
             get
             {
-                return _terminalValueNominal;
+                return _summaryData;
             }
             set
             {
-                _terminalValueNominal = value;
-                this.RaisePropertyChanged(() => this.TerminalValueNominal);
+                _summaryData = value;
+                SetSummaryDisplayData();
+                this.RaisePropertyChanged(() => this.SummaryData);
             }
         }
 
+        private List<DCFDisplayData> _summaryDisplayData;
+        public List<DCFDisplayData> SummaryDisplayData
+        {
+            get { return _summaryDisplayData; }
+            set { _summaryDisplayData = value; }
+        }
+        
 
         #endregion
 
@@ -326,8 +270,8 @@ namespace GreenField.Gadgets.ViewModels
                     EntitySelectionData = entitySelectionData;
                     if (IsActive && EntitySelectionData != null)
                     {
-                        _dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
-                        _dbInteractivity.RetrieveCashFlows(EntitySelectionData, RetrieveDCFCashFlowYearlyDataCallbackMethod);
+                        _dbInteractivity.RetrieveDCFCurrentPrice(entitySelectionData, RetrieveCurrentPriceDataCallbackMethod);
+                        _dbInteractivity.RetrieveDCFSummaryData(entitySelectionData, RetrieveDCFSummaryDataCallbackMethod);
                     }
                 }
                 else
@@ -356,11 +300,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (resultWACC != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, resultWACC, 1);
-                    this.WACC = resultWACC;
-                    if (YearlyCalculatedData != null)
-                    {
-                        YearlyCalculatedData = CalculateYearlyData(YearlyCalculatedData, WACC);
-                    }
+
                 }
                 else
                 {
@@ -372,6 +312,68 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
+        }
+
+        /// <summary>
+        /// Terminal Value Set Event
+        /// </summary>
+        /// <param name="terminalValuePresent"></param>
+        public void HandleTerminalValueSetEvent(decimal terminalValuePresent)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                //ArgumentNullException
+                if (terminalValuePresent != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, terminalValuePresent, 1);
+                    TerminalValuePresent = terminalValuePresent;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Yearly Data Set Event
+        /// </summary>
+        /// <param name="result">List of type DCFCashFlowData</param>
+        public void HandleYearlyDataSetEvent(List<DCFCashFlowData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    YearlyCalculatedData = result;
+                    PresentValueExplicitForecast = Convert.ToDecimal(result.Select(a => a.AMOUNT).Sum());
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorNotification();
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+
         }
 
         #endregion
@@ -382,7 +384,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Consensus Estimate Data callback Method
         /// </summary>
         /// <param name="result"></param>
-        public void RetrieveDCFTerminalValueCalculationsDataCallbackMethod(List<DCFTerminalValueCalculationsData> result)
+        public void RetrieveDCFSummaryDataCallbackMethod(List<DCFSummaryData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -391,7 +393,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    TerminalValueCalculationsData = result;
+                    SummaryData = result;
                 }
                 else
                 {
@@ -414,7 +416,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Consensus Estimate Data callback Method
         /// </summary>
         /// <param name="result"></param>
-        public void RetrieveDCFCashFlowYearlyDataCallbackMethod(List<DCFCashFlowData> result)
+        public void RetrieveCurrentPriceDataCallbackMethod(decimal? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
@@ -423,11 +425,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    YearlyCalculatedData = result;
-                    if (WACC != null)
-                    {
-                        YearlyCalculatedData = CalculateYearlyData(YearlyCalculatedData, WACC);
-                    }
+                    CurrentMarketPrice = result;
                 }
                 else
                 {
@@ -445,7 +443,6 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
-
 
         #endregion
 
@@ -467,34 +464,35 @@ namespace GreenField.Gadgets.ViewModels
         /// Convert Data to Pivotted Form
         /// </summary>
         /// <param name="data">Set the Display Data</param>
-        public void SetAnalysisSummaryDisplayData()
+        public void SetSummaryDisplayData()
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                RangeObservableCollection<DCFDisplayData> result = new RangeObservableCollection<DCFDisplayData>();
+                List<DCFDisplayData> result = new List<DCFDisplayData>();
+                decimal totalEnterpriseValue = DCFCalculations.CalculateTotalEnterpriseValue(PresentValueExplicitForecast, TerminalValuePresent);
+                decimal cash = SummaryData.Select(a => a.Cash).FirstOrDefault();
+                decimal FVInvestments= SummaryData.Select(a => a.FVInvestments).FirstOrDefault();
+                decimal grossDebt= SummaryData.Select(a => a.GrossDebt).FirstOrDefault();
+                decimal FVMinorities= SummaryData.Select(a => a.FVMinorities).FirstOrDefault();
+                decimal equityValue= DCFCalculations.CalculateEquityValue(totalEnterpriseValue,cash,FVInvestments,grossDebt,FVMinorities);
+                decimal numberOfShares= SummaryData.Select(a => a.NumberOfShares).FirstOrDefault();
+                decimal DCFValuePerShare=DCFCalculations.CalculateDCFValuePerShare(equityValue,numberOfShares);
+                decimal upsideDownside=DCFCalculations.CalculateUpsideValue(DCFValuePerShare,Convert.ToDecimal(CurrentMarketPrice));
 
-                decimal cashFlow2020 = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.CashFlow2020).FirstOrDefault());
-                decimal sustainableROIC = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableROIC).FirstOrDefault());
-                decimal sustainableDPR = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableDividendPayoutRatio).FirstOrDefault());
-                decimal longTermNominalGDPGrowth = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.LongTermNominalGDPGrowth).FirstOrDefault());
-                decimal TGR;
-                decimal terminalValuePresent = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.TerminalValuePresent).FirstOrDefault());
-                decimal terminalValueNominal = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.TerminalValueNominal).FirstOrDefault());
-
-                TGR = Math.Min(sustainableROIC * (1 - sustainableDPR / 100), longTermNominalGDPGrowth / 100) * 100;
-
-                result.Add(new DCFDisplayData() { PropertyName = "Cash Flow in 2020", Value = cashFlow2020.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Sustainable ROIC", Value = sustainableROIC.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Sustainable Dividend Payout Ratio", Value = sustainableDPR.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Long-term Nominal GDP Growth", Value = longTermNominalGDPGrowth.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Growth Rate", Value = cashFlow2020.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = terminalValueNominal.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = terminalValuePresent.ToString() });
-
-                _eventAggregator.GetEvent<DCFTerminalValuepresent>().Publish(terminalValuePresent);
-
+                result.Add(new DCFDisplayData() { PropertyName = "Present Value of Explicit Forecast", Value = Convert.ToString(PresentValueExplicitForecast) });
+                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value", Value = Convert.ToString(TerminalValuePresent) });
+                result.Add(new DCFDisplayData() { PropertyName = "Total Enterprise Value", Value = Convert.ToString(totalEnterpriseValue) });
+                result.Add(new DCFDisplayData() { PropertyName = "(+) Cash", Value = Convert.ToString(cash) });
+                result.Add(new DCFDisplayData() { PropertyName = "(+) FV of Investments & Associates", Value = Convert.ToString(FVInvestments) });
+                result.Add(new DCFDisplayData() { PropertyName = "(-) Gross Debt", Value = Convert.ToString(grossDebt) });
+                result.Add(new DCFDisplayData() { PropertyName = "(-) FV of Minorities", Value = Convert.ToString(FVMinorities) });
+                result.Add(new DCFDisplayData() { PropertyName = "Equity Value", Value = Convert.ToString(equityValue) });
+                result.Add(new DCFDisplayData() { PropertyName = "Number of Shares", Value = Convert.ToString(numberOfShares) });
+                result.Add(new DCFDisplayData() { PropertyName = "DCF Value Per Share", Value = Convert.ToString(DCFValuePerShare) });
+                result.Add(new DCFDisplayData() { PropertyName = "Upside", Value = Convert.ToString(upsideDownside) });
+                SummaryDisplayData = result;
             }
             catch (Exception ex)
             {
@@ -503,41 +501,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        /// <summary>
-        /// Calculate Discounting Factor/PresentValues for 10 year period
-        /// </summary>
-        public List<DCFCashFlowData> CalculateYearlyData(List<DCFCashFlowData> periodData, decimal WACC)
-        {
-            try
-            {
-                DateTime currentDate = DateTime.Today;
-                List<DateTime> endDates = new List<DateTime>();
-                foreach (DCFCashFlowData item in periodData)
-                {
-                    DateTime endDate = new DateTime(item.PERIOD_YEAR, 12, 31);
-                    item.DISCOUNTING_FACTOR = Convert.ToDecimal(Math.Pow(Convert.ToDouble(1 + WACC), Convert.ToDouble(endDate - currentDate)));
-                    if (item.DISCOUNTING_FACTOR != 0)
-                    {
-                        item.AMOUNT = item.AMOUNT / item.DISCOUNTING_FACTOR;
-                    }
-                    else
-                    {
-                        item.AMOUNT = 0;
-                    }
-                }
-                if (periodData != null)
-                {
-                    _eventAggregator.GetEvent<DCFYearlyDataSetEvent>().Publish(periodData);
-                }
-                return periodData;
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-                return null;
-            }
-        }
 
         #endregion
     }

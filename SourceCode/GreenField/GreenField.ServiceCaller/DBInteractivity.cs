@@ -3470,7 +3470,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             MeetingOperationsClient client = new MeetingOperationsClient();
-            client.RetrieveSecurityDetailsAsync(entitySelectionData, presentationOverviewData,portfolioData);
+            client.RetrieveSecurityDetailsAsync(entitySelectionData, presentationOverviewData, portfolioData);
             client.RetrieveSecurityDetailsCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -4036,6 +4036,113 @@ namespace GreenField.ServiceCaller
                     if (callback != null)
                     {
                         callback(e.Result.ToList());
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault> fault
+                      = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
+        /// <summary>
+        /// Service Method to Retrieve values of CashFlows
+        /// </summary>
+        /// <param name="entitySelectionData">Selected Security</param>
+        /// <param name="callback">List of DCFCashFlowData</param>
+        public void RetrieveCashFlows(EntitySelectionData entitySelectionData, Action<List<DCFCashFlowData>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            DCFOperationsClient client = new DCFOperationsClient();
+            client.RetrieveCashFlowsAsync(entitySelectionData);
+            client.RetrieveCashFlowsCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault> fault
+                      = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
+        public void RetrieveDCFSummaryData(EntitySelectionData entitySelectionData, Action<List<DCFSummaryData>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            DCFOperationsClient client = new DCFOperationsClient();
+            client.RetrieveSummaryDataAsync(entitySelectionData);
+            client.RetrieveSummaryDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result.ToList());
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault> fault
+                      = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
+
+        public void RetrieveDCFCurrentPrice(EntitySelectionData entitySelectionData, Action<decimal?> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            DCFOperationsClient client = new DCFOperationsClient();
+            client.RetrieveCurrentPriceDataAsync(entitySelectionData);
+            client.RetrieveCurrentPriceDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
                     }
                 }
                 else if (e.Error is FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>)

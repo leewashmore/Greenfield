@@ -1,10 +1,10 @@
-﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewAnalysisSummary"
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewDCFSummary"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
-    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
     mc:Ignorable="d"
     d:DesignHeight="300" d:DesignWidth="400">
 
@@ -15,6 +15,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
+
 
     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" BusyContent="{Binding BusyIndicatorContent}"
                                       IsBusy="{Binding BusyIndicatorIsBusy}" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
@@ -55,10 +56,10 @@
             </Grid>
 
             <Grid Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
-                <telerik:RadGridView x:Name="dgDCFAnalysisSummary" 
+                <telerik:RadGridView x:Name="dgDCFSummary" 
                                          ShowGroupPanel="False" 
                                          AutoGenerateColumns="False" 
-                                         ItemsSource="{Binding AnalysisSummaryDisplayData}"
+                                         ItemsSource="{Binding SummaryDisplayData}"
                                          CanUserFreezeColumns="False" 
                                          CanUserDeleteRows="False"
                                          CanUserInsertRows="False"
@@ -76,15 +77,13 @@
                                          GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
-                                         ElementExporting="dgDCFAnalysisSummary_ElementExporting"
+                                         
                                          ScrollMode="Deferred"
                                          AlternationCount="2" 
                                          EnableRowVirtualization="False"
                                          EnableColumnVirtualization="False"
                                          GridLinesVisibility="None"
-                                     RowEditEnded="dgDCFAnalysisSummary_RowEditEnded"
-                                         BeginningEdit="dgDCFAnalysisSummary_BeginningEdit"
-                                         CellValidating="dgDCFAnalysisSummary_CellValidating">
+                                     >
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn Header="Assumptions" UniqueName="Assumptions" DataMemberBinding="{Binding PropertyName,Mode=TwoWay}" 
                                                     HeaderTextAlignment="Left" TextAlignment="Left"

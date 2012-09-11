@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using GreenField.ServiceCaller.ModelFXDefinitions;
 using GreenField.DataContracts;
 using Microsoft.Practices.Prism.Regions;
+using GreenField.ServiceCaller.DCFDefinitions;
 
 namespace GreenField.Common
 {
@@ -51,7 +52,7 @@ namespace GreenField.Common
 
     public class MarketPerformanceSnapshotActionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionPayload> { }
 
-    public class MarketPerformanceSnapshotActionCompletionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionPayload> { }    
+    public class MarketPerformanceSnapshotActionCompletionEvent : CompositePresentationEvent<MarketPerformanceSnapshotActionPayload> { }
 
     public class DashboardGadgetLoad : CompositePresentationEvent<DashboardGadgetPayload> { }
 
@@ -72,11 +73,17 @@ namespace GreenField.Common
     public class LookThruFilterReferenceSetEvent : CompositePresentationEvent<bool> { }
 
     public class ConsensusEstimateDetailCurrencyChangeEvent : CompositePresentationEvent<ChangedCurrencyInEstimateDetail> { }
-    
+
+    public class DCF_WACCSetEvent : CompositePresentationEvent<decimal> { }
+
+    public class DCFYearlyDataSetEvent : CompositePresentationEvent<List<DCFCashFlowData>> { }
+
+    public class DCFTerminalValuepresent : CompositePresentationEvent<decimal> { }
+
     public class DashboardTileViewItemInfo
     {
         public string DashboardTileHeader { get; set; }
-        public object DashboardTileObject { get; set; }        
+        public object DashboardTileObject { get; set; }
     }
 
     /// <summary>

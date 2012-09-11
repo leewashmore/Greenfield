@@ -46,7 +46,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -187,6 +186,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.RegionSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DataContracts.ValuationQualityGrowthData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DCFAnalysisSummaryData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.DCFSummaryData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DCFTerminalValueCalculationsData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCatalogData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCategoricalData.datasource" />
@@ -295,6 +295,15 @@
     </None>
     <None Include="Service References\DCFDefinitions\DCFOperations4.xsd">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DCFDefinitions\DCFOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DCFDefinitions\DCFOperations51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\DCFDefinitions\GreenField.ServiceCaller.DCFDefinitions.DCFCashFlowData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkspaceOperations.wsdl" />
     <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkSpaceOperations.xsd">
@@ -434,6 +443,9 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MeetingDefinitions\MeetingOperations7.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\MeetingDefinitions\MeetingOperations8.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MeetingDefinitions\MeetingOperations8.xsd">

@@ -136,6 +136,14 @@
       [Macroeconomic_Display].[HELP_TEXT] AS [HELP_TEXT]
       FROM [dbo].[Macroeconomic_Display] AS [Macroeconomic_Display]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="MODEL_INPUTS_CTY" EntityType="ExternalResearchModel.Store.MODEL_INPUTS_CTY" store:Type="Tables" store:Schema="dbo" store:Name="MODEL_INPUTS_CTY">
+            <DefiningQuery>SELECT 
+      [MODEL_INPUTS_CTY].[COUNTRY_CODE] AS [COUNTRY_CODE], 
+      [MODEL_INPUTS_CTY].[RISK_PREM] AS [RISK_PREM], 
+      [MODEL_INPUTS_CTY].[RISK_FREE_RATE] AS [RISK_FREE_RATE], 
+      [MODEL_INPUTS_CTY].[LONG_TERM_GDP_GR] AS [LONG_TERM_GDP_GR]
+      FROM [dbo].[MODEL_INPUTS_CTY] AS [MODEL_INPUTS_CTY]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="PERIOD_FINANCIALS" EntityType="ExternalResearchModel.Store.PERIOD_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="PERIOD_FINANCIALS">
             <DefiningQuery>SELECT 
       [PERIOD_FINANCIALS].[ISSUER_ID] AS [ISSUER_ID], 
@@ -421,6 +429,21 @@
           <Property Name="HELP_TEXT" Type="varchar" MaxLength="255" />
         </EntityType>
         <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.MODEL_INPUTS_CTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="MODEL_INPUTS_CTY">
+          <Key>
+            <PropertyRef Name="COUNTRY_CODE" />
+            <PropertyRef Name="RISK_PREM" />
+            <PropertyRef Name="RISK_FREE_RATE" />
+            <PropertyRef Name="LONG_TERM_GDP_GR" />
+          </Key>
+          <Property Name="COUNTRY_CODE" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="RISK_PREM" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="RISK_FREE_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="LONG_TERM_GDP_GR" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+        </EntityType>
+        <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
         <EntityType Name="PERIOD_FINANCIALS">
@@ -580,6 +603,29 @@
           <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
           <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetDCF_NumberOfShares" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetDCF_ROIC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="YEAR" Type="int" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+        </Function>
+        <Function Name="GetDCFCashFlow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetDCFMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetDCFRiskFreeRate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="COUNTRY_CODE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetDCFSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetFinstatDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="issuerID" Type="varchar" Mode="In" />
           <Parameter Name="securityId" Type="varchar" Mode="In" />
@@ -634,9 +680,24 @@
           <Parameter Name="issuerIdsForBenchmark" Type="varchar(max)" Mode="In" />
           <Parameter Name="securityIdsForBenchmark" Type="varchar(max)" Mode="In" />
         </Function>
+        <Function Name="usp_GetDCF_ROIC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="YEAR" Type="int" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+        </Function>
         <Function Name="usp_GetQuarterlyResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DataId" Type="int" Mode="In" />
           <Parameter Name="PeriodYear" Type="int" Mode="In" />
+        </Function>
+        <Function Name="usp_RetrieveDCFAnalysisSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
       </Schema></edmx:StorageModels>
 
@@ -657,7 +718,7 @@
 					<EntitySet Name="PERIOD_FINANCIALS_DISPLAY" EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" />
 					<EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.REUTERS_XREF" />
 					<FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
-					<Parameter Name="SecurityID" Mode="In" Type="String" />
+          <Parameter Name="SecurityID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
           <Parameter Name="XRef" Mode="In" Type="String" />
@@ -666,7 +727,7 @@
           <Parameter Name="Security" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="usp_GetQuarterlyResults" ReturnType="Collection(ExternalResearchModel.QuarterlyResults)">
-						<Parameter Name="DataId" Mode="In" Type="Int32" />
+            <Parameter Name="DataId" Mode="In" Type="Int32" />
             <Parameter Name="PeriodYear" Mode="In" Type="Int32" />
           </FunctionImport>
 					<FunctionImport Name="GetConsensusEstimateData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateMedianData)">
@@ -806,6 +867,22 @@
           </FunctionImport>
           <EntitySet Name="External_Country_Master" EntityType="ExternalResearchModel.External_Country_Master" />
           <EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.FAIR_VALUE" />
+          <EntitySet Name="MODEL_INPUTS_CTY" EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" />
+          <FunctionImport Name="GetDCFRiskFreeRate" EntitySet="MODEL_INPUTS_CTY" ReturnType="Collection(ExternalResearchModel.MODEL_INPUTS_CTY)">
+          <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetDCFMarketCap" ReturnType="Collection(Decimal)">
+          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetDCFCashFlow" ReturnType="Collection(ExternalResearchModel.DCFCashFlowData)">
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetDCFSummaryData" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetDCF_NumberOfShares" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
+            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          </FunctionImport>
 
 
 				</EntityContainer>
@@ -1337,6 +1414,27 @@
           <Property Type="Decimal" Name="UPSIDE" Nullable="false" Precision="32" Scale="6" />
           <Property Type="DateTime" Name="UPDATED" />
         </EntityType>
+        <EntityType Name="MODEL_INPUTS_CTY">
+          <Key>
+            <PropertyRef Name="COUNTRY_CODE" />
+            <PropertyRef Name="RISK_PREM" />
+            <PropertyRef Name="RISK_FREE_RATE" />
+            <PropertyRef Name="LONG_TERM_GDP_GR" />
+          </Key>
+          <Property Type="String" Name="COUNTRY_CODE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="Decimal" Name="RISK_PREM" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="RISK_FREE_RATE" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Decimal" Name="LONG_TERM_GDP_GR" Nullable="false" Precision="32" Scale="6" />
+        </EntityType>
+        <ComplexType Name="DCFCashFlowData">
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+          <Property Type="Decimal" Name="DISCOUNTING_FACTOR" Nullable="false" Precision="1" Scale="1" />
+        </ComplexType>
+        <ComplexType Name="DCFSummaryDBData">
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+        </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -1881,6 +1979,73 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveDCFAnalysisSummaryData" FunctionName="ExternalResearchModel.Store.usp_RetrieveDCFAnalysisSummaryData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.DCFAnalysisSummaryData_Result">
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+                <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+                <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetDCF_ROIC" FunctionName="ExternalResearchModel.Store.GetDCF_ROIC">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.DCF_ROICResult">
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="MODEL_INPUTS_CTY">
+            <EntityTypeMapping TypeName="ExternalResearchModel.MODEL_INPUTS_CTY">
+              <MappingFragment StoreEntitySet="MODEL_INPUTS_CTY">
+                <ScalarProperty Name="LONG_TERM_GDP_GR" ColumnName="LONG_TERM_GDP_GR" />
+                <ScalarProperty Name="RISK_FREE_RATE" ColumnName="RISK_FREE_RATE" />
+                <ScalarProperty Name="RISK_PREM" ColumnName="RISK_PREM" />
+                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetDCFRiskFreeRate" FunctionName="ExternalResearchModel.Store.GetDCFRiskFreeRate" />
+          <FunctionImportMapping FunctionImportName="GetDCFMarketCap" FunctionName="ExternalResearchModel.Store.GetDCFMarketCap" />
+          <FunctionImportMapping FunctionImportName="GetDCFCashFlow" FunctionName="ExternalResearchModel.Store.GetDCFCashFlow">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.DCFCashFlowData">
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="DISCOUNTING_FACTOR" ColumnName="DISCOUNTING_FACTOR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetDCFSummaryData" FunctionName="ExternalResearchModel.Store.GetDCFSummaryData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.DCFSummaryDBData">
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetDCF_NumberOfShares" FunctionName="ExternalResearchModel.Store.GetDCF_NumberOfShares">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.DCFSummaryDBData">
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
@@ -1920,17 +2085,18 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.FX_RATES" Width="1.5" PointX="6.75" PointY="0.75" Height="1.9802864583333317" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.INTERNAL_ISSUER" Width="1.5" PointX="4.75" PointY="6.75" Height="1.7879850260416674" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.ISSUER_SHARES" Width="1.5" PointX="8.75" PointY="4.75" Height="1.5956835937500031" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.ISSUER_SHARES_COMPOSITION" Width="1.5" PointX="8.75" PointY="7.75" Height="1.4033821614583317" IsExpanded="true" />
+				<EntityTypeShape EntityType="ExternalResearchModel.ISSUER_SHARES_COMPOSITION" Width="1.5" PointX="6.5" PointY="8.25" Height="1.4033821614583317" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.Macroeconomic_Data" Width="1.5" PointX="0.75" PointY="9.75" Height="2.1725878906250031" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.Macroeconomic_Display" Width="1.5" PointX="2.75" PointY="9.75" Height="2.5571907552083388" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS" Width="1.5" PointX="10.75" PointY="0.75" Height="4.0956022135416674" IsExpanded="true" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" Width="1.5" PointX="4.75" PointY="10.75" Height="2.7494921875000031" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.REUTERS_XREF" Width="1.5" PointX="10.75" PointY="5.75" Height="2.3648893229166656" IsExpanded="true" />
-				<EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="11.375" PointY="9.75" Height="3.7109993489583317" />
+				<EntityTypeShape EntityType="ExternalResearchModel.REUTERS_XREF" Width="1.5" PointX="8.75" PointY="6.375" Height="2.3648893229166656" IsExpanded="true" />
+				<EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="6.5" PointY="9.75" Height="3.7109993489583317" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PRICE" Width="1.5" PointX="0.75" PointY="13.75" Height="1.9802864583333388" />
 				<EntityTypeShape EntityType="ExternalResearchModel.COUNTRY_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="4.75" Height="2.5571907552083388" />
+        <EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9.375" PointY="9.75" Height="1.7879850260416674" />
 			</Diagram>
 		</Diagrams>
 	</Designer>
