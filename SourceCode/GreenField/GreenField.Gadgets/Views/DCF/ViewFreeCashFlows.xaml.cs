@@ -85,6 +85,18 @@ namespace GreenField.Gadgets.Views
                 dgFreeCashFlows.Columns[8].Header = System.DateTime.Now.Year + 7 + "\n" + "Y8";
                 dgFreeCashFlows.Columns[9].Header = System.DateTime.Now.Year + 8 + "\n" + "Y9";
                 dgFreeCashFlows.Columns[10].Header = System.DateTime.Now.Year + 9 + "\n" + "Y10";
+
+                dgFreeCashFlows.Columns[1].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[2].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[3].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[4].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[5].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[6].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[7].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[8].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[9].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[10].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                
             }
 
         }
