@@ -176,6 +176,7 @@
     <Compile Include="ViewModels\DCF\ViewModelTerminalValueCalculations.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
+    <Compile Include="ViewModels\ICPresentations\ViewModelPreMeetingVoteReport.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelMeetingConfigSchedule.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentationVote.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentationDecisionEntry.cs" />
@@ -283,6 +284,9 @@
     </Compile>
     <Compile Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml.cs">
       <DependentUpon>ChildViewPresentationMeetingMinutesAddAttendee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ViewPreMeetingVoteReport.xaml.cs">
+      <DependentUpon>ViewPreMeetingVoteReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ICPresentations\ViewPresentationVote.xaml.cs">
       <DependentUpon>ViewPresentationVote.xaml</DependentUpon>
@@ -528,6 +532,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewPreMeetingVoteReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

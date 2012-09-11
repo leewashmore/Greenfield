@@ -80,6 +80,12 @@ namespace GreenField.App.ViewModel
                                 {
                                     SessionManager.SESSION = session;
                                     UserName = SessionManager.SESSION.UserName;
+
+                                    if (session.Roles != null)
+                                    {
+                                        RoleIsICAdmin = !session.Roles.Contains(MemberGroups.IC_ADMIN);
+                                    }
+
                                     Logging.LogSessionStart(_logger);
                                     if (_dbInteractivity != null)
                                     {
@@ -126,6 +132,18 @@ namespace GreenField.App.ViewModel
                 RaisePropertyChanged(() => this.UserName);
             }
         }
+
+        private Boolean _roleIsICAdmin = false;
+        public Boolean RoleIsICAdmin
+        {
+            get { return _roleIsICAdmin; }
+            set 
+            {
+                _roleIsICAdmin = value;
+                RaisePropertyChanged(() => this.RoleIsICAdmin);
+            }
+        }
+        
 
         private string _busyIndicatorContent;
         public string BusyIndicatorContent
