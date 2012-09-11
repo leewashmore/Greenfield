@@ -20,4 +20,29 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PortfolioSelectionData" nillable="true" type="tns:PortfolioSelectionData" />
+  <xs:complexType name="ArrayOfMembershipUserInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MembershipUserInfo" nillable="true" type="tns:MembershipUserInfo" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMembershipUserInfo" nillable="true" type="tns:ArrayOfMembershipUserInfo" />
+  <xs:complexType name="MembershipUserInfo">
+    <xs:sequence>
+      <xs:element name="Comment" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="CreateDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="Email" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsApproved" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsLockedOut" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsOnline" type="xs:boolean" />
+      <xs:element minOccurs="0" name="LastActivityDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastLockOutDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastLogInDate" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="LastPassWordChangedDate" type="xs:dateTime" />
+      <xs:element name="PasswordQuestion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ProviderName" nillable="true" type="xs:string" />
+      <xs:element name="ProviderUserKey" nillable="true" type="xs:string" />
+      <xs:element name="UserName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MembershipUserInfo" nillable="true" type="tns:MembershipUserInfo" />
 </xs:schema>

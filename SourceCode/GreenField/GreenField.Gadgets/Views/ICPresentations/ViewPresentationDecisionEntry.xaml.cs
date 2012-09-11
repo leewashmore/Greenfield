@@ -138,13 +138,16 @@ namespace GreenField.Gadgets.Views
             if (this.cbPFVICDecision.SelectedItem as String != _committeePFVMeasure)
             {
                 pfvChanged = true;
-                if (DataContextViewModelPresentationDecisionEntry
-                        .SecurityPFVMeasureCurrentPrices[this.cbPFVICDecision.SelectedItem as String] == null)
+                if (DataContextViewModelPresentationDecisionEntry.SecurityPFVMeasureCurrentPrices != null)
                 {
-                    this.cbPFVICDecision.SelectedValue = _committeePFVMeasure;
-                    Prompt.ShowDialog("Error: missing current value of P/FV measure");
-                    return;
-                } 
+                    if (DataContextViewModelPresentationDecisionEntry
+                            .SecurityPFVMeasureCurrentPrices[this.cbPFVICDecision.SelectedItem as String] == null)
+                    {
+                        this.cbPFVICDecision.SelectedValue = _committeePFVMeasure;
+                        Prompt.ShowDialog("Error: missing current value of P/FV measure");
+                        return;
+                    }
+                }
             }
 
             _committeePFVMeasure = this.cbPFVICDecision.SelectedItem as String;
@@ -164,7 +167,7 @@ namespace GreenField.Gadgets.Views
             Decimal committeeSellRange;
             if (!Decimal.TryParse(this.txtbPFVICDecisionSell.Text, out committeeSellRange))
             {
-                this.txtbPFVICDecisionBuy.Text = _committeeSellRange.ToString();
+                this.txtbPFVICDecisionSell.Text = _committeeSellRange.ToString();
                 return;
             }
 

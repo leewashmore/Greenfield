@@ -255,7 +255,7 @@ namespace GreenField.ServiceCaller
 
         void UpdateMeetingMinuteDetails(String userName, MeetingInfo meetingInfo, List<MeetingMinuteData> meetingMinuteData, Action<Boolean?> callback);
 
-        void UpdateMeetingAttachedFileStreamData(String userName, Int64 meetingId, MeetingAttachedFileStreamData meetingAttachedFileStreamData, Action<Boolean?> callback);
+        void UpdateMeetingAttachedFileStreamData(String userName, Int64 meetingId, FileMaster fileMasterInfo, Boolean deletionFlag, Action<Boolean?> callback);
 
         void RetrievePresentationOverviewData(Action<List<ICPresentationOverviewData>> callback);
 
@@ -292,6 +292,10 @@ namespace GreenField.ServiceCaller
         void UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, FileMaster fileMasterInfo, Boolean deletionFlag, Action<Boolean?> callback);
 
         void SetICPPresentationStatus(String userName, Int64 presentationId, String status, Action<Boolean?> callback);
+
+        void RetrieveCurrentPFVMeasures(List<String> PFVTypeInfo, String securityTicker, Action<Dictionary<String, Decimal?>> callback);
+
+        void GetAllUsers(Action<List<MembershipUserInfo>> callback);
         #endregion
 
         #region DCF

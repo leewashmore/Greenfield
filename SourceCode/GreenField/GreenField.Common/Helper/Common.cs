@@ -193,12 +193,6 @@ namespace GreenField.Common
         public static String ABSTAIN = "Abstain";
     }
 
-    public static class MeetingAttachedFileType
-    {
-        public static String INDUSTRY_REPORT = "Industry Report";
-        public static String OTHER_DOCUMENT = "Other Document";
-    }
-
     public static class AttendanceType
     {
         public static String ATTENDED = "Attended";
@@ -213,21 +207,21 @@ namespace GreenField.Common
         public static String FORWARD_EV_EBITDA = "Forward EV/EBITDA";
         public static String FORWARD_EV_EBITDA_RELATIVE_TO_COUNTRY = "Forward EV/EBITDA relative to Country";
         public static String FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY = "Forward EV/EBITDA relative to Industry";
-        public static String FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward EV/EBITDA relative to Industry within Country";
+        public static String FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward EV/EBITDA Relative to Country Industry";
         public static String FORWARD_EV_REVENUE = "Forward EV/Revenue";
         public static String FORWARD_P_NAV = "Forward P/NAV";
         public static String FORWARD_P_APPRAISAL_VALUE = "Forward P/Appraisal Value";
         public static String FORWARD_P_BV = "Forward P/BV";
         public static String FORWARD_P_BV_RELATIVE_TO_COUNTRY = "Forward P/BV relative to Country";
         public static String FORWARD_P_BV_RELATIVE_TO_INDUSTRY = "Forward P/BV relative to Industry";
-        public static String FORWARD_P_BV_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward P/BV relative to Industry within Country";
+        public static String FORWARD_P_BV_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward P/BV Relative to Country Industry";
         public static String FORWARD_P_CE = "Forward P/CE";
         public static String FORWARD_P_E = "Forward P/E";
         public static String FORWARD_P_E_RELATIVE_TO_COUNTRY = "Forward P/E relative to Country";
         public static String FORWARD_P_E_RELATIVE_TO_INDUSTRY = "Forward P/E relative to Industry";
-        public static String FORWARD_P_E_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward P/E relative to Industry within Country";
-        public static String FORWARD_P_E_TO_2_YEAR_EARNINGS_GROWTH = "Forward P/E to 2 Year Earnings Growth";
-        public static String FORWARD_P_E_TO_3_YEAR_EARNINGS_GROWTH = "Forward P/E to 3 Year Earnings Growth";
+        public static String FORWARD_P_E_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY = "Forward P/E Relative to Country Industry";
+        public static String FORWARD_P_E_TO_2_YEAR_EARNINGS_GROWTH = "Forward P/E to 2 Year Growth";
+        public static String FORWARD_P_E_TO_3_YEAR_EARNINGS_GROWTH = "Forward P/E to 3 Year Growth";
         public static String FORWARD_P_EMBEDDED_VALUE = "Forward P/Embedded Value";
         public static String FORWARD_P_REVENUE = "Forward P/Revenue";        
     }
@@ -243,7 +237,7 @@ namespace GreenField.Common
     public static class MemberGroups
     {
         public static String VOTING_MEMBER = "IC_MEMBER_VOTING";
-        public static String NON_VOTING_MEMBER = "IC_MEMBER_NONVOTING";
+        public static String NON_VOTING_MEMBER = "IC_MEMBER_NON_VOTING";
         public static String IC_ADMIN = "IC_ADMIN";
         public static String IC_CHIEF_EXECUTIVE = "IC_CHIEF_EXECUTIVE";       
     }
@@ -255,6 +249,8 @@ namespace GreenField.Common
         public static String INVESTMENT_CONTEXT_REPORT = "Investment Context Report";
         public static String DCF_MODEL = "DCF Model";
         public static String ADDITIONAL_ATTACHMENT = "Additional Attachment";
+        public static String INDUSTRY_REPORT = "Industry Report";
+        public static String OTHER_DOCUMENT = "Other Document";
     }
 
     public enum VIEWVOTEFLAG { VIEW, VOTE } ;

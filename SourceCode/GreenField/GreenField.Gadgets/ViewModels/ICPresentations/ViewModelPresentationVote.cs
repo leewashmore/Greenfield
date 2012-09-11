@@ -132,9 +132,21 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
                 if (value != null && _dbInteractivity != null)
                 {
-                    BusyIndicatorNotification(true, "Retrieving Voting information for the selected presentation");
-                    _dbInteractivity.RetrievePresentationVoterData(value.PresentationID, RetrievePresentationVoterDataCallbackMethod);
+                    BusyIndicatorNotification(true, "Retrieving documentation related to selected presentation");
+                    _dbInteractivity.RetrievePresentationAttachedFileDetails(value.PresentationID
+                        , RetrievePresentationAttachedFileDetailsCallbackMethod);
                 }
+            }
+        }
+
+        private List<VoterInfo> _presentationMeetingVoterInfo;
+        public List<VoterInfo> PresentationMeetingVoterInfo
+        {
+            get { return _presentationMeetingVoterInfo; }
+            set
+            {
+                _presentationMeetingVoterInfo = value;
+                RaisePropertyChanged(() => this.PresentationMeetingVoterInfo);
             }
         }
 
@@ -168,6 +180,50 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedPresentationCommentInfo = value;
                 RaisePropertyChanged(() => this.SelectedPresentationCommentInfo);
+            }
+        }
+
+        private FileMaster _selectedPresentationPowerpointDocument;
+        public FileMaster SelectedPresentationPowerpointDocument
+        {
+            get { return _selectedPresentationPowerpointDocument; }
+            set
+            {
+                _selectedPresentationPowerpointDocument = value;
+                RaisePropertyChanged(() => this.SelectedPresentationPowerpointDocument);
+            }
+        }
+
+        private FileMaster _selectedPresentationICPacketDocument;
+        public FileMaster SelectedPresentationICPacketDocument
+        {
+            get { return _selectedPresentationICPacketDocument; }
+            set
+            {
+                _selectedPresentationICPacketDocument = value;
+                RaisePropertyChanged(() => this.SelectedPresentationICPacketDocument);
+            }
+        }
+
+        private Boolean _notesIsEnabled = false;
+        public Boolean NotesIsEnabled
+        {
+            get { return _notesIsEnabled; }
+            set
+            {
+                _notesIsEnabled = value;
+                RaisePropertyChanged(() => this.NotesIsEnabled);
+            }
+        }
+
+        private Boolean _blogIsEnabled = true;
+        public Boolean BlogIsEnabled
+        {
+            get { return _blogIsEnabled; }
+            set
+            {
+                _blogIsEnabled = value;
+                RaisePropertyChanged(() => this.BlogIsEnabled);
             }
         }
 
@@ -249,12 +305,15 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
-        #endregion        
+        #endregion
 
         #region ICommand Methods
         private void SubmitCommandMethod(object param)
         {
-            foreach (VoterInfo info in PresentationPreMeetingVoterInfo)
+            VoterInfo presenterVoterInfo = PresentationPreMeetingVoterInfo
+                .Where(record => record.Name.ToLower() == SelectedPresentationOverviewInfo.Presenter).FirstOrDefault();
+
+            foreach (VoterInfo info in PresentationMeetingVoterInfo)
             {
                 if (info.VoteType == VoteType.MODIFY)
                 {
@@ -264,12 +323,33 @@ namespace GreenField.Gadgets.ViewModels
                         return;
                     }
                 }
+
+                if (presenterVoterInfo != null)
+                {
+                    info.Notes = presenterVoterInfo.Notes;
+                }
+
+
+                if (info.Name.ToLower() == UserSession.SessionManager.SESSION.UserName && info.PostMeetingFlag == false)
+                {
+                    VoterInfo postMeetingVoterInfo = PresentationMeetingVoterInfo
+                        .Where(record => record.Name.ToLower() == UserSession.SessionManager.SESSION.UserName && record.PostMeetingFlag == true)
+                        .FirstOrDefault();
+
+                    if (postMeetingVoterInfo != null)
+                    {
+                        postMeetingVoterInfo.VoteType = info.VoteType;
+                        postMeetingVoterInfo.VoterPFVMeasure = info.VoterPFVMeasure;
+                        postMeetingVoterInfo.VoterBuyRange = info.VoterBuyRange;
+                        postMeetingVoterInfo.VoterSellRange = info.VoterSellRange;
+                    }
+                }
             }
 
             if (_dbInteractivity != null)
             {
                 BusyIndicatorNotification(true, "Updating Pre-Meeting Voting Information");
-                _dbInteractivity.UpdatePreMeetingVoteDetails(UserSession.SessionManager.SESSION.UserName, PresentationPreMeetingVoterInfo
+                _dbInteractivity.UpdatePreMeetingVoteDetails(UserSession.SessionManager.SESSION.UserName, PresentationMeetingVoterInfo
                     , UpdatePreMeetingVoteDetailsCallbackMethod);
             }
         }
@@ -297,7 +377,7 @@ namespace GreenField.Gadgets.ViewModels
                 _dbInteractivity.RetrievePresentationComments(SelectedPresentationOverviewInfo.PresentationID
                     , RetrievePresentationCommentsCallbackMethod);
             }
-        } 
+        }
         #endregion
 
         #region CallBack Methods
@@ -310,11 +390,24 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    
+                    PresentationMeetingVoterInfo = result;
                     PresentationPreMeetingVoterInfo = result.Where(record => record.PostMeetingFlag == false).OrderBy(record => record.Name).ToList();
-                    if (result.Any(record => record.Name == UserSession.SessionManager.SESSION.UserName))
+
+                    if(UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
+                    {
+                        PresentationMeetingVoterInfo = PresentationMeetingVoterInfo
+                            .Where(record => record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower()).ToList();
+                        PresentationPreMeetingVoterInfo = PresentationPreMeetingVoterInfo
+                            .Where(record => record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower()).ToList();
+                    }
+                    
+
+
+                    if (result.Any(record => record.Name.ToLower() == UserSession.SessionManager.SESSION.UserName))
                     {
                         SelectedPresentationPreMeetingVoterInfo = result
-                            .Where(record => record.Name == UserSession.SessionManager.SESSION.UserName).FirstOrDefault();
+                            .Where(record => record.Name.ToLower() == UserSession.SessionManager.SESSION.UserName).FirstOrDefault();
                         VoterIsEnabled = false;
                     }
 
@@ -322,20 +415,73 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         VoterIsEnabled = false;
                         VoteIsEnabled = false;
+                        NotesIsEnabled = true;
                     }
 
-                    if (UserSession.SessionManager.SESSION.Roles.Contains("IC_ADMIN"))
+                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
                     {
                         VoterIsEnabled = true;
                         VoteIsEnabled = true;
                     }
 
-                    if (!UserSession.SessionManager.SESSION.Roles.Contains("IC_ADMIN") &&
-                        !UserSession.SessionManager.SESSION.Roles.Contains("IC_MEMBER_VOTING"))
+                    if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) &&
+                        !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.VOTING_MEMBER))
                     {
                         VoterIsEnabled = false;
                         VoteIsEnabled = false;
                     }
+
+                    if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) &&
+                        !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.VOTING_MEMBER) &&
+                        !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.NON_VOTING_MEMBER) &&
+                        !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE))
+                    {
+                        BlogIsEnabled = false;
+                    }
+
+                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.NON_VOTING_MEMBER))
+                    {
+                        SelectedPresentationPreMeetingVoterInfo = result
+                            .Where(record => record.Name.ToLower() == SelectedPresentationOverviewInfo.Presenter).FirstOrDefault();
+                    }
+
+                    if (!(UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) ||
+                        SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING))
+                    {
+                        VoterIsEnabled = false;
+                        VoteIsEnabled = false;
+                        NotesIsEnabled = false;
+                        BlogIsEnabled = false;
+                    }                    
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);                
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+        }
+
+        private void RetrievePresentationAttachedFileDetailsCallbackMethod(List<FileMaster> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    SelectedPresentationPowerpointDocument = result
+                        .Where(record => record.Category == UploadDocumentType.POWERPOINT_PRESENTATION).FirstOrDefault();
 
                     if (_dbInteractivity != null)
                     {
@@ -358,7 +504,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);                
+                Logging.LogEndMethod(_logger, methodNamespace);
             }
         }
 
@@ -372,21 +518,27 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     SelectedPresentationCommentInfo = result;
+                    if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Voting information for the selected presentation");
+                        _dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod);
+                    }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
             }
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
             }
         }
 
@@ -400,7 +552,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     SelectedPresentationCommentInfo = result;
-                    UploadCommentInfo = null;                    
+                    UploadCommentInfo = null;
                 }
                 else
                 {
@@ -502,7 +654,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public void Dispose()
         {
-        } 
+        }
         #endregion
     }
 }

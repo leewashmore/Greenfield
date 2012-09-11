@@ -237,7 +237,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (_dbInteractivity != null)
                         {
-                            BusyIndicatorNotification(true, "Deleting document");
+                            BusyIndicatorNotification(true, "Deleting document...");
                             _dbInteractivity.UpdatePresentationAttachedFileStreamData(UserSession.SessionManager.SESSION.UserName
                                 , SelectedPresentationOverviewInfo.PresentationID, DeleteFileData, true, UpdatePresentationAttachedFileStreamDataCallbackMethod);
                         }                       

@@ -445,9 +445,6 @@
     <None Include="Service References\MeetingDefinitions\MeetingOperations8.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\MeetingDefinitions\MeetingOperations8.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations.wsdl" />
     <None Include="Service References\ModelFXDefinitions\ModelFXOperations.xsd">
       <SubType>Designer</SubType>

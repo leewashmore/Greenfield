@@ -390,7 +390,15 @@
         <Function Name="SetICPMeetingAttachedFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="MeetingId" Type="bigint" Mode="In" />
-          <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+          <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="SecurityName" Type="varchar" Mode="In" />
+          <Parameter Name="SecurityTicker" Type="varchar" Mode="In" />
+          <Parameter Name="Location" Type="varchar" Mode="In" />
+          <Parameter Name="MetaTags" Type="varchar" Mode="In" />
+          <Parameter Name="Category" Type="varchar" Mode="In" />
+          <Parameter Name="Type" Type="varchar" Mode="In" />
+          <Parameter Name="FileId" Type="bigint" Mode="In" />
+          <Parameter Name="DeletionFlag" Type="bit" Mode="In" />
         </Function>
         <Function Name="SetICPMeetingMinutesDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserName" Type="varchar" Mode="In" />
@@ -757,7 +765,15 @@
           <FunctionImport Name="SetICPMeetingAttachedFileInfo" ReturnType="Collection(Int32)">
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="MeetingId" Mode="In" Type="Int64" />
-            <Parameter Name="xmlScript" Mode="In" Type="String" />
+            <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="SecurityName" Mode="In" Type="String" />
+            <Parameter Name="SecurityTicker" Mode="In" Type="String" />
+            <Parameter Name="Location" Mode="In" Type="String" />
+            <Parameter Name="MetaTags" Mode="In" Type="String" />
+            <Parameter Name="Category" Mode="In" Type="String" />
+            <Parameter Name="Type" Mode="In" Type="String" />
+            <Parameter Name="FileId" Mode="In" Type="Int64" />
+            <Parameter Name="DeletionFlag" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="SetICPMeetingPresentationStatus" ReturnType="Collection(Int32)">
             <Parameter Name="UserName" Mode="In" Type="String" />

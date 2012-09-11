@@ -14,17 +14,15 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ChildViewPresentationMeetingMinutesAddAttendee : ChildWindow
     {
-        public ChildViewPresentationMeetingMinutesAddAttendee()
+        public ChildViewPresentationMeetingMinutesAddAttendee(List<String> userInfo)
         {
             InitializeComponent();
+            UserInfo = userInfo;
             this.cbUser.ItemsSource = UserInfo;
             this.cbAttendanceType.ItemsSource = AttendanceTypeInfo;
         }
 
-        public List<String> UserInfo
-        {
-            get { return new List<string> { "User1", "User2", "User3", "User4" }; }            
-        }
+        public List<String> UserInfo { get; set; }
 
         public List<String> AttendanceTypeInfo
         {
