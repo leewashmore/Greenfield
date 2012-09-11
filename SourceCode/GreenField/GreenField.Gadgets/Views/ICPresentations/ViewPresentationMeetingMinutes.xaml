@@ -15,6 +15,7 @@
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
                 <ResourceDictionary>
                     <helpers:MeetingMinutesAttendenceRemoveButtonEnabledConverter x:Key="MeetingMinutesAttendenceRemoveButtonEnabledConverter"/>
+                    <helpers:DocumentCategoryConverter x:Key="DocumentCategoryConverter"/>
                     <helpers:DataContextProxy x:Key="DataContextProxy"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
@@ -25,7 +26,6 @@
                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
         <Grid x:Name="LayoutRoot">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -55,6 +55,7 @@
                     </telerik:RadComboBox.ItemTemplate>
                 </telerik:RadComboBox>
             </Grid>
+            
             <Grid Grid.Row="1" Margin="0,5,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -128,7 +129,8 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </Grid>            
+            </Grid>    
+            
             <Grid Grid.Row="2" Margin="0,5,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -204,50 +206,47 @@
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="Notes:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
-                <TextBox Grid.Row="1" Text="{Binding SelectedClosedForVotingMeetingInfo.MeetingDescription, Mode=TwoWay}" MaxLength="255" Style="{StaticResource TextBoxStyle}"/>
+                <TextBox Grid.Row="1" Text="{Binding SelectedClosedForVotingMeetingInfo.MeetingDescription, Mode=TwoWay}"
+                         MaxLength="255" Style="{StaticResource TextBoxStyle}" IsEnabled="{Binding ControlsEnabled}"/>
             </Grid>
             <!--Reports Section-->
             <Grid Grid.Row="4" Margin="0,5,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="Uploads:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
-                <Grid Grid.Row="1" Margin="0,2,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>                        
-                    </Grid.RowDefinitions>
+                <!--Upload Section-->
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="130"/>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Industry Report" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                    <TextBlock Text="Other Documents" VerticalAlignment="Center" Grid.Row="1" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
-                    <TextBox Text="{Binding SelectedIndustryReports, Mode=TwoWay}" Margin="2,0,0,0" IsEnabled="False" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
-                    <TextBox Text="{Binding SelectedOtherReports, Mode=TwoWay}" Margin="2,2,0,0" IsEnabled="False" Grid.Row="1" Grid.Column="1" Style="{StaticResource TextBoxStyle}"/>
-                    <telerik:RadButton x:Name="btnBrowseIndustryReport" Content="BROWSE" Width="75" Margin="2,0,0,0" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
-                                       Click="btnBrowseIndustryReport_Click"/>
-                    <telerik:RadButton x:Name="btnBrowseOtherDocuments" Content="BROWSE" Width="75" Margin="2,2,0,0" Grid.Row="1" Grid.Column="2" Style="{StaticResource RadButtonStyle}"
-                                       Click="btnBrowseOtherDocuments_Click"/>
-                    <telerik:RadButton Content="ADD" Width="75" Margin="2,0,0,0" Grid.Column="3" Style="{StaticResource RadButtonStyle}"
-                                       Command="{Binding AddIndustryReportCommand}"/>
-                    <telerik:RadButton Content="ADD" Width="75" Margin="2,2,0,0" Grid.Row="1" Grid.Column="3" Style="{StaticResource RadButtonStyle}"
-                                       Command="{Binding AddOtherDocumentCommand}"/>                    
+                    <telerik:RadComboBox x:Name="cbDocumentType" ItemsSource="{Binding UploadDocumentInfo}"
+                                         SelectedItem="{Binding SelectedUploadDocumentInfo, Mode=TwoWay}"
+                                         HorizontalContentAlignment="Left" EmptyText="Select Document Type" HorizontalAlignment="Left"
+                                         Height="{StaticResource DefaultControlMinHeight}" Width="130" VerticalAlignment="Center"
+                                         Style="{StaticResource RadComboBoxStyle}"/>
+                    <TextBox Grid.Column="1" Text="{Binding SelectedUploadFileName, Mode=TwoWay}" 
+                             Margin="2,0,0,0" IsEnabled="False" Style="{StaticResource TextBoxStyle}"/>
+                    <telerik:RadButton Content="Browse" Width="75" x:Name="btnBrowse" Click="btnBrowse_Click"
+                                       Margin="2,0,0,0" Grid.Column="2" Style="{StaticResource RadButtonStyle}"/>
+                    <telerik:RadButton Content="Upload" Width="75" Margin="2,0,0,0" Grid.Column="3" Style="{StaticResource RadButtonStyle}"
+                                       Command="{Binding UploadCommand}"/>
                 </Grid>
-            </Grid>
-
-            <!--Attachment Section-->
-            <Grid Grid.Row="5" Margin="0,5,0,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <TextBlock Text="Attachments:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
-                <Grid Grid.Row="1" Margin="0,2,0,0">
-                    <ItemsControl ItemsSource="{Binding ClosedForVotingMeetingAttachedFileInfo}">
+                <!--Industry Report Section-->
+                <Grid Grid.Row="1" Margin="0,5,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Industry Report:" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    <ItemsControl ItemsSource="{Binding SelectedMeetingDocumentationInfo, Converter={StaticResource DocumentCategoryConverter}
+                        , ConverterParameter='Industry Report'}" Grid.Column="1" Margin="2,0,0,0" MinHeight="{StaticResource DefaultGridViewRowHeight}">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <toolkit:WrapPanel Orientation="Horizontal"/>
@@ -255,26 +254,69 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <StackPanel Orientation="Horizontal" Margin="2">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,2,0">
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
-                                        <TextBlock Margin="2" Text="{Binding MeetingAttachedFileData.Name}" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"
-                                           HorizontalAlignment="Left"/>
+                                        <HyperlinkButton Margin="2" Content="{Binding Name}" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"
+                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}" TargetName = "_blank"/>
                                     </Grid>
                                     <Grid Background="{StaticResource DefaultGridHeaderBackground}">
-                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="20"
-                                                           Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
-                                                           CommandParameter="{Binding}"
+                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
+                                                           Command="{Binding DeleteAttachedFileCommand}" 
+                                                           CommandParameter="{Binding}" IsEnabled="False"
                                                            Style="{StaticResource RadButtonStyle}"/>
                                     </Grid>
-                                </StackPanel>                                
+                                </StackPanel>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
-                    </ItemsControl>                    
+                    </ItemsControl>
+                </Grid>
+                <Grid Grid.Row="2" Margin="0,2,0,2">
+                    <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6"/>
+                </Grid>
+                <!--Other Document Section-->
+                <Grid Grid.Row="3" Margin="0,2,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="130"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Other Document:" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}" FontWeight="Bold"/>
+                    <ItemsControl ItemsSource="{Binding SelectedMeetingDocumentationInfo, Converter={StaticResource DocumentCategoryConverter}
+                        , ConverterParameter='Other Document'}" Grid.Column="1" Margin="2,0,0,0" MinHeight="{StaticResource DefaultGridViewRowHeight}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <toolkit:WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,2,0">
+                                    <Grid Background="{StaticResource DefaultGridHeaderBackground}">
+                                        <HyperlinkButton Margin="2" Content="{Binding Name}" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"
+                                                         HorizontalAlignment="Left" NavigateUri="{Binding Location}" TargetName = "_blank"/>
+                                    </Grid>
+                                    <Grid Background="{StaticResource DefaultGridHeaderBackground}">
+                                        <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
+                                                           Command="{Binding DeleteAttachedFileCommand}" 
+                                                           CommandParameter="{Binding}" IsEnabled="False"
+                                                           Style="{StaticResource RadButtonStyle}"/>
+                                    </Grid>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Left" 
+                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6" Margin="0,5,0,0"/>
+                    <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Left" Grid.Column="1"
+                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6" Margin="0,5,0,0"/>
+                </Grid>
+                <Grid Grid.Row="4" Margin="0,5,0,3">
+                    <toolkit:Separator VerticalAlignment="Bottom" HorizontalAlignment="Stretch" 
+                                       HorizontalContentAlignment="Left" Height="1" Foreground="Gray" Opacity="0.6"/>
                 </Grid>
             </Grid>
-
             <!--Application Section-->
-            <Grid Grid.Row="6" Margin="0,2,0,10">
+            <Grid Grid.Row="5" Margin="0,2,0,10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>

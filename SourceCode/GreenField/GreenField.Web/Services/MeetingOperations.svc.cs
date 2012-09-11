@@ -94,11 +94,14 @@ namespace GreenField.Web.Services
                 String[] votingUsers = Roles.GetUsersInRole("IC_MEMBER_VOTING");
                 foreach (String user in votingUsers)
                 {
-                    if (user != userName)
-                    {
-                        XElement element = new XElement("VotingUser", user);
-                        xmlDoc.Root.Add(element);
-                    }
+                    //if (user.ToLower() != userName.ToLower())
+                    //{
+                    //    XElement element = new XElement("VotingUser", user);
+                    //    xmlDoc.Root.Add(element);
+                    //}
+
+                    XElement element = new XElement("VotingUser", user.ToLower());
+                    xmlDoc.Root.Add(element);
                 }
 
                 String xmlScript = xmlDoc.ToString();
@@ -452,9 +455,7 @@ namespace GreenField.Web.Services
                 } 
                 #endregion
 
-                presentationOverviewData.SecurityBuySellvsCrnt = String.Empty; //"$16.50(8*2013PE)-$21.50(10.5*2013PE)";
-
-                
+                presentationOverviewData.SecurityBuySellvsCrnt = String.Empty; //"$16.50(8*2013PE)-$21.50(10.5*2013PE)";               
 
                 return presentationOverviewData;
             }
@@ -464,7 +465,62 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        }
+        }        
+        
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Dictionary<String, Decimal?> RetrieveCurrentPFVMeasures(List<String> PFVTypeInfo, String securityTicker)
+        {
+            try
+            {
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                ExternalResearchEntities externalResearchEntity = new ExternalResearchEntities();
+                Dictionary<String, Decimal?> result = new Dictionary<string, decimal?>();
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.TICKER == securityTicker).FirstOrDefault();
+
+                foreach (String pfvType in PFVTypeInfo)
+                {
+                    Decimal? value = null;
+                    DATA_MASTER dataMasterRecord = externalResearchEntity.DATA_MASTER
+                        .Where(record => record.DATA_DESC == pfvType).FirstOrDefault();
+                    if (dataMasterRecord != null)
+                    {
+                        if (securityData != null)
+                        {
+                            String securityID = securityData.SECURITY_ID.ToString();
+                            PERIOD_FINANCIALS periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS
+                                .Where(record => record.SECURITY_ID == securityID
+                                    && record.DATA_ID == dataMasterRecord.DATA_ID
+                                    && record.CURRENCY == "USD"
+                                    && record.PERIOD_TYPE == "C").FirstOrDefault();
+                            if (periodFinancialRecord != null)
+                            {
+                                value = periodFinancialRecord.AMOUNT;
+                            }
+                        }
+                    }
+
+                    result.Add(pfvType, value);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }        
+
         #endregion
 
         #region UploadEdit Presentation Documents
@@ -811,30 +867,20 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public Boolean UpdateMeetingAttachedFileStreamData(String userName, Int64 meetingId, MeetingAttachedFileStreamData meetingAttachedFileStreamData)
+        public Boolean UpdateMeetingAttachedFileStreamData(String userName, Int64 meetingId, FileMaster fileMasterInfo, Boolean deletionFlag)
         {
             try
             {
-                if (meetingAttachedFileStreamData.FileStream != null)
+                ICPresentationEntities entity = new ICPresentationEntities();
+                DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
+                if (deletionFlag)
                 {
-                    String filePath = @"\\10.101.13.146\IC Presentation Documents\" + meetingAttachedFileStreamData.MeetingAttachedFileData.Name;
-                    File.WriteAllBytes(filePath, meetingAttachedFileStreamData.FileStream);
-                    meetingAttachedFileStreamData.MeetingAttachedFileData.Location = @"\\10.101.13.146\IC Presentation Documents\";
-                }
-                else
-                {
-                    String filePath = @"\\10.101.13.146\IC Presentation Documents\" + meetingAttachedFileStreamData.MeetingAttachedFileData.Name;
-                    if (File.Exists(filePath))
-                    {
-                        File.Delete(filePath);
-                    }
+                    documentWorkspaceOperations.DeleteDocument(fileMasterInfo.Location); 
                 }
 
-                XDocument xmlDoc = GetEntityXml<FileMaster>(new List<FileMaster> { meetingAttachedFileStreamData.MeetingAttachedFileData }
-                    , strictlyInclusiveProperties: new List<string> { "FileID", "Name", "SecurityName", "SecurityTicker", "Location", "MetaTags", "Category", "Type" });
-                String xmlScript = xmlDoc.ToString();
-                ICPresentationEntities entity = new ICPresentationEntities();
-                entity.SetICPMeetingAttachedFileInfo(userName, meetingId, xmlScript);
+                entity.SetICPMeetingAttachedFileInfo(userName, meetingId, fileMasterInfo.Name
+                    , fileMasterInfo.SecurityName, fileMasterInfo.SecurityTicker, fileMasterInfo.Location
+                    , fileMasterInfo.MetaTags, fileMasterInfo.Category, fileMasterInfo.Type, fileMasterInfo.FileID, deletionFlag);
                 return true;
             }
             catch (Exception ex)
@@ -861,6 +907,58 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<MembershipUserInfo> GetAllUsers()
+        {
+            try
+            {
+                MembershipUserCollection membershipUserCollection = new MembershipUserCollection();
+                List<MembershipUserInfo> membershipUserInfo = new List<MembershipUserInfo>();
+
+                membershipUserCollection = Membership.GetAllUsers();
+                foreach (MembershipUser user in membershipUserCollection)
+                    membershipUserInfo.Add(ConvertMembershipUser(user));
+                return membershipUserInfo;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+        }
+
+        /// <summary>
+        /// Convert System.Web.Security.MembershipUser to GreenField.Web.DataContracts.MembershipUserInfo
+        /// </summary>
+        /// <param name="user">MembershipUser</param>
+        /// <returns>MembershipUserInfo</returns>
+        private MembershipUserInfo ConvertMembershipUser(MembershipUser user)
+        {
+            if (user == null)
+                return null;
+
+            return new MembershipUserInfo
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                IsApproved = user.IsApproved,
+                IsLockedOut = user.IsLockedOut,
+                IsOnline = user.IsOnline,
+                Comment = user.Comment,
+                CreateDate = user.CreationDate,
+                LastActivityDate = user.LastActivityDate,
+                LastLockoutDate = user.LastLockoutDate,
+                LastLogInDate = user.LastLoginDate,
+                ProviderUserKey = user.ProviderUserKey.ToString(),
+                ProviderName = user.ProviderName,
+                PasswordQuestion = user.PasswordQuestion,
+                LastPasswordChangedDate = user.LastPasswordChangedDate
+            };
         }
 
         private XDocument GetEntityXml<T>(List<T> parameters, XDocument xmlDoc = null, List<String> strictlyInclusiveProperties = null)

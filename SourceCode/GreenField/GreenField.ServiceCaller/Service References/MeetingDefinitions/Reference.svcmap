@@ -32,7 +32,6 @@
     <MetadataFile FileName="MeetingOperations5.xsd" MetadataType="Schema" ID="20764988-db14-4609-9d04-11f8edffb11d" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd4" />
     <MetadataFile FileName="MeetingOperations6.xsd" MetadataType="Schema" ID="7a985760-e2bb-404b-ade0-d53d76fda314" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd7" />
     <MetadataFile FileName="MeetingOperations7.xsd" MetadataType="Schema" ID="54d32daf-60eb-4a79-8e06-eb5b1cd539b2" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd6" />
-    <MetadataFile FileName="MeetingOperations8.xsd" MetadataType="Schema" ID="ad60d6ff-4ba3-4af4-94b7-81fdd61bf300" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd8" />
     <MetadataFile FileName="MeetingOperations1.xsd" MetadataType="Schema" ID="737e4599-97d9-4c62-8c43-7b935e247802" SourceId="1" SourceUrl="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd2" />
   </Metadata>
   <Extensions>

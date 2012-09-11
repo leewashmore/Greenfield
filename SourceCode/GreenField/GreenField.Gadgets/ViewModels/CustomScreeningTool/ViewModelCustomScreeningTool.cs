@@ -37,7 +37,7 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
-        private PortfolioSelectionData _portfolioSelectionData;
+        private IRegionManager _regionManager;
        
         #endregion
 
@@ -48,6 +48,7 @@ namespace GreenField.Gadgets.ViewModels
             //param.DashboardGadgetPayload.EntitySelectionData
             _dbInteractivity = param.DBInteractivity;
             _eventAggregator = param.EventAggregator;
+            _regionManager = param.RegionManager;
            
             //fetch PortfolioId list 
             _dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
@@ -324,6 +325,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _portfolioSelectionVisibility = value;
+                RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
             }
         }
 
@@ -338,6 +340,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _benchmarkSelectionVisibility = value;
+                RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
             }
         }
 
@@ -352,6 +355,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _customSelectionVisibility = value;
+                RaisePropertyChanged(() => this.CustomSelectionVisibility);
             }
         }
 
@@ -366,14 +370,14 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _securitySelectionGridViewVisibility = value;
+                RaisePropertyChanged(() => this.SecuritySelectionGridViewVisibility);
             }
         }
 
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
-        }
-
+        }    
 
         #region Data List Selector
 
@@ -395,6 +399,8 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _dataListSelectionGridViewVisibility = value;
+                RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+
             }
         }
 
@@ -416,6 +422,12 @@ namespace GreenField.Gadgets.ViewModels
          {
              get { return new DelegateCommand<object>(OkCommandMethod, OkCommandValidationMethod); }
          }
+
+         public ICommand CreateDataListCommand
+         {
+             get { return new DelegateCommand<object>(CreateDataListCommandCommandMethod, CreateDataListCommandCommandValidationMethod); }
+         }
+
         #endregion
 
        
@@ -456,10 +468,12 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool OkCommandValidationMethod(object param)
         {
-            if (UserSession.SessionManager.SESSION == null
-                || SelectedSavedDataList == null)
-                return false;
+            //if (UserSession.SessionManager.SESSION == null
+            //    || SelectedSavedDataList == null)
+            //    return false;
 
+            if (UserSession.SessionManager.SESSION == null)
+                return false;
 
             //Check if user is creater of data list
             // bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedSavedDataList.Presenter;
@@ -487,6 +501,20 @@ namespace GreenField.Gadgets.ViewModels
                 }
 
             });
+        }
+
+        private bool CreateDataListCommandCommandValidationMethod(object param)
+        {
+            if (UserSession.SessionManager.SESSION == null)
+                return false;
+            else
+                return true;
+
+        }
+
+        private void CreateDataListCommandCommandMethod(object param)
+        {
+            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
         }
 
         #endregion

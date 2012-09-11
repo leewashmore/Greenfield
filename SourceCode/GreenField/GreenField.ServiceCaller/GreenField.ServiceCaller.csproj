@@ -46,6 +46,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -439,9 +440,6 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MeetingDefinitions\MeetingOperations7.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\MeetingDefinitions\MeetingOperations8.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\MeetingDefinitions\MeetingOperations8.xsd">

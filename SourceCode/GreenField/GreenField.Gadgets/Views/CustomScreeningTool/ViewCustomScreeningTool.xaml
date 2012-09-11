@@ -119,7 +119,8 @@
                                    Width="75"
                                    Visibility="Visible"
                                    HorizontalAlignment="Center"
-                                   Content="SUBMIT" Grid.Column="0" />
+                                   Content="SUBMIT" Grid.Column="0"
+                               Style="{StaticResource RadButtonStyle}"/>
 
         </Grid>
 
@@ -128,35 +129,50 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             
-            <HyperlinkButton Margin="2" Content="Create a New Data List" VerticalAlignment="Center" 
+            <!--<HyperlinkButton Margin="2" Content="Create a New Data List" VerticalAlignment="Center" 
                              Style="{StaticResource HyperlinkButtonStyle}"
                              Grid.Column="0"
-                             HorizontalAlignment="Left" NavigateUri="/Views/CustomScreeningTool/ViewCSTDataFieldSelector.xaml"/>
+                             TargetName = "_self"
+                             HorizontalAlignment="Left" NavigateUri="/Views/CustomScreeningTool/ViewCSTDataFieldSelector.xaml"/>-->
 
-            <TextBlock x:Name="tblkDataListSavedList" Text="Select Saved Data List" HorizontalAlignment="Right" VerticalAlignment="Center" 
-                       Grid.Column="0" Grid.Row="1" 
-                       Style="{StaticResource TextBlockStyle}"/>
+            <telerik:RadButton x:Name="btnCreateNewDataList"
+                                   Command="{Binding CreateDataListCommand}"
+                                   VerticalAlignment="Center"
+                                   Margin="2,2,0,2"
+                                   Visibility="Visible"
+                                   HorizontalAlignment="Left"
+                                   Content="Create New DataList" Grid.Column="0" 
+                                   Style="{StaticResource RadButtonStyle}"/>
+
+            <TextBlock x:Name="tblkDataListSavedList" Text="Select Saved Data List" 
+                                   HorizontalAlignment="Right" VerticalAlignment="Center" 
+                                   Margin="2,2,0,2"
+                                   Grid.Column="0" Grid.Row="1" 
+                                   Style="{StaticResource TextBlockStyle}"/>
 
             <telerik:RadComboBox x:Name="cmbSavedDataListSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
                                      HorizontalAlignment="Left" 
                                      ItemsSource="{Binding SavedDataListInfo}" SelectedValue="{Binding SelectedSavedDataList, Mode=TwoWay}"
-                                     EmptyText="Select Portfolio" Width="150"
+                                     EmptyText="Select Data List" Width="150"
                                      Style="{StaticResource RadComboBoxStyle}"/>
 
             <telerik:RadButton x:Name="btnCustomControlDataListOk"
                                    Command="{Binding OkCommand}"
                                    Grid.Row="2"
+                                   Margin="2"
                                    VerticalAlignment="Center"
                                    Width="75"
                                    Visibility="Visible"
                                    HorizontalAlignment="Center"
-                                   Content="OK" Grid.Column="0" />
+                                   Content="OK"
+                               Style="{StaticResource RadButtonStyle}"/>
         </Grid>
     </Grid>
 </helpers:ViewBaseUserControl>

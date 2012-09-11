@@ -129,7 +129,7 @@
             <!--Accept Without Discussion Section-->
             <Grid Grid.Row="2" Margin="0,2">
                 <CheckBox x:Name="chkbAcceptWithoutDiscussion" Content="ACCEPT WITHOUT DISCUSSION" IsThreeState="False"
-                      IsChecked="{Binding SelectedPresentationOverviewInfo.AcceptWithoutDiscussionFlag, Mode=TwoWay, FallbackValue=True}"
+                      IsChecked="True"
                       HorizontalAlignment="Left" Style="{StaticResource CheckBoxStyle}" Checked="chkbAcceptWithoutDiscussion_Checked" Unchecked="chkbAcceptWithoutDiscussion_Unchecked"
                       />
             </Grid>

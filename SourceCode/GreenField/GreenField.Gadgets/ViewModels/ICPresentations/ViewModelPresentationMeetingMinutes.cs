@@ -25,6 +25,7 @@ using Microsoft.Practices.ServiceLocation;
 using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller.MeetingDefinitions;
 using System.IO;
+using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -59,6 +60,8 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
+        #region Properties
+        #region IsActive
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -74,6 +77,23 @@ namespace GreenField.Gadgets.ViewModels
                     Initialize();
                 }
             }
+        } 
+        #endregion
+
+        #region UserInfo
+        List<MembershipUserInfo> UserInfo { get; set; } 
+        #endregion
+
+        #region Attendance Data
+        private Boolean _controlsEnabled = false;
+        public Boolean ControlsEnabled
+        {
+            get { return _controlsEnabled; }
+            set
+            {
+                _controlsEnabled = value;
+                RaisePropertyChanged(() => this.ControlsEnabled);
+            }
         }
 
         public List<String> AttendanceTypeInfo
@@ -85,10 +105,10 @@ namespace GreenField.Gadgets.ViewModels
         public List<MeetingInfo> ClosedForVotingMeetingInfo
         {
             get { return _closedForVotingMeetingInfo; }
-            set 
-            { 
+            set
+            {
                 _closedForVotingMeetingInfo = value;
-                RaisePropertyChanged(() => this.ClosedForVotingMeetingInfo);                
+                RaisePropertyChanged(() => this.ClosedForVotingMeetingInfo);
             }
         }
 
@@ -103,7 +123,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (value != null && _dbInteractivity != null)
                 {
                     BusyIndicatorNotification(true, "Retrieving Presentation and Attendance details for the selected meeting");
-                    _dbInteractivity.RetrieveMeetingMinuteDetails(value.MeetingID, RetrieveMeetingMinuteDetailsCallbackMethod); 
+                    _dbInteractivity.RetrieveMeetingMinuteDetails(value.MeetingID, RetrieveMeetingMinuteDetailsCallbackMethod);
                 }
             }
         }
@@ -116,13 +136,16 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _closedForVotingMeetingMinuteInfo = value;
                 RaisePropertyChanged(() => this.ClosedForVotingMeetingMinuteInfo);
+                RaisePropertyChanged(() => this.AddAttendeeCommand);
                 if (value == null)
                 {
+                    ControlsEnabled = false;
                     ClosedForVotingMeetingMinuteDistinctPresentationInfo = null;
                     ClosedForVotingMeetingMinuteDistinctAttendanceInfo = null;
                 }
                 else
                 {
+                    ControlsEnabled = true;
                     List<Int64> distinctPresentationIds = value.Select(record => record.PresentationID).ToList()
                         .Distinct().ToList();
                     List<MeetingMinuteData> distinctPresentationRecords = new List<MeetingMinuteData>();
@@ -144,7 +167,7 @@ namespace GreenField.Gadgets.ViewModels
                     }
 
                     ClosedForVotingMeetingMinuteDistinctAttendanceInfo = distinctVoterRecords;
-                    
+
                 }
             }
         }
@@ -169,50 +192,134 @@ namespace GreenField.Gadgets.ViewModels
                 _closedForVotingMeetingMinuteDistinctAttendanceInfo = value;
                 RaisePropertyChanged(() => this.ClosedForVotingMeetingMinuteDistinctAttendanceInfo);
             }
-        }
+        } 
+        #endregion
 
-        public MeetingAttachedFileStreamData SelectedIndustryReportFileStreamData { get; set; }
-        public MeetingAttachedFileStreamData SelectedOtherDocumentFileStreamData { get; set; }
-        public MeetingAttachedFileStreamData SelectedDeleteFileStreamData { get; set; }
-
-        private List<MeetingAttachedFileStreamData> _closedForVotingMeetingAttachedFileInfo;
-        public List<MeetingAttachedFileStreamData> ClosedForVotingMeetingAttachedFileInfo
+        #region Upload Document
+        /// <summary>
+        /// Stores the list of upload document type
+        /// </summary>
+        private List<String> _uploadDocumentInfo;
+        public List<String> UploadDocumentInfo
         {
-            get { return _closedForVotingMeetingAttachedFileInfo; }
-            set
+            get
             {
-                _closedForVotingMeetingAttachedFileInfo = value;
-                RaisePropertyChanged(() => this.ClosedForVotingMeetingAttachedFileInfo);                
+                if (_uploadDocumentInfo == null)
+                {
+                    _uploadDocumentInfo = new List<string> 
+                    {
+                        UploadDocumentType.INDUSTRY_REPORT, 
+                        UploadDocumentType.OTHER_DOCUMENT
+                    };
+                }
+                return _uploadDocumentInfo;
             }
         }
 
-        private String _selectedIndustryReports;
-        public String SelectedIndustryReports
+        /// <summary>
+        /// Stores selected upload document type
+        /// </summary>
+        private String _selectedUploadDocumentInfo = UploadDocumentType.INDUSTRY_REPORT;
+        public String SelectedUploadDocumentInfo
         {
-            get { return _selectedIndustryReports; }
+            get { return _selectedUploadDocumentInfo; }
             set
             {
-                _selectedIndustryReports = value;
-                RaisePropertyChanged(() => this.SelectedIndustryReports);
-                RaisePropertyChanged(() => this.AddIndustryReportCommand);
+                _selectedUploadDocumentInfo = value;
+                UploadFileData = null;
+                UploadFileStreamData = null;
+                SelectedUploadFileName = null;
+                RaisePropertyChanged(() => this.SelectedUploadDocumentInfo);
             }
         }
-
-        private String _selectedOtherReports;
-        public String SelectedOtherReports
-        {
-            get { return _selectedOtherReports; }
-            set
-            {
-                _selectedOtherReports = value;
-                RaisePropertyChanged(() => this.SelectedOtherReports);
-                RaisePropertyChanged(() => this.AddOtherDocumentCommand);
-            }
-        }        
         
+        /// <summary>
+        /// Stores fileName of the browsed file
+        /// </summary>
+        private String _selectedUploadFileName;
+        public String SelectedUploadFileName
+        {
+            get { return _selectedUploadFileName; }
+            set
+            {
+                _selectedUploadFileName = value;
+                RaisePropertyChanged(() => this.SelectedUploadFileName);
+                RaisePropertyChanged(() => this.UploadCommand);
+            }
+        }
+
+        /// <summary>
+        /// Stores Filemaster object for the upload file
+        /// </summary>
+        public FileMaster UploadFileData { get; set; }
+
+        /// <summary>
+        /// Stores Filemaster object for the deletion file
+        /// </summary>
+        public FileMaster DeleteFileData { get; set; }
+
+        /// <summary>
+        /// Stores fileStream object for the upload file
+        /// </summary>
+        public Byte[] UploadFileStreamData { get; set; }
+
+        /// <summary>
+        /// Stores documentation information concerning the selected presentation
+        /// </summary>
+        private List<FileMaster> _selectedMeetingDocumentationInfo;
+        public List<FileMaster> SelectedMeetingDocumentationInfo
+        {
+            get { return _selectedMeetingDocumentationInfo; }
+            set
+            {
+                _selectedMeetingDocumentationInfo = value;
+                RaisePropertyChanged(() => this.SelectedMeetingDocumentationInfo);                
+            }
+        }
+        #endregion
+
+        //public MeetingAttachedFileStreamData SelectedIndustryReportFileStreamData { get; set; }
+        //public MeetingAttachedFileStreamData SelectedOtherDocumentFileStreamData { get; set; }
+        //public MeetingAttachedFileStreamData SelectedDeleteFileStreamData { get; set; }
+
+        //private List<MeetingAttachedFileStreamData> _closedForVotingMeetingAttachedFileInfo;
+        //public List<MeetingAttachedFileStreamData> ClosedForVotingMeetingAttachedFileInfo
+        //{
+        //    get { return _closedForVotingMeetingAttachedFileInfo; }
+        //    set
+        //    {
+        //        _closedForVotingMeetingAttachedFileInfo = value;
+        //        RaisePropertyChanged(() => this.ClosedForVotingMeetingAttachedFileInfo);
+        //    }
+        //}
+
+        //private String _selectedIndustryReports;
+        //public String SelectedIndustryReports
+        //{
+        //    get { return _selectedIndustryReports; }
+        //    set
+        //    {
+        //        _selectedIndustryReports = value;
+        //        RaisePropertyChanged(() => this.SelectedIndustryReports);
+        //        RaisePropertyChanged(() => this.AddIndustryReportCommand);
+        //    }
+        //}
+
+        //private String _selectedOtherReports;
+        //public String SelectedOtherReports
+        //{
+        //    get { return _selectedOtherReports; }
+        //    set
+        //    {
+        //        _selectedOtherReports = value;
+        //        RaisePropertyChanged(() => this.SelectedOtherReports);
+        //        RaisePropertyChanged(() => this.AddOtherDocumentCommand);
+        //    }
+        //}
+
         public ICommand AddAttendeeCommand
         {
-            get { return new DelegateCommand<object>(AddAttendeeCommandMethod); }
+            get { return new DelegateCommand<object>(AddAttendeeCommandMethod, AddAttendeeCommandValidationMethod); }
         }
 
         public ICommand DeleteAttendeeCommand
@@ -225,15 +332,10 @@ namespace GreenField.Gadgets.ViewModels
             get { return new DelegateCommand<object>(DeleteAttachedFileCommandMethod); }
         }
 
-        public ICommand AddIndustryReportCommand
+        public ICommand UploadCommand
         {
-            get { return new DelegateCommand<object>(AddIndustryReportCommandMethod, AddIndustryReportCommandValidationMethod); }
-        }
-
-        public ICommand AddOtherDocumentCommand
-        {
-            get { return new DelegateCommand<object>(AddOtherDocumentCommandMethod, AddOtherDocumentCommandValidationMethod); }
-        }
+            get { return new DelegateCommand<object>(UploadCommandMethod, UploadCommandValidationMethod); }
+        }        
 
         public ICommand SaveCommand
         {
@@ -273,10 +375,10 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
+        #endregion 
         #endregion
 
         #region CallBack Methods
-
         private void RetrieveMeetingInfoByPresentationStatusCallbackMethod(List<MeetingInfo> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -287,23 +389,57 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     ClosedForVotingMeetingInfo = result;
-                    //if (result.Count > 0)
-                    //{
-                    //    SelectedClosedForVotingMeetingInfo = result[0];
-                    //}
+                    if (UserInfo == null && _dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving application user info...");
+                        _dbInteractivity.GetAllUsers(GetAllUsersCallbackMethod);
+                    }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);                
-            }            
-            Logging.LogEndMethod(_logger, methodNamespace);
-            BusyIndicatorNotification();
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+            }
+            
+        }
+
+        private void GetAllUsersCallbackMethod(List<MembershipUserInfo> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    UserInfo = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         private void RetrieveMeetingMinuteDetailsCallbackMethod(List<MeetingMinuteData> result)
@@ -315,7 +451,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    ClosedForVotingMeetingMinuteInfo = result;
+                    ClosedForVotingMeetingMinuteInfo = result.Where(record => record.Name != record.Presenter).ToList();
                     if (_dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving Attached document details for the selected meeting");
@@ -346,13 +482,53 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    List<MeetingAttachedFileStreamData> attachedFileStreamData = new List<MeetingAttachedFileStreamData>();
-                    foreach (FileMaster attachedFileData in result)
+                    SelectedMeetingDocumentationInfo = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+        }
+
+        /// <summary>
+        /// Callback method for UploadDocument service call
+        /// </summary>
+        /// <param name="result">Server location url. Empty String if unsuccessful</param>
+        private void UploadDocumentCallbackMethod(String result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    if (result != String.Empty)
                     {
-                        attachedFileStreamData.Add(new MeetingAttachedFileStreamData() { MeetingAttachedFileData = attachedFileData });
+                        UploadFileData.Location = result;
+                        if (_dbInteractivity != null)
+                        {
+                            if (SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT)
+                            {
+                                UploadFileData.Name = SelectedUploadFileName;
+                            }
+
+                            BusyIndicatorNotification(true, "Uploading document");
+                            _dbInteractivity.UpdateMeetingAttachedFileStreamData(UserSession.SessionManager.SESSION.UserName
+                                , SelectedClosedForVotingMeetingInfo.MeetingID, UploadFileData, false, UpdateMeetingAttachedFileStreamDataCallbackMethod);
+                        }
                     }
-                    ClosedForVotingMeetingAttachedFileInfo = attachedFileStreamData;
-                    BusyIndicatorNotification();
                 }
                 else
                 {
@@ -368,6 +544,45 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+
+        private void UpdateMeetingAttachedFileStreamDataCallbackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != true)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Initialize();
+
+                    UploadFileData = null;
+                    DeleteFileData = null;
+                    UploadFileStreamData = null;
+                    SelectedMeetingDocumentationInfo = null;
+                    SelectedUploadFileName = null;
+
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Attached document details for the selected meeting...");
+                        _dbInteractivity.RetrieveMeetingAttachedFileDetails(SelectedClosedForVotingMeetingInfo.MeetingID, RetrieveMeetingAttachedFileDetailsCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }        
+        
 
         private void UpdateMeetingMinuteDetailsCallbackMethod(Boolean? result)
         {
@@ -400,121 +615,7 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification();
             }
         }
-
-        private void UpdateMeetingAttachedFileStreamDataCallbackMethod_DeleteAttachedFile(Boolean? result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (result == true)
-                    {
-                        ClosedForVotingMeetingAttachedFileInfo = ClosedForVotingMeetingAttachedFileInfo
-                            .Where(record => record != SelectedDeleteFileStreamData).ToList();
-                        SelectedDeleteFileStreamData = null;
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-        private void UpdateMeetingAttachedFileStreamDataCallbackMethod_AddIndustryReport(Boolean? result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (result == true)
-                    {
-                        //List<MeetingAttachedFileStreamData> meetingAttachedFileStreamData = new List<MeetingAttachedFileStreamData>
-                        //    (ClosedForVotingMeetingAttachedFileInfo);
-                        //SelectedIndustryReportFileStreamData.FileStream = null;
-                        //meetingAttachedFileStreamData.Add(SelectedIndustryReportFileStreamData);
-                        //ClosedForVotingMeetingAttachedFileInfo = meetingAttachedFileStreamData;
-                        SelectedIndustryReports = null;
-                        SelectedIndustryReportFileStreamData = null;
-
-                        if (_dbInteractivity != null)
-                        {
-                            BusyIndicatorNotification(true, "Retrieving Attached document details for the selected meeting");
-                            _dbInteractivity.RetrieveMeetingAttachedFileDetails(SelectedClosedForVotingMeetingInfo.MeetingID, RetrieveMeetingAttachedFileDetailsCallbackMethod);
-                        }
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-        private void UpdateMeetingAttachedFileStreamDataCallbackMethod_AddOtherDocument(Boolean? result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (result == true)
-                    {
-                        //List<MeetingAttachedFileStreamData> meetingAttachedFileStreamData = new List<MeetingAttachedFileStreamData>
-                        //    (ClosedForVotingMeetingAttachedFileInfo);
-                        //SelectedOtherDocumentFileStreamData.FileStream = null;
-                        //meetingAttachedFileStreamData.Add(SelectedOtherDocumentFileStreamData);
-                        //ClosedForVotingMeetingAttachedFileInfo = meetingAttachedFileStreamData;
-
-                        SelectedOtherReports = null;
-                        SelectedOtherDocumentFileStreamData = null;
-
-                        if (_dbInteractivity != null)
-                        {
-                            BusyIndicatorNotification(true, "Retrieving Attached document details for the selected meeting");
-                            _dbInteractivity.RetrieveMeetingAttachedFileDetails(SelectedClosedForVotingMeetingInfo.MeetingID, RetrieveMeetingAttachedFileDetailsCallbackMethod);
-                        }
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
+        
         private void SetMeetingPresentationStatusCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -547,32 +648,33 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification();
             }
         }
-        #endregion      
+        #endregion              
 
-
-        /// <summary>
-        /// Display/Hide Busy Indicator
-        /// </summary>
-        /// <param name="showBusyIndicator">True to display indicator; default false</param>
-        /// <param name="message">Content message for indicator; default null</param>
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        #region ICommand Methods
+        private Boolean AddAttendeeCommandValidationMethod(object param)
         {
-            if (message != null)
-                BusyIndicatorContent = message;
-
-            BusyIndicatorIsBusy = showBusyIndicator;
+            return ClosedForVotingMeetingMinuteInfo != null && UserInfo != null;
         }
 
         private void AddAttendeeCommandMethod(object param)
         {
+            List<String> validUsers = UserInfo.OrderBy(record => record.UserName).Select(record => record.UserName.ToLower()).ToList();
+
+            //if (ClosedForVotingMeetingMinuteInfo != null)
+            //{
+            //    validUsers = validUsers
+            //        .Where(record => !ClosedForVotingMeetingMinuteInfo.Any(record2 => record2.Name.ToLower() == record))
+            //        .ToList();
+            //}
             ChildViewPresentationMeetingMinutesAddAttendee cVPresentationMeetingMinutesAddAttendee =
-                new ChildViewPresentationMeetingMinutesAddAttendee();
+                new ChildViewPresentationMeetingMinutesAddAttendee(validUsers);
+            
             cVPresentationMeetingMinutesAddAttendee.Show();
             cVPresentationMeetingMinutesAddAttendee.Unloaded += (se, e) =>
             {
                 if (cVPresentationMeetingMinutesAddAttendee.DialogResult.Equals(true))
                 {
-                    if (ClosedForVotingMeetingMinuteInfo.Any(record => record.Name == cVPresentationMeetingMinutesAddAttendee.SelectedUser))
+                    if (ClosedForVotingMeetingMinuteInfo.Any(record => record.Name.ToLower() == cVPresentationMeetingMinutesAddAttendee.SelectedUser))
                         return;
 
                     List<MeetingMinuteData> closedForVotingMeetingMinuteInfo = new List<MeetingMinuteData>(ClosedForVotingMeetingMinuteInfo);
@@ -588,8 +690,8 @@ namespace GreenField.Gadgets.ViewModels
                             SecurityCountry = item.SecurityCountry,
                             SecurityIndustry = item.SecurityIndustry,
                             Name = cVPresentationMeetingMinutesAddAttendee.SelectedUser,
-                            AttendanceType = cVPresentationMeetingMinutesAddAttendee.SelectedAttendanceType                            
-                        });                         
+                            AttendanceType = cVPresentationMeetingMinutesAddAttendee.SelectedAttendanceType
+                        });
                     }
 
                     ClosedForVotingMeetingMinuteInfo = closedForVotingMeetingMinuteInfo;
@@ -609,41 +711,40 @@ namespace GreenField.Gadgets.ViewModels
 
         private void DeleteAttachedFileCommandMethod(object param)
         {
-            if (param is MeetingAttachedFileStreamData)
+            if (param is FileMaster)
             {
-                SelectedDeleteFileStreamData = param as MeetingAttachedFileStreamData;
+                DeleteFileData = param as FileMaster;
                 Prompt.ShowDialog(messageText: "This action will permanently delete attachment from system. Do you wish to continue?", buttonType: MessageBoxButton.OKCancel, messageBoxResult: (result) =>
                 {
                     if (result == MessageBoxResult.OK)
                     {
                         _dbInteractivity.UpdateMeetingAttachedFileStreamData(GreenField.UserSession.SessionManager.SESSION.UserName
-                            , SelectedClosedForVotingMeetingInfo.MeetingID, SelectedDeleteFileStreamData, UpdateMeetingAttachedFileStreamDataCallbackMethod_DeleteAttachedFile);                                                
+                            , SelectedClosedForVotingMeetingInfo.MeetingID, DeleteFileData, true, UpdateMeetingAttachedFileStreamDataCallbackMethod);
                     }
-                });                
+                });
             }
         }
 
-        private Boolean AddIndustryReportCommandValidationMethod(object param)
+        private Boolean UploadCommandValidationMethod(object param)
         {
-            return SelectedIndustryReports != null && SelectedIndustryReports != String.Empty;
+            return UploadFileStreamData != null && UploadFileData != null;
         }
 
-        private void AddIndustryReportCommandMethod(object param)
+        private void UploadCommandMethod(object param)
         {
-            _dbInteractivity.UpdateMeetingAttachedFileStreamData(GreenField.UserSession.SessionManager.SESSION.UserName
-                , SelectedClosedForVotingMeetingInfo.MeetingID, SelectedIndustryReportFileStreamData, UpdateMeetingAttachedFileStreamDataCallbackMethod_AddIndustryReport);            
-        }
-
-        private Boolean AddOtherDocumentCommandValidationMethod(object param)
-        {
-            return SelectedOtherReports != null && SelectedOtherReports != String.Empty;
-        }
-
-        private void AddOtherDocumentCommandMethod(object param)
-        {
-            _dbInteractivity.UpdateMeetingAttachedFileStreamData(GreenField.UserSession.SessionManager.SESSION.UserName
-                , SelectedClosedForVotingMeetingInfo.MeetingID, SelectedOtherDocumentFileStreamData, UpdateMeetingAttachedFileStreamDataCallbackMethod_AddOtherDocument);
-        }
+            if (_dbInteractivity != null)
+            {
+                BusyIndicatorNotification(true, "Uploading document");
+                String deleteUrl = String.Empty;
+                FileMaster overwriteFileMaster = SelectedMeetingDocumentationInfo
+                    .Where(record => record.Category == SelectedUploadDocumentInfo).FirstOrDefault();
+                if (overwriteFileMaster != null)
+                {
+                    deleteUrl = overwriteFileMaster.Location;
+                }
+                _dbInteractivity.UploadDocument(UploadFileData.Name, UploadFileStreamData, deleteUrl, UploadDocumentCallbackMethod);
+            }
+        }        
 
         private void SaveCommandMethod(object param)
         {
@@ -663,8 +764,8 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification(true, "Updating Meeting Minute Details");
                 _dbInteractivity.UpdateMeetingMinuteDetails(GreenField.UserSession.SessionManager.SESSION.UserName, SelectedClosedForVotingMeetingInfo,
                     ClosedForVotingMeetingMinuteInfo, UpdateMeetingMinuteDetailsCallbackMethod);
-            } 
-            
+            }
+
         }
 
         private void SubmitCommandMethod(object param)
@@ -681,18 +782,31 @@ namespace GreenField.Gadgets.ViewModels
                 }
             });
 
-            
-        }
 
+        } 
+        #endregion
+
+        #region Helper Methods
         public void Initialize()
         {
             if (IsActive)
             {
+                ClosedForVotingMeetingInfo = null;
+                SelectedClosedForVotingMeetingInfo = null;
+                ClosedForVotingMeetingMinuteInfo = null;
+                ClosedForVotingMeetingMinuteDistinctPresentationInfo = null;
+                ClosedForVotingMeetingMinuteDistinctAttendanceInfo = null;
+                UploadFileData = null;
+                DeleteFileData = null;
+                UploadFileStreamData = null;
+                SelectedMeetingDocumentationInfo = null;
+                SelectedUploadFileName = null;
+
                 if (_dbInteractivity != null)
                 {
                     BusyIndicatorNotification(true, "Retrieving Meetings with 'Closed for Voting' Investment Committee presentation status");
                     _dbInteractivity.RetrieveMeetingInfoByPresentationStatus("Closed for Voting", RetrieveMeetingInfoByPresentationStatusCallbackMethod);
-                } 
+                }
             }
         }
 
@@ -700,6 +814,18 @@ namespace GreenField.Gadgets.ViewModels
         {
         }
 
-        
+        /// <summary>
+        /// Display/Hide Busy Indicator
+        /// </summary>
+        /// <param name="showBusyIndicator">True to display indicator; default false</param>
+        /// <param name="message">Content message for indicator; default null</param>
+        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        {
+            if (message != null)
+                BusyIndicatorContent = message;
+
+            BusyIndicatorIsBusy = showBusyIndicator;
+        } 
+        #endregion        
     }
 }

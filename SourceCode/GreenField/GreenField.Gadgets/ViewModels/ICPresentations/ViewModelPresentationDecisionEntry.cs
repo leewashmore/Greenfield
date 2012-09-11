@@ -111,39 +111,39 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                if (_securityPFVMeasureCurrentPrices == null)
-                {
-                    _securityPFVMeasureCurrentPrices = new Dictionary<string, decimal?>();
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_DIVIDEND_YIELD, Convert.ToDecimal(19.2));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA, Convert.ToDecimal(27.6));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_COUNTRY, Convert.ToDecimal(7.8));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY, Convert.ToDecimal(6.6));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY, Convert.ToDecimal(25.8));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_REVENUE, Convert.ToDecimal(9.6));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_NAV, Convert.ToDecimal(21.6));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_APPRAISAL_VALUE, Convert.ToDecimal(23.4));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV, Convert.ToDecimal(26.7));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV_RELATIVE_TO_COUNTRY, Convert.ToDecimal(27));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV_RELATIVE_TO_INDUSTRY, Convert.ToDecimal(28.8));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY, Convert.ToDecimal(20.4));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_CE, Convert.ToDecimal(19.8));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E, Convert.ToDecimal(10.8));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_RELATIVE_TO_COUNTRY, Convert.ToDecimal(11.4));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_RELATIVE_TO_INDUSTRY, Convert.ToDecimal(7.2));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY, Convert.ToDecimal(27.6));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_TO_2_YEAR_EARNINGS_GROWTH, Convert.ToDecimal(22.8));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_TO_3_YEAR_EARNINGS_GROWTH, Convert.ToDecimal(12.6));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_EMBEDDED_VALUE, Convert.ToDecimal(19.2));
-                    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_REVENUE, Convert.ToDecimal(30));
+                //if (_securityPFVMeasureCurrentPrices == null)
+                //{
+                //    _securityPFVMeasureCurrentPrices = new Dictionary<string, decimal?>();
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_DIVIDEND_YIELD, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_COUNTRY, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_EBITDA_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_EV_REVENUE, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_NAV, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_APPRAISAL_VALUE, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV_RELATIVE_TO_COUNTRY, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV_RELATIVE_TO_INDUSTRY, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_BV_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_CE, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_RELATIVE_TO_COUNTRY, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_RELATIVE_TO_INDUSTRY, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_RELATIVE_TO_INDUSTRY_WITHIN_COUNTRY, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_TO_2_YEAR_EARNINGS_GROWTH, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_E_TO_3_YEAR_EARNINGS_GROWTH, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_EMBEDDED_VALUE, null);
+                //    _securityPFVMeasureCurrentPrices.Add(PFVType.FORWARD_P_REVENUE, null);
 
-                }
+                //}
                 return _securityPFVMeasureCurrentPrices;
             }
             set { _securityPFVMeasureCurrentPrices = value; }
         }
 
         Boolean SecurityIsHeld { get; set; }
-
+                
         public List<String> PFVTypeInfo
         {
             get
@@ -313,13 +313,53 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     PresentationVoterInfo = ListUtils.GetDeepCopy<VoterInfo>(result);
-                    PresentationPreMeetingVoterInfo = result.Where(record => record.PostMeetingFlag == false).OrderBy(record => record.Name).ToList();
-                    PresentationPostMeetingVoterInfo = result.Where(record => record.PostMeetingFlag == true).OrderBy(record => record.Name).ToList();
-                    SecurityIsHeld = true; // Call for checking if security is held and Retrieve Security PFVMeasure Current Prices
+                    PresentationPreMeetingVoterInfo = result
+                        .Where(record => record.PostMeetingFlag == false && record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower())
+                        .OrderBy(record => record.Name).ToList();
+                    PresentationPostMeetingVoterInfo = result
+                        .Where(record => record.PostMeetingFlag == true && record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower())
+                        .OrderBy(record => record.Name).ToList();
+                    SecurityIsHeld = SelectedPresentationOverviewInfo.CurrentHoldings.ToLower() == "yes";
+
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieve current P/FV Measure values related to presented security...");
+                        _dbInteractivity.RetrieveCurrentPFVMeasures(PFVTypeInfo, SelectedPresentationOverviewInfo.SecurityTicker
+                            , RetrieveCurrentPFVMeasuresCallbackMethod);
+                    }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);                
+            }
+        }
+
+        private void RetrieveCurrentPFVMeasuresCallbackMethod(Dictionary<String, Decimal?> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    SecurityPFVMeasureCurrentPrices = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
                 }
             }
             catch (Exception ex)
@@ -386,7 +426,16 @@ namespace GreenField.Gadgets.ViewModels
         public void UpdateICDecisionAsPresented(Boolean iCDecisionIsEnable)
         {
             ICDecisionIsEnable = iCDecisionIsEnable;
-            if (SelectedPresentationOverviewInfo.AcceptWithoutDiscussionFlag == true)
+            SelectedPresentationOverviewInfo.AcceptWithoutDiscussionFlag = !iCDecisionIsEnable;
+            //if (SelectedPresentationOverviewInfo.AcceptWithoutDiscussionFlag == true)
+            //{
+            //    SelectedPresentationOverviewInfo.CommitteePFVMeasure = SelectedPresentationOverviewInfo.SecurityPFVMeasure;
+            //    SelectedPresentationOverviewInfo.CommitteeBuyRange = SelectedPresentationOverviewInfo.SecurityBuyRange;
+            //    SelectedPresentationOverviewInfo.CommitteeSellRange = SelectedPresentationOverviewInfo.SecuritySellRange;
+            //    SelectedPresentationOverviewInfo.CommitteeRecommendation = SelectedPresentationOverviewInfo.SecurityRecommendation;
+            //}
+
+            if (!iCDecisionIsEnable)
             {
                 SelectedPresentationOverviewInfo.CommitteePFVMeasure = SelectedPresentationOverviewInfo.SecurityPFVMeasure;
                 SelectedPresentationOverviewInfo.CommitteeBuyRange = SelectedPresentationOverviewInfo.SecurityBuyRange;
@@ -453,16 +502,31 @@ namespace GreenField.Gadgets.ViewModels
 
             if (voterInfo.VoteType == VoteType.AGREE)
             {
+                VoterInfo bindedItem = PresentationPostMeetingVoterInfo.Where(record => record.VoterID == voterInfo.VoterID).FirstOrDefault();
+                bindedItem.VoterPFVMeasure = SelectedPresentationOverviewInfo.SecurityPFVMeasure;
+                bindedItem.VoterBuyRange = SelectedPresentationOverviewInfo.SecurityBuyRange;
+                bindedItem.VoterSellRange = SelectedPresentationOverviewInfo.SecuritySellRange;
+
+                RaisePropertyChanged(() => this.PresentationPostMeetingVoterInfo);
+            }
+            else if (voterInfo.VoteType == VoteType.MODIFY)
+            {
                 VoterInfo origItem = PresentationVoterInfo.Where(record => record.VoterID == voterInfo.VoterID).FirstOrDefault();
                 if (origItem == null)
                     return;
 
+                if (origItem.VoteType != VoteType.MODIFY)
+                    return;
+
                 VoterInfo bindedItem = PresentationPostMeetingVoterInfo.Where(record => record.VoterID == voterInfo.VoterID).FirstOrDefault();
+                if (bindedItem == null)
+                    return;
+
                 bindedItem.VoterPFVMeasure = origItem.VoterPFVMeasure;
                 bindedItem.VoterBuyRange = origItem.VoterBuyRange;
                 bindedItem.VoterSellRange = origItem.VoterSellRange;
 
-                RaisePropertyChanged(() => this.PresentationPostMeetingVoterInfo);
+                RaisePropertyChanged(() => this.PresentationPostMeetingVoterInfo);                 
             }
             else if (voterInfo.VoteType == VoteType.ABSTAIN)
             {

@@ -73,112 +73,117 @@ namespace GreenField.Gadgets.Views
             this.DataContextViewPresentationMeetingMinutes = null;
             this.DataContext = null;
         }
-        #endregion
+        #endregion        
 
-        
-
-        private void btnBrowseIndustryReport_Click(object sender, RoutedEventArgs e)
+        private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false };
+            String filter = "All Files (*.*)|*.*";
+            OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false, Filter = filter };
             if (dialog.ShowDialog() == true)
             {
-                DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification(true, "Uploading file...");
-                if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo != null)
+                DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification(true, "Reading file...");
+
+                Boolean uploadFileExists = DataContextViewPresentationMeetingMinutes.SelectedUploadDocumentInfo != UploadDocumentType.OTHER_DOCUMENT
+                    && DataContextViewPresentationMeetingMinutes.SelectedMeetingDocumentationInfo
+                        .Any(record => record.Category.ToUpper() == DataContextViewPresentationMeetingMinutes.SelectedUploadDocumentInfo.ToUpper());
+
+                if (uploadFileExists)
                 {
-                    if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo
-                                .Any(record => record.MeetingAttachedFileData.Name == dialog.File.Name))
+                    FileMaster uploadDocumentInfo = DataContextViewPresentationMeetingMinutes.SelectedMeetingDocumentationInfo
+                    .Where(record => record.Category == DataContextViewPresentationMeetingMinutes.SelectedUploadDocumentInfo).FirstOrDefault();
+
+                    if (uploadDocumentInfo != null)
                     {
-                        Prompt.ShowDialog("File '" + dialog.File.Name + "' already exists as an attachment. Please change the name of the file and upload again.");
-                        DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
-                        return;
+                        DataContextViewPresentationMeetingMinutes.UploadFileData = uploadDocumentInfo;
                     }
                 }
+                else
+                {
+                    String securityNames = String.Empty;
+                    String securityTickers = String.Empty;
+                    String presenters = String.Empty;                    
+                    foreach (MeetingMinuteData item in DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingMinuteDistinctPresentationInfo)
+                    {
+                        securityNames += item.SecurityName + ";";
+                        securityTickers += item.SecurityTicker + ";";
+                        presenters += item.Presenter + ";";
+                    }
+                    securityNames = securityNames != String.Empty ? securityNames.Substring(0, securityNames.Length - 1) : securityNames;
+                    securityTickers = securityTickers != String.Empty ? securityTickers.Substring(0, securityTickers.Length - 1) : securityTickers;
+                    presenters = presenters != String.Empty ? presenters.Substring(0, presenters.Length - 1) : presenters;
 
-                String securityName = String.Empty;
-                String securityTicker = String.Empty;
-                String presenters = String.Empty;
-                foreach (MeetingMinuteData item in DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingMinuteDistinctPresentationInfo)
-	            {
-		            securityName += item.SecurityName + ";" ;
-                    securityTicker += item.SecurityTicker + ";" ;
-                    presenters += item.Presenter + ";";
-	            }
-
-                FileMaster meetingAttachedFileData
-                    = new FileMaster() 
+                    FileMaster presentationAttachedFileData = new FileMaster()
                     {
                         Name = dialog.File.Name,
-                        SecurityName = securityName,
-                        SecurityTicker = securityTicker,
+                        SecurityName = securityNames,
+                        SecurityTicker = securityTickers,
+                        MetaTags = DataContextViewPresentationMeetingMinutes.SelectedClosedForVotingMeetingInfo.MeetingDateTime.ToString("yyyy-MM-dd") + ";" + presenters,
                         Type = EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(DocumentCategoryType.IC_PRESENTATIONS),
-                        MetaTags = "Industry Report;" + presenters + DataContextViewPresentationMeetingMinutes.SelectedClosedForVotingMeetingInfo.MeetingDateTime.ToShortDateString()
+                        Category = DataContextViewPresentationMeetingMinutes.SelectedUploadDocumentInfo
                     };
-                
+                    DataContextViewPresentationMeetingMinutes.UploadFileData = presentationAttachedFileData;
+                }
+
                 FileStream fileStream = dialog.File.OpenRead();
+                DataContextViewPresentationMeetingMinutes.UploadFileStreamData = ReadFully(fileStream);
+                DataContextViewPresentationMeetingMinutes.SelectedUploadFileName = dialog.File.Name;
+                fileStream.Dispose();
                 
-                DataContextViewPresentationMeetingMinutes.SelectedIndustryReportFileStreamData 
-                    = new MeetingAttachedFileStreamData()
-                    {
-                        MeetingAttachedFileData = meetingAttachedFileData,
-                        FileStream = ReadFully(fileStream)
-                    };
-                
-                DataContextViewPresentationMeetingMinutes.SelectedIndustryReports = dialog.File.Name;
                 DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
             }
         }
 
-        private void btnBrowseOtherDocuments_Click(object sender, RoutedEventArgs e)
-        {
+        //private void btnBrowseOtherDocuments_Click(object sender, RoutedEventArgs e)
+        //{
             
-            OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false };
-            if (dialog.ShowDialog() == true)
-            {
-                DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification(true, "Uploading file...");
-                if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo != null)
-                {
-                    if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo
-                                .Any(record => record.MeetingAttachedFileData.Name == dialog.File.Name))
-                    {
-                        Prompt.ShowDialog("File '" + dialog.File.Name + "' already exists as an attachment. Please change the name of the file and upload again.");
-                        DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
-                        return;
-                    } 
-                }
+        //    OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false };
+        //    if (dialog.ShowDialog() == true)
+        //    {
+        //        DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification(true, "Uploading file...");
+        //        if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo != null)
+        //        {
+        //            if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo
+        //                        .Any(record => record.MeetingAttachedFileData.Name == dialog.File.Name))
+        //            {
+        //                Prompt.ShowDialog("File '" + dialog.File.Name + "' already exists as an attachment. Please change the name of the file and upload again.");
+        //                DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
+        //                return;
+        //            } 
+        //        }
 
-                String securityName = String.Empty;
-                String securityTicker = String.Empty;
-                String presenters = String.Empty;
-                foreach (MeetingMinuteData item in DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingMinuteDistinctPresentationInfo)
-                {
-                    securityName += item.SecurityName + ";";
-                    securityTicker += item.SecurityTicker + ";";
-                    presenters += item.Presenter + ";";
-                }
+        //        String securityName = String.Empty;
+        //        String securityTicker = String.Empty;
+        //        String presenters = String.Empty;
+        //        foreach (MeetingMinuteData item in DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingMinuteDistinctPresentationInfo)
+        //        {
+        //            securityName += item.SecurityName + ";";
+        //            securityTicker += item.SecurityTicker + ";";
+        //            presenters += item.Presenter + ";";
+        //        }
 
-                FileMaster meetingAttachedFileData
-                    = new FileMaster()
-                    {
-                        Name = dialog.File.Name,
-                        SecurityName = securityName,
-                        SecurityTicker = securityTicker,
-                        Type = EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(DocumentCategoryType.IC_PRESENTATIONS),
-                        MetaTags = "Other Document;" + presenters + DataContextViewPresentationMeetingMinutes.SelectedClosedForVotingMeetingInfo.MeetingDateTime.ToShortDateString()
-                    };
+        //        FileMaster meetingAttachedFileData
+        //            = new FileMaster()
+        //            {
+        //                Name = dialog.File.Name,
+        //                SecurityName = securityName,
+        //                SecurityTicker = securityTicker,
+        //                Type = EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(DocumentCategoryType.IC_PRESENTATIONS),
+        //                MetaTags = "Other Document;" + presenters + DataContextViewPresentationMeetingMinutes.SelectedClosedForVotingMeetingInfo.MeetingDateTime.ToShortDateString()
+        //            };
 
-                FileStream fileStream = dialog.File.OpenRead();
+        //        FileStream fileStream = dialog.File.OpenRead();
 
-                DataContextViewPresentationMeetingMinutes.SelectedIndustryReportFileStreamData
-                    = new MeetingAttachedFileStreamData()
-                    {
-                        MeetingAttachedFileData = meetingAttachedFileData,
-                        FileStream = ReadFully(fileStream)
-                    };
+        //        DataContextViewPresentationMeetingMinutes.SelectedIndustryReportFileStreamData
+        //            = new MeetingAttachedFileStreamData()
+        //            {
+        //                MeetingAttachedFileData = meetingAttachedFileData,
+        //                FileStream = ReadFully(fileStream)
+        //            };
 
-                DataContextViewPresentationMeetingMinutes.SelectedIndustryReports = dialog.File.Name;
-                DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
-            }
-        }
+        //        DataContextViewPresentationMeetingMinutes.SelectedIndustryReports = dialog.File.Name;
+        //        DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
+        //    }
+        //}
 
         private Byte[] ReadFully(Stream input)
         {

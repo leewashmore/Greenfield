@@ -89,10 +89,12 @@
                 </Grid.ColumnDefinitions>
                 <!--Presentation-->
                 <TextBlock Text="PRESENTATION:" Margin="2,5,0,0" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-                <HyperlinkButton Content="{Binding}" Margin="2,5,0,0" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"/>
+                <HyperlinkButton Content="{Binding SelectedPresentationPowerpointDocument.Name}"  
+                                 NavigateUri="{Binding SelectedPresentationPowerpointDocument.Location}" TargetName = "_blank"                                 
+                                 Margin="2,5,0,0" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"/>
                 <!--IC Packet-->
                 <TextBlock Grid.Row="1" Margin="2,5,0,0" Text="IC PACKET:" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-                <HyperlinkButton Grid.Row="1" Grid.Column="1" Margin="2,5,0,0" Content="{Binding}" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"/>
+                <HyperlinkButton Grid.Row="1" Grid.Column="1" Margin="2,5,0,0" Content="" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"/>
                 <!--Voter-->
                 <TextBlock Grid.Row="2" Margin="2,5,0,0" Text="VOTER:" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
                 <telerik:RadComboBox Grid.Row="2" Margin="2,5,0,0" Grid.Column="1" x:Name="cbVoter" ItemsSource="{Binding PresentationPreMeetingVoterInfo}" 
@@ -119,19 +121,19 @@
                     <telerik:RadComboBox Margin="5,0,0,0" Grid.Column="1" SelectedItem="{Binding SelectedPresentationPreMeetingVoterInfo.VoterPFVMeasure, Mode=TwoWay}" 
                                      VerticalAlignment="Center" HorizontalContentAlignment="Left" 
                                      Style="{StaticResource RadComboBoxStyle}" Width="250" EmptyText="Select P/FV Measure"
-                                     IsEnabled="{Binding SelectedPresentationPreMeetingVoterInfo.VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"
+                                     IsEnabled="{Binding SelectedPresentationPreMeetingVoterInfo.VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}, FallbackValue=false}"
                                      ItemsSource="{Binding PFVTypeInfo}" 
                                      HorizontalAlignment="Left" />
 
-                    <TextBox x:Name="txtbBuyRange" Margin="5,0,0,0" Grid.Column="2" VerticalAlignment="Center" Width="{StaticResource DefaultControlMinHeight}" LostFocus="txtbBuyRange_LostFocus" 
+                    <TextBox x:Name="txtbBuyRange" Margin="5,0,0,0" Grid.Column="2" VerticalAlignment="Center" Width="50" LostFocus="txtbBuyRange_LostFocus" 
                          Text="{Binding SelectedPresentationPreMeetingVoterInfo.VoterBuyRange, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"
-                         IsEnabled="{Binding SelectedPresentationPreMeetingVoterInfo.VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"/>
+                         IsEnabled="{Binding SelectedPresentationPreMeetingVoterInfo.VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}, FallbackValue=false}"/>
 
                     <TextBlock Margin="5,0,0,0" Grid.Column="3" VerticalAlignment="Center" Text="-" Style="{StaticResource TextBlockStyle}"/>
 
-                    <TextBox x:Name="txtbSellRange" Margin="5,0,0,0" Grid.Column="4" VerticalAlignment="Center" Width="{StaticResource DefaultControlMinHeight}"
+                    <TextBox x:Name="txtbSellRange" Margin="5,0,0,0" Grid.Column="4" VerticalAlignment="Center" Width="50"
                          Text="{Binding SelectedPresentationPreMeetingVoterInfo.VoterSellRange, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}" LostFocus="txtbSellRange_LostFocus"
-                         IsEnabled="{Binding SelectedPresentationPreMeetingVoterInfo.VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"/>
+                         IsEnabled="{Binding SelectedPresentationPreMeetingVoterInfo.VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}, FallbackValue=false}"/>
 
                 </Grid>
 
@@ -139,8 +141,9 @@
             <!--Request Discussion Section-->
             <Grid Grid.Row="2">
                 <CheckBox x:Name="chkbAcceptWithoutDiscussion" Content="REQUEST DISCUSSION" IsThreeState="False" Margin="0,5,0,0"
-                      IsChecked="{Binding SelectedPresentationPreMeetingVoterInfo.DiscussionFlag, Mode=TwoWay, FallbackValue=False}"
-                      HorizontalAlignment="Left" Style="{StaticResource CheckBoxStyle}"/>
+                          IsChecked="{Binding SelectedPresentationPreMeetingVoterInfo.DiscussionFlag, Mode=TwoWay, FallbackValue=False}"
+                          IsEnabled="{Binding VoteIsEnabled}"
+                          HorizontalAlignment="Left" Style="{StaticResource CheckBoxStyle}"/>
             </Grid>
             <!--Notes Section-->
             <Grid Grid.Row="3" Margin="0,5,0,0">
@@ -149,7 +152,9 @@
                     <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <TextBlock Text="NOTES:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
-                <TextBox Grid.Row="1" Text="{Binding SelectedPresentationPreMeetingVoterInfo.Notes, Mode=TwoWay}" MaxLength="255" Style="{StaticResource TextBoxStyle}"/>
+                <TextBox Grid.Row="1" Text="{Binding SelectedPresentationPreMeetingVoterInfo.Notes, Mode=TwoWay}"
+                         IsEnabled="{Binding NotesIsEnabled, FallbackValue=false}"
+                         MaxLength="255" Style="{StaticResource TextBoxStyle}"/>
             </Grid>
             <!--Blog Section-->
             <Grid Grid.Row="4" Margin="0,5,0,0">
@@ -166,7 +171,7 @@
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox Text="{Binding UploadCommentInfo, Mode=TwoWay}" 
+                    <TextBox Text="{Binding UploadCommentInfo, Mode=TwoWay}" IsEnabled="{Binding BlogIsEnabled}"
                      MaxLength="255" Style="{StaticResource TextBoxStyle}"/>
                     <telerik:RadButton Grid.Column="1" Content="Add" Width="50" Margin="2,0,0,0"
                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"

@@ -3325,12 +3325,13 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityReferenceOfPresentationInfojzQAem8p))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.EntitySelectionData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.PortfolioSelectionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.DataContracts.MembershipUserInfo>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.MembershipUserInfo))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, System.Nullable<decimal>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.EntityKey))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.EntityKeyMember>))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<string>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.Dictionary<string, System.Nullable<decimal>>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster>))]
@@ -3484,51 +3485,6 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="MeetingAttachedFileStreamData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.DataContracts")]
-    public partial class MeetingAttachedFileStreamData : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private byte[] FileStreamField;
-        
-        private GreenField.ServiceCaller.MeetingDefinitions.FileMaster MeetingAttachedFileDataField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public byte[] FileStream {
-            get {
-                return this.FileStreamField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FileStreamField, value) != true)) {
-                    this.FileStreamField = value;
-                    this.RaisePropertyChanged("FileStream");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public GreenField.ServiceCaller.MeetingDefinitions.FileMaster MeetingAttachedFileData {
-            get {
-                return this.MeetingAttachedFileDataField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MeetingAttachedFileDataField, value) != true)) {
-                    this.MeetingAttachedFileDataField = value;
-                    this.RaisePropertyChanged("MeetingAttachedFileData");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="MeetingDefinitions.MeetingOperations")]
     public interface MeetingOperations {
@@ -3557,6 +3513,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         System.IAsyncResult BeginRetrieveSecurityDetails(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, GreenField.DataContracts.PortfolioSelectionData portfolio, System.AsyncCallback callback, object asyncState);
         
         GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData EndRetrieveSecurityDetails(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/RetrieveCurrentPFVMeasures", ReplyAction="http://tempuri.org/MeetingOperations/RetrieveCurrentPFVMeasuresResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/RetrieveCurrentPFVMeasuresServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveCurrentPFVMeasures(System.Collections.Generic.List<string> PFVTypeInfo, string securityTicker, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.Dictionary<string, System.Nullable<decimal>> EndRetrieveCurrentPFVMeasures(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/RetrievePresentationAttachedFileDetails", ReplyAction="http://tempuri.org/MeetingOperations/RetrievePresentationAttachedFileDetailsRespo" +
             "nse")]
@@ -3646,7 +3608,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/UpdateMeetingAttachedFileStreamData", ReplyAction="http://tempuri.org/MeetingOperations/UpdateMeetingAttachedFileStreamDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/UpdateMeetingAttachedFileStreamDataServiceFa" +
             "ultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginUpdateMeetingAttachedFileStreamData(string userName, long meetingId, GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData meetingAttachedFileStreamData, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginUpdateMeetingAttachedFileStreamData(string userName, long meetingId, GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo, bool deletionFlag, System.AsyncCallback callback, object asyncState);
         
         bool EndUpdateMeetingAttachedFileStreamData(System.IAsyncResult result);
         
@@ -3656,6 +3618,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         System.IAsyncResult BeginSetMeetingPresentationStatus(string userName, long meetingId, string status, System.AsyncCallback callback, object asyncState);
         
         bool EndSetMeetingPresentationStatus(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/GetAllUsers", ReplyAction="http://tempuri.org/MeetingOperations/GetAllUsersResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/GetAllUsersServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginGetAllUsers(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.MembershipUserInfo> EndGetAllUsers(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/RetrievePresentationComments", ReplyAction="http://tempuri.org/MeetingOperations/RetrievePresentationCommentsResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/RetrievePresentationCommentsServiceFaultFaul" +
@@ -3761,6 +3729,25 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveCurrentPFVMeasuresCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveCurrentPFVMeasuresCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.Dictionary<string, System.Nullable<decimal>> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.Dictionary<string, System.Nullable<decimal>>)(this.results[0]));
             }
         }
     }
@@ -4033,6 +4020,25 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetAllUsersCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetAllUsersCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.MembershipUserInfo> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.MembershipUserInfo>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrievePresentationCommentsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -4135,6 +4141,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveSecurityDetailsCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveCurrentPFVMeasuresDelegate;
+        
+        private EndOperationDelegate onEndRetrieveCurrentPFVMeasuresDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveCurrentPFVMeasuresCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRetrievePresentationAttachedFileDetailsDelegate;
         
         private EndOperationDelegate onEndRetrievePresentationAttachedFileDetailsDelegate;
@@ -4218,6 +4230,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         private EndOperationDelegate onEndSetMeetingPresentationStatusDelegate;
         
         private System.Threading.SendOrPostCallback onSetMeetingPresentationStatusCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetAllUsersDelegate;
+        
+        private EndOperationDelegate onEndGetAllUsersDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetAllUsersCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrievePresentationCommentsDelegate;
         
@@ -4304,6 +4322,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         public event System.EventHandler<RetrieveSecurityDetailsCompletedEventArgs> RetrieveSecurityDetailsCompleted;
         
+        public event System.EventHandler<RetrieveCurrentPFVMeasuresCompletedEventArgs> RetrieveCurrentPFVMeasuresCompleted;
+        
         public event System.EventHandler<RetrievePresentationAttachedFileDetailsCompletedEventArgs> RetrievePresentationAttachedFileDetailsCompleted;
         
         public event System.EventHandler<UpdatePresentationAttachedFileStreamDataCompletedEventArgs> UpdatePresentationAttachedFileStreamDataCompleted;
@@ -4331,6 +4351,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         public event System.EventHandler<UpdateMeetingAttachedFileStreamDataCompletedEventArgs> UpdateMeetingAttachedFileStreamDataCompleted;
         
         public event System.EventHandler<SetMeetingPresentationStatusCompletedEventArgs> SetMeetingPresentationStatusCompleted;
+        
+        public event System.EventHandler<GetAllUsersCompletedEventArgs> GetAllUsersCompleted;
         
         public event System.EventHandler<RetrievePresentationCommentsCompletedEventArgs> RetrievePresentationCommentsCompleted;
         
@@ -4534,6 +4556,54 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                         entitySelectionData,
                         presentationOverviewData,
                         portfolio}, this.onEndRetrieveSecurityDetailsDelegate, this.onRetrieveSecurityDetailsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginRetrieveCurrentPFVMeasures(System.Collections.Generic.List<string> PFVTypeInfo, string securityTicker, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveCurrentPFVMeasures(PFVTypeInfo, securityTicker, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.Dictionary<string, System.Nullable<decimal>> GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndRetrieveCurrentPFVMeasures(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveCurrentPFVMeasures(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveCurrentPFVMeasures(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Collections.Generic.List<string> PFVTypeInfo = ((System.Collections.Generic.List<string>)(inValues[0]));
+            string securityTicker = ((string)(inValues[1]));
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginRetrieveCurrentPFVMeasures(PFVTypeInfo, securityTicker, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveCurrentPFVMeasures(System.IAsyncResult result) {
+            System.Collections.Generic.Dictionary<string, System.Nullable<decimal>> retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndRetrieveCurrentPFVMeasures(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveCurrentPFVMeasuresCompleted(object state) {
+            if ((this.RetrieveCurrentPFVMeasuresCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveCurrentPFVMeasuresCompleted(this, new RetrieveCurrentPFVMeasuresCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveCurrentPFVMeasuresAsync(System.Collections.Generic.List<string> PFVTypeInfo, string securityTicker) {
+            this.RetrieveCurrentPFVMeasuresAsync(PFVTypeInfo, securityTicker, null);
+        }
+        
+        public void RetrieveCurrentPFVMeasuresAsync(System.Collections.Generic.List<string> PFVTypeInfo, string securityTicker, object userState) {
+            if ((this.onBeginRetrieveCurrentPFVMeasuresDelegate == null)) {
+                this.onBeginRetrieveCurrentPFVMeasuresDelegate = new BeginOperationDelegate(this.OnBeginRetrieveCurrentPFVMeasures);
+            }
+            if ((this.onEndRetrieveCurrentPFVMeasuresDelegate == null)) {
+                this.onEndRetrieveCurrentPFVMeasuresDelegate = new EndOperationDelegate(this.OnEndRetrieveCurrentPFVMeasures);
+            }
+            if ((this.onRetrieveCurrentPFVMeasuresCompletedDelegate == null)) {
+                this.onRetrieveCurrentPFVMeasuresCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveCurrentPFVMeasuresCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveCurrentPFVMeasuresDelegate, new object[] {
+                        PFVTypeInfo,
+                        securityTicker}, this.onEndRetrieveCurrentPFVMeasuresDelegate, this.onRetrieveCurrentPFVMeasuresCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5103,8 +5173,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginUpdateMeetingAttachedFileStreamData(string userName, long meetingId, GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData meetingAttachedFileStreamData, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginUpdateMeetingAttachedFileStreamData(userName, meetingId, meetingAttachedFileStreamData, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginUpdateMeetingAttachedFileStreamData(string userName, long meetingId, GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo, bool deletionFlag, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdateMeetingAttachedFileStreamData(userName, meetingId, fileMasterInfo, deletionFlag, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5115,8 +5185,9 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         private System.IAsyncResult OnBeginUpdateMeetingAttachedFileStreamData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string userName = ((string)(inValues[0]));
             long meetingId = ((long)(inValues[1]));
-            GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData meetingAttachedFileStreamData = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData)(inValues[2]));
-            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginUpdateMeetingAttachedFileStreamData(userName, meetingId, meetingAttachedFileStreamData, callback, asyncState);
+            GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo = ((GreenField.ServiceCaller.MeetingDefinitions.FileMaster)(inValues[2]));
+            bool deletionFlag = ((bool)(inValues[3]));
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginUpdateMeetingAttachedFileStreamData(userName, meetingId, fileMasterInfo, deletionFlag, callback, asyncState);
         }
         
         private object[] OnEndUpdateMeetingAttachedFileStreamData(System.IAsyncResult result) {
@@ -5132,11 +5203,11 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             }
         }
         
-        public void UpdateMeetingAttachedFileStreamDataAsync(string userName, long meetingId, GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData meetingAttachedFileStreamData) {
-            this.UpdateMeetingAttachedFileStreamDataAsync(userName, meetingId, meetingAttachedFileStreamData, null);
+        public void UpdateMeetingAttachedFileStreamDataAsync(string userName, long meetingId, GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo, bool deletionFlag) {
+            this.UpdateMeetingAttachedFileStreamDataAsync(userName, meetingId, fileMasterInfo, deletionFlag, null);
         }
         
-        public void UpdateMeetingAttachedFileStreamDataAsync(string userName, long meetingId, GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData meetingAttachedFileStreamData, object userState) {
+        public void UpdateMeetingAttachedFileStreamDataAsync(string userName, long meetingId, GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo, bool deletionFlag, object userState) {
             if ((this.onBeginUpdateMeetingAttachedFileStreamDataDelegate == null)) {
                 this.onBeginUpdateMeetingAttachedFileStreamDataDelegate = new BeginOperationDelegate(this.OnBeginUpdateMeetingAttachedFileStreamData);
             }
@@ -5149,7 +5220,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             base.InvokeAsync(this.onBeginUpdateMeetingAttachedFileStreamDataDelegate, new object[] {
                         userName,
                         meetingId,
-                        meetingAttachedFileStreamData}, this.onEndUpdateMeetingAttachedFileStreamDataDelegate, this.onUpdateMeetingAttachedFileStreamDataCompletedDelegate, userState);
+                        fileMasterInfo,
+                        deletionFlag}, this.onEndUpdateMeetingAttachedFileStreamDataDelegate, this.onUpdateMeetingAttachedFileStreamDataCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5200,6 +5272,50 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                         userName,
                         meetingId,
                         status}, this.onEndSetMeetingPresentationStatusDelegate, this.onSetMeetingPresentationStatusCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginGetAllUsers(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetAllUsers(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.MembershipUserInfo> GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndGetAllUsers(System.IAsyncResult result) {
+            return base.Channel.EndGetAllUsers(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetAllUsers(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginGetAllUsers(callback, asyncState);
+        }
+        
+        private object[] OnEndGetAllUsers(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.MembershipUserInfo> retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndGetAllUsers(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetAllUsersCompleted(object state) {
+            if ((this.GetAllUsersCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetAllUsersCompleted(this, new GetAllUsersCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetAllUsersAsync() {
+            this.GetAllUsersAsync(null);
+        }
+        
+        public void GetAllUsersAsync(object userState) {
+            if ((this.onBeginGetAllUsersDelegate == null)) {
+                this.onBeginGetAllUsersDelegate = new BeginOperationDelegate(this.OnBeginGetAllUsers);
+            }
+            if ((this.onEndGetAllUsersDelegate == null)) {
+                this.onEndGetAllUsersDelegate = new EndOperationDelegate(this.OnEndGetAllUsers);
+            }
+            if ((this.onGetAllUsersCompletedDelegate == null)) {
+                this.onGetAllUsersCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetAllUsersCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetAllUsersDelegate, null, this.onEndGetAllUsersDelegate, this.onGetAllUsersCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -5528,6 +5644,20 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 return _result;
             }
             
+            public System.IAsyncResult BeginRetrieveCurrentPFVMeasures(System.Collections.Generic.List<string> PFVTypeInfo, string securityTicker, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = PFVTypeInfo;
+                _args[1] = securityTicker;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveCurrentPFVMeasures", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.Dictionary<string, System.Nullable<decimal>> EndRetrieveCurrentPFVMeasures(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.Dictionary<string, System.Nullable<decimal>> _result = ((System.Collections.Generic.Dictionary<string, System.Nullable<decimal>>)(base.EndInvoke("RetrieveCurrentPFVMeasures", _args, result)));
+                return _result;
+            }
+            
             public System.IAsyncResult BeginRetrievePresentationAttachedFileDetails(System.Nullable<long> presentationID, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = presentationID;
@@ -5691,11 +5821,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginUpdateMeetingAttachedFileStreamData(string userName, long meetingId, GreenField.ServiceCaller.MeetingDefinitions.MeetingAttachedFileStreamData meetingAttachedFileStreamData, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[3];
+            public System.IAsyncResult BeginUpdateMeetingAttachedFileStreamData(string userName, long meetingId, GreenField.ServiceCaller.MeetingDefinitions.FileMaster fileMasterInfo, bool deletionFlag, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[4];
                 _args[0] = userName;
                 _args[1] = meetingId;
-                _args[2] = meetingAttachedFileStreamData;
+                _args[2] = fileMasterInfo;
+                _args[3] = deletionFlag;
                 System.IAsyncResult _result = base.BeginInvoke("UpdateMeetingAttachedFileStreamData", _args, callback, asyncState);
                 return _result;
             }
@@ -5718,6 +5849,18 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             public bool EndSetMeetingPresentationStatus(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("SetMeetingPresentationStatus", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetAllUsers(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("GetAllUsers", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.MembershipUserInfo> EndGetAllUsers(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.MembershipUserInfo> _result = ((System.Collections.Generic.List<GreenField.DataContracts.MembershipUserInfo>)(base.EndInvoke("GetAllUsers", _args, result)));
                 return _result;
             }
             
