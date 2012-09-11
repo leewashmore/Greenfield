@@ -58,8 +58,7 @@
                                          UseLayoutRounding="True"
                                          IsReadOnly="True"
                                          RowIndicatorVisibility="Collapsed"
-                                         ScrollMode="RealTime"
-                                         IsScrolling="True"                                                             
+                                         ScrollMode="RealTime"                                                        
                                          FontSize="7"
                                          FontFamily="Arial"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
@@ -160,7 +159,6 @@
                                          IsReadOnly="True"
                                          RowIndicatorVisibility="Collapsed"
                                          ScrollMode="RealTime"
-                                         IsScrolling="True"
                                          FontSize="7"
                                          FontFamily="Arial"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
@@ -240,7 +238,7 @@
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
 
-                                        <TextBlock Text="Year Type" Style="{StaticResource TextBlockStyle}"
+                                        <TextBlock Text="Period Type" Style="{StaticResource TextBlockStyle}"
                                                    Margin="2,2,0,2"/>
                                         <telerik:RadComboBox x:Name="cbCSTPeriodFinPeriodType"
                                                              Grid.Row="1"
@@ -258,14 +256,14 @@
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
 
-                                        <TextBlock Text="Year Type" Style="{StaticResource TextBlockStyle}"
+                                        <TextBlock Text="From" Style="{StaticResource TextBlockStyle}"
                                                    Margin="2,2,0,2"/>
                                         <telerik:RadComboBox x:Name="cbCSTPeriodFinFromYear"
                                                              Grid.Row="1"
                                                              Margin="2,2,0,2"
                                                              ItemsSource="{Binding FromYearInfo}"
                                                              SelectedItem="{Binding SelectedFromYearInfo, Mode=TwoWay}"
-                                                             HorizontalContentAlignment="Left" EmptyText="Current Year"  
+                                                             HorizontalContentAlignment="Left"  
                                                              Height="{StaticResource DefaultControlMinHeight}"
                                                              Style="{StaticResource RadComboBoxStyle}"/>
                                     </Grid>
@@ -276,14 +274,14 @@
                                             <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
 
-                                        <TextBlock Text="Year Type" Style="{StaticResource TextBlockStyle}"
+                                        <TextBlock Text="To" Style="{StaticResource TextBlockStyle}"
                                                    Margin="2,2,0,2"/>
                                         <telerik:RadComboBox x:Name="cbCSTPeriodFinToYear"
                                                              Grid.Row="1"
                                                              Margin="2,2,0,2"
                                                              ItemsSource="{Binding ToYearInfo}"
                                                              SelectedItem="{Binding SelectedToYearInfo, Mode=TwoWay}"
-                                                             HorizontalContentAlignment="Left" EmptyText="Current Year"  
+                                                             HorizontalContentAlignment="Left"  
                                                              Height="{StaticResource DefaultControlMinHeight}"
                                                              Style="{StaticResource RadComboBoxStyle}"/>
                                     </Grid>
@@ -365,7 +363,6 @@
                                          IsReadOnly="True"
                                          RowIndicatorVisibility="Collapsed"
                                          ScrollMode="RealTime"
-                                         IsScrolling="True"
                                          FontSize="7"
                                          FontFamily="Arial"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
@@ -489,7 +486,6 @@
                                          IsReadOnly="True"
                                          RowIndicatorVisibility="Collapsed"
                                          ScrollMode="RealTime"
-                                         IsScrolling="True"
                                          FontSize="7"
                                          FontFamily="Arial"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"

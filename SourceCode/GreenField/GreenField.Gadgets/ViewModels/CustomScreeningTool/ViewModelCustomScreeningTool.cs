@@ -49,7 +49,8 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _eventAggregator = param.EventAggregator;
             _regionManager = param.RegionManager;
-           
+
+            BusyIndicatorNotification(true, "Retrieving Security Selection Data...");
             //fetch PortfolioId list 
             _dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
 
@@ -58,6 +59,8 @@ namespace GreenField.Gadgets.ViewModels
 
             //retrieve custom selection data
             RetrieveCustomSelectionData();
+
+            BusyIndicatorNotification();
         }
         #endregion
 
@@ -447,6 +450,37 @@ namespace GreenField.Gadgets.ViewModels
                 //}
             }
         }
+
+        #region Busy Indicator Notification
+        /// <summary>
+        /// Displays/Hides busy indicator to notify user of the on going process
+        /// </summary>
+        private bool _busyIndicatorIsBusy = false;
+        public bool BusyIndicatorIsBusy
+        {
+            get { return _busyIndicatorIsBusy; }
+            set
+            {
+                _busyIndicatorIsBusy = value;
+                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+            }
+        }
+
+        /// <summary>
+        /// Stores the message displayed over the busy indicator to notify user of the on going process
+        /// </summary>
+        private string _busyIndicatorContent;
+        public string BusyIndicatorContent
+        {
+            get { return _busyIndicatorContent; }
+            set
+            {
+                _busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }
+        #endregion        
+
         #endregion
 
         #region ICommand Methods
@@ -545,7 +579,6 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
 
                     PortfolioSelectionInfo = result.Select(o => o.PortfolioId).ToList();
-
                 }
                 else
                 {
@@ -723,6 +756,14 @@ namespace GreenField.Gadgets.ViewModels
                 _dbInteractivity.RetrieveCustomControlsList("Sector", CustomControlsListSectorCallbackMethod);
                 _dbInteractivity.RetrieveCustomControlsList("Industry", CustomControlsListIndustryCallbackMethod);
             }
+        }
+
+        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        {
+            if (message != null)
+                BusyIndicatorContent = message;
+
+            BusyIndicatorIsBusy = showBusyIndicator;
         }
         #endregion
     }

@@ -49,6 +49,10 @@ namespace GreenField.Gadgets.ViewModels
 
             //fetch tabs data
             FetchTabsData();
+
+            //set default values to the relevant data controls
+            SelectedFromYearInfo = DateTime.Now.Year;
+            SelectedToYearInfo = DateTime.Now.Year;
         }
 
       
@@ -158,7 +162,102 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SelectedFairValueData);
             }
         }
-        
+
+         public List<String> DataSourceInfo
+         {
+             get{ return new List<String>{"PRIMARY","INDUSTRY","REUTERS"};}
+
+         }
+
+        public String _selectedDataSourceInfo;
+        public String SelectedDataSourceInfo
+        {
+            get { return _selectedDataSourceInfo; }
+            set
+            {
+                _selectedDataSourceInfo = value;
+                RaisePropertyChanged(() => this.SelectedDataSourceInfo);
+            }
+        }
+
+        public List<String> YearTypeInfo
+        {
+            get { return new List<String> { "CALENDAR", "FISCAL" }; }
+
+        }
+
+        public String _selectedYearTypeInfo;
+        public String SelectedYearTypeInfo
+        {
+            get { return _selectedYearTypeInfo; }
+            set
+            {
+                _selectedYearTypeInfo = value;
+                RaisePropertyChanged(() => this.SelectedYearTypeInfo);
+            }
+        }
+
+        public List<String> PeriodTypeInfo
+        {
+            get { return new List<String> { "ANNUAL", "Q1", "Q2", "Q3", "Q4" }; }
+
+        }
+
+        public String _selectedPeriodTypeInfo;
+        public String SelectedPeriodTypeInfo
+        {
+            get { return _selectedPeriodTypeInfo; }
+            set
+            {
+                _selectedPeriodTypeInfo = value;
+                RaisePropertyChanged(() => this.SelectedPeriodTypeInfo);
+            }
+        }
+
+        public List<int> FromYearInfo
+        {
+            get 
+            {
+                int currentYear = DateTime.Now.Year;
+                return new List<int> { currentYear, currentYear - 10, currentYear - 9, currentYear - 8, currentYear - 7, currentYear - 6, currentYear - 5,
+                                       currentYear - 4, currentYear - 3, currentYear - 2, currentYear - 1, currentYear + 1, currentYear + 2,
+                                       currentYear + 3, currentYear + 4, currentYear + 5 }; 
+            }
+
+        }
+
+        public int _selectedFromYearInfo;
+        public int SelectedFromYearInfo 
+        {
+            get { return _selectedFromYearInfo; }
+            set
+            {
+                _selectedFromYearInfo = value;
+                RaisePropertyChanged(() => this.SelectedFromYearInfo);
+            }
+        }
+
+        public List<int> ToYearInfo
+        {
+            get
+            {
+                int currentYear = DateTime.Now.Year;
+                return new List<int> { currentYear, currentYear - 10, currentYear - 9, currentYear - 8, currentYear - 7, currentYear - 6, currentYear - 5,
+                                       currentYear - 4, currentYear - 3, currentYear - 2, currentYear - 1, currentYear + 1, currentYear + 2,
+                                       currentYear + 3, currentYear + 4, currentYear + 5};
+            }
+        }
+
+        public int _selectedToYearInfo;
+        public int SelectedToYearInfo
+        {
+            get { return _selectedToYearInfo; }
+            set
+            {
+                _selectedToYearInfo = value;
+                RaisePropertyChanged(() => this.SelectedToYearInfo);
+            }
+        } 
 
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
