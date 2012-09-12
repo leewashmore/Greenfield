@@ -28,8 +28,8 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of Type ViewModelAnalysisSummary- ViewModel
         /// </summary>
-        private ViewModelAnalysisSummary _dataContextSource;
-        public ViewModelAnalysisSummary DataContextSource
+        private ViewModelDCF _dataContextSource;
+        public ViewModelDCF DataContextSource
         {
             get
             {
@@ -66,7 +66,7 @@ namespace GreenField.Gadgets.Views
         /// Constructor
         /// </summary>
         /// <param name="dataContextSource">Instance of View-Model, ViewModelAnalysisSummary</param>
-        public ViewAnalysisSummary(ViewModelAnalysisSummary dataContextSource)
+        public ViewAnalysisSummary(ViewModelDCF dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
@@ -94,7 +94,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextSource._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextSource.Logger, methodNamespace);
             try
             {
                 if (this.dgDCFAnalysisSummary.Visibility == Visibility.Visible)
@@ -110,7 +110,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextSource._logger, ex);
+                Logging.LogException(this.DataContextSource.Logger, ex);
             }
         }
 
@@ -138,7 +138,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportPDF_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextSource._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextSource.Logger, methodNamespace);
             try
             {
                 PDFExporter.btnExportPDF_Click(this.dgDCFAnalysisSummary);
@@ -146,7 +146,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextSource._logger, ex);
+                Logging.LogException(this.DataContextSource.Logger, ex);
             }
         }
         #endregion
@@ -161,7 +161,7 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextSource._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextSource.Logger, methodNamespace);
             try
             {
                 Dispatcher.BeginInvoke((Action)(() =>
@@ -175,7 +175,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextSource._logger, ex);
+                Logging.LogException(this.DataContextSource.Logger, ex);
             }
         }
 

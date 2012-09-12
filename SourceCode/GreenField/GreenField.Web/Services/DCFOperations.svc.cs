@@ -133,52 +133,63 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public List<DCFTerminalValueCalculationsData> RetrieveTerminalValueCalculationsData(EntitySelectionData entitySelectionData)
         {
-            List<DCFTerminalValueCalculationsData> result = new List<DCFTerminalValueCalculationsData>();
-            Dictionary<string, decimal> dataROIC_SDPR = new Dictionary<string, decimal>();
-            List<DCFCashFlowData> cashFlowResult = new List<DCFCashFlowData>();
-            string issuerId;
-
-            ExternalResearchEntities entity = new ExternalResearchEntities();
-
-            if (entitySelectionData == null)
-                return new List<DCFTerminalValueCalculationsData>();
-
-            #region ServiceAvailabilityChecker
-
-            bool isServiceUp;
-            isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
-            if (!isServiceUp)
-                throw new Exception("Services are not available");
-
-            #endregion
-
-            GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
-                .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
-                    record.ISSUE_NAME == entitySelectionData.LongName &&
-                    record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
-
-            issuerId = securityDetails.ISSUER_ID;
-            if (issuerId == null)
-                return new List<DCFTerminalValueCalculationsData>();
-
-            cashFlowResult = entity.GetDCFCashFlow(issuerId).ToList();
-
-
-            DCFTerminalValueCalculationsData data = new DCFTerminalValueCalculationsData();
-
-            dataROIC_SDPR = GetROIC(issuerId);
-
-            if (dataROIC_SDPR.ContainsKey("ROIC"))
+            try
             {
-                data.SustainableROIC = dataROIC_SDPR.Where(a => a.Key == "ROIC").Select(a => a.Value).FirstOrDefault();
-            }
-            if (dataROIC_SDPR.ContainsKey("SDPR"))
-            {
-                data.SustainableROIC = dataROIC_SDPR.Where(a => a.Key == "SDPR").Select(a => a.Value).FirstOrDefault();
-            }
+                List<DCFTerminalValueCalculationsData> result = new List<DCFTerminalValueCalculationsData>();
+                Dictionary<string, decimal> dataROIC_SDPR = new Dictionary<string, decimal>();
+                List<DCFCashFlowData> cashFlowResult = new List<DCFCashFlowData>();
+                string issuerId;
 
-            return new List<DCFTerminalValueCalculationsData>();
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+
+                if (entitySelectionData == null)
+                    return new List<DCFTerminalValueCalculationsData>();
+
+                #region ServiceAvailabilityChecker
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                #endregion
+
+                GF_SECURITY_BASEVIEW securityDetails = DimensionEntity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID &&
+                        record.ISSUE_NAME == entitySelectionData.LongName &&
+                        record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
+
+                issuerId = securityDetails.ISSUER_ID;
+                if (issuerId == null)
+                    return new List<DCFTerminalValueCalculationsData>();
+
+                //cashFlowResult = entity.GetDCFCashFlow(issuerId).ToList();
+
+                decimal longTermGDPGrowth = Convert.ToDecimal(entity.GetDCFGDP(Convert.ToString(securityDetails.ISO_COUNTRY_CODE)).FirstOrDefault());
+                DCFTerminalValueCalculationsData data = new DCFTerminalValueCalculationsData();
+
+                dataROIC_SDPR = GetROIC(issuerId);
+
+                if (dataROIC_SDPR.ContainsKey("ROIC"))
+                {
+                    data.SustainableROIC = dataROIC_SDPR.Where(a => a.Key == "ROIC").Select(a => a.Value).FirstOrDefault();
+                }
+                if (dataROIC_SDPR.ContainsKey("SDPR"))
+                {
+                    data.SustainableDividendPayoutRatio = dataROIC_SDPR.Where(a => a.Key == "SDPR").Select(a => a.Value).FirstOrDefault();
+                }
+                data.LongTermNominalGDPGrowth = longTermGDPGrowth;
+                result.Add(data);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
         }
 
         #endregion
@@ -232,16 +243,16 @@ namespace GreenField.Web.Services
                     item.Amount = record.AMOUNT;
                     result.Add(item);
                 }
-                    //decimal? amount ;
-                    //item.FieldName = "Revenue Growth";
-                    //amount = Convert.ToDecimal(resultDB.Where(a => (a.PERIOD_YEAR == DateTime.Now.Year && a.FIELD_NAME == "Revenue Growth")).Select(a => a.AMOUNT));
-                    //if(amount != null)
-                    //item.ValueY0 = Convert.ToString(amount) + "%";
+                //decimal? amount ;
+                //item.FieldName = "Revenue Growth";
+                //amount = Convert.ToDecimal(resultDB.Where(a => (a.PERIOD_YEAR == DateTime.Now.Year && a.FIELD_NAME == "Revenue Growth")).Select(a => a.AMOUNT));
+                //if(amount != null)
+                //item.ValueY0 = Convert.ToString(amount) + "%";
 
-                    //amount = Convert.ToDecimal(resultDB.Where(a => (a.PERIOD_YEAR == DateTime.Now.Year && a.FIELD_NAME == "Revenue Growth")).Select(a => a.AMOUNT));
-                    //if (amount != null)
-                    //    item.ValueY0 = Convert.ToString(amount) + "%";
-                 
+                //amount = Convert.ToDecimal(resultDB.Where(a => (a.PERIOD_YEAR == DateTime.Now.Year && a.FIELD_NAME == "Revenue Growth")).Select(a => a.AMOUNT));
+                //if (amount != null)
+                //    item.ValueY0 = Convert.ToString(amount) + "%";
+
 
 
                 //    result.Add(item);
@@ -268,6 +279,7 @@ namespace GreenField.Web.Services
             try
             {
                 List<DCFCashFlowData> result = new List<DCFCashFlowData>();
+                List<DCFCashFlowData> dbResult = new List<DCFCashFlowData>();
 
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
@@ -293,10 +305,29 @@ namespace GreenField.Web.Services
                 if (issuerId == null)
                     return new List<DCFCashFlowData>();
 
-                result = entity.GetDCFCashFlow(issuerId).OrderBy(a => a.PERIOD_YEAR).ToList();
+                dbResult = entity.GetDCFCashFlow(issuerId).OrderBy(a => a.PERIOD_YEAR).ToList();
+                if (dbResult == null || dbResult.Count == 0)
+                {
+                    return new List<DCFCashFlowData>();
+                }
 
                 int currentYear = DateTime.Today.Year;
-                decimal average = result.Where(a => a.PERIOD_YEAR < currentYear + 5).Select(a => a.AMOUNT).Average();
+
+                for (int i = 0; i < 10; i++)
+                {
+                    if (dbResult.Where(a => a.PERIOD_YEAR == currentYear + i).FirstOrDefault() != null)
+                    {
+                        result.Add(dbResult.Where(a => a.PERIOD_YEAR == currentYear + i).FirstOrDefault());
+                    }
+                }
+
+                decimal average = result.Where(a => a.PERIOD_YEAR < currentYear + 5).Select(a => Convert.ToDecimal(a.AMOUNT)).Average();
+
+                for (int i = 5; i < 10; i++)
+                {
+                    result.Add(new DCFCashFlowData() { AMOUNT = 0, DISCOUNTING_FACTOR = 0, PERIOD_YEAR = currentYear + i });
+                }
+
                 foreach (DCFCashFlowData item in result)
                 {
                     if (item.PERIOD_YEAR > currentYear + 4)

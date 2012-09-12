@@ -20,8 +20,8 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewDCFSummary : ViewBaseUserControl
     {
-        private ViewModelDCFSummary _dataContextSource;
-        public ViewModelDCFSummary DataContextSource
+        private ViewModelDCF _dataContextSource;
+        public ViewModelDCF DataContextSource
         {
             get { return _dataContextSource; }
             set { _dataContextSource = value; }
@@ -46,7 +46,7 @@ namespace GreenField.Gadgets.Views
         /// Constructor
         /// </summary>
         /// <param name="dataContextSource"></param>
-        public ViewDCFSummary(ViewModelDCFSummary dataContextSource)
+        public ViewDCFSummary(ViewModelDCF dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;

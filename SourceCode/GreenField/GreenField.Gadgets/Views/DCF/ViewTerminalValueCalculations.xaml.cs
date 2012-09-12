@@ -28,7 +28,7 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Constructor
         /// </summary>
-        public ViewTerminalValueCalculations(ViewModelTerminalValueCalculations dataContextSource)
+        public ViewTerminalValueCalculations(ViewModelDCF dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
@@ -41,8 +41,8 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Instance of View-Model TerminalValueCalculations
         /// </summary>
-        private ViewModelTerminalValueCalculations _dataContextSource;
-        public ViewModelTerminalValueCalculations DataContextSource
+        private ViewModelDCF _dataContextSource;
+        public ViewModelDCF DataContextSource
         {
             get { return _dataContextSource; }
             set { _dataContextSource = value; }

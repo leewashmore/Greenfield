@@ -83,7 +83,7 @@ namespace Greenfield.Gadgets.Helpers
 
             if (discountingFactor == 0)
             {
-                throw new Exception("Discounting Factor is null");
+                return 0;
             }
 
             if (discountingFactor != 0)
@@ -135,7 +135,7 @@ namespace Greenfield.Gadgets.Helpers
             }
             else
             {
-                throw new Exception("Current Market Price is Zero");
+                return 0;
             }
 
             return upside;

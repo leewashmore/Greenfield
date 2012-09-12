@@ -617,6 +617,9 @@
         <Function Name="GetDCFCashFlow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetDCFGDP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="COUNTRY_CODE" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetDCFMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
         </Function>
@@ -878,10 +881,13 @@
           <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetDCFSummaryData" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetDCF_NumberOfShares" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
-            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetDCFGDP" ReturnType="Collection(Decimal)">
+            <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -2046,6 +2052,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetDCFGDP" FunctionName="ExternalResearchModel.Store.GetDCFGDP" />
           <!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
