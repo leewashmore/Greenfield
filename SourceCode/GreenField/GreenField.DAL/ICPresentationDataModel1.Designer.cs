@@ -129,22 +129,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<MeetingConfigurationSchedule> MeetingConfigurationSchedules
-        {
-            get
-            {
-                if ((_MeetingConfigurationSchedules == null))
-                {
-                    _MeetingConfigurationSchedules = base.CreateObjectSet<MeetingConfigurationSchedule>("MeetingConfigurationSchedules");
-                }
-                return _MeetingConfigurationSchedules;
-            }
-        }
-        private ObjectSet<MeetingConfigurationSchedule> _MeetingConfigurationSchedules;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<PresentationInfo> PresentationInfoes
         {
             get
@@ -221,6 +205,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<PresentationAttachedFileInfo> _PresentationAttachedFileInfoes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<MeetingConfigurationSchedule> MeetingConfigurationSchedules
+        {
+            get
+            {
+                if ((_MeetingConfigurationSchedules == null))
+                {
+                    _MeetingConfigurationSchedules = base.CreateObjectSet<MeetingConfigurationSchedule>("MeetingConfigurationSchedules");
+                }
+                return _MeetingConfigurationSchedules;
+            }
+        }
+        private ObjectSet<MeetingConfigurationSchedule> _MeetingConfigurationSchedules;
 
         #endregion
         #region AddTo Methods
@@ -247,14 +247,6 @@ namespace GreenField.DAL
         public void AddToVoterInfoes(VoterInfo voterInfo)
         {
             base.AddObject("VoterInfoes", voterInfo);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the MeetingConfigurationSchedules EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToMeetingConfigurationSchedules(MeetingConfigurationSchedule meetingConfigurationSchedule)
-        {
-            base.AddObject("MeetingConfigurationSchedules", meetingConfigurationSchedule);
         }
     
         /// <summary>
@@ -295,6 +287,14 @@ namespace GreenField.DAL
         public void AddToPresentationAttachedFileInfoes(PresentationAttachedFileInfo presentationAttachedFileInfo)
         {
             base.AddObject("PresentationAttachedFileInfoes", presentationAttachedFileInfo);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the MeetingConfigurationSchedules EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToMeetingConfigurationSchedules(MeetingConfigurationSchedule meetingConfigurationSchedule)
+        {
+            base.AddObject("MeetingConfigurationSchedules", meetingConfigurationSchedule);
         }
 
         #endregion
@@ -1554,53 +1554,16 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="presentationDateTime">No Metadata Documentation available.</param>
-        /// <param name="presentationTimeZone">No Metadata Documentation available.</param>
-        /// <param name="presentationDeadline">No Metadata Documentation available.</param>
-        /// <param name="preMeetingVotingDeadline">No Metadata Documentation available.</param>
         /// <param name="userName">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> SetMeetingConfigSchedule(Nullable<global::System.DateTime> presentationDateTime, global::System.String presentationTimeZone, Nullable<global::System.DateTime> presentationDeadline, Nullable<global::System.DateTime> preMeetingVotingDeadline, global::System.String userName)
+        /// <param name="presentationDay">No Metadata Documentation available.</param>
+        /// <param name="presentationTime">No Metadata Documentation available.</param>
+        /// <param name="presentationTimeZone">No Metadata Documentation available.</param>
+        /// <param name="presentationDeadlineDay">No Metadata Documentation available.</param>
+        /// <param name="presentationDeadlineTime">No Metadata Documentation available.</param>
+        /// <param name="preMeetingVotingDeadlineDay">No Metadata Documentation available.</param>
+        /// <param name="preMeetingVotingDeadlineTime">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> SetMeetingConfigSchedule(global::System.String userName, global::System.String presentationDay, Nullable<global::System.DateTime> presentationTime, global::System.String presentationTimeZone, global::System.String presentationDeadlineDay, Nullable<global::System.DateTime> presentationDeadlineTime, global::System.String preMeetingVotingDeadlineDay, Nullable<global::System.DateTime> preMeetingVotingDeadlineTime)
         {
-            ObjectParameter presentationDateTimeParameter;
-            if (presentationDateTime.HasValue)
-            {
-                presentationDateTimeParameter = new ObjectParameter("presentationDateTime", presentationDateTime);
-            }
-            else
-            {
-                presentationDateTimeParameter = new ObjectParameter("presentationDateTime", typeof(global::System.DateTime));
-            }
-    
-            ObjectParameter presentationTimeZoneParameter;
-            if (presentationTimeZone != null)
-            {
-                presentationTimeZoneParameter = new ObjectParameter("presentationTimeZone", presentationTimeZone);
-            }
-            else
-            {
-                presentationTimeZoneParameter = new ObjectParameter("presentationTimeZone", typeof(global::System.String));
-            }
-    
-            ObjectParameter presentationDeadlineParameter;
-            if (presentationDeadline.HasValue)
-            {
-                presentationDeadlineParameter = new ObjectParameter("presentationDeadline", presentationDeadline);
-            }
-            else
-            {
-                presentationDeadlineParameter = new ObjectParameter("presentationDeadline", typeof(global::System.DateTime));
-            }
-    
-            ObjectParameter preMeetingVotingDeadlineParameter;
-            if (preMeetingVotingDeadline.HasValue)
-            {
-                preMeetingVotingDeadlineParameter = new ObjectParameter("preMeetingVotingDeadline", preMeetingVotingDeadline);
-            }
-            else
-            {
-                preMeetingVotingDeadlineParameter = new ObjectParameter("preMeetingVotingDeadline", typeof(global::System.DateTime));
-            }
-    
             ObjectParameter userNameParameter;
             if (userName != null)
             {
@@ -1611,7 +1574,77 @@ namespace GreenField.DAL
                 userNameParameter = new ObjectParameter("userName", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetMeetingConfigSchedule", presentationDateTimeParameter, presentationTimeZoneParameter, presentationDeadlineParameter, preMeetingVotingDeadlineParameter, userNameParameter);
+            ObjectParameter presentationDayParameter;
+            if (presentationDay != null)
+            {
+                presentationDayParameter = new ObjectParameter("PresentationDay", presentationDay);
+            }
+            else
+            {
+                presentationDayParameter = new ObjectParameter("PresentationDay", typeof(global::System.String));
+            }
+    
+            ObjectParameter presentationTimeParameter;
+            if (presentationTime.HasValue)
+            {
+                presentationTimeParameter = new ObjectParameter("PresentationTime", presentationTime);
+            }
+            else
+            {
+                presentationTimeParameter = new ObjectParameter("PresentationTime", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter presentationTimeZoneParameter;
+            if (presentationTimeZone != null)
+            {
+                presentationTimeZoneParameter = new ObjectParameter("PresentationTimeZone", presentationTimeZone);
+            }
+            else
+            {
+                presentationTimeZoneParameter = new ObjectParameter("PresentationTimeZone", typeof(global::System.String));
+            }
+    
+            ObjectParameter presentationDeadlineDayParameter;
+            if (presentationDeadlineDay != null)
+            {
+                presentationDeadlineDayParameter = new ObjectParameter("PresentationDeadlineDay", presentationDeadlineDay);
+            }
+            else
+            {
+                presentationDeadlineDayParameter = new ObjectParameter("PresentationDeadlineDay", typeof(global::System.String));
+            }
+    
+            ObjectParameter presentationDeadlineTimeParameter;
+            if (presentationDeadlineTime.HasValue)
+            {
+                presentationDeadlineTimeParameter = new ObjectParameter("PresentationDeadlineTime", presentationDeadlineTime);
+            }
+            else
+            {
+                presentationDeadlineTimeParameter = new ObjectParameter("PresentationDeadlineTime", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter preMeetingVotingDeadlineDayParameter;
+            if (preMeetingVotingDeadlineDay != null)
+            {
+                preMeetingVotingDeadlineDayParameter = new ObjectParameter("PreMeetingVotingDeadlineDay", preMeetingVotingDeadlineDay);
+            }
+            else
+            {
+                preMeetingVotingDeadlineDayParameter = new ObjectParameter("PreMeetingVotingDeadlineDay", typeof(global::System.String));
+            }
+    
+            ObjectParameter preMeetingVotingDeadlineTimeParameter;
+            if (preMeetingVotingDeadlineTime.HasValue)
+            {
+                preMeetingVotingDeadlineTimeParameter = new ObjectParameter("PreMeetingVotingDeadlineTime", preMeetingVotingDeadlineTime);
+            }
+            else
+            {
+                preMeetingVotingDeadlineTimeParameter = new ObjectParameter("PreMeetingVotingDeadlineTime", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetMeetingConfigSchedule", userNameParameter, presentationDayParameter, presentationTimeParameter, presentationTimeZoneParameter, presentationDeadlineDayParameter, presentationDeadlineTimeParameter, preMeetingVotingDeadlineDayParameter, preMeetingVotingDeadlineTimeParameter);
         }
     
         /// <summary>
@@ -3325,21 +3358,21 @@ namespace GreenField.DAL
         /// <summary>
         /// Create a new MeetingConfigurationSchedule object.
         /// </summary>
-        /// <param name="presentationDateTime">Initial value of the PresentationDateTime property.</param>
+        /// <param name="presentationTime">Initial value of the PresentationTime property.</param>
         /// <param name="presentationTimeZone">Initial value of the PresentationTimeZone property.</param>
-        /// <param name="presentationDeadline">Initial value of the PresentationDeadline property.</param>
-        /// <param name="preMeetingVotingDeadline">Initial value of the PreMeetingVotingDeadline property.</param>
+        /// <param name="presentationDeadlineTime">Initial value of the PresentationDeadlineTime property.</param>
+        /// <param name="preMeetingVotingDeadlineTime">Initial value of the PreMeetingVotingDeadlineTime property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
         /// <param name="createdOn">Initial value of the CreatedOn property.</param>
         /// <param name="modifiedBy">Initial value of the ModifiedBy property.</param>
         /// <param name="modifiedOn">Initial value of the ModifiedOn property.</param>
-        public static MeetingConfigurationSchedule CreateMeetingConfigurationSchedule(global::System.DateTime presentationDateTime, global::System.String presentationTimeZone, global::System.DateTime presentationDeadline, global::System.DateTime preMeetingVotingDeadline, global::System.String createdBy, global::System.DateTime createdOn, global::System.String modifiedBy, global::System.DateTime modifiedOn)
+        public static MeetingConfigurationSchedule CreateMeetingConfigurationSchedule(global::System.DateTime presentationTime, global::System.String presentationTimeZone, global::System.DateTime presentationDeadlineTime, global::System.DateTime preMeetingVotingDeadlineTime, global::System.String createdBy, global::System.DateTime createdOn, global::System.String modifiedBy, global::System.DateTime modifiedOn)
         {
             MeetingConfigurationSchedule meetingConfigurationSchedule = new MeetingConfigurationSchedule();
-            meetingConfigurationSchedule.PresentationDateTime = presentationDateTime;
+            meetingConfigurationSchedule.PresentationTime = presentationTime;
             meetingConfigurationSchedule.PresentationTimeZone = presentationTimeZone;
-            meetingConfigurationSchedule.PresentationDeadline = presentationDeadline;
-            meetingConfigurationSchedule.PreMeetingVotingDeadline = preMeetingVotingDeadline;
+            meetingConfigurationSchedule.PresentationDeadlineTime = presentationDeadlineTime;
+            meetingConfigurationSchedule.PreMeetingVotingDeadlineTime = preMeetingVotingDeadlineTime;
             meetingConfigurationSchedule.CreatedBy = createdBy;
             meetingConfigurationSchedule.CreatedOn = createdOn;
             meetingConfigurationSchedule.ModifiedBy = modifiedBy;
@@ -3353,29 +3386,53 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.DateTime PresentationDateTime
+        public global::System.String PresentationDay
         {
             get
             {
-                return _PresentationDateTime;
+                return _PresentationDay;
             }
             set
             {
-                if (_PresentationDateTime != value)
+                OnPresentationDayChanging(value);
+                ReportPropertyChanging("PresentationDay");
+                _PresentationDay = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PresentationDay");
+                OnPresentationDayChanged();
+            }
+        }
+        private global::System.String _PresentationDay;
+        partial void OnPresentationDayChanging(global::System.String value);
+        partial void OnPresentationDayChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime PresentationTime
+        {
+            get
+            {
+                return _PresentationTime;
+            }
+            set
+            {
+                if (_PresentationTime != value)
                 {
-                    OnPresentationDateTimeChanging(value);
-                    ReportPropertyChanging("PresentationDateTime");
-                    _PresentationDateTime = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("PresentationDateTime");
-                    OnPresentationDateTimeChanged();
+                    OnPresentationTimeChanging(value);
+                    ReportPropertyChanging("PresentationTime");
+                    _PresentationTime = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PresentationTime");
+                    OnPresentationTimeChanged();
                 }
             }
         }
-        private global::System.DateTime _PresentationDateTime;
-        partial void OnPresentationDateTimeChanging(global::System.DateTime value);
-        partial void OnPresentationDateTimeChanged();
+        private global::System.DateTime _PresentationTime;
+        partial void OnPresentationTimeChanging(global::System.DateTime value);
+        partial void OnPresentationTimeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3407,56 +3464,152 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.DateTime PresentationDeadline
+        public global::System.String PresentationDeadlineDay
         {
             get
             {
-                return _PresentationDeadline;
+                return _PresentationDeadlineDay;
             }
             set
             {
-                if (_PresentationDeadline != value)
-                {
-                    OnPresentationDeadlineChanging(value);
-                    ReportPropertyChanging("PresentationDeadline");
-                    _PresentationDeadline = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("PresentationDeadline");
-                    OnPresentationDeadlineChanged();
-                }
+                OnPresentationDeadlineDayChanging(value);
+                ReportPropertyChanging("PresentationDeadlineDay");
+                _PresentationDeadlineDay = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PresentationDeadlineDay");
+                OnPresentationDeadlineDayChanged();
             }
         }
-        private global::System.DateTime _PresentationDeadline;
-        partial void OnPresentationDeadlineChanging(global::System.DateTime value);
-        partial void OnPresentationDeadlineChanged();
+        private global::System.String _PresentationDeadlineDay;
+        partial void OnPresentationDeadlineDayChanging(global::System.String value);
+        partial void OnPresentationDeadlineDayChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.DateTime PreMeetingVotingDeadline
+        public global::System.DateTime PresentationDeadlineTime
         {
             get
             {
-                return _PreMeetingVotingDeadline;
+                return _PresentationDeadlineTime;
             }
             set
             {
-                if (_PreMeetingVotingDeadline != value)
+                if (_PresentationDeadlineTime != value)
                 {
-                    OnPreMeetingVotingDeadlineChanging(value);
-                    ReportPropertyChanging("PreMeetingVotingDeadline");
-                    _PreMeetingVotingDeadline = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("PreMeetingVotingDeadline");
-                    OnPreMeetingVotingDeadlineChanged();
+                    OnPresentationDeadlineTimeChanging(value);
+                    ReportPropertyChanging("PresentationDeadlineTime");
+                    _PresentationDeadlineTime = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PresentationDeadlineTime");
+                    OnPresentationDeadlineTimeChanged();
                 }
             }
         }
-        private global::System.DateTime _PreMeetingVotingDeadline;
-        partial void OnPreMeetingVotingDeadlineChanging(global::System.DateTime value);
-        partial void OnPreMeetingVotingDeadlineChanged();
+        private global::System.DateTime _PresentationDeadlineTime;
+        partial void OnPresentationDeadlineTimeChanging(global::System.DateTime value);
+        partial void OnPresentationDeadlineTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PreMeetingVotingDeadlineDay
+        {
+            get
+            {
+                return _PreMeetingVotingDeadlineDay;
+            }
+            set
+            {
+                OnPreMeetingVotingDeadlineDayChanging(value);
+                ReportPropertyChanging("PreMeetingVotingDeadlineDay");
+                _PreMeetingVotingDeadlineDay = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PreMeetingVotingDeadlineDay");
+                OnPreMeetingVotingDeadlineDayChanged();
+            }
+        }
+        private global::System.String _PreMeetingVotingDeadlineDay;
+        partial void OnPreMeetingVotingDeadlineDayChanging(global::System.String value);
+        partial void OnPreMeetingVotingDeadlineDayChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime PreMeetingVotingDeadlineTime
+        {
+            get
+            {
+                return _PreMeetingVotingDeadlineTime;
+            }
+            set
+            {
+                if (_PreMeetingVotingDeadlineTime != value)
+                {
+                    OnPreMeetingVotingDeadlineTimeChanging(value);
+                    ReportPropertyChanging("PreMeetingVotingDeadlineTime");
+                    _PreMeetingVotingDeadlineTime = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("PreMeetingVotingDeadlineTime");
+                    OnPreMeetingVotingDeadlineTimeChanged();
+                }
+            }
+        }
+        private global::System.DateTime _PreMeetingVotingDeadlineTime;
+        partial void OnPreMeetingVotingDeadlineTimeChanging(global::System.DateTime value);
+        partial void OnPreMeetingVotingDeadlineTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ConfigurablePresentationDeadline
+        {
+            get
+            {
+                return _ConfigurablePresentationDeadline;
+            }
+            set
+            {
+                OnConfigurablePresentationDeadlineChanging(value);
+                ReportPropertyChanging("ConfigurablePresentationDeadline");
+                _ConfigurablePresentationDeadline = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ConfigurablePresentationDeadline");
+                OnConfigurablePresentationDeadlineChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ConfigurablePresentationDeadline;
+        partial void OnConfigurablePresentationDeadlineChanging(Nullable<global::System.Decimal> value);
+        partial void OnConfigurablePresentationDeadlineChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> ConfigurablePreMeetingVotingDeadline
+        {
+            get
+            {
+                return _ConfigurablePreMeetingVotingDeadline;
+            }
+            set
+            {
+                OnConfigurablePreMeetingVotingDeadlineChanging(value);
+                ReportPropertyChanging("ConfigurablePreMeetingVotingDeadline");
+                _ConfigurablePreMeetingVotingDeadline = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ConfigurablePreMeetingVotingDeadline");
+                OnConfigurablePreMeetingVotingDeadlineChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _ConfigurablePreMeetingVotingDeadline;
+        partial void OnConfigurablePreMeetingVotingDeadlineChanging(Nullable<global::System.Decimal> value);
+        partial void OnConfigurablePreMeetingVotingDeadlineChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -3565,54 +3718,6 @@ namespace GreenField.DAL
         private global::System.DateTime _ModifiedOn;
         partial void OnModifiedOnChanging(global::System.DateTime value);
         partial void OnModifiedOnChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> ConfigurablePresentationDeadline
-        {
-            get
-            {
-                return _ConfigurablePresentationDeadline;
-            }
-            set
-            {
-                OnConfigurablePresentationDeadlineChanging(value);
-                ReportPropertyChanging("ConfigurablePresentationDeadline");
-                _ConfigurablePresentationDeadline = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ConfigurablePresentationDeadline");
-                OnConfigurablePresentationDeadlineChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _ConfigurablePresentationDeadline;
-        partial void OnConfigurablePresentationDeadlineChanging(Nullable<global::System.Decimal> value);
-        partial void OnConfigurablePresentationDeadlineChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Decimal> ConfigurablePreMeetingVotingDeadline
-        {
-            get
-            {
-                return _ConfigurablePreMeetingVotingDeadline;
-            }
-            set
-            {
-                OnConfigurablePreMeetingVotingDeadlineChanging(value);
-                ReportPropertyChanging("ConfigurablePreMeetingVotingDeadline");
-                _ConfigurablePreMeetingVotingDeadline = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ConfigurablePreMeetingVotingDeadline");
-                OnConfigurablePreMeetingVotingDeadlineChanged();
-            }
-        }
-        private Nullable<global::System.Decimal> _ConfigurablePreMeetingVotingDeadline;
-        partial void OnConfigurablePreMeetingVotingDeadlineChanging(Nullable<global::System.Decimal> value);
-        partial void OnConfigurablePreMeetingVotingDeadlineChanged();
 
         #endregion
     

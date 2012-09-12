@@ -412,6 +412,11 @@ namespace GreenField.Web.Services
                         presentationOverviewData.CommitteeBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
                         presentationOverviewData.CommitteeSellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
 
+                        presentationOverviewData.SecurityBuySellvsCrnt = securityData.TRADING_CURRENCY + " " +
+                            String.Format("{0:n4}", fairValueRecord.FV_BUY) +
+                            "- " + securityData.TRADING_CURRENCY + " " +
+                            String.Format("{0:n4}", fairValueRecord.FV_SELL); 
+
                         Decimal upperLimit = fairValueRecord.FV_BUY >= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
                         Decimal lowerLimit = fairValueRecord.FV_BUY <= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
                         if (presentationOverviewData.CurrentHoldings == "YES")
@@ -442,7 +447,7 @@ namespace GreenField.Web.Services
 
                         PERIOD_FINANCIALS periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS
                             .Where(record => record.SECURITY_ID == securityID
-                                && record.DATA_ID == dataMasterRecord.DATA_ID
+                                && record.DATA_ID == 185
                                 && record.CURRENCY == "USD"
                                 && record.PERIOD_TYPE == "C").FirstOrDefault();
 
@@ -455,7 +460,7 @@ namespace GreenField.Web.Services
                 } 
                 #endregion
 
-                presentationOverviewData.SecurityBuySellvsCrnt = String.Empty; //"$16.50(8*2013PE)-$21.50(10.5*2013PE)";               
+                             
 
                 return presentationOverviewData;
             }
@@ -639,28 +644,32 @@ namespace GreenField.Web.Services
                 ICPresentationEntities entity = new ICPresentationEntities();
                 MeetingConfigurationSchedule meetingConfigurationSchedule = entity.MeetingConfigurationSchedules.FirstOrDefault();
 
-                DateTime presentationDateTime = meetingConfigurationSchedule.PresentationDateTime;
-                DateTime preMeetingVotingDeadline = meetingConfigurationSchedule.PreMeetingVotingDeadline;
-                DateTime presentationDeadline = meetingConfigurationSchedule.PresentationDeadline;
-
+                String presentationDay = meetingConfigurationSchedule.PresentationDay;
+                DateTime presentationTime = meetingConfigurationSchedule.PresentationTime;
+                String preMeetingVotingDeadlineDay = meetingConfigurationSchedule.PreMeetingVotingDeadlineDay;
+                DateTime preMeetingVotingDeadlineTime = meetingConfigurationSchedule.PreMeetingVotingDeadlineTime;
+                String presentationDeadlineDay = meetingConfigurationSchedule.PresentationDeadlineDay;
+                DateTime presentationDeadlineTime = meetingConfigurationSchedule.PresentationDeadlineTime;
+                
                 List<MeetingInfo> result = new List<MeetingInfo>();
-
-                for (DateTime id = DateTime.Now; id < DateTime.Now.AddMonths(months); id = id.AddDays(7))
+                
+                for (DateTime id = DateTime.UtcNow; id < DateTime.Now.AddMonths(months); id = id.AddDays(7))
                 {
-                    DateTime tempPresentationDeadline = id.Date.Add(presentationDeadline.TimeOfDay);
+                    
+                    DateTime tempPresentationDeadline = id.Date.Add(presentationDeadlineTime.TimeOfDay);
 
                     if (tempPresentationDeadline < DateTime.Now)
                         continue;
 
-                    while (tempPresentationDeadline.DayOfWeek != presentationDeadline.DayOfWeek)
+                    while (tempPresentationDeadline.DayOfWeek.ToString() != presentationDeadlineDay)
                         tempPresentationDeadline = tempPresentationDeadline.AddDays(1);
 
-                    DateTime tempPreMeetingVotingDeadline = tempPresentationDeadline.Date.Add(preMeetingVotingDeadline.TimeOfDay);
-                    while (tempPreMeetingVotingDeadline.DayOfWeek != preMeetingVotingDeadline.DayOfWeek)
+                    DateTime tempPreMeetingVotingDeadline = tempPresentationDeadline.Date.Add(preMeetingVotingDeadlineTime.TimeOfDay);
+                    while (tempPreMeetingVotingDeadline.DayOfWeek.ToString() != preMeetingVotingDeadlineDay)
                         tempPreMeetingVotingDeadline = tempPreMeetingVotingDeadline.AddDays(1);
 
-                    DateTime meetingDateTime = tempPreMeetingVotingDeadline.Date.Add(presentationDateTime.TimeOfDay);
-                    while (meetingDateTime.DayOfWeek != presentationDateTime.DayOfWeek)
+                    DateTime meetingDateTime = tempPreMeetingVotingDeadline.Date.Add(presentationTime.TimeOfDay);
+                    while (meetingDateTime.DayOfWeek.ToString() != presentationDay)
                         meetingDateTime = meetingDateTime.AddDays(1);
 
                     result.Add(new MeetingInfo()
@@ -691,11 +700,10 @@ namespace GreenField.Web.Services
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
-                Int32? result = entity.SetMeetingConfigSchedule(meetingConfigurationSchedule.PresentationDateTime,
-                                                            meetingConfigurationSchedule.PresentationTimeZone,
-                                                            meetingConfigurationSchedule.PresentationDeadline,
-                                                            meetingConfigurationSchedule.PreMeetingVotingDeadline,
-                                                            userName).FirstOrDefault();
+                Int32? result = entity.SetMeetingConfigSchedule(userName, meetingConfigurationSchedule.PresentationDay, meetingConfigurationSchedule.PresentationTime
+                    , meetingConfigurationSchedule.PresentationTimeZone, meetingConfigurationSchedule.PresentationDeadlineDay
+                    , meetingConfigurationSchedule.PresentationDeadlineTime, meetingConfigurationSchedule.PreMeetingVotingDeadlineDay
+                    , meetingConfigurationSchedule.PreMeetingVotingDeadlineTime).FirstOrDefault();
 
                 return result == 0;
             }

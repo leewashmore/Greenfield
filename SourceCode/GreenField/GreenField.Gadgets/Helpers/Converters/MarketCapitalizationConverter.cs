@@ -10,37 +10,30 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Data;
 using System.Collections.Generic;
+using System.Linq;
 using GreenField.ServiceCaller.MeetingDefinitions;
-using GreenField.Common;
+
 
 namespace GreenField.Gadgets.Helpers
 {
-    public class UTCToLocalDateTimeConverter : IValueConverter
+    public class MarketCapitalizationConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value is DateTime?)
+            if (value != null)
             {
-                if (value == null)
-                    return null;
-                DateTime dateTime = (DateTime)value;
-
-                return dateTime.ToLocalTime();
+                Decimal convValue;
+                if (Decimal.TryParse(value.ToString(), out convValue) == false)
+                    return value;
+                String result = String.Format("${0:n4}mn", convValue / Decimal.Parse("1000000"));
+                return result;
             }
-            return value;
+            return null;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            if (value is DateTime?)
-            {
-                if (value == null)
-                    return null;
-                DateTime dateTime = (DateTime)value;
-
-                return dateTime.ToUniversalTime();
-            }
-            return value;
+            throw new NotImplementedException();
         }
     }
 }

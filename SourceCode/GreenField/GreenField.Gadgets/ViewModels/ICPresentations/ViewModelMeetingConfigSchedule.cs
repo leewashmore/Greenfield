@@ -35,13 +35,21 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Fields
         private Boolean calculationFlag = false;
-        private DateTime SUNDAY = new DateTime(2012, 1, 1, 0, 0, 0, DateTimeKind.Local);
-        private DateTime MONDAY = new DateTime(2012, 1, 2, 0, 0, 0, DateTimeKind.Local);
-        private DateTime TUESDAY = new DateTime(2012, 1, 3, 0, 0, 0, DateTimeKind.Local);
-        private DateTime WEDNESDAY = new DateTime(2012, 1, 4, 0, 0, 0, DateTimeKind.Local);
-        private DateTime THURSDAY = new DateTime(2012, 1, 5, 0, 0, 0, DateTimeKind.Local);
-        private DateTime FRIDAY = new DateTime(2012, 1, 6, 0, 0, 0, DateTimeKind.Local);
-        private DateTime SATURDAY = new DateTime(2012, 1, 7, 0, 0, 0, DateTimeKind.Local);
+        private DateTime SUNDAY_UTC = new DateTime(2012, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        private DateTime MONDAY_UTC = new DateTime(2012, 1, 2, 0, 0, 0, DateTimeKind.Utc);
+        private DateTime TUESDAY_UTC = new DateTime(2012, 1, 3, 0, 0, 0, DateTimeKind.Utc);
+        private DateTime WEDNESDAY_UTC = new DateTime(2012, 1, 4, 0, 0, 0, DateTimeKind.Utc);
+        private DateTime THURSDAY_UTC = new DateTime(2012, 1, 5, 0, 0, 0, DateTimeKind.Utc);
+        private DateTime FRIDAY_UTC = new DateTime(2012, 1, 6, 0, 0, 0, DateTimeKind.Utc);
+        private DateTime SATURDAY_UTC = new DateTime(2012, 1, 7, 0, 0, 0, DateTimeKind.Utc);
+
+        private DateTime SUNDAY_LOCAL = new DateTime(2012, 1, 1, 0, 0, 0, DateTimeKind.Local);
+        private DateTime MONDAY_LOCAL = new DateTime(2012, 1, 2, 0, 0, 0, DateTimeKind.Local);
+        private DateTime TUESDAY_LOCAL = new DateTime(2012, 1, 3, 0, 0, 0, DateTimeKind.Local);
+        private DateTime WEDNESDAY_LOCAL = new DateTime(2012, 1, 4, 0, 0, 0, DateTimeKind.Local);
+        private DateTime THURSDAY_LOCAL = new DateTime(2012, 1, 5, 0, 0, 0, DateTimeKind.Local);
+        private DateTime FRIDAY_LOCAL = new DateTime(2012, 1, 6, 0, 0, 0, DateTimeKind.Local);
+        private DateTime SATURDAY_LOCAL = new DateTime(2012, 1, 7, 0, 0, 0, DateTimeKind.Local);
 
         // private ManageMeetings _manageMeetings;
         /// <summary>
@@ -92,15 +100,26 @@ namespace GreenField.Gadgets.ViewModels
             _logger = param.LoggerFacade;
             _eventAggregator = param.EventAggregator;
 
-            while(SUNDAY.DayOfWeek != DayOfWeek.Sunday)
+            while (SUNDAY_UTC.DayOfWeek != DayOfWeek.Sunday)
             {
-                SUNDAY = SUNDAY.AddDays(1);
-                MONDAY = MONDAY.AddDays(1);
-                TUESDAY = TUESDAY.AddDays(1);
-                WEDNESDAY = WEDNESDAY.AddDays(1);
-                THURSDAY = THURSDAY.AddDays(1);
-                FRIDAY = FRIDAY.AddDays(1);
-                SATURDAY = SATURDAY.AddDays(1);
+                SUNDAY_UTC = SUNDAY_UTC.AddDays(1);
+                MONDAY_UTC = MONDAY_UTC.AddDays(1);
+                TUESDAY_UTC = TUESDAY_UTC.AddDays(1);
+                WEDNESDAY_UTC = WEDNESDAY_UTC.AddDays(1);
+                THURSDAY_UTC = THURSDAY_UTC.AddDays(1);
+                FRIDAY_UTC = FRIDAY_UTC.AddDays(1);
+                SATURDAY_UTC = SATURDAY_UTC.AddDays(1);
+            }
+
+            while (SUNDAY_LOCAL.DayOfWeek != DayOfWeek.Sunday)
+            {
+                SUNDAY_LOCAL = SUNDAY_LOCAL.AddDays(1);
+                MONDAY_LOCAL = MONDAY_LOCAL.AddDays(1);
+                TUESDAY_LOCAL = TUESDAY_LOCAL.AddDays(1);
+                WEDNESDAY_LOCAL = WEDNESDAY_LOCAL.AddDays(1);
+                THURSDAY_LOCAL = THURSDAY_LOCAL.AddDays(1);
+                FRIDAY_LOCAL = FRIDAY_LOCAL.AddDays(1);
+                SATURDAY_LOCAL = SATURDAY_LOCAL.AddDays(1);
             }
         }
 
@@ -109,32 +128,33 @@ namespace GreenField.Gadgets.ViewModels
         #region Properties
         #region Binded Properties
 
-        public List<DateTime> PresentationDay
+        public List<String> PresentationDay
         {
             get
             {
-                List<DateTime> _presentationDay = new List<DateTime>();
-                _presentationDay.Add(MONDAY);
-                _presentationDay.Add(TUESDAY);
-                _presentationDay.Add(WEDNESDAY);
-                _presentationDay.Add(THURSDAY);
-                _presentationDay.Add(FRIDAY);
+                List<String> _presentationDay = new List<String>();
+                _presentationDay.Add(DayOfWeek.Monday.ToString());
+                _presentationDay.Add(DayOfWeek.Tuesday.ToString());
+                _presentationDay.Add(DayOfWeek.Wednesday.ToString());
+                _presentationDay.Add(DayOfWeek.Thursday.ToString());
+                _presentationDay.Add(DayOfWeek.Friday.ToString());
+                _presentationDay.Add(DayOfWeek.Saturday.ToString());
+                _presentationDay.Add(DayOfWeek.Sunday.ToString());
                 return _presentationDay;
             }
         }
 
-        private DateTime _selectedPresentationDay;
-        public DateTime SelectedPresentationDay
+        private String _selectedPresentationDay;
+        public String SelectedPresentationDay
         {
             get { return _selectedPresentationDay; }
             set
             {
                 _selectedPresentationDay = value;
                 RaisePropertyChanged(() => this.SelectedPresentationDay);
-                if (calculationFlag && SelectedPresentationDateTime != null)
+                if (calculationFlag && SelectedPresentationDateTime != null && value != null)
                 {
-                    SelectedPresentationDateTime = SelectedPresentationDay.Add(
-                        Convert.ToDateTime(SelectedPresentationDateTime).TimeOfDay);
+                    SelectedPresentationDateTime = GetDateTimeFromDayTime(value, Convert.ToDateTime(SelectedPresentationDateTime), false);
                 }
             }
         }
@@ -147,14 +167,14 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (value != null)
                 {
-                    _selectedPresentationDateTime = SelectedPresentationDay.Add(Convert.ToDateTime(value).TimeOfDay);
+                    _selectedPresentationDateTime = value;
                     RaisePropertyChanged(() => this.SelectedPresentationDateTime);
-                }
 
-                if (calculationFlag)
-                {
-                    CalculateDeadlines();
-                }
+                    if (calculationFlag && SelectedPresentationDay != null)
+                    {
+                        CalculateDeadlines(SelectedPresentationDay, Convert.ToDateTime(value));
+                    }
+                }                
             }
         }
 
@@ -175,33 +195,6 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _configPreMeetingVotingDeadLine = value;
-            }
-        }
-
-        public List<string> PresentationTimeZone
-        {
-            get
-            {
-                List<string> _timeZones = new List<string>();
-                _timeZones.Add("EST");
-                _timeZones.Add("PST");
-                _timeZones.Add("UTC");
-                return _timeZones;
-            }
-        }
-
-        private string _selectedTimeZone;
-        public string SelectedTimeZone
-        {
-            get { return _selectedTimeZone; }
-            set
-            {
-                _selectedTimeZone = value;
-                RaisePropertyChanged(() => this.SelectedTimeZone);
-                if (calculationFlag)
-                {
-                    CalculateDeadlines();
-                }
             }
         }
 
@@ -275,10 +268,14 @@ namespace GreenField.Gadgets.ViewModels
         private void MeetingConfigurationSaveItem(object param)
         {
             MeetingConfigurationSchedule config = new MeetingConfigurationSchedule();
-            config.PresentationDateTime = Convert.ToDateTime(SelectedPresentationDateTime).ToUniversalTime();
+            DateTime presentationDateTime = Convert.ToDateTime(SelectedPresentationDateTime);
+            config.PresentationDay = GetDateTimeFromDayTime(presentationDateTime.DayOfWeek.ToString(), presentationDateTime, false).ToUniversalTime().DayOfWeek.ToString();
+            config.PresentationTime = GetDateTimeFromDayTime(presentationDateTime.DayOfWeek.ToString(), presentationDateTime, false).ToUniversalTime();
             config.PresentationTimeZone = "UTC";//SelectedTimeZone;
-            config.PresentationDeadline = PresentationDeadline.ToUniversalTime();
-            config.PreMeetingVotingDeadline = PreMeetingVotingDeadline.ToUniversalTime();
+            config.PresentationDeadlineDay = GetDateTimeFromDayTime(PresentationDeadline.DayOfWeek.ToString(), PresentationDeadline, false).ToUniversalTime().DayOfWeek.ToString();
+            config.PresentationDeadlineTime = GetDateTimeFromDayTime(PresentationDeadline.DayOfWeek.ToString(), PresentationDeadline, false).ToUniversalTime();
+            config.PreMeetingVotingDeadlineDay = GetDateTimeFromDayTime(PreMeetingVotingDeadline.DayOfWeek.ToString(), PreMeetingVotingDeadline, false).ToUniversalTime().DayOfWeek.ToString();
+            config.PreMeetingVotingDeadlineTime = GetDateTimeFromDayTime(PreMeetingVotingDeadline.DayOfWeek.ToString(), PreMeetingVotingDeadline, false).ToUniversalTime();
             config.CreatedBy = "System";
             config.CreatedOn = DateTime.UtcNow;
             config.ModifiedBy = "System";
@@ -303,21 +300,16 @@ namespace GreenField.Gadgets.ViewModels
             RaisePropertyChanged(() => this.SubmitCommand);
         }
 
-        private void CalculateDeadlines()
+        private void CalculateDeadlines(String presentationday, DateTime presentationTime)
         {
-            if (SelectedPresentationDateTime == null)
-                return;
+            DateTime presentationDateTime = GetDateTimeFromDayTime(presentationday, presentationTime, false);
 
-            PresentationDeadline = CalcPresentationDeadline((Convert.ToDateTime(SelectedPresentationDateTime)), ConfigPresentationDeadline);
-
-            PreMeetingVotingDeadline = Convert.ToDateTime(SelectedPresentationDateTime).AddHours(0 - ConfigPreMeetingVotingDeadLine);
+            PresentationDeadline = CalculateDeadlines(Convert.ToDateTime(SelectedPresentationDateTime), ConfigPresentationDeadline);
+            PreMeetingVotingDeadline = CalculateDeadlines(Convert.ToDateTime(SelectedPresentationDateTime), ConfigPreMeetingVotingDeadLine);
         }
 
-        public DateTime CalcPresentationDeadline(DateTime dt, float duration)
+        private DateTime CalculateDeadlines(DateTime dt, float duration)
         {
-            //float days = duration / 24;
-
-
             TimeSpan tDays = new TimeSpan(Convert.ToInt16(duration), Convert.ToInt16((duration - Convert.ToInt16(duration)) * 60), 0);
 
             DateTime newTime = dt - tDays;
@@ -332,7 +324,6 @@ namespace GreenField.Gadgets.ViewModels
                 }
 
                 counter = counter.AddDays(1);
-
             }
 
             newTime = newTime.AddDays(0 - offs);
@@ -361,7 +352,39 @@ namespace GreenField.Gadgets.ViewModels
             BusyIndicatorIsBusy = showBusyIndicator;
         }
 
+        private DateTime GetDateTimeFromDayTime(String day, DateTime time, Boolean IsUTC = true)
+        {
+            DateTime result = DateTime.UtcNow;
+            switch (day)
+            {
+                case "Friday":
+                    result = IsUTC ? FRIDAY_UTC.Add(time.TimeOfDay) : FRIDAY_LOCAL.Add(time.TimeOfDay);
+                    break;
+                case "Monday":
+                    result = IsUTC ? MONDAY_UTC.Add(time.TimeOfDay) : MONDAY_LOCAL.Add(time.TimeOfDay);
+                    break;
+                case "Saturday":
+                    result = IsUTC ? SATURDAY_UTC.Add(time.TimeOfDay) : SATURDAY_LOCAL.Add(time.TimeOfDay);
+                    break;
+                case "Sunday":
+                    result = IsUTC ? SUNDAY_UTC.Add(time.TimeOfDay) : SUNDAY_LOCAL.Add(time.TimeOfDay);
+                    break;
+                case "Thursday":
+                    result = IsUTC ? THURSDAY_UTC.Add(time.TimeOfDay) : THURSDAY_LOCAL.Add(time.TimeOfDay);
+                    break;
+                case "Tuesday":
+                    result = IsUTC ? TUESDAY_UTC.AddHours(time.Hour).AddMinutes(time.Minute).AddSeconds(time.Second)
+                        : TUESDAY_LOCAL.AddHours(time.Hour).AddMinutes(time.Minute).AddSeconds(time.Second);
+                    break;
+                case "Wednesday":
+                    result = IsUTC ? WEDNESDAY_UTC.Add(time.TimeOfDay) : WEDNESDAY_LOCAL.Add(time.TimeOfDay);
+                    break;
+                default:
+                    break;
+            }
 
+            return result;
+        }
         #endregion
 
         #region CallBack Methods
@@ -373,14 +396,30 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (val != null)
                 {
-                    SelectedPresentationDay = val.PresentationDateTime.Date;
-                    SelectedPresentationDateTime = val.PresentationDateTime;
-                    SelectedTimeZone = val.PresentationTimeZone;
-                    PresentationDeadline = val.PresentationDeadline;
-                    PreMeetingVotingDeadline = val.PreMeetingVotingDeadline;
+                    #region Get Local DateTimes
+                    String presentationDay = val.PresentationDay;
+                    DateTime presentationTime = val.PresentationTime;
+                    DateTime presentationDateTime = GetDateTimeFromDayTime(presentationDay, presentationTime).ToLocalTime();
+
+                    String preMeetingVotingDeadlineDay = val.PreMeetingVotingDeadlineDay;
+                    DateTime preMeetingVotingDeadlineTime = val.PreMeetingVotingDeadlineTime;
+                    DateTime preMeetingVotingDeadlineDateTime = GetDateTimeFromDayTime(preMeetingVotingDeadlineDay, preMeetingVotingDeadlineTime).ToLocalTime();
+
+                    String presentationDeadlineDay = val.PresentationDeadlineDay;
+                    DateTime presentationDeadlineTime = val.PresentationDeadlineTime;
+                    DateTime presentationDeadlineDateTime = GetDateTimeFromDayTime(presentationDeadlineDay, presentationDeadlineTime).ToLocalTime(); 
+                    #endregion
+
+                    SelectedPresentationDay = presentationDateTime.DayOfWeek.ToString();
+                    SelectedPresentationDateTime = presentationDateTime;
+
+                    //SelectedTimeZone = val.PresentationTimeZone;
+                    
                     ConfigPresentationDeadline = (float)val.ConfigurablePresentationDeadline;
                     ConfigPreMeetingVotingDeadLine = (float)val.ConfigurablePreMeetingVotingDeadline;
                     calculationFlag = true;
+
+                    CalculateDeadlines(SelectedPresentationDay, Convert.ToDateTime(SelectedPresentationDateTime));
                 }
                 else
                 {

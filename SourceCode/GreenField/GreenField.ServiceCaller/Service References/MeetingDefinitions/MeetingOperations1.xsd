@@ -322,9 +322,12 @@
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="PreMeetingVotingDeadline" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="PresentationDateTime" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="PresentationDeadline" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PreMeetingVotingDeadlineDay" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PreMeetingVotingDeadlineTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PresentationDay" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PresentationDeadlineDay" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PresentationDeadlineTime" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PresentationTime" type="xs:dateTime" />
           <xs:element minOccurs="0" name="PresentationTimeZone" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:extension>

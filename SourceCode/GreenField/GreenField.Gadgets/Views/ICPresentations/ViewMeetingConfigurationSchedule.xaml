@@ -14,10 +14,7 @@
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
-                <ResourceDictionary>
-                    <helpers:UTCToLocalDateTimeConverter x:Key="UTCToLocalDateTimeConverter"/>
-                </ResourceDictionary>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
@@ -45,7 +42,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Presentation Day: " HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadComboBox x:Name="cmbPresentationDay" ItemsSource="{Binding PresentationDay}" HorizontalContentAlignment="Left"
-                                         DisplayMemberPath="DayOfWeek" SelectedItem="{Binding SelectedPresentationDay, Mode=TwoWay}" Width="150"
+                                         SelectedItem="{Binding SelectedPresentationDay, Mode=TwoWay}" Width="150"
                                          Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"
                                          Style="{StaticResource RadComboBoxStyle}">
                     </telerik:RadComboBox>

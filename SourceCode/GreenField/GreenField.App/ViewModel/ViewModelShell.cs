@@ -83,7 +83,7 @@ namespace GreenField.App.ViewModel
 
                                     if (session.Roles != null)
                                     {
-                                        RoleIsICAdmin = !session.Roles.Contains(MemberGroups.IC_ADMIN);
+                                        RoleIsICAdmin = session.Roles.Contains(MemberGroups.IC_ADMIN);
                                     }
 
                                     Logging.LogSessionStart(_logger);

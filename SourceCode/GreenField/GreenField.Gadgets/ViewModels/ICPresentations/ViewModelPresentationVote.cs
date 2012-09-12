@@ -169,6 +169,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedPresentationPreMeetingVoterInfo = value;
                 RaisePropertyChanged(() => this.SelectedPresentationPreMeetingVoterInfo);
+                VoteIsEnabled = value != null && UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN);
             }
         }
 
@@ -263,7 +264,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public ICommand SubmitCommand
         {
-            get { return new DelegateCommand<object>(SubmitCommandMethod); }
+            get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
         }
 
         public ICommand AddCommentCommand
@@ -308,6 +309,26 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region ICommand Methods
+        private bool SubmitCommandValidationMethod(object param)
+        {
+            if (UserSession.SessionManager.SESSION == null
+                || SelectedPresentationOverviewInfo == null
+                || PresentationPreMeetingVoterInfo == null)
+                return false;
+            if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING)
+            {
+                if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
+                    return false;
+            }
+            else
+            {
+                if (!(PresentationPreMeetingVoterInfo.Any(record => record.Name == UserSession.SessionManager.SESSION.UserName) ||
+                    (SelectedPresentationOverviewInfo.Presenter == UserSession.SessionManager.SESSION.UserName)))
+                    return false;
+            }
+            return true;
+        }
+
         private void SubmitCommandMethod(object param)
         {
             VoterInfo presenterVoterInfo = PresentationPreMeetingVoterInfo
@@ -400,6 +421,8 @@ namespace GreenField.Gadgets.ViewModels
                             .Where(record => record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower()).ToList();
                         PresentationPreMeetingVoterInfo = PresentationPreMeetingVoterInfo
                             .Where(record => record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower()).ToList();
+                        VoterIsEnabled = true;
+                        VoteIsEnabled = false;
                     }
                     
 
@@ -416,13 +439,7 @@ namespace GreenField.Gadgets.ViewModels
                         VoterIsEnabled = false;
                         VoteIsEnabled = false;
                         NotesIsEnabled = true;
-                    }
-
-                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
-                    {
-                        VoterIsEnabled = true;
-                        VoteIsEnabled = true;
-                    }
+                    }                    
 
                     if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) &&
                         !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.VOTING_MEMBER))
@@ -452,7 +469,9 @@ namespace GreenField.Gadgets.ViewModels
                         VoteIsEnabled = false;
                         NotesIsEnabled = false;
                         BlogIsEnabled = false;
-                    }                    
+                    }
+
+                    RaisePropertyChanged(() => this.SubmitCommand);
                 }
                 else
                 {

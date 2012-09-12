@@ -127,6 +127,7 @@
     <Compile Include="Helpers\ChildExportOptions.xaml.cs">
       <DependentUpon>ChildExportOptions.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Converters\MarketCapitalizationConverter.cs" />
     <Compile Include="Helpers\Converters\DocumentCategoryConverter.cs" />
     <Compile Include="Helpers\Converters\UTCToLocalDateTimeConverter.cs" />
     <Compile Include="Helpers\Converters\MeetingDecisionEntryPFVBuySellInputEnabledConverter.cs" />

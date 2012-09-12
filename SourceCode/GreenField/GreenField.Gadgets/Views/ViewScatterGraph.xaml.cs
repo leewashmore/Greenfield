@@ -21,13 +21,28 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewScatterGraph : ViewBaseUserControl
     {
-        ViewModelScatterGraph _dataContextSource;
+        public ViewModelScatterGraph DataContextSource { get; set; }
+
+        /// <summary>
+        /// property to set IsActive variable of View Model
+        /// </summary>
+        private bool _isActive;
+        public override bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (DataContextSource != null) //DataContext instance
+                    DataContextSource.IsActive = _isActive;
+            }
+        }
 
         public ViewScatterGraph(ViewModelScatterGraph dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
-            _dataContextSource = dataContextSource;
+            DataContextSource = dataContextSource;
         }
 
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
@@ -37,12 +52,22 @@ namespace GreenField.Gadgets.Views
                 List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>();
 
                 if (this.chScatter.Visibility == Visibility.Visible)
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Scatter Graph Chart", Element = this.chScatter
-                        , ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });                    
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = "Scatter Graph Chart",
+                        Element = this.chScatter
+                        ,
+                        ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER
+                    });
 
                 if (this.dgScatterGraph.Visibility == Visibility.Visible)
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = "Scatter Graph Data", Element = this.dgScatterGraph
-                        , ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    RadExportOptionsInfo.Add(new RadExportOptions()
+                    {
+                        ElementName = "Scatter Graph Data",
+                        Element = this.dgScatterGraph
+                        ,
+                        ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER
+                    });
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: Scatter Graph");
                 childExportOptions.Show();
@@ -70,19 +95,19 @@ namespace GreenField.Gadgets.Views
             RadGridView_ElementExport.ElementExporting(e);
         }
 
-        
+
         private void ChartArea_ItemToolTipOpening(ItemToolTip2D tooltip, ItemToolTipEventArgs e)
         {
             RatioComparisonData dataPointContext = e.DataPoint.DataItem as RatioComparisonData;
-            if(dataPointContext == null)
+            if (dataPointContext == null)
             {
                 tooltip.Content = null;
                 return;
-            }            
+            }
 
-            tooltip.Content = dataPointContext.ISSUE_NAME + " (" 
-                + EnumUtils.GetDescriptionFromEnumValue<ScatterGraphValuationRatio>(_dataContextSource.SelectedValuationRatio) + ":" + dataPointContext.VALUATION + ", "
-                + EnumUtils.GetDescriptionFromEnumValue<ScatterGraphFinancialRatio>(_dataContextSource.SelectedFinancialRatio) + ":" + dataPointContext.FINANCIAL + ")";
+            tooltip.Content = dataPointContext.ISSUE_NAME + " ("
+                + EnumUtils.GetDescriptionFromEnumValue<ScatterGraphValuationRatio>(DataContextSource.SelectedValuationRatio) + ":" + dataPointContext.VALUATION + ", "
+                + EnumUtils.GetDescriptionFromEnumValue<ScatterGraphFinancialRatio>(DataContextSource.SelectedFinancialRatio) + ":" + dataPointContext.FINANCIAL + ")";
 
         }
 
@@ -94,29 +119,29 @@ namespace GreenField.Gadgets.Views
 
         private void chScatter_DataBound(object sender, ChartDataBoundEventArgs e)
         {
-            if (_dataContextSource.RatioComparisonInfo != null)
+            if (DataContextSource.RatioComparisonInfo != null)
             {
                 this.chScatter.DefaultView.ChartArea.Annotations.Clear();
 
-                if (_dataContextSource.RatioComparisonInfo.Count() != 0)
+                if (DataContextSource.RatioComparisonInfo.Count() != 0)
                 {
-                    Decimal? financialRatioTotal = _dataContextSource.RatioComparisonInfo.Sum(record => record.FINANCIAL);
-                    Decimal? financialRatioAverage = financialRatioTotal / _dataContextSource.RatioComparisonInfo.Count();
+                    Decimal? financialRatioTotal = DataContextSource.RatioComparisonInfo.Sum(record => record.FINANCIAL);
+                    Decimal? financialRatioAverage = financialRatioTotal / DataContextSource.RatioComparisonInfo.Count();
 
-                    Decimal? valuationRatioTotal = _dataContextSource.RatioComparisonInfo.Sum(record => record.VALUATION);
-                    Decimal? valuationRatioAverage = valuationRatioTotal / _dataContextSource.RatioComparisonInfo.Count();
+                    Decimal? valuationRatioTotal = DataContextSource.RatioComparisonInfo.Sum(record => record.VALUATION);
+                    Decimal? valuationRatioAverage = valuationRatioTotal / DataContextSource.RatioComparisonInfo.Count();
 
                     this.chaScatter.Annotations.Add(new CustomGridLine() { XIntercept = Convert.ToDouble(valuationRatioAverage), StrokeThickness = 1 });
                     this.chaScatter.Annotations.Add(new CustomGridLine() { YIntercept = Convert.ToDouble(financialRatioAverage), StrokeThickness = 1 });
 
                     //RatioComparisonData issuerRecord = _dataContextSource.RatioComparisonInfo.Where(record => record.ISSUE_NAME == _dataContextSource.EntitySelectionInfo.LongName
                     //    && record.ISSUER_ID == _dataContextSource.IssuerReferenceInfo.IssuerId).FirstOrDefault();
-                    
+
 
                 }
             }
 
-            
+
 
             //RatioComparisonData issuerRecord = _dataContextSource.RatioComparisonInfo.Where(record => record.ISSUE_NAME == "SampleIssueName15").FirstOrDefault();
             //DataPoint point = new DataPoint() 
@@ -124,7 +149,7 @@ namespace GreenField.Gadgets.Views
             //    XValue = Convert.ToDouble(issuerRecord.VALUATION), 
             //    YValue = Convert.ToDouble(issuerRecord.FINANCIAL),                
             //};
-            
+
             //this.chScatter.DefaultView.ChartArea.Annotations.Add(new CustomLine()
             //{
             //    MinX = Convert.ToDouble(issuerRecord.VALUATION) - 0.5,
@@ -151,8 +176,8 @@ namespace GreenField.Gadgets.Views
 
         }
 
-        
 
-        
+
+
     }
 }

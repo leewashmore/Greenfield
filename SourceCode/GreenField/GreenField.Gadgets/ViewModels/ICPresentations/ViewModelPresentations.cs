@@ -352,10 +352,13 @@ namespace GreenField.Gadgets.ViewModels
         {
             Prompt.ShowDialog("Please confirm withdrawal of selected presentation", "Confirmation", MessageBoxButton.OKCancel, (result) =>
             {
-                if (_dbInteractivity != null)
+                if (result == MessageBoxResult.OK)
                 {
-                    _dbInteractivity.SetICPPresentationStatus(UserSession.SessionManager.SESSION.UserName,
-                               SelectedPresentationOverviewInfo.PresentationID, StatusType.WITHDRAWN, SetICPPresentationStatusCallbackMethod); 
+                    if (_dbInteractivity != null)
+                    {
+                        _dbInteractivity.SetICPPresentationStatus(UserSession.SessionManager.SESSION.UserName,
+                                   SelectedPresentationOverviewInfo.PresentationID, StatusType.WITHDRAWN, SetICPPresentationStatusCallbackMethod);
+                    } 
                 }
             });
             

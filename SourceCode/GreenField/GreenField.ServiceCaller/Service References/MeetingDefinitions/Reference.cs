@@ -2964,11 +2964,17 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private System.DateTime ModifiedOnField;
         
-        private System.DateTime PreMeetingVotingDeadlineField;
+        private string PreMeetingVotingDeadlineDayField;
         
-        private System.DateTime PresentationDateTimeField;
+        private System.DateTime PreMeetingVotingDeadlineTimeField;
         
-        private System.DateTime PresentationDeadlineField;
+        private string PresentationDayField;
+        
+        private string PresentationDeadlineDayField;
+        
+        private System.DateTime PresentationDeadlineTimeField;
+        
+        private System.DateTime PresentationTimeField;
         
         private string PresentationTimeZoneField;
         
@@ -3051,40 +3057,79 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime PreMeetingVotingDeadline {
+        public string PreMeetingVotingDeadlineDay {
             get {
-                return this.PreMeetingVotingDeadlineField;
+                return this.PreMeetingVotingDeadlineDayField;
             }
             set {
-                if ((this.PreMeetingVotingDeadlineField.Equals(value) != true)) {
-                    this.PreMeetingVotingDeadlineField = value;
-                    this.RaisePropertyChanged("PreMeetingVotingDeadline");
+                if ((object.ReferenceEquals(this.PreMeetingVotingDeadlineDayField, value) != true)) {
+                    this.PreMeetingVotingDeadlineDayField = value;
+                    this.RaisePropertyChanged("PreMeetingVotingDeadlineDay");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime PresentationDateTime {
+        public System.DateTime PreMeetingVotingDeadlineTime {
             get {
-                return this.PresentationDateTimeField;
+                return this.PreMeetingVotingDeadlineTimeField;
             }
             set {
-                if ((this.PresentationDateTimeField.Equals(value) != true)) {
-                    this.PresentationDateTimeField = value;
-                    this.RaisePropertyChanged("PresentationDateTime");
+                if ((this.PreMeetingVotingDeadlineTimeField.Equals(value) != true)) {
+                    this.PreMeetingVotingDeadlineTimeField = value;
+                    this.RaisePropertyChanged("PreMeetingVotingDeadlineTime");
                 }
             }
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.DateTime PresentationDeadline {
+        public string PresentationDay {
             get {
-                return this.PresentationDeadlineField;
+                return this.PresentationDayField;
             }
             set {
-                if ((this.PresentationDeadlineField.Equals(value) != true)) {
-                    this.PresentationDeadlineField = value;
-                    this.RaisePropertyChanged("PresentationDeadline");
+                if ((object.ReferenceEquals(this.PresentationDayField, value) != true)) {
+                    this.PresentationDayField = value;
+                    this.RaisePropertyChanged("PresentationDay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PresentationDeadlineDay {
+            get {
+                return this.PresentationDeadlineDayField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PresentationDeadlineDayField, value) != true)) {
+                    this.PresentationDeadlineDayField = value;
+                    this.RaisePropertyChanged("PresentationDeadlineDay");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime PresentationDeadlineTime {
+            get {
+                return this.PresentationDeadlineTimeField;
+            }
+            set {
+                if ((this.PresentationDeadlineTimeField.Equals(value) != true)) {
+                    this.PresentationDeadlineTimeField = value;
+                    this.RaisePropertyChanged("PresentationDeadlineTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime PresentationTime {
+            get {
+                return this.PresentationTimeField;
+            }
+            set {
+                if ((this.PresentationTimeField.Equals(value) != true)) {
+                    this.PresentationTimeField = value;
+                    this.RaisePropertyChanged("PresentationTime");
                 }
             }
         }

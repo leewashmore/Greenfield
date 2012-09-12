@@ -56,6 +56,23 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
+        private bool _isActive;
+        public bool IsActive
+        {
+            get { return _isActive; }
+            set
+            {
+                _isActive = value;
+                if (value)
+                {
+                    if (EntitySelectionInfo != null)
+                    {
+                        HandleSecurityReferenceSetEvent(EntitySelectionInfo);
+                    }
+                }                 
+            }
+        }
+
         private List<RatioComparisonData> _ratioComparisonInfo;
         public List<RatioComparisonData> RatioComparisonInfo
         {
@@ -286,7 +303,11 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     IssuerReferenceInfo = result;
-                    _dbInteractivity.RetrieveRatioSecurityReferenceData(SelectedContext, result, RetrieveRatioSecurityReferenceDataCallbackMethod);
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving ratio security reference data...");
+                        _dbInteractivity.RetrieveRatioSecurityReferenceData(SelectedContext, result, RetrieveRatioSecurityReferenceDataCallbackMethod); 
+                    }
                 }
                 else
                 {
@@ -525,7 +546,7 @@ namespace GreenField.Gadgets.ViewModels
                     String contextSecurityXML = GetContextSecurityXML(result);
                     if (_dbInteractivity != null)
                     {
-                        BusyIndicatorNotification(true, "Retrieving ratio comparison data for the selecte dsecurity...");
+                        BusyIndicatorNotification(true, "Retrieving ratio comparison data for the selected security...");
                         _dbInteractivity.RetrieveRatioComparisonData(contextSecurityXML, RetrieveRatioComparisonDataCallbackMethod); 
                     }
                     
