@@ -284,6 +284,7 @@ namespace GreenField.Gadgets.ViewModels
         public List<FreeCashFlowsData> ReArrangingData(RangeObservableCollection<FreeCashFlowsData> FreeCashFlowsData)
         {
             List<FreeCashFlowsData> result = new List<FreeCashFlowsData>();
+            #region IF
             if (FreeCashFlowsData != null && FreeCashFlowsData.Count > 0)
             {
                 //*************  TO DO SEEMA : Chnage System.DateTime.Now.Year - 1 to System.DateTime.Now.Year + 1   ******************//
@@ -416,22 +417,111 @@ namespace GreenField.Gadgets.ViewModels
                
 
             }
-
+            #endregion
             foreach (FreeCashFlowsData item in result)
             {
                 if (item.FieldName == "Revenue Growth" || item.FieldName == "EBITDA Margins")
                 {
-                    item.ValueY0 = (!String.IsNullOrEmpty(item.ValueY0)) ? item.ValueY0 + "%" : string.Empty;
-                    item.ValueY1 = (!String.IsNullOrEmpty(item.ValueY1)) ? item.ValueY1 + "%" : string.Empty;
-                    item.ValueY2 = (!String.IsNullOrEmpty(item.ValueY2)) ? item.ValueY2 + "%" : string.Empty;
-                    item.ValueY3 = (!String.IsNullOrEmpty(item.ValueY3)) ? item.ValueY3 + "%" : string.Empty;
-                    item.ValueY4 = (!String.IsNullOrEmpty(item.ValueY4)) ? item.ValueY4 + "%" : string.Empty;
-                    item.ValueY5 = (!String.IsNullOrEmpty(item.ValueY5)) ? item.ValueY5 + "%" : string.Empty;
-                    item.ValueY6 = (!String.IsNullOrEmpty(item.ValueY6)) ? item.ValueY6 + "%" : string.Empty;
-                    item.ValueY7 = (!String.IsNullOrEmpty(item.ValueY7)) ? item.ValueY7 + "%" : string.Empty;
-                    item.ValueY8 = (!String.IsNullOrEmpty(item.ValueY8)) ? item.ValueY8 + "%" : string.Empty;
-                    item.ValueY9 = (!String.IsNullOrEmpty(item.ValueY9)) ? item.ValueY9 + "%" : string.Empty;
+                    item.ValueY0 = (!String.IsNullOrEmpty(item.ValueY0)) ? Convert.ToDecimal(item.ValueY0).ToString("N1") + "%" : string.Empty;
+                    item.ValueY1 = (!String.IsNullOrEmpty(item.ValueY1)) ? Convert.ToDecimal(item.ValueY1).ToString("N1") + "%" : string.Empty;
+                    item.ValueY2 = (!String.IsNullOrEmpty(item.ValueY2)) ? Convert.ToDecimal(item.ValueY2).ToString("N1") + "%" : string.Empty;
+                    item.ValueY3 = (!String.IsNullOrEmpty(item.ValueY3)) ? Convert.ToDecimal(item.ValueY3).ToString("N1") + "%" : string.Empty;
+                    item.ValueY4 = (!String.IsNullOrEmpty(item.ValueY4)) ? Convert.ToDecimal(item.ValueY4).ToString("N1") + "%" : string.Empty;
+                    item.ValueY5 = (!String.IsNullOrEmpty(item.ValueY5)) ? Convert.ToDecimal(item.ValueY5).ToString("N1") + "%" : string.Empty;
+                    item.ValueY6 = (!String.IsNullOrEmpty(item.ValueY6)) ? Convert.ToDecimal(item.ValueY6).ToString("N1") + "%" : string.Empty;
+                    item.ValueY7 = (!String.IsNullOrEmpty(item.ValueY7)) ? Convert.ToDecimal(item.ValueY7).ToString("N1") + "%" : string.Empty;
+                    item.ValueY8 = (!String.IsNullOrEmpty(item.ValueY8)) ? Convert.ToDecimal(item.ValueY8).ToString("N1") + "%" : string.Empty;
+                    item.ValueY9 = (!String.IsNullOrEmpty(item.ValueY9)) ? Convert.ToDecimal(item.ValueY9).ToString("N1") + "%" : string.Empty;
                 }
+                #region else
+                else
+                {
+                    if (!String.IsNullOrEmpty(item.ValueY0))
+                    {
+                        if (Convert.ToDecimal(item.ValueY0) < 0)
+                            item.ValueY0 = "(" + Convert.ToDecimal(item.ValueY0).ToString("N0") + ")";
+                        else
+                            item.ValueY0 = Convert.ToDecimal(item.ValueY0).ToString("N0");
+                    }
+                    if (!String.IsNullOrEmpty(item.ValueY1))
+                    {
+                        if (Convert.ToDecimal(item.ValueY1) < 0)
+                            item.ValueY1 = "(" + Convert.ToDecimal(item.ValueY1).ToString("N0") + ")";
+                        else
+                            item.ValueY1 = Convert.ToDecimal(item.ValueY1).ToString("N0");
+
+                        if (!String.IsNullOrEmpty(item.ValueY2))
+                        {
+                            if (Convert.ToDecimal(item.ValueY2) < 0)
+                                item.ValueY2 = "(" + Convert.ToDecimal(item.ValueY2).ToString("N0") + ")";
+                            else
+                                item.ValueY2 = Convert.ToDecimal(item.ValueY2).ToString("N0");
+                        }
+                        if (!String.IsNullOrEmpty(item.ValueY3))
+                        {
+                            if (Convert.ToDecimal(item.ValueY3) < 0)
+                                item.ValueY3 = "(" + Convert.ToDecimal(item.ValueY3).ToString("N0") + ")";
+                            else
+                                item.ValueY3 = Convert.ToDecimal(item.ValueY3).ToString("N0");
+                        }
+                        if (!String.IsNullOrEmpty(item.ValueY4))
+                        {
+                            if (Convert.ToDecimal(item.ValueY4) < 0)
+                                item.ValueY4 = "(" + Convert.ToDecimal(item.ValueY4).ToString("N0") + ")";
+                            else
+                                item.ValueY4 = Convert.ToDecimal(item.ValueY4).ToString("N0");
+                        }
+                        if (!String.IsNullOrEmpty(item.ValueY5))
+                        {
+                            if (Convert.ToDecimal(item.ValueY5) < 0)
+                                item.ValueY5 = "(" + Convert.ToDecimal(item.ValueY5).ToString("N0") + ")";
+                            else
+                                item.ValueY5 = Convert.ToDecimal(item.ValueY5).ToString("N0");
+                        }
+                        if (!String.IsNullOrEmpty(item.ValueY6))
+                        {
+                            if (Convert.ToDecimal(item.ValueY6) < 0)
+                                item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
+                            else
+                                item.ValueY6 = Convert.ToDecimal(item.ValueY6).ToString("N0");
+                        }
+                        if (!String.IsNullOrEmpty(item.ValueY7))
+                        {
+                            if (Convert.ToDecimal(item.ValueY7) < 0)
+                                item.ValueY7 = "(" + Convert.ToDecimal(item.ValueY7).ToString("N0") + ")";
+                            else
+                                item.ValueY7 = Convert.ToDecimal(item.ValueY7).ToString("N0");
+                        }
+                        if (!String.IsNullOrEmpty(item.ValueY8))
+                        {
+                            if (Convert.ToDecimal(item.ValueY8) < 0)
+                                item.ValueY8 = "(" + Convert.ToDecimal(item.ValueY8).ToString("N0") + ")";
+                            else
+                                item.ValueY8 = Convert.ToDecimal(item.ValueY8).ToString("N0");
+                        }
+                        if (!String.IsNullOrEmpty(item.ValueY9))
+                        {
+                            if (Convert.ToDecimal(item.ValueY9) < 0)
+                                item.ValueY9 = "(" + Convert.ToDecimal(item.ValueY9).ToString("N0") + ")";
+                            else
+                                item.ValueY9 = Convert.ToDecimal(item.ValueY9).ToString("N0");
+                        }
+                    }
+                }
+                    #endregion
+
+                    //item.ValueY0 = ((!String.IsNullOrEmpty(item.ValueY0)) && Convert.ToDecimal(item.ValueY0) < 0) ? "(" + Convert.ToDecimal(item.ValueY0).ToString("N0") + ")" : Convert.ToDecimal(item.ValueY0).ToString("N0");
+                    //item.ValueY1 = (!String.IsNullOrEmpty(item.ValueY1) && Convert.ToDecimal(item.ValueY1) < 0) ? "(" + Convert.ToDecimal(item.ValueY1).ToString("N0") + ")" : Convert.ToDecimal(item.ValueY1).ToString("N0");
+                    //item.ValueY2 = (!String.IsNullOrEmpty(item.ValueY2) && Convert.ToDecimal(item.ValueY2) < 0) ? "(" + item.ValueY2 + ")" : item.ValueY2;
+                    //item.ValueY3 = (!String.IsNullOrEmpty(item.ValueY3) && Convert.ToDecimal(item.ValueY3) < 0) ? "(" + item.ValueY3 + ")" : item.ValueY3;
+                    //item.ValueY4 = (!String.IsNullOrEmpty(item.ValueY4) && Convert.ToDecimal(item.ValueY4) < 0) ? "(" + item.ValueY4 + ")" : item.ValueY4;
+                    //item.ValueY5 = (!String.IsNullOrEmpty(item.ValueY5) && Convert.ToDecimal(item.ValueY5) < 0) ? "(" + item.ValueY5 + ")" : item.ValueY5;
+                    //item.ValueY6 = (!String.IsNullOrEmpty(item.ValueY6) && Convert.ToDecimal(item.ValueY6) < 0) ? "(" + item.ValueY6 + ")" : item.ValueY6;
+                    //item.ValueY7 = (!String.IsNullOrEmpty(item.ValueY7) && Convert.ToDecimal(item.ValueY7) < 0) ? "(" + item.ValueY7 + ")" : item.ValueY7;
+                    //item.ValueY8 = (!String.IsNullOrEmpty(item.ValueY8) && Convert.ToDecimal(item.ValueY8) < 0) ? "(" + item.ValueY8 + ")" : item.ValueY8;
+                    //item.ValueY9 = (!String.IsNullOrEmpty(item.ValueY9) && Convert.ToDecimal(item.ValueY9) < 0) ? "(" + item.ValueY9 + ")" : item.ValueY9;
+
+                    
             }
             return result;
         }
