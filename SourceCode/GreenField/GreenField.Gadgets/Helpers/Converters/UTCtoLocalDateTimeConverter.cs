@@ -23,7 +23,7 @@ namespace GreenField.Gadgets.Helpers
             {
                 if (value == null)
                     return null;
-                DateTime dateTime = (DateTime)value;
+                DateTime dateTime =new DateTime(((DateTime)value).Ticks, DateTimeKind.Utc);
 
                 return dateTime.ToLocalTime();
             }
@@ -36,7 +36,7 @@ namespace GreenField.Gadgets.Helpers
             {
                 if (value == null)
                     return null;
-                DateTime dateTime = (DateTime)value;
+                DateTime dateTime = new DateTime(((DateTime)value).Ticks, DateTimeKind.Local);
 
                 return dateTime.ToUniversalTime();
             }
