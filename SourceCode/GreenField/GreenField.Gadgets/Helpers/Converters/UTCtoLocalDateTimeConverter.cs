@@ -25,7 +25,7 @@ namespace GreenField.Gadgets.Helpers
                     return null;
                 DateTime dateTime =new DateTime(((DateTime)value).Ticks, DateTimeKind.Utc);
 
-                return dateTime.ToLocalTime();
+                return dateTime.Add(TimeZoneInfo.Local.BaseUtcOffset);
             }
             return value;
         }

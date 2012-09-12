@@ -645,11 +645,11 @@ namespace GreenField.Web.Services
                 MeetingConfigurationSchedule meetingConfigurationSchedule = entity.MeetingConfigurationSchedules.FirstOrDefault();
 
                 String presentationDay = meetingConfigurationSchedule.PresentationDay;
-                DateTime presentationTime = meetingConfigurationSchedule.PresentationTime;
+                DateTime presentationTime = new DateTime(meetingConfigurationSchedule.PresentationTime.Ticks, DateTimeKind.Utc);
                 String preMeetingVotingDeadlineDay = meetingConfigurationSchedule.PreMeetingVotingDeadlineDay;
-                DateTime preMeetingVotingDeadlineTime = meetingConfigurationSchedule.PreMeetingVotingDeadlineTime;
+                DateTime preMeetingVotingDeadlineTime = new DateTime(meetingConfigurationSchedule.PreMeetingVotingDeadlineTime.Ticks, DateTimeKind.Utc);
                 String presentationDeadlineDay = meetingConfigurationSchedule.PresentationDeadlineDay;
-                DateTime presentationDeadlineTime = meetingConfigurationSchedule.PresentationDeadlineTime;
+                DateTime presentationDeadlineTime = new DateTime(meetingConfigurationSchedule.PresentationDeadlineTime.Ticks, DateTimeKind.Utc);
                 
                 List<MeetingInfo> result = new List<MeetingInfo>();
                 
@@ -658,7 +658,7 @@ namespace GreenField.Web.Services
                     
                     DateTime tempPresentationDeadline = id.Date.Add(presentationDeadlineTime.TimeOfDay);
 
-                    if (tempPresentationDeadline < DateTime.Now)
+                    if (tempPresentationDeadline < DateTime.UtcNow)
                         continue;
 
                     while (tempPresentationDeadline.DayOfWeek.ToString() != presentationDeadlineDay)
