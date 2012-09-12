@@ -14,6 +14,7 @@ using GreenField.ServiceCaller.MeetingDefinitions;
 using GreenField.ServiceCaller.AlertDefinitions;
 using GreenField.ServiceCaller.DocumentWorkSpaceDefinitions;
 using GreenField.ServiceCaller.DCFDefinitions;
+using GreenField.ServiceCaller.CustomScreeningDefinitions;
 
 
 namespace GreenField.ServiceCaller

@@ -68,7 +68,7 @@
   <xs:element name="SaveUserDataPointsPreference">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="userPreference" nillable="true" type="q6:ArrayOfCSTUserPreferenceInfo" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="userPreference" nillable="true" type="q6:ArrayOfCSTUserPreferenceInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -88,7 +88,7 @@
         <xs:element minOccurs="0" name="country" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sector" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="industry" nillable="true" type="xs:string" />
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.DataContracts.DataContracts" minOccurs="0" name="userPreference" nillable="true" type="q9:ArrayOfCSTUserPreferenceInfo" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="userPreference" nillable="true" type="q9:ArrayOfCSTUserPreferenceInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

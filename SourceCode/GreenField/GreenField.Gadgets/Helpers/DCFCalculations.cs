@@ -30,7 +30,7 @@ namespace Greenfield.Gadgets.Helpers
             }
             else
             {
-                throw new Exception("Sum of MarketCap and GrossDebt is 0");
+                return 0;
             }
 
             return weightOfEquity;
@@ -119,7 +119,7 @@ namespace Greenfield.Gadgets.Helpers
             }
             else
             {
-                throw new Exception("Number of Shares is Zero");
+                return 0;
             }
 
             return dcfValuePerShare;

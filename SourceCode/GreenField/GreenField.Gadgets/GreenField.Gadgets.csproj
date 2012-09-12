@@ -171,6 +171,7 @@
     <Compile Include="Models\RegionSpecificData.cs" />
     <Compile Include="Models\RiskIndexExposuresChartData.cs" />
     <Compile Include="Models\SectorSpecificData.cs" />
+    <Compile Include="Models\SensitivityData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\CustomScreeningTool\ViewModelCSTDataFieldSelector.cs" />
     <Compile Include="ViewModels\DCF\ViewModelAnalysisSummary.cs" />
@@ -260,6 +261,9 @@
     </Compile>
     <Compile Include="Views\DCF\ViewFreeCashFlows.xaml.cs">
       <DependentUpon>ViewFreeCashFlows.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DCF\ViewSensitivity.xaml.cs">
+      <DependentUpon>ViewSensitivity.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DCF\ViewTerminalValueCalculations.xaml.cs">
       <DependentUpon>ViewTerminalValueCalculations.xaml</DependentUpon>
@@ -503,6 +507,10 @@
     <Page Include="Views\DCF\ViewFreeCashFlows.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DCF\ViewSensitivity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\DCF\ViewTerminalValueCalculations.xaml">
       <SubType>Designer</SubType>

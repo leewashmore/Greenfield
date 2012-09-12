@@ -8122,12 +8122,14 @@ namespace GreenField.DAL
         /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
         /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
         /// <param name="dISCOUNTING_FACTOR">Initial value of the DISCOUNTING_FACTOR property.</param>
-        public static DCFCashFlowData CreateDCFCashFlowData(global::System.Decimal aMOUNT, global::System.Int32 pERIOD_YEAR, global::System.Decimal dISCOUNTING_FACTOR)
+        /// <param name="fREE_CASH_FLOW">Initial value of the FREE_CASH_FLOW property.</param>
+        public static DCFCashFlowData CreateDCFCashFlowData(global::System.Decimal aMOUNT, global::System.Int32 pERIOD_YEAR, global::System.Decimal dISCOUNTING_FACTOR, global::System.Decimal fREE_CASH_FLOW)
         {
             DCFCashFlowData dCFCashFlowData = new DCFCashFlowData();
             dCFCashFlowData.AMOUNT = aMOUNT;
             dCFCashFlowData.PERIOD_YEAR = pERIOD_YEAR;
             dCFCashFlowData.DISCOUNTING_FACTOR = dISCOUNTING_FACTOR;
+            dCFCashFlowData.FREE_CASH_FLOW = fREE_CASH_FLOW;
             return dCFCashFlowData;
         }
 
@@ -8205,6 +8207,30 @@ namespace GreenField.DAL
         private global::System.Decimal _DISCOUNTING_FACTOR;
         partial void OnDISCOUNTING_FACTORChanging(global::System.Decimal value);
         partial void OnDISCOUNTING_FACTORChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal FREE_CASH_FLOW
+        {
+            get
+            {
+                return _FREE_CASH_FLOW;
+            }
+            set
+            {
+                OnFREE_CASH_FLOWChanging(value);
+                ReportPropertyChanging("FREE_CASH_FLOW");
+                _FREE_CASH_FLOW = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FREE_CASH_FLOW");
+                OnFREE_CASH_FLOWChanged();
+            }
+        }
+        private global::System.Decimal _FREE_CASH_FLOW;
+        partial void OnFREE_CASH_FLOWChanging(global::System.Decimal value);
+        partial void OnFREE_CASH_FLOWChanged();
 
         #endregion
     }

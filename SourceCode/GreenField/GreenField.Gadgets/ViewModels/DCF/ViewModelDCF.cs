@@ -15,6 +15,7 @@ using System.Linq;
 using GreenField.Gadgets.Models;
 using Greenfield.Gadgets.Helpers;
 using GreenField.ServiceCaller.DCFDefinitions;
+using Greenfield.Gadgets.Models;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -82,7 +83,7 @@ namespace GreenField.Gadgets.ViewModels
                 _entitySelectionData = value;
                 this.RaisePropertyChanged(() => this.EntitySelectionData);
             }
-        }
+        }              
 
         #endregion
 
@@ -168,6 +169,8 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
+                if (_terminalValueCalculationsData == null)
+                    _terminalValueCalculationsData = new List<DCFTerminalValueCalculationsData>();
                 return _terminalValueCalculationsData;
             }
             set
@@ -332,6 +335,28 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+        #region Sensitivity
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private RangeObservableCollection<SensitivityData> _sensitivityDisplayData;
+        public RangeObservableCollection<SensitivityData> SensitivityDisplayData
+        {
+            get
+            {
+                return _sensitivityDisplayData;
+            }
+            set
+            {
+                _sensitivityDisplayData = value;
+                this.RaisePropertyChanged(() => this.SensitivityDisplayData);
+            }
+        }
+
+
+        #endregion
+
         #endregion
 
         #region LoggerFacade
@@ -411,6 +436,118 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.WACC);
             }
         }
+
+        #region Sensitivity
+
+        private DCFCalculationParameters _calculationParameters;
+        public DCFCalculationParameters CalculationParameters
+        {
+            get
+            {
+                if (_calculationParameters == null)
+                    _calculationParameters = new DCFCalculationParameters();
+                return _calculationParameters;
+            }
+            set
+            {
+                _calculationParameters = value;
+                this.RaisePropertyChanged(() => this.CalculationParameters);
+            }
+        }
+
+        #region Statistics
+
+        /// <summary>
+        /// Max Share Value
+        /// </summary>
+        private string _maxShareVal;
+        public string MaxShareVal
+        {
+            get { return _maxShareVal; }
+            set
+            {
+                _maxShareVal = value;
+                this.RaisePropertyChanged(() => this.MaxShareVal);
+            }
+        }
+
+        /// <summary>
+        /// Min Share Value
+        /// </summary>
+        private string _minShareVal;
+        public string MinShareVal
+        {
+            get { return _minShareVal; }
+            set
+            {
+                _minShareVal = value;
+                this.RaisePropertyChanged(() => this.MinShareVal);
+            }
+        }
+
+        /// <summary>
+        /// Max Share Value
+        /// </summary>
+        private string _avgShareVal;
+        public string AvgShareVal
+        {
+            get { return _avgShareVal; }
+            set
+            {
+                _avgShareVal = value;
+                this.RaisePropertyChanged(() => this.AvgShareVal);
+            }
+        }
+
+        /// <summary>
+        /// Avg Share Value
+        /// </summary>
+        private string _maxUpside;
+        public string MaxUpside
+        {
+            get { return _maxUpside; }
+            set
+            {
+                _maxUpside = value;
+                this.RaisePropertyChanged(() => this.MaxUpside);
+            }
+        }
+
+        /// <summary>
+        /// Avg Share Value
+        /// </summary>
+        private string _minUpside;
+        public string MinUpside
+        {
+            get { return _minUpside; }
+            set
+            {
+                _minUpside = value;
+                this.RaisePropertyChanged(() => this.MinUpside);
+            }
+        }
+
+        /// <summary>
+        /// Avg Share Value
+        /// </summary>
+        private string _avgUpside;
+        public string AvgUpside
+        {
+            get { return _avgUpside; }
+            set
+            {
+                _avgUpside = value;
+                this.RaisePropertyChanged(() => this.AvgUpside);
+            }
+        }
+
+
+
+
+        #endregion
+
+
+        #endregion
 
 
         /// <summary>
@@ -525,12 +662,12 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (IsActive && EntitySelectionData != null)
                         {
-                            _dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
-                            _dbInteractivity.RetrieveCashFlows(EntitySelectionData, RetrieveDCFCashFlowYearlyDataCallbackMethod);
+                            //_dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
+                            //_dbInteractivity.RetrieveCashFlows(EntitySelectionData, RetrieveDCFCashFlowYearlyDataCallbackMethod);
                             _dbInteractivity.RetrieveDCFAnalysisData(EntitySelectionData, RetrieveDCFAnalysisDataCallbackMethod);
 
-                            _dbInteractivity.RetrieveDCFCurrentPrice(entitySelectionData, RetrieveCurrentPriceDataCallbackMethod);
-                            _dbInteractivity.RetrieveDCFSummaryData(entitySelectionData, RetrieveDCFSummaryDataCallbackMethod);
+                            //_dbInteractivity.RetrieveDCFCurrentPrice(entitySelectionData, RetrieveCurrentPriceDataCallbackMethod);
+                            //_dbInteractivity.RetrieveDCFSummaryData(entitySelectionData, RetrieveDCFSummaryDataCallbackMethod);
 
                             BusyIndicatorNotification(true, "Fetching Data for Selected Security");
                         }
@@ -766,13 +903,25 @@ namespace GreenField.Gadgets.ViewModels
                 result.Add(new DCFDisplayData() { PropertyName = "Sustainable ROIC", Value = sustainableROIC.ToString() });
                 result.Add(new DCFDisplayData() { PropertyName = "Sustainable Dividend Payout Ratio", Value = sustainableDPR.ToString() });
                 result.Add(new DCFDisplayData() { PropertyName = "Long-term Nominal GDP Growth", Value = longTermNominalGDPGrowth.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Growth Rate", Value = cashFlow2020.ToString() });
+                result.Add(new DCFDisplayData() { PropertyName = "Terminal Growth Rate", Value = TGR.ToString() });
                 result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = terminalValueNominal.ToString() });
                 result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = terminalValuePresent.ToString() });
 
                 TerminalValueCalculationsDisplayData.Clear();
                 TerminalValueCalculationsDisplayData.AddRange(result);
                 TerminalValuePresent = terminalValuePresent;
+
+                CalculationParameters.Year10CashFlow = (Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
+                    Select(a => a.AMOUNT).FirstOrDefault()));
+                CalculationParameters.TerminalGrowthRate = TGR;
+                CalculationParameters.Year10DiscountingFactor = (Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
+                    Select(a => a.DISCOUNTING_FACTOR).FirstOrDefault()));
+                CalculationParameters.CurrentMarketPrice = Convert.ToDecimal(CurrentMarketPrice);
+                if (EntitySelectionData != null)
+                {
+                    _dbInteractivity.RetrieveDCFCurrentPrice(EntitySelectionData, RetrieveCurrentPriceDataCallbackMethod);
+                    _dbInteractivity.RetrieveDCFSummaryData(EntitySelectionData, RetrieveDCFSummaryDataCallbackMethod);
+                }
             }
             catch (Exception ex)
             {
@@ -797,18 +946,13 @@ namespace GreenField.Gadgets.ViewModels
                     item.DISCOUNTING_FACTOR = Convert.ToDecimal(Math.Pow(Convert.ToDouble(1 + WACC), Convert.ToDouble(timeSpan.Days / 365)));
                     if (item.DISCOUNTING_FACTOR != 0)
                     {
-                        item.AMOUNT = item.AMOUNT / item.DISCOUNTING_FACTOR;
+                        item.AMOUNT = item.FREE_CASH_FLOW / item.DISCOUNTING_FACTOR;
                     }
                     else
                     {
                         item.AMOUNT = 0;
                     }
                 }
-                if (periodData != null)
-                {
-                    _eventAggregator.GetEvent<DCFYearlyDataSetEvent>().Publish(periodData);
-                }
-
                 PresentValueExplicitForecast = periodData.Select(a => Convert.ToDecimal(a.AMOUNT)).Sum();
                 return periodData;
             }
@@ -878,6 +1022,18 @@ namespace GreenField.Gadgets.ViewModels
                 AnalysisSummaryDisplayData = result;
                 this.RaisePropertyChanged(() => this.AnalysisSummaryDisplayData);
                 this.WACC = resultWACC;
+
+                CalculationParameters.CostOfEquity = costOfEquity;
+                CalculationParameters.CostOfDebt = costOfDebt;
+                CalculationParameters.MarketCap = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault());
+                CalculationParameters.MarginalTaxRate = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault());
+                CalculationParameters.GrossDebt = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault());
+
+                if (EntitySelectionData != null)
+                {
+                    _dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
+                    _dbInteractivity.RetrieveCashFlows(EntitySelectionData, RetrieveDCFCashFlowYearlyDataCallbackMethod);
+                }
             }
             catch (Exception ex)
             {
@@ -950,6 +1106,102 @@ namespace GreenField.Gadgets.ViewModels
                 SummaryDisplayData.Clear();
                 SummaryDisplayData.AddRange(result);
                 this.RaisePropertyChanged(() => this.SummaryData);
+
+                CalculationParameters.Cash = cash;
+                CalculationParameters.FutureValueOfInvestments = FVInvestments;
+                CalculationParameters.FutureValueOfMinorties = FVMinorities;
+                CalculationParameters.NumberOfShares = numberOfShares;
+                CalculationParameters.PresentValueOfForecast = PresentValueExplicitForecast;
+
+                GenerateSensitivityDisplayData();
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Generate Data bound for Sensitivity Gadget
+        /// </summary>
+        public void GenerateSensitivityDisplayData()
+        {
+            try
+            {
+                decimal costOfEquity = CalculationParameters.CostOfEquity;
+                decimal terminalValueGrowth = CalculationParameters.TerminalGrowthRate;
+
+                /////to be Removed
+                //{
+                //    costOfEquity = 197 / 1000;
+                //    CalculationParameters.CostOfEquity = Convert.ToDecimal(197.0 / 1000.0);
+                //    terminalValueGrowth = Convert.ToDecimal(103.0 / 1000.0);
+                //    CalculationParameters.TerminalGrowthRate = 103 / 1000;
+                //    CalculationParameters.Cash = 1053;
+                //    CalculationParameters.CostOfDebt = 103 / 1000;
+                //    CalculationParameters.CurrentMarketPrice = 1933 / 100;
+                //    CalculationParameters.FutureValueOfInvestments = 1;
+                //    CalculationParameters.FutureValueOfMinorties = 1;
+                //    CalculationParameters.GrossDebt = 157878;
+                //    CalculationParameters.MarginalTaxRate = 253 / 1000;
+                //    CalculationParameters.MarketCap = 252150;
+                //    CalculationParameters.NumberOfShares = 13044;
+                //    CalculationParameters.PresentValueOfForecast = 5033;
+                //    CalculationParameters.Year10CashFlow = 282;
+                //    CalculationParameters.Year10DiscountingFactor = 370 / 100;
+                //}
+
+                List<decimal> upSideValues = new List<decimal>();
+                List<decimal> TGR = new List<decimal>();
+                SensitivityDisplayData = new RangeObservableCollection<SensitivityData>();
+
+                SensitivityDisplayData.Add(new SensitivityData() { C1 = " Step 0.25%", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
+
+                Dictionary<int, decimal> VPS = new Dictionary<int, decimal>();
+
+                DCFValue result = new DCFValue();
+
+                CalculationParameters.CostOfEquity = Convert.ToDecimal((CalculationParameters.CostOfEquity) / Convert.ToDecimal(100.0)) - Convert.ToDecimal(5.0 / 1000.0);
+                CalculationParameters.TerminalGrowthRate = Convert.ToDecimal((CalculationParameters.TerminalGrowthRate) / Convert.ToDecimal(100.0)) - Convert.ToDecimal(5.0 / 1000.0);
+
+                for (int i = 0; i < 5; i++)
+                {
+                    SensitivityData data = new SensitivityData();
+                    for (int j = 0; j < 5; j++)
+                    {
+                        result = new DCFValue();
+                        result = DCFCalculations.CalculateDCFValue(CalculationParameters);
+                        TGR.Add(result.DCFValuePerShare);
+                        VPS.Add(j, result.DCFValuePerShare);
+                        upSideValues.Add(result.UpsideValue);
+                        CalculationParameters.CostOfEquity = CalculationParameters.CostOfEquity + Convert.ToDecimal(25.0 / 10000.0);
+                    }
+                    data.C1 = i.ToString();
+                    data.C2 = ((-5.0 + (i * 2.5)) / 10.0).ToString() + "%";
+                    if (VPS.ContainsKey(0))
+                        data.C3 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 0).Select(a => a.Value).FirstOrDefault()), 4) + "%");
+                    if (VPS.ContainsKey(1))
+                        data.C4 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 1).Select(a => a.Value).FirstOrDefault()), 4) + "%");
+                    if (VPS.ContainsKey(1))
+                        data.C5 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 2).Select(a => a.Value).FirstOrDefault()), 4) + "%");
+                    if (VPS.ContainsKey(1))
+                        data.C6 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 3).Select(a => a.Value).FirstOrDefault()), 4) + "%");
+                    if (VPS.ContainsKey(1))
+                        data.C7 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 4).Select(a => a.Value).FirstOrDefault()), 4) + "%");
+                    VPS = new Dictionary<int, decimal>();
+                    SensitivityDisplayData.Add(data);
+                    CalculationParameters.CostOfEquity = costOfEquity;
+                    CalculationParameters.TerminalGrowthRate = CalculationParameters.TerminalGrowthRate + Convert.ToDecimal(25.0 / 10000.0);
+                }
+                MaxShareVal = Convert.ToString(Math.Round(TGR.Select(a => a).Max(), 4)) + " %";
+                MinShareVal = Convert.ToString((Math.Round(TGR.Select(a => a).Min(), 4))) + " %";
+                AvgShareVal = Convert.ToString((Math.Round(TGR.Select(a => a).Average(), 4))) + " %";
+
+                MaxUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Max(), 4))) + " %";
+                MinUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Min(), 4))) + " %";
+                AvgUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Average(), 4))) + " %";
             }
             catch (Exception ex)
             {

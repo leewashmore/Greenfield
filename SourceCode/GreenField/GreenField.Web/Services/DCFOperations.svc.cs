@@ -310,9 +310,7 @@ namespace GreenField.Web.Services
                 {
                     return new List<DCFCashFlowData>();
                 }
-
                 int currentYear = DateTime.Today.Year;
-
                 for (int i = 0; i < 10; i++)
                 {
                     if (dbResult.Where(a => a.PERIOD_YEAR == currentYear + i).FirstOrDefault() != null)
@@ -333,6 +331,7 @@ namespace GreenField.Web.Services
                     if (item.PERIOD_YEAR > currentYear + 4)
                     {
                         item.AMOUNT = average * Convert.ToDecimal(Math.Pow((0.99), Convert.ToDouble(item.PERIOD_YEAR - (currentYear + 4))));
+                        item.FREE_CASH_FLOW = item.AMOUNT;
                     }
                 }
                 return result;
@@ -441,8 +440,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
-
+        
         #region HelperMethods
 
         /// <summary>

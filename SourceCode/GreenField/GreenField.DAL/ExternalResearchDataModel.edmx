@@ -890,7 +890,7 @@
           <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetDCFGDP" ReturnType="Collection(Decimal)">
-            <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
+          <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetFreeCashFlows" ReturnType="Collection(ExternalResearchModel.GetFreeCashFlows_Result)">
             <Parameter Name="IssuerId" Mode="In" Type="String" />
@@ -1442,6 +1442,7 @@
           <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
           <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
           <Property Type="Decimal" Name="DISCOUNTING_FACTOR" Nullable="false" Precision="1" Scale="1" />
+          <Property Type="Decimal" Name="FREE_CASH_FLOW" Nullable="false" Precision="1" Scale="1" />
         </ComplexType>
         <ComplexType Name="DCFSummaryDBData">
           <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
@@ -2045,6 +2046,7 @@
                 <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
                 <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
                 <ScalarProperty Name="DISCOUNTING_FACTOR" ColumnName="DISCOUNTING_FACTOR" />
+                <ScalarProperty Name="FREE_CASH_FLOW" ColumnName="FREE_CASH_FLOW" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

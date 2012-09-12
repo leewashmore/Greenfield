@@ -54,6 +54,8 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         
         private decimal DISCOUNTING_FACTORField;
         
+        private decimal FREE_CASH_FLOWField;
+        
         private int PERIOD_YEARField;
         
         [System.Runtime.Serialization.DataMemberAttribute()]
@@ -78,6 +80,19 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
                 if ((this.DISCOUNTING_FACTORField.Equals(value) != true)) {
                     this.DISCOUNTING_FACTORField = value;
                     this.RaisePropertyChanged("DISCOUNTING_FACTOR");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal FREE_CASH_FLOW {
+            get {
+                return this.FREE_CASH_FLOWField;
+            }
+            set {
+                if ((this.FREE_CASH_FLOWField.Equals(value) != true)) {
+                    this.FREE_CASH_FLOWField = value;
+                    this.RaisePropertyChanged("FREE_CASH_FLOW");
                 }
             }
         }

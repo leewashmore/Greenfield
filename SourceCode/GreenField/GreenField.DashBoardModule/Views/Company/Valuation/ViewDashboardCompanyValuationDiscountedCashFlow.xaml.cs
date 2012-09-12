@@ -68,11 +68,12 @@ namespace GreenField.DashboardModule.Views
             ViewModelDCF _viewModel = new ViewModelDCF(param);
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl 
-                { 
-                    Content = GadgetNames.HOLDINGS_FREE_CASH_FLOW, 
-                    Foreground = new SolidColorBrush(Colors.Black), 
-                    FontSize = 12, FontFamily = new FontFamily("Arial") 
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = GadgetNames.HOLDINGS_FREE_CASH_FLOW,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize = 12,
+                    FontFamily = new FontFamily("Arial")
                 },
                 Content = new ViewFreeCashFlows(new ViewModelFreeCashFlows(param))
             });
@@ -108,6 +109,17 @@ namespace GreenField.DashboardModule.Views
                     FontFamily = new FontFamily("Arial")
                 },
                 Content = new ViewDCFSummary(_viewModel)
+            });
+            this.rtvDashboard.Items.Add(new RadTileViewItem
+            {
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = "Sensitivity",
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize = 12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                Content = new ViewSensitivity(_viewModel)
             });
         }
 
