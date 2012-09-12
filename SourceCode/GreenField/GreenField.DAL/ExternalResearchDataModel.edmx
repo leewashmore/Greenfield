@@ -649,6 +649,9 @@
           <Parameter Name="dataSource" Type="varchar" Mode="In" />
           <Parameter Name="fiscalType" Type="char" Mode="In" />
         </Function>
+        <Function Name="GetFreeCashFlows" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IssuerId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetModelConsensusEstimates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
@@ -888,6 +891,9 @@
           </FunctionImport>
           <FunctionImport Name="GetDCFGDP" ReturnType="Collection(Decimal)">
             <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetFreeCashFlows" ReturnType="Collection(ExternalResearchModel.GetFreeCashFlows_Result)">
+            <Parameter Name="IssuerId" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -1440,6 +1446,12 @@
         <ComplexType Name="DCFSummaryDBData">
           <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
           <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetFreeCashFlows_Result">
+          <Property Type="String" Name="FIELD_NAME" Nullable="true" />
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="true" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
         </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -2052,7 +2064,18 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          
           <FunctionImportMapping FunctionImportName="GetDCFGDP" FunctionName="ExternalResearchModel.Store.GetDCFGDP" />
+          <FunctionImportMapping FunctionImportName="GetFreeCashFlows" FunctionName="ExternalResearchModel.Store.GetFreeCashFlows">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.GetFreeCashFlows_Result">
+                <ScalarProperty Name="FIELD_NAME" ColumnName="FIELD_NAME" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />

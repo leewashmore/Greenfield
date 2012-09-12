@@ -207,7 +207,7 @@ namespace GreenField.Web.Services
             {
                 List<FreeCashFlowsData> result = new List<FreeCashFlowsData>();
                 List<GetFreeCashFlows_Result> resultDB = new List<GetFreeCashFlows_Result>();
-                DCFEntities dcf_FreeCashFlows = new DCFEntities();
+                ExternalResearchEntities dcf_FreeCashFlows = new ExternalResearchEntities();
 
                 if (entitySelectionData == null)
                     return null;

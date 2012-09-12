@@ -51,11 +51,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CustomScreeningToolDataModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DCFDataModel.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DCFDataModel.edmx</DependentUpon>
-    </Compile>
     <Compile Include="ExternalResearchDataModel.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -101,10 +96,6 @@
     <EntityDeploy Include="CustomScreeningToolDataModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CustomScreeningToolDataModel.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <EntityDeploy Include="DCFDataModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DCFDataModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

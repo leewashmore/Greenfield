@@ -1797,6 +1797,25 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<Nullable<global::System.Decimal>>("GetDCFGDP", cOUNTRY_CODEParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="issuerId">No Metadata Documentation available.</param>
+        public ObjectResult<GetFreeCashFlows_Result> GetFreeCashFlows(global::System.String issuerId)
+        {
+            ObjectParameter issuerIdParameter;
+            if (issuerId != null)
+            {
+                issuerIdParameter = new ObjectParameter("IssuerId", issuerId);
+            }
+            else
+            {
+                issuerIdParameter = new ObjectParameter("IssuerId", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<GetFreeCashFlows_Result>("GetFreeCashFlows", issuerIdParameter);
+        }
 
         #endregion
     }
@@ -9653,6 +9672,131 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _Shares_Outstanding;
         partial void OnShares_OutstandingChanging(Nullable<global::System.Decimal> value);
         partial void OnShares_OutstandingChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="GetFreeCashFlows_Result")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class GetFreeCashFlows_Result : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new GetFreeCashFlows_Result object.
+        /// </summary>
+        /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
+        /// <param name="pERIOD_YEAR">Initial value of the PERIOD_YEAR property.</param>
+        public static GetFreeCashFlows_Result CreateGetFreeCashFlows_Result(global::System.Int32 dATA_ID, global::System.Int32 pERIOD_YEAR)
+        {
+            GetFreeCashFlows_Result getFreeCashFlows_Result = new GetFreeCashFlows_Result();
+            getFreeCashFlows_Result.DATA_ID = dATA_ID;
+            getFreeCashFlows_Result.PERIOD_YEAR = pERIOD_YEAR;
+            return getFreeCashFlows_Result;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String FIELD_NAME
+        {
+            get
+            {
+                return _FIELD_NAME;
+            }
+            set
+            {
+                OnFIELD_NAMEChanging(value);
+                ReportPropertyChanging("FIELD_NAME");
+                _FIELD_NAME = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("FIELD_NAME");
+                OnFIELD_NAMEChanged();
+            }
+        }
+        private global::System.String _FIELD_NAME;
+        partial void OnFIELD_NAMEChanging(global::System.String value);
+        partial void OnFIELD_NAMEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 DATA_ID
+        {
+            get
+            {
+                return _DATA_ID;
+            }
+            set
+            {
+                OnDATA_IDChanging(value);
+                ReportPropertyChanging("DATA_ID");
+                _DATA_ID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DATA_ID");
+                OnDATA_IDChanged();
+            }
+        }
+        private global::System.Int32 _DATA_ID;
+        partial void OnDATA_IDChanging(global::System.Int32 value);
+        partial void OnDATA_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> AMOUNT
+        {
+            get
+            {
+                return _AMOUNT;
+            }
+            set
+            {
+                OnAMOUNTChanging(value);
+                ReportPropertyChanging("AMOUNT");
+                _AMOUNT = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AMOUNT");
+                OnAMOUNTChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _AMOUNT;
+        partial void OnAMOUNTChanging(Nullable<global::System.Decimal> value);
+        partial void OnAMOUNTChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 PERIOD_YEAR
+        {
+            get
+            {
+                return _PERIOD_YEAR;
+            }
+            set
+            {
+                OnPERIOD_YEARChanging(value);
+                ReportPropertyChanging("PERIOD_YEAR");
+                _PERIOD_YEAR = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("PERIOD_YEAR");
+                OnPERIOD_YEARChanged();
+            }
+        }
+        private global::System.Int32 _PERIOD_YEAR;
+        partial void OnPERIOD_YEARChanging(global::System.Int32 value);
+        partial void OnPERIOD_YEARChanged();
 
         #endregion
     }
