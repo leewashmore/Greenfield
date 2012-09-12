@@ -159,7 +159,7 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault), Action="http://tempuri.org/DCFOperations/RetrieveCurrentPriceDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveCurrentPriceData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
-        decimal EndRetrieveCurrentPriceData(System.IAsyncResult result);
+        System.Nullable<decimal> EndRetrieveCurrentPriceData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -272,10 +272,10 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
             this.results = results;
         }
         
-        public decimal Result {
+        public System.Nullable<decimal> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((decimal)(this.results[0]));
+                return ((System.Nullable<decimal>)(this.results[0]));
             }
         }
     }
@@ -625,7 +625,7 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        decimal GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveCurrentPriceData(System.IAsyncResult result) {
+        System.Nullable<decimal> GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveCurrentPriceData(System.IAsyncResult result) {
             return base.Channel.EndRetrieveCurrentPriceData(result);
         }
         
@@ -635,7 +635,7 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         }
         
         private object[] OnEndRetrieveCurrentPriceData(System.IAsyncResult result) {
-            decimal retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveCurrentPriceData(result);
+            System.Nullable<decimal> retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveCurrentPriceData(result);
             return new object[] {
                     retVal};
         }
@@ -813,9 +813,9 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
                 return _result;
             }
             
-            public decimal EndRetrieveCurrentPriceData(System.IAsyncResult result) {
+            public System.Nullable<decimal> EndRetrieveCurrentPriceData(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                decimal _result = ((decimal)(base.EndInvoke("RetrieveCurrentPriceData", _args, result)));
+                System.Nullable<decimal> _result = ((System.Nullable<decimal>)(base.EndInvoke("RetrieveCurrentPriceData", _args, result)));
                 return _result;
             }
         }

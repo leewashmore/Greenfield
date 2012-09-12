@@ -164,7 +164,7 @@ namespace GreenField.Web.Services
                 if (issuerId == null)
                     return new List<DCFTerminalValueCalculationsData>();
 
-                cashFlowResult = entity.GetDCFCashFlow(issuerId).ToList();
+                //cashFlowResult = entity.GetDCFCashFlow(issuerId).ToList();
 
                 decimal longTermGDPGrowth = Convert.ToDecimal(entity.GetDCFGDP(Convert.ToString(securityDetails.ISO_COUNTRY_CODE)).FirstOrDefault());
                 DCFTerminalValueCalculationsData data = new DCFTerminalValueCalculationsData();

@@ -296,9 +296,6 @@
     <None Include="Service References\DCFDefinitions\DCFOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\DCFDefinitions\DCFOperations5.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Service References\DCFDefinitions\DCFOperations51.xsd">
       <SubType>Designer</SubType>
     </None>
