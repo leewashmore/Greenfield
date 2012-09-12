@@ -601,13 +601,13 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     if (result == true)
                     {
-                        Prompt.ShowDialog("Vote submission successfully completed");
+                        Prompt.ShowDialog("Input submission successfully completed");
                         _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
                     }
                 }
                 else
                 {
-                    Prompt.ShowDialog("An Error ocurred while submitting vote submission form.");
+                    Prompt.ShowDialog("An Error ocurred while submitting input form.");
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
             }
