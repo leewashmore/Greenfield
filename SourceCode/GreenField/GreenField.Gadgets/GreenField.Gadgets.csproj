@@ -254,7 +254,7 @@
     <Compile Include="Views\DCF\ViewAnalysisSummary.xaml.cs">
       <DependentUpon>ViewAnalysisSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DCF\ViewDCFSummary.xaml.cs">
+    <Compile Include="ViewModels\ViewDCFSummary.xaml.cs">
       <DependentUpon>ViewDCFSummary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DCF\ViewFreeCashFlows.xaml.cs">
@@ -263,13 +263,13 @@
     <Compile Include="Views\DCF\ViewTerminalValueCalculations.xaml.cs">
       <DependentUpon>ViewTerminalValueCalculations.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Documents\ChildViewDocumentsUpload.xaml.cs">
+    <Compile Include="Views\DCF\Documents\ChildViewDocumentsUpload.xaml.cs">
       <DependentUpon>ChildViewDocumentsUpload.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Documents\ChildViewDocumentsEditDelete.xaml.cs">
+    <Compile Include="Views\DCF\Documents\ChildViewDocumentsEditDelete.xaml.cs">
       <DependentUpon>ChildViewDocumentsEditDelete.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Documents\ViewExcelModelUpload.xaml.cs">
+    <Compile Include="Views\DCF\Documents\ViewExcelModelUpload.xaml.cs">
       <DependentUpon>ViewExcelModelUpload.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewEstimates.xaml.cs">
@@ -284,7 +284,7 @@
     <Compile Include="Views\ICPresentations\ChildAcceptRequestPresentations.xaml.cs">
       <DependentUpon>ChildAcceptRequestPresentations.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Documents\ViewDocuments.xaml.cs">
+    <Compile Include="Views\DCF\Documents\ViewDocuments.xaml.cs">
       <DependentUpon>ViewDocuments.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ICPresentations\ChildViewPresentationDateChangeEdit.xaml.cs">
@@ -495,7 +495,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DCF\ViewDCFSummary.xaml">
+    <Page Include="ViewModels\ViewDCFSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -507,15 +507,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Documents\ChildViewDocumentsUpload.xaml">
+    <Page Include="Views\DCF\Documents\ChildViewDocumentsUpload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Documents\ChildViewDocumentsEditDelete.xaml">
+    <Page Include="Views\DCF\Documents\ChildViewDocumentsEditDelete.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Documents\ViewExcelModelUpload.xaml">
+    <Page Include="Views\DCF\Documents\ViewExcelModelUpload.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -535,7 +535,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Documents\ViewDocuments.xaml">
+    <Page Include="Views\DCF\Documents\ViewDocuments.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -55,7 +55,7 @@
 
             </Grid>
 
-            <Grid Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     <telerik:RadGridView Name="dgFreeCashFlows" 
                                      AutoGenerateColumns="false" 
