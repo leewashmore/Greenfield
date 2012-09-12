@@ -28,7 +28,7 @@ using GreenField.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelCustomScreeningTool :  NotificationObject
+    public class ViewModelCustomScreeningTool : NotificationObject
     {
         #region Fields
         /// <summary>
@@ -37,8 +37,10 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
+        private List<PortfolioSelectionData> _portfolioSelectionData;
         private IRegionManager _regionManager;
-       
+        private List<EntitySelectionData> _benchmarkSelectionData;
+
         #endregion
 
         #region Constructor
@@ -72,7 +74,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                { return _securitySelectionCriteria = new List<String> { "Portfolio", "Benchmark", "Custom"}; }
+                { return _securitySelectionCriteria = new List<String> { "Portfolio", "Benchmark", "Custom" }; }
             }
             set
             {
@@ -91,7 +93,6 @@ namespace GreenField.Gadgets.ViewModels
             get
             {
                 return _portfolioSelectionInfo;
-               // { return new List<String> { "Portfolio1", "Portfolio2", "Portfolio3" }; }
             }
             set
             {
@@ -109,7 +110,6 @@ namespace GreenField.Gadgets.ViewModels
             get
             {
                 return _benchmarkSelectionInfo;
-                 //return new List<String> { "Benchmark1", "Benchmark2", "Benchmark3" }; 
             }
             set
             {
@@ -227,7 +227,7 @@ namespace GreenField.Gadgets.ViewModels
                         RaisePropertyChanged(() => this.CustomSelectionVisibility);
                         RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
                         RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
-                    }                    
+                    }
                 }
             }
         }
@@ -241,7 +241,11 @@ namespace GreenField.Gadgets.ViewModels
                 if (value != null)
                 {
                     _selectedPortfolio = value;
-                    RaisePropertyChanged(() =>this.SelectedPortfolio);
+                    RaisePropertyChanged(() => this.SelectedPortfolio);
+                    PortfolioSelectionData p = new PortfolioSelectionData();
+                    p = _portfolioSelectionData.Where(a => a.PortfolioId == _selectedPortfolio).FirstOrDefault();
+                    _dbInteractivity.RetrieveSecurityData(p, null, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry
+                                                       , null, RetrieveSecurityDataCallbackMethod);
                 }
             }
         }
@@ -394,7 +398,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         private Visibility _dataListSelectionGridViewVisibility = Visibility.Collapsed;
-         public Visibility DataListSelectionGridViewVisibility
+        public Visibility DataListSelectionGridViewVisibility
         {
             get
             {
@@ -408,24 +412,24 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-         public String _selectedSavedDataList;
-         public String SelectedSavedDataList
-         {
-             get { return _selectedSavedDataList; }
-             set
-             {
-                 if (value != null)
-                 {
-                     _selectedSavedDataList = value;
-                     RaisePropertyChanged(() => this.SelectedSavedDataList);
-                 }
-             }
-         }
+        public String _selectedSavedDataList;
+        public String SelectedSavedDataList
+        {
+            get { return _selectedSavedDataList; }
+            set
+            {
+                if (value != null)
+                {
+                    _selectedSavedDataList = value;
+                    RaisePropertyChanged(() => this.SelectedSavedDataList);
+                }
+            }
+        }
 
-         public ICommand OkCommand
-         {
-             get { return new DelegateCommand<object>(OkCommandMethod, OkCommandValidationMethod); }
-         }
+        public ICommand OkCommand
+        {
+            get { return new DelegateCommand<object>(OkCommandMethod, OkCommandValidationMethod); }
+        }
 
          public ICommand CreateDataListCommand
          {
@@ -434,7 +438,6 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-       
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -449,6 +452,20 @@ namespace GreenField.Gadgets.ViewModels
                 //{
                 //    Initialize();
                 //}
+            }
+        }
+
+        private List<CustomScreeningSecurityData> _securityData;
+        public List<CustomScreeningSecurityData> SecurityData
+        {
+            get { return _securityData; }
+            set
+            {
+                if (_securityData != value)
+                {
+                    _securityData = value;
+                    RaisePropertyChanged(() => SecurityData);
+                }
             }
         }
 
@@ -497,7 +514,7 @@ namespace GreenField.Gadgets.ViewModels
             SecuritySelectionGridViewVisibility = Visibility.Collapsed;
             DataListSelectionGridViewVisibility = Visibility.Visible;
         }
-      
+
 
         #region Data List Selector
 
@@ -578,7 +595,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-
+                    _portfolioSelectionData = result;
                     PortfolioSelectionInfo = result.Select(o => o.PortfolioId).ToList();
                 }
                 else
@@ -586,7 +603,7 @@ namespace GreenField.Gadgets.ViewModels
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-              
+
             }
             catch (Exception ex)
             {
@@ -599,7 +616,6 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification();
             }
         }
-
 
         private void EntitySelectionDataCallbackMethod(List<EntitySelectionData> result)
         {
@@ -622,7 +638,7 @@ namespace GreenField.Gadgets.ViewModels
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-              
+
             }
             catch (Exception ex)
             {
@@ -646,7 +662,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CustomSelectionRegionInfo = result;
-                    
+
                 }
                 else
                 {
@@ -662,7 +678,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
                 BusyIndicatorNotification();
-            }      
+            }
         }
 
         private void CustomControlsListCountryCallbackMethod(List<string> result)
@@ -752,6 +768,34 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private void RetrieveSecurityDataCallbackMethod(List<CustomScreeningSecurityData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    SecurityData = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                //BusyIndicatorNotification();
+            }
+        }
+
         #endregion
 
         #region Helpers
@@ -768,6 +812,7 @@ namespace GreenField.Gadgets.ViewModels
                 _dbInteractivity.RetrieveCustomControlsList("Sector", CustomControlsListSectorCallbackMethod);
                 BusyIndicatorNotification(true, "Retrieving Industry Selection Data...");
                 _dbInteractivity.RetrieveCustomControlsList("Industry", CustomControlsListIndustryCallbackMethod);
+               
             }
         }
 
@@ -781,3 +826,4 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
     }
 }
+ 

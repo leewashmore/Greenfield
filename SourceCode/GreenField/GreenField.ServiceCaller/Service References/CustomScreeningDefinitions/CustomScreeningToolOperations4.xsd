@@ -38,11 +38,11 @@
       <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
       <xs:element minOccurs="0" name="SecurityId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="YearType" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="CustomScreeningSecurityData" nillable="true" type="tns:CustomScreeningSecurityData" />
   <xs:element name="CustomScreeningSecurityData" nillable="true" type="tns:CustomScreeningSecurityData" />
 </xs:schema>

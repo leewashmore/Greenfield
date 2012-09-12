@@ -92,10 +92,18 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         
         System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveFairValueTabDataPoints(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/SaveUserDataPointsPreference", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/SaveUserDataPointsPreferenceResp" +
+            "onse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/SaveUserDataPointsPreferenceServ" +
+            "iceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState);
+        
+        System.Nullable<bool> EndSaveUserDataPointsPreference(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityData", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataServiceFault" +
             "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> EndRetrieveSecurityData(System.IAsyncResult result);
     }
@@ -201,6 +209,25 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SaveUserDataPointsPreferenceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SaveUserDataPointsPreferenceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Nullable<bool> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Nullable<bool>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveSecurityDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -251,6 +278,12 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         private EndOperationDelegate onEndRetrieveFairValueTabDataPointsDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveFairValueTabDataPointsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSaveUserDataPointsPreferenceDelegate;
+        
+        private EndOperationDelegate onEndSaveUserDataPointsPreferenceDelegate;
+        
+        private System.Threading.SendOrPostCallback onSaveUserDataPointsPreferenceCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrieveSecurityDataDelegate;
         
@@ -320,6 +353,8 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         public event System.EventHandler<RetrieveCurrentFinancialsTabDataPointsCompletedEventArgs> RetrieveCurrentFinancialsTabDataPointsCompleted;
         
         public event System.EventHandler<RetrieveFairValueTabDataPointsCompletedEventArgs> RetrieveFairValueTabDataPointsCompleted;
+        
+        public event System.EventHandler<SaveUserDataPointsPreferenceCompletedEventArgs> SaveUserDataPointsPreferenceCompleted;
         
         public event System.EventHandler<RetrieveSecurityDataCompletedEventArgs> RetrieveSecurityDataCompleted;
         
@@ -550,8 +585,54 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveUserDataPointsPreference(userPreference, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Nullable<bool> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndSaveUserDataPointsPreference(System.IAsyncResult result) {
+            return base.Channel.EndSaveUserDataPointsPreference(result);
+        }
+        
+        private System.IAsyncResult OnBeginSaveUserDataPointsPreference(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo>)(inValues[0]));
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginSaveUserDataPointsPreference(userPreference, callback, asyncState);
+        }
+        
+        private object[] OnEndSaveUserDataPointsPreference(System.IAsyncResult result) {
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndSaveUserDataPointsPreference(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSaveUserDataPointsPreferenceCompleted(object state) {
+            if ((this.SaveUserDataPointsPreferenceCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SaveUserDataPointsPreferenceCompleted(this, new SaveUserDataPointsPreferenceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SaveUserDataPointsPreferenceAsync(System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference) {
+            this.SaveUserDataPointsPreferenceAsync(userPreference, null);
+        }
+        
+        public void SaveUserDataPointsPreferenceAsync(System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference, object userState) {
+            if ((this.onBeginSaveUserDataPointsPreferenceDelegate == null)) {
+                this.onBeginSaveUserDataPointsPreferenceDelegate = new BeginOperationDelegate(this.OnBeginSaveUserDataPointsPreference);
+            }
+            if ((this.onEndSaveUserDataPointsPreferenceDelegate == null)) {
+                this.onEndSaveUserDataPointsPreferenceDelegate = new EndOperationDelegate(this.OnEndSaveUserDataPointsPreference);
+            }
+            if ((this.onSaveUserDataPointsPreferenceCompletedDelegate == null)) {
+                this.onSaveUserDataPointsPreferenceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveUserDataPointsPreferenceCompleted);
+            }
+            base.InvokeAsync(this.onBeginSaveUserDataPointsPreferenceDelegate, new object[] {
+                        userPreference}, this.onEndSaveUserDataPointsPreferenceDelegate, this.onSaveUserDataPointsPreferenceCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, userPreference, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -566,7 +647,8 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             string country = ((string)(inValues[3]));
             string sector = ((string)(inValues[4]));
             string industry = ((string)(inValues[5]));
-            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, callback, asyncState);
+            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo>)(inValues[6]));
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, userPreference, callback, asyncState);
         }
         
         private object[] OnEndRetrieveSecurityData(System.IAsyncResult result) {
@@ -582,11 +664,11 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             }
         }
         
-        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry) {
-            this.RetrieveSecurityDataAsync(portfolio, benchmark, region, country, sector, industry, null);
+        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference) {
+            this.RetrieveSecurityDataAsync(portfolio, benchmark, region, country, sector, industry, userPreference, null);
         }
         
-        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, object userState) {
+        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference, object userState) {
             if ((this.onBeginRetrieveSecurityDataDelegate == null)) {
                 this.onBeginRetrieveSecurityDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveSecurityData);
             }
@@ -602,7 +684,8 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                         region,
                         country,
                         sector,
-                        industry}, this.onEndRetrieveSecurityDataDelegate, this.onRetrieveSecurityDataCompletedDelegate, userState);
+                        industry,
+                        userPreference}, this.onEndRetrieveSecurityDataDelegate, this.onRetrieveSecurityDataCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -742,14 +825,28 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[6];
+            public System.IAsyncResult BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = userPreference;
+                System.IAsyncResult _result = base.BeginInvoke("SaveUserDataPointsPreference", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Nullable<bool> EndSaveUserDataPointsPreference(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("SaveUserDataPointsPreference", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[7];
                 _args[0] = portfolio;
                 _args[1] = benchmark;
                 _args[2] = region;
                 _args[3] = country;
                 _args[4] = sector;
                 _args[5] = industry;
+                _args[6] = userPreference;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveSecurityData", _args, callback, asyncState);
                 return _result;
             }

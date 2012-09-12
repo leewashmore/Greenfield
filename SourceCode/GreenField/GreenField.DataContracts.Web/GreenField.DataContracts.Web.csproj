@@ -80,6 +80,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\CountrySelectionData.cs">
       <Link>DataContracts\CountrySelectionData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\CSTUserPreferenceInfo.cs">
+      <Link>DataContracts\CSTUserPreferenceInfo.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\CustomScreeningSecurityData.cs">
       <Link>DataContracts\CustomScreeningSecurityData.cs</Link>
     </Compile>

@@ -16,4 +16,24 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CustomSelectionData" nillable="true" type="tns:CustomSelectionData" />
+  <xs:complexType name="ArrayOfCSTUserPreferenceInfo">
+<xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CSTUserPreferenceInfo" nillable="true" type="tns:CSTUserPreferenceInfo" />
+   </xs:sequence>
+   </xs:complexType>
+  <xs:element name="ArrayOfCSTUserPreferenceInfo" nillable="true" type="tns:ArrayOfCSTUserPreferenceInfo" />
+  <xs:complexType name="CSTUserPreferenceInfo">
+<xs:sequence>
+      <xs:element minOccurs="0" name="Accessibility" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DataPointsOrder" type="xs:int" />
+ <xs:element minOccurs="0" name="DataSource" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FromDate" type="xs:int" />
+      <xs:element minOccurs="0" name="ListName" nillable="true" type="xs:string" />
+ <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ScreeningId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ToDate" type="xs:int" />
+ <xs:element minOccurs="0" name="YearType" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CSTUserPreferenceInfo" nillable="true" type="tns:CSTUserPreferenceInfo" />
 </xs:schema>

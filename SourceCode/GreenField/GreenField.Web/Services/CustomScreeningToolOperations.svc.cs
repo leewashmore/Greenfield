@@ -13,6 +13,7 @@ using GreenField.DataContracts.DataContracts;
 using GreenField.Web.Helpers;
 using GreenField.DataContracts;
 using GreenField.DAL;
+using System.Data;
 
 namespace GreenField.Web.Services
 {
@@ -130,7 +131,8 @@ namespace GreenField.Web.Services
                    { 
                        ScreeningId = item.SCREENING_ID,
                        DataDescription = item.DATA_DESC,
-                       LongDescription = item.LONG_DESC
+                       LongDescription = item.LONG_DESC,
+                       DataColumn = item.TABLE_COLUMN
                    });
                }
                 return result;
@@ -177,7 +179,9 @@ namespace GreenField.Web.Services
                         DataDescription = item.DATA_DESC,
                        // LongDescription = item.LONG_DESC
                        Quaterly = item.QUARTERLY,
-                       Annual = item.ANNUAL
+                       Annual = item.ANNUAL,
+                       DataID = item.DATA_ID,
+                       EstimateID = item.ESTIMATE_ID
                     });
                 }
                 return result;
@@ -224,7 +228,9 @@ namespace GreenField.Web.Services
                         DataDescription = item.DATA_DESC,
                         // LongDescription = item.LONG_DESC
                         Quaterly = item.QUARTERLY,
-                        Annual = item.ANNUAL
+                        Annual = item.ANNUAL,
+                        DataID = item.DATA_ID,
+                        EstimateID = item.ESTIMATE_ID
                     });
                 }
                 return result;
@@ -269,10 +275,44 @@ namespace GreenField.Web.Services
                     {
                         ScreeningId = item.SCREENING_ID,
                         DataDescription = item.DATA_DESC,
-                        LongDescription = item.LONG_DESC
+                        LongDescription = item.LONG_DESC,
+                        DataColumn = item.TABLE_COLUMN
                     });
                 }
                 return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Save user preferred Data Points List
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean? SaveUserDataPointsPreference(List<CSTUserPreferenceInfo> userPreference)
+        {
+            try
+            {
+                if (userPreference == null || userPreference.Count < 0)
+                    return null;
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                Boolean? result = new Boolean?();
+
+                CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
+              
+                    return result;               
             }
             catch (Exception ex)
             {
@@ -294,8 +334,8 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<CustomScreeningSecurityData> RetrieveSecurityData(PortfolioSelectionData portfolio, 
-            BenchmarkSelectionData benchmark, String region, String country, String sector, String industry)
+        public List<CustomScreeningSecurityData> RetrieveSecurityData(PortfolioSelectionData portfolio,
+            BenchmarkSelectionData benchmark, String region, String country, String sector, String industry, List<CSTUserPreferenceInfo> userPreference)
         {
             try
             {
@@ -309,9 +349,180 @@ namespace GreenField.Web.Services
                     throw new Exception();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
-                result = RetrieveSecurityDetailsList(portfolio, benchmark, region, country, sector, industry);
+                ExternalResearchEntities externalEntity = new ExternalResearchEntities();
+                CustomScreeningToolEntities cstEntity = new CustomScreeningToolEntities();
+                List<CustomScreeningSecurityData> securityList = new List<CustomScreeningSecurityData>();
+                securityList = RetrieveSecurityDetailsList(portfolio, benchmark, region, country, sector, industry);
 
+                List<string> distinctSecurityId = securityList.Select(record => record.SecurityId).ToList();
+                List<string> distinctIssuerId = securityList.Select(record => record.IssuerId).ToList();
+                
+                string _securityIds = StringBuilder(distinctSecurityId);
+                string _issuerIds = StringBuilder(distinctIssuerId);
 
+                //dummy data
+                userPreference = new List<CSTUserPreferenceInfo>();
+                userPreference.Add(new CSTUserPreferenceInfo()
+                {
+                    ScreeningId = "FIN001",
+                    DataSource = "REUTERS",
+                    PeriodType = "A",
+                    YearType = "FISCAL",
+                    FromDate = 2009,
+                    DataID = 3,
+                    DataDescription = "ABC"
+                });
+                userPreference.Add(new CSTUserPreferenceInfo()
+                {
+                    ScreeningId = "FIN009",
+                    DataSource = "REUTERS",
+                    PeriodType = "A",
+                    YearType = "FISCAL",
+                    FromDate = 2005,
+                    DataID = 11,
+                    DataDescription = "XYZ"
+                });
+                userPreference.Add(new CSTUserPreferenceInfo()
+                {
+                    ScreeningId = "CUR001",
+                    DataSource = "REUTERS",
+                    DataID = 3,
+                    DataDescription = "ABC"
+                });
+                userPreference.Add(new CSTUserPreferenceInfo()
+                {
+                    ScreeningId = "REF009",
+                    TableColumnName = "SECURITY_VOLUME_AVG_30D"
+                });
+                userPreference.Add(new CSTUserPreferenceInfo()
+                {
+                    ScreeningId = "REF003",
+                    TableColumnName = "ISIN"
+                });
+                userPreference.Add(new CSTUserPreferenceInfo()
+                {
+                    ScreeningId = "FVA001",
+                    DataSource = "REUTERS",
+                    TableColumnName = "DATA_DESC"
+                });
+                userPreference.Add(new CSTUserPreferenceInfo()
+                {
+                    ScreeningId = "FVA002",
+                    DataSource = "REUTERS",
+                    TableColumnName = "FV_BUY"
+                });
+                //****
+
+                #region Retrieving REF Data Items
+
+                if (userPreference != null)
+                {
+                    List<CustomScreeningREFData> data = cstEntity.GetCustomScreeningREFData(_securityIds).ToList();
+                    foreach (CSTUserPreferenceInfo item in userPreference)
+                    {
+                        if (item.ScreeningId.StartsWith("REF"))
+                        {
+                            CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
+                            foreach (CustomScreeningREFData record in data)
+                            {
+                                fillData.SecurityId = record.SecurityId;
+                                fillData.IssueName = securityList.Where(a=> a.SecurityId == record.SecurityId).Select(a => a.IssueName).FirstOrDefault();
+                                fillData.Type = item.TableColumnName;
+                                fillData.Value = record.GetType().GetProperty(item.TableColumnName).GetValue(record, null);
+                                result.Add(fillData);
+                            }
+                        }
+                    }
+                }
+                
+                #endregion
+
+                #region Retrieving FIN Data Items
+                                
+                  foreach (CSTUserPreferenceInfo item in userPreference)
+                  {
+                      if (item.ScreeningId.StartsWith("FIN"))
+                      {
+                          List<CustomScreeningFINData> temp = new List<CustomScreeningFINData>();
+                          temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.EstimateID, item.PeriodType, item.FromDate, item.YearType, item.DataSource).ToList();
+
+                          foreach (CustomScreeningFINData record in temp)
+                          {
+                              CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
+                              fillData.SecurityId = record.SecurityId;
+                              fillData.IssuerId = record.IssuerId;
+                              fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId).Select(a => a.IssueName).FirstOrDefault();
+                              fillData.Type = item.DataDescription;
+                              fillData.Multiplier = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.MULTIPLIER).FirstOrDefault();
+                              decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
+                              fillData.DataSource = item.DataSource;
+                              fillData.PeriodYear = record.PeriodYear;
+                              fillData.PeriodType = item.PeriodType;
+                              fillData.YearType = item.YearType;
+                              fillData.Decimals = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.DECIMAL).FirstOrDefault();
+                              fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.PERCENTAGE).FirstOrDefault();
+                              _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
+                              fillData.Value = fillData.IsPercentage == "Y" ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount);
+                              result.Add(fillData);
+                          }
+                      }
+                  }
+
+                #endregion
+
+                #region Retrieving CUR Data Items
+
+                  foreach (CSTUserPreferenceInfo item in userPreference)
+                  {
+                      if (item.ScreeningId.StartsWith("CUR"))
+                      {
+                          List<CustomScreeningCURData> temp = new List<CustomScreeningCURData>();
+                          temp = cstEntity.GetCustomScreeningCURData(_issuerIds, _securityIds, item.DataID, item.EstimateID, item.PeriodType, item.DataSource).ToList();
+
+                          foreach (CustomScreeningCURData record in temp)
+                          {
+                              CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
+                              fillData.SecurityId = record.SecurityId;
+                              fillData.IssuerId = record.IssuerId;
+                              fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId).Select(a => a.IssueName).FirstOrDefault();
+                              fillData.Type = item.DataDescription;
+                              fillData.Multiplier = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.MULTIPLIER).FirstOrDefault();
+                              decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
+                              fillData.DataSource = item.DataSource;
+                              fillData.Decimals = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.DECIMAL).FirstOrDefault();
+                              fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.PERCENTAGE).FirstOrDefault();
+                              _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
+                              fillData.Value = fillData.IsPercentage == "Y" ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount);
+                              result.Add(fillData);
+                          }
+                      }
+                  }
+
+                #endregion
+
+                #region Retrieving FVA Data Items
+
+                  if (userPreference != null)
+                  {                     
+                      foreach (CSTUserPreferenceInfo item in userPreference)
+                      {
+                          if (item.ScreeningId.StartsWith("FAV"))
+                          {
+                              List<CustomScreeningFVAData> data = cstEntity.GetCustomScreeningFVAData(_securityIds,item.DataSource).ToList();
+                              CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
+                              foreach (CustomScreeningFVAData record in data)
+                              {
+                                  fillData.SecurityId = record.SECURITY_ID;
+                                  fillData.IssueName = securityList.Where(a => a.SecurityId == record.SECURITY_ID).Select(a => a.IssueName).FirstOrDefault();
+                                  fillData.Type = item.TableColumnName;
+                                  fillData.Value = record.GetType().GetProperty(item.TableColumnName).GetValue(record, null);
+                                  result.Add(fillData);
+                              }
+                          }
+                      }
+                  }
+
+                #endregion
 
                 return result;
             }
@@ -328,6 +539,8 @@ namespace GreenField.Web.Services
         public List<CustomScreeningSecurityData> RetrieveSecurityDetailsList(PortfolioSelectionData portfolio,
             BenchmarkSelectionData benchmark, String region, String country, String sector, String industry)
         {
+          try
+         {
             DimensionEntitiesService.Entities entity = DimensionEntity;            
             
             List<GF_SECURITY_BASEVIEW> securitiesFromCustomControls = new List<GF_SECURITY_BASEVIEW>();
@@ -345,14 +558,17 @@ namespace GreenField.Web.Services
                 securitiesFromPortfolio = entity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolio.PortfolioId
                                                                                  && record.PORTFOLIO_DATE == lastBusinessDate
                                                                                  && (record.A_SEC_INSTR_TYPE == "Equity" || record.A_SEC_INSTR_TYPE == "GDR/ADR")
-                                                                                 && record.DIRTY_VALUE_PC > 0).Distinct().ToList();
+                                                                                 && record.DIRTY_VALUE_PC > 0).ToList();
+                securitiesFromPortfolio = securitiesFromPortfolio.Distinct().ToList();
                 if (securitiesFromPortfolio == null)
                     return securityList;
                 foreach (GF_PORTFOLIO_HOLDINGS item in securitiesFromPortfolio)
 	            {
+                    GF_SECURITY_BASEVIEW securityIdRow  = item.ASEC_SEC_SHORT_NAME != null ? entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME)
+                                                                                                                       .FirstOrDefault() : null;
 		             securityList.Add(new CustomScreeningSecurityData()
                      {
-                         SecurityId = item.ASEC_SEC_SHORT_NAME,
+                         SecurityId = securityIdRow != null ? (securityIdRow.SECURITY_ID).ToString() : null,
                          IssuerId = item.ISSUER_ID,
                          IssueName = item.ISSUE_NAME
                      });
@@ -374,9 +590,11 @@ namespace GreenField.Web.Services
                     return securityList;
                 foreach (GF_BENCHMARK_HOLDINGS item in securitiesFromBenchmark)
                 {
+                    GF_SECURITY_BASEVIEW securityIdRow = item.ASEC_SEC_SHORT_NAME != null ? entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME)
+                                                                                                                       .FirstOrDefault() : null;
                     securityList.Add(new CustomScreeningSecurityData()
                     {
-                        SecurityId = item.ASEC_SEC_SHORT_NAME,
+                        SecurityId = securityIdRow != null ? (securityIdRow.SECURITY_ID).ToString() : null,
                         IssuerId = item.ISSUER_ID,
                         IssueName = item.ISSUE_NAME
                     });
@@ -419,13 +637,36 @@ namespace GreenField.Web.Services
             {
                 securityList.Add(new CustomScreeningSecurityData()
                 {
-                    SecurityId = item.ASEC_SEC_SHORT_NAME,
+                    SecurityId = item.SECURITY_ID.ToString(),
                     IssuerId = item.ISSUER_ID,
                     IssueName = item.ISSUE_NAME
                 });
             }
             return securityList;
+          }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
         }
+
+        public string StringBuilder(List<string> param)
+        {
+            StringBuilder var = new StringBuilder();
+            int check = 1;
+            foreach (String item in param)
+            {
+                check = 0;
+                var.Append(",'" + item + "'");
+            }
+            var = check == 0 ? var.Remove(0, 1) : null;
+
+            string result = var == null ? null : var.ToString();
+            return result;
+        }
+
         #endregion
      	}
 }

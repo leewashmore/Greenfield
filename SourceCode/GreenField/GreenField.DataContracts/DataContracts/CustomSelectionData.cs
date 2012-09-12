@@ -21,5 +21,14 @@ namespace GreenField.DataContracts.DataContracts
 
         [DataMember]
         public string Annual { get; set; }
+
+        [DataMember]
+        public int DataID { get; set; }
+
+        [DataMember]
+        public int? EstimateID { get; set; }
+
+        [DataMember]
+        public string DataColumn { get; set; }
     }
 }
