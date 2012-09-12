@@ -90,44 +90,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.FreeCashFlowsOutputData);
             }
         }
-
        
-        ///// Collection of type DCFAnalysisSummaryData bound to the Data-Grid
-        ///// </summary>
-        //private RangeObservableCollection<DCFAnalysisSummaryData> _analysisSummaryData;
-        //public RangeObservableCollection<DCFAnalysisSummaryData> AnalysisSummaryData
-        //{
-        //    get
-        //    {
-        //        if (_analysisSummaryData == null)
-        //            _analysisSummaryData = new RangeObservableCollection<DCFAnalysisSummaryData>();
-        //        return _analysisSummaryData;
-        //    }
-        //    set
-        //    {
-        //        _analysisSummaryData = value;
-        //        this.RaisePropertyChanged(() => this.AnalysisSummaryData);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Default Display Data
-        ///// </summary>
-        //private RangeObservableCollection<DCFDisplayData> _analysisSummaryDisplayData;
-        //public RangeObservableCollection<DCFDisplayData> AnalysisSummaryDisplayData
-        //{
-        //    get
-        //    {
-        //        if (_analysisSummaryDisplayData == null)
-        //            _analysisSummaryDisplayData = SetDefaultAnalysisDisplayData();
-        //        return _analysisSummaryDisplayData;
-        //    }
-        //    set
-        //    {
-        //        this._analysisSummaryDisplayData = value;
-        //        this.RaisePropertyChanged(() => this.AnalysisSummaryDisplayData);
-        //    }
-        //}
         public Visibility FreeCashFlowGadgetVisibility
         {
             get { return _freeCashFlowGadgetVisibility; }
@@ -256,7 +219,6 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     FreeCashFlowGadgetVisibility = Visibility.Visible;
                     Logging.LogMethodParameter(_logger, methodNamespace, freeCashFlowsData, 1);
-                    //FreeCashFlowsDataInfo = freeCashFlowsData.FirstOrDefault();
                     FreeCashFlowsDataInfo.Clear();
                     FreeCashFlowsDataInfo.AddRange(freeCashFlowsData);
                     FreeCashFlowsOutputData = ReArrangingData(FreeCashFlowsDataInfo);
@@ -287,8 +249,6 @@ namespace GreenField.Gadgets.ViewModels
             #region IF
             if (FreeCashFlowsData != null && FreeCashFlowsData.Count > 0)
             {
-                //*************  TO DO SEEMA : Chnage System.DateTime.Now.Year - 1 to System.DateTime.Now.Year + 1   ******************//
-
                 List<FreeCashFlowsData> data = new List<FreeCashFlowsData>(FreeCashFlowsData);
                 //Revenue Growth
                 data = FreeCashFlowsData.Where(a => a.FieldName == "Revenue Growth").ToList();
@@ -296,15 +256,15 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     FieldName = "Revenue Growth"                   
                     ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 9)).Select(a => a.Amount).FirstOrDefault().ToString()
                 });
 
                 //EBITDA Margins
@@ -314,14 +274,14 @@ namespace GreenField.Gadgets.ViewModels
                      FieldName = "EBITDA Margins"                                          
                     ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
                     ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 9)).Select(a => a.Amount).FirstOrDefault().ToString()
                     });
                
                 //EBITDA 
@@ -331,15 +291,15 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         FieldName = "EBITDA"
                     ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 9)).Select(a => a.Amount).FirstOrDefault().ToString()
                     });
                 
                 //(-) Taxes
@@ -348,15 +308,15 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         FieldName = "(-) Taxes"               
                     ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 9)).Select(a => a.Amount).FirstOrDefault().ToString()
                     });
                 
                 //(+/-) Change in WC
@@ -366,15 +326,15 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         FieldName = "(+/-) Change in WC"
                     ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 9)).Select(a => a.Amount).FirstOrDefault().ToString()
                     });
 
                 //(-) Capex
@@ -384,15 +344,15 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         FieldName = "(-) Capex"                  
                     ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 9)).Select(a => a.Amount).FirstOrDefault().ToString()
                     });
 
                 //Blank Row
@@ -404,15 +364,15 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         FieldName = "(=) Free Cash Flow"             
                     ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 2)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 3)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 4)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 5)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 6)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 7)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 8)).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 9)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 2)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 3)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 4)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY5 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 5)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY6 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 6)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY7 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 7)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY8 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 8)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY9 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 9)).Select(a => a.Amount).FirstOrDefault().ToString()
                     });
                
 
@@ -509,17 +469,6 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 }
                     #endregion
-
-                    //item.ValueY0 = ((!String.IsNullOrEmpty(item.ValueY0)) && Convert.ToDecimal(item.ValueY0) < 0) ? "(" + Convert.ToDecimal(item.ValueY0).ToString("N0") + ")" : Convert.ToDecimal(item.ValueY0).ToString("N0");
-                    //item.ValueY1 = (!String.IsNullOrEmpty(item.ValueY1) && Convert.ToDecimal(item.ValueY1) < 0) ? "(" + Convert.ToDecimal(item.ValueY1).ToString("N0") + ")" : Convert.ToDecimal(item.ValueY1).ToString("N0");
-                    //item.ValueY2 = (!String.IsNullOrEmpty(item.ValueY2) && Convert.ToDecimal(item.ValueY2) < 0) ? "(" + item.ValueY2 + ")" : item.ValueY2;
-                    //item.ValueY3 = (!String.IsNullOrEmpty(item.ValueY3) && Convert.ToDecimal(item.ValueY3) < 0) ? "(" + item.ValueY3 + ")" : item.ValueY3;
-                    //item.ValueY4 = (!String.IsNullOrEmpty(item.ValueY4) && Convert.ToDecimal(item.ValueY4) < 0) ? "(" + item.ValueY4 + ")" : item.ValueY4;
-                    //item.ValueY5 = (!String.IsNullOrEmpty(item.ValueY5) && Convert.ToDecimal(item.ValueY5) < 0) ? "(" + item.ValueY5 + ")" : item.ValueY5;
-                    //item.ValueY6 = (!String.IsNullOrEmpty(item.ValueY6) && Convert.ToDecimal(item.ValueY6) < 0) ? "(" + item.ValueY6 + ")" : item.ValueY6;
-                    //item.ValueY7 = (!String.IsNullOrEmpty(item.ValueY7) && Convert.ToDecimal(item.ValueY7) < 0) ? "(" + item.ValueY7 + ")" : item.ValueY7;
-                    //item.ValueY8 = (!String.IsNullOrEmpty(item.ValueY8) && Convert.ToDecimal(item.ValueY8) < 0) ? "(" + item.ValueY8 + ")" : item.ValueY8;
-                    //item.ValueY9 = (!String.IsNullOrEmpty(item.ValueY9) && Convert.ToDecimal(item.ValueY9) < 0) ? "(" + item.ValueY9 + ")" : item.ValueY9;
 
                     
             }

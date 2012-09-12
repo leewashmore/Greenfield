@@ -42,7 +42,8 @@
                                      telerik:TileViewPanel.IsColumnsShrinkEnabled="True"
                                      VerticalAlignment="Top"                                 
                                      ColumnWidth="*"
-                                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                                     HorizontalContentAlignment="Stretch" 
+                                     VerticalContentAlignment="Stretch">
                 </telerik:RadTileView>
             </Border>
         </telerik:RadBusyIndicator>
