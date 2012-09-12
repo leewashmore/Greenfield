@@ -37,24 +37,25 @@
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center"
                         Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
-                    <Image Source="../Images/ExportExcel.png" />
+                    <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
                 </Button>
                 <Button Height="15" Width="15" Grid.Column="1"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnExportPDF"
                         Margin="5,0,0,0" Click="btnExportPDF_Click">
-                    <Image Source="../Images/PDF.png" />
+                    <Image Source="/GreenField.Gadgets;component/Images/PDF.png"/>
                 </Button>
                 <Button Height="15" Width="15" Grid.Column="2"
                         BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
                         Margin="5,0,0,0" Click="btnPrint_Click">
-                    <Image Source="../Images/Print.png" />
+                    <Image Source="/GreenField.Gadgets;component/Images/Print.png"/>
+
                 </Button>
 
             </Grid>
 
-            <Grid Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                 <telerik:RadGridView x:Name="dgDCFAnalysisSummary" 
                                          ShowGroupPanel="False" 
                                          AutoGenerateColumns="False" 
@@ -82,7 +83,7 @@
                                          EnableRowVirtualization="False"
                                          EnableColumnVirtualization="False"
                                          GridLinesVisibility="None"
-                                     RowEditEnded="dgDCFAnalysisSummary_RowEditEnded"
+                                         RowEditEnded="dgDCFAnalysisSummary_RowEditEnded"
                                          BeginningEdit="dgDCFAnalysisSummary_BeginningEdit"
                                          CellValidating="dgDCFAnalysisSummary_CellValidating">
                     <telerik:RadGridView.Columns>

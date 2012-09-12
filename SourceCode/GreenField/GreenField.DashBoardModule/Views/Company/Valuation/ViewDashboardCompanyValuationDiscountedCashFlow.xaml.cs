@@ -64,6 +64,8 @@ namespace GreenField.DashboardModule.Views
                 EventAggregator = _eventAggregator,
                 LoggerFacade = _logger
             };
+
+            ViewModelDCF _viewModel = new ViewModelDCF(param);
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl 
@@ -74,7 +76,39 @@ namespace GreenField.DashboardModule.Views
                 },
                 Content = new ViewFreeCashFlows(new ViewModelFreeCashFlows(param))
             });
-            //this.cctrDashboardContent.Content = null; // new ViewAnalysisSummary(new ViewModelAnalysisSummary(param));
+            this.rtvDashboard.Items.Add(new RadTileViewItem
+            {
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = "Analysis Summary",
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize = 12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                Content = new ViewAnalysisSummary(_viewModel)
+            });
+            this.rtvDashboard.Items.Add(new RadTileViewItem
+            {
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = "Terminal Value Calculations",
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize = 12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                Content = new ViewTerminalValueCalculations(_viewModel)
+            });
+            this.rtvDashboard.Items.Add(new RadTileViewItem
+            {
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = "DCF Summary",
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize = 12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                Content = new ViewDCFSummary(_viewModel)
+            });
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

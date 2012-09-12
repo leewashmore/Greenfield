@@ -16,21 +16,88 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="White">
+    <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" BusyContent="{Binding BusyIndicatorContent}"
+                                      IsBusy="{Binding BusyIndicatorIsBusy}" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="0"/>
-        </Grid.RowDefinitions>
+            <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-        <telerik:RadGridView x:Name="dgTerminalValueCalculations">
+                <Button Height="15" Width="15" Grid.Column="0"
+                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                        Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
+                    <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
 
-        </telerik:RadGridView>
+                </Button>
+                <Button Height="15" Width="15" Grid.Column="1"
+                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnExportPDF"
+                        Margin="5,0,0,0" Click="btnExportPDF_Click">
+                    <Image Source="/GreenField.Gadgets;component/Images/PDF.png"/>
 
-        <telerik:RadRichTextBox Grid.Row="2" x:Name="RichTextBox" >
+                </Button>
+                <Button Height="15" Width="15" Grid.Column="2"
+                        BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
+                        Margin="5,0,0,0" Click="btnPrint_Click">
+                    <Image Source="/GreenField.Gadgets;component/Images/Print.png"/>
 
-        </telerik:RadRichTextBox>
+                </Button>
 
-    </Grid>
+            </Grid>
+
+            <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                <telerik:RadGridView x:Name="dgTerminalValueCalculations" 
+                                         ShowGroupPanel="False" 
+                                         AutoGenerateColumns="False" 
+                                         ItemsSource="{Binding TerminalValueCalculationsDisplayData}"
+                                         CanUserFreezeColumns="False" 
+                                         CanUserDeleteRows="False"
+                                         CanUserInsertRows="False"
+                                         IsReadOnly="True"
+                                         CanUserReorderColumns="False" 
+                                         CanUserSortColumns="False"
+                                         RowIndicatorVisibility="Collapsed" 
+                                         UseLayoutRounding="True" 
+                                         ColumnWidth="Auto" ShowColumnFooters="False"
+                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                         ShowGroupFooters="True"
+                                         GroupPanelBackground="#e4e5e5"
+                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
+                                         GroupPanelItemStyle="{StaticResource GridViewGroupPanelItemStyle}"
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}" 
+                                         RowStyle="{StaticResource GridViewRowStyle}"
+                                         ScrollMode="Deferred"
+                                         AlternationCount="2" 
+                                         EnableRowVirtualization="False"
+                                         EnableColumnVirtualization="False"
+                                         GridLinesVisibility="None">
+                    <telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn Header="Terminal Value Calculations" UniqueName="Terminal Value Calculations" DataMemberBinding="{Binding PropertyName,Mode=TwoWay}" 
+                                                    HeaderTextAlignment="Left" TextAlignment="Left"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                        <telerik:GridViewDataColumn Header=" " UniqueName="Values" DataMemberBinding="{Binding Value,Mode=TwoWay}" HeaderTextAlignment="Right" TextAlignment="Right"
+                                                    HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
+            </Grid>
+
+            <telerik:RadRichTextBox Grid.Row="2" x:Name="RichTextBox" >
+
+            </telerik:RadRichTextBox>
+
+        </Grid>
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

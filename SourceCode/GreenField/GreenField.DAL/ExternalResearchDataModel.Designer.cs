@@ -1778,6 +1778,25 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<DCFSummaryDBData>("GetDCF_NumberOfShares", sECURITY_IDParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="cOUNTRY_CODE">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Decimal>> GetDCFGDP(global::System.String cOUNTRY_CODE)
+        {
+            ObjectParameter cOUNTRY_CODEParameter;
+            if (cOUNTRY_CODE != null)
+            {
+                cOUNTRY_CODEParameter = new ObjectParameter("COUNTRY_CODE", cOUNTRY_CODE);
+            }
+            else
+            {
+                cOUNTRY_CODEParameter = new ObjectParameter("COUNTRY_CODE", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Decimal>>("GetDCFGDP", cOUNTRY_CODEParameter);
+        }
 
         #endregion
     }
