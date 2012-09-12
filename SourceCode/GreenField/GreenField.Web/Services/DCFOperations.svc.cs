@@ -233,7 +233,7 @@ namespace GreenField.Web.Services
 
                 //data.ISSUER_ID = "920028";
                 ////Retrieving data from Period Financials table
-                resultDB = dcf_FreeCashFlows.ExecuteStoreQuery<GetFreeCashFlows_Result>("exec GetFreeCashFlows @IssuerID={0}", "920028").ToList();
+                resultDB = dcf_FreeCashFlows.ExecuteStoreQuery<GetFreeCashFlows_Result>("exec GetFreeCashFlows @IssuerID={0}", data.ISSUER_ID).ToList();
 
                 foreach (GetFreeCashFlows_Result record in resultDB)
                 {
