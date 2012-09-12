@@ -81,7 +81,7 @@ namespace GreenField.Gadgets.Views
             String filter = "All Files (*.*)|*.*";
             if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.POWERPOINT_PRESENTATION)
             {
-                filter = "PowerPoint Presentation (*.pptx)|*.pptx|PowerPoint 97-2003 Presentation (*.ppt)|*.ppt";
+                filter = "PowerPoint Presentation (*.pptx)|*.pptx";
             }
             else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
             {
@@ -96,6 +96,22 @@ namespace GreenField.Gadgets.Views
             OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false, Filter = filter };            
             if (dialog.ShowDialog() == true)
             {
+                if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.POWERPOINT_PRESENTATION)
+                {
+                    if (!dialog.File.Name.Contains(".pptx"))
+                        return;
+                }
+                else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
+                {
+                    if (!(dialog.File.Name.Contains(".pdf") || dialog.File.Name.Contains(".jpeg")))
+                        return;                    
+                }
+                else
+                {
+                    if (!dialog.File.Name.Contains(".pdf"))
+                        return;                    
+                }
+
                 DataContextViewModelCreateUpdatePresentations.BusyIndicatorNotification(true, "Reading file...");
 
                 Boolean uploadFileExists = DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo != UploadDocumentType.ADDITIONAL_ATTACHMENT
