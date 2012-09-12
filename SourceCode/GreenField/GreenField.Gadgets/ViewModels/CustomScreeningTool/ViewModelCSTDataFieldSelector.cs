@@ -49,12 +49,7 @@ namespace GreenField.Gadgets.ViewModels
 
             //fetch tabs data
             FetchTabsData();
-
-            //set default values to the relevant data controls
-            SelectedFromYearInfo = DateTime.Now.Year;
-            SelectedToYearInfo = DateTime.Now.Year;
         }
-
       
         #endregion
 
@@ -226,7 +221,7 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
-        public int _selectedFromYearInfo;
+        public int _selectedFromYearInfo = DateTime.Now.Year;
         public int SelectedFromYearInfo 
         {
             get { return _selectedFromYearInfo; }
@@ -248,7 +243,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public int _selectedToYearInfo;
+        public int _selectedToYearInfo = DateTime.Now.Year;
         public int SelectedToYearInfo
         {
             get { return _selectedToYearInfo; }
@@ -326,16 +321,13 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-
                     SecurityReferenceData = result;
-
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-
             }
             catch (Exception ex)
             {
@@ -355,16 +347,13 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-
                     PeriodFinancialsData = result;
-
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-
             }
             catch (Exception ex)
             {
@@ -384,16 +373,13 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-
                     CurrentFinancialsData = result;
-
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-
             }
             catch (Exception ex)
             {
@@ -413,16 +399,13 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-
                     FairValueData = result;
-
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-
             }
             catch (Exception ex)
             {

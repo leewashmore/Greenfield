@@ -50,17 +50,18 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _regionManager = param.RegionManager;
 
-            BusyIndicatorNotification(true, "Retrieving Security Selection Data...");
+            BusyIndicatorNotification(true, "Retrieving Portfolio Selection Data...");
             //fetch PortfolioId list 
             _dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
 
+            BusyIndicatorNotification(true, "Retrieving Benchmark Selection Data...");
             //fetch Benchmark list
             _dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
 
             //retrieve custom selection data
             RetrieveCustomSelectionData();
 
-            BusyIndicatorNotification();
+            //BusyIndicatorNotification();
         }
         #endregion
 
@@ -592,7 +593,11 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
 
@@ -624,7 +629,11 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         private void CustomControlsListRegionCallbackMethod(List<string> result)
@@ -652,7 +661,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                //BusyIndicatorNotification();
+                BusyIndicatorNotification();
             }      
         }
 
@@ -681,7 +690,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                //BusyIndicatorNotification();
+                BusyIndicatorNotification();
             }
         }
 
@@ -710,7 +719,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                //BusyIndicatorNotification();
+                BusyIndicatorNotification();
             }
         }
 
@@ -739,7 +748,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                //BusyIndicatorNotification();
+                BusyIndicatorNotification();
             }
         }
 
@@ -751,9 +760,13 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (_dbInteractivity != null)
             {
+                 BusyIndicatorNotification(true, "Retrieving Region Selection Data...");
                 _dbInteractivity.RetrieveCustomControlsList("Region", CustomControlsListRegionCallbackMethod);
+                BusyIndicatorNotification(true, "Retrieving Country Selection Data...");
                 _dbInteractivity.RetrieveCustomControlsList("Country", CustomControlsListCountryCallbackMethod);
+                BusyIndicatorNotification(true, "Retrieving Sector Selection Data...");
                 _dbInteractivity.RetrieveCustomControlsList("Sector", CustomControlsListSectorCallbackMethod);
+                BusyIndicatorNotification(true, "Retrieving Industry Selection Data...");
                 _dbInteractivity.RetrieveCustomControlsList("Industry", CustomControlsListIndustryCallbackMethod);
             }
         }
