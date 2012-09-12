@@ -45,216 +45,6 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
     }
     
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CSTUserPreferenceInfo", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts")]
-    public partial class CSTUserPreferenceInfo : object, System.ComponentModel.INotifyPropertyChanged {
-        
-        private string AccessibilityField;
-        
-        private string DataDescriptionField;
-        
-        private int DataIDField;
-        
-        private int DataPointsOrderField;
-        
-        private string DataSourceField;
-        
-        private int EstimateIDField;
-        
-        private int FromDateField;
-        
-        private string ListNameField;
-        
-        private string PeriodTypeField;
-        
-        private string ScreeningIdField;
-        
-        private string TableColumnNameField;
-        
-        private int ToDateField;
-        
-        private string YearTypeField;
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Accessibility {
-            get {
-                return this.AccessibilityField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AccessibilityField, value) != true)) {
-                    this.AccessibilityField = value;
-                    this.RaisePropertyChanged("Accessibility");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DataDescription {
-            get {
-                return this.DataDescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DataDescriptionField, value) != true)) {
-                    this.DataDescriptionField = value;
-                    this.RaisePropertyChanged("DataDescription");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DataID {
-            get {
-                return this.DataIDField;
-            }
-            set {
-                if ((this.DataIDField.Equals(value) != true)) {
-                    this.DataIDField = value;
-                    this.RaisePropertyChanged("DataID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int DataPointsOrder {
-            get {
-                return this.DataPointsOrderField;
-            }
-            set {
-                if ((this.DataPointsOrderField.Equals(value) != true)) {
-                    this.DataPointsOrderField = value;
-                    this.RaisePropertyChanged("DataPointsOrder");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DataSource {
-            get {
-                return this.DataSourceField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DataSourceField, value) != true)) {
-                    this.DataSourceField = value;
-                    this.RaisePropertyChanged("DataSource");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int EstimateID {
-            get {
-                return this.EstimateIDField;
-            }
-            set {
-                if ((this.EstimateIDField.Equals(value) != true)) {
-                    this.EstimateIDField = value;
-                    this.RaisePropertyChanged("EstimateID");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int FromDate {
-            get {
-                return this.FromDateField;
-            }
-            set {
-                if ((this.FromDateField.Equals(value) != true)) {
-                    this.FromDateField = value;
-                    this.RaisePropertyChanged("FromDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ListName {
-            get {
-                return this.ListNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ListNameField, value) != true)) {
-                    this.ListNameField = value;
-                    this.RaisePropertyChanged("ListName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PeriodType {
-            get {
-                return this.PeriodTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PeriodTypeField, value) != true)) {
-                    this.PeriodTypeField = value;
-                    this.RaisePropertyChanged("PeriodType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ScreeningId {
-            get {
-                return this.ScreeningIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ScreeningIdField, value) != true)) {
-                    this.ScreeningIdField = value;
-                    this.RaisePropertyChanged("ScreeningId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TableColumnName {
-            get {
-                return this.TableColumnNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TableColumnNameField, value) != true)) {
-                    this.TableColumnNameField = value;
-                    this.RaisePropertyChanged("TableColumnName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ToDate {
-            get {
-                return this.ToDateField;
-            }
-            set {
-                if ((this.ToDateField.Equals(value) != true)) {
-                    this.ToDateField = value;
-                    this.RaisePropertyChanged("ToDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string YearType {
-            get {
-                return this.YearTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.YearTypeField, value) != true)) {
-                    this.YearTypeField = value;
-                    this.RaisePropertyChanged("YearType");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="CustomScreeningDefinitions.CustomScreeningToolOperations")]
     public interface CustomScreeningToolOperations {
@@ -306,14 +96,14 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             "onse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/SaveUserDataPointsPreferenceServ" +
             "iceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndSaveUserDataPointsPreference(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityData", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataServiceFault" +
             "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> EndRetrieveSecurityData(System.IAsyncResult result);
     }
@@ -795,7 +585,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginSaveUserDataPointsPreference(userPreference, callback, asyncState);
         }
         
@@ -805,7 +595,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         private System.IAsyncResult OnBeginSaveUserDataPointsPreference(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference = ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo>)(inValues[0]));
+            System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference = ((System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo>)(inValues[0]));
             return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginSaveUserDataPointsPreference(userPreference, callback, asyncState);
         }
         
@@ -822,11 +612,11 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             }
         }
         
-        public void SaveUserDataPointsPreferenceAsync(System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference) {
+        public void SaveUserDataPointsPreferenceAsync(System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference) {
             this.SaveUserDataPointsPreferenceAsync(userPreference, null);
         }
         
-        public void SaveUserDataPointsPreferenceAsync(System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference, object userState) {
+        public void SaveUserDataPointsPreferenceAsync(System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, object userState) {
             if ((this.onBeginSaveUserDataPointsPreferenceDelegate == null)) {
                 this.onBeginSaveUserDataPointsPreferenceDelegate = new BeginOperationDelegate(this.OnBeginSaveUserDataPointsPreference);
             }
@@ -841,7 +631,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, userPreference, callback, asyncState);
         }
         
@@ -857,7 +647,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             string country = ((string)(inValues[3]));
             string sector = ((string)(inValues[4]));
             string industry = ((string)(inValues[5]));
-            System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference = ((System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo>)(inValues[6]));
+            System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference = ((System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo>)(inValues[6]));
             return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, userPreference, callback, asyncState);
         }
         
@@ -874,11 +664,11 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             }
         }
         
-        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference) {
+        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference) {
             this.RetrieveSecurityDataAsync(portfolio, benchmark, region, country, sector, industry, userPreference, null);
         }
         
-        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference, object userState) {
+        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, object userState) {
             if ((this.onBeginRetrieveSecurityDataDelegate == null)) {
                 this.onBeginRetrieveSecurityDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveSecurityData);
             }
@@ -1035,7 +825,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[1];
                 _args[0] = userPreference;
                 System.IAsyncResult _result = base.BeginInvoke("SaveUserDataPointsPreference", _args, callback, asyncState);
@@ -1048,7 +838,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.ServiceCaller.CustomScreeningDefinitions.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[7];
                 _args[0] = portfolio;
                 _args[1] = benchmark;
