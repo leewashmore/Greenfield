@@ -825,9 +825,6 @@
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
-          <Parameter Name="securityBucketXML" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="RetrieveDCFAnalysisSummaryData" ReturnType="Collection(ExternalResearchModel.DCFAnalysisSummaryData_Result)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
@@ -899,7 +896,10 @@
           <Parameter Name="IssuerId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetFairValueCompositionSummaryData" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
-            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
+            <Parameter Name="securityBucketXML" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -1958,17 +1958,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveRatioComparisonData" FunctionName="ExternalResearchModel.Store.RetrieveRatioComparisonData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.RatioComparisonData">
-                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
-                <ScalarProperty Name="FINANCIAL" ColumnName="FINANCIAL" />
-                <ScalarProperty Name="VALUATION" ColumnName="VALUATION" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="RetrieveSecurityPFVMeasureCurrentPrice" FunctionName="ExternalResearchModel.Store.RetrieveSecurityPFVMeasureCurrentPrice" />
           <FunctionImportMapping FunctionImportName="usp_GetDataForValuationQualityGrowth" FunctionName="ExternalResearchModel.Store.usp_GetDataForValuationQualityGrowth">
             <ResultMapping>
@@ -2103,6 +2092,17 @@
                 <ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
                 <ScalarProperty Name="DATE" ColumnName="DATE" />
                 <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveRatioComparisonData" FunctionName="ExternalResearchModel.Store.RetrieveRatioComparisonData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.RatioComparisonData">
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+                <ScalarProperty Name="FINANCIAL" ColumnName="FINANCIAL" />
+                <ScalarProperty Name="VALUATION" ColumnName="VALUATION" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
