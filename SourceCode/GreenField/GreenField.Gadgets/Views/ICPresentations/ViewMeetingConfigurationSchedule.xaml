@@ -20,7 +20,7 @@
     </helpers:ViewBaseUserControl.Resources>
 
     <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" BusyContent="{Binding BusyIndicatorContent}"
-                                      IsBusy="{Binding BusyIndicatorIsBusy}" DisplayAfter="0" FontFamily="Arial" FontSize="7">
+                                      IsBusy="{Binding BusyIndicatorIsBusy}" DisplayAfter="0" Style="{StaticResource BusyIndicatorStyle}">
 
         <Grid x:Name="LayoutRoot">
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">

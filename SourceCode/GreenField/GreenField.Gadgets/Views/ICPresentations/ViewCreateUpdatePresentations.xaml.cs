@@ -98,17 +98,17 @@ namespace GreenField.Gadgets.Views
             {
                 if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.POWERPOINT_PRESENTATION)
                 {
-                    if (!dialog.File.Name.Contains(".pptx"))
+                    if (dialog.File.Extension !=".pptx")
                         return;
                 }
                 else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
                 {
-                    if (!(dialog.File.Name.Contains(".pdf") || dialog.File.Name.Contains(".jpeg")))
+                    if (dialog.File.Extension != ".pdf" || dialog.File.Extension != ".jpeg")
                         return;                    
                 }
                 else
                 {
-                    if (!dialog.File.Name.Contains(".pdf"))
+                    if (dialog.File.Extension != ".pdf")
                         return;                    
                 }
 

@@ -65,7 +65,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Margin="5,0,0,0" Text="Presentation Date: " FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.MeetingDateTime}" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.MeetingDateTim, Converter={StaticResource UTCToLocalDateTimeConverter}}" Style="{StaticResource TextBlockStyle}"/>
                 </Grid>
                 <Grid Grid.Column="3">
                     <Grid.ColumnDefinitions>
