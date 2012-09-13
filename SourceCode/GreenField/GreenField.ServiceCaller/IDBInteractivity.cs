@@ -340,6 +340,10 @@ namespace GreenField.ServiceCaller
         void RetrieveDocumentsData(EntitySelectionData selectedSecurity, Action<byte[]> callback);
 
         #endregion
+        #region FAIR VALUE 
+        void RetrieveFairValueCompostionSummary(EntitySelectionData entitySelectionData, Action<List<FairValueCompositionSummaryData>> callback);
+
+        #endregion
 
 
     }

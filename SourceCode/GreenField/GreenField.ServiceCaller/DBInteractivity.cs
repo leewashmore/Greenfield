@@ -21,6 +21,7 @@ using GreenField.ServiceCaller.DCFDefinitions;
 using GreenField.ServiceCaller.DocumentWorkSpaceDefinitions;
 using System.IO;
 using GreenField.ServiceCaller.CustomScreeningDefinitions;
+using GreenField.ServiceCaller.FairValueDefinitions;
 
 
 namespace GreenField.ServiceCaller
@@ -4861,6 +4862,56 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        #endregion
+
+        #region FAIR VALUE
+        /// <summary>
+        /// Gets FAIR VALUE SUMMARY Data
+        /// </summary>
+        /// <param name="entitySelectionData"></param>
+        /// <param name="callback"></param>
+        public void RetrieveFairValueCompostionSummary(EntitySelectionData entitySelectionData, Action<List<FairValueCompositionSummaryData>> callback)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            FairValueOperationsClient client = new FairValueOperationsClient();
+            client.RetrieveFairValueCompostionSummaryAsync(entitySelectionData);
+            client.RetrieveFairValueCompostionSummaryCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+        }
         #endregion
 
     }

@@ -230,8 +230,6 @@ namespace GreenField.Web.Services
 
                 if (data == null)
                     return null;
-
-                //data.ISSUER_ID = "920028";
                 ////Retrieving data from Period Financials table
                 resultDB = dcf_FreeCashFlows.ExecuteStoreQuery<GetFreeCashFlows_Result>("exec GetFreeCashFlows @IssuerID={0}", data.ISSUER_ID).ToList();
 
@@ -243,20 +241,6 @@ namespace GreenField.Web.Services
                     item.Amount = record.AMOUNT;
                     result.Add(item);
                 }
-                //decimal? amount ;
-                //item.FieldName = "Revenue Growth";
-                //amount = Convert.ToDecimal(resultDB.Where(a => (a.PERIOD_YEAR == DateTime.Now.Year && a.FIELD_NAME == "Revenue Growth")).Select(a => a.AMOUNT));
-                //if(amount != null)
-                //item.ValueY0 = Convert.ToString(amount) + "%";
-
-                //amount = Convert.ToDecimal(resultDB.Where(a => (a.PERIOD_YEAR == DateTime.Now.Year && a.FIELD_NAME == "Revenue Growth")).Select(a => a.AMOUNT));
-                //if (amount != null)
-                //    item.ValueY0 = Convert.ToString(amount) + "%";
-
-
-
-                //    result.Add(item);
-                //}
                 return result;
             }
             catch (Exception ex)

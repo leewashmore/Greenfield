@@ -629,6 +629,9 @@
         <Function Name="GetDCFSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="GetFairValueCompositionSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetFinstatDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="issuerID" Type="varchar" Mode="In" />
           <Parameter Name="securityId" Type="varchar" Mode="In" />
@@ -893,7 +896,10 @@
           <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetFreeCashFlows" ReturnType="Collection(ExternalResearchModel.GetFreeCashFlows_Result)">
-            <Parameter Name="IssuerId" Mode="In" Type="String" />
+          <Parameter Name="IssuerId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetFairValueCompositionSummaryData" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
+            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -1453,6 +1459,15 @@
           <Property Type="Int32" Name="DATA_ID" Nullable="false" />
           <Property Type="Decimal" Name="AMOUNT" Nullable="true" />
           <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="GetFairValueComposition_Result" >
+          <Property Type="String" Name="SOURCE" Nullable="true" />
+          <Property Type="String" Name="MEASURE" Nullable="true" />
+          <Property Type="Decimal" Name="BUY" Nullable="true" />
+          <Property Type="Decimal" Name="SELL" Nullable="true" />
+          <Property Type="Decimal" Name="UPSIDE" Nullable="true" />
+          <Property Type="DateTime" Name="DATE" Nullable="true" />
+          <Property Type="Int32" Name="DATA_ID" Nullable="true" />
         </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -2075,6 +2090,19 @@
                 <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
                 <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
                 <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetFairValueCompositionSummaryData" FunctionName="ExternalResearchModel.Store.GetFairValueCompositionSummaryData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.GetFairValueComposition_Result">
+                <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
+                <ScalarProperty Name="MEASURE" ColumnName="MEASURE" />
+                <ScalarProperty Name="BUY" ColumnName="BUY" />
+                <ScalarProperty Name="SELL" ColumnName="SELL" />
+                <ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

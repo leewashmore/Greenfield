@@ -46,6 +46,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -123,6 +124,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\FairValueDefinitions\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\LoggingDefinitions\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -191,6 +197,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCatalogData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.DocumentCategoricalData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.EntitySelectionData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.FairValueCompositionSummaryData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FilterSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FinstatDetailData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.FreeCashFlowsData.datasource" />
@@ -372,6 +379,20 @@
     </None>
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo1.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\FairValueDefinitions\FairValueOperations.wsdl" />
+    <None Include="Service References\FairValueDefinitions\FairValueOperations.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FairValueDefinitions\FairValueOperations1.wsdl" />
+    <None Include="Service References\FairValueDefinitions\FairValueOperations1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FairValueDefinitions\FairValueOperations2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\FairValueDefinitions\FairValueOperations3.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Service References\LoggingDefinitions\LoggingOperations.disco" />
     <None Include="Service References\LoggingDefinitions\configuration91.svcinfo" />
@@ -585,6 +606,13 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+    <None Include="Service References\FairValueDefinitions\FairValueOperations.disco" />
+    <None Include="Service References\FairValueDefinitions\configuration91.svcinfo" />
+    <None Include="Service References\FairValueDefinitions\configuration.svcinfo" />
+    <None Include="Service References\FairValueDefinitions\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="ServiceReferences.ClientConfig">
       <SubType>Designer</SubType>
     </Content>
@@ -655,6 +683,7 @@
     <WCFMetadataStorage Include="Service References\DCFDefinitions\" />
     <WCFMetadataStorage Include="Service References\DocumentWorkSpaceDefinitions\" />
     <WCFMetadataStorage Include="Service References\ExternalResearchDefinitions\" />
+    <WCFMetadataStorage Include="Service References\FairValueDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoggingDefinitions\" />
     <WCFMetadataStorage Include="Service References\LoginDefinitions\" />
     <WCFMetadataStorage Include="Service References\MeetingDefinitions\" />

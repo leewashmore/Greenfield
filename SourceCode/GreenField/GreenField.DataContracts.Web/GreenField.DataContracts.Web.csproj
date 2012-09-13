@@ -107,6 +107,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\Enumerations.cs">
       <Link>DataContracts\Enumerations.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\FairValueCompositionSummaryData.cs">
+      <Link>DataContracts\FairValueCompositionSummaryData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\FilterSelectionData.cs">
       <Link>DataContracts\FilterSelectionData.cs</Link>
     </Compile>

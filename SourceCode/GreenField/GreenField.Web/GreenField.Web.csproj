@@ -94,6 +94,7 @@
     <Content Include="Services\AlertOperations.svc" />
     <Content Include="Services\DCFOperations.svc" />
     <Content Include="Services\ExternalResearchOperations.svc" />
+    <Content Include="Services\FairValueOperations.svc" />
     <Content Include="Services\MeetingOperations.svc" />
     <Content Include="Services\ModelFXOperations.svc" />
     <Content Include="Services\BenchmarkHoldingsOperations.svc" />
@@ -188,6 +189,9 @@
     </Compile>
     <Compile Include="Services\ExternalResearchOperations.svc.cs">
       <DependentUpon>ExternalResearchOperations.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Services\FairValueOperations.svc.cs">
+      <DependentUpon>FairValueOperations.svc</DependentUpon>
     </Compile>
     <Compile Include="Services\MeetingOperations.svc.cs">
       <DependentUpon>MeetingOperations.svc</DependentUpon>
