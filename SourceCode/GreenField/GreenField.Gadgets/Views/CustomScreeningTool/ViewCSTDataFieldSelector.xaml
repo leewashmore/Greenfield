@@ -18,643 +18,659 @@
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid x:Name="gDataFieldSelector">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <telerik:RadTabControl x:Name="tabControl" 
+                           IsContentPreserved="True"
+                           ItemsSource="{Binding SecurityOverviewData}">
+                        <telerik:RadTabItem Header="Securtiy Reference" Margin="0,0,2,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
 
-            <Grid Grid.Column="0">
-                <telerik:RadTabControl x:Name="tabControl" 
-                       IsContentPreserved="True"
-                       ItemsSource="{Binding SecurityOverviewData}">
-                    <telerik:RadTabItem Header="Securtiy Reference" Margin="0,0,2,0">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
                                 
-                                <Grid Grid.Column="0" Margin="5,5,5,5">
-                                        <!--Data Grid-->
-                                        <telerik:RadGridView x:Name="dgSecurityReferenceList"
-                                         Margin="2,2,0,2"
-                                         ItemsSource="{Binding SecurityReferenceData}"
-                                         telerik:StyleManager.Theme="Metro"
-                                         CanUserReorderColumns ="False" 
-                                         CanUserSelect="True"
-                                         CanUserSortColumns="true"
-                                         AutoGenerateColumns="False"
-                                         CanUserInsertRows="False"
-                                         CanUserDeleteRows="False"
-                                         ShowGroupFooters="False"
-                                         ShowColumnFooters="False"
-                                         ShowGroupPanel="False"
-                                         UseLayoutRounding="True"
-                                         IsReadOnly="True"
-                                         RowIndicatorVisibility="Collapsed"
-                                         ScrollMode="RealTime"                                                        
-                                         FontSize="7"
-                                         FontFamily="Arial"
-                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                         AlternationCount="2" 
-                                         EnableRowVirtualization="False"
-                                         EnableColumnVirtualization="False"  
-                                         Width="250"
-                                         Height="220"
-                                         SelectedItem="{Binding SelectedSecurityReferenceData, Mode=TwoWay}"
-                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         RowStyle="{StaticResource GridViewRowStyle}" >
+                                    <Grid Grid.Column="0" Margin="5,5,5,5">
+                                            <!--Data Grid-->
+                                            <telerik:RadGridView x:Name="dgSecurityReferenceList"
+                                             Margin="2,2,0,2"
+                                             ItemsSource="{Binding SecurityReferenceData}"
+                                             telerik:StyleManager.Theme="Metro"
+                                             CanUserReorderColumns ="False" 
+                                             CanUserSelect="True"
+                                             CanUserSortColumns="true"
+                                             AutoGenerateColumns="False"
+                                             CanUserInsertRows="False"
+                                             CanUserDeleteRows="False"
+                                             ShowGroupFooters="False"
+                                             ShowColumnFooters="False"
+                                             ShowGroupPanel="False"
+                                             UseLayoutRounding="True"
+                                             IsReadOnly="True"
+                                             RowIndicatorVisibility="Collapsed"
+                                             ScrollMode="RealTime"                                                        
+                                             FontSize="7"
+                                             FontFamily="Arial"
+                                             AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                             AlternationCount="2" 
+                                             EnableRowVirtualization="False"
+                                             EnableColumnVirtualization="False"  
+                                             Width="250"
+                                             Height="220"
+                                             SelectedItem="{Binding SelectedSecurityReferenceData, Mode=TwoWay}"
+                                             HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                             RowStyle="{StaticResource GridViewRowStyle}" >
                                          
-                                         <telerik:RadGridView.Columns>
-                                         <telerik:GridViewDataColumn x:Name="dgSelectedSecurityReferenceDataItem"                                            
-                                            Width="Auto"
-                                            Header="Data Fields"
-                                            DataMemberBinding="{Binding DataDescription}"
-                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Left"
-                                            TextAlignment="Left"
-                                            IsFilterable="True"/>
+                                             <telerik:RadGridView.Columns>
+                                             <telerik:GridViewDataColumn x:Name="dgSelectedSecurityReferenceDataItem"                                            
+                                                Width="Auto"
+                                                Header="Data Fields"
+                                                DataMemberBinding="{Binding DataDescription}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Left"
+                                                IsFilterable="True"/>
+                                                </telerik:RadGridView.Columns>
+                                            </telerik:RadGridView>
+                                    </Grid>
+
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <telerik:RadButton x:Name="btnCustomControlAddSecurityRef" Command="{Binding AddCommand}"
+                                                       Width="50" Height="20" 
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="Visible" Content=">>"/>
+
+                                        <telerik:RadButton x:Name="btnCustomControlRemoveSecurityRef" Command="{Binding RemoveCommand}"
+                                                       Width="50" Height="20" Grid.Row="1"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="Visible" Content="&lt;&lt;"/>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation ="Vertical" VerticalAlignment="Stretch" Margin="5,0,5,5" Height="50">
+                                        <TextBlock Text="Description" FontWeight="Bold" 
+                                                   Margin="2,2,0,2"
+                                                   Style="{StaticResource TextBlockStyle}" 
+                                                   Grid.Row="0"
+                                                   HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{Binding SelectedSecurityReferenceData.LongDescription}" 
+                                                   Style="{StaticResource TextBlockStyle}"                                                
+                                                   Margin="2,2,0,2"
+                                                   Grid.Row="1"
+                                                   HorizontalAlignment="Left"
+                                                   Padding="2"
+                                                   VerticalAlignment="Stretch"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+                        </telerik:RadTabItem>
+                    
+                        <telerik:RadTabItem Header="Period Financials" Margin="2,0,2,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Margin="5,5,5,5">
+                                        <!--Data Grid-->
+                                        <telerik:RadGridView x:Name="dgPeriodFinancialsList"
+                                             Margin="2,2,0,2"
+                                             ItemsSource="{Binding PeriodFinancialsData}"
+                                             telerik:StyleManager.Theme="Metro"
+                                             CanUserReorderColumns ="False" 
+                                             CanUserSelect="True"
+                                             CanUserSortColumns="true"
+                                             AutoGenerateColumns="False"
+                                             CanUserInsertRows="False"
+                                             CanUserDeleteRows="False"
+                                             ShowGroupFooters="False"
+                                             ShowColumnFooters="False"
+                                             ShowGroupPanel="False"
+                                             UseLayoutRounding="True"
+                                             IsReadOnly="True"
+                                             RowIndicatorVisibility="Collapsed"
+                                             ScrollMode="RealTime"
+                                             FontSize="7"
+                                             FontFamily="Arial"
+                                             AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                             AlternationCount="2" 
+                                             EnableRowVirtualization="False"
+                                             EnableColumnVirtualization="False" 
+                                             HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                             SelectedItem="{Binding SelectedPeriodFinancialsData, Mode=TwoWay}"
+                                             RowStyle="{StaticResource GridViewRowStyle}"
+                                             Width="250" Height="220">
+
+                                            <telerik:RadGridView.Columns>
+                                                <telerik:GridViewDataColumn x:Name="dgSelectedPeriodFinancialsDataItem"                                            
+                                                Width="Auto"
+                                                Header="Data Fields"
+                                                DataMemberBinding="{Binding DataDescription}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Left"
+                                                IsFilterable="True"/>
                                             </telerik:RadGridView.Columns>
                                         </telerik:RadGridView>
-                                </Grid>
+                                    </Grid>
 
-                                <Grid Grid.Column="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <telerik:RadButton x:Name="btnCustomControlAddSecurityRef" Command="{Binding AddCommand}"
-                                                   Width="50" Height="20" 
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="Visible" Content=">>"/>
-
-                                    <telerik:RadButton x:Name="btnCustomControlRemoveSecurityRef" Command="{Binding RemoveCommand}"
-                                                   Width="50" Height="20" Grid.Row="1"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="Visible" Content="&lt;&lt;"/>
-                                </Grid>
-                            </Grid>
-
-                            <Grid Grid.Row="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <StackPanel Orientation ="Vertical" VerticalAlignment="Stretch" Margin="5,0,5,5" Height="50">
-                                    <TextBlock Text="Description" FontWeight="Bold" 
-                                               Margin="2,2,0,2"
-                                               Style="{StaticResource TextBlockStyle}" 
-                                               Grid.Row="0"
-                                               HorizontalAlignment="Left"/>
-                                    <TextBlock Text="{Binding SelectedSecurityReferenceData.LongDescription}" 
-                                               Style="{StaticResource TextBlockStyle}"                                                
-                                               Margin="2,2,0,2"
-                                               Grid.Row="1"
-                                               HorizontalAlignment="Left"
-                                               Padding="2"
-                                               VerticalAlignment="Stretch"/>
-                                </StackPanel>
-                            </Grid>
-                        </Grid>
-                    </telerik:RadTabItem>
-                    
-                    <telerik:RadTabItem Header="Period Financials" Margin="2,0,2,0">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Grid Grid.Column="0" Margin="5,5,5,5">
-                                    <!--Data Grid-->
-                                    <telerik:RadGridView x:Name="dgPeriodFinancialsList"
-                                         Margin="2,2,0,2"
-                                         ItemsSource="{Binding PeriodFinancialsData}"
-                                         telerik:StyleManager.Theme="Metro"
-                                         CanUserReorderColumns ="False" 
-                                         CanUserSelect="True"
-                                         CanUserSortColumns="true"
-                                         AutoGenerateColumns="False"
-                                         CanUserInsertRows="False"
-                                         CanUserDeleteRows="False"
-                                         ShowGroupFooters="False"
-                                         ShowColumnFooters="False"
-                                         ShowGroupPanel="False"
-                                         UseLayoutRounding="True"
-                                         IsReadOnly="True"
-                                         RowIndicatorVisibility="Collapsed"
-                                         ScrollMode="RealTime"
-                                         FontSize="7"
-                                         FontFamily="Arial"
-                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                         AlternationCount="2" 
-                                         EnableRowVirtualization="False"
-                                         EnableColumnVirtualization="False" 
-                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         SelectedItem="{Binding SelectedPeriodFinancialsData, Mode=TwoWay}"
-                                         RowStyle="{StaticResource GridViewRowStyle}"
-                                         Width="250" Height="220">
-
-                                        <telerik:RadGridView.Columns>
-                                            <telerik:GridViewDataColumn x:Name="dgSelectedPeriodFinancialsDataItem"                                            
-                                            Width="Auto"
-                                            Header="Data Fields"
-                                            DataMemberBinding="{Binding DataDescription}"
-                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Left"
-                                            TextAlignment="Left"
-                                            IsFilterable="True"/>
-                                        </telerik:RadGridView.Columns>
-                                    </telerik:RadGridView>
-                                </Grid>
-
-                                <Grid Grid.Column="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    
-                                    <Grid Grid.Row="0">
+                                    <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
+                                    
+                                        <Grid Grid.Row="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
                                         
-                                        <TextBlock Text="Data Source" Style="{StaticResource TextBlockStyle}"
-                                                   Margin="2,2,2,2"/>
-                                        <telerik:RadComboBox x:Name="cbCSTPeriodFinDataSource"
-                                                             Grid.Row="1"
-                                                             Margin="2,2,0,2"
-                                                             ItemsSource="{Binding DataSourceInfo}"
-                                                             SelectedItem="{Binding SelectedDataSourceInfo, Mode=TwoWay}"
-                                                             HorizontalContentAlignment="Left" EmptyText="Primary"  
-                                                             Height="{StaticResource DefaultControlMinHeight}"
-                                                             Style="{StaticResource RadComboBoxStyle}"/>
-                                    </Grid>                                  
+                                            <TextBlock Text="Data Source" Style="{StaticResource TextBlockStyle}"
+                                                       Margin="2,2,2,2"/>
+                                            <telerik:RadComboBox x:Name="cbCSTPeriodFinDataSource"
+                                                                 Grid.Row="1"
+                                                                 Margin="2,2,0,2"
+                                                                 ItemsSource="{Binding DataSourceInfo}"
+                                                                 SelectedItem="{Binding SelectedDataSourceInfo, Mode=TwoWay}"
+                                                                 HorizontalContentAlignment="Left" EmptyText="Primary"  
+                                                                 Height="{StaticResource DefaultControlMinHeight}"
+                                                                 Style="{StaticResource RadComboBoxStyle}"/>
+                                        </Grid>                                  
                                     
 
-                                    <Grid Grid.Row="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
 
-                                        <TextBlock Text="Year Type" Style="{StaticResource TextBlockStyle}"
-                                                   Margin="2,2,0,2"/>
-                                        <telerik:RadComboBox x:Name="cbCSTPeriodFinYearType"
-                                                             Grid.Row="1"
-                                                             Margin="2,2,0,2"
-                                                             ItemsSource="{Binding YearTypeInfo}"
-                                                             SelectedItem="{Binding SelectedYearTypeInfo, Mode=TwoWay}"
-                                                             HorizontalContentAlignment="Left" EmptyText="Calendar"  
-                                                             Height="{StaticResource DefaultControlMinHeight}"
-                                                             Style="{StaticResource RadComboBoxStyle}"/>
+                                            <TextBlock Text="Year Type" Style="{StaticResource TextBlockStyle}"
+                                                       Margin="2,2,0,2"/>
+                                            <telerik:RadComboBox x:Name="cbCSTPeriodFinYearType"
+                                                                 Grid.Row="1"
+                                                                 Margin="2,2,0,2"
+                                                                 ItemsSource="{Binding YearTypeInfo}"
+                                                                 SelectedItem="{Binding SelectedYearTypeInfo, Mode=TwoWay}"
+                                                                 HorizontalContentAlignment="Left" EmptyText="Calendar"  
+                                                                 Height="{StaticResource DefaultControlMinHeight}"
+                                                                 Style="{StaticResource RadComboBoxStyle}"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="2">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="Period Type" Style="{StaticResource TextBlockStyle}"
+                                                       Margin="2,2,0,2"/>
+                                            <telerik:RadComboBox x:Name="cbCSTPeriodFinPeriodType"
+                                                                 Grid.Row="1"
+                                                                 Margin="2,2,0,2"
+                                                                 ItemsSource="{Binding PeriodTypeInfo}"
+                                                                 SelectedItem="{Binding SelectedPeriodTypeInfo, Mode=TwoWay}"
+                                                                 HorizontalContentAlignment="Left" EmptyText="Annual"  
+                                                                 Height="{StaticResource DefaultControlMinHeight}"
+                                                                 Style="{StaticResource RadComboBoxStyle}"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="3">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="From" Style="{StaticResource TextBlockStyle}"
+                                                       Margin="2,2,0,2"/>
+                                            <telerik:RadComboBox x:Name="cbCSTPeriodFinFromYear"
+                                                                 Grid.Row="1"
+                                                                 Margin="2,2,0,2"
+                                                                 ItemsSource="{Binding FromYearInfo}"
+                                                                 SelectedItem="{Binding SelectedFromYearInfo, Mode=TwoWay}"
+                                                                 HorizontalContentAlignment="Left"  
+                                                                 Height="{StaticResource DefaultControlMinHeight}"
+                                                                 Style="{StaticResource RadComboBoxStyle}"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="4">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="To" Style="{StaticResource TextBlockStyle}"
+                                                       Margin="2,2,0,2"/>
+                                            <telerik:RadComboBox x:Name="cbCSTPeriodFinToYear"
+                                                                 Grid.Row="1"
+                                                                 Margin="2,2,0,2"
+                                                                 ItemsSource="{Binding ToYearInfo}"
+                                                                 SelectedItem="{Binding SelectedToYearInfo, Mode=TwoWay}"
+                                                                 HorizontalContentAlignment="Left"  
+                                                                 Height="{StaticResource DefaultControlMinHeight}"
+                                                                 Style="{StaticResource RadComboBoxStyle}"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="5">
+                                            <telerik:RadButton x:Name="btnCustomControlAddPeriodFin" Command="{Binding AddCommand}"
+                                                       Width="50" Height="20"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="Visible" Content=">>"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="6">
+                                            <telerik:RadButton x:Name="btnCustomControlRemovePeriodFin" Command="{Binding RemoveCommand}"
+                                                       Width="50" Height="20" 
+                                                       Margin="2,2,0,2"
+                                                       Grid.Row="6"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="Visible" Content="&lt;&lt;"/>
+
+                                        </Grid>
                                     </Grid>
+                                </Grid>  
 
-                                    <Grid Grid.Row="2">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <TextBlock Text="Period Type" Style="{StaticResource TextBlockStyle}"
-                                                   Margin="2,2,0,2"/>
-                                        <telerik:RadComboBox x:Name="cbCSTPeriodFinPeriodType"
-                                                             Grid.Row="1"
-                                                             Margin="2,2,0,2"
-                                                             ItemsSource="{Binding PeriodTypeInfo}"
-                                                             SelectedItem="{Binding SelectedPeriodTypeInfo, Mode=TwoWay}"
-                                                             HorizontalContentAlignment="Left" EmptyText="Annual"  
-                                                             Height="{StaticResource DefaultControlMinHeight}"
-                                                             Style="{StaticResource RadComboBoxStyle}"/>
-                                    </Grid>
-
-                                    <Grid Grid.Row="3">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <TextBlock Text="From" Style="{StaticResource TextBlockStyle}"
-                                                   Margin="2,2,0,2"/>
-                                        <telerik:RadComboBox x:Name="cbCSTPeriodFinFromYear"
-                                                             Grid.Row="1"
-                                                             Margin="2,2,0,2"
-                                                             ItemsSource="{Binding FromYearInfo}"
-                                                             SelectedItem="{Binding SelectedFromYearInfo, Mode=TwoWay}"
-                                                             HorizontalContentAlignment="Left"  
-                                                             Height="{StaticResource DefaultControlMinHeight}"
-                                                             Style="{StaticResource RadComboBoxStyle}"/>
-                                    </Grid>
-
-                                    <Grid Grid.Row="4">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <TextBlock Text="To" Style="{StaticResource TextBlockStyle}"
-                                                   Margin="2,2,0,2"/>
-                                        <telerik:RadComboBox x:Name="cbCSTPeriodFinToYear"
-                                                             Grid.Row="1"
-                                                             Margin="2,2,0,2"
-                                                             ItemsSource="{Binding ToYearInfo}"
-                                                             SelectedItem="{Binding SelectedToYearInfo, Mode=TwoWay}"
-                                                             HorizontalContentAlignment="Left"  
-                                                             Height="{StaticResource DefaultControlMinHeight}"
-                                                             Style="{StaticResource RadComboBoxStyle}"/>
-                                    </Grid>
-
-                                    <Grid Grid.Row="5">
-                                        <telerik:RadButton x:Name="btnCustomControlAddPeriodFin" Command="{Binding AddCommand}"
-                                                   Width="50" Height="20"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="Visible" Content=">>"/>
-                                    </Grid>
-
-                                    <Grid Grid.Row="6">
-                                        <telerik:RadButton x:Name="btnCustomControlRemovePeriodFin" Command="{Binding RemoveCommand}"
-                                                   Width="50" Height="20" 
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation ="Vertical" VerticalAlignment="Stretch" Margin="5,0,5,5" Height="50">
+                                        <TextBlock Text="Description" FontWeight="Bold" 
                                                    Margin="2,2,0,2"
-                                                   Grid.Row="6"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="Visible" Content="&lt;&lt;"/>
-
-                                    </Grid>
+                                                   Style="{StaticResource TextBlockStyle}" 
+                                                   Grid.Row="0"
+                                                   HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{Binding SelectedPeriodFinancialsData.LongDescription}" 
+                                                   Style="{StaticResource TextBlockStyle}" 
+                                                   Margin="2,2,0,2"
+                                                   Grid.Row="1"
+                                                   HorizontalAlignment="Left"
+                                                   Padding="2"
+                                                   VerticalAlignment="Stretch"/>
+                                    </StackPanel>
                                 </Grid>
-                            </Grid>  
 
-                            <Grid Grid.Row="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <StackPanel Orientation ="Vertical" VerticalAlignment="Stretch" Margin="5,0,5,5" Height="50">
-                                    <TextBlock Text="Description" FontWeight="Bold" 
-                                               Margin="2,2,0,2"
-                                               Style="{StaticResource TextBlockStyle}" 
-                                               Grid.Row="0"
-                                               HorizontalAlignment="Left"/>
-                                    <TextBlock Text="{Binding SelectedPeriodFinancialsData.LongDescription}" 
-                                               Style="{StaticResource TextBlockStyle}" 
-                                               Margin="2,2,0,2"
-                                               Grid.Row="1"
-                                               HorizontalAlignment="Left"
-                                               Padding="2"
-                                               VerticalAlignment="Stretch"/>
-                                </StackPanel>
                             </Grid>
-
-                        </Grid>
-                    </telerik:RadTabItem>
+                        </telerik:RadTabItem>
                     
-                    <telerik:RadTabItem Header="Current Financials"  Margin="2,0,2,0">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
+                        <telerik:RadTabItem Header="Current Financials"  Margin="2,0,2,0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
 
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
                               
-                                <Grid Grid.Column="0" Margin="5,5,5,5">
-                                    <!--Data Grid-->
-                                    <telerik:RadGridView x:Name="dgCurrentFinancialsList"
-                                         Margin="2,2,0,2"
-                                         ItemsSource="{Binding CurrentFinancialsData}"
-                                         telerik:StyleManager.Theme="Metro"
-                                         CanUserReorderColumns ="False" 
-                                         CanUserSelect="True"
-                                         CanUserSortColumns="true"
-                                         AutoGenerateColumns="False"
-                                         CanUserInsertRows="False"
-                                         CanUserDeleteRows="False"
-                                         ShowGroupFooters="False"
-                                         ShowColumnFooters="False"
-                                         ShowGroupPanel="False"
-                                         UseLayoutRounding="True"
-                                         IsReadOnly="True"
-                                         RowIndicatorVisibility="Collapsed"
-                                         ScrollMode="RealTime"
-                                         FontSize="7"
-                                         FontFamily="Arial"
-                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                         AlternationCount="2" 
-                                         EnableRowVirtualization="False"
-                                         EnableColumnVirtualization="False"   
-                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         SelectedItem="{Binding SelectedCurrentFinancialsData, Mode=TwoWay}"
-                                         RowStyle="{StaticResource GridViewRowStyle}"
-                                         Width="250" Height="220">
+                                    <Grid Grid.Column="0" Margin="5,5,5,5">
+                                        <!--Data Grid-->
+                                        <telerik:RadGridView x:Name="dgCurrentFinancialsList"
+                                             Margin="2,2,0,2"
+                                             ItemsSource="{Binding CurrentFinancialsData}"
+                                             telerik:StyleManager.Theme="Metro"
+                                             CanUserReorderColumns ="False" 
+                                             CanUserSelect="True"
+                                             CanUserSortColumns="true"
+                                             AutoGenerateColumns="False"
+                                             CanUserInsertRows="False"
+                                             CanUserDeleteRows="False"
+                                             ShowGroupFooters="False"
+                                             ShowColumnFooters="False"
+                                             ShowGroupPanel="False"
+                                             UseLayoutRounding="True"
+                                             IsReadOnly="True"
+                                             RowIndicatorVisibility="Collapsed"
+                                             ScrollMode="RealTime"
+                                             FontSize="7"
+                                             FontFamily="Arial"
+                                             AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                             AlternationCount="2" 
+                                             EnableRowVirtualization="False"
+                                             EnableColumnVirtualization="False"   
+                                             HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                             SelectedItem="{Binding SelectedCurrentFinancialsData, Mode=TwoWay}"
+                                             RowStyle="{StaticResource GridViewRowStyle}"
+                                             Width="250" Height="220">
 
-                                        <telerik:RadGridView.Columns>
-                                            <telerik:GridViewDataColumn x:Name="dgSelectedCurrentFinancialsDataItem"                                            
-                                            Width="Auto"
-                                            Header="Data Fields"
-                                            DataMemberBinding="{Binding DataDescription}"
-                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Left"
-                                            TextAlignment="Left"
-                                            IsFilterable="True"/>
-                                        </telerik:RadGridView.Columns>
-                                    </telerik:RadGridView>
-                                </Grid>
-
-                                <Grid Grid.Column="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <TextBlock Text="Data Source" Style="{StaticResource TextBlockStyle}" 
-                                                   Margin="2,2,2,2"/>
-                                        <telerik:RadComboBox x:Name="cbCSTCurrentFinDataSource"
-                                                             Grid.Row="1"
-                                                             Margin="2,2,0,2"
-                                                             ItemsSource="{Binding DataSourceInfo}"
-                                                             SelectedItem="{Binding SelectedDataSourceInfo, Mode=TwoWay}"
-                                                             HorizontalContentAlignment="Left" EmptyText="Primary"  
-                                                             Height="{StaticResource DefaultControlMinHeight}"
-                                                             Style="{StaticResource RadComboBoxStyle}"/>
-                                    </Grid>                                    
-                                    
-                                        <telerik:RadButton x:Name="btnCustomControlAddCurrentFin" Command="{Binding AddCommand}"
-                                                   Width="50" Height="20" Margin="10,0,5,0" 
-                                                   Grid.Column="1"
-                                                   Grid.Row="1"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="Visible" Content=">>"/>
-
-                                        <telerik:RadButton x:Name="btnCustomControlRemoveCurrentFin" Command="{Binding RemoveCommand}"
-                                                   Width="50" Height="20" 
-                                                   Grid.Column="1"
-                                                   Grid.Row="2"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="Visible" Content="&lt;&lt;"/>
-                                </Grid>                              
-
-                            </Grid>
-
-                            <Grid Grid.Row="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
-                                </Grid.RowDefinitions>
-                                <StackPanel Orientation ="Vertical" VerticalAlignment="Stretch" Margin="5,0,5,5" Height="50">
-                                    <TextBlock Text="Description" FontWeight="Bold" 
-                                               Margin="2,2,0,2"
-                                               Style="{StaticResource TextBlockStyle}" 
-                                               Grid.Row="0"
-                                               HorizontalAlignment="Left"/>
-                                    <TextBlock Text="{Binding SelectedCurrentFinancialsData.LongDescription}" 
-                                               Style="{StaticResource TextBlockStyle}" 
-                                               Margin="2,2,0,2"
-                                               Grid.Row="1"
-                                               HorizontalAlignment="Left"
-                                               Padding="2"
-                                               VerticalAlignment="Stretch"/>
-                                </StackPanel>
-                            </Grid>
-                            
-                        </Grid>
-                    </telerik:RadTabItem>
-                    <telerik:RadTabItem Header="Fair Value" Margin="2,0,2,0" >
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-
-                            <Grid Grid.Row="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-
-                                <Grid Grid.Column="0" Margin="5,5,5,5">
-                                    <!--Data Grid-->
-                                    <telerik:RadGridView x:Name="dgFairValueList"
-                                         Margin="2,2,0,2"
-                                         ItemsSource="{Binding FairValueData}"
-                                         telerik:StyleManager.Theme="Metro"
-                                         CanUserReorderColumns ="False" 
-                                         CanUserSelect="True"
-                                         CanUserSortColumns="true"
-                                         AutoGenerateColumns="False"
-                                         CanUserInsertRows="False"
-                                         CanUserDeleteRows="False"
-                                         ShowGroupFooters="False"
-                                         ShowColumnFooters="False"
-                                         ShowGroupPanel="False"
-                                         UseLayoutRounding="True"
-                                         IsReadOnly="True"
-                                         RowIndicatorVisibility="Collapsed"
-                                         ScrollMode="RealTime"
-                                         FontSize="7"
-                                         FontFamily="Arial"
-                                         AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                                         AlternationCount="2" 
-                                         EnableRowVirtualization="False"
-                                         EnableColumnVirtualization="False"   
-                                         HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                         SelectedItem="{Binding SelectedFairValueData, Mode=TwoWay}"
-                                         RowStyle="{StaticResource GridViewRowStyle}" 
-                                         Width="250" Height="200">
-
-                                        <telerik:RadGridView.Columns>
-                                            <telerik:GridViewDataColumn x:Name="dgSelectedFairValueDataItem"                                            
-                                            Width="Auto"
-                                            Header="Data Fields"
-                                            DataMemberBinding="{Binding DataDescription}"
-                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Left"
-                                            TextAlignment="Left"
-                                            IsFilterable="True"/>
-                                        </telerik:RadGridView.Columns>
-                                    </telerik:RadGridView>
-                                </Grid>
-
-                                <Grid Grid.Column="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                        <RowDefinition Height="*"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid Grid.Row="0">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="Auto"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-
-                                        <TextBlock Text="Data Source" Style="{StaticResource TextBlockStyle}"
-                                                   Margin="2,2,2,2"/>
-                                        <telerik:RadComboBox x:Name="cbCSTFairvalueDataSource"
-                                                             Grid.Row="1"
-                                                             Margin="2,2,0,2"
-                                                             ItemsSource="{Binding DataSourceInfo}"
-                                                             SelectedItem="{Binding SelectedDataSourceInfo, Mode=TwoWay}"
-                                                             HorizontalContentAlignment="Left" EmptyText="Primary"  
-                                                             Height="{StaticResource DefaultControlMinHeight}"
-                                                             Style="{StaticResource RadComboBoxStyle}"/>
+                                            <telerik:RadGridView.Columns>
+                                                <telerik:GridViewDataColumn x:Name="dgSelectedCurrentFinancialsDataItem"                                            
+                                                Width="Auto"
+                                                Header="Data Fields"
+                                                DataMemberBinding="{Binding DataDescription}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Left"
+                                                IsFilterable="True"/>
+                                            </telerik:RadGridView.Columns>
+                                        </telerik:RadGridView>
                                     </Grid>
+
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="Data Source" Style="{StaticResource TextBlockStyle}" 
+                                                       Margin="2,2,2,2"/>
+                                            <telerik:RadComboBox x:Name="cbCSTCurrentFinDataSource"
+                                                                 Grid.Row="1"
+                                                                 Margin="2,2,0,2"
+                                                                 ItemsSource="{Binding DataSourceInfo}"
+                                                                 SelectedItem="{Binding SelectedDataSourceInfo, Mode=TwoWay}"
+                                                                 HorizontalContentAlignment="Left" EmptyText="Primary"  
+                                                                 Height="{StaticResource DefaultControlMinHeight}"
+                                                                 Style="{StaticResource RadComboBoxStyle}"/>
+                                        </Grid>                                    
                                     
-                                        <telerik:RadButton x:Name="btnCustomControlAddFairValue" Command="{Binding AddCommand}"
-                                                   Width="50" Height="20" Margin="10,0,5,0"
-                                                   Grid.Column="1"
-                                                   Grid.Row="1"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="Visible" Content=">>"/>
+                                            <telerik:RadButton x:Name="btnCustomControlAddCurrentFin" Command="{Binding AddCommand}"
+                                                       Width="50" Height="20" Margin="10,0,5,0" 
+                                                       Grid.Column="1"
+                                                       Grid.Row="1"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="Visible" Content=">>"/>
 
-                                        <telerik:RadButton x:Name="btnCustomControlRemoveFairValue" Command="{Binding RemoveCommand}"
-                                                   Width="50" Height="20" 
-                                                   Grid.Column="1"
-                                                   Grid.Row="2"
-                                                   HorizontalAlignment="Center"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="Visible" Content="&lt;&lt;"/>
+                                            <telerik:RadButton x:Name="btnCustomControlRemoveCurrentFin" Command="{Binding RemoveCommand}"
+                                                       Width="50" Height="20" 
+                                                       Grid.Column="1"
+                                                       Grid.Row="2"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="Visible" Content="&lt;&lt;"/>
+                                    </Grid>                              
+
                                 </Grid>
-                            </Grid>
 
-                            <Grid Grid.Row="1">
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation ="Vertical" VerticalAlignment="Stretch" Margin="5,0,5,5" Height="50">
+                                        <TextBlock Text="Description" FontWeight="Bold" 
+                                                   Margin="2,2,0,2"
+                                                   Style="{StaticResource TextBlockStyle}" 
+                                                   Grid.Row="0"
+                                                   HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{Binding SelectedCurrentFinancialsData.LongDescription}" 
+                                                   Style="{StaticResource TextBlockStyle}" 
+                                                   Margin="2,2,0,2"
+                                                   Grid.Row="1"
+                                                   HorizontalAlignment="Left"
+                                                   Padding="2"
+                                                   VerticalAlignment="Stretch"/>
+                                    </StackPanel>
+                                </Grid>
+                            
+                            </Grid>
+                        </telerik:RadTabItem>
+                        <telerik:RadTabItem Header="Fair Value" Margin="2,0,2,0" >
+                            <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <StackPanel Orientation ="Vertical" VerticalAlignment="Stretch" Margin="5,0,5,5" Height="50">
-                                    <TextBlock Text="Description" FontWeight="Bold" 
-                                               Margin="2,2,0,2"
-                                               Style="{StaticResource TextBlockStyle}" 
-                                               Grid.Row="0"
-                                               HorizontalAlignment="Left"/>
-                                    <TextBlock Text="{Binding SelectedFairValueData.LongDescription}" 
-                                               Style="{StaticResource TextBlockStyle}" 
-                                               Margin="2,2,0,2"
-                                               Grid.Row="1"
-                                               HorizontalAlignment="Left"
-                                               Padding="2"
-                                               VerticalAlignment="Stretch"/>
-                                </StackPanel>
-                            </Grid>
 
-                        </Grid>
-                    </telerik:RadTabItem>
-                </telerik:RadTabControl>
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Margin="5,5,5,5">
+                                        <!--Data Grid-->
+                                        <telerik:RadGridView x:Name="dgFairValueList"
+                                             Margin="2,2,0,2"
+                                             ItemsSource="{Binding FairValueData}"
+                                             telerik:StyleManager.Theme="Metro"
+                                             CanUserReorderColumns ="False" 
+                                             CanUserSelect="True"
+                                             CanUserSortColumns="true"
+                                             AutoGenerateColumns="False"
+                                             CanUserInsertRows="False"
+                                             CanUserDeleteRows="False"
+                                             ShowGroupFooters="False"
+                                             ShowColumnFooters="False"
+                                             ShowGroupPanel="False"
+                                             UseLayoutRounding="True"
+                                             IsReadOnly="True"
+                                             RowIndicatorVisibility="Collapsed"
+                                             ScrollMode="RealTime"
+                                             FontSize="7"
+                                             FontFamily="Arial"
+                                             AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                             AlternationCount="2" 
+                                             EnableRowVirtualization="False"
+                                             EnableColumnVirtualization="False"   
+                                             HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                             SelectedItem="{Binding SelectedFairValueData, Mode=TwoWay}"
+                                             RowStyle="{StaticResource GridViewRowStyle}" 
+                                             Width="250" Height="200">
+
+                                            <telerik:RadGridView.Columns>
+                                                <telerik:GridViewDataColumn x:Name="dgSelectedFairValueDataItem"                                            
+                                                Width="Auto"
+                                                Header="Data Fields"
+                                                DataMemberBinding="{Binding DataDescription}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Left"
+                                                IsFilterable="True"/>
+                                            </telerik:RadGridView.Columns>
+                                        </telerik:RadGridView>
+                                    </Grid>
+
+                                    <Grid Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid Grid.Row="0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto"/>
+                                                <RowDefinition Height="Auto"/>
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="Data Source" Style="{StaticResource TextBlockStyle}"
+                                                       Margin="2,2,2,2"/>
+                                            <telerik:RadComboBox x:Name="cbCSTFairvalueDataSource"
+                                                                 Grid.Row="1"
+                                                                 Margin="2,2,0,2"
+                                                                 ItemsSource="{Binding DataSourceInfo}"
+                                                                 SelectedItem="{Binding SelectedDataSourceInfo, Mode=TwoWay}"
+                                                                 HorizontalContentAlignment="Left" EmptyText="Primary"  
+                                                                 Height="{StaticResource DefaultControlMinHeight}"
+                                                                 Style="{StaticResource RadComboBoxStyle}"/>
+                                        </Grid>
+                                    
+                                            <telerik:RadButton x:Name="btnCustomControlAddFairValue" Command="{Binding AddCommand}"
+                                                       Width="50" Height="20" Margin="10,0,5,0"
+                                                       Grid.Column="1"
+                                                       Grid.Row="1"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="Visible" Content=">>"/>
+
+                                            <telerik:RadButton x:Name="btnCustomControlRemoveFairValue" Command="{Binding RemoveCommand}"
+                                                       Width="50" Height="20" 
+                                                       Grid.Column="1"
+                                                       Grid.Row="2"
+                                                       HorizontalAlignment="Center"
+                                                       VerticalAlignment="Center"
+                                                       Visibility="Visible" Content="&lt;&lt;"/>
+                                    </Grid>
+                                </Grid>
+
+                                <Grid Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <StackPanel Orientation ="Vertical" VerticalAlignment="Stretch" Margin="5,0,5,5" Height="50">
+                                        <TextBlock Text="Description" FontWeight="Bold" 
+                                                   Margin="2,2,0,2"
+                                                   Style="{StaticResource TextBlockStyle}" 
+                                                   Grid.Row="0"
+                                                   HorizontalAlignment="Left"/>
+                                        <TextBlock Text="{Binding SelectedFairValueData.LongDescription}" 
+                                                   Style="{StaticResource TextBlockStyle}" 
+                                                   Margin="2,2,0,2"
+                                                   Grid.Row="1"
+                                                   HorizontalAlignment="Left"
+                                                   Padding="2"
+                                                   VerticalAlignment="Stretch"/>
+                                    </StackPanel>
+                                </Grid>
+
+                            </Grid>
+                        </telerik:RadTabItem>
+                    </telerik:RadTabControl>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <!--Data Grid-->
+                    <telerik:RadGridView x:Name="dgSelectedFieldsList"
+                                 ItemsSource="{Binding SelectedFieldsOverviewInfo}"
+                                 Grid.Row="1"
+                                 telerik:StyleManager.Theme="Metro"
+                                 CanUserReorderColumns ="False" 
+                                 CanUserSelect="True"
+                                 CanUserSortColumns="true"
+                                 AutoGenerateColumns="False"
+                                 CanUserInsertRows="False"
+                                 CanUserDeleteRows="False"
+                                 ShowGroupFooters="False"
+                                 ShowColumnFooters="False"
+                                 ShowGroupPanel="False"
+                                 UseLayoutRounding="True"
+                                 IsReadOnly="True"
+                                 RowIndicatorVisibility="Collapsed"
+                                 ScrollMode="RealTime"
+                                 FontSize="7"
+                                 FontFamily="Arial"
+                                 AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                 AlternationCount="2" 
+                                 EnableRowVirtualization="False"
+                                 EnableColumnVirtualization="False"                             
+                                 HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                 SelectedItem="{Binding SelectedDataFieldsOverviewInfo, Mode=TwoWay}"
+                                 RowStyle="{StaticResource GridViewRowStyle}">
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItem"                                            
+                                                Width="Auto"
+                                                Header=""
+                                                DataMemberBinding="{Binding SelectedDataFieldsInfo}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Left"
+                                                IsFilterable="True"/>
+                            <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItemSource"
+                                                Width="Auto"
+                                                Header="Source"
+                                                DataMemberBinding="{Binding DataFieldsOverviewInfo.Source}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Left"
+                                                IsFilterable="True"/>
+                            <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItemYearType"
+                                                Width="Auto"
+                                                Header="Year Type"
+                                                DataMemberBinding="{Binding DataFieldsOverviewInfo.YearType}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Left"
+                                                IsFilterable="True"/>
+                            <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItemPeriodType"
+                                                Width="Auto"
+                                                Header="Period Type"
+                                                DataMemberBinding="{Binding DataFieldsOverviewInfo.PeriodType}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Left"
+                                                IsFilterable="True"/>
+                            <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItemYear"
+                                                Width="Auto"
+                                                Header="Year"
+                                                DataMemberBinding="{Binding DataFieldsOverviewInfo.Year}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Right"
+                                                TextAlignment="Right"
+                                                IsFilterable="True"/>
+                        </telerik:RadGridView.Columns>
+                    </telerik:RadGridView>
+                </Grid>
             </Grid>
-            <Grid Grid.Column="1">
-                <!--Data Grid-->
-                <telerik:RadGridView x:Name="dgSelectedFieldsList"
-                             ItemsSource="{Binding SelectedFieldsOverviewInfo}"
-                             Grid.Row="1"
-                             telerik:StyleManager.Theme="Metro"
-                             CanUserReorderColumns ="False" 
-                             CanUserSelect="True"
-                             CanUserSortColumns="true"
-                             AutoGenerateColumns="False"
-                             CanUserInsertRows="False"
-                             CanUserDeleteRows="False"
-                             ShowGroupFooters="False"
-                             ShowColumnFooters="False"
-                             ShowGroupPanel="False"
-                             UseLayoutRounding="True"
-                             IsReadOnly="True"
-                             RowIndicatorVisibility="Collapsed"
-                             ScrollMode="RealTime"
-                             IsScrolling="True"
-                             FontSize="7"
-                             FontFamily="Arial"
-                             AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
-                             AlternationCount="2" 
-                             EnableRowVirtualization="False"
-                             EnableColumnVirtualization="False"                             
-                             HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                             SelectedItem="{Binding SelectedDataFieldsOverviewInfo, Mode=TwoWay}"
-                             RowStyle="{StaticResource GridViewRowStyle}">
-                    <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItem"                                            
-                                            Width="Auto"
-                                            Header=""
-                                            DataMemberBinding="{Binding SelectedDataFieldsInfo}"
-                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Left"
-                                            TextAlignment="Left"
-                                            IsFilterable="True"/>
-                        <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItemSource"
-                                            Width="Auto"
-                                            Header="Source"
-                                            DataMemberBinding="{Binding DataFieldsOverviewInfo.Source}"
-                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Left"
-                                            TextAlignment="Left"
-                                            IsFilterable="True"/>
-                        <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItemYearType"
-                                            Width="Auto"
-                                            Header="Year Type"
-                                            DataMemberBinding="{Binding DataFieldsOverviewInfo.YearType}"
-                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Left"
-                                            TextAlignment="Left"
-                                            IsFilterable="True"/>
-                        <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItemPeriodType"
-                                            Width="Auto"
-                                            Header="Period Type"
-                                            DataMemberBinding="{Binding DataFieldsOverviewInfo.PeriodType}"
-                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Left"
-                                            TextAlignment="Left"
-                                            IsFilterable="True"/>
-                        <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItemYear"
-                                            Width="Auto"
-                                            Header="Year"
-                                            DataMemberBinding="{Binding DataFieldsOverviewInfo.Year}"
-                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                            CellStyle="{StaticResource GridViewCellStyle}"
-                                            HeaderTextAlignment="Right"
-                                            TextAlignment="Right"
-                                            IsFilterable="True"/>
-                    </telerik:RadGridView.Columns>
-                </telerik:RadGridView>
+            
+            <Grid Grid.Row="1">
+                <telerik:RadButton x:Name="btnCustomControlSubmit"
+                                   Command="{Binding SubmitCommand}"
+                                   VerticalAlignment="Center"
+                                   Width="75"
+                                   Visibility="Visible"
+                                   HorizontalAlignment="Center"
+                                   Content="SUBMIT"
+                               Style="{StaticResource RadButtonStyle}"/>
             </Grid>
         </Grid>
     </Grid>

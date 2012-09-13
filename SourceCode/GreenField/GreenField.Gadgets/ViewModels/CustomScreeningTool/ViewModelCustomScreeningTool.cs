@@ -382,10 +382,14 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        #region ICommand Properties
+        
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
-        }    
+        }
+
+        #endregion
 
         #region Data List Selector
 

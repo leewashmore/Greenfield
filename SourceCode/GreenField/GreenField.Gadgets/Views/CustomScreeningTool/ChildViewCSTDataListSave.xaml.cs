@@ -26,10 +26,6 @@ namespace GreenField.Gadgets.Views
         
 
         #region Fields
-        
-        private DateTime _presentationDate { get; set; }        
-        IDBInteractivity _dBInteractivity;
-        ILoggerFacade _logger;
 
         public enum AccessbitlityMode
         {
@@ -41,15 +37,10 @@ namespace GreenField.Gadgets.Views
 
         #region Constructor
         
-        public ChildViewCSTDataListSave(IDBInteractivity dBInteractivity, ILoggerFacade logger, DateTime presentationDate)
+        public ChildViewCSTDataListSave()
         {
             InitializeComponent();
-
-            _dBInteractivity = dBInteractivity;
-            _logger = logger;
-            _presentationDate = presentationDate;
         }
-
         
         #endregion
 
@@ -90,8 +81,7 @@ namespace GreenField.Gadgets.Views
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            //this.DialogResult = true;
-            //Validate data fields and save list name and accessibility flag
+            this.DialogResult = true;            
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)

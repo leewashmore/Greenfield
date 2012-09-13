@@ -270,15 +270,26 @@ namespace GreenField.Gadgets.ViewModels
                 //}
             }
         }
-        #endregion
 
-        #region ICommand Methods
+        #region ICommand Properties
 
         public ICommand AddCommand
         {
             get { return new DelegateCommand<object>(AddCommandMethod, AddCommandValidationMethod); }
         }
 
+        public ICommand SubmitCommand
+        {
+            get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region ICommand Methods
+
+     
         private bool AddCommandValidationMethod(object param)
         {
             return true;
@@ -290,6 +301,45 @@ namespace GreenField.Gadgets.ViewModels
             SelectedFieldsList = new List<CustomSelectionData>();
             SelectedFieldsList.Add(SelectedSecurityReferenceData);
             SelectedFieldsOverviewInfo = SelectedFieldsList;            
+        }
+
+        private bool SubmitCommandValidationMethod(object param)
+        {
+            if (UserSession.SessionManager.SESSION == null)
+                return false;
+            else
+                return true;
+        }
+
+        private void SubmitCommandMethod(object param)
+        {
+            //prompt to ask if user wants to save list
+            //if yes open child window
+
+            //also need to send the user data selection list to the child view so that it can be updated when save clicked in child window
+
+            ChildViewCSTDataListSave childViewCSTDataListSave = new ChildViewCSTDataListSave();
+            childViewCSTDataListSave.Show();
+
+            childViewCSTDataListSave.Unloaded += (se, e) =>
+            {
+                if (childViewCSTDataListSave.DialogResult == true)
+                {
+                    Prompt.ShowDialog("Confirm to save the list","Save", MessageBoxButton.OKCancel, (result) =>
+                        {
+                            if (result == MessageBoxResult.OK)
+                            {
+                               //save the list
+
+                                if (_dbInteractivity != null)
+                                {
+                                    //BusyIndicatorNotification(true, "Updating data list...");
+                                   //update the data list.. make a call to service method to update
+                                }
+                            }
+                        });
+                }
+            };
         }
 
         #endregion
