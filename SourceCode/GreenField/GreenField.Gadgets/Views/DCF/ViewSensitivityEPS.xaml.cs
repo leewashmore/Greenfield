@@ -15,66 +15,35 @@ using GreenField.Common;
 using GreenField.ServiceCaller;
 using Telerik.Windows.Documents.Model;
 using Telerik.Windows.Controls;
-
 namespace GreenField.Gadgets.Views
 {
-    /// <summary>
-    /// View for DCF AnalysisSummary
-    /// </summary>
-    public partial class ViewAnalysisSummary : ViewBaseUserControl
+    public partial class ViewSensitivityEPS : ViewBaseUserControl
     {
-        #region PrivateVariables
-
-        /// <summary>
-        /// Property of Type ViewModelAnalysisSummary- ViewModel
-        /// </summary>
         private ViewModelDCF _dataContextSource;
         public ViewModelDCF DataContextSource
         {
-            get
-            {
-                return _dataContextSource;
-            }
-            set
-            {
-                _dataContextSource = value;
-            }
+            get { return _dataContextSource; }
+            set { _dataContextSource = value; }
         }
 
-        private string stockSpecificDiscount = "";
-
-        /// <summary>
-        /// To check whether the Dashboard is Active or not
-        /// </summary>
-        private bool _isActive;
-        public override bool IsActive
-        {
-            get { return _isActive; }
-            set
-            {
-                _isActive = value;
-                if (DataContextSource != null)
-                    DataContextSource.IsActive = value;
-            }
-        }
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="dataContextSource">Instance of View-Model, ViewModelAnalysisSummary</param>
-        public ViewAnalysisSummary(ViewModelDCF dataContextSource)
+        public ViewSensitivityEPS(ViewModelDCF dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextSource = dataContextSource;
-            
         }
 
-        #endregion
+        private void txtFWDEPS_TextInput(object sender, TextCompositionEventArgs e)
+        {
+            string textEntered = e.Text as string;
+            decimal value;
+            if (!Decimal.TryParse(textEntered, out value))
+            {
+                txtFWDEPS.Text = "";
+                Prompt.ShowDialog("FWD EPS can only be Numeric");
+            }
+        }
+
 
         #region ExportToExcel/PDF/Print
 
@@ -98,11 +67,11 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextSource.Logger, methodNamespace);
             try
             {
-                if (this.dgDCFAnalysisSummary.Visibility == Visibility.Visible)
+                if (this.dgDCFSensitivity.Visibility == Visibility.Visible)
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
-                                new RadExportOptions() { ElementName = ExportTypes.PORTFOLIO_DETAILS_UI, Element = this.dgDCFAnalysisSummary, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                new RadExportOptions() { ElementName = ExportTypes.PORTFOLIO_DETAILS_UI, Element = this.dgDCFSensitivity, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                         };
                     ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.PORTFOLIO_DETAILS_UI);
                     childExportOptions.Show();
@@ -142,7 +111,7 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextSource.Logger, methodNamespace);
             try
             {
-                PDFExporter.btnExportPDF_Click(this.dgDCFAnalysisSummary);
+                PDFExporter.btnExportPDF_Click(this.dgDCFSensitivity);
             }
             catch (Exception ex)
             {
@@ -167,7 +136,7 @@ namespace GreenField.Gadgets.Views
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    RichTextBox.Document = PDFExporter.Print(dgDCFAnalysisSummary, 6);
+                    RichTextBox.Document = PDFExporter.Print(dgDCFSensitivity, 6);
                 }));
 
                 this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
@@ -181,70 +150,6 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-
-        /// <summary>
-        /// Before Editing Begins
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgDCFAnalysisSummary_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
-        {
-            int Index = this.dgDCFAnalysisSummary.Items.IndexOf(e.Cell.ParentRow.Item);
-            if (Index != 3)
-            {
-                e.Cancel = true;
-            }
-            else
-            {
-                e.Cell.Value = "";
-            }
-        }
-
         #endregion
-
-        #region GridEditingMethods
-
-        /// <summary>
-        /// Validating the Contents of the Edited Cell.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgDCFAnalysisSummary_CellValidating(object sender, GridViewCellValidatingEventArgs e)
-        {
-            if (e.Cell.Column.UniqueName == "High")
-            {
-                decimal value;
-                var textEntered = e.NewValue as string;
-
-                if (!Decimal.TryParse(textEntered, out value))
-                {
-                    e.IsValid = false;
-                    e.ErrorMessage = "The Entered value should be a valid number";
-                }
-                else
-                {
-                    this.stockSpecificDiscount = textEntered;
-                }
-            }
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Event that occurs after the Editing is completed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgDCFAnalysisSummary_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
-        {
-            this.DataContextSource.StockSpecificDiscount = Convert.ToDecimal(stockSpecificDiscount);
-
-        }
-
-        private void dgDCFAnalysisSummary_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            
-        }
-
     }
 }

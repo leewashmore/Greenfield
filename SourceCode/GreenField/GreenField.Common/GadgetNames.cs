@@ -83,7 +83,7 @@ namespace GreenField.Common
         #region Valuation
         #region Valuation DCF
         public static string HOLDINGS_DISCOUNTED_CASH_FLOW = "DCF - Discounted Cash Flow Holdings 4.1";
-        public static string HOLDINGS_FREE_CASH_FLOW = "Free Cash Flows";
+        public static string HOLDINGS_FREE_CASH_FLOW = "Free Cash Flow";
         #endregion
 
         #region Valuation Fair Value

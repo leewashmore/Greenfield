@@ -64,6 +64,15 @@
   <wsdl:message name="CustomScreeningToolOperations_SaveUserDataPointsPreference_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_GetCustomScreeningUserPreferences_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomScreeningUserPreferences" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_GetCustomScreeningUserPreferences_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCustomScreeningUserPreferencesResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_GetCustomScreeningUserPreferences_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="CustomScreeningToolOperations_RetrieveSecurityData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveSecurityData" />
   </wsdl:message>
@@ -71,7 +80,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveSecurityDataResponse" />
   </wsdl:message>
   <wsdl:message name="CustomScreeningToolOperations_RetrieveSecurityData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="CustomScreeningToolOperations">
     <wsdl:operation name="RetrieveCustomControlsList">
@@ -103,6 +112,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/SaveUserDataPointsPreference" message="tns:CustomScreeningToolOperations_SaveUserDataPointsPreference_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/SaveUserDataPointsPreferenceResponse" message="tns:CustomScreeningToolOperations_SaveUserDataPointsPreference_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/SaveUserDataPointsPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_SaveUserDataPointsPreference_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomScreeningUserPreferences">
+      <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/GetCustomScreeningUserPreferences" message="tns:CustomScreeningToolOperations_GetCustomScreeningUserPreferences_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/GetCustomScreeningUserPreferencesResponse" message="tns:CustomScreeningToolOperations_GetCustomScreeningUserPreferences_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/GetCustomScreeningUserPreferencesServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_GetCustomScreeningUserPreferences_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveSecurityData">
       <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityData" message="tns:CustomScreeningToolOperations_RetrieveSecurityData_InputMessage" />
@@ -174,6 +188,18 @@
     </wsdl:operation>
     <wsdl:operation name="SaveUserDataPointsPreference">
       <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/SaveUserDataPointsPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetCustomScreeningUserPreferences">
+      <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/GetCustomScreeningUserPreferences" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

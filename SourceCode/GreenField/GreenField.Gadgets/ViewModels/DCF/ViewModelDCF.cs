@@ -83,7 +83,7 @@ namespace GreenField.Gadgets.ViewModels
                 _entitySelectionData = value;
                 this.RaisePropertyChanged(() => this.EntitySelectionData);
             }
-        }              
+        }
 
         #endregion
 
@@ -108,12 +108,12 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (EntitySelectionData != null)
                         {
-                            _dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
-                            _dbInteractivity.RetrieveCashFlows(EntitySelectionData, RetrieveDCFCashFlowYearlyDataCallbackMethod);
-                            _dbInteractivity.RetrieveDCFAnalysisData(EntitySelectionData, RetrieveDCFAnalysisDataCallbackMethod);
+                            //_dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
+                            //_dbInteractivity.RetrieveCashFlows(EntitySelectionData, RetrieveDCFCashFlowYearlyDataCallbackMethod);
+                            //_dbInteractivity.RetrieveDCFAnalysisData(EntitySelectionData, RetrieveDCFAnalysisDataCallbackMethod);
 
                             _dbInteractivity.RetrieveDCFCurrentPrice(EntitySelectionData, RetrieveCurrentPriceDataCallbackMethod);
-                            _dbInteractivity.RetrieveDCFSummaryData(EntitySelectionData, RetrieveDCFSummaryDataCallbackMethod);
+                            //_dbInteractivity.RetrieveDCFSummaryData(EntitySelectionData, RetrieveDCFSummaryDataCallbackMethod);
 
                             BusyIndicatorNotification(true, "Fetching Data for Selected Security");
                         }
@@ -306,7 +306,6 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _summaryData = value;
-                SetSummaryDisplayData();
                 this.RaisePropertyChanged(() => this.SummaryData);
             }
         }
@@ -354,6 +353,89 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+
+        #endregion
+
+        #region SensitivityBPS
+
+        private RangeObservableCollection<SensitivityData> _sensitivityBPS;
+        public RangeObservableCollection<SensitivityData> SensitivityBPS
+        {
+            get
+            {
+                if (_sensitivityBPS == null)
+                    _sensitivityBPS = new RangeObservableCollection<SensitivityData>();
+                return _sensitivityBPS;
+            }
+            set
+            {
+                _sensitivityBPS = value;
+                this.RaisePropertyChanged(() => this.SensitivityBPS);
+            }
+        }
+
+        private decimal _fwdEPS = 0;
+        public decimal FWDEPS
+        {
+            get
+            {
+                return _fwdEPS;
+            }
+            set
+            {
+                _fwdEPS = value;
+                if (value != null || value != 0)
+                {
+                    if (SensitivityValues.Count != 0)
+                    {
+                        GenerateSensitivityEPSData(SensitivityDisplayData);
+                    }
+                }
+                this.RaisePropertyChanged(() => this.FWDEPS);
+            }
+        }
+
+
+        #endregion
+
+        #region SensitivityBVPS
+
+        private RangeObservableCollection<SensitivityData> _sensivityBVPS;
+        public RangeObservableCollection<SensitivityData> SensitivityBVPS
+        {
+            get
+            {
+                if (_sensivityBVPS == null)
+                    _sensivityBVPS = new RangeObservableCollection<SensitivityData>();
+                return _sensivityBVPS;
+            }
+            set
+            {
+                _sensivityBVPS = value;
+                this.RaisePropertyChanged(() => this.SensitivityBVPS);
+            }
+        }
+
+        private decimal _fwdBVPS = 0;
+        public decimal FWDBVPS
+        {
+            get
+            {
+                return _fwdBVPS;
+            }
+            set
+            {
+                _fwdBVPS = value;
+                if (value != null || value != 0)
+                {
+                    if (SensitivityValues.Count != 0)
+                    {
+                        GenerateSensitivityBVPSData(SensitivityDisplayData);
+                    }
+                }
+                this.RaisePropertyChanged(() => this.FWDBVPS);
+            }
+        }
 
         #endregion
 
@@ -432,7 +514,10 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _WACC = value;
-                SetTerminalValueCalculationsDisplayData();
+                if (_WACC != null)
+                {
+                    YearlyCalculatedData = CalculateYearlyData(YearlyCalculatedData, value);
+                }
                 this.RaisePropertyChanged(() => this.WACC);
             }
         }
@@ -546,6 +631,208 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+        #region StatisticsEPS
+
+        /// <summary>
+        /// Max Share Value
+        /// </summary>
+        private string _maxEPSShareVal;
+        public string MaxEPSShareVal
+        {
+            get { return _maxEPSShareVal; }
+            set
+            {
+                _maxEPSShareVal = value;
+                this.RaisePropertyChanged(() => this.MaxEPSShareVal);
+            }
+        }
+
+        /// <summary>
+        /// Min Share Value
+        /// </summary>
+        private string _minEPSShareVal;
+        public string MinEPSShareVal
+        {
+            get { return _minEPSShareVal; }
+            set
+            {
+                _minEPSShareVal = value;
+                this.RaisePropertyChanged(() => this.MinEPSShareVal);
+            }
+        }
+
+        /// <summary>
+        /// Max Share Value
+        /// </summary>
+        private string _avgEPSShareVal;
+        public string AvgEPSShareVal
+        {
+            get { return _avgEPSShareVal; }
+            set
+            {
+                _avgEPSShareVal = value;
+                this.RaisePropertyChanged(() => this.AvgEPSShareVal);
+            }
+        }
+
+        /// <summary>
+        /// Avg Share Value
+        /// </summary>
+        private string _maxEPSUpside;
+        public string MaxEPSUpside
+        {
+            get { return _maxEPSUpside; }
+            set
+            {
+                _maxEPSUpside = value;
+                this.RaisePropertyChanged(() => this.MaxEPSUpside);
+            }
+        }
+
+        /// <summary>
+        /// Avg Share Value
+        /// </summary>
+        private string _minEPSUpside;
+        public string MinEPSUpside
+        {
+            get { return _minEPSUpside; }
+            set
+            {
+                _minEPSUpside = value;
+                this.RaisePropertyChanged(() => this.MinEPSUpside);
+            }
+        }
+
+        /// <summary>
+        /// Avg Share Value
+        /// </summary>
+        private string _avgEPSUpside;
+        public string AvgEPSUpside
+        {
+            get { return _avgEPSUpside; }
+            set
+            {
+                _avgEPSUpside = value;
+                this.RaisePropertyChanged(() => this.AvgEPSUpside);
+            }
+        }
+
+
+
+
+        #endregion
+
+        #region StatisticsBVPS
+
+        /// <summary>
+        /// Max Share Value
+        /// </summary>
+        private string _maxBVPSShareVal;
+        public string MaxBVPSShareVal
+        {
+            get { return _maxBVPSShareVal; }
+            set
+            {
+                _maxBVPSShareVal = value;
+                this.RaisePropertyChanged(() => this.MaxBVPSShareVal);
+            }
+        }
+
+        /// <summary>
+        /// Min Share Value
+        /// </summary>
+        private string _minBVPSShareVal;
+        public string MinBVPSShareVal
+        {
+            get { return _minBVPSShareVal; }
+            set
+            {
+                _minBVPSShareVal = value;
+                this.RaisePropertyChanged(() => this.MinBVPSShareVal);
+            }
+        }
+
+        /// <summary>
+        /// Max Share Value
+        /// </summary>
+        private string _avgBVPSShareVal;
+        public string AvgBVPSShareVal
+        {
+            get { return _avgBVPSShareVal; }
+            set
+            {
+                _avgBVPSShareVal = value;
+                this.RaisePropertyChanged(() => this.AvgBVPSShareVal);
+            }
+        }
+
+        /// <summary>
+        /// Avg Share Value
+        /// </summary>
+        private string _maxBVPSUpside;
+        public string MaxBVPSUpside
+        {
+            get { return _maxBVPSUpside; }
+            set
+            {
+                _maxBVPSUpside = value;
+                this.RaisePropertyChanged(() => this.MaxBVPSUpside);
+            }
+        }
+
+        /// <summary>
+        /// Avg Share Value
+        /// </summary>
+        private string _minBVPSUpside;
+        public string MinBVPSUpside
+        {
+            get { return _minBVPSUpside; }
+            set
+            {
+                _minBVPSUpside = value;
+                this.RaisePropertyChanged(() => this.MinBVPSUpside);
+            }
+        }
+
+        /// <summary>
+        /// Avg Share Value
+        /// </summary>
+        private string _avgBVPSUpside;
+        public string AvgBVPSUpside
+        {
+            get { return _avgBVPSUpside; }
+            set
+            {
+                _avgBVPSUpside = value;
+                this.RaisePropertyChanged(() => this.AvgBVPSUpside);
+            }
+        }
+
+
+
+
+        #endregion
+
+        /// <summary>
+        /// Property to Store the Values of Sensitivity
+        /// </summary>
+        private RangeObservableCollection<SensitivityData> _sensitivityValues;
+        public RangeObservableCollection<SensitivityData> SensitivityValues
+        {
+            get
+            {
+                if (_sensitivityValues == null)
+                    _sensitivityValues = new RangeObservableCollection<SensitivityData>();
+                return _sensitivityValues;
+            }
+            set
+            {
+                _sensitivityValues = value;
+                this.RaisePropertyChanged(() => this.SensitivityValues);
+            }
+        }
+
+
 
         #endregion
 
@@ -563,7 +850,6 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _terminalValuePresent = value;
-                SetSummaryDisplayData();
                 this.RaisePropertyChanged(() => this.TerminalValuePresent);
             }
         }
@@ -664,9 +950,9 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             //_dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
                             //_dbInteractivity.RetrieveCashFlows(EntitySelectionData, RetrieveDCFCashFlowYearlyDataCallbackMethod);
-                            _dbInteractivity.RetrieveDCFAnalysisData(EntitySelectionData, RetrieveDCFAnalysisDataCallbackMethod);
+                            //_dbInteractivity.RetrieveDCFAnalysisData(EntitySelectionData, RetrieveDCFAnalysisDataCallbackMethod);
 
-                            //_dbInteractivity.RetrieveDCFCurrentPrice(entitySelectionData, RetrieveCurrentPriceDataCallbackMethod);
+                            _dbInteractivity.RetrieveDCFCurrentPrice(entitySelectionData, RetrieveCurrentPriceDataCallbackMethod);
                             //_dbInteractivity.RetrieveDCFSummaryData(entitySelectionData, RetrieveDCFSummaryDataCallbackMethod);
 
                             BusyIndicatorNotification(true, "Fetching Data for Selected Security");
@@ -703,7 +989,6 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     TerminalValueCalculationsData = result;
-                    SetTerminalValueCalculationsDisplayData();
                 }
                 else
                 {
@@ -718,6 +1003,8 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 BusyIndicatorNotification();
+                _dbInteractivity.RetrieveDCFSummaryData(EntitySelectionData, RetrieveDCFSummaryDataCallbackMethod);
+                BusyIndicatorNotification(true, "Fetching Data for DCF Summary Data");
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -740,7 +1027,6 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         YearlyCalculatedData = CalculateYearlyData(YearlyCalculatedData, WACC);
                     }
-                    SetTerminalValueCalculationsDisplayData();
                 }
                 else
                 {
@@ -755,6 +1041,8 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 BusyIndicatorNotification();
+                _dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
+                BusyIndicatorNotification(true, "Fetching Data for Terminal Value Calculations");
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -774,7 +1062,6 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     AnalysisSummaryData.Clear();
                     AnalysisSummaryData.AddRange(result);
-                    SetAnalysisSummaryDisplayData();
                 }
                 else
                 {
@@ -789,6 +1076,8 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 BusyIndicatorNotification();
+                _dbInteractivity.RetrieveCashFlows(EntitySelectionData, RetrieveDCFCashFlowYearlyDataCallbackMethod);
+                BusyIndicatorNotification(true, "Fetching Cash Flow Data for Current Security");
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -807,7 +1096,6 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     SummaryData = result;
-                    SetSummaryDisplayData();
                 }
                 else
                 {
@@ -822,6 +1110,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 BusyIndicatorNotification();
+                SetAnalysisSummaryDisplayData();
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -854,6 +1143,8 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 BusyIndicatorNotification();
+                _dbInteractivity.RetrieveDCFAnalysisData(EntitySelectionData, RetrieveDCFAnalysisDataCallbackMethod);
+                BusyIndicatorNotification(true, "Fetching Data for Analysis Summary");
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -900,12 +1191,12 @@ namespace GreenField.Gadgets.ViewModels
                 decimal terminalValuePresent = Math.Round(Convert.ToDecimal(DCFCalculations.CalculatePresentTerminalValue(terminalValueNominal, discountingFactorY10)), 4);
 
                 result.Add(new DCFDisplayData() { PropertyName = "Cash Flow in 2020", Value = cashFlow2020.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Sustainable ROIC", Value = sustainableROIC.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Sustainable Dividend Payout Ratio", Value = sustainableDPR.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Long-term Nominal GDP Growth", Value = longTermNominalGDPGrowth.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Growth Rate", Value = TGR.ToString() });
+                result.Add(new DCFDisplayData() { PropertyName = "Sustainable ROIC", Value = Convert.ToDecimal(sustainableROIC * Convert.ToDecimal(100)).ToString() + " %" });
+                result.Add(new DCFDisplayData() { PropertyName = "Sustainable Dividend Payout Ratio", Value = Convert.ToDecimal(sustainableDPR * Convert.ToDecimal(100)).ToString() + " %" });
+                result.Add(new DCFDisplayData() { PropertyName = "Long-term Nominal GDP Growth", Value = Convert.ToDecimal(longTermNominalGDPGrowth * Convert.ToDecimal(100)).ToString() + " %" });
+                result.Add(new DCFDisplayData() { PropertyName = "Terminal Growth Rate", Value = Convert.ToDecimal(TGR * Convert.ToDecimal(100)).ToString() + " %" });
                 result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = terminalValueNominal.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = terminalValuePresent.ToString() });
+                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (present)", Value = terminalValuePresent.ToString() });
 
                 TerminalValueCalculationsDisplayData.Clear();
                 TerminalValueCalculationsDisplayData.AddRange(result);
@@ -917,11 +1208,8 @@ namespace GreenField.Gadgets.ViewModels
                 CalculationParameters.Year10DiscountingFactor = (Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
                     Select(a => a.DISCOUNTING_FACTOR).FirstOrDefault()));
                 CalculationParameters.CurrentMarketPrice = Convert.ToDecimal(CurrentMarketPrice);
-                if (EntitySelectionData != null)
-                {
-                    _dbInteractivity.RetrieveDCFCurrentPrice(EntitySelectionData, RetrieveCurrentPriceDataCallbackMethod);
-                    _dbInteractivity.RetrieveDCFSummaryData(EntitySelectionData, RetrieveDCFSummaryDataCallbackMethod);
-                }
+
+                SetSummaryDisplayData();
             }
             catch (Exception ex)
             {
@@ -981,31 +1269,33 @@ namespace GreenField.Gadgets.ViewModels
                 decimal costOfDebt;
                 decimal resultWACC;
 
-                result.Add(new DCFDisplayData() { PropertyName = "Market Risk Premium", Value = Convert.ToString(Math.Round((Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault())), 4)) + "%" });
-                result.Add(new DCFDisplayData() { PropertyName = "Beta (*)", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()), 4)) + "%" });
-                result.Add(new DCFDisplayData() { PropertyName = "Risk Free Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault()), 4)) });
+
+
+                result.Add(new DCFDisplayData() { PropertyName = "Market Risk Premium", Value = Convert.ToString(Math.Round((Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault() * 100)), 4)) + "%" });
+                result.Add(new DCFDisplayData() { PropertyName = "Beta (*)", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()), 4)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Risk Free Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault() * 100), 4)) + " %" });
                 result.Add(new DCFDisplayData()
                 {
                     PropertyName = "Stock Specific Discount",
                     Value = Convert.ToString(Math.Round(Convert.ToDecimal(StockSpecificDiscount), 4)) + "%"
                 });
 
-                result.Add(new DCFDisplayData() { PropertyName = "Marginal Tax Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()), 4)) + "%" });
+                result.Add(new DCFDisplayData() { PropertyName = "Marginal Tax Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault() * 100), 4)) + "%" });
 
 
-                costOfEquity = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()) * Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault()) + Convert.ToDecimal(StockSpecificDiscount);
+                costOfEquity = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()) * Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault()) + Convert.ToDecimal(StockSpecificDiscount / Convert.ToDecimal(100));
                 result.Add(new DCFDisplayData()
                 {
                     PropertyName = "Cost of Equity",
-                    Value = Convert.ToString(Math.Round(Convert.ToDecimal(costOfEquity), 4)) + "%"
+                    Value = Convert.ToString(Math.Round(Convert.ToDecimal(costOfEquity * 100), 4)) + "%"
                 });
 
-                costOfDebt = Convert.ToDecimal(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()), 4));
+                costOfDebt = Convert.ToDecimal(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.CostOfDebt).FirstOrDefault() * 100), 4));
                 result.Add(new DCFDisplayData() { PropertyName = "Cost of Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(costOfDebt), 4)) + "%" });
 
 
                 result.Add(new DCFDisplayData() { PropertyName = "Market Cap", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()), 4)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()), 4)) });
                 if ((Convert.ToDecimal(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()), 4)) == 0))
                 {
                     weightOfEquity = 0;
@@ -1016,8 +1306,11 @@ namespace GreenField.Gadgets.ViewModels
                     weightOfEquity = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) / (Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()));
                     resultWACC = (weightOfEquity * costOfEquity) + ((1 - weightOfEquity) * (costOfDebt * (1 - Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault()))));
                 }
-                result.Add(new DCFDisplayData() { PropertyName = "Weight of Equity", Value = Convert.ToString(Math.Round(Convert.ToDecimal(weightOfEquity), 4)) + "%" });
-                result.Add(new DCFDisplayData() { PropertyName = "WACC", Value = Convert.ToString(Math.Round(Convert.ToDecimal(resultWACC), 4)) + "%" });
+                result.Add(new DCFDisplayData() { PropertyName = "Weight of Equity", Value = Convert.ToString(Math.Round(Convert.ToDecimal(weightOfEquity * 100), 4)) + "%" });
+                result.Add(new DCFDisplayData() { PropertyName = "WACC", Value = Convert.ToString(Math.Round(Convert.ToDecimal(resultWACC * 100), 4)) + "%" });
+                result.Add(new DCFDisplayData() { PropertyName = "Date", Value = (DateTime.Today.ToShortDateString()) });
+                result.Add(new DCFDisplayData() { PropertyName = "Market Price", Value = Convert.ToString(CurrentMarketPrice) });
+
 
                 AnalysisSummaryDisplayData = result;
                 this.RaisePropertyChanged(() => this.AnalysisSummaryDisplayData);
@@ -1026,14 +1319,11 @@ namespace GreenField.Gadgets.ViewModels
                 CalculationParameters.CostOfEquity = costOfEquity;
                 CalculationParameters.CostOfDebt = costOfDebt;
                 CalculationParameters.MarketCap = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault());
-                CalculationParameters.MarginalTaxRate = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault());
-                CalculationParameters.GrossDebt = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault());
+                CalculationParameters.MarginalTaxRate = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault());
+                CalculationParameters.GrossDebt = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault());
 
-                if (EntitySelectionData != null)
-                {
-                    _dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
-                    _dbInteractivity.RetrieveCashFlows(EntitySelectionData, RetrieveDCFCashFlowYearlyDataCallbackMethod);
-                }
+                SetTerminalValueCalculationsDisplayData();
+
             }
             catch (Exception ex)
             {
@@ -1060,6 +1350,8 @@ namespace GreenField.Gadgets.ViewModels
             result.Add(new DCFDisplayData() { PropertyName = "Gross Debt" });
             result.Add(new DCFDisplayData() { PropertyName = "Weight of Equity" });
             result.Add(new DCFDisplayData() { PropertyName = "WACC" });
+            result.Add(new DCFDisplayData() { PropertyName = "Date" });
+            result.Add(new DCFDisplayData() { PropertyName = "Market Price" });
             return result;
         }
 
@@ -1156,8 +1448,10 @@ namespace GreenField.Gadgets.ViewModels
                 List<decimal> upSideValues = new List<decimal>();
                 List<decimal> TGR = new List<decimal>();
                 SensitivityDisplayData = new RangeObservableCollection<SensitivityData>();
+                RangeObservableCollection<SensitivityData> passData = new RangeObservableCollection<SensitivityData>();
 
                 SensitivityDisplayData.Add(new SensitivityData() { C1 = " Step 0.25%", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
+                passData.Add(new SensitivityData() { C1 = " Step 0.25%", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
 
                 Dictionary<int, decimal> VPS = new Dictionary<int, decimal>();
 
@@ -1181,27 +1475,40 @@ namespace GreenField.Gadgets.ViewModels
                     data.C1 = i.ToString();
                     data.C2 = ((-5.0 + (i * 2.5)) / 10.0).ToString() + "%";
                     if (VPS.ContainsKey(0))
-                        data.C3 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 0).Select(a => a.Value).FirstOrDefault()), 4) + "%");
+                        data.C3 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 0).Select(a => a.Value).FirstOrDefault()), 4));
                     if (VPS.ContainsKey(1))
-                        data.C4 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 1).Select(a => a.Value).FirstOrDefault()), 4) + "%");
+                        data.C4 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 1).Select(a => a.Value).FirstOrDefault()), 4));
                     if (VPS.ContainsKey(1))
-                        data.C5 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 2).Select(a => a.Value).FirstOrDefault()), 4) + "%");
+                        data.C5 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 2).Select(a => a.Value).FirstOrDefault()), 4));
                     if (VPS.ContainsKey(1))
-                        data.C6 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 3).Select(a => a.Value).FirstOrDefault()), 4) + "%");
+                        data.C6 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 3).Select(a => a.Value).FirstOrDefault()), 4));
                     if (VPS.ContainsKey(1))
-                        data.C7 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 4).Select(a => a.Value).FirstOrDefault()), 4) + "%");
+                        data.C7 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 4).Select(a => a.Value).FirstOrDefault()), 4));
                     VPS = new Dictionary<int, decimal>();
                     SensitivityDisplayData.Add(data);
+                    passData.Add(data);
                     CalculationParameters.CostOfEquity = costOfEquity;
                     CalculationParameters.TerminalGrowthRate = CalculationParameters.TerminalGrowthRate + Convert.ToDecimal(25.0 / 10000.0);
                 }
-                MaxShareVal = Convert.ToString(Math.Round(TGR.Select(a => a).Max(), 4)) + " %";
-                MinShareVal = Convert.ToString((Math.Round(TGR.Select(a => a).Min(), 4))) + " %";
-                AvgShareVal = Convert.ToString((Math.Round(TGR.Select(a => a).Average(), 4))) + " %";
+                MaxShareVal = Convert.ToString(Math.Round(TGR.Select(a => a).Max(), 4));
+                MinShareVal = Convert.ToString((Math.Round(TGR.Select(a => a).Min(), 4)));
+                AvgShareVal = Convert.ToString((Math.Round(TGR.Select(a => a).Average(), 4)));
 
-                MaxUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Max(), 4))) + " %";
-                MinUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Min(), 4))) + " %";
-                AvgUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Average(), 4))) + " %";
+                MaxUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Max() * 100, 4))) + " %";
+                MinUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Min() * 100, 4))) + " %";
+                AvgUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Average() * 100, 4))) + " %";
+
+                SensitivityValues = SensitivityDisplayData;
+                RangeObservableCollection<SensitivityData> dataL = new RangeObservableCollection<SensitivityData>();
+                dataL.AddRange(SensitivityDisplayData.ToList());
+                if (FWDEPS != 0)
+                {
+                    GenerateSensitivityEPSData(dataL);
+                }
+                if (FWDBVPS != 0)
+                {
+                    GenerateSensitivityBVPSData(dataL);
+                }
             }
             catch (Exception ex)
             {
@@ -1209,6 +1516,136 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
         }
+
+        /// <summary>
+        /// Generate Data for Display in SensitivityBVPS
+        /// </summary>
+        private void GenerateSensitivityBVPSData(RangeObservableCollection<SensitivityData> sensitivityData)
+        {
+            try
+            {
+                RangeObservableCollection<SensitivityData> data = new RangeObservableCollection<SensitivityData>();
+                data.AddRange(sensitivityData.ToList());
+                data.RemoveAt(0);
+                char[] redundantData = new char[] { '%' };
+
+                List<decimal> BVPS = new List<decimal>();
+
+                if (FWDBVPS == 0)
+                    throw new Exception("FWD BVPS cannot be 0");
+
+                foreach (SensitivityData item in data)
+                {
+                    item.C1 = "";
+                    item.C2 = "";
+
+                    item.C3 = item.C3.Trim(redundantData);
+                    item.C4 = item.C4.Trim(redundantData);
+                    item.C5 = item.C5.Trim(redundantData);
+                    item.C6 = item.C6.Trim(redundantData);
+                    item.C7 = item.C7.Trim(redundantData);
+                }
+
+                int i = 1;
+                foreach (SensitivityData item in data)
+                {
+                    item.C1 = i.ToString();
+                    item.C2 = (-0.50 + (i - 1) * 0.25).ToString();
+                    item.C3 = Convert.ToString((Convert.ToDecimal(item.C3) / FWDBVPS) * CurrentMarketPrice);
+                    item.C4 = Convert.ToString((Convert.ToDecimal(item.C4) / FWDBVPS) * CurrentMarketPrice);
+                    item.C5 = Convert.ToString((Convert.ToDecimal(item.C5) / FWDBVPS) * CurrentMarketPrice);
+                    item.C6 = Convert.ToString((Convert.ToDecimal(item.C6) / FWDBVPS) * CurrentMarketPrice);
+                    item.C7 = Convert.ToString((Convert.ToDecimal(item.C7) / FWDBVPS) * CurrentMarketPrice);
+                    BVPS.Add(Convert.ToDecimal(item.C3));
+                    BVPS.Add(Convert.ToDecimal(item.C4));
+                    BVPS.Add(Convert.ToDecimal(item.C5));
+                    BVPS.Add(Convert.ToDecimal(item.C6));
+                    BVPS.Add(Convert.ToDecimal(item.C7));
+                    i++;
+                }
+                SensitivityBVPS.Clear();
+                SensitivityBVPS.Add(new SensitivityData() { C1 = " Step 0.25%", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
+                SensitivityBVPS.AddRange(data.ToList());
+
+                MaxBVPSShareVal = Convert.ToString(Math.Round(BVPS.Max(), 4));
+                MinBVPSShareVal = Convert.ToString(Math.Round(BVPS.Min(), 4));
+                AvgBVPSShareVal = Convert.ToString(Math.Round(BVPS.Average(), 4));
+
+                MaxBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
+                MinBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MinBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
+                AvgBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(AvgBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Generate data for Sensitivity EPS
+        /// </summary>
+        private void GenerateSensitivityEPSData(RangeObservableCollection<SensitivityData> sensitivityData)
+        {
+            try
+            {
+                RangeObservableCollection<SensitivityData> data = new RangeObservableCollection<SensitivityData>();
+                data.AddRange(sensitivityData.ToList());
+                data.RemoveAt(0);
+                char[] redundantData = new char[] { '%' };
+
+                if (FWDEPS == 0)
+                    throw new Exception("FWD EPS cannot be 0");
+                List<decimal> EPS = new List<decimal>();
+                foreach (SensitivityData item in data)
+                {
+                    item.C1 = "";
+                    item.C2 = "";
+
+                    item.C3 = item.C3.Trim(redundantData);
+                    item.C4 = item.C4.Trim(redundantData);
+                    item.C5 = item.C5.Trim(redundantData);
+                    item.C6 = item.C6.Trim(redundantData);
+                    item.C7 = item.C7.Trim(redundantData);
+                }
+
+                int i = 1;
+                foreach (SensitivityData item in data)
+                {
+                    item.C1 = i.ToString();
+                    item.C2 = (-0.50 + (i - 1) * 0.25).ToString() + "%";
+                    item.C3 = Convert.ToString((Convert.ToDecimal(item.C3) / FWDEPS) * CurrentMarketPrice);
+                    item.C4 = Convert.ToString((Convert.ToDecimal(item.C4) / FWDEPS) * CurrentMarketPrice);
+                    item.C5 = Convert.ToString((Convert.ToDecimal(item.C5) / FWDEPS) * CurrentMarketPrice);
+                    item.C6 = Convert.ToString((Convert.ToDecimal(item.C6) / FWDEPS) * CurrentMarketPrice);
+                    item.C7 = Convert.ToString((Convert.ToDecimal(item.C7) / FWDEPS) * CurrentMarketPrice);
+                    EPS.Add(Convert.ToDecimal(item.C3));
+                    EPS.Add(Convert.ToDecimal(item.C4));
+                    EPS.Add(Convert.ToDecimal(item.C5));
+                    EPS.Add(Convert.ToDecimal(item.C6));
+                    EPS.Add(Convert.ToDecimal(item.C7));
+                    i++;
+                }
+                SensitivityBPS.Clear();
+                SensitivityBPS.Add(new SensitivityData() { C1 = " Step 0.25%", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
+                SensitivityBPS.AddRange(data.ToList());
+
+                MaxEPSShareVal = Convert.ToString(Math.Round(EPS.Max(), 4));
+                MinEPSShareVal = Convert.ToString(Math.Round(EPS.Min(), 4));
+                AvgEPSShareVal = Convert.ToString(Math.Round(EPS.Average(), 4));
+
+                MaxEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
+                MinEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MinEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
+                AvgEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(AvgEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+        }
+
 
         #endregion
 

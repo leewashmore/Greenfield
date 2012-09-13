@@ -256,7 +256,7 @@
     <Compile Include="Views\DCF\ViewAnalysisSummary.xaml.cs">
       <DependentUpon>ViewAnalysisSummary.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ViewDCFSummary.xaml.cs">
+    <Compile Include="Views\DCF\ViewDCFSummary.xaml.cs">
       <DependentUpon>ViewDCFSummary.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DCF\ViewFreeCashFlows.xaml.cs">
@@ -264,6 +264,12 @@
     </Compile>
     <Compile Include="Views\DCF\ViewSensitivity.xaml.cs">
       <DependentUpon>ViewSensitivity.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DCF\ViewSensitivityBVPS.xaml.cs">
+      <DependentUpon>ViewSensitivityBVPS.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DCF\ViewSensitivityEPS.xaml.cs">
+      <DependentUpon>ViewSensitivityEPS.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DCF\ViewTerminalValueCalculations.xaml.cs">
       <DependentUpon>ViewTerminalValueCalculations.xaml</DependentUpon>
@@ -500,7 +506,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="ViewModels\ViewDCFSummary.xaml">
+    <Page Include="Views\DCF\ViewDCFSummary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -509,6 +515,14 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\DCF\ViewSensitivity.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DCF\ViewSensitivityBVPS.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DCF\ViewSensitivityEPS.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

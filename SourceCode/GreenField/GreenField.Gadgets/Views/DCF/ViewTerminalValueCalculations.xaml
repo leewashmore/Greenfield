@@ -65,6 +65,7 @@
                                          CanUserFreezeColumns="False" 
                                          CanUserDeleteRows="False"
                                          CanUserInsertRows="False"
+                                         IsFilteringAllowed="False"
                                          IsReadOnly="True"
                                          CanUserReorderColumns="False" 
                                          CanUserSortColumns="False"

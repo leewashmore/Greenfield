@@ -104,6 +104,9 @@ namespace GreenField.Web.Services
                 data.GrossDebt = dbResult.Where(a => a.DATA_ID == 90).Select(a => a.AMOUNT).FirstOrDefault();
                 data.MarketCap = Convert.ToDecimal(marketCap);
 
+
+               
+
                 if (modelData != null)
                 {
                     data.RiskFreeRate = (modelData.RISK_FREE_RATE != null ? modelData.RISK_FREE_RATE : 0);
@@ -315,8 +318,8 @@ namespace GreenField.Web.Services
                     if (item.PERIOD_YEAR > currentYear + 4)
                     {
                         item.AMOUNT = average * Convert.ToDecimal(Math.Pow((0.99), Convert.ToDouble(item.PERIOD_YEAR - (currentYear + 4))));
-                        item.FREE_CASH_FLOW = item.AMOUNT;
                     }
+                    item.FREE_CASH_FLOW = item.AMOUNT;
                 }
                 return result;
             }
@@ -424,7 +427,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-        
+
         #region HelperMethods
 
         /// <summary>

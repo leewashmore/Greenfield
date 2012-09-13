@@ -71,6 +71,7 @@
                                          CanUserSortColumns="False"
                                          RowIndicatorVisibility="Collapsed" 
                                          UseLayoutRounding="True" 
+                                     IsFilteringAllowed="False"
                                          ColumnWidth="Auto" ShowColumnFooters="False"
                                          AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"

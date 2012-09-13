@@ -100,6 +100,15 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         
         System.Nullable<bool> EndSaveUserDataPointsPreference(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/GetCustomScreeningUserPreference" +
+            "s", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/GetCustomScreeningUserPreference" +
+            "sResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/GetCustomScreeningUserPreference" +
+            "sServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginGetCustomScreeningUserPreferences(string username, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> EndGetCustomScreeningUserPreferences(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityData", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataServiceFault" +
             "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
@@ -228,6 +237,25 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetCustomScreeningUserPreferencesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetCustomScreeningUserPreferencesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveSecurityDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -284,6 +312,12 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         private EndOperationDelegate onEndSaveUserDataPointsPreferenceDelegate;
         
         private System.Threading.SendOrPostCallback onSaveUserDataPointsPreferenceCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetCustomScreeningUserPreferencesDelegate;
+        
+        private EndOperationDelegate onEndGetCustomScreeningUserPreferencesDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetCustomScreeningUserPreferencesCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrieveSecurityDataDelegate;
         
@@ -355,6 +389,8 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         public event System.EventHandler<RetrieveFairValueTabDataPointsCompletedEventArgs> RetrieveFairValueTabDataPointsCompleted;
         
         public event System.EventHandler<SaveUserDataPointsPreferenceCompletedEventArgs> SaveUserDataPointsPreferenceCompleted;
+        
+        public event System.EventHandler<GetCustomScreeningUserPreferencesCompletedEventArgs> GetCustomScreeningUserPreferencesCompleted;
         
         public event System.EventHandler<RetrieveSecurityDataCompletedEventArgs> RetrieveSecurityDataCompleted;
         
@@ -631,6 +667,52 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginGetCustomScreeningUserPreferences(string username, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetCustomScreeningUserPreferences(username, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndGetCustomScreeningUserPreferences(System.IAsyncResult result) {
+            return base.Channel.EndGetCustomScreeningUserPreferences(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetCustomScreeningUserPreferences(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string username = ((string)(inValues[0]));
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginGetCustomScreeningUserPreferences(username, callback, asyncState);
+        }
+        
+        private object[] OnEndGetCustomScreeningUserPreferences(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndGetCustomScreeningUserPreferences(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetCustomScreeningUserPreferencesCompleted(object state) {
+            if ((this.GetCustomScreeningUserPreferencesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetCustomScreeningUserPreferencesCompleted(this, new GetCustomScreeningUserPreferencesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetCustomScreeningUserPreferencesAsync(string username) {
+            this.GetCustomScreeningUserPreferencesAsync(username, null);
+        }
+        
+        public void GetCustomScreeningUserPreferencesAsync(string username, object userState) {
+            if ((this.onBeginGetCustomScreeningUserPreferencesDelegate == null)) {
+                this.onBeginGetCustomScreeningUserPreferencesDelegate = new BeginOperationDelegate(this.OnBeginGetCustomScreeningUserPreferences);
+            }
+            if ((this.onEndGetCustomScreeningUserPreferencesDelegate == null)) {
+                this.onEndGetCustomScreeningUserPreferencesDelegate = new EndOperationDelegate(this.OnEndGetCustomScreeningUserPreferences);
+            }
+            if ((this.onGetCustomScreeningUserPreferencesCompletedDelegate == null)) {
+                this.onGetCustomScreeningUserPreferencesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetCustomScreeningUserPreferencesCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetCustomScreeningUserPreferencesDelegate, new object[] {
+                        username}, this.onEndGetCustomScreeningUserPreferencesDelegate, this.onGetCustomScreeningUserPreferencesCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, userPreference, callback, asyncState);
         }
@@ -835,6 +917,19 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             public System.Nullable<bool> EndSaveUserDataPointsPreference(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("SaveUserDataPointsPreference", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGetCustomScreeningUserPreferences(string username, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = username;
+                System.IAsyncResult _result = base.BeginInvoke("GetCustomScreeningUserPreferences", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> EndGetCustomScreeningUserPreferences(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> _result = ((System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo>)(base.EndInvoke("GetCustomScreeningUserPreferences", _args, result)));
                 return _result;
             }
             

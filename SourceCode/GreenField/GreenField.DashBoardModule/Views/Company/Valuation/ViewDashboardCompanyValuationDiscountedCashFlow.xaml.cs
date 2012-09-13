@@ -81,7 +81,7 @@ namespace GreenField.DashboardModule.Views
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
                 {
-                    Content = "Analysis Summary",
+                    Content = "Assumptions",
                     Foreground = new SolidColorBrush(Colors.Black),
                     FontSize = 12,
                     FontFamily = new FontFamily("Arial")
@@ -120,6 +120,28 @@ namespace GreenField.DashboardModule.Views
                     FontFamily = new FontFamily("Arial")
                 },
                 Content = new ViewSensitivity(_viewModel)
+            });
+            this.rtvDashboard.Items.Add(new RadTileViewItem
+            {
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = "FORWARD EPS",
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize = 12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                Content = new ViewSensitivityEPS(_viewModel)
+            });
+            this.rtvDashboard.Items.Add(new RadTileViewItem
+            {
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = "FORWARD BVPS",
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize = 12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                Content = new ViewSensitivityBVPS(_viewModel)
             });
         }
 

@@ -79,23 +79,37 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetCustomScreeningUserPreferences">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="username" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCustomScreeningUserPreferencesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="GetCustomScreeningUserPreferencesResult" nillable="true" type="q7:ArrayOfCSTUserPreferenceInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="RetrieveSecurityData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolio" nillable="true" type="q7:PortfolioSelectionData" />
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="benchmark" nillable="true" type="q8:BenchmarkSelectionData" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolio" nillable="true" type="q8:PortfolioSelectionData" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="benchmark" nillable="true" type="q9:BenchmarkSelectionData" />
         <xs:element minOccurs="0" name="region" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="country" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sector" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="industry" nillable="true" type="xs:string" />
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="userPreference" nillable="true" type="q9:ArrayOfCSTUserPreferenceInfo" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="userPreference" nillable="true" type="q10:ArrayOfCSTUserPreferenceInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveSecurityDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveSecurityDataResult" nillable="true" type="q10:ArrayOfCustomScreeningSecurityData" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveSecurityDataResult" nillable="true" type="q11:ArrayOfCustomScreeningSecurityData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
