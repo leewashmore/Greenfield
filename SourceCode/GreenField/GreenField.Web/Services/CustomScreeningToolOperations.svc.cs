@@ -323,6 +323,61 @@ namespace GreenField.Web.Services
         }
 
         /// <summary>
+        /// retrieve stored user preference for custom screening data
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<CSTUserPreferenceInfo> GetCustomScreeningUserPreferences(string username)
+        {
+            try
+            {
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                List<CSTUserPreferenceInfo> result = new List<CSTUserPreferenceInfo>();
+
+                CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
+                List<CustomScreeningUserPreferences> data = new List<CustomScreeningUserPreferences>();
+
+                data = entity.GetCustomScreeningUserPreferences(username).ToList();
+
+                if (data == null || data.Count < 1)
+                    return result;
+
+                foreach (CustomScreeningUserPreferences item in data)
+                {
+                    result.Add(new CSTUserPreferenceInfo()
+                    {
+                        ScreeningId = item.ScreeningId,
+                        //DataDescription = item.DATA_DESC,
+                        //LongDescription = item.LONG_DESC,
+                        //DataColumn = item.TABLE_COLUMN
+                        ListName = item.ListName,
+                        Accessibility = item.Accessibilty,
+                        DataSource = item.DataSource,
+                        PeriodType = item.PeriodType,
+                        YearType = item.YearType,
+                        FromDate = Convert.ToInt32(item.FromDate),
+                        ToDate = Convert.ToInt32(item.ToDate),
+                        DataPointsOrder = Convert.ToInt32(item.DataPointsOrder)
+                    });
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
         /// Retrieving security data based on selected data points
         /// </summary>
         /// <param name="portfolio"></param>

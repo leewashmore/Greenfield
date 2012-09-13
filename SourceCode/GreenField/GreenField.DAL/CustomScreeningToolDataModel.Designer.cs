@@ -121,6 +121,22 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
+        public ObjectSet<SCREENING_DISPLAY_PERIOD> SCREENING_DISPLAY_PERIOD
+        {
+            get
+            {
+                if ((_SCREENING_DISPLAY_PERIOD == null))
+                {
+                    _SCREENING_DISPLAY_PERIOD = base.CreateObjectSet<SCREENING_DISPLAY_PERIOD>("SCREENING_DISPLAY_PERIOD");
+                }
+                return _SCREENING_DISPLAY_PERIOD;
+            }
+        }
+        private ObjectSet<SCREENING_DISPLAY_PERIOD> _SCREENING_DISPLAY_PERIOD;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
         public ObjectSet<UserCustomisedListInfo> UserCustomisedListInfoes
         {
             get
@@ -149,22 +165,6 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<UserListDataPointMappingInfo> _UserListDataPointMappingInfoes;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<SCREENING_DISPLAY_PERIOD> SCREENING_DISPLAY_PERIOD
-        {
-            get
-            {
-                if ((_SCREENING_DISPLAY_PERIOD == null))
-                {
-                    _SCREENING_DISPLAY_PERIOD = base.CreateObjectSet<SCREENING_DISPLAY_PERIOD>("SCREENING_DISPLAY_PERIOD");
-                }
-                return _SCREENING_DISPLAY_PERIOD;
-            }
-        }
-        private ObjectSet<SCREENING_DISPLAY_PERIOD> _SCREENING_DISPLAY_PERIOD;
 
         #endregion
         #region AddTo Methods
@@ -194,6 +194,14 @@ namespace GreenField.DAL
         }
     
         /// <summary>
+        /// Deprecated Method for adding a new object to the SCREENING_DISPLAY_PERIOD EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSCREENING_DISPLAY_PERIOD(SCREENING_DISPLAY_PERIOD sCREENING_DISPLAY_PERIOD)
+        {
+            base.AddObject("SCREENING_DISPLAY_PERIOD", sCREENING_DISPLAY_PERIOD);
+        }
+    
+        /// <summary>
         /// Deprecated Method for adding a new object to the UserCustomisedListInfoes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToUserCustomisedListInfoes(UserCustomisedListInfo userCustomisedListInfo)
@@ -207,14 +215,6 @@ namespace GreenField.DAL
         public void AddToUserListDataPointMappingInfoes(UserListDataPointMappingInfo userListDataPointMappingInfo)
         {
             base.AddObject("UserListDataPointMappingInfoes", userListDataPointMappingInfo);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the SCREENING_DISPLAY_PERIOD EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToSCREENING_DISPLAY_PERIOD(SCREENING_DISPLAY_PERIOD sCREENING_DISPLAY_PERIOD)
-        {
-            base.AddObject("SCREENING_DISPLAY_PERIOD", sCREENING_DISPLAY_PERIOD);
         }
 
         #endregion
@@ -456,6 +456,25 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<CustomScreeningFVAData>("GetCustomScreeningFVAData", securityIdsListParameter, dataSourceParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="username">No Metadata Documentation available.</param>
+        public ObjectResult<CustomScreeningUserPreferences> GetCustomScreeningUserPreferences(global::System.String username)
+        {
+            ObjectParameter usernameParameter;
+            if (username != null)
+            {
+                usernameParameter = new ObjectParameter("username", username);
+            }
+            else
+            {
+                usernameParameter = new ObjectParameter("username", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<CustomScreeningUserPreferences>("GetCustomScreeningUserPreferences", usernameParameter);
         }
 
         #endregion
@@ -1395,7 +1414,7 @@ namespace GreenField.DAL
         /// <param name="createdOn">Initial value of the CreatedOn property.</param>
         /// <param name="modifiedBy">Initial value of the ModifiedBy property.</param>
         /// <param name="modifiedOn">Initial value of the ModifiedOn property.</param>
-        public static UserCustomisedListInfo CreateUserCustomisedListInfo(global::System.Int64 listId, global::System.String userName, global::System.String listName, global::System.String accessibilty, global::System.DateTime createdOn, global::System.DateTime modifiedBy, global::System.DateTime modifiedOn)
+        public static UserCustomisedListInfo CreateUserCustomisedListInfo(global::System.Int64 listId, global::System.String userName, global::System.String listName, global::System.String accessibilty, global::System.DateTime createdOn, global::System.String modifiedBy, global::System.DateTime modifiedOn)
         {
             UserCustomisedListInfo userCustomisedListInfo = new UserCustomisedListInfo();
             userCustomisedListInfo.ListId = listId;
@@ -1539,7 +1558,7 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.DateTime ModifiedBy
+        public global::System.String ModifiedBy
         {
             get
             {
@@ -1549,13 +1568,13 @@ namespace GreenField.DAL
             {
                 OnModifiedByChanging(value);
                 ReportPropertyChanging("ModifiedBy");
-                _ModifiedBy = StructuralObject.SetValidValue(value);
+                _ModifiedBy = StructuralObject.SetValidValue(value, false);
                 ReportPropertyChanged("ModifiedBy");
                 OnModifiedByChanged();
             }
         }
-        private global::System.DateTime _ModifiedBy;
-        partial void OnModifiedByChanging(global::System.DateTime value);
+        private global::System.String _ModifiedBy;
+        partial void OnModifiedByChanging(global::System.String value);
         partial void OnModifiedByChanged();
     
         /// <summary>
@@ -1729,11 +1748,11 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Byte[] DataSource
+        public global::System.String DataSource
         {
             get
             {
-                return StructuralObject.GetValidValue(_DataSource);
+                return _DataSource;
             }
             set
             {
@@ -1744,8 +1763,8 @@ namespace GreenField.DAL
                 OnDataSourceChanged();
             }
         }
-        private global::System.Byte[] _DataSource;
-        partial void OnDataSourceChanging(global::System.Byte[] value);
+        private global::System.String _DataSource;
+        partial void OnDataSourceChanging(global::System.String value);
         partial void OnDataSourceChanged();
     
         /// <summary>
@@ -3244,6 +3263,303 @@ namespace GreenField.DAL
         private Nullable<global::System.Double> _TOT_CURR_SHRS_OUTST_ALL_CLASS;
         partial void OnTOT_CURR_SHRS_OUTST_ALL_CLASSChanging(Nullable<global::System.Double> value);
         partial void OnTOT_CURR_SHRS_OUTST_ALL_CLASSChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="CustomScreeningToolModel", Name="CustomScreeningUserPreferences")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class CustomScreeningUserPreferences : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new CustomScreeningUserPreferences object.
+        /// </summary>
+        /// <param name="userName">Initial value of the UserName property.</param>
+        /// <param name="listId">Initial value of the ListId property.</param>
+        /// <param name="listName">Initial value of the ListName property.</param>
+        /// <param name="accessibilty">Initial value of the Accessibilty property.</param>
+        public static CustomScreeningUserPreferences CreateCustomScreeningUserPreferences(global::System.String userName, global::System.Int64 listId, global::System.String listName, global::System.String accessibilty)
+        {
+            CustomScreeningUserPreferences customScreeningUserPreferences = new CustomScreeningUserPreferences();
+            customScreeningUserPreferences.UserName = userName;
+            customScreeningUserPreferences.ListId = listId;
+            customScreeningUserPreferences.ListName = listName;
+            customScreeningUserPreferences.Accessibilty = accessibilty;
+            return customScreeningUserPreferences;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String UserName
+        {
+            get
+            {
+                return _UserName;
+            }
+            set
+            {
+                OnUserNameChanging(value);
+                ReportPropertyChanging("UserName");
+                _UserName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("UserName");
+                OnUserNameChanged();
+            }
+        }
+        private global::System.String _UserName;
+        partial void OnUserNameChanging(global::System.String value);
+        partial void OnUserNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int64 ListId
+        {
+            get
+            {
+                return _ListId;
+            }
+            set
+            {
+                OnListIdChanging(value);
+                ReportPropertyChanging("ListId");
+                _ListId = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ListId");
+                OnListIdChanged();
+            }
+        }
+        private global::System.Int64 _ListId;
+        partial void OnListIdChanging(global::System.Int64 value);
+        partial void OnListIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ListName
+        {
+            get
+            {
+                return _ListName;
+            }
+            set
+            {
+                OnListNameChanging(value);
+                ReportPropertyChanging("ListName");
+                _ListName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ListName");
+                OnListNameChanged();
+            }
+        }
+        private global::System.String _ListName;
+        partial void OnListNameChanging(global::System.String value);
+        partial void OnListNameChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Accessibilty
+        {
+            get
+            {
+                return _Accessibilty;
+            }
+            set
+            {
+                OnAccessibiltyChanging(value);
+                ReportPropertyChanging("Accessibilty");
+                _Accessibilty = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Accessibilty");
+                OnAccessibiltyChanged();
+            }
+        }
+        private global::System.String _Accessibilty;
+        partial void OnAccessibiltyChanging(global::System.String value);
+        partial void OnAccessibiltyChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ScreeningId
+        {
+            get
+            {
+                return _ScreeningId;
+            }
+            set
+            {
+                OnScreeningIdChanging(value);
+                ReportPropertyChanging("ScreeningId");
+                _ScreeningId = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ScreeningId");
+                OnScreeningIdChanged();
+            }
+        }
+        private global::System.String _ScreeningId;
+        partial void OnScreeningIdChanging(global::System.String value);
+        partial void OnScreeningIdChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String DataSource
+        {
+            get
+            {
+                return _DataSource;
+            }
+            set
+            {
+                OnDataSourceChanging(value);
+                ReportPropertyChanging("DataSource");
+                _DataSource = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("DataSource");
+                OnDataSourceChanged();
+            }
+        }
+        private global::System.String _DataSource;
+        partial void OnDataSourceChanging(global::System.String value);
+        partial void OnDataSourceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PeriodType
+        {
+            get
+            {
+                return _PeriodType;
+            }
+            set
+            {
+                OnPeriodTypeChanging(value);
+                ReportPropertyChanging("PeriodType");
+                _PeriodType = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PeriodType");
+                OnPeriodTypeChanged();
+            }
+        }
+        private global::System.String _PeriodType;
+        partial void OnPeriodTypeChanging(global::System.String value);
+        partial void OnPeriodTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String YearType
+        {
+            get
+            {
+                return _YearType;
+            }
+            set
+            {
+                OnYearTypeChanging(value);
+                ReportPropertyChanging("YearType");
+                _YearType = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("YearType");
+                OnYearTypeChanged();
+            }
+        }
+        private global::System.String _YearType;
+        partial void OnYearTypeChanging(global::System.String value);
+        partial void OnYearTypeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> FromDate
+        {
+            get
+            {
+                return _FromDate;
+            }
+            set
+            {
+                OnFromDateChanging(value);
+                ReportPropertyChanging("FromDate");
+                _FromDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("FromDate");
+                OnFromDateChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _FromDate;
+        partial void OnFromDateChanging(Nullable<global::System.Int32> value);
+        partial void OnFromDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> ToDate
+        {
+            get
+            {
+                return _ToDate;
+            }
+            set
+            {
+                OnToDateChanging(value);
+                ReportPropertyChanging("ToDate");
+                _ToDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ToDate");
+                OnToDateChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _ToDate;
+        partial void OnToDateChanging(Nullable<global::System.Int32> value);
+        partial void OnToDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> DataPointsOrder
+        {
+            get
+            {
+                return _DataPointsOrder;
+            }
+            set
+            {
+                OnDataPointsOrderChanging(value);
+                ReportPropertyChanging("DataPointsOrder");
+                _DataPointsOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("DataPointsOrder");
+                OnDataPointsOrderChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _DataPointsOrder;
+        partial void OnDataPointsOrderChanging(Nullable<global::System.Int32> value);
+        partial void OnDataPointsOrderChanged();
 
         #endregion
     }

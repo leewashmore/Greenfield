@@ -143,7 +143,7 @@
           <Property Name="ListName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Accessibilty" Type="nvarchar" Nullable="false" MaxLength="10" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="UserListDataPointMappingInfo">
@@ -153,7 +153,7 @@
           <Property Name="DataPointId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ListId" Type="bigint" Nullable="false" />
           <Property Name="ScreeningId" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="DataSource" Type="varbinary" MaxLength="10" />
+          <Property Name="DataSource" Type="varchar" MaxLength="50" />
           <Property Name="PeriodType" Type="char" MaxLength="2" />
           <Property Name="YearType" Type="char" MaxLength="8" />
           <Property Name="FromDate" Type="int" />
@@ -203,6 +203,9 @@
         <Function Name="GetCustomScreeningREFData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
         </Function>
+        <Function Name="GetCustomScreeningUserPreferences" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GetFinancialTabDataDescriptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="tabName" Type="nvarchar" Mode="In" />
         </Function>
@@ -214,12 +217,6 @@
           <EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" />
           <EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" />
           <EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" />
-          <EntitySet Name="UserCustomisedListInfoes" EntityType="CustomScreeningToolModel.UserCustomisedListInfo" />
-          <EntitySet Name="UserListDataPointMappingInfoes" EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" />
-          <AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
-            <End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfoes" />
-            <End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfoes" />
-          </AssociationSet>
           <FunctionImport Name="GetFinancialTabDataDescriptions" ReturnType="Collection(CustomScreeningToolModel.FinancialTabDataDescriptions)">
           <Parameter Name="tabName" Mode="In" Type="String" />
           </FunctionImport>
@@ -248,6 +245,15 @@
           <FunctionImport Name="GetCustomScreeningFVAData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFVAData)">
             <Parameter Name="securityIdsList" Mode="In" Type="String" />
             <Parameter Name="dataSource" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="UserCustomisedListInfoes" EntityType="CustomScreeningToolModel.UserCustomisedListInfo" />
+          <EntitySet Name="UserListDataPointMappingInfoes" EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" />
+          <AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+            <End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfoes" />
+            <End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfoes" />
+          </AssociationSet>
+          <FunctionImport Name="GetCustomScreeningUserPreferences" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningUserPreferences)">
+            <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="SCREENING_DISPLAY_CURRENT">
@@ -301,50 +307,6 @@
           <Property Name="DECIMAL" Type="Int32" />
           <Property Name="PERCENTAGE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
         </EntityType>
-        <EntityType Name="UserCustomisedListInfo">
-          <Key>
-            <PropertyRef Name="ListId" />
-          </Key>
-          <Property Name="ListId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="ListName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="Accessibilty" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="DateTime" Nullable="false" />
-          <Property Name="ModifiedOn" Type="DateTime" Nullable="false" />
-          <NavigationProperty Name="UserListDataPointMappingInfoes" Relationship="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" FromRole="UserCustomisedListInfo" ToRole="UserListDataPointMappingInfo" />
-        </EntityType>
-        <EntityType Name="UserListDataPointMappingInfo">
-          <Key>
-            <PropertyRef Name="DataPointId" />
-          </Key>
-          <Property Type="Int64" Name="DataPointId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int64" Name="ListId" Nullable="false" />
-          <Property Type="String" Name="ScreeningId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Binary" Name="DataSource" MaxLength="10" FixedLength="false" />
-          <Property Type="String" Name="PeriodType" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="YearType" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Type="Int32" Name="FromDate" />
-          <Property Type="Int32" Name="ToDate" />
-          <Property Type="Int32" Name="DataPointsOrder" Nullable="false" />
-          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
-          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="UserCustomisedListInfo" Relationship="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" FromRole="UserListDataPointMappingInfo" ToRole="UserCustomisedListInfo" />
-        </EntityType>
-        <Association Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
-          <End Type="CustomScreeningToolModel.UserCustomisedListInfo" Role="UserCustomisedListInfo" Multiplicity="1" />
-          <End Type="CustomScreeningToolModel.UserListDataPointMappingInfo" Role="UserListDataPointMappingInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserCustomisedListInfo">
-              <PropertyRef Name="ListId" />
-            </Principal>
-            <Dependent Role="UserListDataPointMappingInfo">
-              <PropertyRef Name="ListId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
 		  <ComplexType Name="FinancialTabDataDescriptions" >
 			  <Property Type="String" Name="SCREENING_ID" Nullable="false" />
 			  <Property Type="String" Name="DATA_DESC" Nullable="false" />
@@ -420,6 +382,63 @@
           <Property Type="Decimal" Name="CURRENT_MEASURE_VALUE" Nullable="false" Precision="32" Scale="6" />
           <Property Type="Decimal" Name="UPSIDE" Nullable="false" Precision="32" Scale="6" />
         </ComplexType>
+        <EntityType Name="UserCustomisedListInfo">
+          <Key>
+            <PropertyRef Name="ListId" />
+          </Key>
+          <Property Type="Int64" Name="ListId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ListName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Accessibilty" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
+          <NavigationProperty Name="UserListDataPointMappingInfoes" Relationship="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" FromRole="UserCustomisedListInfo" ToRole="UserListDataPointMappingInfo" />
+        </EntityType>
+        <EntityType Name="UserListDataPointMappingInfo">
+          <Key>
+            <PropertyRef Name="DataPointId" />
+          </Key>
+          <Property Type="Int64" Name="DataPointId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="ListId" Nullable="false" />
+          <Property Type="String" Name="ScreeningId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DataSource" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="PeriodType" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="YearType" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="FromDate" />
+          <Property Type="Int32" Name="ToDate" />
+          <Property Type="Int32" Name="DataPointsOrder" Nullable="false" />
+          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
+          <NavigationProperty Name="UserCustomisedListInfo" Relationship="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" FromRole="UserListDataPointMappingInfo" ToRole="UserCustomisedListInfo" />
+        </EntityType>
+        <Association Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+          <End Type="CustomScreeningToolModel.UserCustomisedListInfo" Role="UserCustomisedListInfo" Multiplicity="1" />
+          <End Type="CustomScreeningToolModel.UserListDataPointMappingInfo" Role="UserListDataPointMappingInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserCustomisedListInfo">
+              <PropertyRef Name="ListId" />
+            </Principal>
+            <Dependent Role="UserListDataPointMappingInfo">
+              <PropertyRef Name="ListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="CustomScreeningUserPreferences">
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="Int64" Name="ListId" Nullable="false" />
+          <Property Type="String" Name="ListName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Accessibilty" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="ScreeningId" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DataSource" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PeriodType" Nullable="true" MaxLength="2" />
+          <Property Type="String" Name="YearType" Nullable="true" MaxLength="8" />
+          <Property Type="Int32" Name="FromDate" Nullable="true" />
+          <Property Type="Int32" Name="ToDate" Nullable="true" />
+          <Property Type="Int32" Name="DataPointsOrder" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -456,34 +475,6 @@
             <ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
             <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="UserCustomisedListInfoes"><EntityTypeMapping TypeName="CustomScreeningToolModel.UserCustomisedListInfo"><MappingFragment StoreEntitySet="UserCustomisedListInfo">
-            <ScalarProperty Name="ListId" ColumnName="ListId" />
-            <ScalarProperty Name="UserName" ColumnName="UserName" />
-            <ScalarProperty Name="ListName" ColumnName="ListName" />
-            <ScalarProperty Name="Accessibilty" ColumnName="Accessibilty" />
-            <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-            <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-            <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-          </MappingFragment></EntityTypeMapping></EntitySetMapping>
-          <EntitySetMapping Name="UserListDataPointMappingInfoes">
-            <EntityTypeMapping TypeName="CustomScreeningToolModel.UserListDataPointMappingInfo">
-              <MappingFragment StoreEntitySet="UserListDataPointMappingInfo">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
-                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
-                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
-                <ScalarProperty Name="YearType" ColumnName="YearType" />
-                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
-                <ScalarProperty Name="ScreeningId" ColumnName="ScreeningId" />
-                <ScalarProperty Name="ListId" ColumnName="ListId" />
-                <ScalarProperty Name="DataPointId" ColumnName="DataPointId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetFinancialTabDataDescriptions" FunctionName="CustomScreeningToolModel.Store.GetFinancialTabDataDescriptions">
             <ResultMapping>
               <ComplexTypeMapping TypeName="CustomScreeningToolModel.FinancialTabDataDescriptions">
@@ -579,6 +570,55 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="UserCustomisedListInfoes">
+            <EntityTypeMapping TypeName="CustomScreeningToolModel.UserCustomisedListInfo">
+              <MappingFragment StoreEntitySet="UserCustomisedListInfo">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="Accessibilty" ColumnName="Accessibilty" />
+                <ScalarProperty Name="ListName" ColumnName="ListName" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ListId" ColumnName="ListId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserListDataPointMappingInfoes">
+            <EntityTypeMapping TypeName="CustomScreeningToolModel.UserListDataPointMappingInfo">
+              <MappingFragment StoreEntitySet="UserListDataPointMappingInfo">
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="YearType" ColumnName="YearType" />
+                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
+                <ScalarProperty Name="ScreeningId" ColumnName="ScreeningId" />
+                <ScalarProperty Name="ListId" ColumnName="ListId" />
+                <ScalarProperty Name="DataPointId" ColumnName="DataPointId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetCustomScreeningUserPreferences" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningUserPreferences">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningUserPreferences">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ListId" ColumnName="ListId" />
+                <ScalarProperty Name="ListName" ColumnName="ListName" />
+                <ScalarProperty Name="Accessibilty" ColumnName="Accessibilty" />
+                <ScalarProperty Name="ScreeningId" ColumnName="ScreeningId" />
+                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
+                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+                <ScalarProperty Name="YearType" ColumnName="YearType" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -603,13 +643,13 @@
         <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" Width="2.375" PointX="0.5" PointY="4.75" Height="2.1725878906250102" IsExpanded="true" />
         <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" Width="2.375" PointX="5.375" PointY="0.5" Height="2.7494921875000102" IsExpanded="true" />
         <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" Width="2.875" PointX="5.25" PointY="3.5" Height="2.7494921875000102" IsExpanded="true" />
-        <EntityTypeShape EntityType="CustomScreeningToolModel.UserCustomisedListInfo" Width="1.5" PointX="0.75" PointY="1.75" Height="2.5571907552083242" IsExpanded="true" />
+        <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" Width="2.25" PointX="8" PointY="0.625" Height="2.1725878906249996" />
+        <EntityTypeShape EntityType="CustomScreeningToolModel.UserCustomisedListInfo" Width="1.5" PointX="0.75" PointY="1.375" Height="2.5571907552083317" />
         <EntityTypeShape EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" Width="1.5" PointX="3" PointY="0.75" Height="3.7109993489583317" />
         <AssociationConnector Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" >
-          <ConnectorPoint PointX="2.25" PointY="3.0285953776041659" />
-          <ConnectorPoint PointX="3" PointY="3.0285953776041659" />
+          <ConnectorPoint PointX="2.25" PointY="2.6535953776041667" />
+          <ConnectorPoint PointX="3" PointY="2.6535953776041667" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" Width="2.25" PointX="8" PointY="0.625" Height="2.1725878906249996" />
       </Diagram>
     </Diagrams>
   </Designer>
