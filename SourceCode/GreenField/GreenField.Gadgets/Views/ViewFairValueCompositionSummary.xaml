@@ -10,6 +10,7 @@
 
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
+            <helpers:PercentageValueConverter x:Key="ConverterPercValTwoDecPlace"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
@@ -79,37 +80,37 @@
                                      AlternateRowStyle ="{StaticResource GridViewAlternateRowStyle}">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Source" 
-                                                        DataMemberBinding="{Binding FieldName}"
+                                                        DataMemberBinding="{Binding SOURCE}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Left" 
                                                         TextAlignment="Left"/>
                             <telerik:GridViewDataColumn Header="Measure" 
-                                                        DataMemberBinding="{Binding ValueY0}"
+                                                        DataMemberBinding="{Binding MEASURE}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
-                                                        HeaderTextAlignment="Right" 
-                                                        TextAlignment="Right"/>
+                                                        HeaderTextAlignment="Left" 
+                                                        TextAlignment="Left"/>
                             <telerik:GridViewDataColumn Header="Buy" 
-                                                        DataMemberBinding="{Binding ValueY1}"
+                                                        DataMemberBinding="{Binding BUY, StringFormat=\{0:n1\}}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Sell" 
-                                                        DataMemberBinding="{Binding ValueY2}"
+                                                        DataMemberBinding="{Binding SELL, StringFormat=\{0:n1\}}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Upside" 
-                                                        DataMemberBinding="{Binding ValueY3}"
+                                                        DataMemberBinding="{Binding UPSIDE,Converter={StaticResource ConverterPercValTwoDecPlace}}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Date" 
-                                                        DataMemberBinding="{Binding ValueY4}"
+                                                        DataMemberBinding="{Binding DATE}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 

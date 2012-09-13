@@ -26,7 +26,7 @@ namespace GreenField.Common
         public static string EXTERNAL_RESEARCH_MARGINS = "Margins Information External Research 4.1.3.2 / 4.4.3";
         public static string EXTERNAL_RESEARCH_BASIC_DATA = "Basic Data";// Information External Research 4.1.4.1";
         public static string EXTERNAL_RESEARCH_LEVERAGE_CAPITAL_FINANCIAL_STRENGTH = "Leverage/Capital Structure / Financial Strength External Research 4.1.3.3 / 4.1.3.4 / 4.4.3";
-        public static string PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION = "Fair Value Composition 4.2.2";
+        public static string PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION_SUMMARY = "Fair Value Composition Summary";
         public static string EXTERNAL_RESEARCH_ASSET_QUALITY_CASH_FLOW = "Asset Quality / Cash Flow Information External Research 4.1.3.5 / 4.1.3.6 / 4.4.3";
         public static string INTERNAL_RESEARCH_VALUATIONS_DETAILED = "Valuations Detailed Internal Research 5.1.1.2";
         public static string EXTERNAL_RESEARCH_PROFITABILITY = "Profitability Information External Research 4.1.3.7 / 4.4.3";
@@ -87,7 +87,7 @@ namespace GreenField.Common
         #endregion
 
         #region Valuation Fair Value
-        public static string PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION_SUMMARY = "Fair Value Composition Summary Portfolio Construction 4.2.1";
+        public static string PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION = "Fair Value Composition";
         #endregion
         #endregion
 

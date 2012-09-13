@@ -43,7 +43,7 @@ namespace GreenField.DashboardModule.Views
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
 
-            this.tbHeader.Text = GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION_SUMMARY;
+            this.tbHeader.Text = GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION;
             
         }
 
