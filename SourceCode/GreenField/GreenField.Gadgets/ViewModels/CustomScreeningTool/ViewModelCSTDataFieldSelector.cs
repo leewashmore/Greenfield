@@ -271,6 +271,36 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        #region Busy Indicator Notification
+        /// <summary>
+        /// Displays/Hides busy indicator to notify user of the on going process
+        /// </summary>
+        private bool _busyIndicatorIsBusy = false;
+        public bool BusyIndicatorIsBusy
+        {
+            get { return _busyIndicatorIsBusy; }
+            set
+            {
+                _busyIndicatorIsBusy = value;
+                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+            }
+        }
+
+        /// <summary>
+        /// Stores the message displayed over the busy indicator to notify user of the on going process
+        /// </summary>
+        private string _busyIndicatorContent;
+        public string BusyIndicatorContent
+        {
+            get { return _busyIndicatorContent; }
+            set
+            {
+                _busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }
+        #endregion        
+
         #region ICommand Properties
 
         public ICommand AddCommand
@@ -334,7 +364,8 @@ namespace GreenField.Gadgets.ViewModels
                                 if (_dbInteractivity != null)
                                 {
                                     //BusyIndicatorNotification(true, "Updating data list...");
-                                   //update the data list.. make a call to service method to update
+                                    //update the already selected data list by fetching the SelectedAccessibility from child window .. 
+                                    //make a call to service method to update
                                 }
                             }
                         });
@@ -350,11 +381,23 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (_dbInteractivity != null)
             {
+                BusyIndicatorNotification(true, "Retrieving Security Reference Data...");
                 _dbInteractivity.RetrieveSecurityReferenceTabDataPoints(SecurityReferenceTabDataPointsCallbackMethod);
+                BusyIndicatorNotification(true, "Retrieving Period Financials Data...");
                 _dbInteractivity.RetrievePeriodFinancialsTabDataPoints(PeriodFinancialsTabDataPointsCallbackMethod);
+                BusyIndicatorNotification(true, "Retrieving Current Financials Data...");
                 _dbInteractivity.RetrieveCurrentFinancialsTabDataPoints(CurrentFinancialsTabDataPointsCallbackMethod);
+                BusyIndicatorNotification(true, "Retrieving Fair Value Data...");
                 _dbInteractivity.RetrieveFairValueTabDataPoints(FairValueTabDataPointsCallbackMethod);
             }
+        }
+
+        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        {
+            if (message != null)
+                BusyIndicatorContent = message;
+
+            BusyIndicatorIsBusy = showBusyIndicator;
         }
 
         #endregion
@@ -384,7 +427,11 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         private void PeriodFinancialsTabDataPointsCallbackMethod(List<CustomSelectionData> result)
@@ -410,7 +457,11 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         private void CurrentFinancialsTabDataPointsCallbackMethod(List<CustomSelectionData> result)
@@ -436,7 +487,11 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         private void FairValueTabDataPointsCallbackMethod(List<CustomSelectionData> result)
@@ -462,7 +517,11 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         #endregion

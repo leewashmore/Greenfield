@@ -16,7 +16,10 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <Grid x:Name="LayoutRoot" Background="White">
+    <telerik:RadBusyIndicator x:Name="biPresentationOverview" BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+
+        <Grid x:Name="LayoutRoot" Background="White">
         <Grid x:Name="gDataFieldSelector">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -674,4 +677,6 @@
             </Grid>
         </Grid>
     </Grid>
+        
+    </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

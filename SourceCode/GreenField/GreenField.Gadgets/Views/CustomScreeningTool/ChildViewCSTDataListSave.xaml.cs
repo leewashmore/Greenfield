@@ -46,38 +46,55 @@ namespace GreenField.Gadgets.Views
 
         #region Properties
 
-        public AccessbitlityMode SelectedAccessbitlity {get;  set; }
+        public AccessbitlityMode Accessbitlity {get;  set; }
 
-        private bool? _rbtnPublic = true;
-        public bool? RbtnPublic
+        public string SelectedAccessibility { get; set; }
+        
+
+        private bool _isSelectedRbtnPublic = true;
+        public bool IsSelectedRbtnPublic
         {
-            get { return _rbtnPublic; }
+            get { return _isSelectedRbtnPublic; }
             set
             {
-                if (_rbtnPublic != value)
+                if (_isSelectedRbtnPublic != value)
                 {
-                    _rbtnPublic = value;
-                    //RaisePropertyChanged(() => RbtnPublic);
+                    _isSelectedRbtnPublic = value;
                 }
             }
         }
 
-        private bool? _rbtnPrivate = false;
-        public bool? RbtnPrivate
+        private bool _isSelectedRbtnPrivate = false;
+        public bool IsSelectedRbtnPrivate
         {
-            get { return _rbtnPrivate; }
+            get { return _isSelectedRbtnPrivate; }
             set
             {
-                if (_rbtnPrivate != value)
+                if (_isSelectedRbtnPrivate != value)
                 {
-                    _rbtnPrivate = value;
-                    //RaisePropertyChanged(() => RbtnPrivate);
+                    _isSelectedRbtnPrivate = value;
                 }              
             }
         }
         #endregion
 
         #region Events
+
+        private void HandleCheck(object sender, RoutedEventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+            //choiceTextBlock.Text = "You chose: " + rb.GroupName + ": " + rb.Name;
+            if (IsSelectedRbtnPublic)
+            {
+                SelectedAccessibility = "Public";
+            }
+            else if (IsSelectedRbtnPrivate)
+            {
+                SelectedAccessibility = "Private";
+            }
+        }
+
+
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
