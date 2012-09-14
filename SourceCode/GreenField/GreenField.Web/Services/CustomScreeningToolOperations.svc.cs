@@ -215,10 +215,10 @@ namespace GreenField.Web.Services
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
                 List<FinancialTabDataDescriptions> data = new List<FinancialTabDataDescriptions>();
 
+                data = entity.GetFinancialTabDataDescriptions("Current").ToList();
+
                 if (data == null || data.Count < 1)
                     return result;
-
-                data = entity.GetFinancialTabDataDescriptions("Current").ToList();
 
                 foreach (FinancialTabDataDescriptions item in data)
                 {
@@ -354,8 +354,9 @@ namespace GreenField.Web.Services
                 {
                     result.Add(new CSTUserPreferenceInfo()
                     {
+                        UserName = item.UserName,
                         ScreeningId = item.ScreeningId,
-                        //DataDescription = item.DATA_DESC,
+                        DataDescription = item.DataDescription,
                         //LongDescription = item.LONG_DESC,
                         //DataColumn = item.TABLE_COLUMN
                         ListName = item.ListName,
@@ -481,8 +482,8 @@ namespace GreenField.Web.Services
                             CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
                             foreach (CustomScreeningREFData record in data)
                             {
-                                fillData.SecurityId = record.SecurityId;
-                                fillData.IssueName = securityList.Where(a=> a.SecurityId == record.SecurityId).Select(a => a.IssueName).FirstOrDefault();
+                                fillData.SecurityId = record.SECURITY_ID;
+                                fillData.IssueName = securityList.Where(a=> a.SecurityId == record.SECURITY_ID).Select(a => a.IssueName).FirstOrDefault();
                                 fillData.Type = item.TableColumnName;
                                 fillData.Value = record.GetType().GetProperty(item.TableColumnName).GetValue(record, null);
                                 result.Add(fillData);
@@ -500,7 +501,7 @@ namespace GreenField.Web.Services
                       if (item.ScreeningId.StartsWith("FIN"))
                       {
                           List<CustomScreeningFINData> temp = new List<CustomScreeningFINData>();
-                          temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.PeriodType, item.FromDate, item.YearType, item.DataSource).ToList();
+                          temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID,item.PeriodType, item.FromDate, item.YearType, item.DataSource).ToList();
 
                           foreach (CustomScreeningFINData record in temp)
                           {

@@ -8,6 +8,9 @@ namespace GreenField.DataContracts
     public class CSTUserPreferenceInfo
     {
         [DataMember]
+        public string UserName { get; set; }
+
+        [DataMember]
         public string ListName { get; set; }
 
         [DataMember]
