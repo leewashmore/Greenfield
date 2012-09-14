@@ -164,6 +164,7 @@
     <Compile Include="Models\ExcelModel.cs" />
     <Compile Include="Models\FinancialStatementDisplayData.cs" />
     <Compile Include="Models\FiveYearDataModels.cs" />
+    <Compile Include="Models\CSTNavigationInfo.cs" />
     <Compile Include="Models\ICPresentations\ICNavigationInfo.cs" />
     <Compile Include="Models\GadgetWithPeriodColumns.cs" />
     <Compile Include="Models\PerformancePeriodData.cs" />

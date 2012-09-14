@@ -333,6 +333,8 @@ namespace GreenField.ServiceCaller
         void RetrieveSecurityData(PortfolioSelectionData portfolio, BenchmarkSelectionData benchmark, String region, String country, String sector, String industry,
                                         List<CSTUserPreferenceInfo> userPreference,Action<List<CustomScreeningSecurityData>> callback);
 
+        void GetCustomScreeningUserPreferences(string username, Action<List<CSTUserPreferenceInfo>> callback);
+
         #endregion
 
         #region Documents

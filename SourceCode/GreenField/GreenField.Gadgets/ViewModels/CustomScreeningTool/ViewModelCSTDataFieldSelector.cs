@@ -24,6 +24,7 @@ using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.ServiceLocation;
 using GreenField.Gadgets.Helpers;
+using GreenField.DataContracts;
 using GreenField.DataContracts.DataContracts;
 
 namespace GreenField.Gadgets.ViewModels
@@ -49,16 +50,37 @@ namespace GreenField.Gadgets.ViewModels
 
             //fetch tabs data
             FetchTabsData();
-        }
-      
+
+            Flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+            if (Flag == "Edit")
+            {
+                SelectedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
+            }
+        }     
+              
         #endregion
 
         #region Properties
 
+        public List<CSTUserPreferenceInfo> _selectedDataList;
+        public List<CSTUserPreferenceInfo> SelectedDataList
+        {
+            get { return _selectedDataList; }
+            set
+            {
+                if (value != null)
+                {
+                    _selectedDataList = value;
+                    RaisePropertyChanged(() => this.SelectedDataList);
+                }
+            }
+        }
+
+        public string Flag { get; set; }
+
         public static List<CustomSelectionData> SelectedFieldsList { get; set; }
 
         private List<CustomSelectionData> _selectedFieldsOverviewInfo;
-
         public List<CustomSelectionData> SelectedFieldsOverviewInfo
         {
             get { return _selectedFieldsOverviewInfo; }
@@ -68,7 +90,6 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SelectedFieldsOverviewInfo);
             }
         }
-        
        
         public List<CustomSelectionData> _securityReferenceData;
         public List<CustomSelectionData> SecurityReferenceData

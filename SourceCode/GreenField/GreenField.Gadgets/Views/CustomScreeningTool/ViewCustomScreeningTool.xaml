@@ -162,7 +162,7 @@
 
             <telerik:RadComboBox x:Name="cmbSavedDataListSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
                                      HorizontalAlignment="Left" 
-                                     ItemsSource="{Binding SavedDataListInfo}" SelectedValue="{Binding SelectedSavedDataList, Mode=TwoWay}"
+                                     ItemsSource="{Binding SavedDataListInfo}" SelectedValue="{Binding SelectedDataListInfo, Mode=TwoWay}"
                                      EmptyText="Select Data List" Width="150"
                                      Style="{StaticResource RadComboBoxStyle}"/>
 

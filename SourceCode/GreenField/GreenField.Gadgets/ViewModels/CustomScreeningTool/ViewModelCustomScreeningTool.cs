@@ -393,11 +393,65 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Data List Selector
 
+        private List<CSTUserPreferenceInfo> _cstUserPreferenceInfo;
+        public List<CSTUserPreferenceInfo> CSTUserPreference
+        {
+            get { return _cstUserPreferenceInfo; }
+            set
+            {
+                _cstUserPreferenceInfo = value;
+                RaisePropertyChanged(() => this.CSTUserPreference);
+            }
+        }
+
+        public List<String> _savedDataListInfo;
         public List<String> SavedDataListInfo
         {
             get
             {
-                { return new List<String> { "DataList1", "DataList2", "DataList3" }; }
+                return _savedDataListInfo;
+                //{ return new List<String> { "DataList1", "DataList2", "DataList3" }; }
+            }
+            set
+            {
+                if(value !=null)
+                {
+                    _savedDataListInfo = value;
+                    RaisePropertyChanged(() => this.SavedDataListInfo);
+                }
+            }
+        }
+
+        public String _selectedDataListInfo;
+        public String SelectedDataListInfo
+        {
+            get
+            {
+                return _selectedDataListInfo;
+            }
+            set
+            {
+                if (value != null)
+                {
+                    _selectedDataListInfo = value;
+                    RaisePropertyChanged(() => this.SelectedDataListInfo);
+                    SelectedSavedDataList = CSTUserPreference.Where(a => a.ListName == _selectedDataListInfo).ToList();
+                }
+            }
+        }
+
+        public List<CSTUserPreferenceInfo> _selectedSavedDataList;
+        public List<CSTUserPreferenceInfo> SelectedSavedDataList
+        {
+            get { return _selectedSavedDataList; }
+            set
+            {
+                if (value != null)
+                {
+                    _selectedSavedDataList = value;
+                    RaisePropertyChanged(() => this.SelectedSavedDataList);
+                    CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, SelectedSavedDataList);
+                }
             }
         }
 
@@ -416,19 +470,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public String _selectedSavedDataList;
-        public String SelectedSavedDataList
-        {
-            get { return _selectedSavedDataList; }
-            set
-            {
-                if (value != null)
-                {
-                    _selectedSavedDataList = value;
-                    RaisePropertyChanged(() => this.SelectedSavedDataList);
-                }
-            }
-        }
+       
 
         public ICommand OkCommand
         {
@@ -517,6 +559,13 @@ namespace GreenField.Gadgets.ViewModels
             //create list of selected options and save in the user class and fecth the securities based on filter selctions
             SecuritySelectionGridViewVisibility = Visibility.Collapsed;
             DataListSelectionGridViewVisibility = Visibility.Visible;
+
+            if (_dbInteractivity == null || (UserSession.SessionManager.SESSION == null))
+                return;
+            else
+            {
+                _dbInteractivity.GetCustomScreeningUserPreferences(UserSession.SessionManager.SESSION.UserName, CustomScreeningUserPreferencesCallbackMethod);
+            }
         }
 
 
@@ -549,11 +598,13 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result == MessageBoxResult.OK)
                 {
+                    CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Edit");
                     //open pre populated selected fields list
+                    _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
                 }
                 else
                 {
-                    //display results screen
+                    CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
                 }
 
             });
@@ -565,7 +616,6 @@ namespace GreenField.Gadgets.ViewModels
                 return false;
             else
                 return true;
-
         }
 
         private void CreateDataListCommandCommandMethod(object param)
@@ -782,6 +832,37 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     SecurityData = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                //BusyIndicatorNotification();
+            }
+        }
+
+        private void CustomScreeningUserPreferencesCallbackMethod(List<CSTUserPreferenceInfo> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    CSTUserPreference = result;
+
+                    SavedDataListInfo = (from res in result select new { ListName = res.ListName }).AsEnumerable().Select(t => t.ListName).Distinct()
+                                  .ToList();
                 }
                 else
                 {
