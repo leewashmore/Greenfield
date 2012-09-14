@@ -105,7 +105,7 @@ namespace GreenField.Web.Services
                 data.MarketCap = Convert.ToDecimal(marketCap);
 
 
-               
+
 
                 if (modelData != null)
                 {
@@ -446,6 +446,10 @@ namespace GreenField.Web.Services
 
             decimal? valueROIC;
             decimal? valueSustainableDividendPayoutRatio;
+
+            decimal valueAverageROIC;
+            decimal valueAverageSustainableDividendPayoutRatio;
+
             int currentYear = DateTime.Today.Year;
 
             for (int i = 0; i < 5; i++)
@@ -461,11 +465,17 @@ namespace GreenField.Web.Services
 
             if (collectionROIC.Any(a => a.Value != null))
             {
-                result.Add("ROIC", Convert.ToDecimal(collectionROIC.Average()));
+                if (Convert.ToDecimal(collectionROIC.Average()) != 0)
+                    result.Add("ROIC", Convert.ToDecimal(collectionROIC.Average()));
+                else
+                    result.Add("ROIC", Convert.ToDecimal(0.3333));
             }
             if (collectionSustainableDividendPayoutRatio.Any(a => a.Value != null))
             {
-                result.Add("SDPR", Convert.ToDecimal(collectionSustainableDividendPayoutRatio.Average()));
+                if (Convert.ToDecimal(collectionROIC.Average()) != 0)
+                    result.Add("SDPR", Convert.ToDecimal(collectionSustainableDividendPayoutRatio.Average()));
+                else
+                    result.Add("SDPR", Convert.ToDecimal(0.3333));
             }
 
             return result;

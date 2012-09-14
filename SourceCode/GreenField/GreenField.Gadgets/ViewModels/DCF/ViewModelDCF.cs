@@ -1191,10 +1191,10 @@ namespace GreenField.Gadgets.ViewModels
                 decimal terminalValuePresent = Math.Round(Convert.ToDecimal(DCFCalculations.CalculatePresentTerminalValue(terminalValueNominal, discountingFactorY10)), 4);
 
                 result.Add(new DCFDisplayData() { PropertyName = "Cash Flow in 2020", Value = cashFlow2020.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Sustainable ROIC", Value = Convert.ToDecimal(sustainableROIC * Convert.ToDecimal(100)).ToString() + " %" });
-                result.Add(new DCFDisplayData() { PropertyName = "Sustainable Dividend Payout Ratio", Value = Convert.ToDecimal(sustainableDPR * Convert.ToDecimal(100)).ToString() + " %" });
-                result.Add(new DCFDisplayData() { PropertyName = "Long-term Nominal GDP Growth", Value = Convert.ToDecimal(longTermNominalGDPGrowth * Convert.ToDecimal(100)).ToString() + " %" });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Growth Rate", Value = Convert.ToDecimal(TGR * Convert.ToDecimal(100)).ToString() + " %" });
+                result.Add(new DCFDisplayData() { PropertyName = "Sustainable ROIC", Value = Math.Round(Convert.ToDecimal(sustainableROIC * Convert.ToDecimal(100)), 1).ToString() + " %" });
+                result.Add(new DCFDisplayData() { PropertyName = "Sustainable Dividend Payout Ratio", Value = Math.Round(Convert.ToDecimal(sustainableDPR * Convert.ToDecimal(100)), 1).ToString() + " %" });
+                result.Add(new DCFDisplayData() { PropertyName = "Long-term Nominal GDP Growth", Value = Math.Round(Convert.ToDecimal(longTermNominalGDPGrowth * Convert.ToDecimal(100)), 1).ToString() + " %" });
+                result.Add(new DCFDisplayData() { PropertyName = "Terminal Growth Rate", Value = Math.Round(Convert.ToDecimal(TGR * Convert.ToDecimal(100)), 1).ToString() + " %" });
                 result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = terminalValueNominal.ToString() });
                 result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (present)", Value = terminalValuePresent.ToString() });
 
@@ -1263,39 +1263,33 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 RangeObservableCollection<DCFDisplayData> result = new RangeObservableCollection<DCFDisplayData>();
-
                 decimal costOfEquity;
                 decimal weightOfEquity;
                 decimal costOfDebt;
                 decimal resultWACC;
-
-
-
-                result.Add(new DCFDisplayData() { PropertyName = "Market Risk Premium", Value = Convert.ToString(Math.Round((Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault() * 100)), 4)) + "%" });
-                result.Add(new DCFDisplayData() { PropertyName = "Beta (*)", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Risk Free Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault() * 100), 4)) + " %" });
+                result.Add(new DCFDisplayData() { PropertyName = "Market Risk Premium", Value = Convert.ToString(Math.Round((Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault() * 100)), 1)) + "%" });
+                result.Add(new DCFDisplayData() { PropertyName = "Beta (*)", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()), 2)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Risk Free Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault() * 100), 1)) + " %" });
                 result.Add(new DCFDisplayData()
                 {
                     PropertyName = "Stock Specific Discount",
-                    Value = Convert.ToString(Math.Round(Convert.ToDecimal(StockSpecificDiscount), 4)) + "%"
+                    Value = Convert.ToString(Math.Round(Convert.ToDecimal(StockSpecificDiscount), 1)) + "%"
                 });
 
-                result.Add(new DCFDisplayData() { PropertyName = "Marginal Tax Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault() * 100), 4)) + "%" });
+                result.Add(new DCFDisplayData() { PropertyName = "Marginal Tax Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault() * 100), 1)) + "%" });
 
 
                 costOfEquity = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()) * Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault()) + Convert.ToDecimal(StockSpecificDiscount / Convert.ToDecimal(100));
                 result.Add(new DCFDisplayData()
                 {
                     PropertyName = "Cost of Equity",
-                    Value = Convert.ToString(Math.Round(Convert.ToDecimal(costOfEquity * 100), 4)) + "%"
+                    Value = Convert.ToString(Math.Round(Convert.ToDecimal(costOfEquity * 100), 1)) + "%"
                 });
 
                 costOfDebt = Convert.ToDecimal(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.CostOfDebt).FirstOrDefault() / 100), 4));
-                result.Add(new DCFDisplayData() { PropertyName = "Cost of Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(costOfDebt) * 100, 4)) + "%" });
-
-
-                result.Add(new DCFDisplayData() { PropertyName = "Market Cap", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()), 4)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Cost of Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(costOfDebt) * 100, 1)) + "%" });
+                result.Add(new DCFDisplayData() { PropertyName = "Market Cap", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()), 0)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()), 0)) });
                 if ((Convert.ToDecimal(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()), 4)) == 0))
                 {
                     weightOfEquity = 0;
@@ -1306,12 +1300,10 @@ namespace GreenField.Gadgets.ViewModels
                     weightOfEquity = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) / (Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()));
                     resultWACC = (weightOfEquity * costOfEquity) + ((1 - weightOfEquity) * ((costOfDebt) * (1 - Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault()))));
                 }
-                result.Add(new DCFDisplayData() { PropertyName = "Weight of Equity", Value = Convert.ToString(Math.Round(Convert.ToDecimal(weightOfEquity * 100), 4)) + "%" });
-                result.Add(new DCFDisplayData() { PropertyName = "WACC", Value = Convert.ToString(Math.Round(Convert.ToDecimal(resultWACC * 100), 4)) + "%" });
+                result.Add(new DCFDisplayData() { PropertyName = "Weight of Equity", Value = Convert.ToString(Math.Round(Convert.ToDecimal(weightOfEquity * 100), 1)) + "%" });
+                result.Add(new DCFDisplayData() { PropertyName = "WACC", Value = Convert.ToString(Math.Round(Convert.ToDecimal(resultWACC * 100), 1)) + "%" });
                 result.Add(new DCFDisplayData() { PropertyName = "Date", Value = (DateTime.Today.ToShortDateString()) });
-                result.Add(new DCFDisplayData() { PropertyName = "Market Price", Value = Convert.ToString(CurrentMarketPrice) });
-
-
+                result.Add(new DCFDisplayData() { PropertyName = "Market Price", Value = Convert.ToString(Math.Round(Convert.ToDecimal(CurrentMarketPrice), 2)) });
                 AnalysisSummaryDisplayData = result;
                 this.RaisePropertyChanged(() => this.AnalysisSummaryDisplayData);
                 this.WACC = resultWACC;
@@ -1321,9 +1313,7 @@ namespace GreenField.Gadgets.ViewModels
                 CalculationParameters.MarketCap = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault());
                 CalculationParameters.MarginalTaxRate = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault());
                 CalculationParameters.GrossDebt = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault());
-
                 SetTerminalValueCalculationsDisplayData();
-
             }
             catch (Exception ex)
             {
@@ -1392,9 +1382,9 @@ namespace GreenField.Gadgets.ViewModels
                 result.Add(new DCFDisplayData() { PropertyName = "(-) Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(grossDebt), 4)) });
                 result.Add(new DCFDisplayData() { PropertyName = "(-) FV of Minorities", Value = Convert.ToString(Math.Round(Convert.ToDecimal(FVMinorities), 4)) });
                 result.Add(new DCFDisplayData() { PropertyName = "Equity Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(equityValue), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Number of Shares", Value = Convert.ToString(Math.Round(Convert.ToDecimal(numberOfShares), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "DCF Value Per Share", Value = Convert.ToString(Math.Round(Convert.ToDecimal(DCFValuePerShare), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Upside", Value = Convert.ToString(Math.Round(Convert.ToDecimal(upsideDownside), 4)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Number of Shares", Value = Convert.ToString(Math.Round(Convert.ToDecimal(numberOfShares), 2)) });
+                result.Add(new DCFDisplayData() { PropertyName = "DCF Value Per Share", Value = Convert.ToString(Math.Round(Convert.ToDecimal(DCFValuePerShare), 2)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Upside/Downside", Value = Convert.ToString(Math.Round(Convert.ToDecimal(upsideDownside), 1)) });
                 SummaryDisplayData.Clear();
                 SummaryDisplayData.AddRange(result);
                 this.RaisePropertyChanged(() => this.SummaryData);
@@ -1424,27 +1414,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 decimal costOfEquity = CalculationParameters.CostOfEquity;
                 decimal terminalValueGrowth = CalculationParameters.TerminalGrowthRate;
-
-                /////to be Removed
-                //{
-                //    costOfEquity = 197 / 1000;
-                //    CalculationParameters.CostOfEquity = Convert.ToDecimal(197.0 / 1000.0);
-                //    terminalValueGrowth = Convert.ToDecimal(103.0 / 1000.0);
-                //    CalculationParameters.TerminalGrowthRate = 103 / 1000;
-                //    CalculationParameters.Cash = 1053;
-                //    CalculationParameters.CostOfDebt = 103 / 1000;
-                //    CalculationParameters.CurrentMarketPrice = 1933 / 100;
-                //    CalculationParameters.FutureValueOfInvestments = 1;
-                //    CalculationParameters.FutureValueOfMinorties = 1;
-                //    CalculationParameters.GrossDebt = 157878;
-                //    CalculationParameters.MarginalTaxRate = 253 / 1000;
-                //    CalculationParameters.MarketCap = 252150;
-                //    CalculationParameters.NumberOfShares = 13044;
-                //    CalculationParameters.PresentValueOfForecast = 5033;
-                //    CalculationParameters.Year10CashFlow = 282;
-                //    CalculationParameters.Year10DiscountingFactor = 370 / 100;
-                //}
-
                 List<decimal> upSideValues = new List<decimal>();
                 List<decimal> TGR = new List<decimal>();
                 SensitivityDisplayData = new RangeObservableCollection<SensitivityData>();
@@ -1475,28 +1444,28 @@ namespace GreenField.Gadgets.ViewModels
                     data.C1 = i.ToString();
                     data.C2 = ((-5.0 + (i * 2.5)) / 10.0).ToString() + "%";
                     if (VPS.ContainsKey(0))
-                        data.C3 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 0).Select(a => a.Value).FirstOrDefault()), 4));
+                        data.C3 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 0).Select(a => a.Value).FirstOrDefault()), 2));
                     if (VPS.ContainsKey(1))
-                        data.C4 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 1).Select(a => a.Value).FirstOrDefault()), 4));
+                        data.C4 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 1).Select(a => a.Value).FirstOrDefault()), 2));
                     if (VPS.ContainsKey(1))
-                        data.C5 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 2).Select(a => a.Value).FirstOrDefault()), 4));
+                        data.C5 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 2).Select(a => a.Value).FirstOrDefault()), 2));
                     if (VPS.ContainsKey(1))
-                        data.C6 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 3).Select(a => a.Value).FirstOrDefault()), 4));
+                        data.C6 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 3).Select(a => a.Value).FirstOrDefault()), 2));
                     if (VPS.ContainsKey(1))
-                        data.C7 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 4).Select(a => a.Value).FirstOrDefault()), 4));
+                        data.C7 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 4).Select(a => a.Value).FirstOrDefault()), 2));
                     VPS = new Dictionary<int, decimal>();
                     SensitivityDisplayData.Add(data);
                     passData.Add(data);
                     CalculationParameters.CostOfEquity = costOfEquity;
                     CalculationParameters.TerminalGrowthRate = CalculationParameters.TerminalGrowthRate + Convert.ToDecimal(25.0 / 10000.0);
                 }
-                MaxShareVal = Convert.ToString(Math.Round(TGR.Select(a => a).Max(), 4));
-                MinShareVal = Convert.ToString((Math.Round(TGR.Select(a => a).Min(), 4)));
-                AvgShareVal = Convert.ToString((Math.Round(TGR.Select(a => a).Average(), 4)));
+                MaxShareVal = Convert.ToString(Math.Round(TGR.Select(a => a).Max(), 2));
+                MinShareVal = Convert.ToString((Math.Round(TGR.Select(a => a).Min(), 2)));
+                AvgShareVal = Convert.ToString((Math.Round(TGR.Select(a => a).Average(), 2)));
 
-                MaxUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Max() * 100, 4))) + " %";
-                MinUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Min() * 100, 4))) + " %";
-                AvgUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Average() * 100, 4))) + " %";
+                MaxUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Max() * 100, 2))) + " %";
+                MinUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Min() * 100, 2))) + " %";
+                AvgUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Average() * 100, 2))) + " %";
 
                 SensitivityValues = SensitivityDisplayData;
                 RangeObservableCollection<SensitivityData> dataL = new RangeObservableCollection<SensitivityData>();
@@ -1551,11 +1520,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     item.C1 = i.ToString();
                     item.C2 = (-0.50 + (i - 1) * 0.25).ToString();
-                    item.C3 = Convert.ToString((Convert.ToDecimal(item.C3) / FWDBVPS) * CurrentMarketPrice);
-                    item.C4 = Convert.ToString((Convert.ToDecimal(item.C4) / FWDBVPS) * CurrentMarketPrice);
-                    item.C5 = Convert.ToString((Convert.ToDecimal(item.C5) / FWDBVPS) * CurrentMarketPrice);
-                    item.C6 = Convert.ToString((Convert.ToDecimal(item.C6) / FWDBVPS) * CurrentMarketPrice);
-                    item.C7 = Convert.ToString((Convert.ToDecimal(item.C7) / FWDBVPS) * CurrentMarketPrice);
+                    item.C3 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C3) / FWDBVPS) * CurrentMarketPrice), 2));
+                    item.C4 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C4) / FWDBVPS) * CurrentMarketPrice), 2));
+                    item.C5 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C5) / FWDBVPS) * CurrentMarketPrice), 2));
+                    item.C6 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C6) / FWDBVPS) * CurrentMarketPrice), 2));
+                    item.C7 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C7) / FWDBVPS) * CurrentMarketPrice), 2));
                     BVPS.Add(Convert.ToDecimal(item.C3));
                     BVPS.Add(Convert.ToDecimal(item.C4));
                     BVPS.Add(Convert.ToDecimal(item.C5));
@@ -1567,13 +1536,13 @@ namespace GreenField.Gadgets.ViewModels
                 SensitivityBVPS.Add(new SensitivityData() { C1 = " Step 0.25%", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
                 SensitivityBVPS.AddRange(data.ToList());
 
-                MaxBVPSShareVal = Convert.ToString(Math.Round(BVPS.Max(), 4));
-                MinBVPSShareVal = Convert.ToString(Math.Round(BVPS.Min(), 4));
-                AvgBVPSShareVal = Convert.ToString(Math.Round(BVPS.Average(), 4));
+                MaxBVPSShareVal = Convert.ToString(Math.Round(BVPS.Max(), 2));
+                MinBVPSShareVal = Convert.ToString(Math.Round(BVPS.Min(), 2));
+                AvgBVPSShareVal = Convert.ToString(Math.Round(BVPS.Average(), 2));
 
-                MaxBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
-                MinBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MinBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
-                AvgBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(AvgBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
+                MaxBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                MinBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MinBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                AvgBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(AvgBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
 
             }
             catch (Exception ex)
@@ -1615,11 +1584,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     item.C1 = i.ToString();
                     item.C2 = (-0.50 + (i - 1) * 0.25).ToString() + "%";
-                    item.C3 = Convert.ToString((Convert.ToDecimal(item.C3) / FWDEPS) * CurrentMarketPrice);
-                    item.C4 = Convert.ToString((Convert.ToDecimal(item.C4) / FWDEPS) * CurrentMarketPrice);
-                    item.C5 = Convert.ToString((Convert.ToDecimal(item.C5) / FWDEPS) * CurrentMarketPrice);
-                    item.C6 = Convert.ToString((Convert.ToDecimal(item.C6) / FWDEPS) * CurrentMarketPrice);
-                    item.C7 = Convert.ToString((Convert.ToDecimal(item.C7) / FWDEPS) * CurrentMarketPrice);
+                    item.C3 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C3) / FWDEPS) * CurrentMarketPrice), 2));
+                    item.C4 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C4) / FWDEPS) * CurrentMarketPrice), 2));
+                    item.C5 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C5) / FWDEPS) * CurrentMarketPrice), 2));
+                    item.C6 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C6) / FWDEPS) * CurrentMarketPrice), 2));
+                    item.C7 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C7) / FWDEPS) * CurrentMarketPrice), 2));
                     EPS.Add(Convert.ToDecimal(item.C3));
                     EPS.Add(Convert.ToDecimal(item.C4));
                     EPS.Add(Convert.ToDecimal(item.C5));
@@ -1631,13 +1600,13 @@ namespace GreenField.Gadgets.ViewModels
                 SensitivityBPS.Add(new SensitivityData() { C1 = " Step 0.25%", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
                 SensitivityBPS.AddRange(data.ToList());
 
-                MaxEPSShareVal = Convert.ToString(Math.Round(EPS.Max(), 4));
-                MinEPSShareVal = Convert.ToString(Math.Round(EPS.Min(), 4));
-                AvgEPSShareVal = Convert.ToString(Math.Round(EPS.Average(), 4));
+                MaxEPSShareVal = Convert.ToString(Math.Round(EPS.Max(), 2));
+                MinEPSShareVal = Convert.ToString(Math.Round(EPS.Min(), 2));
+                AvgEPSShareVal = Convert.ToString(Math.Round(EPS.Average(), 2));
 
-                MaxEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
-                MinEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MinEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
-                AvgEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(AvgEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 4)) + "%";
+                MaxEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                MinEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MinEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                AvgEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(AvgEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
             }
             catch (Exception ex)
             {
