@@ -110,7 +110,7 @@
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Date" 
-                                                        DataMemberBinding="{Binding DATE}"
+                                                        DataMemberBinding="{Binding DATE, StringFormat=d}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 

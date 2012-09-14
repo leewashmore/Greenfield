@@ -273,7 +273,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                      FieldName = "EBITDA Margins"                                          
                     ,ValueY0 = data.Where(a => a.PeriodYear == System.DateTime.Now.Year).Select(a => a.Amount).FirstOrDefault().ToString()
-                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year - 1)).Select(a => a.Amount).FirstOrDefault().ToString()
+                    ,ValueY1 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 1)).Select(a => a.Amount).FirstOrDefault().ToString()
                     ,ValueY2 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 2)).Select(a => a.Amount).FirstOrDefault().ToString()
                     ,ValueY3 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 3)).Select(a => a.Amount).FirstOrDefault().ToString()
                     ,ValueY4 = data.Where(a => a.PeriodYear == (System.DateTime.Now.Year + 4)).Select(a => a.Amount).FirstOrDefault().ToString()

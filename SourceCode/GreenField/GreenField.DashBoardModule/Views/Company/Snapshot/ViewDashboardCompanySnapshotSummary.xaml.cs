@@ -146,7 +146,7 @@ namespace GreenField.DashboardModule.Views
 
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION_SUMMARY,
                     Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-                Content = null//new ViewFairValueCompositionSummary(new ViewModelFairValueCompositionSummary(param))
+                Content = null //new ViewFairValueCompositionSummary(new ViewModelFairValueCompositionSummary(param))
             });
 
             //this.rtvDashboard.Items.Add(new RadTileViewItem
