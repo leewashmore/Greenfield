@@ -68,39 +68,6 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        //# region EVENT
-        //private List<FairValueCompositionSummaryData> FairValueCompositionSummaryData;
-        //public void RetrieveFairValueCompositionSummaryDataCompletedEvent(RetrieveFairValueCompositionSummaryDataCompleteEventArs e)
-        //{
-        //    FairValueCompositionSummaryData = e.FairValueCompositionSummaryInfo;
-        //    if (FairValueCompositionSummaryData != null)
-        //    {
-        //        dgFairValueCompositionSummary.Columns[1].Header = System.DateTime.Now.Year + "\n" + "Y1";
-        //        dgFairValueCompositionSummary.Columns[2].Header = System.DateTime.Now.Year + 1 + "\n" + "Y2";
-        //        dgFairValueCompositionSummary.Columns[3].Header = System.DateTime.Now.Year + 2 + "\n" + "Y3";
-        //        dgFairValueCompositionSummary.Columns[4].Header = System.DateTime.Now.Year + 3 + "\n" + "Y4";
-        //        dgFairValueCompositionSummary.Columns[5].Header = System.DateTime.Now.Year + 4 + "\n" + "Y5";
-        //        //dgFairValueCompositionSummary.Columns[6].Header = System.DateTime.Now.Year + 5 + "\n" + "Y6";
-        //        //dgFairValueCompositionSummary.Columns[7].Header = System.DateTime.Now.Year + 6 + "\n" + "Y7";
-        //        //dgFairValueCompositionSummary.Columns[8].Header = System.DateTime.Now.Year + 7 + "\n" + "Y8";
-        //        //dgFairValueCompositionSummary.Columns[9].Header = System.DateTime.Now.Year + 8 + "\n" + "Y9";
-        //        //dgFairValueCompositionSummary.Columns[10].Header = System.DateTime.Now.Year + 9 + "\n" + "Y10";
-
-        //        dgFairValueCompositionSummary.Columns[1].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-        //        dgFairValueCompositionSummary.Columns[2].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-        //        dgFairValueCompositionSummary.Columns[3].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-        //        dgFairValueCompositionSummary.Columns[4].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-        //        dgFairValueCompositionSummary.Columns[5].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-        //        //dgFairValueCompositionSummary.Columns[6].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-        //        //dgFairValueCompositionSummary.Columns[7].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-        //        //dgFairValueCompositionSummary.Columns[8].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-        //        //dgFairValueCompositionSummary.Columns[9].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-        //        //dgFairValueCompositionSummary.Columns[10].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-                
-        //    }
-
-        //}
-        //#endregion
         #region ExcelExport
         /// <summary>
         /// Static class storing string types
