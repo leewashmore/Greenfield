@@ -242,176 +242,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="issuerIdsList">No Metadata Documentation available.</param>
-        /// <param name="securityIdsList">No Metadata Documentation available.</param>
-        /// <param name="dataID">No Metadata Documentation available.</param>
-        /// <param name="estimateID">No Metadata Documentation available.</param>
-        /// <param name="periodType">No Metadata Documentation available.</param>
-        /// <param name="periodYear">No Metadata Documentation available.</param>
-        /// <param name="fiscalType">No Metadata Documentation available.</param>
-        /// <param name="dataSource">No Metadata Documentation available.</param>
-        public ObjectResult<CustomScreeningFINData> GetCustomScreeningFINData(global::System.String issuerIdsList, global::System.String securityIdsList, Nullable<global::System.Int32> dataID, Nullable<global::System.Int32> estimateID, global::System.String periodType, Nullable<global::System.Int32> periodYear, global::System.String fiscalType, global::System.String dataSource)
-        {
-            ObjectParameter issuerIdsListParameter;
-            if (issuerIdsList != null)
-            {
-                issuerIdsListParameter = new ObjectParameter("issuerIdsList", issuerIdsList);
-            }
-            else
-            {
-                issuerIdsListParameter = new ObjectParameter("issuerIdsList", typeof(global::System.String));
-            }
-    
-            ObjectParameter securityIdsListParameter;
-            if (securityIdsList != null)
-            {
-                securityIdsListParameter = new ObjectParameter("securityIdsList", securityIdsList);
-            }
-            else
-            {
-                securityIdsListParameter = new ObjectParameter("securityIdsList", typeof(global::System.String));
-            }
-    
-            ObjectParameter dataIDParameter;
-            if (dataID.HasValue)
-            {
-                dataIDParameter = new ObjectParameter("dataID", dataID);
-            }
-            else
-            {
-                dataIDParameter = new ObjectParameter("dataID", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter estimateIDParameter;
-            if (estimateID.HasValue)
-            {
-                estimateIDParameter = new ObjectParameter("estimateID", estimateID);
-            }
-            else
-            {
-                estimateIDParameter = new ObjectParameter("estimateID", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter periodTypeParameter;
-            if (periodType != null)
-            {
-                periodTypeParameter = new ObjectParameter("periodType", periodType);
-            }
-            else
-            {
-                periodTypeParameter = new ObjectParameter("periodType", typeof(global::System.String));
-            }
-    
-            ObjectParameter periodYearParameter;
-            if (periodYear.HasValue)
-            {
-                periodYearParameter = new ObjectParameter("periodYear", periodYear);
-            }
-            else
-            {
-                periodYearParameter = new ObjectParameter("periodYear", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter fiscalTypeParameter;
-            if (fiscalType != null)
-            {
-                fiscalTypeParameter = new ObjectParameter("fiscalType", fiscalType);
-            }
-            else
-            {
-                fiscalTypeParameter = new ObjectParameter("fiscalType", typeof(global::System.String));
-            }
-    
-            ObjectParameter dataSourceParameter;
-            if (dataSource != null)
-            {
-                dataSourceParameter = new ObjectParameter("dataSource", dataSource);
-            }
-            else
-            {
-                dataSourceParameter = new ObjectParameter("dataSource", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<CustomScreeningFINData>("GetCustomScreeningFINData", issuerIdsListParameter, securityIdsListParameter, dataIDParameter, estimateIDParameter, periodTypeParameter, periodYearParameter, fiscalTypeParameter, dataSourceParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="issuerIdsList">No Metadata Documentation available.</param>
-        /// <param name="securityIdsList">No Metadata Documentation available.</param>
-        /// <param name="dataID">No Metadata Documentation available.</param>
-        /// <param name="estimateID">No Metadata Documentation available.</param>
-        /// <param name="periodType">No Metadata Documentation available.</param>
-        /// <param name="dataSource">No Metadata Documentation available.</param>
-        public ObjectResult<CustomScreeningCURData> GetCustomScreeningCURData(global::System.String issuerIdsList, global::System.String securityIdsList, Nullable<global::System.Int32> dataID, Nullable<global::System.Int32> estimateID, global::System.String periodType, global::System.String dataSource)
-        {
-            ObjectParameter issuerIdsListParameter;
-            if (issuerIdsList != null)
-            {
-                issuerIdsListParameter = new ObjectParameter("issuerIdsList", issuerIdsList);
-            }
-            else
-            {
-                issuerIdsListParameter = new ObjectParameter("issuerIdsList", typeof(global::System.String));
-            }
-    
-            ObjectParameter securityIdsListParameter;
-            if (securityIdsList != null)
-            {
-                securityIdsListParameter = new ObjectParameter("securityIdsList", securityIdsList);
-            }
-            else
-            {
-                securityIdsListParameter = new ObjectParameter("securityIdsList", typeof(global::System.String));
-            }
-    
-            ObjectParameter dataIDParameter;
-            if (dataID.HasValue)
-            {
-                dataIDParameter = new ObjectParameter("dataID", dataID);
-            }
-            else
-            {
-                dataIDParameter = new ObjectParameter("dataID", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter estimateIDParameter;
-            if (estimateID.HasValue)
-            {
-                estimateIDParameter = new ObjectParameter("estimateID", estimateID);
-            }
-            else
-            {
-                estimateIDParameter = new ObjectParameter("estimateID", typeof(global::System.Int32));
-            }
-    
-            ObjectParameter periodTypeParameter;
-            if (periodType != null)
-            {
-                periodTypeParameter = new ObjectParameter("periodType", periodType);
-            }
-            else
-            {
-                periodTypeParameter = new ObjectParameter("periodType", typeof(global::System.String));
-            }
-    
-            ObjectParameter dataSourceParameter;
-            if (dataSource != null)
-            {
-                dataSourceParameter = new ObjectParameter("dataSource", dataSource);
-            }
-            else
-            {
-                dataSourceParameter = new ObjectParameter("dataSource", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<CustomScreeningCURData>("GetCustomScreeningCURData", issuerIdsListParameter, securityIdsListParameter, dataIDParameter, estimateIDParameter, periodTypeParameter, dataSourceParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="securityIdsList">No Metadata Documentation available.</param>
         public ObjectResult<CustomScreeningREFData> GetCustomScreeningREFData(global::System.String securityIdsList)
         {
@@ -475,6 +305,143 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<CustomScreeningUserPreferences>("GetCustomScreeningUserPreferences", usernameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="issuerIdsList">No Metadata Documentation available.</param>
+        /// <param name="securityIdsList">No Metadata Documentation available.</param>
+        /// <param name="dataID">No Metadata Documentation available.</param>
+        /// <param name="dataSource">No Metadata Documentation available.</param>
+        public ObjectResult<CustomScreeningCURData> GetCustomScreeningCURData(global::System.String issuerIdsList, global::System.String securityIdsList, Nullable<global::System.Int32> dataID, global::System.String dataSource)
+        {
+            ObjectParameter issuerIdsListParameter;
+            if (issuerIdsList != null)
+            {
+                issuerIdsListParameter = new ObjectParameter("issuerIdsList", issuerIdsList);
+            }
+            else
+            {
+                issuerIdsListParameter = new ObjectParameter("issuerIdsList", typeof(global::System.String));
+            }
+    
+            ObjectParameter securityIdsListParameter;
+            if (securityIdsList != null)
+            {
+                securityIdsListParameter = new ObjectParameter("securityIdsList", securityIdsList);
+            }
+            else
+            {
+                securityIdsListParameter = new ObjectParameter("securityIdsList", typeof(global::System.String));
+            }
+    
+            ObjectParameter dataIDParameter;
+            if (dataID.HasValue)
+            {
+                dataIDParameter = new ObjectParameter("dataID", dataID);
+            }
+            else
+            {
+                dataIDParameter = new ObjectParameter("dataID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter dataSourceParameter;
+            if (dataSource != null)
+            {
+                dataSourceParameter = new ObjectParameter("dataSource", dataSource);
+            }
+            else
+            {
+                dataSourceParameter = new ObjectParameter("dataSource", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<CustomScreeningCURData>("GetCustomScreeningCURData", issuerIdsListParameter, securityIdsListParameter, dataIDParameter, dataSourceParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="issuerIdsList">No Metadata Documentation available.</param>
+        /// <param name="securityIdsList">No Metadata Documentation available.</param>
+        /// <param name="dataID">No Metadata Documentation available.</param>
+        /// <param name="periodType">No Metadata Documentation available.</param>
+        /// <param name="periodYear">No Metadata Documentation available.</param>
+        /// <param name="fiscalType">No Metadata Documentation available.</param>
+        /// <param name="dataSource">No Metadata Documentation available.</param>
+        public ObjectResult<CustomScreeningFINData> GetCustomScreeningFINData(global::System.String issuerIdsList, global::System.String securityIdsList, Nullable<global::System.Int32> dataID, global::System.String periodType, Nullable<global::System.Int32> periodYear, global::System.String fiscalType, global::System.String dataSource)
+        {
+            ObjectParameter issuerIdsListParameter;
+            if (issuerIdsList != null)
+            {
+                issuerIdsListParameter = new ObjectParameter("issuerIdsList", issuerIdsList);
+            }
+            else
+            {
+                issuerIdsListParameter = new ObjectParameter("issuerIdsList", typeof(global::System.String));
+            }
+    
+            ObjectParameter securityIdsListParameter;
+            if (securityIdsList != null)
+            {
+                securityIdsListParameter = new ObjectParameter("securityIdsList", securityIdsList);
+            }
+            else
+            {
+                securityIdsListParameter = new ObjectParameter("securityIdsList", typeof(global::System.String));
+            }
+    
+            ObjectParameter dataIDParameter;
+            if (dataID.HasValue)
+            {
+                dataIDParameter = new ObjectParameter("dataID", dataID);
+            }
+            else
+            {
+                dataIDParameter = new ObjectParameter("dataID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter periodTypeParameter;
+            if (periodType != null)
+            {
+                periodTypeParameter = new ObjectParameter("periodType", periodType);
+            }
+            else
+            {
+                periodTypeParameter = new ObjectParameter("periodType", typeof(global::System.String));
+            }
+    
+            ObjectParameter periodYearParameter;
+            if (periodYear.HasValue)
+            {
+                periodYearParameter = new ObjectParameter("periodYear", periodYear);
+            }
+            else
+            {
+                periodYearParameter = new ObjectParameter("periodYear", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter fiscalTypeParameter;
+            if (fiscalType != null)
+            {
+                fiscalTypeParameter = new ObjectParameter("fiscalType", fiscalType);
+            }
+            else
+            {
+                fiscalTypeParameter = new ObjectParameter("fiscalType", typeof(global::System.String));
+            }
+    
+            ObjectParameter dataSourceParameter;
+            if (dataSource != null)
+            {
+                dataSourceParameter = new ObjectParameter("dataSource", dataSource);
+            }
+            else
+            {
+                dataSourceParameter = new ObjectParameter("dataSource", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<CustomScreeningFINData>("GetCustomScreeningFINData", issuerIdsListParameter, securityIdsListParameter, dataIDParameter, periodTypeParameter, periodYearParameter, fiscalTypeParameter, dataSourceParameter);
         }
 
         #endregion

@@ -295,12 +295,12 @@ namespace GreenField.Web.Services
         /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public Boolean? SaveUserDataPointsPreference(List<CSTUserPreferenceInfo> userPreference)
+        public Boolean? SaveUserDataPointsPreference(string userPreference,string username)
         {
             try
             {
-                if (userPreference == null || userPreference.Count < 0)
-                    return null;
+                if (userPreference == null)
+                    return false;
 
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -311,8 +311,9 @@ namespace GreenField.Web.Services
                 Boolean? result = new Boolean?();
 
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
-              
-                    return result;               
+                //result = entity.get
+
+                return false;               
             }
             catch (Exception ex)
             {
@@ -499,7 +500,7 @@ namespace GreenField.Web.Services
                       if (item.ScreeningId.StartsWith("FIN"))
                       {
                           List<CustomScreeningFINData> temp = new List<CustomScreeningFINData>();
-                          temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.EstimateID, item.PeriodType, item.FromDate, item.YearType, item.DataSource).ToList();
+                          temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.PeriodType, item.FromDate, item.YearType, item.DataSource).ToList();
 
                           foreach (CustomScreeningFINData record in temp)
                           {
@@ -532,7 +533,7 @@ namespace GreenField.Web.Services
                       if (item.ScreeningId.StartsWith("CUR"))
                       {
                           List<CustomScreeningCURData> temp = new List<CustomScreeningCURData>();
-                          temp = cstEntity.GetCustomScreeningCURData(_issuerIds, _securityIds, item.DataID, item.EstimateID, item.PeriodType, item.DataSource).ToList();
+                          temp = cstEntity.GetCustomScreeningCURData(_issuerIds, _securityIds, item.DataID, item.DataSource).ToList();
 
                           foreach (CustomScreeningCURData record in temp)
                           {

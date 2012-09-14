@@ -25,7 +25,8 @@ using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.ServiceLocation;
 using GreenField.Gadgets.Helpers;
 using GreenField.DataContracts;
-using GreenField.DataContracts.DataContracts;
+using GreenField.UserSession;
+using System.Xml.Linq;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -38,6 +39,7 @@ namespace GreenField.Gadgets.ViewModels
         private IEventAggregator _eventAggregator;
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
+        private IManageSessions _manageSessions;
        
         #endregion
 
@@ -46,7 +48,8 @@ namespace GreenField.Gadgets.ViewModels
         {
             _logger = param.LoggerFacade;
             _dbInteractivity = param.DBInteractivity;
-            _eventAggregator = param.EventAggregator;      
+            _eventAggregator = param.EventAggregator;
+            _manageSessions = param.ManageSessions;
 
             //fetch tabs data
             FetchTabsData();
@@ -381,12 +384,13 @@ namespace GreenField.Gadgets.ViewModels
                             if (result == MessageBoxResult.OK)
                             {
                                //save the list
-
                                 if (_dbInteractivity != null)
                                 {
-                                    //BusyIndicatorNotification(true, "Updating data list...");
-                                    //update the already selected data list by fetching the SelectedAccessibility from child window .. 
-                                    //make a call to service method to update
+                                    string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, MyProperty);
+                                    if (xmlData != null)
+                                    {
+                                        _dbInteractivity.SaveUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName, SaveUserDataPointsPreferenceCallBackMethod);
+                                    }
                                 }
                             }
                         });
@@ -419,6 +423,51 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorContent = message;
 
             BusyIndicatorIsBusy = showBusyIndicator;
+        }
+
+        /// <summary>
+        /// Construct XML for Save As Event
+        /// </summary>
+        /// <returns></returns>
+        private string SaveAsXmlBuilder(String userName, List<CSTUserPreferenceInfo> userPreference)
+        {
+            string saveAsXml = String.Empty;
+
+            try
+            {
+                if (userName != null && userPreference != null)
+                {
+                    XDocument doc = new XDocument(
+                       new XDeclaration("1.0", "utf-8", "yes"),
+                       new XComment("Custom screening Tool save as preference details"));
+
+                    foreach (CSTUserPreferenceInfo preference in userPreference)
+                    {
+                        doc.Add(new XElement("UserName", userName),
+                            new XElement("ListName", preference.ListName),
+                            new XElement("Accessibilty", preference.Accessibility),
+                            new XElement("ScreeningId", preference.ScreeningId),
+                            new XElement("DataSource", preference.DataSource),
+                            new XElement("PeriodType", preference.PeriodType),
+                            new XElement("YearType", preference.YearType),
+                            new XElement("FromDate", preference.FromDate),
+                            new XElement("ToDate", preference.ToDate),
+                            new XElement("DataPointsOrder", preference.DataPointsOrder),
+                            new XElement("CreatedBy", userName),
+                            new XElement("CreatedOn", DateTime.Now),
+                            new XElement("ModifiedBy", userName),
+                            new XElement("ModifiedOn", DateTime.Now));
+                    }
+
+                    saveAsXml = doc.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+
+            return saveAsXml;
         }
 
         #endregion
@@ -545,6 +594,35 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private void SaveUserDataPointsPreferenceCallBackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+
+            try
+            {
+                if (result == true)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                }
+                else if (result == false)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                }
+                else
+                {
+                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+           
+        }
+
         #endregion
 
         #region EventUnSubscribe
@@ -557,5 +635,14 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
+        private List<CSTUserPreferenceInfo> myVar;
+
+        public List<CSTUserPreferenceInfo> MyProperty
+        {
+            get { return myVar; }
+            set { myVar = value; RaisePropertyChanged(() => MyProperty); }
+        }
+        
     }
 }

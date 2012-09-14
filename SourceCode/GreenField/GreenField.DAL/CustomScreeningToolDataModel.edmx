@@ -182,15 +182,12 @@
           <Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
           <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
           <Parameter Name="dataID" Type="int" Mode="In" />
-          <Parameter Name="estimateID" Type="int" Mode="In" />
-          <Parameter Name="periodType" Type="char" Mode="In" />
           <Parameter Name="dataSource" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetCustomScreeningFINData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
           <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
           <Parameter Name="dataID" Type="int" Mode="In" />
-          <Parameter Name="estimateID" Type="int" Mode="In" />
           <Parameter Name="periodType" Type="char" Mode="In" />
           <Parameter Name="periodYear" Type="int" Mode="In" />
           <Parameter Name="fiscalType" Type="char" Mode="In" />
@@ -221,24 +218,6 @@
           <Parameter Name="tabName" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" />
-          <FunctionImport Name="GetCustomScreeningFINData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFINData)">
-            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
-            <Parameter Name="securityIdsList" Mode="In" Type="String" />
-            <Parameter Name="dataID" Mode="In" Type="Int32" />
-            <Parameter Name="estimateID" Mode="In" Type="Int32" />
-            <Parameter Name="periodType" Mode="In" Type="String" />
-            <Parameter Name="periodYear" Mode="In" Type="Int32" />
-            <Parameter Name="fiscalType" Mode="In" Type="String" />
-            <Parameter Name="dataSource" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetCustomScreeningCURData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningCURData)">
-            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
-            <Parameter Name="securityIdsList" Mode="In" Type="String" />
-            <Parameter Name="dataID" Mode="In" Type="Int32" />
-            <Parameter Name="estimateID" Mode="In" Type="Int32" />
-            <Parameter Name="periodType" Mode="In" Type="String" />
-            <Parameter Name="dataSource" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="GetCustomScreeningREFData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningREFData)">
           <Parameter Name="securityIdsList" Mode="In" Type="String" />
           </FunctionImport>
@@ -253,7 +232,22 @@
             <End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfoes" />
           </AssociationSet>
           <FunctionImport Name="GetCustomScreeningUserPreferences" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningUserPreferences)">
-            <Parameter Name="username" Mode="In" Type="String" />
+          <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetCustomScreeningCURData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningCURData)">
+            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
+            <Parameter Name="securityIdsList" Mode="In" Type="String" />
+            <Parameter Name="dataID" Mode="In" Type="Int32" />
+            <Parameter Name="dataSource" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetCustomScreeningFINData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFINData)">
+            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
+            <Parameter Name="securityIdsList" Mode="In" Type="String" />
+            <Parameter Name="dataID" Mode="In" Type="Int32" />
+            <Parameter Name="periodType" Mode="In" Type="String" />
+            <Parameter Name="periodYear" Mode="In" Type="Int32" />
+            <Parameter Name="fiscalType" Mode="In" Type="String" />
+            <Parameter Name="dataSource" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="SCREENING_DISPLAY_CURRENT">
@@ -327,20 +321,6 @@
           <Property Type="Int32" Name="DECIMAL" />
           <Property Type="String" Name="PERCENTAGE" MaxLength="1" FixedLength="false" Unicode="false" />
         </EntityType>
-        <ComplexType Name="CustomScreeningFINData">
-          <Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
-          <Property Type="Int32" Name="DataId" Nullable="true" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Int32" Name="PeriodYear" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="CustomScreeningCURData">
-          <Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
-          <Property Type="Int32" Name="DataId" Nullable="true" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Int32" Name="PeriodYear" Nullable="false" />
-        </ComplexType>
         <ComplexType Name="CustomScreeningREFData">
           <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="ISIN" Nullable="true" MaxLength="255" />
@@ -439,6 +419,20 @@
           <Property Type="Int32" Name="ToDate" Nullable="true" />
           <Property Type="Int32" Name="DataPointsOrder" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="CustomScreeningCURData">
+          <Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="DataId" Nullable="true" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="PeriodYear" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="CustomScreeningFINData">
+          <Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
+          <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="DataId" Nullable="true" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="Int32" Name="PeriodYear" Nullable="false" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -499,28 +493,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetCustomScreeningFINData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningFINData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningFINData">
-                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
-                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
-                <ScalarProperty Name="DataId" ColumnName="DataId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetCustomScreeningCURData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningCURData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningCURData">
-                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
-                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
-                <ScalarProperty Name="DataId" ColumnName="DataId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetCustomScreeningREFData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningREFData">
             <ResultMapping>
               <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningREFData">
@@ -616,6 +588,28 @@
                 <ScalarProperty Name="FromDate" ColumnName="FromDate" />
                 <ScalarProperty Name="ToDate" ColumnName="ToDate" />
                 <ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCustomScreeningCURData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningCURData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningCURData">
+                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
+                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+                <ScalarProperty Name="DataId" ColumnName="DataId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCustomScreeningFINData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningFINData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningFINData">
+                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
+                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+                <ScalarProperty Name="DataId" ColumnName="DataId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

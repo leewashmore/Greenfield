@@ -64,7 +64,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             "PointsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveSecurityReferenceTabDataPoints(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrievePeriodFinancialsTabDataP" +
             "oints", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrievePeriodFinancialsTabDataP" +
@@ -73,7 +73,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             "ointsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrievePeriodFinancialsTabDataPoints(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCurrentFinancialsTabData" +
             "Points", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveCurrentFinancialsTabData" +
@@ -82,7 +82,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             "PointsServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveCurrentFinancialsTabDataPoints(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabDataPoints", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabDataPointsRe" +
             "sponse")]
@@ -90,13 +90,13 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             "rviceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveFairValueTabDataPoints(System.AsyncCallback callback, object asyncState);
         
-        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveFairValueTabDataPoints(System.IAsyncResult result);
+        System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> EndRetrieveFairValueTabDataPoints(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/SaveUserDataPointsPreference", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/SaveUserDataPointsPreferenceResp" +
             "onse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/SaveUserDataPointsPreferenceServ" +
             "iceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginSaveUserDataPointsPreference(string userPreference, string username, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndSaveUserDataPointsPreference(System.IAsyncResult result);
         
@@ -151,10 +151,10 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData>)(this.results[0]));
             }
         }
     }
@@ -170,10 +170,10 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData>)(this.results[0]));
             }
         }
     }
@@ -189,10 +189,10 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData>)(this.results[0]));
             }
         }
     }
@@ -208,10 +208,10 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             this.results = results;
         }
         
-        public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> Result {
+        public System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> Result {
             get {
                 base.RaiseExceptionIfNecessary();
-                return ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(this.results[0]));
+                return ((System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData>)(this.results[0]));
             }
         }
     }
@@ -450,7 +450,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
             return base.Channel.EndRetrieveSecurityReferenceTabDataPoints(result);
         }
         
@@ -459,7 +459,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         private object[] OnEndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveSecurityReferenceTabDataPoints(result);
+            System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveSecurityReferenceTabDataPoints(result);
             return new object[] {
                     retVal};
         }
@@ -494,7 +494,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
             return base.Channel.EndRetrievePeriodFinancialsTabDataPoints(result);
         }
         
@@ -503,7 +503,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         private object[] OnEndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrievePeriodFinancialsTabDataPoints(result);
+            System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrievePeriodFinancialsTabDataPoints(result);
             return new object[] {
                     retVal};
         }
@@ -538,7 +538,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
             return base.Channel.EndRetrieveCurrentFinancialsTabDataPoints(result);
         }
         
@@ -547,7 +547,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         private object[] OnEndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveCurrentFinancialsTabDataPoints(result);
+            System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveCurrentFinancialsTabDataPoints(result);
             return new object[] {
                     retVal};
         }
@@ -582,7 +582,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
+        System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
             return base.Channel.EndRetrieveFairValueTabDataPoints(result);
         }
         
@@ -591,7 +591,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         private object[] OnEndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
-            System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveFairValueTabDataPoints(result);
+            System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveFairValueTabDataPoints(result);
             return new object[] {
                     retVal};
         }
@@ -621,8 +621,8 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginSaveUserDataPointsPreference(userPreference, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginSaveUserDataPointsPreference(string userPreference, string username, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveUserDataPointsPreference(userPreference, username, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -631,8 +631,9 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         private System.IAsyncResult OnBeginSaveUserDataPointsPreference(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference = ((System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo>)(inValues[0]));
-            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginSaveUserDataPointsPreference(userPreference, callback, asyncState);
+            string userPreference = ((string)(inValues[0]));
+            string username = ((string)(inValues[1]));
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginSaveUserDataPointsPreference(userPreference, username, callback, asyncState);
         }
         
         private object[] OnEndSaveUserDataPointsPreference(System.IAsyncResult result) {
@@ -648,11 +649,11 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             }
         }
         
-        public void SaveUserDataPointsPreferenceAsync(System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference) {
-            this.SaveUserDataPointsPreferenceAsync(userPreference, null);
+        public void SaveUserDataPointsPreferenceAsync(string userPreference, string username) {
+            this.SaveUserDataPointsPreferenceAsync(userPreference, username, null);
         }
         
-        public void SaveUserDataPointsPreferenceAsync(System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, object userState) {
+        public void SaveUserDataPointsPreferenceAsync(string userPreference, string username, object userState) {
             if ((this.onBeginSaveUserDataPointsPreferenceDelegate == null)) {
                 this.onBeginSaveUserDataPointsPreferenceDelegate = new BeginOperationDelegate(this.OnBeginSaveUserDataPointsPreference);
             }
@@ -663,7 +664,8 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 this.onSaveUserDataPointsPreferenceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveUserDataPointsPreferenceCompleted);
             }
             base.InvokeAsync(this.onBeginSaveUserDataPointsPreferenceDelegate, new object[] {
-                        userPreference}, this.onEndSaveUserDataPointsPreferenceDelegate, this.onSaveUserDataPointsPreferenceCompletedDelegate, userState);
+                        userPreference,
+                        username}, this.onEndSaveUserDataPointsPreferenceDelegate, this.onSaveUserDataPointsPreferenceCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -865,9 +867,9 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> EndRetrieveSecurityReferenceTabDataPoints(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveSecurityReferenceTabDataPoints", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveSecurityReferenceTabDataPoints", _args, result)));
                 return _result;
             }
             
@@ -877,9 +879,9 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> EndRetrievePeriodFinancialsTabDataPoints(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrievePeriodFinancialsTabDataPoints", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrievePeriodFinancialsTabDataPoints", _args, result)));
                 return _result;
             }
             
@@ -889,9 +891,9 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> EndRetrieveCurrentFinancialsTabDataPoints(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveCurrentFinancialsTabDataPoints", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveCurrentFinancialsTabDataPoints", _args, result)));
                 return _result;
             }
             
@@ -901,15 +903,16 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> EndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
+            public System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> EndRetrieveFairValueTabDataPoints(System.IAsyncResult result) {
                 object[] _args = new object[0];
-                System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveFairValueTabDataPoints", _args, result)));
+                System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.CustomSelectionData>)(base.EndInvoke("RetrieveFairValueTabDataPoints", _args, result)));
                 return _result;
             }
             
-            public System.IAsyncResult BeginSaveUserDataPointsPreference(System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[1];
+            public System.IAsyncResult BeginSaveUserDataPointsPreference(string userPreference, string username, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
                 _args[0] = userPreference;
+                _args[1] = username;
                 System.IAsyncResult _result = base.BeginInvoke("SaveUserDataPointsPreference", _args, callback, asyncState);
                 return _result;
             }

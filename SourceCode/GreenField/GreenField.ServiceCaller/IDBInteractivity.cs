@@ -327,11 +327,12 @@ namespace GreenField.ServiceCaller
 
         void RetrieveCurrentFinancialsTabDataPoints(Action<List<CustomSelectionData>> callback);
 
-        void RetrieveFairValueTabDataPoints(Action<List<CustomSelectionData>> callback);
-        
+        void RetrieveFairValueTabDataPoints(Action<List<CustomSelectionData>> callback);        
 
         void RetrieveSecurityData(PortfolioSelectionData portfolio, BenchmarkSelectionData benchmark, String region, String country, String sector, String industry,
                                         List<CSTUserPreferenceInfo> userPreference,Action<List<CustomScreeningSecurityData>> callback);
+
+        void SaveUserDataPointsPreference(string userPreference, string username, Action<Boolean?> callback);
 
         void GetCustomScreeningUserPreferences(string username, Action<List<CSTUserPreferenceInfo>> callback);
 
