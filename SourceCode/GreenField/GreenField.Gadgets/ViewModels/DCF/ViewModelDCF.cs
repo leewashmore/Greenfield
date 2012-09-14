@@ -1418,14 +1418,14 @@ namespace GreenField.Gadgets.ViewModels
                 SensitivityDisplayData = new RangeObservableCollection<SensitivityData>();
 
                 SensitivityDisplayData.Add(new SensitivityData() { C1 = "T.G.R", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
-                
+
 
                 Dictionary<int, decimal> VPS = new Dictionary<int, decimal>();
 
                 DCFValue result = new DCFValue();
 
-                CalculationParameters.CostOfEquity = Convert.ToDecimal((CalculationParameters.CostOfEquity) / Convert.ToDecimal(100.0)) - Convert.ToDecimal(5.0 / 1000.0);
-                CalculationParameters.TerminalGrowthRate = Convert.ToDecimal((CalculationParameters.TerminalGrowthRate) / Convert.ToDecimal(100.0)) - Convert.ToDecimal(5.0 / 1000.0);
+                CalculationParameters.CostOfEquity = Convert.ToDecimal((CalculationParameters.CostOfEquity)) - Convert.ToDecimal(5.0 / 1000.0);
+                CalculationParameters.TerminalGrowthRate = Convert.ToDecimal((CalculationParameters.TerminalGrowthRate)) - Convert.ToDecimal(5.0 / 1000.0);
 
                 for (int i = 0; i < 5; i++)
                 {
