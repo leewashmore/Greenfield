@@ -238,7 +238,6 @@ namespace GreenField.Gadgets.Views
         private void dgDCFAnalysisSummary_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
         {
             this.DataContextSource.StockSpecificDiscount = Convert.ToDecimal(stockSpecificDiscount);
-
         }
 
         private void dgDCFAnalysisSummary_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
@@ -246,5 +245,22 @@ namespace GreenField.Gadgets.Views
             
         }
 
+        /// <summary>
+        /// create RadDocument from the DataGrid
+        /// </summary>
+        /// <returns>Returns the RadDcoument for the Grid</returns>
+        public override RadDocument CreateDocument()
+        {
+            try
+            {
+                return PDFExporter.ExportArray(dgDCFAnalysisSummary, 12);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextSource.Logger, ex);
+                return null;
+            }
+        }
     }
 }

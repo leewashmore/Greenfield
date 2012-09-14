@@ -93,10 +93,10 @@
                                          EnableColumnVirtualization="False"
                                          GridLinesVisibility="None">
                     <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn Header="Cost Of Equity" UniqueName="CostOfEquity" DataMemberBinding="{Binding C1,Mode=TwoWay}" 
+                        <telerik:GridViewDataColumn Header="Cost Of Equity&#x0a;Step Size: 0.25%" UniqueName="CostOfEquity" DataMemberBinding="{Binding C1,Mode=TwoWay}" 
                                                     HeaderTextAlignment="Left" TextAlignment="Left" Width="*"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn Header="" UniqueName="" DataMemberBinding="{Binding C2,Mode=TwoWay}" HeaderTextAlignment="Right" TextAlignment="Right"
+                        <telerik:GridViewDataColumn Header="" UniqueName=" " DataMemberBinding="{Binding C2,Mode=TwoWay}" HeaderTextAlignment="Right" TextAlignment="Right"
                                                     Width="*"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                         <telerik:GridViewDataColumn Header="1" UniqueName="1" DataMemberBinding="{Binding C3,Mode=TwoWay}" 

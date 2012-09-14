@@ -23,6 +23,7 @@ using GreenField.Gadgets.Views;
 using GreenField.Gadgets.ViewModels;
 using Microsoft.Practices.Prism.Regions;
 using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Documents.Model;
 
 namespace GreenField.DashboardModule.Views
 {
@@ -33,6 +34,24 @@ namespace GreenField.DashboardModule.Views
         private IEventAggregator _eventAggregator;
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
+
+        private RadDocument[] _dcfReport;
+        public RadDocument[] DCFReport
+        {
+            get
+            {
+                if (_dcfReport == null)
+                { 
+                    _dcfReport= new RadDocument[7];
+                }
+                return _dcfReport;
+            }
+            set
+            {
+                _dcfReport = value;
+            }
+        }
+
         #endregion
 
         [ImportingConstructor]
@@ -78,7 +97,7 @@ namespace GreenField.DashboardModule.Views
                 },
                 Content = new ViewAnalysisSummary(_viewModel)
             });
-            
+
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
@@ -90,7 +109,7 @@ namespace GreenField.DashboardModule.Views
                 },
                 Content = new ViewFreeCashFlows(new ViewModelFreeCashFlows(param))
             });
-            
+
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
                 Header = new Telerik.Windows.Controls.HeaderedContentControl
@@ -171,7 +190,57 @@ namespace GreenField.DashboardModule.Views
                 if (control != null)
                     control.IsActive = value;
             }
+        }
 
+        /// <summary>
+        /// Generate DCF Report PDF
+        /// </summary>
+        /// <param name="sender">Sender of Event</param>
+        /// <param name="e"></param>
+        private void btnPDF_Click(object sender, RoutedEventArgs e)
+        {
+            RadDocument finalReport = new RadDocument();
+            int i = 0;
+            foreach (RadTileViewItem item in this.rtvDashboard.Items)
+            {
+                ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
+                RadDocument document = control.CreateDocument();
+                if (document != null)
+                {
+                    DCFReport[i] = document;
+                    
+                }
+                else
+                {
+                    DCFReport[i] = new RadDocument();
+                }
+                i++;
+            }
+            if (DCFReport != null)
+            {
+                finalReport = MergeDocuments(DCFReport);
+                PDFExporter.ExportPDF_RadDocument(finalReport, 12);
+            }
+        }
+
+        /// <summary>
+        /// Method to Merge Multiple RadDocuments
+        /// </summary>
+        /// <param name="documents">Array of type RadDocuments</param>
+        /// <returns>Merged Documents</returns>
+        private RadDocument MergeDocuments(RadDocument[] documents)
+        {
+            RadDocument mergedDocument = new RadDocument();           
+            foreach (RadDocument document in documents)
+            {
+                foreach (Telerik.Windows.Documents.Model.Section section in document.Sections)
+                {
+                    Telerik.Windows.Documents.Model.Section copySection = section.CreateDeepCopy() as Telerik.Windows.Documents.Model.Section;
+                    document.Sections.Remove(section);
+                    mergedDocument.Sections.Add(copySection);
+                }
+            }
+            return mergedDocument;
         }
     }
 }

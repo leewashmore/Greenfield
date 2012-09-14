@@ -217,6 +217,23 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-        
+
+        /// <summary>
+        /// create RadDocument from the DataGrid
+        /// </summary>
+        /// <returns>Returns the RadDcoument for the Grid</returns>
+        public override RadDocument CreateDocument()
+        {
+            try
+            {
+                return PDFExporter.ExportArray(dgFreeCashFlows, 8);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                return null;
+            }
+        }
+
     }
 }

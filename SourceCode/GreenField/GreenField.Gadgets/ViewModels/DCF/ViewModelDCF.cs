@@ -1416,10 +1416,9 @@ namespace GreenField.Gadgets.ViewModels
                 List<decimal> upSideValues = new List<decimal>();
                 List<decimal> TGR = new List<decimal>();
                 SensitivityDisplayData = new RangeObservableCollection<SensitivityData>();
-                RangeObservableCollection<SensitivityData> passData = new RangeObservableCollection<SensitivityData>();
 
-                SensitivityDisplayData.Add(new SensitivityData() { C1 = " Step 0.25%", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
-                passData.Add(new SensitivityData() { C1 = " Step 0.25%", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
+                SensitivityDisplayData.Add(new SensitivityData() { C1 = "T.G.R", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
+                
 
                 Dictionary<int, decimal> VPS = new Dictionary<int, decimal>();
 
@@ -1454,7 +1453,6 @@ namespace GreenField.Gadgets.ViewModels
                         data.C7 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 4).Select(a => a.Value).FirstOrDefault()), 2));
                     VPS = new Dictionary<int, decimal>();
                     SensitivityDisplayData.Add(data);
-                    passData.Add(data);
                     CalculationParameters.CostOfEquity = costOfEquity;
                     CalculationParameters.TerminalGrowthRate = CalculationParameters.TerminalGrowthRate + Convert.ToDecimal(25.0 / 10000.0);
                 }
@@ -1532,7 +1530,7 @@ namespace GreenField.Gadgets.ViewModels
                     i++;
                 }
                 SensitivityBVPS.Clear();
-                SensitivityBVPS.Add(new SensitivityData() { C1 = " Step 0.25%", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
+                SensitivityBVPS.Add(new SensitivityData() { C1 = "T.G.R", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
                 SensitivityBVPS.AddRange(data.ToList());
 
                 MaxBVPSShareVal = Convert.ToString(Math.Round(BVPS.Max(), 2));
@@ -1596,7 +1594,7 @@ namespace GreenField.Gadgets.ViewModels
                     i++;
                 }
                 SensitivityBPS.Clear();
-                SensitivityBPS.Add(new SensitivityData() { C1 = " Step 0.25%", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
+                SensitivityBPS.Add(new SensitivityData() { C1 = "T.G.R", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
                 SensitivityBPS.AddRange(data.ToList());
 
                 MaxEPSShareVal = Convert.ToString(Math.Round(EPS.Max(), 2));

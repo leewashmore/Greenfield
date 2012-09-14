@@ -20,7 +20,19 @@
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
-        <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" HorizontalAlignment="Right">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Generate DCF Report" Grid.Column="0" Click="btnPDF_Click" x:Name="btnPDF"/>
+        </Grid>
+        
+        <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Grid.Row="1">
             <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" BorderThickness="0.25" BorderBrush="Gray">
                 <telerik:RadTileView x:Name="rtvDashboard"
                                      Background="White"

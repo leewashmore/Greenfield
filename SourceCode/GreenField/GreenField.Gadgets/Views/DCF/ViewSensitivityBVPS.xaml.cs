@@ -26,7 +26,7 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextSource; }
             set { _dataContextSource = value; }
         }
-        
+
 
         public ViewSensitivityBVPS(ViewModelDCF dataContextSource)
         {
@@ -147,6 +147,28 @@ namespace GreenField.Gadgets.Views
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(this.DataContextSource.Logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// create RadDocument from the DataGrid
+        /// </summary>
+        /// <returns>Returns the RadDcoument for the Grid</returns>
+        public override RadDocument CreateDocument()
+        {
+            try
+            {
+                if (dgDCFSensitivity.Items.Count == 0)
+                {
+                    return null;
+                }
+                return PDFExporter.ExportArray(dgDCFSensitivity, 12);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextSource.Logger, ex);
+                return null;
             }
         }
 

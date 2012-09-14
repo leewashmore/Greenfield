@@ -80,6 +80,44 @@ namespace GreenField.Gadgets.Helpers
 
         }
 
+        public static void ExportPDF_RadDocument(RadDocument document, int fontSize)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.DefaultExt = "*.pdf";
+            dialog.Filter = "Adobe PDF Document (*.pdf)|*.pdf";
+
+            fontSizePDF = fontSize;
+
+            if (dialog.ShowDialog() == true)
+            {
+                document.LayoutMode = DocumentLayoutMode.Paged;
+                document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
+                document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
+
+                PdfFormatProvider provider = new PdfFormatProvider();
+                using (Stream output = dialog.OpenFile())
+                {
+                    provider.Export(document, output);
+                }
+            }
+        }
+
+        public static RadDocument ExportArray(RadGridView dataGrid, int fontSize = 12)
+        {
+            try
+            {
+                fontSizePDF = fontSize;
+                RadDocument document = CreateDocument(dataGrid);
+                return document;
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                return null;
+            }
+        }
+
+
         #endregion
 
         #region Print
@@ -247,7 +285,7 @@ namespace GreenField.Gadgets.Helpers
             {
                 //for (int i = 0; i < group.ItemCount; i++)
                 //{
-                    AddDataRows(table, group.Items, columns, grid);
+                AddDataRows(table, group.Items, columns, grid);
                 //}
             }
         }
@@ -288,7 +326,7 @@ namespace GreenField.Gadgets.Helpers
         }
 
         #endregion
-        
+
         #endregion
 
         #region Chart
@@ -355,8 +393,8 @@ namespace GreenField.Gadgets.Helpers
             }
         }
 
-        #endregion 
-        
+        #endregion
+
         #endregion
 
     }
