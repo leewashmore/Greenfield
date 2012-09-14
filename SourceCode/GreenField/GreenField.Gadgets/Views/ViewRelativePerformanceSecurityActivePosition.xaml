@@ -52,7 +52,7 @@
                 <telerik:RadGridView.Columns>
                     <telerik:GridViewDataColumn Header="Security Name" DataMemberBinding="{Binding Entity}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 Width="auto" HeaderTextAlignment="Left" TextAlignment="Left" CellStyle="{StaticResource GridViewCellStyle}"/>
-                    <telerik:GridViewDataColumn Header="Market Value" DataMemberBinding="{Binding MarketValue, StringFormat=\{0:n2\}}" Width="*" HeaderTextAlignment="Right"
+                    <telerik:GridViewDataColumn Header="Market Value" DataMemberBinding="{Binding MarketValue, StringFormat=\{0:n0\}}" Width="*" HeaderTextAlignment="Right"
                                                 TextAlignment="Right" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
                     <telerik:GridViewDataColumn Header="Fund Wt." DataMemberBinding="{Binding FundWeight, Converter={StaticResource PercentageValueConverter}}" TextAlignment="Right" 
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" Width="auto" HeaderTextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"/>
