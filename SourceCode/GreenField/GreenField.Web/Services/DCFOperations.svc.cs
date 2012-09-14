@@ -472,7 +472,7 @@ namespace GreenField.Web.Services
             }
             if (collectionSustainableDividendPayoutRatio.Any(a => a.Value != null))
             {
-                if (Convert.ToDecimal(collectionROIC.Average()) != 0)
+                if (Convert.ToDecimal(collectionSustainableDividendPayoutRatio.Average()) != 0)
                     result.Add("SDPR", Convert.ToDecimal(collectionSustainableDividendPayoutRatio.Average()));
                 else
                     result.Add("SDPR", Convert.ToDecimal(0.3333));

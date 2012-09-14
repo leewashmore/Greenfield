@@ -1178,7 +1178,7 @@ namespace GreenField.Gadgets.ViewModels
                 List<DCFDisplayData> result = new List<DCFDisplayData>();
 
                 decimal cashFlow2020 = Math.Round(Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(8).Year)).
-                    Select(a => a.AMOUNT).FirstOrDefault()), 4);
+                    Select(a => a.AMOUNT).FirstOrDefault()), 1);
                 decimal sustainableROIC = Math.Round(Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableROIC).FirstOrDefault()), 4);
                 decimal sustainableDPR = Math.Round(Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableDividendPayoutRatio).FirstOrDefault()), 4);
                 decimal longTermNominalGDPGrowth = Math.Round(Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.LongTermNominalGDPGrowth).FirstOrDefault()), 4);
@@ -1186,9 +1186,9 @@ namespace GreenField.Gadgets.ViewModels
 
                 decimal discountingFactorY10 = Math.Round(Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
                     Select(a => a.DISCOUNTING_FACTOR).FirstOrDefault()), 4);
-                TGR = Math.Round((Math.Min(sustainableROIC * (1 - sustainableDPR / 100), longTermNominalGDPGrowth / 100) * 100), 4);
-                decimal terminalValueNominal = Math.Round(Convert.ToDecimal(DCFCalculations.CalculateNominalTerminalValue(WACC, TGR, cashFlow2020)), 4);
-                decimal terminalValuePresent = Math.Round(Convert.ToDecimal(DCFCalculations.CalculatePresentTerminalValue(terminalValueNominal, discountingFactorY10)), 4);
+                TGR = Math.Round((Math.Min(sustainableROIC * (1 - sustainableDPR / 100), longTermNominalGDPGrowth)), 4);
+                decimal terminalValueNominal = Math.Round(Convert.ToDecimal(DCFCalculations.CalculateNominalTerminalValue(WACC, TGR, cashFlow2020)), 1);
+                decimal terminalValuePresent = Math.Round(Convert.ToDecimal(DCFCalculations.CalculatePresentTerminalValue(terminalValueNominal, discountingFactorY10)), 1);
 
                 result.Add(new DCFDisplayData() { PropertyName = "Cash Flow in 2020", Value = cashFlow2020.ToString() });
                 result.Add(new DCFDisplayData() { PropertyName = "Sustainable ROIC", Value = Math.Round(Convert.ToDecimal(sustainableROIC * Convert.ToDecimal(100)), 1).ToString() + " %" });
@@ -1374,17 +1374,17 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 decimal upsideDownside = DCFCalculations.CalculateUpsideValue(DCFValuePerShare, Convert.ToDecimal(CurrentMarketPrice));
 
-                result.Add(new DCFDisplayData() { PropertyName = "Present Value of Explicit Forecast", Value = Convert.ToString(Math.Round(Convert.ToDecimal(PresentValueExplicitForecast), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(TerminalValuePresent), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Total Enterprise Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(totalEnterpriseValue), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "(+) Cash", Value = Convert.ToString(Math.Round(Convert.ToDecimal(cash), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "(+) FV of Investments & Associates", Value = Convert.ToString(Math.Round(Convert.ToDecimal(FVInvestments), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "(-) Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(grossDebt), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "(-) FV of Minorities", Value = Convert.ToString(Math.Round(Convert.ToDecimal(FVMinorities), 4)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Equity Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(equityValue), 4)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Present Value of Explicit Forecast", Value = Convert.ToString(Math.Round(Convert.ToDecimal(PresentValueExplicitForecast), 1)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(TerminalValuePresent), 1)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Total Enterprise Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(totalEnterpriseValue), 1)) });
+                result.Add(new DCFDisplayData() { PropertyName = "(+) Cash", Value = Convert.ToString(Math.Round(Convert.ToDecimal(cash), 1)) });
+                result.Add(new DCFDisplayData() { PropertyName = "(+) FV of Investments & Associates", Value = Convert.ToString(Math.Round(Convert.ToDecimal(FVInvestments), 1)) });
+                result.Add(new DCFDisplayData() { PropertyName = "(-) Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(grossDebt), 1)) });
+                result.Add(new DCFDisplayData() { PropertyName = "(-) FV of Minorities", Value = Convert.ToString(Math.Round(Convert.ToDecimal(FVMinorities), 1)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Equity Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(equityValue), 1)) });
                 result.Add(new DCFDisplayData() { PropertyName = "Number of Shares", Value = Convert.ToString(Math.Round(Convert.ToDecimal(numberOfShares), 2)) });
                 result.Add(new DCFDisplayData() { PropertyName = "DCF Value Per Share", Value = Convert.ToString(Math.Round(Convert.ToDecimal(DCFValuePerShare), 2)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Upside/Downside", Value = Convert.ToString(Math.Round(Convert.ToDecimal(upsideDownside), 1)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Upside/Downside", Value = Convert.ToString(Math.Round(Convert.ToDecimal(upsideDownside * 100), 1)) + "%" });
                 SummaryDisplayData.Clear();
                 SummaryDisplayData.AddRange(result);
                 this.RaisePropertyChanged(() => this.SummaryData);
