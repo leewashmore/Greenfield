@@ -93,6 +93,7 @@ namespace GreenField.Web.Services
                     item.BUY = record.BUY;
                     item.SELL = record.SELL;
                     item.UPSIDE = record.UPSIDE;
+                    if(record.DATE != null)
                     item.DATE = record.DATE.Value.Date;
                     item.DATA_ID = record.DATA_ID;
                     result.Add(item);
