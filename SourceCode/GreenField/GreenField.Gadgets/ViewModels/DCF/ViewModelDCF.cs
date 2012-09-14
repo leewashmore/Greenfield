@@ -1424,11 +1424,12 @@ namespace GreenField.Gadgets.ViewModels
 
                 DCFValue result = new DCFValue();
 
-                CalculationParameters.CostOfEquity = Convert.ToDecimal((CalculationParameters.CostOfEquity)) - Convert.ToDecimal(5.0 / 1000.0);
+                
                 CalculationParameters.TerminalGrowthRate = Convert.ToDecimal((CalculationParameters.TerminalGrowthRate)) - Convert.ToDecimal(5.0 / 1000.0);
 
                 for (int i = 0; i < 5; i++)
                 {
+                    CalculationParameters.CostOfEquity = Convert.ToDecimal((CalculationParameters.CostOfEquity)) - Convert.ToDecimal(5.0 / 1000.0);
                     SensitivityData data = new SensitivityData();
                     for (int j = 0; j < 5; j++)
                     {
