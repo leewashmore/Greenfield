@@ -379,7 +379,7 @@ namespace GreenField.Web.Services
                 data.FVInvestments = dbResult.Where(a => a.DATA_ID == 258).Select(a => a.AMOUNT).FirstOrDefault();
                 data.GrossDebt = dbResult.Where(a => a.DATA_ID == 256).Select(a => a.AMOUNT).FirstOrDefault();
                 data.FVMinorities = dbResult.Where(a => a.DATA_ID == 257).Select(a => a.AMOUNT).FirstOrDefault();
-                data.NumberOfShares = dbResult.Select(a => a.AMOUNT).FirstOrDefault();
+                data.NumberOfShares = dbResultShares.Select(a => a.AMOUNT).FirstOrDefault();
                 result.Add(data);
 
                 return result;

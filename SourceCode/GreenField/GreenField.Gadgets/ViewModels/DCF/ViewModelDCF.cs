@@ -1394,7 +1394,6 @@ namespace GreenField.Gadgets.ViewModels
                 CalculationParameters.FutureValueOfMinorties = FVMinorities;
                 CalculationParameters.NumberOfShares = numberOfShares;
                 CalculationParameters.PresentValueOfForecast = PresentValueExplicitForecast;
-
                 GenerateSensitivityDisplayData();
 
             }
