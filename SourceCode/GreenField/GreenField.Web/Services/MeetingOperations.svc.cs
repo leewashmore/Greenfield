@@ -94,12 +94,13 @@ namespace GreenField.Web.Services
                 String[] votingUsers = Roles.GetUsersInRole("IC_MEMBER_VOTING");
                 foreach (String user in votingUsers)
                 {
-                    //if (user.ToLower() != userName.ToLower())
-                    //{
-                    //    XElement element = new XElement("VotingUser", user);
-                    //    xmlDoc.Root.Add(element);
-                    //}
+                    XElement element = new XElement("VotingUser", user.ToLower());
+                    xmlDoc.Root.Add(element);
+                }
 
+                String[] chiefExecutiveUsers = Roles.GetUsersInRole("IC_CHIEF_EXECUTIVE");
+                foreach (String user in chiefExecutiveUsers)
+                {
                     XElement element = new XElement("VotingUser", user.ToLower());
                     xmlDoc.Root.Add(element);
                 }

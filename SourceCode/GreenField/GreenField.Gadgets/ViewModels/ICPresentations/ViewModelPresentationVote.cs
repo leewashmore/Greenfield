@@ -169,7 +169,8 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedPresentationPreMeetingVoterInfo = value;
                 RaisePropertyChanged(() => this.SelectedPresentationPreMeetingVoterInfo);
-                VoteIsEnabled = value != null && UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN);
+                if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
+                    VoteIsEnabled = value != null;                
             }
         }
 
@@ -206,16 +207,16 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private Boolean _notesIsEnabled = false;
-        public Boolean NotesIsEnabled
-        {
-            get { return _notesIsEnabled; }
-            set
-            {
-                _notesIsEnabled = value;
-                RaisePropertyChanged(() => this.NotesIsEnabled);
-            }
-        }
+        //private Boolean _notesIsEnabled = false;
+        //public Boolean NotesIsEnabled
+        //{
+        //    get { return _notesIsEnabled; }
+        //    set
+        //    {
+        //        _notesIsEnabled = value;
+        //        RaisePropertyChanged(() => this.NotesIsEnabled);
+        //    }
+        //}
 
         private Boolean _blogIsEnabled = true;
         public Boolean BlogIsEnabled
@@ -322,8 +323,8 @@ namespace GreenField.Gadgets.ViewModels
             }
             else
             {
-                if (!(PresentationPreMeetingVoterInfo.Any(record => record.Name == UserSession.SessionManager.SESSION.UserName) ||
-                    (SelectedPresentationOverviewInfo.Presenter == UserSession.SessionManager.SESSION.UserName)))
+                if (!(PresentationPreMeetingVoterInfo.Any(record => record.Name.ToLower() == UserSession.SessionManager.SESSION.UserName.ToLower()) ||
+                    (SelectedPresentationOverviewInfo.Presenter.ToLower() == UserSession.SessionManager.SESSION.UserName.ToLower())))
                     return false;
             }
             return true;
@@ -331,8 +332,8 @@ namespace GreenField.Gadgets.ViewModels
 
         private void SubmitCommandMethod(object param)
         {
-            VoterInfo presenterVoterInfo = PresentationPreMeetingVoterInfo
-                .Where(record => record.Name.ToLower() == SelectedPresentationOverviewInfo.Presenter).FirstOrDefault();
+            //VoterInfo presenterVoterInfo = PresentationPreMeetingVoterInfo
+            //    .Where(record => record.Name.ToLower() == SelectedPresentationOverviewInfo.Presenter).FirstOrDefault();
 
             foreach (VoterInfo info in PresentationMeetingVoterInfo)
             {
@@ -345,10 +346,10 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 }
 
-                if (presenterVoterInfo != null)
-                {
-                    info.Notes = presenterVoterInfo.Notes;
-                }
+                //if (presenterVoterInfo != null)
+                //{
+                //    info.Notes = presenterVoterInfo.Notes;
+                //}
 
 
                 if (info.Name.ToLower() == UserSession.SessionManager.SESSION.UserName && info.PostMeetingFlag == false)
@@ -438,25 +439,25 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         VoterIsEnabled = false;
                         VoteIsEnabled = false;
-                        NotesIsEnabled = true;
+                        //NotesIsEnabled = true;
                     }                    
 
                     if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) &&
-                        !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.VOTING_MEMBER))
+                        !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_VOTING_MEMBER))
                     {
                         VoterIsEnabled = false;
                         VoteIsEnabled = false;
                     }
 
                     if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) &&
-                        !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.VOTING_MEMBER) &&
-                        !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.NON_VOTING_MEMBER) &&
+                        !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_VOTING_MEMBER) &&
+                        !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_NON_VOTING_MEMBER) &&
                         !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE))
                     {
                         BlogIsEnabled = false;
                     }
 
-                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.NON_VOTING_MEMBER))
+                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_NON_VOTING_MEMBER))
                     {
                         SelectedPresentationPreMeetingVoterInfo = result
                             .Where(record => record.Name.ToLower() == SelectedPresentationOverviewInfo.Presenter).FirstOrDefault();
@@ -467,7 +468,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         VoterIsEnabled = false;
                         VoteIsEnabled = false;
-                        NotesIsEnabled = false;
+                        //NotesIsEnabled = false;
                         BlogIsEnabled = false;
                     }
 

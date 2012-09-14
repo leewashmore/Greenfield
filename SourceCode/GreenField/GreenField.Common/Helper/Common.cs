@@ -241,8 +241,8 @@ namespace GreenField.Common
 
     public static class MemberGroups
     {
-        public static String VOTING_MEMBER = "IC_MEMBER_VOTING";
-        public static String NON_VOTING_MEMBER = "IC_MEMBER_NON_VOTING";
+        public static String IC_VOTING_MEMBER = "IC_MEMBER_VOTING";
+        public static String IC_NON_VOTING_MEMBER = "IC_MEMBER_NON_VOTING";
         public static String IC_ADMIN = "IC_ADMIN";
         public static String IC_CHIEF_EXECUTIVE = "IC_CHIEF_EXECUTIVE";       
     }
