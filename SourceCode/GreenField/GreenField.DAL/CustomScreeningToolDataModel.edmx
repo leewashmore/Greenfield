@@ -1,747 +1,746 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
-  <!-- EF Runtime content -->
-  <edmx:Runtime>
-    <!-- SSDL content -->
-    <edmx:StorageModels>
-      <Schema Namespace="CustomScreeningToolModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="CustomScreeningToolModelStoreContainer">
-          <EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_CURRENT" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_CURRENT">
-            <DefiningQuery>
-              SELECT
-              [SCREENING_DISPLAY_CURRENT].[SCREENING_ID] AS [SCREENING_ID],
-              [SCREENING_DISPLAY_CURRENT].[DATA_ID] AS [DATA_ID],
-              [SCREENING_DISPLAY_CURRENT].[ESTIMATE_ID] AS [ESTIMATE_ID],
-              [SCREENING_DISPLAY_CURRENT].[MULTIPLIER] AS [MULTIPLIER],
-              [SCREENING_DISPLAY_CURRENT].[DECIMAL] AS [DECIMAL],
-              [SCREENING_DISPLAY_CURRENT].[PERCENTAGE] AS [PERCENTAGE]
-              FROM [dbo].[SCREENING_DISPLAY_CURRENT] AS [SCREENING_DISPLAY_CURRENT]
-            </DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_FAIRVALUE" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_FAIRVALUE">
-            <DefiningQuery>
-              SELECT
-              [SCREENING_DISPLAY_FAIRVALUE].[SCREENING_ID] AS [SCREENING_ID],
-              [SCREENING_DISPLAY_FAIRVALUE].[DATA_DESC] AS [DATA_DESC],
-              [SCREENING_DISPLAY_FAIRVALUE].[SHORT_COLUMN_DESC] AS [SHORT_COLUMN_DESC],
-              [SCREENING_DISPLAY_FAIRVALUE].[LONG_DESC] AS [LONG_DESC],
-              [SCREENING_DISPLAY_FAIRVALUE].[TABLE_COLUMN] AS [TABLE_COLUMN],
-              [SCREENING_DISPLAY_FAIRVALUE].[DATA_TYPE] AS [DATA_TYPE],
-              [SCREENING_DISPLAY_FAIRVALUE].[MULTIPLIER] AS [MULTIPLIER],
-              [SCREENING_DISPLAY_FAIRVALUE].[DECIMAL] AS [DECIMAL],
-              [SCREENING_DISPLAY_FAIRVALUE].[PERCENTAGE] AS [PERCENTAGE]
-              FROM [dbo].[SCREENING_DISPLAY_FAIRVALUE] AS [SCREENING_DISPLAY_FAIRVALUE]
-            </DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_PERIOD" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_PERIOD">
-            <DefiningQuery>
-              SELECT
-              [SCREENING_DISPLAY_PERIOD].[SCREENING_ID] AS [SCREENING_ID],
-              [SCREENING_DISPLAY_PERIOD].[DATA_ID] AS [DATA_ID],
-              [SCREENING_DISPLAY_PERIOD].[ESTIMATE_ID] AS [ESTIMATE_ID],
-              [SCREENING_DISPLAY_PERIOD].[MULTIPLIER] AS [MULTIPLIER],
-              [SCREENING_DISPLAY_PERIOD].[DECIMAL] AS [DECIMAL],
-              [SCREENING_DISPLAY_PERIOD].[PERCENTAGE] AS [PERCENTAGE]
-              FROM [dbo].[SCREENING_DISPLAY_PERIOD] AS [SCREENING_DISPLAY_PERIOD]
-            </DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_REFERENCE" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_REFERENCE">
-            <DefiningQuery>
-              SELECT
-              [SCREENING_DISPLAY_REFERENCE].[SCREENING_ID] AS [SCREENING_ID],
-              [SCREENING_DISPLAY_REFERENCE].[DATA_DESC] AS [DATA_DESC],
-              [SCREENING_DISPLAY_REFERENCE].[SHORT_COLUMN_DESC] AS [SHORT_COLUMN_DESC],
-              [SCREENING_DISPLAY_REFERENCE].[LONG_DESC] AS [LONG_DESC],
-              [SCREENING_DISPLAY_REFERENCE].[TABLE_COLUMN] AS [TABLE_COLUMN],
-              [SCREENING_DISPLAY_REFERENCE].[DATA_TYPE] AS [DATA_TYPE],
-              [SCREENING_DISPLAY_REFERENCE].[MULTIPLIER] AS [MULTIPLIER],
-              [SCREENING_DISPLAY_REFERENCE].[DECIMAL] AS [DECIMAL],
-              [SCREENING_DISPLAY_REFERENCE].[PERCENTAGE] AS [PERCENTAGE]
-              FROM [dbo].[SCREENING_DISPLAY_REFERENCE] AS [SCREENING_DISPLAY_REFERENCE]
-            </DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserCustomisedListInfo" EntityType="CustomScreeningToolModel.Store.UserCustomisedListInfo" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="UserListDataPointMappingInfo" EntityType="CustomScreeningToolModel.Store.UserListDataPointMappingInfo" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.Store.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
-            <End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfo" />
-            <End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfo" />
-          </AssociationSet>
-        </EntityContainer>
-        <!--Errors Found During Generation:
+	<!-- EF Runtime content -->
+	<edmx:Runtime>
+		<!-- SSDL content -->
+		<edmx:StorageModels>
+			<Schema Namespace="CustomScreeningToolModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+				<EntityContainer Name="CustomScreeningToolModelStoreContainer">
+					<EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_CURRENT" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_CURRENT">
+						<DefiningQuery>
+							SELECT
+							[SCREENING_DISPLAY_CURRENT].[SCREENING_ID] AS [SCREENING_ID],
+							[SCREENING_DISPLAY_CURRENT].[DATA_ID] AS [DATA_ID],
+							[SCREENING_DISPLAY_CURRENT].[ESTIMATE_ID] AS [ESTIMATE_ID],
+							[SCREENING_DISPLAY_CURRENT].[MULTIPLIER] AS [MULTIPLIER],
+							[SCREENING_DISPLAY_CURRENT].[DECIMAL] AS [DECIMAL],
+							[SCREENING_DISPLAY_CURRENT].[PERCENTAGE] AS [PERCENTAGE]
+							FROM [dbo].[SCREENING_DISPLAY_CURRENT] AS [SCREENING_DISPLAY_CURRENT]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_FAIRVALUE" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_FAIRVALUE">
+						<DefiningQuery>
+							SELECT
+							[SCREENING_DISPLAY_FAIRVALUE].[SCREENING_ID] AS [SCREENING_ID],
+							[SCREENING_DISPLAY_FAIRVALUE].[DATA_DESC] AS [DATA_DESC],
+							[SCREENING_DISPLAY_FAIRVALUE].[SHORT_COLUMN_DESC] AS [SHORT_COLUMN_DESC],
+							[SCREENING_DISPLAY_FAIRVALUE].[LONG_DESC] AS [LONG_DESC],
+							[SCREENING_DISPLAY_FAIRVALUE].[TABLE_COLUMN] AS [TABLE_COLUMN],
+							[SCREENING_DISPLAY_FAIRVALUE].[DATA_TYPE] AS [DATA_TYPE],
+							[SCREENING_DISPLAY_FAIRVALUE].[MULTIPLIER] AS [MULTIPLIER],
+							[SCREENING_DISPLAY_FAIRVALUE].[DECIMAL] AS [DECIMAL],
+							[SCREENING_DISPLAY_FAIRVALUE].[PERCENTAGE] AS [PERCENTAGE]
+							FROM [dbo].[SCREENING_DISPLAY_FAIRVALUE] AS [SCREENING_DISPLAY_FAIRVALUE]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_PERIOD" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_PERIOD">
+						<DefiningQuery>
+							SELECT
+							[SCREENING_DISPLAY_PERIOD].[SCREENING_ID] AS [SCREENING_ID],
+							[SCREENING_DISPLAY_PERIOD].[DATA_ID] AS [DATA_ID],
+							[SCREENING_DISPLAY_PERIOD].[ESTIMATE_ID] AS [ESTIMATE_ID],
+							[SCREENING_DISPLAY_PERIOD].[MULTIPLIER] AS [MULTIPLIER],
+							[SCREENING_DISPLAY_PERIOD].[DECIMAL] AS [DECIMAL],
+							[SCREENING_DISPLAY_PERIOD].[PERCENTAGE] AS [PERCENTAGE]
+							FROM [dbo].[SCREENING_DISPLAY_PERIOD] AS [SCREENING_DISPLAY_PERIOD]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_REFERENCE" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_REFERENCE">
+						<DefiningQuery>
+							SELECT
+							[SCREENING_DISPLAY_REFERENCE].[SCREENING_ID] AS [SCREENING_ID],
+							[SCREENING_DISPLAY_REFERENCE].[DATA_DESC] AS [DATA_DESC],
+							[SCREENING_DISPLAY_REFERENCE].[SHORT_COLUMN_DESC] AS [SHORT_COLUMN_DESC],
+							[SCREENING_DISPLAY_REFERENCE].[LONG_DESC] AS [LONG_DESC],
+							[SCREENING_DISPLAY_REFERENCE].[TABLE_COLUMN] AS [TABLE_COLUMN],
+							[SCREENING_DISPLAY_REFERENCE].[DATA_TYPE] AS [DATA_TYPE],
+							[SCREENING_DISPLAY_REFERENCE].[MULTIPLIER] AS [MULTIPLIER],
+							[SCREENING_DISPLAY_REFERENCE].[DECIMAL] AS [DECIMAL],
+							[SCREENING_DISPLAY_REFERENCE].[PERCENTAGE] AS [PERCENTAGE]
+							FROM [dbo].[SCREENING_DISPLAY_REFERENCE] AS [SCREENING_DISPLAY_REFERENCE]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="UserCustomisedListInfo" EntityType="CustomScreeningToolModel.Store.UserCustomisedListInfo" store:Type="Tables" Schema="dbo" />
+					<EntitySet Name="UserListDataPointMappingInfo" EntityType="CustomScreeningToolModel.Store.UserListDataPointMappingInfo" store:Type="Tables" Schema="dbo" />
+					<AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.Store.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+						<End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfo" />
+						<End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfo" />
+					</AssociationSet>
+				</EntityContainer>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_CURRENT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="SCREENING_DISPLAY_CURRENT">
-          <Key>
-            <PropertyRef Name="SCREENING_ID" />
-            <PropertyRef Name="DATA_ID" />
-            <PropertyRef Name="ESTIMATE_ID" />
-          </Key>
-          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="DATA_ID" Type="int" Nullable="false" />
-          <Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
-          <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="DECIMAL" Type="int" />
-          <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="SCREENING_DISPLAY_CURRENT">
+					<Key>
+						<PropertyRef Name="SCREENING_ID" />
+						<PropertyRef Name="DATA_ID" />
+						<PropertyRef Name="ESTIMATE_ID" />
+					</Key>
+					<Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="DATA_ID" Type="int" Nullable="false" />
+					<Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
+					<Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
+					<Property Name="DECIMAL" Type="int" />
+					<Property Name="PERCENTAGE" Type="char" MaxLength="10" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_FAIRVALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="SCREENING_DISPLAY_FAIRVALUE">
-          <Key>
-            <PropertyRef Name="SCREENING_ID" />
-            <PropertyRef Name="DATA_DESC" />
-            <PropertyRef Name="SHORT_COLUMN_DESC" />
-            <PropertyRef Name="LONG_DESC" />
-            <PropertyRef Name="TABLE_COLUMN" />
-            <PropertyRef Name="DATA_TYPE" />
-          </Key>
-          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="SHORT_COLUMN_DESC" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="LONG_DESC" Type="varchar(max)" Nullable="false" />
-          <Property Name="TABLE_COLUMN" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="DATA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="DECIMAL" Type="int" />
-          <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="SCREENING_DISPLAY_FAIRVALUE">
+					<Key>
+						<PropertyRef Name="SCREENING_ID" />
+						<PropertyRef Name="DATA_DESC" />
+						<PropertyRef Name="SHORT_COLUMN_DESC" />
+						<PropertyRef Name="LONG_DESC" />
+						<PropertyRef Name="TABLE_COLUMN" />
+						<PropertyRef Name="DATA_TYPE" />
+					</Key>
+					<Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
+					<Property Name="SHORT_COLUMN_DESC" Type="varchar" Nullable="false" MaxLength="255" />
+					<Property Name="LONG_DESC" Type="varchar(max)" Nullable="false" />
+					<Property Name="TABLE_COLUMN" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="DATA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
+					<Property Name="DECIMAL" Type="int" />
+					<Property Name="PERCENTAGE" Type="char" MaxLength="10" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_PERIOD' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="SCREENING_DISPLAY_PERIOD">
-          <Key>
-            <PropertyRef Name="SCREENING_ID" />
-            <PropertyRef Name="DATA_ID" />
-          </Key>
-          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="DATA_ID" Type="int" Nullable="false" />
-          <Property Name="ESTIMATE_ID" Type="int" />
-          <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="DECIMAL" Type="int" />
-          <Property Name="PERCENTAGE" Type="varchar" MaxLength="1" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="SCREENING_DISPLAY_PERIOD">
+					<Key>
+						<PropertyRef Name="SCREENING_ID" />
+						<PropertyRef Name="DATA_ID" />
+					</Key>
+					<Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="DATA_ID" Type="int" Nullable="false" />
+					<Property Name="ESTIMATE_ID" Type="int" />
+					<Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
+					<Property Name="DECIMAL" Type="int" />
+					<Property Name="PERCENTAGE" Type="varchar" MaxLength="1" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_REFERENCE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="SCREENING_DISPLAY_REFERENCE">
-          <Key>
-            <PropertyRef Name="SCREENING_ID" />
-            <PropertyRef Name="DATA_DESC" />
-            <PropertyRef Name="SHORT_COLUMN_DESC" />
-            <PropertyRef Name="LONG_DESC" />
-            <PropertyRef Name="TABLE_COLUMN" />
-            <PropertyRef Name="DATA_TYPE" />
-          </Key>
-          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="SHORT_COLUMN_DESC" Type="varchar" Nullable="false" MaxLength="255" />
-          <Property Name="LONG_DESC" Type="varchar(max)" Nullable="false" />
-          <Property Name="TABLE_COLUMN" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="DATA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="DECIMAL" Type="int" />
-          <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
-        </EntityType>
-        <EntityType Name="UserCustomisedListInfo">
-          <Key>
-            <PropertyRef Name="ListId" />
-          </Key>
-          <Property Name="ListId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="ListName" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="Accessibilty" Type="nvarchar" Nullable="false" MaxLength="10" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="UserListDataPointMappingInfo">
-          <Key>
-            <PropertyRef Name="DataPointId" />
-          </Key>
-          <Property Name="DataPointId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="ListId" Type="bigint" Nullable="false" />
-          <Property Name="ScreeningId" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="DataDescription" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="DataSource" Type="varchar" MaxLength="50" />
-          <Property Name="PeriodType" Type="char" MaxLength="2" />
-          <Property Name="YearType" Type="char" MaxLength="8" />
-          <Property Name="FromDate" Type="int" />
-          <Property Name="ToDate" Type="int" />
-          <Property Name="DataPointsOrder" Type="int" Nullable="false" />
-          <Property Name="CreatedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
-          <Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
-          <End Role="UserCustomisedListInfo" Type="CustomScreeningToolModel.Store.UserCustomisedListInfo" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="UserListDataPointMappingInfo" Type="CustomScreeningToolModel.Store.UserListDataPointMappingInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserCustomisedListInfo">
-              <PropertyRef Name="ListId" />
-            </Principal>
-            <Dependent Role="UserListDataPointMappingInfo">
-              <PropertyRef Name="ListId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Function Name="GetCustomScreeningCURData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
-          <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
-          <Parameter Name="dataID" Type="int" Mode="In" />
-          <Parameter Name="dataSource" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetCustomScreeningFINData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
-          <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
-          <Parameter Name="dataID" Type="int" Mode="In" />
-          <Parameter Name="periodType" Type="char" Mode="In" />
-          <Parameter Name="periodYear" Type="int" Mode="In" />
-          <Parameter Name="fiscalType" Type="char" Mode="In" />
-          <Parameter Name="dataSource" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetCustomScreeningFVAData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
-          <Parameter Name="dataSource" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetCustomScreeningMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
-          <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="GetCustomScreeningREFData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="GetCustomScreeningUserPreferences" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="username" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="GetFinancialTabDataDescriptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="tabName" Type="nvarchar" Mode="In" />
-        </Function>
-      </Schema>
-    </edmx:StorageModels>
-    <!-- CSDL content -->
-    <edmx:ConceptualModels>
-      <Schema Namespace="CustomScreeningToolModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
-        <EntityContainer Name="CustomScreeningToolEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" />
-          <EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" />
-          <FunctionImport Name="GetFinancialTabDataDescriptions" ReturnType="Collection(CustomScreeningToolModel.FinancialTabDataDescriptions)">
-            <Parameter Name="tabName" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" />
-          <FunctionImport Name="GetCustomScreeningFVAData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFVAData)">
-            <Parameter Name="securityIdsList" Mode="In" Type="String" />
-            <Parameter Name="dataSource" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="UserCustomisedListInfoes" EntityType="CustomScreeningToolModel.UserCustomisedListInfo" />
-          <FunctionImport Name="GetCustomScreeningCURData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningCURData)">
-            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
-            <Parameter Name="securityIdsList" Mode="In" Type="String" />
-            <Parameter Name="dataID" Mode="In" Type="Int32" />
-            <Parameter Name="dataSource" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetCustomScreeningFINData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFINData)">
-            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
-            <Parameter Name="securityIdsList" Mode="In" Type="String" />
-            <Parameter Name="dataID" Mode="In" Type="Int32" />
-            <Parameter Name="periodType" Mode="In" Type="String" />
-            <Parameter Name="periodYear" Mode="In" Type="Int32" />
-            <Parameter Name="fiscalType" Mode="In" Type="String" />
-            <Parameter Name="dataSource" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetCustomScreeningREFData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningREFData)">
-            <Parameter Name="securityIdsList" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetCustomScreeningMarketCap" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningMarketCap)">
-            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
-            <Parameter Name="securityIdsList" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" />
-          <EntitySet Name="UserListDataPointMappingInfoes" EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" />
-          <AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
-            <End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfoes" />
-            <End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfoes" />
-          </AssociationSet>
-          <FunctionImport Name="GetCustomScreeningUserPreferences" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningUserPreferences)">
-            <Parameter Name="username" Mode="In" Type="String" />
-          </FunctionImport>
-        </EntityContainer>
-        <EntityType Name="SCREENING_DISPLAY_CURRENT">
-          <Key>
-            <PropertyRef Name="SCREENING_ID" />
-            <PropertyRef Name="DATA_ID" />
-            <PropertyRef Name="ESTIMATE_ID" />
-          </Key>
-          <Property Name="SCREENING_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="DATA_ID" Type="Int32" Nullable="false" />
-          <Property Name="ESTIMATE_ID" Type="Int32" Nullable="false" />
-          <Property Name="MULTIPLIER" Type="Decimal" Precision="32" Scale="6" />
-          <Property Name="DECIMAL" Type="Int32" />
-          <Property Name="PERCENTAGE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-        </EntityType>
-        <EntityType Name="SCREENING_DISPLAY_FAIRVALUE">
-          <Key>
-            <PropertyRef Name="SCREENING_ID" />
-            <PropertyRef Name="DATA_DESC" />
-            <PropertyRef Name="SHORT_COLUMN_DESC" />
-            <PropertyRef Name="LONG_DESC" />
-            <PropertyRef Name="TABLE_COLUMN" />
-            <PropertyRef Name="DATA_TYPE" />
-          </Key>
-          <Property Name="SCREENING_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="DATA_DESC" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
-          <Property Name="SHORT_COLUMN_DESC" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
-          <Property Name="LONG_DESC" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
-          <Property Name="TABLE_COLUMN" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="DATA_TYPE" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
-          <Property Name="MULTIPLIER" Type="Decimal" Precision="32" Scale="6" />
-          <Property Name="DECIMAL" Type="Int32" />
-          <Property Name="PERCENTAGE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
-        </EntityType>
-        <ComplexType Name="FinancialTabDataDescriptions" >
-          <Property Type="String" Name="SCREENING_ID" Nullable="false" />
-          <Property Type="String" Name="DATA_DESC" Nullable="false" />
-          <Property Type="String" Name="QUARTERLY" Nullable="true" />
-          <Property Type="String" Name="ANNUAL" Nullable="true" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-          <Property Type="Int32" Name="ESTIMATE_ID" Nullable="true" />
-        </ComplexType>
-        <EntityType Name="SCREENING_DISPLAY_PERIOD">
-          <Key>
-            <PropertyRef Name="SCREENING_ID" />
-            <PropertyRef Name="DATA_ID" />
-          </Key>
-          <Property Type="String" Name="SCREENING_ID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-          <Property Type="Int32" Name="ESTIMATE_ID" />
-          <Property Type="Decimal" Name="MULTIPLIER" Precision="32" Scale="6" />
-          <Property Type="Int32" Name="DECIMAL" />
-          <Property Type="String" Name="PERCENTAGE" MaxLength="1" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <ComplexType Name="CustomScreeningFVAData">
-          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" />
-          <Property Type="Decimal" Name="FV_BUY" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="FV_SELL" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="CURRENT_MEASURE_VALUE" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="UPSIDE" Nullable="false" Precision="32" Scale="6" />
-        </ComplexType>
-        <EntityType Name="UserCustomisedListInfo">
-          <Key>
-            <PropertyRef Name="ListId" />
-          </Key>
-          <Property Type="Int64" Name="ListId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ListName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Accessibilty" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
-          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="UserListDataPointMappingInfoes" Relationship="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" FromRole="UserCustomisedListInfo" ToRole="UserListDataPointMappingInfo" />
-        </EntityType>
-        <ComplexType Name="CustomScreeningCURData">
-          <Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
-          <Property Type="Int32" Name="DataId" Nullable="true" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Int32" Name="PeriodYear" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="CustomScreeningFINData">
-          <Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
-          <Property Type="Int32" Name="DataId" Nullable="true" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Int32" Name="PeriodYear" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="CustomScreeningREFData">
-          <Property Type="String" Name="SECURITY_ID" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="ASEC_SEC_SHORT_NAME" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ISSUE_NAME" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ISIN" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="SEDOL" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="SECS_INSTYPE" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ASEC_INSTR_TYPE" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="SECURITY_TYPE" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="ASEC_FC_SEC_REF" Nullable="true" />
-          <Property Type="String" Name="LOOK_THRU_FUND" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="FIFTYTWO_WEEK_LOW" Nullable="true" />
-          <Property Type="Double" Name="FIFTYTWO_WEEK_HIGH" Nullable="true" />
-          <Property Type="String" Name="SECURITY_VOLUME_AVG_90D" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="SECURITY_VOLUME_AVG_6M" Nullable="true" />
-          <Property Type="Double" Name="SECURITY_VOLUME_AVG_30D" Nullable="true" />
-          <Property Type="String" Name="GREENFIELD_FLAG" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="FLOAT_AMOUNT" Nullable="true" />
-          <Property Type="String" Name="CUSIP" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="STOCK_EXCHANGE_ID" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="ASEC_ISSUED_VOLUME" Nullable="true" />
-          <Property Type="String" Name="ISSUER_ID" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="TRADING_CURRENCY" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="SHARES_OUTSTANDING" Nullable="true" />
-          <Property Type="Double" Name="BETA" Nullable="true" />
-          <Property Type="Double" Name="BARRA_BETA" Nullable="true" />
-          <Property Type="String" Name="TICKER" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="MSCI" Nullable="true" />
-          <Property Type="String" Name="BARRA" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ISO_COUNTRY_CODE" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ASEC_SEC_COUNTRY_NAME" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ASEC_SEC_COUNTRY_ZONE_NAME" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ISSUER_NAME" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ASHEMM_ONE_LINER_DESCRIPTION" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="BLOOMBERG_DESCRIPTION" Nullable="true" MaxLength="Max" />
-          <Property Type="String" Name="ASHMOREEMM_INDUSTRY_ANALYST" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ASHMOREEMM_PRIMARY_ANALYST" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="ASHMOREEMM_PORTFOLIO_MANAGER" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="WEBSITE" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="FISCAL_YEAR_END" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="XREF" Nullable="true" />
-          <Property Type="String" Name="REPORTNUMBER" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="GICS_SECTOR" Nullable="true" />
-          <Property Type="String" Name="GICS_SECTOR_NAME" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="GICS_INDUSTRY" Nullable="true" />
-          <Property Type="String" Name="GICS_INDUSTRY_NAME" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="GICS_SUB_INDUSTRY" Nullable="true" />
-          <Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="SHARES_PER_ADR" Nullable="true" />
-          <Property Type="String" Name="ADR_UNDERLYING_TICKER" Nullable="true" MaxLength="255" />
-          <Property Type="Double" Name="MARKET_CAP_IN_TRADING_CURRENCY" Nullable="true" />
-          <Property Type="Double" Name="CLOSING_PRICE" Nullable="true" />
-          <Property Type="Double" Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" Nullable="true" />
-          <Property Type="DateTime" Name="LAST_CLOSE_DATE" Nullable="true" Precision="23" />
-          <Property Type="Double" Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="CustomScreeningMarketCap">
-          <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
-          <Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
-        </ComplexType>
-        <EntityType Name="SCREENING_DISPLAY_REFERENCE">
-          <Key>
-            <PropertyRef Name="SCREENING_ID" />
-            <PropertyRef Name="DATA_DESC" />
-            <PropertyRef Name="SHORT_COLUMN_DESC" />
-            <PropertyRef Name="LONG_DESC" />
-            <PropertyRef Name="TABLE_COLUMN" />
-            <PropertyRef Name="DATA_TYPE" />
-          </Key>
-          <Property Type="String" Name="SCREENING_ID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SHORT_COLUMN_DESC" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="LONG_DESC" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="TABLE_COLUMN" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DATA_TYPE" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="MULTIPLIER" Precision="32" Scale="6" />
-          <Property Type="Int32" Name="DECIMAL" />
-          <Property Type="String" Name="PERCENTAGE" MaxLength="10" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="UserListDataPointMappingInfo">
-          <Key>
-            <PropertyRef Name="DataPointId" />
-          </Key>
-          <Property Type="Int64" Name="DataPointId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int64" Name="ListId" Nullable="false" />
-          <Property Type="String" Name="ScreeningId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DataDescription" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="DataSource" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="PeriodType" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="YearType" MaxLength="8" FixedLength="true" Unicode="false" />
-          <Property Type="Int32" Name="FromDate" />
-          <Property Type="Int32" Name="ToDate" />
-          <Property Type="Int32" Name="DataPointsOrder" Nullable="false" />
-          <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
-          <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="UserCustomisedListInfo" Relationship="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" FromRole="UserListDataPointMappingInfo" ToRole="UserCustomisedListInfo" />
-        </EntityType>
-        <Association Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
-          <End Type="CustomScreeningToolModel.UserCustomisedListInfo" Role="UserCustomisedListInfo" Multiplicity="1" />
-          <End Type="CustomScreeningToolModel.UserListDataPointMappingInfo" Role="UserListDataPointMappingInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="UserCustomisedListInfo">
-              <PropertyRef Name="ListId" />
-            </Principal>
-            <Dependent Role="UserListDataPointMappingInfo">
-              <PropertyRef Name="ListId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="CustomScreeningUserPreferences">
-          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
-          <Property Type="Int64" Name="ListId" Nullable="false" />
-          <Property Type="String" Name="ListName" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Accessibilty" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="ScreeningId" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="DataDescription" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="DataSource" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PeriodType" Nullable="true" MaxLength="2" />
-          <Property Type="String" Name="YearType" Nullable="true" MaxLength="8" />
-          <Property Type="Int32" Name="FromDate" Nullable="true" />
-          <Property Type="Int32" Name="ToDate" Nullable="true" />
-          <Property Type="Int32" Name="DataPointsOrder" Nullable="true" />
-        </ComplexType>
-      </Schema>
-    </edmx:ConceptualModels>
-    <!-- C-S mapping content -->
-    <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="CustomScreeningToolModelStoreContainer" CdmEntityContainer="CustomScreeningToolEntities">
-          <EntitySetMapping Name="SCREENING_DISPLAY_CURRENT">
-            <EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT">
-              <MappingFragment StoreEntitySet="SCREENING_DISPLAY_CURRENT">
-                <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
-                <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
-                <ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
-                <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SCREENING_DISPLAY_FAIRVALUE">
-            <EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE">
-              <MappingFragment StoreEntitySet="SCREENING_DISPLAY_FAIRVALUE">
-                <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
-                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
-                <ScalarProperty Name="SHORT_COLUMN_DESC" ColumnName="SHORT_COLUMN_DESC" />
-                <ScalarProperty Name="LONG_DESC" ColumnName="LONG_DESC" />
-                <ScalarProperty Name="TABLE_COLUMN" ColumnName="TABLE_COLUMN" />
-                <ScalarProperty Name="DATA_TYPE" ColumnName="DATA_TYPE" />
-                <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
-                <ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
-                <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetFinancialTabDataDescriptions" FunctionName="CustomScreeningToolModel.Store.GetFinancialTabDataDescriptions">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CustomScreeningToolModel.FinancialTabDataDescriptions">
-                <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
-                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
-                <ScalarProperty Name="QUARTERLY" ColumnName="QUARTERLY" />
-                <ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="SCREENING_DISPLAY_PERIOD">
-            <EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD">
-              <MappingFragment StoreEntitySet="SCREENING_DISPLAY_PERIOD">
-                <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
-                <ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
-                <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
-                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-                <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetCustomScreeningFVAData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningFVAData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningFVAData">
-                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
-                <ScalarProperty Name="FV_BUY" ColumnName="FV_BUY" />
-                <ScalarProperty Name="FV_SELL" ColumnName="FV_SELL" />
-                <ScalarProperty Name="CURRENT_MEASURE_VALUE" ColumnName="CURRENT_MEASURE_VALUE" />
-                <ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="UserCustomisedListInfoes">
-            <EntityTypeMapping TypeName="CustomScreeningToolModel.UserCustomisedListInfo">
-              <MappingFragment StoreEntitySet="UserCustomisedListInfo">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="Accessibilty" ColumnName="Accessibilty" />
-                <ScalarProperty Name="ListName" ColumnName="ListName" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="ListId" ColumnName="ListId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetCustomScreeningCURData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningCURData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningCURData">
-                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
-                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
-                <ScalarProperty Name="DataId" ColumnName="DataId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetCustomScreeningFINData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningFINData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningFINData">
-                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
-                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
-                <ScalarProperty Name="DataId" ColumnName="DataId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetCustomScreeningREFData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningREFData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningREFData">
-                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-                <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
-                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
-                <ScalarProperty Name="ISIN" ColumnName="ISIN" />
-                <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
-                <ScalarProperty Name="SECS_INSTYPE" ColumnName="SECS_INSTYPE" />
-                <ScalarProperty Name="ASEC_INSTR_TYPE" ColumnName="ASEC_INSTR_TYPE" />
-                <ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
-                <ScalarProperty Name="ASEC_FC_SEC_REF" ColumnName="ASEC_FC_SEC_REF" />
-                <ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
-                <ScalarProperty Name="FIFTYTWO_WEEK_LOW" ColumnName="FIFTYTWO_WEEK_LOW" />
-                <ScalarProperty Name="FIFTYTWO_WEEK_HIGH" ColumnName="FIFTYTWO_WEEK_HIGH" />
-                <ScalarProperty Name="SECURITY_VOLUME_AVG_90D" ColumnName="SECURITY_VOLUME_AVG_90D" />
-                <ScalarProperty Name="SECURITY_VOLUME_AVG_6M" ColumnName="SECURITY_VOLUME_AVG_6M" />
-                <ScalarProperty Name="SECURITY_VOLUME_AVG_30D" ColumnName="SECURITY_VOLUME_AVG_30D" />
-                <ScalarProperty Name="GREENFIELD_FLAG" ColumnName="GREENFIELD_FLAG" />
-                <ScalarProperty Name="FLOAT_AMOUNT" ColumnName="FLOAT_AMOUNT" />
-                <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
-                <ScalarProperty Name="STOCK_EXCHANGE_ID" ColumnName="STOCK_EXCHANGE_ID" />
-                <ScalarProperty Name="ASEC_ISSUED_VOLUME" ColumnName="ASEC_ISSUED_VOLUME" />
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="TRADING_CURRENCY" ColumnName="TRADING_CURRENCY" />
-                <ScalarProperty Name="SHARES_OUTSTANDING" ColumnName="SHARES_OUTSTANDING" />
-                <ScalarProperty Name="BETA" ColumnName="BETA" />
-                <ScalarProperty Name="BARRA_BETA" ColumnName="BARRA_BETA" />
-                <ScalarProperty Name="TICKER" ColumnName="TICKER" />
-                <ScalarProperty Name="MSCI" ColumnName="MSCI" />
-                <ScalarProperty Name="BARRA" ColumnName="BARRA" />
-                <ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
-                <ScalarProperty Name="ASEC_SEC_COUNTRY_NAME" ColumnName="ASEC_SEC_COUNTRY_NAME" />
-                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
-                <ScalarProperty Name="ASEC_SEC_COUNTRY_ZONE_NAME" ColumnName="ASEC_SEC_COUNTRY_ZONE_NAME" />
-                <ScalarProperty Name="ISSUER_NAME" ColumnName="ISSUER_NAME" />
-                <ScalarProperty Name="ASHEMM_ONE_LINER_DESCRIPTION" ColumnName="ASHEMM_ONE_LINER_DESCRIPTION" />
-                <ScalarProperty Name="BLOOMBERG_DESCRIPTION" ColumnName="BLOOMBERG_DESCRIPTION" />
-                <ScalarProperty Name="ASHMOREEMM_INDUSTRY_ANALYST" ColumnName="ASHMOREEMM_INDUSTRY_ANALYST" />
-                <ScalarProperty Name="ASHMOREEMM_PRIMARY_ANALYST" ColumnName="ASHMOREEMM_PRIMARY_ANALYST" />
-                <ScalarProperty Name="ASHMOREEMM_PORTFOLIO_MANAGER" ColumnName="ASHMOREEMM_PORTFOLIO_MANAGER" />
-                <ScalarProperty Name="WEBSITE" ColumnName="WEBSITE" />
-                <ScalarProperty Name="FISCAL_YEAR_END" ColumnName="FISCAL_YEAR_END" />
-                <ScalarProperty Name="XREF" ColumnName="XREF" />
-                <ScalarProperty Name="REPORTNUMBER" ColumnName="REPORTNUMBER" />
-                <ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
-                <ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
-                <ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
-                <ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
-                <ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
-                <ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
-                <ScalarProperty Name="SHARES_PER_ADR" ColumnName="SHARES_PER_ADR" />
-                <ScalarProperty Name="ADR_UNDERLYING_TICKER" ColumnName="ADR_UNDERLYING_TICKER" />
-                <ScalarProperty Name="MARKET_CAP_IN_TRADING_CURRENCY" ColumnName="MARKET_CAP_IN_TRADING_CURRENCY" />
-                <ScalarProperty Name="CLOSING_PRICE" ColumnName="CLOSING_PRICE" />
-                <ScalarProperty Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" ColumnName="LAST_CLOSE_FX_QUO_CURR_TO_USD" />
-                <ScalarProperty Name="LAST_CLOSE_DATE" ColumnName="LAST_CLOSE_DATE" />
-                <ScalarProperty Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" ColumnName="TOT_CURR_SHRS_OUTST_ALL_CLASS" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetCustomScreeningMarketCap" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningMarketCap">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningMarketCap">
-                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
-                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="SCREENING_DISPLAY_REFERENCE">
-            <EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE">
-              <MappingFragment StoreEntitySet="SCREENING_DISPLAY_REFERENCE">
-                <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
-                <ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
-                <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
-                <ScalarProperty Name="DATA_TYPE" ColumnName="DATA_TYPE" />
-                <ScalarProperty Name="TABLE_COLUMN" ColumnName="TABLE_COLUMN" />
-                <ScalarProperty Name="LONG_DESC" ColumnName="LONG_DESC" />
-                <ScalarProperty Name="SHORT_COLUMN_DESC" ColumnName="SHORT_COLUMN_DESC" />
-                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
-                <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserListDataPointMappingInfoes">
-            <EntityTypeMapping TypeName="CustomScreeningToolModel.UserListDataPointMappingInfo">
-              <MappingFragment StoreEntitySet="UserListDataPointMappingInfo">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
-                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
-                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
-                <ScalarProperty Name="YearType" ColumnName="YearType" />
-                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
-                <ScalarProperty Name="DataDescription" ColumnName="DataDescription" />
-                <ScalarProperty Name="ScreeningId" ColumnName="ScreeningId" />
-                <ScalarProperty Name="ListId" ColumnName="ListId" />
-                <ScalarProperty Name="DataPointId" ColumnName="DataPointId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetCustomScreeningUserPreferences" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningUserPreferences">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningUserPreferences">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="ListId" ColumnName="ListId" />
-                <ScalarProperty Name="ListName" ColumnName="ListName" />
-                <ScalarProperty Name="Accessibilty" ColumnName="Accessibilty" />
-                <ScalarProperty Name="ScreeningId" ColumnName="ScreeningId" />
-                <ScalarProperty Name="DataDescription" ColumnName="DataDescription" />
-                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
-                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-                <ScalarProperty Name="YearType" ColumnName="YearType" />
-                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
-                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
-                <ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
-  </edmx:Runtime>
-  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
-  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
-    <Connection>
-      <DesignerInfoPropertySet>
-        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
-      </DesignerInfoPropertySet>
-    </Connection>
-    <Options>
-      <DesignerInfoPropertySet>
-        <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="True" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
-      </DesignerInfoPropertySet>
-    </Options>
-    <!-- Diagram content (shape and connector positions) -->
-    <Diagrams>
-      <Diagram Name="CustomScreeningToolDataModel" ZoomLevel="97">
-        <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" Width="2.375" PointX="0.5" PointY="4.75" Height="2.1725878906250102" IsExpanded="true" />
-        <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" Width="2.375" PointX="5.375" PointY="0.5" Height="2.7494921875000102" IsExpanded="true" />
-        <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" Width="2.25" PointX="8" PointY="0.625" Height="2.1725878906249996" />
-        <EntityTypeShape EntityType="CustomScreeningToolModel.UserCustomisedListInfo" Width="1.5" PointX="0.75" PointY="1.375" Height="2.5571907552083317" />
-        <EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" Width="2.625" PointX="5" PointY="4" Height="2.7494921874999996" />
-        <EntityTypeShape EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" Width="1.5" PointX="3.25" PointY="1.25" Height="3.9033007812499996" />
-        <AssociationConnector Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" >
-          <ConnectorPoint PointX="2.25" PointY="2.6535953776041667" />
-          <ConnectorPoint PointX="3.25" PointY="2.6535953776041667" />
-        </AssociationConnector>
-      </Diagram>
-    </Diagrams>
-  </Designer>
+				<EntityType Name="SCREENING_DISPLAY_REFERENCE">
+					<Key>
+						<PropertyRef Name="SCREENING_ID" />
+						<PropertyRef Name="DATA_DESC" />
+						<PropertyRef Name="SHORT_COLUMN_DESC" />
+						<PropertyRef Name="LONG_DESC" />
+						<PropertyRef Name="TABLE_COLUMN" />
+						<PropertyRef Name="DATA_TYPE" />
+					</Key>
+					<Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
+					<Property Name="SHORT_COLUMN_DESC" Type="varchar" Nullable="false" MaxLength="255" />
+					<Property Name="LONG_DESC" Type="varchar(max)" Nullable="false" />
+					<Property Name="TABLE_COLUMN" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="DATA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
+					<Property Name="DECIMAL" Type="int" />
+					<Property Name="PERCENTAGE" Type="char" MaxLength="10" />
+				</EntityType>
+				<EntityType Name="UserCustomisedListInfo">
+					<Key>
+						<PropertyRef Name="ListId" />
+					</Key>
+					<Property Name="ListId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+					<Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+					<Property Name="ListName" Type="nvarchar" Nullable="false" MaxLength="50" />
+					<Property Name="Accessibilty" Type="nvarchar" Nullable="false" MaxLength="10" />
+					<Property Name="CreatedOn" Type="datetime" Nullable="false" />
+					<Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+					<Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+				</EntityType>
+				<EntityType Name="UserListDataPointMappingInfo">
+					<Key>
+						<PropertyRef Name="DataPointId" />
+					</Key>
+					<Property Name="DataPointId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+					<Property Name="ListId" Type="bigint" Nullable="false" />
+					<Property Name="ScreeningId" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="DataDescription" Type="varchar" Nullable="false" MaxLength="100" />
+					<Property Name="DataSource" Type="varchar" MaxLength="50" />
+					<Property Name="PeriodType" Type="char" MaxLength="2" />
+					<Property Name="YearType" Type="char" MaxLength="8" />
+					<Property Name="FromDate" Type="int" />
+					<Property Name="ToDate" Type="int" />
+					<Property Name="DataPointsOrder" Type="int" Nullable="false" />
+					<Property Name="CreatedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+					<Property Name="CreatedOn" Type="datetime" Nullable="false" />
+					<Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+					<Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+				</EntityType>
+				<Association Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+					<End Role="UserCustomisedListInfo" Type="CustomScreeningToolModel.Store.UserCustomisedListInfo" Multiplicity="1">
+						<OnDelete Action="Cascade" />
+					</End>
+					<End Role="UserListDataPointMappingInfo" Type="CustomScreeningToolModel.Store.UserListDataPointMappingInfo" Multiplicity="*" />
+					<ReferentialConstraint>
+						<Principal Role="UserCustomisedListInfo">
+							<PropertyRef Name="ListId" />
+						</Principal>
+						<Dependent Role="UserListDataPointMappingInfo">
+							<PropertyRef Name="ListId" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<Function Name="GetCustomScreeningCURData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
+					<Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
+					<Parameter Name="dataID" Type="int" Mode="In" />
+					<Parameter Name="dataSource" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetCustomScreeningFINData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
+					<Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
+					<Parameter Name="dataID" Type="int" Mode="In" />
+					<Parameter Name="periodType" Type="char" Mode="In" />
+					<Parameter Name="periodYear" Type="int" Mode="In" />
+					<Parameter Name="fiscalType" Type="char" Mode="In" />
+					<Parameter Name="dataSource" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetCustomScreeningFVAData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
+					<Parameter Name="dataSource" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetCustomScreeningMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
+					<Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
+				</Function>
+				<Function Name="GetCustomScreeningREFData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
+				</Function>
+				<Function Name="GetCustomScreeningUserPreferences" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="username" Type="nvarchar" Mode="In" />
+				</Function>
+				<Function Name="GetFinancialTabDataDescriptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="tabName" Type="nvarchar" Mode="In" />
+				</Function>
+			</Schema>
+		</edmx:StorageModels>
+		<!-- CSDL content -->
+		<edmx:ConceptualModels>
+			<Schema Namespace="CustomScreeningToolModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+				<EntityContainer Name="CustomScreeningToolEntities" annotation:LazyLoadingEnabled="true">
+					<EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" />
+					<EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" />
+					<FunctionImport Name="GetFinancialTabDataDescriptions" ReturnType="Collection(CustomScreeningToolModel.FinancialTabDataDescriptions)">
+						<Parameter Name="tabName" Mode="In" Type="String" />
+					</FunctionImport>
+					<EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" />
+					<FunctionImport Name="GetCustomScreeningFVAData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFVAData)">
+						<Parameter Name="securityIdsList" Mode="In" Type="String" />
+						<Parameter Name="dataSource" Mode="In" Type="String" />
+					</FunctionImport>
+					<EntitySet Name="UserCustomisedListInfoes" EntityType="CustomScreeningToolModel.UserCustomisedListInfo" />
+					<FunctionImport Name="GetCustomScreeningCURData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningCURData)">
+						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
+						<Parameter Name="securityIdsList" Mode="In" Type="String" />
+						<Parameter Name="dataID" Mode="In" Type="Int32" />
+						<Parameter Name="dataSource" Mode="In" Type="String" />
+					</FunctionImport>
+					<FunctionImport Name="GetCustomScreeningFINData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFINData)">
+						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
+						<Parameter Name="securityIdsList" Mode="In" Type="String" />
+						<Parameter Name="dataID" Mode="In" Type="Int32" />
+						<Parameter Name="periodType" Mode="In" Type="String" />
+						<Parameter Name="periodYear" Mode="In" Type="Int32" />
+						<Parameter Name="fiscalType" Mode="In" Type="String" />
+						<Parameter Name="dataSource" Mode="In" Type="String" />
+					</FunctionImport>
+					<FunctionImport Name="GetCustomScreeningREFData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningREFData)">
+						<Parameter Name="securityIdsList" Mode="In" Type="String" />
+					</FunctionImport>
+					<FunctionImport Name="GetCustomScreeningMarketCap" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningMarketCap)">
+						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
+						<Parameter Name="securityIdsList" Mode="In" Type="String" />
+					</FunctionImport>
+					<EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" />
+					<EntitySet Name="UserListDataPointMappingInfoes" EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" />
+					<AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+						<End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfoes" />
+						<End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfoes" />
+					</AssociationSet>
+					<FunctionImport Name="GetCustomScreeningUserPreferences" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningUserPreferences)">
+						<Parameter Name="username" Mode="In" Type="String" />
+					</FunctionImport>
+				</EntityContainer>
+				<EntityType Name="SCREENING_DISPLAY_CURRENT">
+					<Key>
+						<PropertyRef Name="SCREENING_ID" />
+						<PropertyRef Name="DATA_ID" />
+						<PropertyRef Name="ESTIMATE_ID" />
+					</Key>
+					<Property Name="SCREENING_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+					<Property Name="DATA_ID" Type="Int32" Nullable="false" />
+					<Property Name="ESTIMATE_ID" Type="Int32" Nullable="false" />
+					<Property Name="MULTIPLIER" Type="Decimal" Precision="32" Scale="6" />
+					<Property Name="DECIMAL" Type="Int32" />
+					<Property Name="PERCENTAGE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+				</EntityType>
+				<EntityType Name="SCREENING_DISPLAY_FAIRVALUE">
+					<Key>
+						<PropertyRef Name="SCREENING_ID" />
+						<PropertyRef Name="DATA_DESC" />
+						<PropertyRef Name="SHORT_COLUMN_DESC" />
+						<PropertyRef Name="LONG_DESC" />
+						<PropertyRef Name="TABLE_COLUMN" />
+						<PropertyRef Name="DATA_TYPE" />
+					</Key>
+					<Property Name="SCREENING_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+					<Property Name="DATA_DESC" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
+					<Property Name="SHORT_COLUMN_DESC" Type="String" Nullable="false" MaxLength="255" Unicode="false" FixedLength="false" />
+					<Property Name="LONG_DESC" Type="String" Nullable="false" MaxLength="Max" Unicode="false" FixedLength="false" />
+					<Property Name="TABLE_COLUMN" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+					<Property Name="DATA_TYPE" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+					<Property Name="MULTIPLIER" Type="Decimal" Precision="32" Scale="6" />
+					<Property Name="DECIMAL" Type="Int32" />
+					<Property Name="PERCENTAGE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+				</EntityType>
+				<ComplexType Name="FinancialTabDataDescriptions" >
+					<Property Type="String" Name="SCREENING_ID" Nullable="false" />
+					<Property Type="String" Name="DATA_DESC" Nullable="false" />
+					<Property Type="String" Name="QUARTERLY" Nullable="true" />
+					<Property Type="String" Name="ANNUAL" Nullable="true" />
+					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
+					<Property Type="Int32" Name="ESTIMATE_ID" Nullable="true" />
+				</ComplexType>
+				<EntityType Name="SCREENING_DISPLAY_PERIOD">
+					<Key>
+						<PropertyRef Name="SCREENING_ID" />
+						<PropertyRef Name="DATA_ID" />
+					</Key>
+					<Property Type="String" Name="SCREENING_ID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
+					<Property Type="Int32" Name="ESTIMATE_ID" />
+					<Property Type="Decimal" Name="MULTIPLIER" Precision="32" Scale="6" />
+					<Property Type="Int32" Name="DECIMAL" />
+					<Property Type="String" Name="PERCENTAGE" MaxLength="1" FixedLength="false" Unicode="false" />
+				</EntityType>
+				<ComplexType Name="CustomScreeningFVAData">
+					<Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" />
+					<Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" />
+					<Property Type="Decimal" Name="FV_BUY" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="FV_SELL" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="CURRENT_MEASURE_VALUE" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="UPSIDE" Nullable="false" Precision="32" Scale="6" />
+				</ComplexType>
+				<EntityType Name="UserCustomisedListInfo">
+					<Key>
+						<PropertyRef Name="ListId" />
+					</Key>
+					<Property Type="Int64" Name="ListId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Type="String" Name="UserName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Type="String" Name="ListName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Type="String" Name="Accessibilty" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+					<Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+					<Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
+					<NavigationProperty Name="UserListDataPointMappingInfoes" Relationship="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" FromRole="UserCustomisedListInfo" ToRole="UserListDataPointMappingInfo" />
+				</EntityType>
+				<ComplexType Name="CustomScreeningCURData">
+					<Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
+					<Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
+					<Property Type="Int32" Name="DataId" Nullable="true" />
+					<Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Int32" Name="PeriodYear" Nullable="false" />
+				</ComplexType>
+				<ComplexType Name="CustomScreeningFINData">
+					<Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
+					<Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
+					<Property Type="Int32" Name="DataId" Nullable="true" />
+					<Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Int32" Name="PeriodYear" Nullable="false" />
+				</ComplexType>
+				<ComplexType Name="CustomScreeningREFData">
+					<Property Type="String" Name="SECURITY_ID" Nullable="true" MaxLength="50" />
+					<Property Type="String" Name="ASEC_SEC_SHORT_NAME" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="ISSUE_NAME" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="ISIN" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="SEDOL" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="SECS_INSTYPE" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="ASEC_INSTR_TYPE" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="SECURITY_TYPE" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="ASEC_FC_SEC_REF" Nullable="true" />
+					<Property Type="String" Name="LOOK_THRU_FUND" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="FIFTYTWO_WEEK_LOW" Nullable="true" />
+					<Property Type="Double" Name="FIFTYTWO_WEEK_HIGH" Nullable="true" />
+					<Property Type="String" Name="SECURITY_VOLUME_AVG_90D" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="SECURITY_VOLUME_AVG_6M" Nullable="true" />
+					<Property Type="Double" Name="SECURITY_VOLUME_AVG_30D" Nullable="true" />
+					<Property Type="String" Name="GREENFIELD_FLAG" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="FLOAT_AMOUNT" Nullable="true" />
+					<Property Type="String" Name="CUSIP" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="STOCK_EXCHANGE_ID" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="ASEC_ISSUED_VOLUME" Nullable="true" />
+					<Property Type="String" Name="ISSUER_ID" Nullable="true" MaxLength="50" />
+					<Property Type="String" Name="TRADING_CURRENCY" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="SHARES_OUTSTANDING" Nullable="true" />
+					<Property Type="Double" Name="BETA" Nullable="true" />
+					<Property Type="Double" Name="BARRA_BETA" Nullable="true" />
+					<Property Type="String" Name="TICKER" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="MSCI" Nullable="true" />
+					<Property Type="String" Name="BARRA" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="ISO_COUNTRY_CODE" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="ASEC_SEC_COUNTRY_NAME" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="ASEC_SEC_COUNTRY_ZONE_NAME" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="ISSUER_NAME" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="ASHEMM_ONE_LINER_DESCRIPTION" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="BLOOMBERG_DESCRIPTION" Nullable="true" MaxLength="Max" />
+					<Property Type="String" Name="ASHMOREEMM_INDUSTRY_ANALYST" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="ASHMOREEMM_PRIMARY_ANALYST" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="ASHMOREEMM_PORTFOLIO_MANAGER" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="WEBSITE" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="FISCAL_YEAR_END" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="XREF" Nullable="true" />
+					<Property Type="String" Name="REPORTNUMBER" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="GICS_SECTOR" Nullable="true" />
+					<Property Type="String" Name="GICS_SECTOR_NAME" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="GICS_INDUSTRY" Nullable="true" />
+					<Property Type="String" Name="GICS_INDUSTRY_NAME" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="GICS_SUB_INDUSTRY" Nullable="true" />
+					<Property Type="String" Name="GICS_SUB_INDUSTRY_NAME" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="SHARES_PER_ADR" Nullable="true" />
+					<Property Type="String" Name="ADR_UNDERLYING_TICKER" Nullable="true" MaxLength="255" />
+					<Property Type="Double" Name="MARKET_CAP_IN_TRADING_CURRENCY" Nullable="true" />
+					<Property Type="Double" Name="CLOSING_PRICE" Nullable="true" />
+					<Property Type="Double" Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" Nullable="true" />
+					<Property Type="DateTime" Name="LAST_CLOSE_DATE" Nullable="true" Precision="23" />
+					<Property Type="Double" Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" Nullable="true" />
+				</ComplexType>
+				<ComplexType Name="CustomScreeningMarketCap">
+					<Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
+					<Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
+					<Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
+				</ComplexType>
+				<EntityType Name="SCREENING_DISPLAY_REFERENCE">
+					<Key>
+						<PropertyRef Name="SCREENING_ID" />
+						<PropertyRef Name="DATA_DESC" />
+						<PropertyRef Name="SHORT_COLUMN_DESC" />
+						<PropertyRef Name="LONG_DESC" />
+						<PropertyRef Name="TABLE_COLUMN" />
+						<PropertyRef Name="DATA_TYPE" />
+					</Key>
+					<Property Type="String" Name="SCREENING_ID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="SHORT_COLUMN_DESC" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="LONG_DESC" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="TABLE_COLUMN" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="DATA_TYPE" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="Decimal" Name="MULTIPLIER" Precision="32" Scale="6" />
+					<Property Type="Int32" Name="DECIMAL" />
+					<Property Type="String" Name="PERCENTAGE" MaxLength="10" FixedLength="true" Unicode="false" />
+				</EntityType>
+				<EntityType Name="UserListDataPointMappingInfo">
+					<Key>
+						<PropertyRef Name="DataPointId" />
+					</Key>
+					<Property Type="Int64" Name="DataPointId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Type="Int64" Name="ListId" Nullable="false" />
+					<Property Type="String" Name="ScreeningId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="DataDescription" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="DataSource" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="PeriodType" MaxLength="2" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="YearType" MaxLength="8" FixedLength="true" Unicode="false" />
+					<Property Type="Int32" Name="FromDate" />
+					<Property Type="Int32" Name="ToDate" />
+					<Property Type="Int32" Name="DataPointsOrder" Nullable="false" />
+					<Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Type="DateTime" Name="CreatedOn" Nullable="false" />
+					<Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+					<Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
+					<NavigationProperty Name="UserCustomisedListInfo" Relationship="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" FromRole="UserListDataPointMappingInfo" ToRole="UserCustomisedListInfo" />
+				</EntityType>
+				<Association Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+					<End Type="CustomScreeningToolModel.UserCustomisedListInfo" Role="UserCustomisedListInfo" Multiplicity="1" />
+					<End Type="CustomScreeningToolModel.UserListDataPointMappingInfo" Role="UserListDataPointMappingInfo" Multiplicity="*" />
+					<ReferentialConstraint>
+						<Principal Role="UserCustomisedListInfo">
+							<PropertyRef Name="ListId" />
+						</Principal>
+						<Dependent Role="UserListDataPointMappingInfo">
+							<PropertyRef Name="ListId" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<ComplexType Name="CustomScreeningUserPreferences">
+					<Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+					<Property Type="Int64" Name="ListId" Nullable="false" />
+					<Property Type="String" Name="ListName" Nullable="false" MaxLength="50" />
+					<Property Type="String" Name="Accessibilty" Nullable="false" MaxLength="10" />
+					<Property Type="String" Name="ScreeningId" Nullable="true" MaxLength="50" />
+					<Property Type="String" Name="DataDescription" Nullable="true" MaxLength="100" />
+					<Property Type="String" Name="DataSource" Nullable="true" MaxLength="50" />
+					<Property Type="String" Name="PeriodType" Nullable="true" MaxLength="2" />
+					<Property Type="String" Name="YearType" Nullable="true" MaxLength="8" />
+					<Property Type="Int32" Name="FromDate" Nullable="true" />
+					<Property Type="Int32" Name="ToDate" Nullable="true" />
+					<Property Type="Int32" Name="DataPointsOrder" Nullable="true" />
+				</ComplexType>
+			</Schema>
+		</edmx:ConceptualModels>
+		<!-- C-S mapping content -->
+		<edmx:Mappings>
+			<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+				<EntityContainerMapping StorageEntityContainer="CustomScreeningToolModelStoreContainer" CdmEntityContainer="CustomScreeningToolEntities">
+					<EntitySetMapping Name="SCREENING_DISPLAY_CURRENT">
+						<EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT">
+							<MappingFragment StoreEntitySet="SCREENING_DISPLAY_CURRENT">
+								<ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+								<ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+								<ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+								<ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
+								<ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="SCREENING_DISPLAY_FAIRVALUE">
+						<EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE">
+							<MappingFragment StoreEntitySet="SCREENING_DISPLAY_FAIRVALUE">
+								<ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+								<ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+								<ScalarProperty Name="SHORT_COLUMN_DESC" ColumnName="SHORT_COLUMN_DESC" />
+								<ScalarProperty Name="LONG_DESC" ColumnName="LONG_DESC" />
+								<ScalarProperty Name="TABLE_COLUMN" ColumnName="TABLE_COLUMN" />
+								<ScalarProperty Name="DATA_TYPE" ColumnName="DATA_TYPE" />
+								<ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+								<ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
+								<ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<FunctionImportMapping FunctionImportName="GetFinancialTabDataDescriptions" FunctionName="CustomScreeningToolModel.Store.GetFinancialTabDataDescriptions">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="CustomScreeningToolModel.FinancialTabDataDescriptions">
+								<ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+								<ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+								<ScalarProperty Name="QUARTERLY" ColumnName="QUARTERLY" />
+								<ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+								<ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<EntitySetMapping Name="SCREENING_DISPLAY_PERIOD">
+						<EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD">
+							<MappingFragment StoreEntitySet="SCREENING_DISPLAY_PERIOD">
+								<ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+								<ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
+								<ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+								<ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+								<ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<FunctionImportMapping FunctionImportName="GetCustomScreeningFVAData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningFVAData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningFVAData">
+								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+								<ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+								<ScalarProperty Name="FV_BUY" ColumnName="FV_BUY" />
+								<ScalarProperty Name="FV_SELL" ColumnName="FV_SELL" />
+								<ScalarProperty Name="CURRENT_MEASURE_VALUE" ColumnName="CURRENT_MEASURE_VALUE" />
+								<ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<EntitySetMapping Name="UserCustomisedListInfoes">
+						<EntityTypeMapping TypeName="CustomScreeningToolModel.UserCustomisedListInfo">
+							<MappingFragment StoreEntitySet="UserCustomisedListInfo">
+								<ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+								<ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+								<ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+								<ScalarProperty Name="Accessibilty" ColumnName="Accessibilty" />
+								<ScalarProperty Name="ListName" ColumnName="ListName" />
+								<ScalarProperty Name="UserName" ColumnName="UserName" />
+								<ScalarProperty Name="ListId" ColumnName="ListId" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<FunctionImportMapping FunctionImportName="GetCustomScreeningCURData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningCURData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningCURData">
+								<ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
+								<ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+								<ScalarProperty Name="DataId" ColumnName="DataId" />
+								<ScalarProperty Name="Amount" ColumnName="Amount" />
+								<ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetCustomScreeningFINData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningFINData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningFINData">
+								<ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
+								<ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+								<ScalarProperty Name="DataId" ColumnName="DataId" />
+								<ScalarProperty Name="Amount" ColumnName="Amount" />
+								<ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetCustomScreeningREFData" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningREFData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningREFData">
+								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+								<ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+								<ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+								<ScalarProperty Name="ISIN" ColumnName="ISIN" />
+								<ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
+								<ScalarProperty Name="SECS_INSTYPE" ColumnName="SECS_INSTYPE" />
+								<ScalarProperty Name="ASEC_INSTR_TYPE" ColumnName="ASEC_INSTR_TYPE" />
+								<ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
+								<ScalarProperty Name="ASEC_FC_SEC_REF" ColumnName="ASEC_FC_SEC_REF" />
+								<ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
+								<ScalarProperty Name="FIFTYTWO_WEEK_LOW" ColumnName="FIFTYTWO_WEEK_LOW" />
+								<ScalarProperty Name="FIFTYTWO_WEEK_HIGH" ColumnName="FIFTYTWO_WEEK_HIGH" />
+								<ScalarProperty Name="SECURITY_VOLUME_AVG_90D" ColumnName="SECURITY_VOLUME_AVG_90D" />
+								<ScalarProperty Name="SECURITY_VOLUME_AVG_6M" ColumnName="SECURITY_VOLUME_AVG_6M" />
+								<ScalarProperty Name="SECURITY_VOLUME_AVG_30D" ColumnName="SECURITY_VOLUME_AVG_30D" />
+								<ScalarProperty Name="GREENFIELD_FLAG" ColumnName="GREENFIELD_FLAG" />
+								<ScalarProperty Name="FLOAT_AMOUNT" ColumnName="FLOAT_AMOUNT" />
+								<ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
+								<ScalarProperty Name="STOCK_EXCHANGE_ID" ColumnName="STOCK_EXCHANGE_ID" />
+								<ScalarProperty Name="ASEC_ISSUED_VOLUME" ColumnName="ASEC_ISSUED_VOLUME" />
+								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="TRADING_CURRENCY" ColumnName="TRADING_CURRENCY" />
+								<ScalarProperty Name="SHARES_OUTSTANDING" ColumnName="SHARES_OUTSTANDING" />
+								<ScalarProperty Name="BETA" ColumnName="BETA" />
+								<ScalarProperty Name="BARRA_BETA" ColumnName="BARRA_BETA" />
+								<ScalarProperty Name="TICKER" ColumnName="TICKER" />
+								<ScalarProperty Name="MSCI" ColumnName="MSCI" />
+								<ScalarProperty Name="BARRA" ColumnName="BARRA" />
+								<ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
+								<ScalarProperty Name="ASEC_SEC_COUNTRY_NAME" ColumnName="ASEC_SEC_COUNTRY_NAME" />
+								<ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
+								<ScalarProperty Name="ASEC_SEC_COUNTRY_ZONE_NAME" ColumnName="ASEC_SEC_COUNTRY_ZONE_NAME" />
+								<ScalarProperty Name="ISSUER_NAME" ColumnName="ISSUER_NAME" />
+								<ScalarProperty Name="ASHEMM_ONE_LINER_DESCRIPTION" ColumnName="ASHEMM_ONE_LINER_DESCRIPTION" />
+								<ScalarProperty Name="BLOOMBERG_DESCRIPTION" ColumnName="BLOOMBERG_DESCRIPTION" />
+								<ScalarProperty Name="ASHMOREEMM_INDUSTRY_ANALYST" ColumnName="ASHMOREEMM_INDUSTRY_ANALYST" />
+								<ScalarProperty Name="ASHMOREEMM_PRIMARY_ANALYST" ColumnName="ASHMOREEMM_PRIMARY_ANALYST" />
+								<ScalarProperty Name="ASHMOREEMM_PORTFOLIO_MANAGER" ColumnName="ASHMOREEMM_PORTFOLIO_MANAGER" />
+								<ScalarProperty Name="WEBSITE" ColumnName="WEBSITE" />
+								<ScalarProperty Name="FISCAL_YEAR_END" ColumnName="FISCAL_YEAR_END" />
+								<ScalarProperty Name="XREF" ColumnName="XREF" />
+								<ScalarProperty Name="REPORTNUMBER" ColumnName="REPORTNUMBER" />
+								<ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
+								<ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
+								<ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
+								<ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
+								<ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
+								<ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
+								<ScalarProperty Name="SHARES_PER_ADR" ColumnName="SHARES_PER_ADR" />
+								<ScalarProperty Name="ADR_UNDERLYING_TICKER" ColumnName="ADR_UNDERLYING_TICKER" />
+								<ScalarProperty Name="MARKET_CAP_IN_TRADING_CURRENCY" ColumnName="MARKET_CAP_IN_TRADING_CURRENCY" />
+								<ScalarProperty Name="CLOSING_PRICE" ColumnName="CLOSING_PRICE" />
+								<ScalarProperty Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" ColumnName="LAST_CLOSE_FX_QUO_CURR_TO_USD" />
+								<ScalarProperty Name="LAST_CLOSE_DATE" ColumnName="LAST_CLOSE_DATE" />
+								<ScalarProperty Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" ColumnName="TOT_CURR_SHRS_OUTST_ALL_CLASS" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetCustomScreeningMarketCap" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningMarketCap">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningMarketCap">
+								<ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+								<ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
+								<ScalarProperty Name="Amount" ColumnName="Amount" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<EntitySetMapping Name="SCREENING_DISPLAY_REFERENCE">
+						<EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE">
+							<MappingFragment StoreEntitySet="SCREENING_DISPLAY_REFERENCE">
+								<ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+								<ScalarProperty Name="DECIMAL" ColumnName="DECIMAL" />
+								<ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+								<ScalarProperty Name="DATA_TYPE" ColumnName="DATA_TYPE" />
+								<ScalarProperty Name="TABLE_COLUMN" ColumnName="TABLE_COLUMN" />
+								<ScalarProperty Name="LONG_DESC" ColumnName="LONG_DESC" />
+								<ScalarProperty Name="SHORT_COLUMN_DESC" ColumnName="SHORT_COLUMN_DESC" />
+								<ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+								<ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="UserListDataPointMappingInfoes">
+						<EntityTypeMapping TypeName="CustomScreeningToolModel.UserListDataPointMappingInfo">
+							<MappingFragment StoreEntitySet="UserListDataPointMappingInfo">
+								<ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+								<ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+								<ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+								<ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+								<ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
+								<ScalarProperty Name="ToDate" ColumnName="ToDate" />
+								<ScalarProperty Name="FromDate" ColumnName="FromDate" />
+								<ScalarProperty Name="YearType" ColumnName="YearType" />
+								<ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+								<ScalarProperty Name="DataSource" ColumnName="DataSource" />
+								<ScalarProperty Name="DataDescription" ColumnName="DataDescription" />
+								<ScalarProperty Name="ScreeningId" ColumnName="ScreeningId" />
+								<ScalarProperty Name="ListId" ColumnName="ListId" />
+								<ScalarProperty Name="DataPointId" ColumnName="DataPointId" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<FunctionImportMapping FunctionImportName="GetCustomScreeningUserPreferences" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningUserPreferences">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningUserPreferences">
+								<ScalarProperty Name="UserName" ColumnName="UserName" />
+								<ScalarProperty Name="ListId" ColumnName="ListId" />
+								<ScalarProperty Name="ListName" ColumnName="ListName" />
+								<ScalarProperty Name="Accessibilty" ColumnName="Accessibilty" />
+								<ScalarProperty Name="ScreeningId" ColumnName="ScreeningId" />
+								<ScalarProperty Name="DataDescription" ColumnName="DataDescription" />
+								<ScalarProperty Name="DataSource" ColumnName="DataSource" />
+								<ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+								<ScalarProperty Name="YearType" ColumnName="YearType" />
+								<ScalarProperty Name="FromDate" ColumnName="FromDate" />
+								<ScalarProperty Name="ToDate" ColumnName="ToDate" />
+								<ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+				</EntityContainerMapping>
+			</Mapping>
+		</edmx:Mappings>
+	</edmx:Runtime>
+	<!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+	<Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+		<Connection>
+			<DesignerInfoPropertySet>
+				<DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+			</DesignerInfoPropertySet>
+		</Connection>
+		<Options>
+			<DesignerInfoPropertySet>
+				<DesignerProperty Name="ValidateOnBuild" Value="true" />
+				<DesignerProperty Name="EnablePluralization" Value="True" />
+				<DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+			</DesignerInfoPropertySet>
+		</Options>
+		<!-- Diagram content (shape and connector positions) -->
+		<Diagrams>
+			<Diagram Name="CustomScreeningToolDataModel" ZoomLevel="97">
+				<EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" Width="2.375" PointX="0.5" PointY="4.75" Height="2.1725878906250102" IsExpanded="true" />
+				<EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" Width="2.375" PointX="5.375" PointY="0.5" Height="2.7494921875000102" IsExpanded="true" />
+				<EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" Width="2.25" PointX="8" PointY="0.625" Height="2.1725878906249996" />
+				<EntityTypeShape EntityType="CustomScreeningToolModel.UserCustomisedListInfo" Width="1.5" PointX="0.75" PointY="1.375" Height="2.5571907552083317" />
+				<EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" Width="2.625" PointX="5" PointY="4" Height="2.7494921874999996" />
+				<EntityTypeShape EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" Width="1.5" PointX="3.25" PointY="1.25" Height="3.9033007812499996" />
+				<AssociationConnector Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" >
+					<ConnectorPoint PointX="2.25" PointY="2.6535953776041667" />
+					<ConnectorPoint PointX="3.25" PointY="2.6535953776041667" />
+				</AssociationConnector>
+			</Diagram>
+		</Diagrams>
+	</Designer>
 </edmx:Edmx>
-

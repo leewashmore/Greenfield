@@ -452,6 +452,7 @@ namespace GreenField.Gadgets.ViewModels
                             new XElement("ListName", preference.ListName),
                             new XElement("Accessibilty", preference.Accessibility),
                             new XElement("ScreeningId", preference.ScreeningId),
+                            new XElement("DataDescription", preference.DataDescription),
                             new XElement("DataSource", preference.DataSource),
                             new XElement("PeriodType", preference.PeriodType),
                             new XElement("YearType", preference.YearType),
