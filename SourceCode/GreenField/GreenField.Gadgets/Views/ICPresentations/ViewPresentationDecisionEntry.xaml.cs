@@ -144,7 +144,7 @@ namespace GreenField.Gadgets.Views
                             .SecurityPFVMeasureCurrentPrices[this.cbPFVICDecision.SelectedItem as String] == null)
                     {
                         this.cbPFVICDecision.SelectedValue = _committeePFVMeasure;
-                        Prompt.ShowDialog("Error: missing current value of P/FV measure");
+                        Prompt.ShowDialog("Error: missing current value of P/FV measure: " + this.cbPFVICDecision.SelectedItem as String);
                         return;
                     }
                 }
@@ -162,6 +162,18 @@ namespace GreenField.Gadgets.Views
             Boolean buyRangeChanged = true;
             if (_committeeBuyRange == committeeBuyRange)
                 buyRangeChanged = false;
+
+            if (DataContextViewModelPresentationDecisionEntry.SecurityPFVMeasureCurrentPrices != null)
+            {
+                if (DataContextViewModelPresentationDecisionEntry
+                        .SecurityPFVMeasureCurrentPrices[this.cbPFVICDecision.SelectedItem as String] == null)
+                {
+                    this.cbPFVICDecision.SelectedValue = _committeePFVMeasure;
+                    Prompt.ShowDialog("Error: missing current value of P/FV measure: " + this.cbPFVICDecision.SelectedItem as String);
+                    return;
+                }
+            }
+
             _committeeBuyRange = committeeBuyRange;
 
             Decimal committeeSellRange;
@@ -176,11 +188,11 @@ namespace GreenField.Gadgets.Views
                 sellRangeChanged = false;
             _committeeSellRange = committeeSellRange;
 
-            String committeeRecommendation = this.cbPFVICDecision.SelectedItem as String;
+            //String committeeRecommendation = this.cbPFVICDecision.SelectedItem as String;
 
             if (pfvChanged || buyRangeChanged || sellRangeChanged)
             {
-                DataContextViewModelPresentationDecisionEntry.UpdateICDecisionRecommendation(committeeRecommendation, committeeBuyRange, committeeSellRange); 
+                DataContextViewModelPresentationDecisionEntry.UpdateICDecisionRecommendation(_committeePFVMeasure, _committeeBuyRange, _committeeSellRange); 
             }
         } 
         #endregion

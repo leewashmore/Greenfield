@@ -175,6 +175,18 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private Boolean? _acceptWithoutDiscussionIsChecked = true;
+        public Boolean? AcceptWithoutDiscussionIsChecked
+        {
+            get { return _acceptWithoutDiscussionIsChecked; }
+            set 
+            {
+                _acceptWithoutDiscussionIsChecked = value;
+                RaisePropertyChanged(() => this.AcceptWithoutDiscussionIsChecked);
+            }
+        }
+        
+
         private ICPresentationOverviewData _selectedPresentationOverviewInfo;
         public ICPresentationOverviewData SelectedPresentationOverviewInfo
         {
@@ -185,6 +197,8 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
                 if (value != null && _dbInteractivity != null)
                 {
+                    AcceptWithoutDiscussionIsChecked = value.AcceptWithoutDiscussionFlag;
+                    ICDecisionIsEnable = !(Convert.ToBoolean(value.AcceptWithoutDiscussionFlag));
                     BusyIndicatorNotification(true, "Retrieving Voting information for the selected presentation");
                     _dbInteractivity.RetrievePresentationVoterData(value.PresentationID, RetrievePresentationVoterDataCallbackMethod);
                 }
@@ -302,7 +316,6 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region CallBack Methods
-
         private void RetrievePresentationVoterDataCallbackMethod(List<VoterInfo> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -406,7 +419,6 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification();
             }
         }
-
         #endregion
 
         #region Helper Methods
@@ -453,7 +465,10 @@ namespace GreenField.Gadgets.ViewModels
             Decimal? CurrentPFVMeasurePrice = SecurityPFVMeasureCurrentPrices[selectedPFVMeasure];
 
             if (CurrentPFVMeasurePrice == null)
+            {
+                Prompt.ShowDialog("Current P/FV measure value is not available to evaluate recommendation");
                 return;
+            }
             SelectedPresentationOverviewInfo.CommitteeBuyRange = Convert.ToSingle(buyRange);
             SelectedPresentationOverviewInfo.CommitteeSellRange = Convert.ToSingle(sellRange);
 

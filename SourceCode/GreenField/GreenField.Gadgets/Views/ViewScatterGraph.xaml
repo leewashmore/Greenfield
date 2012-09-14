@@ -194,7 +194,7 @@
                     <!--Chart-->
                     <Grid>
                         <TextBlock Text="*Missing Data for Security Selected" Margin="5" Opacity="0.3" VerticalAlignment="Bottom"
-                                   HorizontalAlignment="Left"
+                                   HorizontalAlignment="Left" Visibility="{Binding MissingSecurityDataNotificationVisibility}"
                                    Style="{StaticResource TextBlockStyle}"/>
                         <telerik:RadChart x:Name="chScatter" telerik:StyleManager.Theme="Metro" FontSize="7" FontFamily="Arial" UseDefaultLayout="False"
                                           Visibility="Visible" ItemsSource="{Binding RatioComparisonInfo, Mode=TwoWay}" Background="Transparent"

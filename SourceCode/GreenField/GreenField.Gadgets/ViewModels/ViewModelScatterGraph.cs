@@ -46,16 +46,12 @@ namespace GreenField.Gadgets.ViewModels
             if (_eventAggregator != null)
             {
                 _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSetEvent);
-            }
-
-            if (EntitySelectionInfo != null)
-            {
-                HandleSecurityReferenceSetEvent(EntitySelectionInfo);
-            }
+            }            
         } 
         #endregion
 
         #region Properties
+        #region IsActive
         private bool _isActive;
         public bool IsActive
         {
@@ -69,19 +65,24 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         HandleSecurityReferenceSetEvent(EntitySelectionInfo);
                     }
-                }                 
+                }
             }
-        }
+        } 
+        #endregion
 
+        #region Ratio Comparison Data
         private List<RatioComparisonData> _ratioComparisonInfo;
         public List<RatioComparisonData> RatioComparisonInfo
         {
             get { return _ratioComparisonInfo; }
-            set 
+            set
             {
                 _ratioComparisonInfo = value;
                 RaisePropertyChanged(() => this.RatioComparisonInfo);
-                IssueRatioComparisonInfo = value.Where(record => record.ISSUE_NAME == "SampleIssueName15").ToList();
+                if (value != null)
+                {
+                    IssueRatioComparisonInfo = value.Where(record => record.ISSUE_NAME == EntitySelectionInfo.LongName).ToList(); 
+                }
             }
         }
 
@@ -89,13 +90,28 @@ namespace GreenField.Gadgets.ViewModels
         public List<RatioComparisonData> IssueRatioComparisonInfo
         {
             get { return _issueRatioComparisonInfo; }
-            set 
+            set
             {
                 _issueRatioComparisonInfo = value;
                 RaisePropertyChanged(() => this.IssueRatioComparisonInfo);
+                MissingSecurityDataNotificationVisibility = value != null 
+                    ? (value.Count == 1 ? Visibility.Visible : Visibility.Collapsed) 
+                    : Visibility.Collapsed;
+            }
+        }
+
+        private Visibility _missingSecurityDataNotificationVisibility = Visibility.Collapsed;
+        public Visibility MissingSecurityDataNotificationVisibility
+        {
+            get { return _missingSecurityDataNotificationVisibility; }
+            set 
+            {
+                _missingSecurityDataNotificationVisibility = value;
+                RaisePropertyChanged(() => this.MissingSecurityDataNotificationVisibility);
             }
         }
         
+        #endregion        
 
         #region Issuer Details
         /// <summary>
@@ -133,6 +149,15 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _selectedFinancialRatio = value;
                     RaisePropertyChanged(() => this.SelectedFinancialRatio);
+                    if (ContextSecurityInfo != null)
+                    {
+                        String contextSecurityXML = GetContextSecurityXML(ContextSecurityInfo);
+                        if (_dbInteractivity != null && IsActive)
+                        {
+                            BusyIndicatorNotification(true, "Retrieving ratio comparison data for the selected security...");
+                            _dbInteractivity.RetrieveRatioComparisonData(contextSecurityXML, RetrieveRatioComparisonDataCallbackMethod);
+                        }  
+                    }
                 }
             }
         }
@@ -160,6 +185,15 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _selectedValuationRatio = value;
                     RaisePropertyChanged(() => this.SelectedValuationRatio);
+                    if (ContextSecurityInfo != null)
+                    {
+                        String contextSecurityXML = GetContextSecurityXML(ContextSecurityInfo);
+                        if (_dbInteractivity != null && IsActive)
+                        {
+                            BusyIndicatorNotification(true, "Retrieving ratio comparison data for the selected security...");
+                            _dbInteractivity.RetrieveRatioComparisonData(contextSecurityXML, RetrieveRatioComparisonDataCallbackMethod);
+                        } 
+                    }
                 }
             }
         }
@@ -187,6 +221,12 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _selectedContext = value;
                     RaisePropertyChanged(() => this.SelectedContext);
+                    if (_dbInteractivity != null && IsActive)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving ratio security reference data...");
+                        _dbInteractivity.RetrieveRatioSecurityReferenceData(value, IssuerReferenceInfo
+                            , RetrieveRatioSecurityReferenceDataCallbackMethod);
+                    }
                 }
             }
         }
@@ -214,6 +254,15 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _selectedPeriod = value;
                     RaisePropertyChanged(() => this.SelectedPeriod);
+                    if (ContextSecurityInfo != null)
+                    {
+                        String contextSecurityXML = GetContextSecurityXML(ContextSecurityInfo);
+                        if (_dbInteractivity != null && IsActive)
+                        {
+                            BusyIndicatorNotification(true, "Retrieving ratio comparison data for the selected security...");
+                            _dbInteractivity.RetrieveRatioComparisonData(contextSecurityXML, RetrieveRatioComparisonDataCallbackMethod);
+                        } 
+                    }
                 }
             }
         }
@@ -232,6 +281,8 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
+
+        public List<GF_SECURITY_BASEVIEW> ContextSecurityInfo { get; set; }
 
         #region Busy Indicator
         private bool _busyIndicatorIsBusy;
@@ -265,7 +316,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (result != null)
+                if (result != null && IsActive)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     EntitySelectionInfo = result;
@@ -332,8 +383,8 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 if (result != null)
-                {                   
-
+                {
+                    ContextSecurityInfo = result;
                     #region SampleData
                     //List<RatioComparisonData> RatioComparisonInfoData = new List<RatioComparisonData>();
 
@@ -685,8 +736,7 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorContent = message;
             BusyIndicatorIsBusy = showBusyIndicator;
         }
-        #endregion        
-
+        
         private void SetScatterChartDefaults(ScatterChartDefaults chartDefault)
         {
             switch (chartDefault)
@@ -711,5 +761,6 @@ namespace GreenField.Gadgets.ViewModels
                     break;
             }
         }
+        #endregion
     }
 }
