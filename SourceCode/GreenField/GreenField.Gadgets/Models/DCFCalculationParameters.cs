@@ -35,5 +35,6 @@ namespace Greenfield.Gadgets.Models
 
         public decimal CurrentMarketPrice { get; set; }
 
+        public decimal GrossDebtA { get; set; }
     }
 }

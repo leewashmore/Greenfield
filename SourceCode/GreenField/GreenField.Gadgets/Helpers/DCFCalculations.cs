@@ -150,7 +150,7 @@ namespace Greenfield.Gadgets.Helpers
                 throw new Exception("DCFCalculationParameters is null");
             }
 
-            decimal weightOfEquity = CalculateWeightofEquity(inputParameter.MarketCap, inputParameter.GrossDebt);
+            decimal weightOfEquity = CalculateWeightofEquity(inputParameter.MarketCap, inputParameter.GrossDebtA);
 
             decimal wacc = CalculateWACC(weightOfEquity, inputParameter.CostOfEquity,
                 inputParameter.CostOfDebt, inputParameter.MarginalTaxRate);

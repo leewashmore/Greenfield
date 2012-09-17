@@ -15,6 +15,7 @@ using GreenField.Common;
 using GreenField.ServiceCaller;
 using Telerik.Windows.Documents.Model;
 using Telerik.Windows.Controls;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.Views
 {
@@ -71,7 +72,7 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextSource = dataContextSource;
-            
+
         }
 
         #endregion
@@ -240,9 +241,26 @@ namespace GreenField.Gadgets.Views
             this.DataContextSource.StockSpecificDiscount = Convert.ToDecimal(stockSpecificDiscount);
         }
 
+        /// <summary>
+        /// Row Loaded Event, changes the color for StockSpecificDiscount
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgDCFAnalysisSummary_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            
+            if (e.Row != null)
+            {
+                if (e.Row.DataContext != null)
+                {
+                    var data = e.Row.DataContext as DCFDisplayData;
+                    if (data == null)
+                        return;
+                    if ((e.Row.DataContext as DCFDisplayData).PropertyName == "Stock Specific Discount")
+                    {
+                        e.Row.Background = new SolidColorBrush(Colors.Yellow);
+                    }
+                }
+            }
         }
 
         /// <summary>

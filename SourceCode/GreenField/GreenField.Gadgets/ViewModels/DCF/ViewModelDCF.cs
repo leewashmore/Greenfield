@@ -1179,33 +1179,33 @@ namespace GreenField.Gadgets.ViewModels
             {
                 List<DCFDisplayData> result = new List<DCFDisplayData>();
 
-                decimal cashFlow2020 = Math.Round(Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(8).Year)).
-                    Select(a => a.FREE_CASH_FLOW).FirstOrDefault()), 1);
-                decimal sustainableROIC = Math.Round(Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableROIC).FirstOrDefault()), 4);
-                decimal sustainableDPR = Math.Round(Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableDividendPayoutRatio).FirstOrDefault()), 4);
-                decimal longTermNominalGDPGrowth = Math.Round(Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.LongTermNominalGDPGrowth).FirstOrDefault()), 4);
+                decimal cashFlow2020 = Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(8).Year)).
+                    Select(a => a.FREE_CASH_FLOW).FirstOrDefault());
+                decimal sustainableROIC = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableROIC).FirstOrDefault());
+                decimal sustainableDPR = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableDividendPayoutRatio).FirstOrDefault());
+                decimal longTermNominalGDPGrowth = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.LongTermNominalGDPGrowth).FirstOrDefault());
                 decimal TGR;
 
-                decimal discountingFactorY10 = Math.Round(Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
-                    Select(a => a.DISCOUNTING_FACTOR).FirstOrDefault()), 4);
-                TGR = Math.Round((Math.Min(sustainableROIC * (1 - sustainableDPR / 100), longTermNominalGDPGrowth)), 4);
-                decimal terminalValueNominal = Math.Round(Convert.ToDecimal(DCFCalculations.CalculateNominalTerminalValue(WACC, TGR, cashFlow2020)), 1);
-                decimal terminalValuePresent = Math.Round(Convert.ToDecimal(DCFCalculations.CalculatePresentTerminalValue(terminalValueNominal, discountingFactorY10)), 1);
+                decimal discountingFactorY10 = Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
+                    Select(a => a.DISCOUNTING_FACTOR).FirstOrDefault());
+                TGR = (Math.Min(sustainableROIC * (Convert.ToDecimal(Convert.ToDecimal(1.0) - sustainableDPR)), longTermNominalGDPGrowth));
+                decimal terminalValueNominal = Convert.ToDecimal(DCFCalculations.CalculateNominalTerminalValue(WACC, TGR, cashFlow2020));
+                decimal terminalValuePresent = Convert.ToDecimal(DCFCalculations.CalculatePresentTerminalValue(terminalValueNominal, discountingFactorY10));
 
-                result.Add(new DCFDisplayData() { PropertyName = "Cash Flow in 2020", Value = cashFlow2020.ToString() });
+                result.Add(new DCFDisplayData() { PropertyName = "Cash Flow in 2020", Value = Math.Round(cashFlow2020, 1).ToString() });
                 result.Add(new DCFDisplayData() { PropertyName = "Sustainable ROIC", Value = Math.Round(Convert.ToDecimal(sustainableROIC * Convert.ToDecimal(100)), 1).ToString() + " %" });
                 result.Add(new DCFDisplayData() { PropertyName = "Sustainable Dividend Payout Ratio", Value = Math.Round(Convert.ToDecimal(sustainableDPR * Convert.ToDecimal(100)), 1).ToString() + " %" });
                 result.Add(new DCFDisplayData() { PropertyName = "Long-term Nominal GDP Growth", Value = Math.Round(Convert.ToDecimal(longTermNominalGDPGrowth * Convert.ToDecimal(100)), 1).ToString() + " %" });
                 result.Add(new DCFDisplayData() { PropertyName = "Terminal Growth Rate", Value = Math.Round(Convert.ToDecimal(TGR * Convert.ToDecimal(100)), 1).ToString() + " %" });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = terminalValueNominal.ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (present)", Value = terminalValuePresent.ToString() });
+                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = Math.Round(terminalValueNominal, 1).ToString() });
+                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (present)", Value = Math.Round(terminalValuePresent, 1).ToString() });
 
                 TerminalValueCalculationsDisplayData.Clear();
                 TerminalValueCalculationsDisplayData.AddRange(result);
                 TerminalValuePresent = terminalValuePresent;
 
                 CalculationParameters.Year10CashFlow = (Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
-                    Select(a => a.AMOUNT).FirstOrDefault()));
+                    Select(a => a.FREE_CASH_FLOW).FirstOrDefault()));
                 CalculationParameters.TerminalGrowthRate = TGR;
                 CalculationParameters.Year10DiscountingFactor = (Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
                     Select(a => a.DISCOUNTING_FACTOR).FirstOrDefault()));
@@ -1292,7 +1292,7 @@ namespace GreenField.Gadgets.ViewModels
                 result.Add(new DCFDisplayData() { PropertyName = "Cost of Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(costOfDebt) * 100, 1)) + "%" });
                 result.Add(new DCFDisplayData() { PropertyName = "Market Cap", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()), 0)) });
                 result.Add(new DCFDisplayData() { PropertyName = "Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()), 0)) });
-                if ((Convert.ToDecimal(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()), 4)) == 0))
+                if ((Convert.ToDecimal(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault())) == 0))
                 {
                     weightOfEquity = 0;
                     resultWACC = 0;
@@ -1314,7 +1314,7 @@ namespace GreenField.Gadgets.ViewModels
                 CalculationParameters.CostOfDebt = costOfDebt;
                 CalculationParameters.MarketCap = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault());
                 CalculationParameters.MarginalTaxRate = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault());
-                CalculationParameters.GrossDebt = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault());
+                CalculationParameters.GrossDebtA = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault());
                 SetTerminalValueCalculationsDisplayData();
             }
             catch (Exception ex)
@@ -1396,6 +1396,7 @@ namespace GreenField.Gadgets.ViewModels
                 CalculationParameters.FutureValueOfMinorties = FVMinorities;
                 CalculationParameters.NumberOfShares = numberOfShares;
                 CalculationParameters.PresentValueOfForecast = PresentValueExplicitForecast;
+                CalculationParameters.GrossDebt = grossDebt;
                 GenerateSensitivityDisplayData();
 
             }
@@ -1418,12 +1419,12 @@ namespace GreenField.Gadgets.ViewModels
                 List<decimal> upSideValues = new List<decimal>();
                 List<decimal> TGR = new List<decimal>();
                 SensitivityDisplayData = new RangeObservableCollection<SensitivityData>();
-                
+
                 SensitivityDisplayData.Add(new SensitivityData() { C1 = "T.G.R", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
-               
+
                 Dictionary<int, decimal> VPS = new Dictionary<int, decimal>();
                 DCFValue result = new DCFValue();
-                
+
                 CalculationParameters.TerminalGrowthRate = Convert.ToDecimal((CalculationParameters.TerminalGrowthRate)) - Convert.ToDecimal(5.0 / 1000.0);
 
                 for (int i = 0; i < 5; i++)
@@ -1432,6 +1433,11 @@ namespace GreenField.Gadgets.ViewModels
                     SensitivityData data = new SensitivityData();
                     for (int j = 0; j < 5; j++)
                     {
+                        if (i == 2 && j == 2)
+                        {
+
+                        }
+
                         result = new DCFValue();
                         result = DCFCalculations.CalculateDCFValue(CalculationParameters);
                         TGR.Add(result.DCFValuePerShare);
@@ -1499,7 +1505,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     dataBVPS.Add(item);
                 }
-                
+
                 //dataBVPS.AddRange(sensitivityData.ToList());
                 dataBVPS.RemoveAt(0);
                 char[] redundantData = new char[] { '%' };
