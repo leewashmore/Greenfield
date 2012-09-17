@@ -52,47 +52,45 @@ namespace GreenField.Gadgets.ViewModels
             _manageSessions = param.ManageSessions;
 
             //fetch tabs data
-            FetchTabsData();
+            //FetchTabsData();
 
-            Flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
-            if (Flag == "Edit")
-            {
-                SelectedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
-            }
+            //Flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+            //if (Flag == "Edit")
+            //{
+            //    SelectedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
+            //}
         }     
               
         #endregion
 
         #region Properties
 
-        public List<CSTUserPreferenceInfo> _selectedDataList;
-        public List<CSTUserPreferenceInfo> SelectedDataList
+        public List<CSTUserPreferenceInfo> _selectedFieldsDataList;
+        public List<CSTUserPreferenceInfo> SelectedFieldsDataList
         {
-            get { return _selectedDataList; }
+            get { return _selectedFieldsDataList; }
             set
             {
                 if (value != null)
                 {
-                    _selectedDataList = value;
-                    RaisePropertyChanged(() => this.SelectedDataList);
+                    _selectedFieldsDataList = value;
+                    RaisePropertyChanged(() => this.SelectedFieldsDataList);
                 }
             }
         }
 
-        public string Flag { get; set; }
-
-        public static List<CustomSelectionData> SelectedFieldsList { get; set; }
-
-        private List<CustomSelectionData> _selectedFieldsOverviewInfo;
-        public List<CustomSelectionData> SelectedFieldsOverviewInfo
+        public CSTUserPreferenceInfo _selectedDataField;
+        public CSTUserPreferenceInfo SelectedDataField
         {
-            get { return _selectedFieldsOverviewInfo; }
+            get { return _selectedDataField; }
             set
             {
-                _selectedFieldsOverviewInfo = value;
-                RaisePropertyChanged(() => this.SelectedFieldsOverviewInfo);
+                _selectedDataField = value;
+                RaisePropertyChanged(() => this.SelectedDataField);
             }
         }
+
+        public string Flag { get; set; }
        
         public List<CustomSelectionData> _securityReferenceData;
         public List<CustomSelectionData> SecurityReferenceData
@@ -113,6 +111,7 @@ namespace GreenField.Gadgets.ViewModels
             { 
                 _selectedSecurityReferenceData = value;
                 RaisePropertyChanged(() => this.SelectedSecurityReferenceData);
+                RaisePropertyChanged(() => this.AddCommand);
             }
         }
 
@@ -288,10 +287,10 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _isActive = value;
-                //if (value)
-                //{
-                //    Initialize();
-                //}
+                if (value)
+                {
+                    Initialize();
+                }
             }
         }
 
@@ -337,12 +336,16 @@ namespace GreenField.Gadgets.ViewModels
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
         }
 
+        public ICommand RemoveCommand
+        {
+            get { return new DelegateCommand<object>(RemoveCommandMethod, RemoveCommandValidationMethod); }
+        }
+
         #endregion
 
         #endregion
 
         #region ICommand Methods
-
      
         private bool AddCommandValidationMethod(object param)
         {
@@ -352,9 +355,32 @@ namespace GreenField.Gadgets.ViewModels
         private void AddCommandMethod(object param)
         {
            //add selected data point to selected data list
-            SelectedFieldsList = new List<CustomSelectionData>();
-            SelectedFieldsList.Add(SelectedSecurityReferenceData);
-            SelectedFieldsOverviewInfo = SelectedFieldsList;            
+            //SelectedFieldsList = new List<CustomSelectionData>();
+            //SelectedFieldsList.Add(new CustomSelectionData()
+            //{
+            //    ScreeningId = SelectedSecurityReferenceData.ScreeningId,
+            //    DataDescription = SelectedSecurityReferenceData.DataDescription,
+            //    LongDescription = SelectedSecurityReferenceData.LongDescription,
+            //    DataColumn = SelectedSecurityReferenceData.DataColumn
+            //});
+
+            //SelectedFieldsOverviewInfo = SelectedFieldsList;
+
+            SelectedFieldsDataList.Add(new CSTUserPreferenceInfo()
+            {
+                ScreeningId = SelectedSecurityReferenceData.ScreeningId,
+                DataDescription = SelectedSecurityReferenceData.DataDescription
+            });
+        }
+
+        private bool RemoveCommandValidationMethod(object param)
+        {
+            return true;
+        }
+
+        private void RemoveCommandMethod(object param)
+        {
+           
         }
 
         private bool SubmitCommandValidationMethod(object param)
@@ -367,6 +393,9 @@ namespace GreenField.Gadgets.ViewModels
 
         private void SubmitCommandMethod(object param)
         {
+            CSTNavigation.UpdateString(CSTNavigationInfo.ListName, SelectedFieldsDataList[0].ListName);
+            CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, SelectedFieldsDataList[0].Accessibility);
+
             //prompt to ask if user wants to save list
             //if yes open child window
 
@@ -383,7 +412,8 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             if (result == MessageBoxResult.OK)
                             {
-                               //save the list
+                                string userEnteredListName = childViewCSTDataListSave.txtDataListName.Text;
+                                string userEnteredAccessibility = childViewCSTDataListSave.SelectedAccessibility;
                                 if (_dbInteractivity != null)
                                 {
                                     string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, MyProperty);
@@ -399,31 +429,6 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
-
-        #region Helpers
-
-        public void FetchTabsData()
-        {
-            if (_dbInteractivity != null)
-            {
-                BusyIndicatorNotification(true, "Retrieving Security Reference Data...");
-                _dbInteractivity.RetrieveSecurityReferenceTabDataPoints(SecurityReferenceTabDataPointsCallbackMethod);
-                BusyIndicatorNotification(true, "Retrieving Period Financials Data...");
-                _dbInteractivity.RetrievePeriodFinancialsTabDataPoints(PeriodFinancialsTabDataPointsCallbackMethod);
-                BusyIndicatorNotification(true, "Retrieving Current Financials Data...");
-                _dbInteractivity.RetrieveCurrentFinancialsTabDataPoints(CurrentFinancialsTabDataPointsCallbackMethod);
-                BusyIndicatorNotification(true, "Retrieving Fair Value Data...");
-                _dbInteractivity.RetrieveFairValueTabDataPoints(FairValueTabDataPointsCallbackMethod);
-            }
-        }
-
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
-        {
-            if (message != null)
-                BusyIndicatorContent = message;
-
-            BusyIndicatorIsBusy = showBusyIndicator;
-        }
 
         /// <summary>
         /// Construct XML for Save As Event
@@ -447,6 +452,7 @@ namespace GreenField.Gadgets.ViewModels
                             new XElement("ListName", preference.ListName),
                             new XElement("Accessibilty", preference.Accessibility),
                             new XElement("ScreeningId", preference.ScreeningId),
+                            new XElement("DataDescription", preference.DataDescription),
                             new XElement("DataSource", preference.DataSource),
                             new XElement("PeriodType", preference.PeriodType),
                             new XElement("YearType", preference.YearType),
@@ -469,8 +475,6 @@ namespace GreenField.Gadgets.ViewModels
 
             return saveAsXml;
         }
-
-        #endregion
 
         #region CallBack Methods
 
@@ -636,13 +640,95 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        private List<CSTUserPreferenceInfo> myVar;
+        #region Helpers
+
+        public void FetchTabsData()
+        {
+            if (_dbInteractivity != null)
+            {
+                BusyIndicatorNotification(true, "Retrieving Security Reference Data...");
+                _dbInteractivity.RetrieveSecurityReferenceTabDataPoints(SecurityReferenceTabDataPointsCallbackMethod);
+                BusyIndicatorNotification(true, "Retrieving Period Financials Data...");
+                _dbInteractivity.RetrievePeriodFinancialsTabDataPoints(PeriodFinancialsTabDataPointsCallbackMethod);
+                BusyIndicatorNotification(true, "Retrieving Current Financials Data...");
+                _dbInteractivity.RetrieveCurrentFinancialsTabDataPoints(CurrentFinancialsTabDataPointsCallbackMethod);
+                BusyIndicatorNotification(true, "Retrieving Fair Value Data...");
+                _dbInteractivity.RetrieveFairValueTabDataPoints(FairValueTabDataPointsCallbackMethod);
+            }
+        }
+
+        public void Initialize()
+        {
+            //fetch tabs data
+            FetchTabsData();
+
+            Flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+            if (Flag != null)
+            {
+                if (Flag == "Edit")
+                {
+                    SelectedFieldsDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
+                }
+            }
+        }
+
+        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        {
+            if (message != null)
+                BusyIndicatorContent = message;
+
+            BusyIndicatorIsBusy = showBusyIndicator;
+        }
+
+        //public void CreateCSTSelectorDataGrid(List<CSTUserPreferenceInfo> preference)
+        //{
+        //    List<CSTUserPreferenceInfo> temp = new List<CSTUserPreferenceInfo>();
+        //    foreach (var item in preference)
+        //    {
+        //        switch (item.ScreeningId.Substring(0,2))
+        //        {
+        //            case "REF":
+        //                temp.Add(new CSTUserPreferenceInfo() 
+        //                {
+        //                    UserName = item.UserName,
+        //                    ScreeningId = item.ScreeningId,
+        //                    DataDescription = SecurityReferenceData.Where(a=>a.ScreeningId == item.ScreeningId).Select(a=>a.DataDescription).FirstOrDefault(),
+        //                    //LongDescription = item.LONG_DESC,
+        //                    //DataColumn = item.TABLE_COLUMN
+        //                    ListName = item.ListName,
+        //                    Accessibility = item.Accessibility,
+        //                    DataSource = item.DataSource,
+        //                    PeriodType = item.PeriodType,
+        //                    YearType = item.YearType,
+        //                    FromDate = Convert.ToInt32(item.FromDate),
+        //                    ToDate = Convert.ToInt32(item.ToDate),
+        //                    DataPointsOrder = Convert.ToInt32(item.DataPointsOrder)
+        //                });
+        //                break;
+        //            case "FIN":
+
+        //                break;
+        //            case "CUR":
+
+        //                break;
+        //            case "FVA":
+
+        //                break;
+        //            default:
+        //                break;
+        //        } 
+        //    }
+
+        //    SelectedFieldsDataList = temp;           
+        //}
+
+        #endregion
+ private List<CSTUserPreferenceInfo> myVar;
 
         public List<CSTUserPreferenceInfo> MyProperty
         {
             get { return myVar; }
             set { myVar = value; RaisePropertyChanged(() => MyProperty); }
         }
-        
     }
 }

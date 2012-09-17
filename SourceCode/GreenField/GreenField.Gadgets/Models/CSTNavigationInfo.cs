@@ -18,7 +18,9 @@ namespace GreenField.Gadgets.Models
     public enum CSTNavigationInfo
     {
         SelectedDataList,
-        Flag
+        Flag,
+        ListName,
+        Accessibility
     }
 
     public static class CSTNavigation

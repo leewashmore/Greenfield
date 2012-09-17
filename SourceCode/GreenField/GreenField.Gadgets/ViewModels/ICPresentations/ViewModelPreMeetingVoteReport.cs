@@ -214,8 +214,8 @@ namespace GreenField.Gadgets.ViewModels
                 || SelectedPresentationOverviewInfo == null)
                 return false;
 
-            return (UserSession.SessionManager.SESSION.Roles.Contains("IC_ADMIN")
-                || UserSession.SessionManager.SESSION.Roles.Contains("CHIEF_EXECUTIVE"))
+            return (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
+                || UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE))
                 && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN;
         }
 

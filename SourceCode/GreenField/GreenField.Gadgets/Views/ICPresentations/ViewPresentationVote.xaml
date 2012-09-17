@@ -153,8 +153,9 @@
                 </Grid.RowDefinitions>
                 <TextBlock Text="NOTES:" FontWeight="Bold" Foreground="DarkGray" Style="{StaticResource TextBlockStyle}"/>
                 <TextBox Grid.Row="1" Text="{Binding SelectedPresentationPreMeetingVoterInfo.Notes, Mode=TwoWay}"
-                         IsEnabled="{Binding NotesIsEnabled, FallbackValue=false}"
                          MaxLength="255" Style="{StaticResource TextBoxStyle}"/>
+                         <!--IsEnabled="{Binding NotesIsEnabled, FallbackValue=false}"-->
+                         
             </Grid>
             <!--Blog Section-->
             <Grid Grid.Row="4" Margin="0,5,0,0">

@@ -214,9 +214,10 @@ namespace GreenField.Gadgets.ViewModels
                 || SelectedPresentationOverviewInfo == null)
                 return false;
 
-            return (UserSession.SessionManager.SESSION.Roles.Contains("IC_ADMIN")
-                || UserSession.SessionManager.SESSION.Roles.Contains("CHIEF_EXECUTIVE"))
-                && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN;
+            return (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
+                || UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE))
+                && SelectedPresentationOverviewInfo.StatusType != StatusType.WITHDRAWN
+                && SelectedPresentationOverviewInfo.StatusType != StatusType.FINAL;
         }
 
         private void ChangeDateCommandMethod(object param)
@@ -288,7 +289,7 @@ namespace GreenField.Gadgets.ViewModels
             if (UserSession.SessionManager.SESSION == null
                 || SelectedPresentationOverviewInfo == null)
                 return false;
-            return UserSession.SessionManager.SESSION.Roles.Contains("IC_ADMIN")
+            return UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)
                 && SelectedPresentationOverviewInfo.StatusType == StatusType.CLOSED_FOR_VOTING;
         }
 

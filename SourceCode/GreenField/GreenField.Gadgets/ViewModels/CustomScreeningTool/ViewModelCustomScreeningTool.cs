@@ -52,16 +52,16 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _regionManager = param.RegionManager;
 
-            BusyIndicatorNotification(true, "Retrieving Portfolio Selection Data...");
-            //fetch PortfolioId list 
-            _dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
+            //BusyIndicatorNotification(true, "Retrieving Portfolio Selection Data...");
+            ////fetch PortfolioId list 
+            //_dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
 
-            BusyIndicatorNotification(true, "Retrieving Benchmark Selection Data...");
-            //fetch Benchmark list
-            _dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
+            //BusyIndicatorNotification(true, "Retrieving Benchmark Selection Data...");
+            ////fetch Benchmark list
+            //_dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
 
-            //retrieve custom selection data
-            RetrieveCustomSelectionData();
+            ////retrieve custom selection data
+            //RetrieveCustomSelectionData();
 
             //BusyIndicatorNotification();
         }
@@ -243,9 +243,9 @@ namespace GreenField.Gadgets.ViewModels
                     _selectedPortfolio = value;
                     RaisePropertyChanged(() => this.SelectedPortfolio);
                     PortfolioSelectionData p = new PortfolioSelectionData();
-                    p = _portfolioSelectionData.Where(a => a.PortfolioId == _selectedPortfolio).FirstOrDefault();
-                    _dbInteractivity.RetrieveSecurityData(p, null, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry
-                                                       , null, RetrieveSecurityDataCallbackMethod);
+                    //p = _portfolioSelectionData.Where(a => a.PortfolioId == _selectedPortfolio).FirstOrDefault();
+                    //_dbInteractivity.RetrieveSecurityData(p, null, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry
+                    //                                   , null, RetrieveSecurityDataCallbackMethod);
                 }
             }
         }
@@ -383,7 +383,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #region ICommand Properties
-        
+
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
@@ -414,7 +414,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             set
             {
-                if(value !=null)
+                if (value != null)
                 {
                     _savedDataListInfo = value;
                     RaisePropertyChanged(() => this.SavedDataListInfo);
@@ -470,17 +470,17 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-       
+
 
         public ICommand OkCommand
         {
             get { return new DelegateCommand<object>(OkCommandMethod, OkCommandValidationMethod); }
         }
 
-         public ICommand CreateDataListCommand
-         {
-             get { return new DelegateCommand<object>(CreateDataListCommandCommandMethod, CreateDataListCommandCommandValidationMethod); }
-         }
+        public ICommand CreateDataListCommand
+        {
+            get { return new DelegateCommand<object>(CreateDataListCommandCommandMethod, CreateDataListCommandCommandValidationMethod); }
+        }
 
         #endregion
 
@@ -494,10 +494,10 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _isActive = value;
-                //if (value)
-                //{
-                //    Initialize();
-                //}
+                if (value)
+                {
+                    Initialize();
+                }
             }
         }
 
@@ -543,7 +543,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion        
+        #endregion
 
         #endregion
 
@@ -591,23 +591,31 @@ namespace GreenField.Gadgets.ViewModels
         private void OkCommandMethod(object param)
         {
             //if user the creater of datalist, prompt for edit of data fileds
-            //if user says 'yes', data fileds selector screen appears with all data fileds pre populated in selected fields list.
-            //if user says'no' open resluts screen
-
-            Prompt.ShowDialog("Do you wish to edit the data fields?", "Confirmation", MessageBoxButton.OK, (result) =>
+            //if user says 'yes', data fileds selector screen appears with all data fields pre populated in selected fields list.
+            //if user says'no' open resluts screen            
+            
+            if (UserSession.SessionManager.SESSION.UserName.ToLower().Equals(SelectedSavedDataList[0].UserName.ToLower()))
             {
-                if (result == MessageBoxResult.OK)
+                Prompt.ShowDialog("Do you wish to edit the data fields?", "Confirmation", MessageBoxButton.OKCancel, (result) =>
                 {
-                    CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Edit");
-                    //open pre populated selected fields list
-                    _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
-                }
-                else
-                {
-                    CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
-                }
-
-            });
+                    if (result == MessageBoxResult.OK)
+                    {
+                        CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Edit");
+                        //open pre populated selected fields list
+                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
+                    }
+                    else if (result == MessageBoxResult.Cancel)
+                    {
+                        CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
+                        //redirect to results views
+                    }
+                    else
+                    {
+                        CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
+                        //redirect to results views
+                    }
+                });
+            }
         }
 
         private bool CreateDataListCommandCommandValidationMethod(object param)
@@ -651,6 +659,12 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                     _portfolioSelectionData = result;
                     PortfolioSelectionInfo = result.Select(o => o.PortfolioId).ToList();
+
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Benchmark Selection Data...");
+                        _dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
+                    }
                 }
                 else
                 {
@@ -663,11 +677,12 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
             }
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
+                //BusyIndicatorNotification();
             }
         }
 
@@ -685,7 +700,13 @@ namespace GreenField.Gadgets.ViewModels
                     List<string> res = new List<string>();
                     BenchmarkSelectionInfo = result.Where(a => a.Type.Equals("BENCHMARK")).Select(a => a.LongName).ToList();
                     //res = result.Where(a => a.Type.Equals("BENCHMARK")).Select(a => a.LongName).ToList();
-
+                    //retrieve custom selection data
+                    //RetrieveCustomSelectionData();
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Region Selection Data...");
+                        _dbInteractivity.RetrieveCustomControlsList("Region", CustomControlsListRegionCallbackMethod);
+                    }
                 }
                 else
                 {
@@ -716,6 +737,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CustomSelectionRegionInfo = result;
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Country Selection Data...");
+                        _dbInteractivity.RetrieveCustomControlsList("Country", CustomControlsListCountryCallbackMethod);
+                    }
 
                 }
                 else
@@ -745,7 +771,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CustomSelectionCountryInfo = result;
-
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Sector Selection Data...");
+                        _dbInteractivity.RetrieveCustomControlsList("Sector", CustomControlsListSectorCallbackMethod);
+                    }
                 }
                 else
                 {
@@ -774,7 +804,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CustomSelectionSectorInfo = result;
-
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Industry Selection Data...");
+                        _dbInteractivity.RetrieveCustomControlsList("Industry", CustomControlsListIndustryCallbackMethod);
+                    }
                 }
                 else
                 {
@@ -803,7 +837,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CustomSelectionIndustryInfo = result;
-
+                    BusyIndicatorNotification();
                 }
                 else
                 {
@@ -814,11 +848,12 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
             }
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
+                //BusyIndicatorNotification();
             }
         }
 
@@ -885,19 +920,36 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Helpers
 
-        public void RetrieveCustomSelectionData()
+        //public void RetrieveCustomSelectionData()
+        //{
+        //    if (_dbInteractivity != null)
+        //    {
+        //        // BusyIndicatorNotification(true, "Retrieving Region Selection Data...");
+        //        //_dbInteractivity.RetrieveCustomControlsList("Region", CustomControlsListRegionCallbackMethod);
+        //        //BusyIndicatorNotification(true, "Retrieving Country Selection Data...");
+        //        //_dbInteractivity.RetrieveCustomControlsList("Country", CustomControlsListCountryCallbackMethod);
+        //        //BusyIndicatorNotification(true, "Retrieving Sector Selection Data...");
+        //        //_dbInteractivity.RetrieveCustomControlsList("Sector", CustomControlsListSectorCallbackMethod);
+        //        //BusyIndicatorNotification(true, "Retrieving Industry Selection Data...");
+        //        //_dbInteractivity.RetrieveCustomControlsList("Industry", CustomControlsListIndustryCallbackMethod);
+
+        //    }
+        //}
+
+        public void Initialize()
         {
-            if (_dbInteractivity != null)
+            if (_dbInteractivity != null && IsActive)
             {
-                 BusyIndicatorNotification(true, "Retrieving Region Selection Data...");
-                _dbInteractivity.RetrieveCustomControlsList("Region", CustomControlsListRegionCallbackMethod);
-                BusyIndicatorNotification(true, "Retrieving Country Selection Data...");
-                _dbInteractivity.RetrieveCustomControlsList("Country", CustomControlsListCountryCallbackMethod);
-                BusyIndicatorNotification(true, "Retrieving Sector Selection Data...");
-                _dbInteractivity.RetrieveCustomControlsList("Sector", CustomControlsListSectorCallbackMethod);
-                BusyIndicatorNotification(true, "Retrieving Industry Selection Data...");
-                _dbInteractivity.RetrieveCustomControlsList("Industry", CustomControlsListIndustryCallbackMethod);
-               
+                BusyIndicatorNotification(true, "Retrieving Portfolio Selection Data...");
+                //fetch PortfolioId list 
+                _dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
+
+                //BusyIndicatorNotification(true, "Retrieving Benchmark Selection Data...");
+                //fetch Benchmark list
+                //_dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
+
+                //retrieve custom selection data
+                //RetrieveCustomSelectionData();
             }
         }
 
@@ -911,4 +963,4 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
     }
 }
- 
+

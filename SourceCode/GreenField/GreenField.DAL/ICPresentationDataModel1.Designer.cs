@@ -19,14 +19,14 @@ using System.Runtime.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingPresentationMappingInfo_MeetingInfo", "MeetingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.MeetingInfo), "MeetingPresentationMappingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingPresentationMappingInfo), true)]
-[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingPresentationMappingInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "MeetingPresentationMappingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingPresentationMappingInfo), true)]
-[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_VoterInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "VoterInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.VoterInfo), true)]
-[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(GreenField.DAL.PresentationInfo), "CommentInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.CommentInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_CommentInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(GreenField.DAL.FileMaster), "CommentInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.CommentInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingAttachedFileInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.FileMaster), "MeetingAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingAttachedFileInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_PresentationAttachedFileInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.FileMaster), "PresentationAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.PresentationAttachedFileInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingAttachedFileInfo_MeetingInfo", "MeetingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.MeetingInfo), "MeetingAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingAttachedFileInfo), true)]
+[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(GreenField.DAL.PresentationInfo), "CommentInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.CommentInfo), true)]
+[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingPresentationMappingInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "MeetingPresentationMappingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingPresentationMappingInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_AttachedFileInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "PresentationAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.PresentationAttachedFileInfo), true)]
+[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_VoterInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "VoterInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.VoterInfo), true)]
 
 #endregion
 
@@ -129,22 +129,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<PresentationInfo> PresentationInfoes
-        {
-            get
-            {
-                if ((_PresentationInfoes == null))
-                {
-                    _PresentationInfoes = base.CreateObjectSet<PresentationInfo>("PresentationInfoes");
-                }
-                return _PresentationInfoes;
-            }
-        }
-        private ObjectSet<PresentationInfo> _PresentationInfoes;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<CommentInfo> CommentInfoes
         {
             get
@@ -221,6 +205,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<MeetingConfigurationSchedule> _MeetingConfigurationSchedules;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PresentationInfo> PresentationInfoes
+        {
+            get
+            {
+                if ((_PresentationInfoes == null))
+                {
+                    _PresentationInfoes = base.CreateObjectSet<PresentationInfo>("PresentationInfoes");
+                }
+                return _PresentationInfoes;
+            }
+        }
+        private ObjectSet<PresentationInfo> _PresentationInfoes;
 
         #endregion
         #region AddTo Methods
@@ -247,14 +247,6 @@ namespace GreenField.DAL
         public void AddToVoterInfoes(VoterInfo voterInfo)
         {
             base.AddObject("VoterInfoes", voterInfo);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the PresentationInfoes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPresentationInfoes(PresentationInfo presentationInfo)
-        {
-            base.AddObject("PresentationInfoes", presentationInfo);
         }
     
         /// <summary>
@@ -295,6 +287,14 @@ namespace GreenField.DAL
         public void AddToMeetingConfigurationSchedules(MeetingConfigurationSchedule meetingConfigurationSchedule)
         {
             base.AddObject("MeetingConfigurationSchedules", meetingConfigurationSchedule);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PresentationInfoes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPresentationInfoes(PresentationInfo presentationInfo)
+        {
+            base.AddObject("PresentationInfoes", presentationInfo);
         }
 
         #endregion
@@ -1478,14 +1478,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectResult<ICPresentationOverviewData> RetrieveICPresentationOverviewData()
-        {
-            return base.ExecuteFunction<ICPresentationOverviewData>("RetrieveICPresentationOverviewData");
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="userName">No Metadata Documentation available.</param>
         /// <param name="xmlScript">No Metadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> SetICPresentationDecisionEntryDetails(global::System.String userName, global::System.String xmlScript)
@@ -2404,6 +2396,14 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("SetICPPresentationStatus", userNameParameter, presentationIdParameter, statusParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectResult<ICPresentationOverviewData> RetrieveICPresentationOverviewData()
+        {
+            return base.ExecuteFunction<ICPresentationOverviewData>("RetrieveICPresentationOverviewData");
+        }
 
         #endregion
     }
@@ -2594,44 +2594,6 @@ namespace GreenField.DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "PresentationInfo")]
-        public PresentationInfo PresentationInfo
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<PresentationInfo> PresentationInfoReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_FileMaster", "FileMaster")]
         public FileMaster FileMaster
         {
@@ -2660,6 +2622,44 @@ namespace GreenField.DAL
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FileMaster>("ICPresentationModel.FK_CommentInfo_FileMaster", "FileMaster", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "PresentationInfo")]
+        public PresentationInfo PresentationInfo
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<PresentationInfo> PresentationInfoReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo", value);
                 }
             }
         }
@@ -5111,150 +5111,6 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String InvestmentThesis
-        {
-            get
-            {
-                return _InvestmentThesis;
-            }
-            set
-            {
-                OnInvestmentThesisChanging(value);
-                ReportPropertyChanging("InvestmentThesis");
-                _InvestmentThesis = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("InvestmentThesis");
-                OnInvestmentThesisChanged();
-            }
-        }
-        private global::System.String _InvestmentThesis;
-        partial void OnInvestmentThesisChanging(global::System.String value);
-        partial void OnInvestmentThesisChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Background
-        {
-            get
-            {
-                return _Background;
-            }
-            set
-            {
-                OnBackgroundChanging(value);
-                ReportPropertyChanging("Background");
-                _Background = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Background");
-                OnBackgroundChanged();
-            }
-        }
-        private global::System.String _Background;
-        partial void OnBackgroundChanging(global::System.String value);
-        partial void OnBackgroundChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Valuations
-        {
-            get
-            {
-                return _Valuations;
-            }
-            set
-            {
-                OnValuationsChanging(value);
-                ReportPropertyChanging("Valuations");
-                _Valuations = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Valuations");
-                OnValuationsChanged();
-            }
-        }
-        private global::System.String _Valuations;
-        partial void OnValuationsChanging(global::System.String value);
-        partial void OnValuationsChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String EarningsOutlook
-        {
-            get
-            {
-                return _EarningsOutlook;
-            }
-            set
-            {
-                OnEarningsOutlookChanging(value);
-                ReportPropertyChanging("EarningsOutlook");
-                _EarningsOutlook = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("EarningsOutlook");
-                OnEarningsOutlookChanged();
-            }
-        }
-        private global::System.String _EarningsOutlook;
-        partial void OnEarningsOutlookChanging(global::System.String value);
-        partial void OnEarningsOutlookChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CompetitiveAdvantage
-        {
-            get
-            {
-                return _CompetitiveAdvantage;
-            }
-            set
-            {
-                OnCompetitiveAdvantageChanging(value);
-                ReportPropertyChanging("CompetitiveAdvantage");
-                _CompetitiveAdvantage = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CompetitiveAdvantage");
-                OnCompetitiveAdvantageChanged();
-            }
-        }
-        private global::System.String _CompetitiveAdvantage;
-        partial void OnCompetitiveAdvantageChanging(global::System.String value);
-        partial void OnCompetitiveAdvantageChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CompetitiveDisadvantage
-        {
-            get
-            {
-                return _CompetitiveDisadvantage;
-            }
-            set
-            {
-                OnCompetitiveDisadvantageChanging(value);
-                ReportPropertyChanging("CompetitiveDisadvantage");
-                _CompetitiveDisadvantage = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CompetitiveDisadvantage");
-                OnCompetitiveDisadvantageChanged();
-            }
-        }
-        private global::System.String _CompetitiveDisadvantage;
-        partial void OnCompetitiveDisadvantageChanging(global::System.String value);
-        partial void OnCompetitiveDisadvantageChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public global::System.String CommitteePFVMeasure
         {
             get
@@ -5788,50 +5644,6 @@ namespace GreenField.DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_MeetingPresentationMappingInfo_PresentationInfo", "MeetingPresentationMappingInfo")]
-        public EntityCollection<MeetingPresentationMappingInfo> MeetingPresentationMappingInfoes
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<MeetingPresentationMappingInfo>("ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo", "MeetingPresentationMappingInfo");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<MeetingPresentationMappingInfo>("ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo", "MeetingPresentationMappingInfo", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_VoterInfo_PresentationInfo", "VoterInfo")]
-        public EntityCollection<VoterInfo> VoterInfoes
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<VoterInfo>("ICPresentationModel.FK_VoterInfo_PresentationInfo", "VoterInfo");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<VoterInfo>("ICPresentationModel.FK_VoterInfo_PresentationInfo", "VoterInfo", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "CommentInfo")]
         public EntityCollection<CommentInfo> CommentInfoes
         {
@@ -5854,6 +5666,28 @@ namespace GreenField.DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_MeetingPresentationMappingInfo_PresentationInfo", "MeetingPresentationMappingInfo")]
+        public EntityCollection<MeetingPresentationMappingInfo> MeetingPresentationMappingInfoes
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<MeetingPresentationMappingInfo>("ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo", "MeetingPresentationMappingInfo");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<MeetingPresentationMappingInfo>("ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo", "MeetingPresentationMappingInfo", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_AttachedFileInfo_PresentationInfo", "PresentationAttachedFileInfo")]
         public EntityCollection<PresentationAttachedFileInfo> PresentationAttachedFileInfoes
         {
@@ -5866,6 +5700,28 @@ namespace GreenField.DAL
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<PresentationAttachedFileInfo>("ICPresentationModel.FK_AttachedFileInfo_PresentationInfo", "PresentationAttachedFileInfo", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_VoterInfo_PresentationInfo", "VoterInfo")]
+        public EntityCollection<VoterInfo> VoterInfoes
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<VoterInfo>("ICPresentationModel.FK_VoterInfo_PresentationInfo", "VoterInfo");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<VoterInfo>("ICPresentationModel.FK_VoterInfo_PresentationInfo", "VoterInfo", value);
                 }
             }
         }
@@ -6720,412 +6576,28 @@ namespace GreenField.DAL
         /// <summary>
         /// Create a new ICPresentationOverviewData object.
         /// </summary>
+        /// <param name="presentationID">Initial value of the PresentationID property.</param>
+        /// <param name="presenter">Initial value of the Presenter property.</param>
+        /// <param name="statusType">Initial value of the StatusType property.</param>
         /// <param name="createdBy">Initial value of the CreatedBy property.</param>
         /// <param name="createdOn">Initial value of the CreatedOn property.</param>
         /// <param name="modifiedBy">Initial value of the ModifiedBy property.</param>
         /// <param name="modifiedOn">Initial value of the ModifiedOn property.</param>
-        /// <param name="presentationID">Initial value of the PresentationID property.</param>
-        /// <param name="presenter">Initial value of the Presenter property.</param>
-        /// <param name="statusType">Initial value of the StatusType property.</param>
-        public static ICPresentationOverviewData CreateICPresentationOverviewData(global::System.String createdBy, global::System.DateTime createdOn, global::System.String modifiedBy, global::System.DateTime modifiedOn, global::System.Int64 presentationID, global::System.String presenter, global::System.String statusType)
+        public static ICPresentationOverviewData CreateICPresentationOverviewData(global::System.Int64 presentationID, global::System.String presenter, global::System.String statusType, global::System.String createdBy, global::System.DateTime createdOn, global::System.String modifiedBy, global::System.DateTime modifiedOn)
         {
             ICPresentationOverviewData iCPresentationOverviewData = new ICPresentationOverviewData();
+            iCPresentationOverviewData.PresentationID = presentationID;
+            iCPresentationOverviewData.Presenter = presenter;
+            iCPresentationOverviewData.StatusType = statusType;
             iCPresentationOverviewData.CreatedBy = createdBy;
             iCPresentationOverviewData.CreatedOn = createdOn;
             iCPresentationOverviewData.ModifiedBy = modifiedBy;
             iCPresentationOverviewData.ModifiedOn = modifiedOn;
-            iCPresentationOverviewData.PresentationID = presentationID;
-            iCPresentationOverviewData.Presenter = presenter;
-            iCPresentationOverviewData.StatusType = statusType;
             return iCPresentationOverviewData;
         }
 
         #endregion
         #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Boolean> AcceptWithoutDiscussionFlag
-        {
-            get
-            {
-                return _AcceptWithoutDiscussionFlag;
-            }
-            set
-            {
-                OnAcceptWithoutDiscussionFlagChanging(value);
-                ReportPropertyChanging("AcceptWithoutDiscussionFlag");
-                _AcceptWithoutDiscussionFlag = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("AcceptWithoutDiscussionFlag");
-                OnAcceptWithoutDiscussionFlagChanged();
-            }
-        }
-        private Nullable<global::System.Boolean> _AcceptWithoutDiscussionFlag;
-        partial void OnAcceptWithoutDiscussionFlagChanging(Nullable<global::System.Boolean> value);
-        partial void OnAcceptWithoutDiscussionFlagChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String AdminNotes
-        {
-            get
-            {
-                return _AdminNotes;
-            }
-            set
-            {
-                OnAdminNotesChanging(value);
-                ReportPropertyChanging("AdminNotes");
-                _AdminNotes = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("AdminNotes");
-                OnAdminNotesChanged();
-            }
-        }
-        private global::System.String _AdminNotes;
-        partial void OnAdminNotesChanging(global::System.String value);
-        partial void OnAdminNotesChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String Background
-        {
-            get
-            {
-                return _Background;
-            }
-            set
-            {
-                OnBackgroundChanging(value);
-                ReportPropertyChanging("Background");
-                _Background = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Background");
-                OnBackgroundChanged();
-            }
-        }
-        private global::System.String _Background;
-        partial void OnBackgroundChanging(global::System.String value);
-        partial void OnBackgroundChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Single> CommitteeBuyRange
-        {
-            get
-            {
-                return _CommitteeBuyRange;
-            }
-            set
-            {
-                OnCommitteeBuyRangeChanging(value);
-                ReportPropertyChanging("CommitteeBuyRange");
-                _CommitteeBuyRange = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CommitteeBuyRange");
-                OnCommitteeBuyRangeChanged();
-            }
-        }
-        private Nullable<global::System.Single> _CommitteeBuyRange;
-        partial void OnCommitteeBuyRangeChanging(Nullable<global::System.Single> value);
-        partial void OnCommitteeBuyRangeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CommitteePFVMeasure
-        {
-            get
-            {
-                return _CommitteePFVMeasure;
-            }
-            set
-            {
-                OnCommitteePFVMeasureChanging(value);
-                ReportPropertyChanging("CommitteePFVMeasure");
-                _CommitteePFVMeasure = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CommitteePFVMeasure");
-                OnCommitteePFVMeasureChanged();
-            }
-        }
-        private global::System.String _CommitteePFVMeasure;
-        partial void OnCommitteePFVMeasureChanging(global::System.String value);
-        partial void OnCommitteePFVMeasureChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> CommitteeRangeEffectiveThrough
-        {
-            get
-            {
-                return _CommitteeRangeEffectiveThrough;
-            }
-            set
-            {
-                OnCommitteeRangeEffectiveThroughChanging(value);
-                ReportPropertyChanging("CommitteeRangeEffectiveThrough");
-                _CommitteeRangeEffectiveThrough = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CommitteeRangeEffectiveThrough");
-                OnCommitteeRangeEffectiveThroughChanged();
-            }
-        }
-        private Nullable<global::System.DateTime> _CommitteeRangeEffectiveThrough;
-        partial void OnCommitteeRangeEffectiveThroughChanging(Nullable<global::System.DateTime> value);
-        partial void OnCommitteeRangeEffectiveThroughChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CommitteeRecommendation
-        {
-            get
-            {
-                return _CommitteeRecommendation;
-            }
-            set
-            {
-                OnCommitteeRecommendationChanging(value);
-                ReportPropertyChanging("CommitteeRecommendation");
-                _CommitteeRecommendation = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CommitteeRecommendation");
-                OnCommitteeRecommendationChanged();
-            }
-        }
-        private global::System.String _CommitteeRecommendation;
-        partial void OnCommitteeRecommendationChanging(global::System.String value);
-        partial void OnCommitteeRecommendationChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Single> CommitteeSellRange
-        {
-            get
-            {
-                return _CommitteeSellRange;
-            }
-            set
-            {
-                OnCommitteeSellRangeChanging(value);
-                ReportPropertyChanging("CommitteeSellRange");
-                _CommitteeSellRange = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CommitteeSellRange");
-                OnCommitteeSellRangeChanged();
-            }
-        }
-        private Nullable<global::System.Single> _CommitteeSellRange;
-        partial void OnCommitteeSellRangeChanging(Nullable<global::System.Single> value);
-        partial void OnCommitteeSellRangeChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CompetitiveAdvantage
-        {
-            get
-            {
-                return _CompetitiveAdvantage;
-            }
-            set
-            {
-                OnCompetitiveAdvantageChanging(value);
-                ReportPropertyChanging("CompetitiveAdvantage");
-                _CompetitiveAdvantage = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CompetitiveAdvantage");
-                OnCompetitiveAdvantageChanged();
-            }
-        }
-        private global::System.String _CompetitiveAdvantage;
-        partial void OnCompetitiveAdvantageChanging(global::System.String value);
-        partial void OnCompetitiveAdvantageChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String CompetitiveDisadvantage
-        {
-            get
-            {
-                return _CompetitiveDisadvantage;
-            }
-            set
-            {
-                OnCompetitiveDisadvantageChanging(value);
-                ReportPropertyChanging("CompetitiveDisadvantage");
-                _CompetitiveDisadvantage = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("CompetitiveDisadvantage");
-                OnCompetitiveDisadvantageChanged();
-            }
-        }
-        private global::System.String _CompetitiveDisadvantage;
-        partial void OnCompetitiveDisadvantageChanging(global::System.String value);
-        partial void OnCompetitiveDisadvantageChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String CreatedBy
-        {
-            get
-            {
-                return _CreatedBy;
-            }
-            set
-            {
-                OnCreatedByChanging(value);
-                ReportPropertyChanging("CreatedBy");
-                _CreatedBy = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("CreatedBy");
-                OnCreatedByChanged();
-            }
-        }
-        private global::System.String _CreatedBy;
-        partial void OnCreatedByChanging(global::System.String value);
-        partial void OnCreatedByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime CreatedOn
-        {
-            get
-            {
-                return _CreatedOn;
-            }
-            set
-            {
-                OnCreatedOnChanging(value);
-                ReportPropertyChanging("CreatedOn");
-                _CreatedOn = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("CreatedOn");
-                OnCreatedOnChanged();
-            }
-        }
-        private global::System.DateTime _CreatedOn;
-        partial void OnCreatedOnChanging(global::System.DateTime value);
-        partial void OnCreatedOnChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String EarningsOutlook
-        {
-            get
-            {
-                return _EarningsOutlook;
-            }
-            set
-            {
-                OnEarningsOutlookChanging(value);
-                ReportPropertyChanging("EarningsOutlook");
-                _EarningsOutlook = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("EarningsOutlook");
-                OnEarningsOutlookChanged();
-            }
-        }
-        private global::System.String _EarningsOutlook;
-        partial void OnEarningsOutlookChanging(global::System.String value);
-        partial void OnEarningsOutlookChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String InvestmentThesis
-        {
-            get
-            {
-                return _InvestmentThesis;
-            }
-            set
-            {
-                OnInvestmentThesisChanging(value);
-                ReportPropertyChanging("InvestmentThesis");
-                _InvestmentThesis = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("InvestmentThesis");
-                OnInvestmentThesisChanged();
-            }
-        }
-        private global::System.String _InvestmentThesis;
-        partial void OnInvestmentThesisChanging(global::System.String value);
-        partial void OnInvestmentThesisChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.String ModifiedBy
-        {
-            get
-            {
-                return _ModifiedBy;
-            }
-            set
-            {
-                OnModifiedByChanging(value);
-                ReportPropertyChanging("ModifiedBy");
-                _ModifiedBy = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("ModifiedBy");
-                OnModifiedByChanged();
-            }
-        }
-        private global::System.String _ModifiedBy;
-        partial void OnModifiedByChanging(global::System.String value);
-        partial void OnModifiedByChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime ModifiedOn
-        {
-            get
-            {
-                return _ModifiedOn;
-            }
-            set
-            {
-                OnModifiedOnChanging(value);
-                ReportPropertyChanging("ModifiedOn");
-                _ModifiedOn = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("ModifiedOn");
-                OnModifiedOnChanged();
-            }
-        }
-        private global::System.DateTime _ModifiedOn;
-        partial void OnModifiedOnChanging(global::System.DateTime value);
-        partial void OnModifiedOnChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7178,50 +6650,74 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityBuyRange
+        public global::System.String StatusType
         {
             get
             {
-                return _SecurityBuyRange;
+                return _StatusType;
             }
             set
             {
-                OnSecurityBuyRangeChanging(value);
-                ReportPropertyChanging("SecurityBuyRange");
-                _SecurityBuyRange = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityBuyRange");
-                OnSecurityBuyRangeChanged();
+                OnStatusTypeChanging(value);
+                ReportPropertyChanging("StatusType");
+                _StatusType = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("StatusType");
+                OnStatusTypeChanged();
             }
         }
-        private Nullable<global::System.Single> _SecurityBuyRange;
-        partial void OnSecurityBuyRangeChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityBuyRangeChanged();
+        private global::System.String _StatusType;
+        partial void OnStatusTypeChanging(global::System.String value);
+        partial void OnStatusTypeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityCashPosition
+        public global::System.String SecurityTicker
         {
             get
             {
-                return _SecurityCashPosition;
+                return _SecurityTicker;
             }
             set
             {
-                OnSecurityCashPositionChanging(value);
-                ReportPropertyChanging("SecurityCashPosition");
-                _SecurityCashPosition = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityCashPosition");
-                OnSecurityCashPositionChanged();
+                OnSecurityTickerChanging(value);
+                ReportPropertyChanging("SecurityTicker");
+                _SecurityTicker = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SecurityTicker");
+                OnSecurityTickerChanged();
             }
         }
-        private Nullable<global::System.Single> _SecurityCashPosition;
-        partial void OnSecurityCashPositionChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityCashPositionChanged();
+        private global::System.String _SecurityTicker;
+        partial void OnSecurityTickerChanging(global::System.String value);
+        partial void OnSecurityTickerChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SecurityName
+        {
+            get
+            {
+                return _SecurityName;
+            }
+            set
+            {
+                OnSecurityNameChanging(value);
+                ReportPropertyChanging("SecurityName");
+                _SecurityName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SecurityName");
+                OnSecurityNameChanged();
+            }
+        }
+        private global::System.String _SecurityName;
+        partial void OnSecurityNameChanging(global::System.String value);
+        partial void OnSecurityNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7276,30 +6772,6 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityGlobalActiveWeight
-        {
-            get
-            {
-                return _SecurityGlobalActiveWeight;
-            }
-            set
-            {
-                OnSecurityGlobalActiveWeightChanging(value);
-                ReportPropertyChanging("SecurityGlobalActiveWeight");
-                _SecurityGlobalActiveWeight = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityGlobalActiveWeight");
-                OnSecurityGlobalActiveWeightChanged();
-            }
-        }
-        private Nullable<global::System.Single> _SecurityGlobalActiveWeight;
-        partial void OnSecurityGlobalActiveWeightChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityGlobalActiveWeightChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public global::System.String SecurityIndustry
         {
             get
@@ -7324,144 +6796,24 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityLastClosingPrice
+        public Nullable<global::System.Single> SecurityCashPosition
         {
             get
             {
-                return _SecurityLastClosingPrice;
+                return _SecurityCashPosition;
             }
             set
             {
-                OnSecurityLastClosingPriceChanging(value);
-                ReportPropertyChanging("SecurityLastClosingPrice");
-                _SecurityLastClosingPrice = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityLastClosingPrice");
-                OnSecurityLastClosingPriceChanged();
+                OnSecurityCashPositionChanging(value);
+                ReportPropertyChanging("SecurityCashPosition");
+                _SecurityCashPosition = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityCashPosition");
+                OnSecurityCashPositionChanged();
             }
         }
-        private Nullable<global::System.Single> _SecurityLastClosingPrice;
-        partial void OnSecurityLastClosingPriceChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityLastClosingPriceChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityMSCIIMIWeight
-        {
-            get
-            {
-                return _SecurityMSCIIMIWeight;
-            }
-            set
-            {
-                OnSecurityMSCIIMIWeightChanging(value);
-                ReportPropertyChanging("SecurityMSCIIMIWeight");
-                _SecurityMSCIIMIWeight = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityMSCIIMIWeight");
-                OnSecurityMSCIIMIWeightChanged();
-            }
-        }
-        private Nullable<global::System.Single> _SecurityMSCIIMIWeight;
-        partial void OnSecurityMSCIIMIWeightChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityMSCIIMIWeightChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityMSCIStdWeight
-        {
-            get
-            {
-                return _SecurityMSCIStdWeight;
-            }
-            set
-            {
-                OnSecurityMSCIStdWeightChanging(value);
-                ReportPropertyChanging("SecurityMSCIStdWeight");
-                _SecurityMSCIStdWeight = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityMSCIStdWeight");
-                OnSecurityMSCIStdWeightChanged();
-            }
-        }
-        private Nullable<global::System.Single> _SecurityMSCIStdWeight;
-        partial void OnSecurityMSCIStdWeightChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityMSCIStdWeightChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityMarketCapitalization
-        {
-            get
-            {
-                return _SecurityMarketCapitalization;
-            }
-            set
-            {
-                OnSecurityMarketCapitalizationChanging(value);
-                ReportPropertyChanging("SecurityMarketCapitalization");
-                _SecurityMarketCapitalization = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityMarketCapitalization");
-                OnSecurityMarketCapitalizationChanged();
-            }
-        }
-        private Nullable<global::System.Single> _SecurityMarketCapitalization;
-        partial void OnSecurityMarketCapitalizationChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityMarketCapitalizationChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String SecurityName
-        {
-            get
-            {
-                return _SecurityName;
-            }
-            set
-            {
-                OnSecurityNameChanging(value);
-                ReportPropertyChanging("SecurityName");
-                _SecurityName = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("SecurityName");
-                OnSecurityNameChanged();
-            }
-        }
-        private global::System.String _SecurityName;
-        partial void OnSecurityNameChanging(global::System.String value);
-        partial void OnSecurityNameChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String SecurityPFVMeasure
-        {
-            get
-            {
-                return _SecurityPFVMeasure;
-            }
-            set
-            {
-                OnSecurityPFVMeasureChanging(value);
-                ReportPropertyChanging("SecurityPFVMeasure");
-                _SecurityPFVMeasure = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("SecurityPFVMeasure");
-                OnSecurityPFVMeasureChanged();
-            }
-        }
-        private global::System.String _SecurityPFVMeasure;
-        partial void OnSecurityPFVMeasureChanging(global::System.String value);
-        partial void OnSecurityPFVMeasureChanged();
+        private Nullable<global::System.Single> _SecurityCashPosition;
+        partial void OnSecurityCashPositionChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityCashPositionChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7492,24 +6844,168 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String SecurityRecommendation
+        public Nullable<global::System.Single> SecurityMSCIStdWeight
         {
             get
             {
-                return _SecurityRecommendation;
+                return _SecurityMSCIStdWeight;
             }
             set
             {
-                OnSecurityRecommendationChanging(value);
-                ReportPropertyChanging("SecurityRecommendation");
-                _SecurityRecommendation = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("SecurityRecommendation");
-                OnSecurityRecommendationChanged();
+                OnSecurityMSCIStdWeightChanging(value);
+                ReportPropertyChanging("SecurityMSCIStdWeight");
+                _SecurityMSCIStdWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityMSCIStdWeight");
+                OnSecurityMSCIStdWeightChanged();
             }
         }
-        private global::System.String _SecurityRecommendation;
-        partial void OnSecurityRecommendationChanging(global::System.String value);
-        partial void OnSecurityRecommendationChanged();
+        private Nullable<global::System.Single> _SecurityMSCIStdWeight;
+        partial void OnSecurityMSCIStdWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityMSCIStdWeightChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityMSCIIMIWeight
+        {
+            get
+            {
+                return _SecurityMSCIIMIWeight;
+            }
+            set
+            {
+                OnSecurityMSCIIMIWeightChanging(value);
+                ReportPropertyChanging("SecurityMSCIIMIWeight");
+                _SecurityMSCIIMIWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityMSCIIMIWeight");
+                OnSecurityMSCIIMIWeightChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityMSCIIMIWeight;
+        partial void OnSecurityMSCIIMIWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityMSCIIMIWeightChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityGlobalActiveWeight
+        {
+            get
+            {
+                return _SecurityGlobalActiveWeight;
+            }
+            set
+            {
+                OnSecurityGlobalActiveWeightChanging(value);
+                ReportPropertyChanging("SecurityGlobalActiveWeight");
+                _SecurityGlobalActiveWeight = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityGlobalActiveWeight");
+                OnSecurityGlobalActiveWeightChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityGlobalActiveWeight;
+        partial void OnSecurityGlobalActiveWeightChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityGlobalActiveWeightChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityLastClosingPrice
+        {
+            get
+            {
+                return _SecurityLastClosingPrice;
+            }
+            set
+            {
+                OnSecurityLastClosingPriceChanging(value);
+                ReportPropertyChanging("SecurityLastClosingPrice");
+                _SecurityLastClosingPrice = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityLastClosingPrice");
+                OnSecurityLastClosingPriceChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityLastClosingPrice;
+        partial void OnSecurityLastClosingPriceChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityLastClosingPriceChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityMarketCapitalization
+        {
+            get
+            {
+                return _SecurityMarketCapitalization;
+            }
+            set
+            {
+                OnSecurityMarketCapitalizationChanging(value);
+                ReportPropertyChanging("SecurityMarketCapitalization");
+                _SecurityMarketCapitalization = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityMarketCapitalization");
+                OnSecurityMarketCapitalizationChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityMarketCapitalization;
+        partial void OnSecurityMarketCapitalizationChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityMarketCapitalizationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String SecurityPFVMeasure
+        {
+            get
+            {
+                return _SecurityPFVMeasure;
+            }
+            set
+            {
+                OnSecurityPFVMeasureChanging(value);
+                ReportPropertyChanging("SecurityPFVMeasure");
+                _SecurityPFVMeasure = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SecurityPFVMeasure");
+                OnSecurityPFVMeasureChanged();
+            }
+        }
+        private global::System.String _SecurityPFVMeasure;
+        partial void OnSecurityPFVMeasureChanging(global::System.String value);
+        partial void OnSecurityPFVMeasureChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> SecurityBuyRange
+        {
+            get
+            {
+                return _SecurityBuyRange;
+            }
+            set
+            {
+                OnSecurityBuyRangeChanging(value);
+                ReportPropertyChanging("SecurityBuyRange");
+                _SecurityBuyRange = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityBuyRange");
+                OnSecurityBuyRangeChanged();
+            }
+        }
+        private Nullable<global::System.Single> _SecurityBuyRange;
+        partial void OnSecurityBuyRangeChanging(Nullable<global::System.Single> value);
+        partial void OnSecurityBuyRangeChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -7540,72 +7036,288 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String SecurityTicker
+        public global::System.String SecurityRecommendation
         {
             get
             {
-                return _SecurityTicker;
+                return _SecurityRecommendation;
             }
             set
             {
-                OnSecurityTickerChanging(value);
-                ReportPropertyChanging("SecurityTicker");
-                _SecurityTicker = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("SecurityTicker");
-                OnSecurityTickerChanged();
+                OnSecurityRecommendationChanging(value);
+                ReportPropertyChanging("SecurityRecommendation");
+                _SecurityRecommendation = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("SecurityRecommendation");
+                OnSecurityRecommendationChanged();
             }
         }
-        private global::System.String _SecurityTicker;
-        partial void OnSecurityTickerChanging(global::System.String value);
-        partial void OnSecurityTickerChanged();
+        private global::System.String _SecurityRecommendation;
+        partial void OnSecurityRecommendationChanging(global::System.String value);
+        partial void OnSecurityRecommendationChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.String Valuations
+        public global::System.String CommitteePFVMeasure
         {
             get
             {
-                return _Valuations;
+                return _CommitteePFVMeasure;
             }
             set
             {
-                OnValuationsChanging(value);
-                ReportPropertyChanging("Valuations");
-                _Valuations = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("Valuations");
-                OnValuationsChanged();
+                OnCommitteePFVMeasureChanging(value);
+                ReportPropertyChanging("CommitteePFVMeasure");
+                _CommitteePFVMeasure = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CommitteePFVMeasure");
+                OnCommitteePFVMeasureChanged();
             }
         }
-        private global::System.String _Valuations;
-        partial void OnValuationsChanging(global::System.String value);
-        partial void OnValuationsChanged();
+        private global::System.String _CommitteePFVMeasure;
+        partial void OnCommitteePFVMeasureChanging(global::System.String value);
+        partial void OnCommitteePFVMeasureChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> CommitteeBuyRange
+        {
+            get
+            {
+                return _CommitteeBuyRange;
+            }
+            set
+            {
+                OnCommitteeBuyRangeChanging(value);
+                ReportPropertyChanging("CommitteeBuyRange");
+                _CommitteeBuyRange = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CommitteeBuyRange");
+                OnCommitteeBuyRangeChanged();
+            }
+        }
+        private Nullable<global::System.Single> _CommitteeBuyRange;
+        partial void OnCommitteeBuyRangeChanging(Nullable<global::System.Single> value);
+        partial void OnCommitteeBuyRangeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Single> CommitteeSellRange
+        {
+            get
+            {
+                return _CommitteeSellRange;
+            }
+            set
+            {
+                OnCommitteeSellRangeChanging(value);
+                ReportPropertyChanging("CommitteeSellRange");
+                _CommitteeSellRange = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CommitteeSellRange");
+                OnCommitteeSellRangeChanged();
+            }
+        }
+        private Nullable<global::System.Single> _CommitteeSellRange;
+        partial void OnCommitteeSellRangeChanging(Nullable<global::System.Single> value);
+        partial void OnCommitteeSellRangeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CommitteeRecommendation
+        {
+            get
+            {
+                return _CommitteeRecommendation;
+            }
+            set
+            {
+                OnCommitteeRecommendationChanging(value);
+                ReportPropertyChanging("CommitteeRecommendation");
+                _CommitteeRecommendation = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CommitteeRecommendation");
+                OnCommitteeRecommendationChanged();
+            }
+        }
+        private global::System.String _CommitteeRecommendation;
+        partial void OnCommitteeRecommendationChanging(global::System.String value);
+        partial void OnCommitteeRecommendationChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.DateTime> CommitteeRangeEffectiveThrough
+        {
+            get
+            {
+                return _CommitteeRangeEffectiveThrough;
+            }
+            set
+            {
+                OnCommitteeRangeEffectiveThroughChanging(value);
+                ReportPropertyChanging("CommitteeRangeEffectiveThrough");
+                _CommitteeRangeEffectiveThrough = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CommitteeRangeEffectiveThrough");
+                OnCommitteeRangeEffectiveThroughChanged();
+            }
+        }
+        private Nullable<global::System.DateTime> _CommitteeRangeEffectiveThrough;
+        partial void OnCommitteeRangeEffectiveThroughChanging(Nullable<global::System.DateTime> value);
+        partial void OnCommitteeRangeEffectiveThroughChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Boolean> AcceptWithoutDiscussionFlag
+        {
+            get
+            {
+                return _AcceptWithoutDiscussionFlag;
+            }
+            set
+            {
+                OnAcceptWithoutDiscussionFlagChanging(value);
+                ReportPropertyChanging("AcceptWithoutDiscussionFlag");
+                _AcceptWithoutDiscussionFlag = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("AcceptWithoutDiscussionFlag");
+                OnAcceptWithoutDiscussionFlagChanged();
+            }
+        }
+        private Nullable<global::System.Boolean> _AcceptWithoutDiscussionFlag;
+        partial void OnAcceptWithoutDiscussionFlagChanging(Nullable<global::System.Boolean> value);
+        partial void OnAcceptWithoutDiscussionFlagChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String AdminNotes
+        {
+            get
+            {
+                return _AdminNotes;
+            }
+            set
+            {
+                OnAdminNotesChanging(value);
+                ReportPropertyChanging("AdminNotes");
+                _AdminNotes = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("AdminNotes");
+                OnAdminNotesChanged();
+            }
+        }
+        private global::System.String _AdminNotes;
+        partial void OnAdminNotesChanging(global::System.String value);
+        partial void OnAdminNotesChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.String StatusType
+        public global::System.String CreatedBy
         {
             get
             {
-                return _StatusType;
+                return _CreatedBy;
             }
             set
             {
-                OnStatusTypeChanging(value);
-                ReportPropertyChanging("StatusType");
-                _StatusType = StructuralObject.SetValidValue(value, false);
-                ReportPropertyChanged("StatusType");
-                OnStatusTypeChanged();
+                OnCreatedByChanging(value);
+                ReportPropertyChanging("CreatedBy");
+                _CreatedBy = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("CreatedBy");
+                OnCreatedByChanged();
             }
         }
-        private global::System.String _StatusType;
-        partial void OnStatusTypeChanging(global::System.String value);
-        partial void OnStatusTypeChanged();
+        private global::System.String _CreatedBy;
+        partial void OnCreatedByChanging(global::System.String value);
+        partial void OnCreatedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime CreatedOn
+        {
+            get
+            {
+                return _CreatedOn;
+            }
+            set
+            {
+                OnCreatedOnChanging(value);
+                ReportPropertyChanging("CreatedOn");
+                _CreatedOn = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CreatedOn");
+                OnCreatedOnChanged();
+            }
+        }
+        private global::System.DateTime _CreatedOn;
+        partial void OnCreatedOnChanging(global::System.DateTime value);
+        partial void OnCreatedOnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ModifiedBy
+        {
+            get
+            {
+                return _ModifiedBy;
+            }
+            set
+            {
+                OnModifiedByChanging(value);
+                ReportPropertyChanging("ModifiedBy");
+                _ModifiedBy = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ModifiedBy");
+                OnModifiedByChanged();
+            }
+        }
+        private global::System.String _ModifiedBy;
+        partial void OnModifiedByChanging(global::System.String value);
+        partial void OnModifiedByChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime ModifiedOn
+        {
+            get
+            {
+                return _ModifiedOn;
+            }
+            set
+            {
+                OnModifiedOnChanging(value);
+                ReportPropertyChanging("ModifiedOn");
+                _ModifiedOn = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ModifiedOn");
+                OnModifiedOnChanged();
+            }
+        }
+        private global::System.DateTime _ModifiedOn;
+        partial void OnModifiedOnChanging(global::System.DateTime value);
+        partial void OnModifiedOnChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

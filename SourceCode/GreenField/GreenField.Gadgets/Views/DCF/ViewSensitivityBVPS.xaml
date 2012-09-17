@@ -36,9 +36,11 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Enter the Value of FWD BVPS:" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"/>
+                <TextBlock Text="Enter the Value of FWD BVPS:" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"
+                           />
+                
                 <Border Grid.Column="1" Background="Yellow">
-                    <TextBox x:Name="txtFWDBVPS" Text="{Binding FWDBVPS, Mode=TwoWay}" VerticalAlignment="Center"  HorizontalAlignment="Left"
+                    <TextBox x:Name="txtFWDBVPS" Text="{Binding FWDBVPS, Mode=TwoWay}" VerticalAlignment="Center"  HorizontalAlignment="Left" KeyDown="TextBlock_KeyDown"
                            TextInput="txtFWDBVPS_TextInput"/>
                 </Border>
                 <Button Height="15" Width="15" Grid.Column="2"

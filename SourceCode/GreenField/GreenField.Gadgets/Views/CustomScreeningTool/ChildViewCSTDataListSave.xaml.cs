@@ -23,8 +23,6 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ChildViewCSTDataListSave : ChildWindow
     {
-        
-
         #region Fields
 
         public enum AccessbitlityMode
@@ -40,42 +38,69 @@ namespace GreenField.Gadgets.Views
         public ChildViewCSTDataListSave()
         {
             InitializeComponent();
+            FetchedFlag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+            FetchedAccessibility = CSTNavigation.FetchString(CSTNavigationInfo.Accessibility) as string;
+            FetchedListName = CSTNavigation.FetchString(CSTNavigationInfo.ListName) as string;
+            if (FetchedFlag == "Edit")
+            {
+                //ListName = FetchedListName;
+                txtDataListName.Text = FetchedListName;
+                //ListName = txtDataListName.Text;
+                if (FetchedAccessibility.ToLower() == "public")
+                {
+                    rbtnPublic.IsChecked = true;
+                    rbtnPrivate.IsChecked = false;
+                }
+                else
+                {
+                    rbtnPublic.IsChecked = false;
+                    rbtnPrivate.IsChecked = true;
+                }
+            }
         }
         
         #endregion
 
         #region Properties
 
+        public string FetchedFlag { get; set; }
+
+        public string FetchedAccessibility { get; set; }
+
+        public string FetchedListName { get; set; }
+
         public AccessbitlityMode Accessbitlity {get;  set; }
 
         public string SelectedAccessibility { get; set; }
+
+        //public string ListName { get; set; }
         
 
-        private bool _isSelectedRbtnPublic = true;
-        public bool IsSelectedRbtnPublic
-        {
-            get { return _isSelectedRbtnPublic; }
-            set
-            {
-                if (_isSelectedRbtnPublic != value)
-                {
-                    _isSelectedRbtnPublic = value;
-                }
-            }
-        }
+        //private bool _isSelectedRbtnPublic = true;
+        //public bool IsSelectedRbtnPublic
+        //{
+        //    get { return _isSelectedRbtnPublic; }
+        //    set
+        //    {
+        //        if (_isSelectedRbtnPublic != value)
+        //        {
+        //            _isSelectedRbtnPublic = value;
+        //        }
+        //    }
+        //}
 
-        private bool _isSelectedRbtnPrivate = false;
-        public bool IsSelectedRbtnPrivate
-        {
-            get { return _isSelectedRbtnPrivate; }
-            set
-            {
-                if (_isSelectedRbtnPrivate != value)
-                {
-                    _isSelectedRbtnPrivate = value;
-                }              
-            }
-        }
+        //private bool _isSelectedRbtnPrivate = false;
+        //public bool IsSelectedRbtnPrivate
+        //{
+        //    get { return _isSelectedRbtnPrivate; }
+        //    set
+        //    {
+        //        if (_isSelectedRbtnPrivate != value)
+        //        {
+        //            _isSelectedRbtnPrivate = value;
+        //        }              
+        //    }
+        //}
         #endregion
 
         #region Events
@@ -84,17 +109,15 @@ namespace GreenField.Gadgets.Views
         {
             RadioButton rb = sender as RadioButton;
             //choiceTextBlock.Text = "You chose: " + rb.GroupName + ": " + rb.Name;
-            if (IsSelectedRbtnPublic)
+            if (Convert.ToBoolean(rbtnPublic.IsChecked))
             {
                 SelectedAccessibility = "Public";
             }
-            else if (IsSelectedRbtnPrivate)
+            else if (Convert.ToBoolean(rbtnPrivate.IsChecked))
             {
                 SelectedAccessibility = "Private";
             }
         }
-
-
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
@@ -104,15 +127,7 @@ namespace GreenField.Gadgets.Views
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
-        }
-
-       
-
-        #endregion
-
-        #region CallBack Method(s)
-
-      
+        }       
 
         #endregion
 

@@ -375,12 +375,14 @@ namespace GreenField.Gadgets.ViewModels
 
             BusyIndicatorIsBusy = showBusyIndicator;
         }
+
         public void Initialize()
         {
             MeetingInfo meetingInfo = ICNavigation.Fetch(ICNavigationInfo.MeetingInfo) as MeetingInfo;
             if (meetingInfo != null)
             {
                 ICPresentationOverviewInfo.MeetingDateTime = meetingInfo.MeetingDateTime;
+                ICPresentationOverviewInfo.CommitteeRangeEffectiveThrough = meetingInfo.MeetingDateTime.Date.AddMonths(3);
                 ICPresentationOverviewInfo.MeetingClosedDateTime = meetingInfo.MeetingClosedDateTime;
                 ICPresentationOverviewInfo.MeetingVotingClosedDateTime = meetingInfo.MeetingVotingClosedDateTime;
             }

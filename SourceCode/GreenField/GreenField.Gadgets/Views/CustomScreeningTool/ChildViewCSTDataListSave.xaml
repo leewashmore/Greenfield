@@ -24,10 +24,15 @@
                     HorizontalAlignment="left"
                     VerticalAlignment="Top">
             <TextBlock Text="Name:" 
-                       Width="120"/>
-            <TextBlock x:Name="txtDataListName" 
+                       Width="120" FontFamily="Arial"
+                       FontSize="11"
+                       FontWeight="Normal"/>
+            <TextBox x:Name="txtDataListName" 
+                       TextAlignment="Left"
                         Margin="10,0,0,0"
-                       Width="194"/>
+                       Width="194" FontFamily="Arial"
+                       FontSize="11"
+                       FontWeight="Normal"/>
         </StackPanel>
 
         <Grid Grid.Row="1">
@@ -37,13 +42,11 @@
             </Grid.RowDefinitions>
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Margin="10,10,10,10">
-                <RadioButton Content="Private" Margin="5,0,0,0" 
+                <RadioButton x:Name="rbtnPrivate" Content="Private" Margin="5,0,0,0" 
                              GroupName="Accessbitlity" 
-                             IsChecked="{Binding RbtnPublic, Mode=TwoWay}"
                              Checked="HandleCheck"/>
-                <RadioButton Content="Public" Margin="5,0,0,0" 
+                <RadioButton x:Name="rbtnPublic" Content="Public" Margin="5,0,0,0" 
                              GroupName="Accessbitlity" 
-                             IsChecked="{Binding RbtnPrivate, Mode=TwoWay}"
                              Checked="HandleCheck"/>
             </StackPanel>
 

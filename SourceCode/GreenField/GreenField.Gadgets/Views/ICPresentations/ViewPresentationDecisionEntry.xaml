@@ -65,7 +65,7 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Margin="5,0,0,0" Text="Presentation Date: " FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
-                    <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.MeetingDateTim, Converter={StaticResource UTCToLocalDateTimeConverter}}" Style="{StaticResource TextBlockStyle}"/>
+                    <TextBlock Grid.Column="1" Text="{Binding SelectedPresentationOverviewInfo.MeetingDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}}" Style="{StaticResource TextBlockStyle}"/>
                 </Grid>
                 <Grid Grid.Column="3">
                     <Grid.ColumnDefinitions>
@@ -192,7 +192,7 @@
                              IsEnabled="{Binding ICDecisionIsEnable}"/>
                     </Grid>
                     <Grid Grid.Row="1" Grid.Column="4">
-                        <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeRangeEffectiveThrough, Converter={StaticResource UTCToLocalDateTimeConverter}}" VerticalAlignment="Center"
+                        <TextBlock Margin="5,2,2,2" Text="{Binding SelectedPresentationOverviewInfo.CommitteeRangeEffectiveThrough, Converter={StaticResource UTCToLocalDateTimeConverter}, StringFormat='MMMM d, yyyy'}" VerticalAlignment="Center"
                                Style="{StaticResource TextBlockStyle}"/>
                     </Grid>
                 </Grid>

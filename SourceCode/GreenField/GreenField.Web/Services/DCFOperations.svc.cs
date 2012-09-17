@@ -447,18 +447,14 @@ namespace GreenField.Web.Services
             decimal? valueROIC;
             decimal? valueSustainableDividendPayoutRatio;
 
-            decimal valueAverageROIC;
-            decimal valueAverageSustainableDividendPayoutRatio;
-
             int currentYear = DateTime.Today.Year;
 
             for (int i = 0; i < 5; i++)
             {
-                currentYear = currentYear + i;
-                valueROIC = entity.GetDCF_ROIC(issuerid, currentYear, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 162)
+                valueROIC = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 162)
                     .Select(a => a.AMOUNT).FirstOrDefault();
                 collectionROIC.Add(valueROIC);
-                valueSustainableDividendPayoutRatio = entity.GetDCF_ROIC(issuerid, currentYear, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 141)
+                valueSustainableDividendPayoutRatio = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 141)
                     .Select(a => a.AMOUNT).FirstOrDefault();
                 collectionSustainableDividendPayoutRatio.Add(valueSustainableDividendPayoutRatio);
             }
@@ -466,16 +462,24 @@ namespace GreenField.Web.Services
             if (collectionROIC.Any(a => a.Value != null))
             {
                 if (Convert.ToDecimal(collectionROIC.Average()) != 0)
-                    result.Add("ROIC", Convert.ToDecimal(collectionROIC.Average()));
+                { 
+                    result.Add("ROIC", Convert.ToDecimal(collectionROIC.Average())); 
+                }
                 else
-                    result.Add("ROIC", Convert.ToDecimal(0.3333));
+                {
+                    result.Add("ROIC", Convert.ToDecimal(0.3333)); 
+                }
             }
             if (collectionSustainableDividendPayoutRatio.Any(a => a.Value != null))
             {
                 if (Convert.ToDecimal(collectionSustainableDividendPayoutRatio.Average()) != 0)
+                {
                     result.Add("SDPR", Convert.ToDecimal(collectionSustainableDividendPayoutRatio.Average()));
+                }
                 else
+                {
                     result.Add("SDPR", Convert.ToDecimal(0.3333));
+                }
             }
 
             return result;
