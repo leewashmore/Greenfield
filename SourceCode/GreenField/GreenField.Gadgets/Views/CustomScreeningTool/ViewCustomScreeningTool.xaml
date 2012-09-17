@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"                        
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"                             
-    d:DesignHeight="300" d:DesignWidth="400">
+    d:DesignHeight="300" d:DesignWidth="700">
 
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
@@ -20,60 +20,70 @@
                               IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
 
         <Grid x:Name="LayoutRoot" Background="White">
-            <Grid x:Name="gSecuritySelection"
-              Visibility="{Binding SecuritySelectionGridViewVisibility}">            
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition Width="80"/>
-            </Grid.ColumnDefinitions>
-            <TextBlock x:Name="tblkCustomControlSelection" Text="Security Selection Criteria" HorizontalAlignment="Right" VerticalAlignment="Center" 
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid x:Name="gSecuritySelection" Grid.Column="0"
+              Visibility="{Binding SecuritySelectionGridViewVisibility}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="80"/>
+                        <ColumnDefinition Width="80"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="tblkCustomControlSelection" Text="Security Selection Criteria" HorizontalAlignment="Right" VerticalAlignment="Center" 
                        Grid.Column="0" Grid.Row="0" 
                        Style="{StaticResource TextBlockStyle}"/>
-        
-            <telerik:RadComboBox x:Name="cmbSecuritySelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0"
+
+                    <telerik:RadComboBox x:Name="cmbSecuritySelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="0"
                                      HorizontalAlignment="Left" 
                                      ItemsSource="{Binding SecuritySelectionCriteria}" SelectedValue="{Binding SelectedCriteria, Mode=TwoWay}"
                                      EmptyText="Select Criteria" Width="150"                               
                                      Style="{StaticResource RadComboBoxStyle}"/>
 
-            <TextBlock x:Name="tblkCustomControlPortfolio" Text="Select Portfolio" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                    <TextBlock x:Name="tblkCustomControlPortfolio" Text="Select Portfolio" HorizontalAlignment="Right" VerticalAlignment="Center" 
                        Grid.Column="0" Grid.Row="1" Visibility="{Binding PortfolioSelectionVisibility}"
                        Style="{StaticResource TextBlockStyle}"/>
 
-            <telerik:RadComboBox x:Name="cmbPortfolioSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
+                    <telerik:RadComboBox x:Name="cmbPortfolioSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
                                      HorizontalAlignment="Left" 
                                      ItemsSource="{Binding PortfolioSelectionInfo}" SelectedValue="{Binding SelectedPortfolio, Mode=TwoWay}"
                                      EmptyText="Select Portfolio" Width="150"
                                      Visibility="{Binding PortfolioSelectionVisibility}"
                                      Style="{StaticResource RadComboBoxStyle}"/>
 
-            <TextBlock x:Name="tblkCustomControlBenchmark" Text="Select Benchmark" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                    <TextBlock x:Name="tblkCustomControlBenchmark" Text="Select Benchmark" HorizontalAlignment="Right" VerticalAlignment="Center" 
                        Grid.Column="0" Grid.Row="1" Visibility="{Binding BenchmarkSelectionVisibility}"
                        Style="{StaticResource TextBlockStyle}"/>
 
-            <telerik:RadComboBox x:Name="cmbBenchmarkSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
+                    <telerik:RadComboBox x:Name="cmbBenchmarkSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
                                      HorizontalAlignment="Left" 
                                      ItemsSource="{Binding BenchmarkSelectionInfo}" SelectedValue="{Binding SelectedBenchmark, Mode=TwoWay}"
                                      EmptyText="Select Benchmark" Width="150"
                                      Visibility="{Binding BenchmarkSelectionVisibility}"
                                      Style="{StaticResource RadComboBoxStyle}"/>
 
-            <TextBlock x:Name="tblkCustomControlCustomRegion" Text="Select Region" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                    <TextBlock x:Name="tblkCustomControlCustomRegion" Text="Select Region" HorizontalAlignment="Right" VerticalAlignment="Center" 
                        Grid.Column="0" Grid.Row="1" Visibility="{Binding CustomSelectionVisibility}"
                        Style="{StaticResource TextBlockStyle}"/>
 
-            <telerik:RadComboBox x:Name="cmbCustomRegionSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
+                    <telerik:RadComboBox x:Name="cmbCustomRegionSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
                                      HorizontalAlignment="Left" 
                                      ItemsSource="{Binding CustomSelectionRegionInfo}" SelectedValue="{Binding SelectedRegion, Mode=TwoWay}"
                                      EmptyText="Select Region" Width="150"
@@ -81,33 +91,33 @@
                                      Style="{StaticResource RadComboBoxStyle}"/>
 
 
-            <TextBlock x:Name="tblkCustomControlCustomCountry" Text="Select Country" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                    <TextBlock x:Name="tblkCustomControlCustomCountry" Text="Select Country" HorizontalAlignment="Right" VerticalAlignment="Center" 
                        Grid.Column="0" Grid.Row="2" Visibility="{Binding CustomSelectionVisibility}"
                        Style="{StaticResource TextBlockStyle}"/>
 
-            <telerik:RadComboBox x:Name="cmbCustomCountrySelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2"
+                    <telerik:RadComboBox x:Name="cmbCustomCountrySelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="2"
                                      HorizontalAlignment="Left" 
                                      ItemsSource="{Binding CustomSelectionCountryInfo}" SelectedValue="{Binding SelectedCountry, Mode=TwoWay}"
                                      EmptyText="Select Country" Width="150"
                                      Visibility="{Binding CustomSelectionVisibility}"
                                      Style="{StaticResource RadComboBoxStyle}"/>
 
-            <TextBlock x:Name="tblkCustomControlCustomSector" Text="Select Sector" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                    <TextBlock x:Name="tblkCustomControlCustomSector" Text="Select Sector" HorizontalAlignment="Right" VerticalAlignment="Center" 
                        Grid.Column="0" Grid.Row="3" Visibility="{Binding CustomSelectionVisibility}"
                        Style="{StaticResource TextBlockStyle}"/>
 
-            <telerik:RadComboBox x:Name="cmbCustomSectorSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="3"
+                    <telerik:RadComboBox x:Name="cmbCustomSectorSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="3"
                                      HorizontalAlignment="Left" 
                                      ItemsSource="{Binding CustomSelectionSectorInfo}" SelectedValue="{Binding SelectedSector, Mode=TwoWay}"
                                      EmptyText="Select Sector" Width="150"
                                      Visibility="{Binding CustomSelectionVisibility}"
                                      Style="{StaticResource RadComboBoxStyle}"/>
 
-            <TextBlock x:Name="tblkCustomControlCustomIndustry" Text="Select Industry" HorizontalAlignment="Right" VerticalAlignment="Center" 
+                    <TextBlock x:Name="tblkCustomControlCustomIndustry" Text="Select Industry" HorizontalAlignment="Right" VerticalAlignment="Center" 
                        Grid.Column="0" Grid.Row="4" Visibility="{Binding CustomSelectionVisibility}"
                        Style="{StaticResource TextBlockStyle}"/>
 
-            <telerik:RadComboBox x:Name="cmbCustomIndustrySelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4"
+                    <telerik:RadComboBox x:Name="cmbCustomIndustrySelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="4"
                                      HorizontalAlignment="Left" 
                                      ItemsSource="{Binding CustomSelectionIndustryInfo}" SelectedValue="{Binding SelectedIndustry, Mode=TwoWay}"
                                      EmptyText="Select Industry" Width="150"
@@ -115,7 +125,7 @@
                                      Style="{StaticResource RadComboBoxStyle}"/>
 
 
-            <telerik:RadButton x:Name="btnCustomControlSubmit"
+                    <telerik:RadButton x:Name="btnCustomControlSubmit"
                                    Command="{Binding SubmitCommand}"
                                    Grid.Row="5"
                                    VerticalAlignment="Center"
@@ -125,27 +135,27 @@
                                    Content="SUBMIT" Grid.Column="0"
                                Style="{StaticResource RadButtonStyle}"/>
 
-        </Grid>
+                </Grid>
 
-            <Grid x:Name="gDataListSelection"
+                <Grid x:Name="gDataListSelection" Grid.Column="1"
               Visibility="{Binding DataListSelectionGridViewVisibility}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            
-            <!--<HyperlinkButton Margin="2" Content="Create a New Data List" VerticalAlignment="Center" 
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!--<HyperlinkButton Margin="2" Content="Create a New Data List" VerticalAlignment="Center" 
                              Style="{StaticResource HyperlinkButtonStyle}"
                              Grid.Column="0"
                              TargetName = "_self"
                              HorizontalAlignment="Left" NavigateUri="/Views/CustomScreeningTool/ViewCSTDataFieldSelector.xaml"/>-->
 
-            <telerik:RadButton x:Name="btnCreateNewDataList"
+                    <telerik:RadButton x:Name="btnCreateNewDataList"
                                    Command="{Binding CreateDataListCommand}"
                                    VerticalAlignment="Center"
                                    Margin="2,2,0,2"
@@ -154,29 +164,38 @@
                                    Content="Create New DataList" Grid.Column="0" 
                                    Style="{StaticResource RadButtonStyle}"/>
 
-            <TextBlock x:Name="tblkDataListSavedList" Text="Select Saved Data List" 
+                    <TextBlock x:Name="tblkDataListSavedList" Text="Select Saved Data List" 
                                    HorizontalAlignment="Right" VerticalAlignment="Center" 
                                    Margin="2,2,0,2"
                                    Grid.Column="0" Grid.Row="1" 
                                    Style="{StaticResource TextBlockStyle}"/>
 
-            <telerik:RadComboBox x:Name="cmbSavedDataListSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
+                    <telerik:RadComboBox x:Name="cmbSavedDataListSelection" Margin="2,0,2,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1"
                                      HorizontalAlignment="Left" 
                                      ItemsSource="{Binding SavedDataListInfo}" SelectedValue="{Binding SelectedDataListInfo, Mode=TwoWay}"
                                      EmptyText="Select Data List" Width="150"
                                      Style="{StaticResource RadComboBoxStyle}"/>
 
-            <telerik:RadButton x:Name="btnCustomControlDataListOk"
+                    <telerik:RadButton x:Name="btnCustomControlDataListOk"
                                    Command="{Binding OkCommand}"
                                    Grid.Row="2"
                                    Margin="2"
                                    VerticalAlignment="Center"
                                    Width="75"
                                    Visibility="Visible"
-                                   HorizontalAlignment="Center"
+                                   HorizontalAlignment="Left"
                                    Content="OK"
                                Style="{StaticResource RadButtonStyle}"/>
-        </Grid>
+                </Grid>
+
+            </Grid>
+            
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
+            <Border BorderThickness="4" HorizontalAlignment="Stretch"/>
+                </StackPanel>
+            </Grid>
+
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

@@ -94,14 +94,16 @@
 
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
-                                        </Grid.RowDefinitions>
-                                        <telerik:RadButton x:Name="btnCustomControlAddSecurityRef" Command="{Binding AddCommand}"
-                                                       Width="50" Height="20" 
-                                                       HorizontalAlignment="Center"
-                                                       VerticalAlignment="Center"
-                                                       Visibility="Visible" Content=">>"/>
+                                            <RowDefinition Height="auto"/>
+                                            <RowDefinition Height="auto"/>
+                                            </Grid.RowDefinitions>
+                                        <telerik:RadButton x:Name="btnCustomControlAddSecurityRef"
+                                                           Command="{Binding AddSecurityRefCommand}"
+                                                           Margin="0,100,0,2"
+                                                           Width="50" Height="20" Grid.Row="0"
+                                                           HorizontalAlignment="Center"
+                                                           VerticalAlignment="Center"
+                                                           Visibility="Visible" Content=">>"/>
 
                                         <telerik:RadButton x:Name="btnCustomControlRemoveSecurityRef" Command="{Binding RemoveCommand}"
                                                        Width="50" Height="20" Grid.Row="1"
@@ -293,8 +295,8 @@
                                         </Grid>
 
                                         <Grid Grid.Row="5">
-                                            <telerik:RadButton x:Name="btnCustomControlAddPeriodFin" Command="{Binding AddCommand}"
-                                                       Width="50" Height="20"
+                                            <telerik:RadButton x:Name="btnCustomControlAddPeriodFin" Command="{Binding AddPeriodFinCommand}"
+                                                       Width="50" Height="20" 
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
                                                        Visibility="Visible" Content=">>"/>
@@ -303,7 +305,7 @@
                                         <Grid Grid.Row="6">
                                             <telerik:RadButton x:Name="btnCustomControlRemovePeriodFin" Command="{Binding RemoveCommand}"
                                                        Width="50" Height="20" 
-                                                       Margin="2,2,0,2"
+                                                       Margin="0,2,0,2"
                                                        Grid.Row="6"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
@@ -395,9 +397,9 @@
 
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
                                             <Grid.RowDefinitions>
@@ -417,8 +419,8 @@
                                                                  Style="{StaticResource RadComboBoxStyle}"/>
                                         </Grid>                                    
                                     
-                                            <telerik:RadButton x:Name="btnCustomControlAddCurrentFin" Command="{Binding AddCommand}"
-                                                       Width="50" Height="20" Margin="10,0,5,0" 
+                                            <telerik:RadButton x:Name="btnCustomControlAddCurrentFin" Command="{Binding AddCurrentFinCommand}"
+                                                       Width="50" Height="20" Margin="0,40,0,2" 
                                                        Grid.Column="1"
                                                        Grid.Row="1"
                                                        HorizontalAlignment="Center"
@@ -517,9 +519,9 @@
 
                                     <Grid Grid.Column="1">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
-                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <Grid Grid.Row="0">
                                             <Grid.RowDefinitions>
@@ -539,8 +541,8 @@
                                                                  Style="{StaticResource RadComboBoxStyle}"/>
                                         </Grid>
                                     
-                                            <telerik:RadButton x:Name="btnCustomControlAddFairValue" Command="{Binding AddCommand}"
-                                                       Width="50" Height="20" Margin="10,0,5,0"
+                                            <telerik:RadButton x:Name="btnCustomControlAddFairValue" Command="{Binding AddFairValueCommand}"
+                                                       Width="50" Height="20" Margin="0,40,0,2"
                                                        Grid.Column="1"
                                                        Grid.Row="1"
                                                        HorizontalAlignment="Center"
@@ -598,7 +600,7 @@
                                  ShowColumnFooters="False"
                                  ShowGroupPanel="False"
                                  UseLayoutRounding="True"
-                                 IsReadOnly="True"
+                                 IsReadOnly="True"                                 
                                  RowIndicatorVisibility="Collapsed"
                                  ScrollMode="RealTime"
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
