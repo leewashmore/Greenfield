@@ -324,16 +324,31 @@ namespace GreenField.Gadgets.ViewModels
             else
             {
                 if (!(PresentationPreMeetingVoterInfo.Any(record => record.Name.ToLower() == UserSession.SessionManager.SESSION.UserName.ToLower()) ||
-                    (SelectedPresentationOverviewInfo.Presenter.ToLower() == UserSession.SessionManager.SESSION.UserName.ToLower())))
+                    (SelectedPresentationOverviewInfo.Presenter.ToLower() == UserSession.SessionManager.SESSION.UserName.ToLower()) ||
+                    UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN)))
                     return false;
             }
             return true;
         }
 
         private void SubmitCommandMethod(object param)
-        {
-            //VoterInfo presenterVoterInfo = PresentationPreMeetingVoterInfo
-            //    .Where(record => record.Name.ToLower() == SelectedPresentationOverviewInfo.Presenter).FirstOrDefault();
+        {      
+            //Pending implementation of check if the deadline has actually passed for submitting vote while the application was still open
+
+
+
+            //if (UserSession.SessionManager.SESSION == null || PresentationMeetingVoterInfo == null)
+            //    return;
+
+            //if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
+            //{
+            //    if (SelectedPresentationOverviewInfo.MeetingVotingClosedDateTime > DateTime.UtcNow)
+            //    {
+            //        Prompt.ShowDialog("Presentation Voting Deadline has been exceeded. Last submitted voting details have been registered and distributed. " +
+            //        "Please contact Investment Committee Administrator for updating voting details.");
+            //        return;
+            //    }
+            //}
 
             foreach (VoterInfo info in PresentationMeetingVoterInfo)
             {
@@ -345,12 +360,6 @@ namespace GreenField.Gadgets.ViewModels
                         return;
                     }
                 }
-
-                //if (presenterVoterInfo != null)
-                //{
-                //    info.Notes = presenterVoterInfo.Notes;
-                //}
-
 
                 if (info.Name.ToLower() == UserSession.SessionManager.SESSION.UserName && info.PostMeetingFlag == false)
                 {
