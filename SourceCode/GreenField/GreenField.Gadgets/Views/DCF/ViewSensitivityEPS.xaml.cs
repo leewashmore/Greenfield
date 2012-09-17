@@ -15,6 +15,7 @@ using GreenField.Common;
 using GreenField.ServiceCaller;
 using Telerik.Windows.Documents.Model;
 using Telerik.Windows.Controls;
+using System.Text.RegularExpressions;
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewSensitivityEPS : ViewBaseUserControl
@@ -172,6 +173,33 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
+
+        /// <summary>
+        /// Key-Down Event of TextBox for EPS
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void txtFWDEPS_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Tab)
+            {
+                return; //Added to handle TAB key after below post
+            }
+            var thisKeyStr = "";
+            if (e.PlatformKeyCode == 190 || e.PlatformKeyCode == 110)
+            {
+                thisKeyStr = ".";
+            }
+            else
+            {
+                thisKeyStr = e.Key.ToString().Replace("D", "").Replace("NumPad", "");
+            }
+            var s = (sender as TextBox).Text + thisKeyStr;
+            //var rStr = "^[0-9]*[0-9](|.[0-9]*[0-9]|,([0-9]*[0-9]))?$";
+            var rStr = "^[0-9]+[.]?([0-9]{1,10})*$";
+            var r = new Regex(rStr, RegexOptions.IgnoreCase);
+            e.Handled = !r.IsMatch(s);
+        }
         #endregion
     }
 }

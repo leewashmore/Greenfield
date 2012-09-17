@@ -32,6 +32,7 @@ namespace GreenField.Gadgets.Views
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
+            this.DataContextSource = dataContextSource;
         }
 
         #endregion

@@ -38,7 +38,7 @@
 
                 <TextBlock Text="Enter the Value of FWD EPS:" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"/>
                 <Border Grid.Column="1" Background="Yellow">
-                    <TextBox x:Name="txtFWDEPS" Text="{Binding FWDEPS, Mode=TwoWay}" VerticalAlignment="Center"   HorizontalAlignment="Left"
+                    <TextBox x:Name="txtFWDEPS" Text="{Binding FWDEPS, Mode=TwoWay}" VerticalAlignment="Center"   HorizontalAlignment="Left" KeyDown="txtFWDEPS_KeyDown"
                                TextInput="txtFWDEPS_TextInput"/>
                 </Border>
                 <Button Height="15" Width="15" Grid.Column="2"

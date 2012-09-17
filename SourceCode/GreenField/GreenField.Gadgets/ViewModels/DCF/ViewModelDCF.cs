@@ -388,7 +388,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (SensitivityValues.Count != 0)
                     {
-                        GenerateSensitivityEPSData(SensitivityDisplayData);
+                        List<SensitivityData> data = ListUtils.GetDeepCopy<SensitivityData>(SensitivityValues.ToList());
+                        GenerateSensitivityEPSData(data);
                     }
                 }
                 this.RaisePropertyChanged(() => this.FWDEPS);
@@ -430,7 +431,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (SensitivityValues.Count != 0)
                     {
-                        GenerateSensitivityBVPSData(SensitivityDisplayData);
+                        List<SensitivityData> data = ListUtils.GetDeepCopy<SensitivityData>(SensitivityValues.ToList());
+                        GenerateSensitivityBVPSData(data);
                     }
                 }
                 this.RaisePropertyChanged(() => this.FWDBVPS);
@@ -1178,7 +1180,7 @@ namespace GreenField.Gadgets.ViewModels
                 List<DCFDisplayData> result = new List<DCFDisplayData>();
 
                 decimal cashFlow2020 = Math.Round(Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(8).Year)).
-                    Select(a => a.AMOUNT).FirstOrDefault()), 1);
+                    Select(a => a.FREE_CASH_FLOW).FirstOrDefault()), 1);
                 decimal sustainableROIC = Math.Round(Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableROIC).FirstOrDefault()), 4);
                 decimal sustainableDPR = Math.Round(Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableDividendPayoutRatio).FirstOrDefault()), 4);
                 decimal longTermNominalGDPGrowth = Math.Round(Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.LongTermNominalGDPGrowth).FirstOrDefault()), 4);
@@ -1416,14 +1418,11 @@ namespace GreenField.Gadgets.ViewModels
                 List<decimal> upSideValues = new List<decimal>();
                 List<decimal> TGR = new List<decimal>();
                 SensitivityDisplayData = new RangeObservableCollection<SensitivityData>();
-
+                
                 SensitivityDisplayData.Add(new SensitivityData() { C1 = "T.G.R", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
-
-
+               
                 Dictionary<int, decimal> VPS = new Dictionary<int, decimal>();
-
                 DCFValue result = new DCFValue();
-
                 
                 CalculationParameters.TerminalGrowthRate = Convert.ToDecimal((CalculationParameters.TerminalGrowthRate)) - Convert.ToDecimal(5.0 / 1000.0);
 
@@ -1468,13 +1467,16 @@ namespace GreenField.Gadgets.ViewModels
                 SensitivityValues = SensitivityDisplayData;
                 RangeObservableCollection<SensitivityData> dataL = new RangeObservableCollection<SensitivityData>();
                 dataL.AddRange(SensitivityDisplayData.ToList());
+
+                List<SensitivityData> dataEPS = ListUtils.GetDeepCopy<SensitivityData>(SensitivityValues.ToList());
+
                 if (FWDEPS != 0)
                 {
-                    GenerateSensitivityEPSData(dataL);
+                    GenerateSensitivityEPSData(dataEPS);
                 }
                 if (FWDBVPS != 0)
                 {
-                    GenerateSensitivityBVPSData(dataL);
+                    GenerateSensitivityBVPSData(dataEPS);
                 }
             }
             catch (Exception ex)
@@ -1487,13 +1489,19 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Generate Data for Display in SensitivityBVPS
         /// </summary>
-        private void GenerateSensitivityBVPSData(RangeObservableCollection<SensitivityData> sensitivityData)
+        private void GenerateSensitivityBVPSData(List<SensitivityData> sensitivityData)
         {
             try
             {
-                RangeObservableCollection<SensitivityData> data = new RangeObservableCollection<SensitivityData>();
-                data.AddRange(sensitivityData.ToList());
-                data.RemoveAt(0);
+                RangeObservableCollection<SensitivityData> dataBVPS = new RangeObservableCollection<SensitivityData>();
+
+                foreach (SensitivityData item in sensitivityData)
+                {
+                    dataBVPS.Add(item);
+                }
+                
+                //dataBVPS.AddRange(sensitivityData.ToList());
+                dataBVPS.RemoveAt(0);
                 char[] redundantData = new char[] { '%' };
 
                 List<decimal> BVPS = new List<decimal>();
@@ -1501,7 +1509,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (FWDBVPS == 0)
                     throw new Exception("FWD BVPS cannot be 0");
 
-                foreach (SensitivityData item in data)
+                foreach (SensitivityData item in dataBVPS)
                 {
                     item.C1 = "";
                     item.C2 = "";
@@ -1514,7 +1522,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
 
                 int i = 1;
-                foreach (SensitivityData item in data)
+                foreach (SensitivityData item in dataBVPS)
                 {
                     item.C1 = i.ToString();
                     item.C2 = (-0.50 + (i - 1) * 0.25).ToString();
@@ -1532,7 +1540,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 SensitivityBVPS.Clear();
                 SensitivityBVPS.Add(new SensitivityData() { C1 = "T.G.R", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
-                SensitivityBVPS.AddRange(data.ToList());
+                SensitivityBVPS.AddRange(dataBVPS.ToList());
 
                 MaxBVPSShareVal = Convert.ToString(Math.Round(BVPS.Max(), 2));
                 MinBVPSShareVal = Convert.ToString(Math.Round(BVPS.Min(), 2));
@@ -1553,19 +1561,24 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Generate data for Sensitivity EPS
         /// </summary>
-        private void GenerateSensitivityEPSData(RangeObservableCollection<SensitivityData> sensitivityData)
+        private void GenerateSensitivityEPSData(List<SensitivityData> sensitivityData)
         {
             try
             {
-                RangeObservableCollection<SensitivityData> data = new RangeObservableCollection<SensitivityData>();
-                data.AddRange(sensitivityData.ToList());
-                data.RemoveAt(0);
+                RangeObservableCollection<SensitivityData> dataEPS = new RangeObservableCollection<SensitivityData>();
+
+                foreach (SensitivityData item in sensitivityData)
+                {
+                    dataEPS.Add(item);
+                }
+                //dataEPS.AddRange(sensitivityData.ToList());
+                //dataEPS.RemoveAt(0);
                 char[] redundantData = new char[] { '%' };
 
                 if (FWDEPS == 0)
                     throw new Exception("FWD EPS cannot be 0");
                 List<decimal> EPS = new List<decimal>();
-                foreach (SensitivityData item in data)
+                foreach (SensitivityData item in dataEPS)
                 {
                     item.C1 = "";
                     item.C2 = "";
@@ -1578,7 +1591,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
 
                 int i = 1;
-                foreach (SensitivityData item in data)
+                foreach (SensitivityData item in dataEPS)
                 {
                     item.C1 = i.ToString();
                     item.C2 = (-0.50 + (i - 1) * 0.25).ToString() + "%";
@@ -1596,7 +1609,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 SensitivityBPS.Clear();
                 SensitivityBPS.Add(new SensitivityData() { C1 = "T.G.R", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
-                SensitivityBPS.AddRange(data.ToList());
+                SensitivityBPS.AddRange(dataEPS.ToList());
 
                 MaxEPSShareVal = Convert.ToString(Math.Round(EPS.Max(), 2));
                 MinEPSShareVal = Convert.ToString(Math.Round(EPS.Min(), 2));
@@ -1605,6 +1618,7 @@ namespace GreenField.Gadgets.ViewModels
                 MaxEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
                 MinEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MinEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
                 AvgEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(AvgEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                dataEPS.Clear();
             }
             catch (Exception ex)
             {

@@ -156,6 +156,8 @@ namespace GreenField.Gadgets.Helpers
             List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
                                                      orderby c.DisplayIndex
                                                      select c).ToList();
+
+
             Table table = new Table();
             RadDocument document = new RadDocument();
             Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
