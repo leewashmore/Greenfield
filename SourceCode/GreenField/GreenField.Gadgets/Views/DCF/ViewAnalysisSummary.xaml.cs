@@ -190,7 +190,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgDCFAnalysisSummary_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
         {
-            int Index = this.dgDCFAnalysisSummary.Items.IndexOf(e.Cell.ParentRow.Item);
+            int Index = this.dgDCFAnalysisSummary.Items.IndexOf(e.Cell.DataColumn);
             if (Index != 3)
             {
                 e.Cancel = true;

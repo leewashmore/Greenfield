@@ -84,7 +84,7 @@
                                          EnableRowVirtualization="False"
                                          EnableColumnVirtualization="False"
                                          GridLinesVisibility="None"
-                                     RowLoaded="dgDCFAnalysisSummary_RowLoaded"
+                                         RowLoaded="dgDCFAnalysisSummary_RowLoaded"
                                          RowEditEnded="dgDCFAnalysisSummary_RowEditEnded"
                                          BeginningEdit="dgDCFAnalysisSummary_BeginningEdit"
                                          CellValidating="dgDCFAnalysisSummary_CellValidating">

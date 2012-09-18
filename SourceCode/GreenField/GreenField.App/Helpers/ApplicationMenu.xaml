@@ -137,7 +137,7 @@
                     </telerik:RadMenuItem>
 
                     <telerik:RadMenuItem Header="Valuation" x:Name="rmItemValuation">
-                        <telerik:RadMenuItem x:Name="rmItemFairValue" Header="Fair Value"
+                        <telerik:RadMenuItem x:Name="rmItemFairValue" Header="Fair Value" Command="{Binding DashboardCompanyValuationFairValueCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
                         <telerik:RadMenuItem x:Name="rmItemDCF" Header="Discounted Cash Flows" Command="{Binding DashboardCompanyValuationDiscountedCashFlowCommand}"
                                                Style="{StaticResource RadSecondLevelMenuItemStyle}"/>

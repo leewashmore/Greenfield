@@ -210,6 +210,7 @@
     <Compile Include="ViewModels\ViewModelConsensusEstimatesDetails.cs" />
     <Compile Include="ViewModels\ViewModelContributorDetractor.cs" />
     <Compile Include="ViewModels\CustomScreeningTool\ViewModelCustomScreeningTool.cs" />
+    <Compile Include="ViewModels\ViewModelFairValueComposition.cs" />
     <Compile Include="ViewModels\ViewModelFairValueCompositionSummary.cs" />
     <Compile Include="ViewModels\ViewModelFinancialStatements.cs" />
     <Compile Include="ViewModels\ViewModelDividendYield.cs" />
@@ -356,6 +357,9 @@
     </Compile>
     <Compile Include="Views\ViewEVEBITDA.xaml.cs">
       <DependentUpon>ViewEVEBITDA.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewFairValueComposition.xaml.cs">
+      <DependentUpon>ViewFairValueComposition.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewFairValueCompositionSummary.xaml.cs">
       <DependentUpon>ViewFairValueCompositionSummary.xaml</DependentUpon>
@@ -640,6 +644,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ViewEVEBITDA.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewFairValueComposition.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

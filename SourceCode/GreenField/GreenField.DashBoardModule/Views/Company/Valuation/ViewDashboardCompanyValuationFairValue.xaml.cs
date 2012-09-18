@@ -19,6 +19,7 @@ using GreenField.Common;
 using GreenField.Common.Helper;
 using Microsoft.Practices.Prism.Regions;
 using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Controls;
 
 namespace GreenField.DashboardModule.Views
 {
@@ -42,14 +43,11 @@ namespace GreenField.DashboardModule.Views
             _dBInteractivity = dbInteractivity;
 
             _eventAggregator.GetEvent<DashboardGadgetLoad>().Subscribe(HandleDashboardGadgetLoad);
-
-            this.tbHeader.Text = GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION;
-            
         }
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
         {
-            if (this.cctrDashboardContent.Content != null)
+            if (this.rtvDashboard.Items.Count > 0)
                 return;
 
             DashboardGadgetParam param = new DashboardGadgetParam()
@@ -60,7 +58,18 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.cctrDashboardContent.Content = null;
+            this.rtvDashboard.Items.Add(new RadTileViewItem
+            {
+                Header = new Telerik.Windows.Controls.HeaderedContentControl
+                {
+                    Content = GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION,
+                    Foreground = new SolidColorBrush(Colors.Black),
+                    FontSize =
+                        12,
+                    FontFamily = new FontFamily("Arial")
+                },
+                Content = null //new ViewFairValueComposition(new ViewModelFairValueComposition(param))
+            });
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -70,19 +79,20 @@ namespace GreenField.DashboardModule.Views
 
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
-            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
-            if (control != null)
-            {
-                control.IsActive = false;
-            }
+            SetIsActiveOnDahsboardItems(false);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
-            if (control != null)
+            SetIsActiveOnDahsboardItems(true);
+        }
+        private void SetIsActiveOnDahsboardItems(bool value)
+        {
+            foreach (RadTileViewItem item in this.rtvDashboard.Items)
             {
-                control.IsActive = true;
+                ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
+                if (control != null)
+                    control.IsActive = value;
             }
         }
     }
