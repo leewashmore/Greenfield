@@ -2,8 +2,8 @@ set noexec off
 
 --declare  current and required version
 --also do it an the end of the script
-declare @RequiredDBVersion as nvarchar(100) = '00062'
-declare @CurrentScriptVersion as nvarchar(100) = '00063'
+declare @RequiredDBVersion as nvarchar(100) = '00067'
+declare @CurrentScriptVersion as nvarchar(100) = '00068'
 
 --if current version already in DB, just skip
 if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
@@ -18,6 +18,11 @@ begin
 end
 
 GO
+
+IF OBJECT_ID ('[dbo].[GetCustomScreeningUserPreferences]') IS NOT NULL
+	DROP PROCEDURE [dbo].[GetCustomScreeningUserPreferences]
+GO
+
 CREATE PROCEDURE [dbo].[GetCustomScreeningUserPreferences] 
 	-- the parameters for the stored procedure here
 	@username nvarchar(50)
@@ -59,7 +64,7 @@ END
 
 GO
 --indicate thet current script is executed
-declare @CurrentScriptVersion as nvarchar(100) = '00063'
+declare @CurrentScriptVersion as nvarchar(100) = '00068'
 insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
 
 
