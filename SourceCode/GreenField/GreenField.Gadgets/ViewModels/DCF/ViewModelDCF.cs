@@ -1578,7 +1578,7 @@ namespace GreenField.Gadgets.ViewModels
                     dataEPS.Add(item);
                 }
                 //dataEPS.AddRange(sensitivityData.ToList());
-                //dataEPS.RemoveAt(0);
+                dataEPS.RemoveAt(0);
                 char[] redundantData = new char[] { '%' };
 
                 if (FWDEPS == 0)
