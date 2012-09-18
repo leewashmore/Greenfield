@@ -151,7 +151,7 @@
                                 </telerik:GridViewDataColumn.AggregateFunctions>-->
 
                             <telerik:GridViewDataColumn Header="Model %" UniqueName="Model %" DataMemberBinding="{Binding ReAshEmmModelWeight}" 
-                                                        DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
+                                                        DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
@@ -159,7 +159,7 @@
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Portfolio %" UniqueName="Portfolio %" DataMemberBinding="{Binding RePortfolioWeight}" 
-                                                        DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
+                                                        DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False" FooterTextAlignment="Right"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
@@ -167,7 +167,7 @@
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Benchmark %" UniqueName="Benchmark %" DataMemberBinding="{Binding ReBenchmarkWeight}"       
-                                                        DataFormatString="{}{0:n4}%" x:Name="BenchmarkWeight" IsGroupable="False" FooterTextAlignment="Right"
+                                                        DataFormatString="{}{0:n2}%" x:Name="BenchmarkWeight" IsGroupable="False" FooterTextAlignment="Right"
                                                         IsFilterable="False" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
                                                         CellStyle="{StaticResource GridViewCellStyle}" TextAlignment="Right" HeaderTextAlignment="Right">
                                 <telerik:GridViewDataColumn.AggregateFunctions>
@@ -175,7 +175,7 @@
                                 </telerik:GridViewDataColumn.AggregateFunctions>
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewDataColumn Header="Active Position %" UniqueName="Active Position %" DataMemberBinding="{Binding ActivePosition}" 
-                                                        DataFormatString="{}{0:n4}%" IsGroupable="False" IsFilterable="False"
+                                                        DataFormatString="{}{0:n2}%" IsGroupable="False" IsFilterable="False"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"
                                                         TextAlignment="Right" HeaderTextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Market Cap" UniqueName="Market Cap" DataMemberBinding="{Binding MarketCapUSD, StringFormat=c}" 
