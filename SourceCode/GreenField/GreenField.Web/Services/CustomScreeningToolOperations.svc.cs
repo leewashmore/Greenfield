@@ -491,13 +491,13 @@ namespace GreenField.Web.Services
                         {
                             if (item.ScreeningId.StartsWith("REF"))
                             {
-                                CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
                                 foreach (CustomScreeningREFData record in data)
                                 {
+                                    CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
                                     fillData.SecurityId = record.SECURITY_ID;
                                     fillData.IssueName = securityList.Where(a => a.SecurityId == record.SECURITY_ID).Select(a => a.IssueName).FirstOrDefault();
-                                    fillData.Type = item.TableColumnName;
-                                    fillData.Value = record.GetType().GetProperty(item.TableColumnName).GetValue(record, null);
+                                    fillData.Type = cstEntity.SCREENING_DISPLAY_REFERENCE.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.TABLE_COLUMN).FirstOrDefault();//item.TableColumnName;
+                                    fillData.Value = record.GetType().GetProperty(fillData.Type).GetValue(record, null);
                                     result.Add(fillData);
                                 }
                             }
@@ -587,13 +587,13 @@ namespace GreenField.Web.Services
                               if (item.ScreeningId.StartsWith("FAV"))
                               {
                                   List<CustomScreeningFVAData> data = cstEntity.GetCustomScreeningFVAData(_securityIds, item.DataSource).ToList();
-                                  CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
                                   foreach (CustomScreeningFVAData record in data)
                                   {
+                                      CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
                                       fillData.SecurityId = record.SECURITY_ID;
                                       fillData.IssueName = securityList.Where(a => a.SecurityId == record.SECURITY_ID).Select(a => a.IssueName).FirstOrDefault();
-                                      fillData.Type = item.TableColumnName;
-                                      fillData.Value = record.GetType().GetProperty(item.TableColumnName).GetValue(record, null);
+                                      fillData.Type = cstEntity.SCREENING_DISPLAY_FAIRVALUE.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.TABLE_COLUMN).FirstOrDefault();//item.TableColumnName;
+                                      fillData.Value = record.GetType().GetProperty(fillData.Type).GetValue(record, null);
                                       result.Add(fillData);
                                   }
                               }
