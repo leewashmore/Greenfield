@@ -977,5 +977,12 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
     </Style>
+    <!--GridViewCellStyleBoldText-->
+    <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyleBoldText">
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewCellHeight}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
 
 </ResourceDictionary>

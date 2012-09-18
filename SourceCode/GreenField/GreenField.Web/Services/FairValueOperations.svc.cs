@@ -88,7 +88,17 @@ namespace GreenField.Web.Services
                 foreach (GetFairValueComposition_Result record in resultDB)
                 {
                     FairValueCompositionSummaryData item = new FairValueCompositionSummaryData();
-                    item.SOURCE = record.SOURCE;
+                    if (!String.IsNullOrEmpty(record.SOURCE))
+                    {
+                        if(record.SOURCE.ToUpper() == "PRIMARY")
+                            item.SOURCE = "Primary Analyst";
+                        else if (record.SOURCE.ToUpper() == "INDUSTRY")
+                            item.SOURCE = "Industry Analyst";
+                        else if (record.SOURCE.ToUpper() == "PFV_PE")
+                            item.SOURCE = "DCF-PE";
+                        else if (record.SOURCE.ToUpper() == "PFV_PBV")
+                            item.SOURCE = "DCF-PBV";
+                    }
                     item.MEASURE = record.MEASURE;
                     item.BUY = record.BUY;
                     item.SELL = record.SELL;

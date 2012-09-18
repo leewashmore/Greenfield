@@ -82,7 +82,7 @@
                             <telerik:GridViewDataColumn Header="Source" 
                                                         DataMemberBinding="{Binding SOURCE}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        CellStyle="{StaticResource GridViewCellStyleBoldText}" 
                                                         HeaderTextAlignment="Left" 
                                                         TextAlignment="Left"/>
                             <telerik:GridViewDataColumn Header="Measure" 
