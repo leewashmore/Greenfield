@@ -61,7 +61,7 @@ namespace GreenField.DashBoardModule.Views.Screening
                 RegionManager = _regionManager
             };
 
-            this.cctrDashboardContent.Content = null; // new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(param));
+            this.cctrDashboardContent.Content = new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(param));
 
         }
 

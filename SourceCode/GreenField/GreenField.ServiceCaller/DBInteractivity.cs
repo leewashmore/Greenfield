@@ -4614,7 +4614,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void RetrieveSecurityData(PortfolioSelectionData portfolio, BenchmarkSelectionData benchmark, String region, String country, String sector, String industry,
+        public void RetrieveSecurityData(PortfolioSelectionData portfolio, EntitySelectionData benchmark, String region, String country, String sector, String industry,
                                         List<CSTUserPreferenceInfo> userPreference, Action<List<CustomScreeningSecurityData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

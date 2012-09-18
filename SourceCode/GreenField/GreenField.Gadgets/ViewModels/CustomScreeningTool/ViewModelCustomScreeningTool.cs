@@ -214,15 +214,17 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedPortfolio; }
             set
             {
-                _selectedPortfolio = value;
-                RaisePropertyChanged(() => this.SelectedPortfolio);
-                PortfolioSelectionData p = new PortfolioSelectionData();
-                //p = _portfolioSelectionData.Where(a => a.PortfolioId == _selectedPortfolio).FirstOrDefault();
-                //_dbInteractivity.RetrieveSecurityData(p, null, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry
-                //                                   , null, RetrieveSecurityDataCallbackMethod);
-
-                DataListSelectionGridViewVisibility = Visibility.Visible;
-                RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                if (value != null)
+                {
+                    _selectedPortfolio = value;
+                    RaisePropertyChanged(() => this.SelectedPortfolio);
+                    // PortfolioSelectionData p = new PortfolioSelectionData();
+                    //p = _portfolioSelectionData.Where(a => a.PortfolioId == _selectedPortfolio).FirstOrDefault();
+                    //_dbInteractivity.RetrieveSecurityData(p, null, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry
+                    //                                   , null, RetrieveSecurityDataCallbackMethod);
+                    ResultsListVisibility = Visibility.Collapsed;                    
+                    RaisePropertyChanged(() => this.SubmitCommand);
+                }
             }
         }
 
@@ -234,7 +236,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedBenchmark = value;
                 RaisePropertyChanged(() => this.SelectedBenchmark);
-                DataListSelectionGridViewVisibility = Visibility.Visible;
                 RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
             }
         }
@@ -247,7 +248,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedRegion = value;
                 RaisePropertyChanged(() => this.SelectedRegion);
-                DataListSelectionGridViewVisibility = Visibility.Visible;
                 RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
             }
         }
@@ -260,7 +260,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedCountry = value;
                 RaisePropertyChanged(() => this.SelectedCountry);
-                DataListSelectionGridViewVisibility = Visibility.Visible;
                 RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
             }
         }
@@ -273,7 +272,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedSector = value;
                 RaisePropertyChanged(() => this.SelectedSector);
-                DataListSelectionGridViewVisibility = Visibility.Visible;
                 RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
             }
         }
@@ -286,7 +284,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedIndustry = value;
                 RaisePropertyChanged(() => this.SelectedIndustry);
-                DataListSelectionGridViewVisibility = Visibility.Visible;
                 RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
             }
         }
@@ -402,6 +399,7 @@ namespace GreenField.Gadgets.ViewModels
                 _selectedDataListInfo = value;
                 RaisePropertyChanged(() => this.SelectedDataListInfo);
                 SelectedSavedDataList = CSTUserPreference.Where(a => a.ListName == _selectedDataListInfo).ToList();
+                ResultsListVisibility = Visibility.Collapsed;
             }
         }
 
@@ -428,6 +426,21 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _dataListSelectionGridViewVisibility = value;
                 RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+
+            }
+        }
+
+        private Visibility _resultsListVisibility = Visibility.Collapsed;
+        public Visibility ResultsListVisibility
+        {
+            get
+            {
+                return _resultsListVisibility;
+            }
+            set
+            {
+                _resultsListVisibility = value;
+                RaisePropertyChanged(() => this.ResultsListVisibility);
 
             }
         }
@@ -522,6 +535,9 @@ namespace GreenField.Gadgets.ViewModels
             //SecuritySelectionGridViewVisibility = Visibility.Collapsed;
             //DataListSelectionGridViewVisibility = Visibility.Visible;
 
+            DataListSelectionGridViewVisibility = Visibility.Visible;
+            RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+
             if (_dbInteractivity == null || (UserSession.SessionManager.SESSION == null))
                 return;
             else
@@ -571,6 +587,13 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
                         //redirect to results views
+                        PortfolioSelectionData p = new PortfolioSelectionData();
+                        p = _portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
+
+                        EntitySelectionData b = new EntitySelectionData();
+                        b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
+                        _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
+                                                                SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);                    
                     }
                     else
                     {
@@ -662,6 +685,7 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
 
                     List<string> res = new List<string>();
+                    _benchmarkSelectionData = result;
                     BenchmarkSelectionInfo = result.Where(a => a.Type.Equals("BENCHMARK")).Select(a => a.LongName).ToList();
                     //res = result.Where(a => a.Type.Equals("BENCHMARK")).Select(a => a.LongName).ToList();
                     //retrieve custom selection data
@@ -831,6 +855,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     SecurityData = result;
+                    ResultsListVisibility = Visibility.Visible;
                 }
                 else
                 {
@@ -909,7 +934,7 @@ namespace GreenField.Gadgets.ViewModels
             CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, null);
             CSTNavigation.UpdateString(CSTNavigationInfo.Flag, null);
             CSTNavigation.UpdateString(CSTNavigationInfo.ListName, null);
-            CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, null);
+            //CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, null);
 
             if (_dbInteractivity != null && IsActive)
             {
@@ -918,14 +943,10 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification(true, "Retrieving Data...");
                 //fetch PortfolioId list 
                 _dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
-
-                //BusyIndicatorNotification(true, "Retrieving Benchmark Selection Data...");
-                //fetch Benchmark list
-                //_dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
-
-                //retrieve custom selection data
-                //RetrieveCustomSelectionData();
+                //fetch final list of securities
+                RetrieveResultsList();
             }
+            
         }
 
         private void SelectionRaisePropertyChanged()
@@ -951,6 +972,21 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorContent = message;
 
             BusyIndicatorIsBusy = showBusyIndicator;
+        }
+
+        public void RetrieveResultsList()
+        {
+            SelectedSavedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
+            if (SelectedSavedDataList != null)
+            {
+                PortfolioSelectionData p = new PortfolioSelectionData();
+                p = _portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
+
+                EntitySelectionData b = new EntitySelectionData();
+                b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
+                _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
+                                                        SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
+            }
         }
         #endregion
     }

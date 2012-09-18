@@ -53,15 +53,17 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="PortfolioSelectionData" nillable="true" type="tns:PortfolioSelectionData" />
-  <xs:complexType name="BenchmarkSelectionData">
+  <xs:complexType name="EntitySelectionData">
     <xs:sequence>
       <xs:element minOccurs="0" name="InstrumentID" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="Ticker" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LongName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SecurityType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
       <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="BenchmarkSelectionData" nillable="true" type="tns:BenchmarkSelectionData" />
+  <xs:element name="EntitySelectionData" nillable="true" type="tns:EntitySelectionData" />
   <xs:complexType name="ArrayOfCustomScreeningSecurityData">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="CustomScreeningSecurityData" nillable="true" type="tns:CustomScreeningSecurityData" />

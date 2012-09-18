@@ -97,7 +97,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolio" nillable="true" type="q7:PortfolioSelectionData" />
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="benchmark" nillable="true" type="q8:BenchmarkSelectionData" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="benchmark" nillable="true" type="q8:EntitySelectionData" />
         <xs:element minOccurs="0" name="region" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="country" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="sector" nillable="true" type="xs:string" />

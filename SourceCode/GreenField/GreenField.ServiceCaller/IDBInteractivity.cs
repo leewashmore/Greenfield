@@ -329,7 +329,7 @@ namespace GreenField.ServiceCaller
 
         void RetrieveFairValueTabDataPoints(Action<List<CustomSelectionData>> callback);        
 
-        void RetrieveSecurityData(PortfolioSelectionData portfolio, BenchmarkSelectionData benchmark, String region, String country, String sector, String industry,
+        void RetrieveSecurityData(PortfolioSelectionData portfolio, EntitySelectionData benchmark, String region, String country, String sector, String industry,
                                         List<CSTUserPreferenceInfo> userPreference,Action<List<CustomScreeningSecurityData>> callback);
 
         void SaveUserDataPointsPreference(string userPreference, string username, Action<Boolean?> callback);

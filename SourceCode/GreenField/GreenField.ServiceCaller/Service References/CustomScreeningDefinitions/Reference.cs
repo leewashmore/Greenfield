@@ -112,7 +112,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityData", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveSecurityDataServiceFault" +
             "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.EntitySelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> EndRetrieveSecurityData(System.IAsyncResult result);
     }
@@ -715,7 +715,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.EntitySelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveSecurityData(portfolio, benchmark, region, country, sector, industry, userPreference, callback, asyncState);
         }
         
@@ -726,7 +726,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         
         private System.IAsyncResult OnBeginRetrieveSecurityData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             GreenField.DataContracts.PortfolioSelectionData portfolio = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[0]));
-            GreenField.DataContracts.BenchmarkSelectionData benchmark = ((GreenField.DataContracts.BenchmarkSelectionData)(inValues[1]));
+            GreenField.DataContracts.EntitySelectionData benchmark = ((GreenField.DataContracts.EntitySelectionData)(inValues[1]));
             string region = ((string)(inValues[2]));
             string country = ((string)(inValues[3]));
             string sector = ((string)(inValues[4]));
@@ -748,11 +748,11 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             }
         }
         
-        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference) {
+        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.EntitySelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference) {
             this.RetrieveSecurityDataAsync(portfolio, benchmark, region, country, sector, industry, userPreference, null);
         }
         
-        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, object userState) {
+        public void RetrieveSecurityDataAsync(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.EntitySelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, object userState) {
             if ((this.onBeginRetrieveSecurityDataDelegate == null)) {
                 this.onBeginRetrieveSecurityDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveSecurityData);
             }
@@ -936,7 +936,7 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.BenchmarkSelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
+            public System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.EntitySelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState) {
                 object[] _args = new object[7];
                 _args[0] = portfolio;
                 _args[1] = benchmark;

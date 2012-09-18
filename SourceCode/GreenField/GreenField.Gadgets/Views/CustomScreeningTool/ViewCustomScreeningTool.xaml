@@ -195,6 +195,46 @@
             <Border BorderThickness="4" HorizontalAlignment="Stretch"/>
                 </StackPanel>
             </Grid>
+            
+            <Grid Grid.Row="2" Visibility="{Binding ResultsListVisibility}">
+                <telerik:RadGridView x:Name="dgSecurityResultList"
+                                             Margin="2,2,0,2"
+                                             ItemsSource="{Binding SecurityData}"
+                                             telerik:StyleManager.Theme="Metro"
+                                             CanUserReorderColumns ="False" 
+                                             CanUserSelect="True"
+                                             CanUserSortColumns="False"
+                                             IsFilteringAllowed="False"
+                                             AutoGenerateColumns="True"
+                                             CanUserInsertRows="False"
+                                             CanUserDeleteRows="False"
+                                             ShowGroupFooters="False"
+                                             ShowColumnFooters="False"
+                                             ShowGroupPanel="False"
+                                             UseLayoutRounding="True" 
+                                             IsReadOnly="True"
+                                             RowIndicatorVisibility="Collapsed"
+                                             ScrollMode="RealTime"                                                        
+                                             AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                                             AlternationCount="2" 
+                                             EnableRowVirtualization="False"
+                                             EnableColumnVirtualization="False"                                              
+                                             HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                                             RowStyle="{StaticResource GridViewRowStyle}" >
+
+                    <!--<telerik:RadGridView.Columns>
+                        <telerik:GridViewDataColumn x:Name="dgSelectedSecurityReferenceDataItem"                                            
+                                                Width="Auto"
+                                                Header="Data Fields"
+                                                DataMemberBinding="{Binding DataDescription}"
+                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                CellStyle="{StaticResource GridViewCellStyle}"
+                                                HeaderTextAlignment="Left"
+                                                TextAlignment="Left"
+                                                IsFilterable="True"/>
+                    </telerik:RadGridView.Columns>-->
+                </telerik:RadGridView>
+            </Grid>
 
         </Grid>
     </telerik:RadBusyIndicator>

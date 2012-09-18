@@ -30,7 +30,7 @@ using System.Xml.Linq;
 
 namespace GreenField.Gadgets.ViewModels
 {
-    public class ViewModelCSTDataFieldSelector :  NotificationObject
+    public class ViewModelCSTDataFieldSelector : NotificationObject
     {
         #region Fields
         /// <summary>
@@ -40,7 +40,8 @@ namespace GreenField.Gadgets.ViewModels
         private IDBInteractivity _dbInteractivity;
         private ILoggerFacade _logger;
         private IManageSessions _manageSessions;
-       
+        private IRegionManager _regionManager;
+
         #endregion
 
         #region Constructor
@@ -50,6 +51,7 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = param.DBInteractivity;
             _eventAggregator = param.EventAggregator;
             _manageSessions = param.ManageSessions;
+            _regionManager = param.RegionManager;
 
             //fetch tabs data
             //FetchTabsData();
@@ -59,8 +61,8 @@ namespace GreenField.Gadgets.ViewModels
             //{
             //    SelectedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
             //}
-        }     
-              
+        }
+
         #endregion
 
         #region Properties
@@ -88,7 +90,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         public string Flag { get; set; }
-       
+
         public List<CustomSelectionData> _securityReferenceData;
         public List<CustomSelectionData> SecurityReferenceData
         {
@@ -100,12 +102,12 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public  CustomSelectionData _selectedSecurityReferenceData;
+        public CustomSelectionData _selectedSecurityReferenceData;
         public CustomSelectionData SelectedSecurityReferenceData
         {
             get { return _selectedSecurityReferenceData; }
-            set 
-            { 
+            set
+            {
                 _selectedSecurityReferenceData = value;
                 RaisePropertyChanged(() => this.SelectedSecurityReferenceData);
                 RaisePropertyChanged(() => this.AddSecurityRefCommand);
@@ -116,7 +118,7 @@ namespace GreenField.Gadgets.ViewModels
         public List<CustomSelectionData> PeriodFinancialsData
         {
             get { return _periodFinancialsData; }
-            set 
+            set
             {
                 _periodFinancialsData = value;
                 RaisePropertyChanged(() => this.PeriodFinancialsData);
@@ -131,6 +133,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedPeriodFinancialsData = value;
                 RaisePropertyChanged(() => this.SelectedPeriodFinancialsData);
+                RaisePropertyChanged(() => this.AddPeriodFinCommand);
             }
         }
 
@@ -138,8 +141,8 @@ namespace GreenField.Gadgets.ViewModels
         public List<CustomSelectionData> CurrentFinancialsData
         {
             get { return _currentFinancialsData; }
-            set 
-            { 
+            set
+            {
                 _currentFinancialsData = value;
                 RaisePropertyChanged(() => this.CurrentFinancialsData);
             }
@@ -153,6 +156,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedCurrentFinancialsData = value;
                 RaisePropertyChanged(() => this.SelectedCurrentFinancialsData);
+                RaisePropertyChanged(() => this.AddCurrentFinCommand);
             }
         }
 
@@ -160,31 +164,32 @@ namespace GreenField.Gadgets.ViewModels
         public List<CustomSelectionData> FairValueData
         {
             get { return _fairValueData; }
-            set 
-            { 
+            set
+            {
                 _fairValueData = value;
                 RaisePropertyChanged(() => this.FairValueData);
             }
         }
 
         public CustomSelectionData _selectedFairValueData;
-         public CustomSelectionData SelectedFairValueData
+        public CustomSelectionData SelectedFairValueData
         {
             get { return _selectedFairValueData; }
             set
             {
                 _selectedFairValueData = value;
                 RaisePropertyChanged(() => this.SelectedFairValueData);
+                RaisePropertyChanged(() => this.AddFairValueCommand);
             }
         }
 
-         public List<String> DataSourceInfo
-         {
-             get{ return new List<String>{"PRIMARY","INDUSTRY","REUTERS"};}
+        public List<String> DataSourceInfo
+        {
+            get { return new List<String> { "PRIMARY", "INDUSTRY", "REUTERS" }; }
 
-         }
+        }
 
-        public String _selectedDataSourceInfo;
+        public String _selectedDataSourceInfo = "PRIMARY";
         public String SelectedDataSourceInfo
         {
             get { return _selectedDataSourceInfo; }
@@ -201,7 +206,7 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
-        public String _selectedYearTypeInfo;
+        public String _selectedYearTypeInfo = "CALENDAR";
         public String SelectedYearTypeInfo
         {
             get { return _selectedYearTypeInfo; }
@@ -218,7 +223,7 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
-        public String _selectedPeriodTypeInfo;
+        public String _selectedPeriodTypeInfo = "ANNUAL";
         public String SelectedPeriodTypeInfo
         {
             get { return _selectedPeriodTypeInfo; }
@@ -231,18 +236,18 @@ namespace GreenField.Gadgets.ViewModels
 
         public List<int> FromYearInfo
         {
-            get 
+            get
             {
                 int currentYear = DateTime.Now.Year;
                 return new List<int> { currentYear, currentYear - 10, currentYear - 9, currentYear - 8, currentYear - 7, currentYear - 6, currentYear - 5,
                                        currentYear - 4, currentYear - 3, currentYear - 2, currentYear - 1, currentYear + 1, currentYear + 2,
-                                       currentYear + 3, currentYear + 4, currentYear + 5 }; 
+                                       currentYear + 3, currentYear + 4, currentYear + 5 };
             }
 
         }
 
         public int _selectedFromYearInfo = DateTime.Now.Year;
-        public int SelectedFromYearInfo 
+        public int SelectedFromYearInfo
         {
             get { return _selectedFromYearInfo; }
             set
@@ -272,7 +277,7 @@ namespace GreenField.Gadgets.ViewModels
                 _selectedToYearInfo = value;
                 RaisePropertyChanged(() => this.SelectedToYearInfo);
             }
-        } 
+        }
 
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
@@ -319,7 +324,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
-        #endregion        
+        #endregion
 
         #region ICommand Properties
 
@@ -343,7 +348,7 @@ namespace GreenField.Gadgets.ViewModels
             get { return new DelegateCommand<object>(AddFairValueCommandMethod, AddFairValueCommandValidationMethod); }
         }
 
-        
+
 
         public ICommand SubmitCommand
         {
@@ -376,22 +381,34 @@ namespace GreenField.Gadgets.ViewModels
 
         private void AddSecurityRefCommandMethod(object param)
         {
-            ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();             
-            temp = this.SelectedFieldsDataList;
-            int tempOrder = temp.Count;
+            ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
             string listName;
             string accessibility;
+            int tempOrder;
             if (Flag == "Edit")
             {
+                temp = this.SelectedFieldsDataList;
+                tempOrder = temp.Count;
+
                 listName = SelectedFieldsDataList[0].ListName;
                 accessibility = SelectedFieldsDataList[0].Accessibility;
             }
             else
             {
-                listName = string.Empty;
-                accessibility = string.Empty;
+                if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                {
+                    listName = string.Empty;
+                    accessibility = string.Empty;
+                    tempOrder = -1;
+                }
+                else
+                {
+                    listName = SelectedFieldsDataList[0].ListName;
+                    accessibility = SelectedFieldsDataList[0].Accessibility;
+                    temp = this.SelectedFieldsDataList;
+                    tempOrder = SelectedFieldsDataList.Count;
+                }              
             }
-
             temp.Add(new CSTUserPreferenceInfo()
             {
                 ScreeningId = SelectedSecurityReferenceData.ScreeningId,
@@ -401,7 +418,6 @@ namespace GreenField.Gadgets.ViewModels
                 Accessibility = accessibility,
                 DataPointsOrder = tempOrder++
             });
-
             SelectedFieldsDataList = temp;
         }
 
@@ -421,35 +437,49 @@ namespace GreenField.Gadgets.ViewModels
         private void AddPeriodFinCommandMethod(object param)
         {
             ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
-            temp = this.SelectedFieldsDataList;
-            int tempOrder = temp.Count;
+            int tempOrder;
             string listName;
             string accessibility;
             if (Flag == "Edit")
             {
+                temp = this.SelectedFieldsDataList;
+                tempOrder = temp.Count();
                 listName = SelectedFieldsDataList[0].ListName;
                 accessibility = SelectedFieldsDataList[0].Accessibility;
             }
             else
             {
-                listName = string.Empty;
-                accessibility = string.Empty;
+                if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                {
+                    tempOrder = -1;
+                    listName = string.Empty;
+                    accessibility = string.Empty;
+                }
+                else
+                {
+                    temp = this.SelectedFieldsDataList;
+                    tempOrder = SelectedFieldsDataList.Count;
+                    listName = SelectedFieldsDataList[0].ListName;
+                    accessibility = SelectedFieldsDataList[0].Accessibility;
+                }               
             }
-
-            temp.Add(new CSTUserPreferenceInfo()
+            for (int i = SelectedFromYearInfo; i <= SelectedToYearInfo; i++)
             {
-                ScreeningId = SelectedPeriodFinancialsData.ScreeningId,
-                DataDescription = SelectedPeriodFinancialsData.DataDescription,
-                UserName = UserSession.SessionManager.SESSION.UserName,
-                ListName = listName,
-                Accessibility = accessibility,
-                DataSource = SelectedDataSourceInfo,
-                PeriodType = SelectedPeriodTypeInfo,
-                YearType = SelectedYearTypeInfo,
-                FromDate = SelectedFromYearInfo,
-                ToDate = SelectedToYearInfo,
-                DataPointsOrder = tempOrder++
-            });
+                temp.Add(new CSTUserPreferenceInfo()
+                {
+                    ScreeningId = SelectedPeriodFinancialsData.ScreeningId,
+                    DataDescription = SelectedPeriodFinancialsData.DataDescription,
+                    UserName = UserSession.SessionManager.SESSION.UserName,
+                    ListName = listName,
+                    Accessibility = accessibility,
+                    DataSource = SelectedDataSourceInfo,
+                    PeriodType = SelectedPeriodTypeInfo,
+                    YearType = SelectedYearTypeInfo,
+                    FromDate = i,
+                    ToDate = SelectedToYearInfo,
+                    DataPointsOrder = tempOrder++
+                });
+            }
             SelectedFieldsDataList = temp;
             //RaisePropertyChanged(() => this.SelectedFieldsDataList);
         }
@@ -471,21 +501,32 @@ namespace GreenField.Gadgets.ViewModels
         private void AddCurrentFinCommandMethod(object param)
         {
             ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
-            temp = this.SelectedFieldsDataList;
-            int tempOrder = temp.Count;
+            int tempOrder;
             string listName;
             string accessibility;
             if (Flag == "Edit")
             {
                 listName = SelectedFieldsDataList[0].ListName;
                 accessibility = SelectedFieldsDataList[0].Accessibility;
+                temp = this.SelectedFieldsDataList;
+                tempOrder = temp.Count();               
             }
             else
             {
-                listName = string.Empty;
-                accessibility = string.Empty;
-            }
-
+                if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                {
+                    tempOrder = -1;
+                    listName = string.Empty;
+                    accessibility = string.Empty;
+                }
+                else
+                {
+                    listName = SelectedFieldsDataList[0].ListName;
+                    accessibility = SelectedFieldsDataList[0].Accessibility;
+                    temp = this.SelectedFieldsDataList;
+                    tempOrder = SelectedFieldsDataList.Count;
+                }
+             }
             temp.Add(new CSTUserPreferenceInfo()
             {
                 ScreeningId = SelectedCurrentFinancialsData.ScreeningId,
@@ -516,19 +557,31 @@ namespace GreenField.Gadgets.ViewModels
         private void AddFairValueCommandMethod(object param)
         {
             ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
-            temp = this.SelectedFieldsDataList;
-            int tempOrder = temp.Count;
+            int tempOrder;
             string listName;
             string accessibility;
             if (Flag == "Edit")
             {
+                temp = this.SelectedFieldsDataList;
+                tempOrder = temp.Count();
                 listName = SelectedFieldsDataList[0].ListName;
                 accessibility = SelectedFieldsDataList[0].Accessibility;
             }
             else
             {
-                listName = string.Empty;
-                accessibility = string.Empty;
+                if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                {
+                    tempOrder = -1;
+                    listName = string.Empty;
+                    accessibility = string.Empty;
+                }
+                else
+                {
+                    temp = this.SelectedFieldsDataList;
+                    tempOrder = temp.Count();
+                    listName = SelectedFieldsDataList[0].ListName;
+                    accessibility = SelectedFieldsDataList[0].Accessibility;
+                }
             }
 
             temp.Add(new CSTUserPreferenceInfo()
@@ -586,19 +639,30 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (childViewCSTDataListSave.DialogResult == true)
                 {
-                    Prompt.ShowDialog("Confirm to save the list","Save", MessageBoxButton.OKCancel, (result) =>
+                    Prompt.ShowDialog("Confirm to save the list", "Save", MessageBoxButton.OKCancel, (result) =>
                         {
                             if (result == MessageBoxResult.OK)
                             {
                                 string userEnteredListName = childViewCSTDataListSave.txtDataListName.Text;
                                 string userEnteredAccessibility = childViewCSTDataListSave.SelectedAccessibility;
-                                if (_dbInteractivity != null)
+                                if (Flag != "Edit")
                                 {
-                                   // string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList);
-                                    //if (xmlData != null)
-                                    //{
-                                    //    _dbInteractivity.SaveUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName, SaveUserDataPointsPreferenceCallBackMethod);
-                                    //}
+                                    if (_dbInteractivity != null)
+                                    {
+                                        string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList.ToList(), userEnteredListName, userEnteredAccessibility);
+                                        if (xmlData != null)
+                                        {
+                                            _dbInteractivity.SaveUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName, SaveUserDataPointsPreferenceCallBackMethod);
+                                        }
+                                    }
+                                }
+                                else if (Flag == "Edit")
+                                {
+                                    if (_dbInteractivity != null)
+                                    {
+                                        CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, SelectedFieldsDataList.ToList());
+                                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
+                                    }
                                 }
                             }
                         });
@@ -612,7 +676,7 @@ namespace GreenField.Gadgets.ViewModels
         /// Construct XML for Save As Event
         /// </summary>
         /// <returns></returns>
-        private string SaveAsXmlBuilder(String userName, List<CSTUserPreferenceInfo> userPreference)
+        private string SaveAsXmlBuilder(String userName, List<CSTUserPreferenceInfo> userPreference, string listName, string accessibility)
         {
             string saveAsXml = String.Empty;
 
@@ -620,48 +684,68 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (userName != null && userPreference != null)
                 {
-                    
+
 
                     XElement root = new XElement("Root");
 
                     foreach (CSTUserPreferenceInfo preference in userPreference)
                     {
-                        XElement createRow = new XElement("CreateRow", new XAttribute("ListName", preference.ListName));
+                        XElement createRow = new XElement("CreateRow", new XAttribute("ListName", listName));
                         XElement createRowEntity = new XElement("CreateRowEntity");
 
-                            createRowEntity.Add(new XAttribute("UserName", userName));
-                            createRowEntity.Add(new XAttribute("ListName", preference.ListName));
-                            createRowEntity.Add(new XAttribute("Accessibilty", preference.Accessibility));
-                            createRowEntity.Add(new XAttribute("CreatedOn", DateTime.Now));
-                            createRowEntity.Add(new XAttribute("ModifiedBy", userName));
-                            createRowEntity.Add(new XAttribute("ModifiedOn", DateTime.Now));
+                        createRowEntity.Add(new XAttribute("UserName", userName));
+                        createRowEntity.Add(new XAttribute("ListName", listName));
+                        createRowEntity.Add(new XAttribute("Accessibilty", accessibility));
+                        createRowEntity.Add(new XAttribute("CreatedOn", DateTime.Now));
+                        createRowEntity.Add(new XAttribute("ModifiedBy", userName));
+                        createRowEntity.Add(new XAttribute("ModifiedOn", DateTime.Now));
 
-                            createRow.Add(createRowEntity);
+                        createRow.Add(createRowEntity);
 
-                            XElement createRowPreference = new XElement("CreateRowPreference");
+                        XElement createRowPreference = new XElement("CreateRowPreference");
 
-                            createRowPreference.Add(new XAttribute("UserName", userName));
-                            createRowPreference.Add(new XAttribute("ListName", preference.ListName));
-                            createRowPreference.Add(new XAttribute("ScreeningId", preference.ScreeningId));
-                            createRowPreference.Add(new XAttribute("DataDescription", preference.DataDescription));
-                            createRowPreference.Add(new XAttribute("DataSource", preference.DataSource));
-                            createRowPreference.Add(new XAttribute("PeriodType", preference.PeriodType));
-                            createRowPreference.Add(new XAttribute("YearType", preference.YearType));
-                            createRowPreference.Add(new XAttribute("FromDate", preference.FromDate));
-                            createRowPreference.Add(new XAttribute("ToDate", preference.ToDate));
-                            createRowPreference.Add(new XAttribute("DataPointsOrder", preference.DataPointsOrder));
-                            createRowPreference.Add(new XAttribute("CreatedBy", userName));
-                            createRowPreference.Add(new XAttribute("CreatedOn", DateTime.Now));
-                            createRowPreference.Add(new XAttribute("ModifiedBy", userName));
-                            createRowPreference.Add(new XAttribute("ModifiedOn", DateTime.Now));
+                        createRowPreference.Add(new XAttribute("UserName", userName));
+                        createRowPreference.Add(new XAttribute("ListName", listName));
+                        createRowPreference.Add(new XAttribute("ScreeningId", preference.ScreeningId));
+                        createRowPreference.Add(new XAttribute("DataDescription", preference.DataDescription));
+                        if(preference.DataSource != null)
+                        createRowPreference.Add(new XAttribute("DataSource", preference.DataSource));
+                        else
+                        createRowPreference.Add(new XAttribute("DataSource", string.Empty));
 
-                            createRow.Add(createRowPreference);
-                            root.Add(createRow);
+                        if(preference.PeriodType != null)
+                        createRowPreference.Add(new XAttribute("PeriodType", preference.PeriodType));
+                        else
+                        createRowPreference.Add(new XAttribute("PeriodType", string.Empty));
+
+                        if (preference.YearType != null)
+                        createRowPreference.Add(new XAttribute("YearType", preference.YearType));
+                        else
+                        createRowPreference.Add(new XAttribute("YearType", string.Empty));
+
+                         if (preference.FromDate != null)
+                        createRowPreference.Add(new XAttribute("FromDate", preference.FromDate));
+                        else
+                          createRowPreference.Add(new XAttribute("FromDate", string.Empty));
+
+                         if (preference.ToDate != null)
+                        createRowPreference.Add(new XAttribute("ToDate", preference.ToDate));
+                        else
+                        createRowPreference.Add(new XAttribute("ToDate", string.Empty));
+
+                        createRowPreference.Add(new XAttribute("DataPointsOrder", preference.DataPointsOrder));
+                        createRowPreference.Add(new XAttribute("CreatedBy", userName));
+                        createRowPreference.Add(new XAttribute("CreatedOn", DateTime.Now));
+                        createRowPreference.Add(new XAttribute("ModifiedBy", userName));
+                        createRowPreference.Add(new XAttribute("ModifiedOn", DateTime.Now));
+
+                        createRow.Add(createRowPreference);
+                        root.Add(createRow);
                     }
 
                     XDocument doc = new XDocument(
                        new XDeclaration("1.0", "utf-8", "yes"),
-                       new XComment("Custom screening Tool save as preference details"),root);
+                       new XComment("Custom screening Tool save as preference details"), root);
 
                     saveAsXml = doc.ToString();
                 }
@@ -806,6 +890,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (result == true)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, SelectedFieldsDataList.ToList());
+                    _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
                 }
                 else if (result == false)
                 {
@@ -822,7 +908,7 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-           
+
         }
 
         #endregion
@@ -864,7 +950,7 @@ namespace GreenField.Gadgets.ViewModels
             //fetch tabs data
             FetchTabsData();
             List<CSTUserPreferenceInfo> temp = new List<CSTUserPreferenceInfo>();
-            ObservableCollection<CSTUserPreferenceInfo> userPref = new ObservableCollection<CSTUserPreferenceInfo>(); 
+            ObservableCollection<CSTUserPreferenceInfo> userPref = new ObservableCollection<CSTUserPreferenceInfo>();
 
             Flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
             if (Flag != null)
@@ -889,7 +975,9 @@ namespace GreenField.Gadgets.ViewModels
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
+            {
                 BusyIndicatorContent = message;
+            }
 
             BusyIndicatorIsBusy = showBusyIndicator;
         }

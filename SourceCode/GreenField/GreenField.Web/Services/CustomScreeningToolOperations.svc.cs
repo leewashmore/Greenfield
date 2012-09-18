@@ -400,7 +400,7 @@ namespace GreenField.Web.Services
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<CustomScreeningSecurityData> RetrieveSecurityData(PortfolioSelectionData portfolio,
-            BenchmarkSelectionData benchmark, String region, String country, String sector, String industry, List<CSTUserPreferenceInfo> userPreference)
+            EntitySelectionData benchmark, String region, String country, String sector, String industry, List<CSTUserPreferenceInfo> userPreference)
         {
             try
             {
@@ -604,7 +604,7 @@ namespace GreenField.Web.Services
         #region Helper Methods
 
         public List<CustomScreeningSecurityData> RetrieveSecurityDetailsList(PortfolioSelectionData portfolio,
-            BenchmarkSelectionData benchmark, String region, String country, String sector, String industry)
+            EntitySelectionData benchmark, String region, String country, String sector, String industry)
         {
           try
          {

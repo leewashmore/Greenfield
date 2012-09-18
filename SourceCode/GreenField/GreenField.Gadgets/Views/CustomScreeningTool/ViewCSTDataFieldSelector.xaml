@@ -216,7 +216,7 @@
                                                                  Margin="2,2,0,2"
                                                                  ItemsSource="{Binding DataSourceInfo}"
                                                                  SelectedItem="{Binding SelectedDataSourceInfo, Mode=TwoWay}"
-                                                                 HorizontalContentAlignment="Left" EmptyText="Primary"  
+                                                                 HorizontalContentAlignment="Left" 
                                                                  Height="{StaticResource DefaultControlMinHeight}"
                                                                  Style="{StaticResource RadComboBoxStyle}"/>
                                         </Grid>                                  
@@ -235,7 +235,7 @@
                                                                  Margin="2,2,0,2"
                                                                  ItemsSource="{Binding YearTypeInfo}"
                                                                  SelectedItem="{Binding SelectedYearTypeInfo, Mode=TwoWay}"
-                                                                 HorizontalContentAlignment="Left" EmptyText="Calendar"  
+                                                                 HorizontalContentAlignment="Left"
                                                                  Height="{StaticResource DefaultControlMinHeight}"
                                                                  Style="{StaticResource RadComboBoxStyle}"/>
                                         </Grid>
@@ -253,7 +253,7 @@
                                                                  Margin="2,2,0,2"
                                                                  ItemsSource="{Binding PeriodTypeInfo}"
                                                                  SelectedItem="{Binding SelectedPeriodTypeInfo, Mode=TwoWay}"
-                                                                 HorizontalContentAlignment="Left" EmptyText="Annual"  
+                                                                 HorizontalContentAlignment="Left"  
                                                                  Height="{StaticResource DefaultControlMinHeight}"
                                                                  Style="{StaticResource RadComboBoxStyle}"/>
                                         </Grid>
@@ -414,7 +414,7 @@
                                                                  Margin="2,2,0,2"
                                                                  ItemsSource="{Binding DataSourceInfo}"
                                                                  SelectedItem="{Binding SelectedDataSourceInfo, Mode=TwoWay}"
-                                                                 HorizontalContentAlignment="Left" EmptyText="Primary"  
+                                                                 HorizontalContentAlignment="Left"
                                                                  Height="{StaticResource DefaultControlMinHeight}"
                                                                  Style="{StaticResource RadComboBoxStyle}"/>
                                         </Grid>                                    
@@ -536,7 +536,7 @@
                                                                  Margin="2,2,0,2"
                                                                  ItemsSource="{Binding DataSourceInfo}"
                                                                  SelectedItem="{Binding SelectedDataSourceInfo, Mode=TwoWay}"
-                                                                 HorizontalContentAlignment="Left" EmptyText="Primary"  
+                                                                 HorizontalContentAlignment="Left"  
                                                                  Height="{StaticResource DefaultControlMinHeight}"
                                                                  Style="{StaticResource RadComboBoxStyle}"/>
                                         </Grid>
@@ -649,7 +649,8 @@
                                                 IsFilterable="True"/>
                             <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItemYear"
                                                 Width="Auto"
-                                                Header="Year"                                                
+                                                Header="Year"  
+                                                DataMemberBinding="{Binding FromDate}"
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 HeaderTextAlignment="Right"
