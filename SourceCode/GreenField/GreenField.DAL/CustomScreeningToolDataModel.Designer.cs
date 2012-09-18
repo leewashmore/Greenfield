@@ -473,6 +473,36 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<CustomScreeningUserPreferences>("GetCustomScreeningUserPreferences", usernameParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userPreference">No Metadata Documentation available.</param>
+        /// <param name="username">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> SaveCustomScreeningDataPointsPreference(global::System.String userPreference, global::System.String username)
+        {
+            ObjectParameter userPreferenceParameter;
+            if (userPreference != null)
+            {
+                userPreferenceParameter = new ObjectParameter("userPreference", userPreference);
+            }
+            else
+            {
+                userPreferenceParameter = new ObjectParameter("userPreference", typeof(global::System.String));
+            }
+    
+            ObjectParameter usernameParameter;
+            if (username != null)
+            {
+                usernameParameter = new ObjectParameter("username", username);
+            }
+            else
+            {
+                usernameParameter = new ObjectParameter("username", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("SaveCustomScreeningDataPointsPreference", userPreferenceParameter, usernameParameter);
+        }
 
         #endregion
     }

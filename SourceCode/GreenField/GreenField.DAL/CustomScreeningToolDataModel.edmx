@@ -4,223 +4,218 @@
 	<edmx:Runtime>
 		<!-- SSDL content -->
 		<edmx:StorageModels>
-			<Schema Namespace="CustomScreeningToolModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-				<EntityContainer Name="CustomScreeningToolModelStoreContainer">
-					<EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_CURRENT" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_CURRENT">
-						<DefiningQuery>
-							SELECT
-							[SCREENING_DISPLAY_CURRENT].[SCREENING_ID] AS [SCREENING_ID],
-							[SCREENING_DISPLAY_CURRENT].[DATA_ID] AS [DATA_ID],
-							[SCREENING_DISPLAY_CURRENT].[ESTIMATE_ID] AS [ESTIMATE_ID],
-							[SCREENING_DISPLAY_CURRENT].[MULTIPLIER] AS [MULTIPLIER],
-							[SCREENING_DISPLAY_CURRENT].[DECIMAL] AS [DECIMAL],
-							[SCREENING_DISPLAY_CURRENT].[PERCENTAGE] AS [PERCENTAGE]
-							FROM [dbo].[SCREENING_DISPLAY_CURRENT] AS [SCREENING_DISPLAY_CURRENT]
-						</DefiningQuery>
-					</EntitySet>
-					<EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_FAIRVALUE" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_FAIRVALUE">
-						<DefiningQuery>
-							SELECT
-							[SCREENING_DISPLAY_FAIRVALUE].[SCREENING_ID] AS [SCREENING_ID],
-							[SCREENING_DISPLAY_FAIRVALUE].[DATA_DESC] AS [DATA_DESC],
-							[SCREENING_DISPLAY_FAIRVALUE].[SHORT_COLUMN_DESC] AS [SHORT_COLUMN_DESC],
-							[SCREENING_DISPLAY_FAIRVALUE].[LONG_DESC] AS [LONG_DESC],
-							[SCREENING_DISPLAY_FAIRVALUE].[TABLE_COLUMN] AS [TABLE_COLUMN],
-							[SCREENING_DISPLAY_FAIRVALUE].[DATA_TYPE] AS [DATA_TYPE],
-							[SCREENING_DISPLAY_FAIRVALUE].[MULTIPLIER] AS [MULTIPLIER],
-							[SCREENING_DISPLAY_FAIRVALUE].[DECIMAL] AS [DECIMAL],
-							[SCREENING_DISPLAY_FAIRVALUE].[PERCENTAGE] AS [PERCENTAGE]
-							FROM [dbo].[SCREENING_DISPLAY_FAIRVALUE] AS [SCREENING_DISPLAY_FAIRVALUE]
-						</DefiningQuery>
-					</EntitySet>
-					<EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_PERIOD" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_PERIOD">
-						<DefiningQuery>
-							SELECT
-							[SCREENING_DISPLAY_PERIOD].[SCREENING_ID] AS [SCREENING_ID],
-							[SCREENING_DISPLAY_PERIOD].[DATA_ID] AS [DATA_ID],
-							[SCREENING_DISPLAY_PERIOD].[ESTIMATE_ID] AS [ESTIMATE_ID],
-							[SCREENING_DISPLAY_PERIOD].[MULTIPLIER] AS [MULTIPLIER],
-							[SCREENING_DISPLAY_PERIOD].[DECIMAL] AS [DECIMAL],
-							[SCREENING_DISPLAY_PERIOD].[PERCENTAGE] AS [PERCENTAGE]
-							FROM [dbo].[SCREENING_DISPLAY_PERIOD] AS [SCREENING_DISPLAY_PERIOD]
-						</DefiningQuery>
-					</EntitySet>
-					<EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_REFERENCE" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_REFERENCE">
-						<DefiningQuery>
-							SELECT
-							[SCREENING_DISPLAY_REFERENCE].[SCREENING_ID] AS [SCREENING_ID],
-							[SCREENING_DISPLAY_REFERENCE].[DATA_DESC] AS [DATA_DESC],
-							[SCREENING_DISPLAY_REFERENCE].[SHORT_COLUMN_DESC] AS [SHORT_COLUMN_DESC],
-							[SCREENING_DISPLAY_REFERENCE].[LONG_DESC] AS [LONG_DESC],
-							[SCREENING_DISPLAY_REFERENCE].[TABLE_COLUMN] AS [TABLE_COLUMN],
-							[SCREENING_DISPLAY_REFERENCE].[DATA_TYPE] AS [DATA_TYPE],
-							[SCREENING_DISPLAY_REFERENCE].[MULTIPLIER] AS [MULTIPLIER],
-							[SCREENING_DISPLAY_REFERENCE].[DECIMAL] AS [DECIMAL],
-							[SCREENING_DISPLAY_REFERENCE].[PERCENTAGE] AS [PERCENTAGE]
-							FROM [dbo].[SCREENING_DISPLAY_REFERENCE] AS [SCREENING_DISPLAY_REFERENCE]
-						</DefiningQuery>
-					</EntitySet>
-					<EntitySet Name="UserCustomisedListInfo" EntityType="CustomScreeningToolModel.Store.UserCustomisedListInfo" store:Type="Tables" Schema="dbo" />
-					<EntitySet Name="UserListDataPointMappingInfo" EntityType="CustomScreeningToolModel.Store.UserListDataPointMappingInfo" store:Type="Tables" Schema="dbo" />
-					<AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.Store.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
-						<End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfo" />
-						<End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfo" />
-					</AssociationSet>
-				</EntityContainer>
-				<!--Errors Found During Generation:
+		<Schema Namespace="CustomScreeningToolModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="CustomScreeningToolModelStoreContainer">
+          <EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_CURRENT" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_CURRENT">
+            <DefiningQuery>SELECT 
+      [SCREENING_DISPLAY_CURRENT].[SCREENING_ID] AS [SCREENING_ID], 
+      [SCREENING_DISPLAY_CURRENT].[DATA_ID] AS [DATA_ID], 
+      [SCREENING_DISPLAY_CURRENT].[ESTIMATE_ID] AS [ESTIMATE_ID], 
+      [SCREENING_DISPLAY_CURRENT].[MULTIPLIER] AS [MULTIPLIER], 
+      [SCREENING_DISPLAY_CURRENT].[DECIMAL] AS [DECIMAL], 
+      [SCREENING_DISPLAY_CURRENT].[PERCENTAGE] AS [PERCENTAGE]
+      FROM [dbo].[SCREENING_DISPLAY_CURRENT] AS [SCREENING_DISPLAY_CURRENT]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_FAIRVALUE" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_FAIRVALUE">
+            <DefiningQuery>SELECT 
+      [SCREENING_DISPLAY_FAIRVALUE].[SCREENING_ID] AS [SCREENING_ID], 
+      [SCREENING_DISPLAY_FAIRVALUE].[DATA_DESC] AS [DATA_DESC], 
+      [SCREENING_DISPLAY_FAIRVALUE].[SHORT_COLUMN_DESC] AS [SHORT_COLUMN_DESC], 
+      [SCREENING_DISPLAY_FAIRVALUE].[LONG_DESC] AS [LONG_DESC], 
+      [SCREENING_DISPLAY_FAIRVALUE].[TABLE_COLUMN] AS [TABLE_COLUMN], 
+      [SCREENING_DISPLAY_FAIRVALUE].[DATA_TYPE] AS [DATA_TYPE], 
+      [SCREENING_DISPLAY_FAIRVALUE].[MULTIPLIER] AS [MULTIPLIER], 
+      [SCREENING_DISPLAY_FAIRVALUE].[DECIMAL] AS [DECIMAL], 
+      [SCREENING_DISPLAY_FAIRVALUE].[PERCENTAGE] AS [PERCENTAGE]
+      FROM [dbo].[SCREENING_DISPLAY_FAIRVALUE] AS [SCREENING_DISPLAY_FAIRVALUE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_PERIOD" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_PERIOD">
+            <DefiningQuery>SELECT 
+      [SCREENING_DISPLAY_PERIOD].[SCREENING_ID] AS [SCREENING_ID], 
+      [SCREENING_DISPLAY_PERIOD].[DATA_ID] AS [DATA_ID], 
+      [SCREENING_DISPLAY_PERIOD].[ESTIMATE_ID] AS [ESTIMATE_ID], 
+      [SCREENING_DISPLAY_PERIOD].[MULTIPLIER] AS [MULTIPLIER], 
+      [SCREENING_DISPLAY_PERIOD].[DECIMAL] AS [DECIMAL], 
+      [SCREENING_DISPLAY_PERIOD].[PERCENTAGE] AS [PERCENTAGE]
+      FROM [dbo].[SCREENING_DISPLAY_PERIOD] AS [SCREENING_DISPLAY_PERIOD]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.Store.SCREENING_DISPLAY_REFERENCE" store:Type="Tables" store:Schema="dbo" store:Name="SCREENING_DISPLAY_REFERENCE">
+            <DefiningQuery>SELECT 
+      [SCREENING_DISPLAY_REFERENCE].[SCREENING_ID] AS [SCREENING_ID], 
+      [SCREENING_DISPLAY_REFERENCE].[DATA_DESC] AS [DATA_DESC], 
+      [SCREENING_DISPLAY_REFERENCE].[SHORT_COLUMN_DESC] AS [SHORT_COLUMN_DESC], 
+      [SCREENING_DISPLAY_REFERENCE].[LONG_DESC] AS [LONG_DESC], 
+      [SCREENING_DISPLAY_REFERENCE].[TABLE_COLUMN] AS [TABLE_COLUMN], 
+      [SCREENING_DISPLAY_REFERENCE].[DATA_TYPE] AS [DATA_TYPE], 
+      [SCREENING_DISPLAY_REFERENCE].[MULTIPLIER] AS [MULTIPLIER], 
+      [SCREENING_DISPLAY_REFERENCE].[DECIMAL] AS [DECIMAL], 
+      [SCREENING_DISPLAY_REFERENCE].[PERCENTAGE] AS [PERCENTAGE]
+      FROM [dbo].[SCREENING_DISPLAY_REFERENCE] AS [SCREENING_DISPLAY_REFERENCE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UserCustomisedListInfo" EntityType="CustomScreeningToolModel.Store.UserCustomisedListInfo" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserListDataPointMappingInfo" EntityType="CustomScreeningToolModel.Store.UserListDataPointMappingInfo" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.Store.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+            <End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfo" />
+            <End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfo" />
+          </AssociationSet>
+        </EntityContainer>
+        <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_CURRENT' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-				<EntityType Name="SCREENING_DISPLAY_CURRENT">
-					<Key>
-						<PropertyRef Name="SCREENING_ID" />
-						<PropertyRef Name="DATA_ID" />
-						<PropertyRef Name="ESTIMATE_ID" />
-					</Key>
-					<Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
-					<Property Name="DATA_ID" Type="int" Nullable="false" />
-					<Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
-					<Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
-					<Property Name="DECIMAL" Type="int" />
-					<Property Name="PERCENTAGE" Type="char" MaxLength="10" />
-				</EntityType>
-				<!--Errors Found During Generation:
+        <EntityType Name="SCREENING_DISPLAY_CURRENT">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="ESTIMATE_ID" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
+          <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DECIMAL" Type="int" />
+          <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_FAIRVALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-				<EntityType Name="SCREENING_DISPLAY_FAIRVALUE">
-					<Key>
-						<PropertyRef Name="SCREENING_ID" />
-						<PropertyRef Name="DATA_DESC" />
-						<PropertyRef Name="SHORT_COLUMN_DESC" />
-						<PropertyRef Name="LONG_DESC" />
-						<PropertyRef Name="TABLE_COLUMN" />
-						<PropertyRef Name="DATA_TYPE" />
-					</Key>
-					<Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
-					<Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
-					<Property Name="SHORT_COLUMN_DESC" Type="varchar" Nullable="false" MaxLength="255" />
-					<Property Name="LONG_DESC" Type="varchar(max)" Nullable="false" />
-					<Property Name="TABLE_COLUMN" Type="varchar" Nullable="false" MaxLength="50" />
-					<Property Name="DATA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
-					<Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
-					<Property Name="DECIMAL" Type="int" />
-					<Property Name="PERCENTAGE" Type="char" MaxLength="10" />
-				</EntityType>
-				<!--Errors Found During Generation:
+        <EntityType Name="SCREENING_DISPLAY_FAIRVALUE">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_DESC" />
+            <PropertyRef Name="SHORT_COLUMN_DESC" />
+            <PropertyRef Name="LONG_DESC" />
+            <PropertyRef Name="TABLE_COLUMN" />
+            <PropertyRef Name="DATA_TYPE" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="SHORT_COLUMN_DESC" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="LONG_DESC" Type="varchar(max)" Nullable="false" />
+          <Property Name="TABLE_COLUMN" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DECIMAL" Type="int" />
+          <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
+        </EntityType>
+        <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_PERIOD' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-				<EntityType Name="SCREENING_DISPLAY_PERIOD">
-					<Key>
-						<PropertyRef Name="SCREENING_ID" />
-						<PropertyRef Name="DATA_ID" />
-					</Key>
-					<Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
-					<Property Name="DATA_ID" Type="int" Nullable="false" />
-					<Property Name="ESTIMATE_ID" Type="int" />
-					<Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
-					<Property Name="DECIMAL" Type="int" />
-					<Property Name="PERCENTAGE" Type="varchar" MaxLength="1" />
-				</EntityType>
-				<!--Errors Found During Generation:
+        <EntityType Name="SCREENING_DISPLAY_PERIOD">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_ID" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="ESTIMATE_ID" Type="int" />
+          <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DECIMAL" Type="int" />
+          <Property Name="PERCENTAGE" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data0608.dbo.SCREENING_DISPLAY_REFERENCE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-				<EntityType Name="SCREENING_DISPLAY_REFERENCE">
-					<Key>
-						<PropertyRef Name="SCREENING_ID" />
-						<PropertyRef Name="DATA_DESC" />
-						<PropertyRef Name="SHORT_COLUMN_DESC" />
-						<PropertyRef Name="LONG_DESC" />
-						<PropertyRef Name="TABLE_COLUMN" />
-						<PropertyRef Name="DATA_TYPE" />
-					</Key>
-					<Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
-					<Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
-					<Property Name="SHORT_COLUMN_DESC" Type="varchar" Nullable="false" MaxLength="255" />
-					<Property Name="LONG_DESC" Type="varchar(max)" Nullable="false" />
-					<Property Name="TABLE_COLUMN" Type="varchar" Nullable="false" MaxLength="50" />
-					<Property Name="DATA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
-					<Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
-					<Property Name="DECIMAL" Type="int" />
-					<Property Name="PERCENTAGE" Type="char" MaxLength="10" />
-				</EntityType>
-				<EntityType Name="UserCustomisedListInfo">
-					<Key>
-						<PropertyRef Name="ListId" />
-					</Key>
-					<Property Name="ListId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-					<Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
-					<Property Name="ListName" Type="nvarchar" Nullable="false" MaxLength="50" />
-					<Property Name="Accessibilty" Type="nvarchar" Nullable="false" MaxLength="10" />
-					<Property Name="CreatedOn" Type="datetime" Nullable="false" />
-					<Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
-					<Property Name="ModifiedOn" Type="datetime" Nullable="false" />
-				</EntityType>
-				<EntityType Name="UserListDataPointMappingInfo">
-					<Key>
-						<PropertyRef Name="DataPointId" />
-					</Key>
-					<Property Name="DataPointId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
-					<Property Name="ListId" Type="bigint" Nullable="false" />
-					<Property Name="ScreeningId" Type="varchar" Nullable="false" MaxLength="50" />
-					<Property Name="DataDescription" Type="varchar" Nullable="false" MaxLength="100" />
-					<Property Name="DataSource" Type="varchar" MaxLength="50" />
-					<Property Name="PeriodType" Type="char" MaxLength="2" />
-					<Property Name="YearType" Type="char" MaxLength="8" />
-					<Property Name="FromDate" Type="int" />
-					<Property Name="ToDate" Type="int" />
-					<Property Name="DataPointsOrder" Type="int" Nullable="false" />
-					<Property Name="CreatedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
-					<Property Name="CreatedOn" Type="datetime" Nullable="false" />
-					<Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
-					<Property Name="ModifiedOn" Type="datetime" Nullable="false" />
-				</EntityType>
-				<Association Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
-					<End Role="UserCustomisedListInfo" Type="CustomScreeningToolModel.Store.UserCustomisedListInfo" Multiplicity="1">
-						<OnDelete Action="Cascade" />
-					</End>
-					<End Role="UserListDataPointMappingInfo" Type="CustomScreeningToolModel.Store.UserListDataPointMappingInfo" Multiplicity="*" />
-					<ReferentialConstraint>
-						<Principal Role="UserCustomisedListInfo">
-							<PropertyRef Name="ListId" />
-						</Principal>
-						<Dependent Role="UserListDataPointMappingInfo">
-							<PropertyRef Name="ListId" />
-						</Dependent>
-					</ReferentialConstraint>
-				</Association>
-				<Function Name="GetCustomScreeningCURData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-					<Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
-					<Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
-					<Parameter Name="dataID" Type="int" Mode="In" />
-					<Parameter Name="dataSource" Type="varchar" Mode="In" />
-				</Function>
-				<Function Name="GetCustomScreeningFINData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-					<Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
-					<Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
-					<Parameter Name="dataID" Type="int" Mode="In" />
-					<Parameter Name="periodType" Type="char" Mode="In" />
-					<Parameter Name="periodYear" Type="int" Mode="In" />
-					<Parameter Name="fiscalType" Type="char" Mode="In" />
-					<Parameter Name="dataSource" Type="varchar" Mode="In" />
-				</Function>
-				<Function Name="GetCustomScreeningFVAData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-					<Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
-					<Parameter Name="dataSource" Type="varchar" Mode="In" />
-				</Function>
-				<Function Name="GetCustomScreeningMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-					<Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
-					<Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
-				</Function>
-				<Function Name="GetCustomScreeningREFData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-					<Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
-				</Function>
-				<Function Name="GetCustomScreeningUserPreferences" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-					<Parameter Name="username" Type="nvarchar" Mode="In" />
-				</Function>
-				<Function Name="GetFinancialTabDataDescriptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-					<Parameter Name="tabName" Type="nvarchar" Mode="In" />
-				</Function>
-			</Schema>
-		</edmx:StorageModels>
+        <EntityType Name="SCREENING_DISPLAY_REFERENCE">
+          <Key>
+            <PropertyRef Name="SCREENING_ID" />
+            <PropertyRef Name="DATA_DESC" />
+            <PropertyRef Name="SHORT_COLUMN_DESC" />
+            <PropertyRef Name="LONG_DESC" />
+            <PropertyRef Name="TABLE_COLUMN" />
+            <PropertyRef Name="DATA_TYPE" />
+          </Key>
+          <Property Name="SCREENING_ID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="SHORT_COLUMN_DESC" Type="varchar" Nullable="false" MaxLength="255" />
+          <Property Name="LONG_DESC" Type="varchar(max)" Nullable="false" />
+          <Property Name="TABLE_COLUMN" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DATA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="MULTIPLIER" Type="decimal" Precision="32" Scale="6" />
+          <Property Name="DECIMAL" Type="int" />
+          <Property Name="PERCENTAGE" Type="char" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="UserCustomisedListInfo">
+          <Key>
+            <PropertyRef Name="ListId" />
+          </Key>
+          <Property Name="ListId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ListName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Accessibilty" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserListDataPointMappingInfo">
+          <Key>
+            <PropertyRef Name="DataPointId" />
+          </Key>
+          <Property Name="DataPointId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ListId" Type="bigint" Nullable="false" />
+          <Property Name="ScreeningId" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="DataDescription" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="DataSource" Type="varchar" MaxLength="50" />
+          <Property Name="PeriodType" Type="char" MaxLength="2" />
+          <Property Name="YearType" Type="char" MaxLength="8" />
+          <Property Name="FromDate" Type="int" />
+          <Property Name="ToDate" Type="int" />
+          <Property Name="DataPointsOrder" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
+          <End Role="UserCustomisedListInfo" Type="CustomScreeningToolModel.Store.UserCustomisedListInfo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="UserListDataPointMappingInfo" Type="CustomScreeningToolModel.Store.UserListDataPointMappingInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserCustomisedListInfo">
+              <PropertyRef Name="ListId" />
+            </Principal>
+            <Dependent Role="UserListDataPointMappingInfo">
+              <PropertyRef Name="ListId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="GetCustomScreeningCURData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
+          <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
+          <Parameter Name="dataID" Type="int" Mode="In" />
+          <Parameter Name="dataSource" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetCustomScreeningFINData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
+          <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
+          <Parameter Name="dataID" Type="int" Mode="In" />
+          <Parameter Name="periodType" Type="char" Mode="In" />
+          <Parameter Name="periodYear" Type="int" Mode="In" />
+          <Parameter Name="fiscalType" Type="char" Mode="In" />
+          <Parameter Name="dataSource" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetCustomScreeningFVAData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
+          <Parameter Name="dataSource" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetCustomScreeningMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
+          <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="GetCustomScreeningREFData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="GetCustomScreeningUserPreferences" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetFinancialTabDataDescriptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="tabName" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="SaveCustomScreeningDataPointsPreference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userPreference" Type="varchar(max)" Mode="In" />
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
 		<!-- CSDL content -->
 		<edmx:ConceptualModels>
 			<Schema Namespace="CustomScreeningToolModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -228,36 +223,36 @@
 					<EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" />
 					<EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" />
 					<FunctionImport Name="GetFinancialTabDataDescriptions" ReturnType="Collection(CustomScreeningToolModel.FinancialTabDataDescriptions)">
-						<Parameter Name="tabName" Mode="In" Type="String" />
-					</FunctionImport>
+          <Parameter Name="tabName" Mode="In" Type="String" />
+          </FunctionImport>
 					<EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" />
 					<FunctionImport Name="GetCustomScreeningFVAData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFVAData)">
-						<Parameter Name="securityIdsList" Mode="In" Type="String" />
-						<Parameter Name="dataSource" Mode="In" Type="String" />
-					</FunctionImport>
+            <Parameter Name="securityIdsList" Mode="In" Type="String" />
+            <Parameter Name="dataSource" Mode="In" Type="String" />
+          </FunctionImport>
 					<EntitySet Name="UserCustomisedListInfoes" EntityType="CustomScreeningToolModel.UserCustomisedListInfo" />
 					<FunctionImport Name="GetCustomScreeningCURData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningCURData)">
-						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
-						<Parameter Name="securityIdsList" Mode="In" Type="String" />
-						<Parameter Name="dataID" Mode="In" Type="Int32" />
-						<Parameter Name="dataSource" Mode="In" Type="String" />
-					</FunctionImport>
+            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
+            <Parameter Name="securityIdsList" Mode="In" Type="String" />
+            <Parameter Name="dataID" Mode="In" Type="Int32" />
+            <Parameter Name="dataSource" Mode="In" Type="String" />
+          </FunctionImport>
 					<FunctionImport Name="GetCustomScreeningFINData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFINData)">
-						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
-						<Parameter Name="securityIdsList" Mode="In" Type="String" />
-						<Parameter Name="dataID" Mode="In" Type="Int32" />
-						<Parameter Name="periodType" Mode="In" Type="String" />
-						<Parameter Name="periodYear" Mode="In" Type="Int32" />
-						<Parameter Name="fiscalType" Mode="In" Type="String" />
-						<Parameter Name="dataSource" Mode="In" Type="String" />
-					</FunctionImport>
+            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
+            <Parameter Name="securityIdsList" Mode="In" Type="String" />
+            <Parameter Name="dataID" Mode="In" Type="Int32" />
+            <Parameter Name="periodType" Mode="In" Type="String" />
+            <Parameter Name="periodYear" Mode="In" Type="Int32" />
+            <Parameter Name="fiscalType" Mode="In" Type="String" />
+            <Parameter Name="dataSource" Mode="In" Type="String" />
+          </FunctionImport>
 					<FunctionImport Name="GetCustomScreeningREFData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningREFData)">
-						<Parameter Name="securityIdsList" Mode="In" Type="String" />
-					</FunctionImport>
+          <Parameter Name="securityIdsList" Mode="In" Type="String" />
+          </FunctionImport>
 					<FunctionImport Name="GetCustomScreeningMarketCap" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningMarketCap)">
-						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
-						<Parameter Name="securityIdsList" Mode="In" Type="String" />
-					</FunctionImport>
+            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
+            <Parameter Name="securityIdsList" Mode="In" Type="String" />
+          </FunctionImport>
 					<EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" />
 					<EntitySet Name="UserListDataPointMappingInfoes" EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" />
 					<AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
@@ -265,8 +260,12 @@
 						<End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfoes" />
 					</AssociationSet>
 					<FunctionImport Name="GetCustomScreeningUserPreferences" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningUserPreferences)">
-						<Parameter Name="username" Mode="In" Type="String" />
-					</FunctionImport>
+          <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SaveCustomScreeningDataPointsPreference" ReturnType="Collection(Int32)">
+            <Parameter Name="userPreference" Mode="In" Type="String" />
+            <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
 				</EntityContainer>
 				<EntityType Name="SCREENING_DISPLAY_CURRENT">
 					<Key>
@@ -709,6 +708,7 @@
 							</ComplexTypeMapping>
 						</ResultMapping>
 					</FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SaveCustomScreeningDataPointsPreference" FunctionName="CustomScreeningToolModel.Store.SaveCustomScreeningDataPointsPreference" />
 				</EntityContainerMapping>
 			</Mapping>
 		</edmx:Mappings>

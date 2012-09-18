@@ -299,6 +299,7 @@ namespace GreenField.Web.Services
         {
             try
             {
+                bool isSaveSuccessful = true;
                 if (userPreference == null)
                     return false;
 
@@ -308,12 +309,19 @@ namespace GreenField.Web.Services
                 if (!isServiceUp)
                     throw new Exception("Services are not available");
 
-                Boolean? result = new Boolean?();
+                int? result;
 
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
-                //result = entity.get
 
-                return false;               
+                result = entity.SaveCustomScreeningDataPointsPreference(userPreference, username).FirstOrDefault();
+
+
+                if (result < 0)
+                {
+                    isSaveSuccessful =  false;
+                }
+
+                return isSaveSuccessful;
             }
             catch (Exception ex)
             {
@@ -417,58 +425,60 @@ namespace GreenField.Web.Services
                 string _securityIds = StringBuilder(distinctSecurityId);
                 string _issuerIds = StringBuilder(distinctIssuerId);
 
-                //dummy data
-                userPreference = new List<CSTUserPreferenceInfo>();
-                userPreference.Add(new CSTUserPreferenceInfo()
-                {
-                    ScreeningId = "FIN001",
-                    DataSource = "REUTERS",
-                    PeriodType = "A",
-                    YearType = "FISCAL",
-                    FromDate = 2009,
-                    DataID = 3,
-                    DataDescription = "ABC"
-                });
-                userPreference.Add(new CSTUserPreferenceInfo()
-                {
-                    ScreeningId = "FIN009",
-                    DataSource = "REUTERS",
-                    PeriodType = "A",
-                    YearType = "FISCAL",
-                    FromDate = 2005,
-                    DataID = 11,
-                    DataDescription = "XYZ"
-                });
-                userPreference.Add(new CSTUserPreferenceInfo()
-                {
-                    ScreeningId = "CUR001",
-                    DataSource = "REUTERS",
-                    DataID = 3,
-                    DataDescription = "ABC"
-                });
-                userPreference.Add(new CSTUserPreferenceInfo()
-                {
-                    ScreeningId = "REF009",
-                    TableColumnName = "SECURITY_VOLUME_AVG_30D"
-                });
-                userPreference.Add(new CSTUserPreferenceInfo()
-                {
-                    ScreeningId = "REF003",
-                    TableColumnName = "ISIN"
-                });
-                userPreference.Add(new CSTUserPreferenceInfo()
-                {
-                    ScreeningId = "FVA001",
-                    DataSource = "REUTERS",
-                    TableColumnName = "DATA_DESC"
-                });
-                userPreference.Add(new CSTUserPreferenceInfo()
-                {
-                    ScreeningId = "FVA002",
-                    DataSource = "REUTERS",
-                    TableColumnName = "FV_BUY"
-                });
-                //****
+                #region dummy data
+                ////dummy data
+                //userPreference = new List<CSTUserPreferenceInfo>();
+                //userPreference.Add(new CSTUserPreferenceInfo()
+                //{
+                //    ScreeningId = "FIN001",
+                //    DataSource = "REUTERS",
+                //    PeriodType = "A",
+                //    YearType = "FISCAL",
+                //    FromDate = 2009,
+                //    DataID = 3,
+                //    DataDescription = "ABC"
+                //});
+                //userPreference.Add(new CSTUserPreferenceInfo()
+                //{
+                //    ScreeningId = "FIN009",
+                //    DataSource = "REUTERS",
+                //    PeriodType = "A",
+                //    YearType = "FISCAL",
+                //    FromDate = 2005,
+                //    DataID = 11,
+                //    DataDescription = "XYZ"
+                //});
+                //userPreference.Add(new CSTUserPreferenceInfo()
+                //{
+                //    ScreeningId = "CUR001",
+                //    DataSource = "REUTERS",
+                //    DataID = 3,
+                //    DataDescription = "ABC"
+                //});
+                //userPreference.Add(new CSTUserPreferenceInfo()
+                //{
+                //    ScreeningId = "REF009",
+                //    TableColumnName = "SECURITY_VOLUME_AVG_30D"
+                //});
+                //userPreference.Add(new CSTUserPreferenceInfo()
+                //{
+                //    ScreeningId = "REF003",
+                //    TableColumnName = "ISIN"
+                //});
+                //userPreference.Add(new CSTUserPreferenceInfo()
+                //{
+                //    ScreeningId = "FVA001",
+                //    DataSource = "REUTERS",
+                //    TableColumnName = "DATA_DESC"
+                //});
+                //userPreference.Add(new CSTUserPreferenceInfo()
+                //{
+                //    ScreeningId = "FVA002",
+                //    DataSource = "REUTERS",
+                //    TableColumnName = "FV_BUY"
+                //});
+                ////**** 
+                #endregion
 
                 #region Retrieving REF Data Items
 

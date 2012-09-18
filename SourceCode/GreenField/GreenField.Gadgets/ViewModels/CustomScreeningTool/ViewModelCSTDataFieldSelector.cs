@@ -594,11 +594,11 @@ namespace GreenField.Gadgets.ViewModels
                                 string userEnteredAccessibility = childViewCSTDataListSave.SelectedAccessibility;
                                 if (_dbInteractivity != null)
                                 {
-                                    string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, MyProperty);
-                                    if (xmlData != null)
-                                    {
-                                        _dbInteractivity.SaveUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName, SaveUserDataPointsPreferenceCallBackMethod);
-                                    }
+                                   // string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList);
+                                    //if (xmlData != null)
+                                    //{
+                                    //    _dbInteractivity.SaveUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName, SaveUserDataPointsPreferenceCallBackMethod);
+                                    //}
                                 }
                             }
                         });
@@ -620,28 +620,48 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (userName != null && userPreference != null)
                 {
-                    XDocument doc = new XDocument(
-                       new XDeclaration("1.0", "utf-8", "yes"),
-                       new XComment("Custom screening Tool save as preference details"));
+                    
+
+                    XElement root = new XElement("Root");
 
                     foreach (CSTUserPreferenceInfo preference in userPreference)
                     {
-                        doc.Add(new XElement("UserName", userName),
-                            new XElement("ListName", preference.ListName),
-                            new XElement("Accessibilty", preference.Accessibility),
-                            new XElement("ScreeningId", preference.ScreeningId),
-                            new XElement("DataDescription", preference.DataDescription),
-                            new XElement("DataSource", preference.DataSource),
-                            new XElement("PeriodType", preference.PeriodType),
-                            new XElement("YearType", preference.YearType),
-                            new XElement("FromDate", preference.FromDate),
-                            new XElement("ToDate", preference.ToDate),
-                            new XElement("DataPointsOrder", preference.DataPointsOrder),
-                            new XElement("CreatedBy", userName),
-                            new XElement("CreatedOn", DateTime.Now),
-                            new XElement("ModifiedBy", userName),
-                            new XElement("ModifiedOn", DateTime.Now));
+                        XElement createRow = new XElement("CreateRow", new XAttribute("ListName", preference.ListName));
+                        XElement createRowEntity = new XElement("CreateRowEntity");
+
+                            createRowEntity.Add(new XAttribute("UserName", userName));
+                            createRowEntity.Add(new XAttribute("ListName", preference.ListName));
+                            createRowEntity.Add(new XAttribute("Accessibilty", preference.Accessibility));
+                            createRowEntity.Add(new XAttribute("CreatedOn", DateTime.Now));
+                            createRowEntity.Add(new XAttribute("ModifiedBy", userName));
+                            createRowEntity.Add(new XAttribute("ModifiedOn", DateTime.Now));
+
+                            createRow.Add(createRowEntity);
+
+                            XElement createRowPreference = new XElement("CreateRowPreference");
+
+                            createRowPreference.Add(new XAttribute("UserName", userName));
+                            createRowPreference.Add(new XAttribute("ListName", preference.ListName));
+                            createRowPreference.Add(new XAttribute("ScreeningId", preference.ScreeningId));
+                            createRowPreference.Add(new XAttribute("DataDescription", preference.DataDescription));
+                            createRowPreference.Add(new XAttribute("DataSource", preference.DataSource));
+                            createRowPreference.Add(new XAttribute("PeriodType", preference.PeriodType));
+                            createRowPreference.Add(new XAttribute("YearType", preference.YearType));
+                            createRowPreference.Add(new XAttribute("FromDate", preference.FromDate));
+                            createRowPreference.Add(new XAttribute("ToDate", preference.ToDate));
+                            createRowPreference.Add(new XAttribute("DataPointsOrder", preference.DataPointsOrder));
+                            createRowPreference.Add(new XAttribute("CreatedBy", userName));
+                            createRowPreference.Add(new XAttribute("CreatedOn", DateTime.Now));
+                            createRowPreference.Add(new XAttribute("ModifiedBy", userName));
+                            createRowPreference.Add(new XAttribute("ModifiedOn", DateTime.Now));
+
+                            createRow.Add(createRowPreference);
+                            root.Add(createRow);
                     }
+
+                    XDocument doc = new XDocument(
+                       new XDeclaration("1.0", "utf-8", "yes"),
+                       new XComment("Custom screening Tool save as preference details"),root);
 
                     saveAsXml = doc.ToString();
                 }
@@ -918,12 +938,5 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
- private List<CSTUserPreferenceInfo> myVar;
-
-        public List<CSTUserPreferenceInfo> MyProperty
-        {
-            get { return myVar; }
-            set { myVar = value; RaisePropertyChanged(() => MyProperty); }
-        }
     }
 }
