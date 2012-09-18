@@ -838,6 +838,20 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+        private decimal _numberOfShares;
+        public decimal NumberOfShares
+        {
+            get
+            {
+                return _numberOfShares; 
+            }
+            set 
+            {
+                _numberOfShares = value;
+                this.RaisePropertyChanged(() => this.NumberOfShares);
+            }
+        }
+        
 
         /// <summary>
         /// TerminalValuePresent
@@ -1366,6 +1380,7 @@ namespace GreenField.Gadgets.ViewModels
                 decimal FVMinorities = SummaryData.Select(a => a.FVMinorities).FirstOrDefault();
                 decimal equityValue = DCFCalculations.CalculateEquityValue(totalEnterpriseValue, cash, FVInvestments, grossDebt, FVMinorities);
                 decimal numberOfShares = SummaryData.Select(a => a.NumberOfShares).FirstOrDefault();
+                NumberOfShares = numberOfShares;
                 if (numberOfShares != 0)
                 {
                     DCFValuePerShare = DCFCalculations.CalculateDCFValuePerShare(equityValue, numberOfShares);
@@ -1532,11 +1547,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     item.C1 = i.ToString();
                     item.C2 = (-0.50 + (i - 1) * 0.25).ToString();
-                    item.C3 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C3) / FWDBVPS) * CurrentMarketPrice), 2));
-                    item.C4 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C4) / FWDBVPS) * CurrentMarketPrice), 2));
-                    item.C5 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C5) / FWDBVPS) * CurrentMarketPrice), 2));
-                    item.C6 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C6) / FWDBVPS) * CurrentMarketPrice), 2));
-                    item.C7 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C7) / FWDBVPS) * CurrentMarketPrice), 2));
+                    item.C3 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C3) / FWDBVPS) * NumberOfShares), 2));
+                    item.C4 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C4) / FWDBVPS) * NumberOfShares), 2));
+                    item.C5 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C5) / FWDBVPS) * NumberOfShares), 2));
+                    item.C6 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C6) / FWDBVPS) * NumberOfShares), 2));
+                    item.C7 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C7) / FWDBVPS) * NumberOfShares), 2));
                     BVPS.Add(Convert.ToDecimal(item.C3));
                     BVPS.Add(Convert.ToDecimal(item.C4));
                     BVPS.Add(Convert.ToDecimal(item.C5));
@@ -1601,11 +1616,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     item.C1 = i.ToString();
                     item.C2 = (-0.50 + (i - 1) * 0.25).ToString() + "%";
-                    item.C3 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C3) / FWDEPS) * CurrentMarketPrice), 2));
-                    item.C4 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C4) / FWDEPS) * CurrentMarketPrice), 2));
-                    item.C5 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C5) / FWDEPS) * CurrentMarketPrice), 2));
-                    item.C6 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C6) / FWDEPS) * CurrentMarketPrice), 2));
-                    item.C7 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C7) / FWDEPS) * CurrentMarketPrice), 2));
+                    item.C3 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C3) / FWDEPS) * NumberOfShares), 2));
+                    item.C4 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C4) / FWDEPS) * NumberOfShares), 2));
+                    item.C5 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C5) / FWDEPS) * NumberOfShares), 2));
+                    item.C6 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C6) / FWDEPS) * NumberOfShares), 2));
+                    item.C7 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C7) / FWDEPS) * NumberOfShares), 2));
                     EPS.Add(Convert.ToDecimal(item.C3));
                     EPS.Add(Convert.ToDecimal(item.C4));
                     EPS.Add(Convert.ToDecimal(item.C5));
