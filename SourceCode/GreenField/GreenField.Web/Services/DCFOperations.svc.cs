@@ -85,6 +85,9 @@ namespace GreenField.Web.Services
                         record.ISSUE_NAME == entitySelectionData.LongName &&
                         record.TICKER == entitySelectionData.ShortName).FirstOrDefault();
 
+                if (securityDetails == null)
+                    return new List<DCFAnalysisSummaryData>();
+
                 issuerId = securityDetails.ISSUER_ID;
                 if (issuerId == null)
                     return new List<DCFAnalysisSummaryData>();

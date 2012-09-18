@@ -17,7 +17,7 @@ namespace Greenfield.Gadgets.Models
 
         public decimal GrossDebt { get; set; }
 
-        public decimal Year10CashFlow { get; set; }
+        public decimal Year9CashFlow { get; set; }
 
         public decimal TerminalGrowthRate { get; set; }
 

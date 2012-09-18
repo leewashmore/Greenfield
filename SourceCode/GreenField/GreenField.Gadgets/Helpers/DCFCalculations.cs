@@ -156,7 +156,7 @@ namespace Greenfield.Gadgets.Helpers
                 inputParameter.CostOfDebt, inputParameter.MarginalTaxRate);
 
             decimal nominalTerminalValue = CalculateNominalTerminalValue(wacc, inputParameter.TerminalGrowthRate,
-                inputParameter.Year10CashFlow);
+                inputParameter.Year9CashFlow);
 
             decimal presentTerminalValue = CalculatePresentTerminalValue(nominalTerminalValue,
                 inputParameter.Year10DiscountingFactor);

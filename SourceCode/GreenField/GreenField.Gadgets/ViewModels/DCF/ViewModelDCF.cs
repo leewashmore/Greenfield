@@ -108,13 +108,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         if (EntitySelectionData != null)
                         {
-                            //_dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
-                            //_dbInteractivity.RetrieveCashFlows(EntitySelectionData, RetrieveDCFCashFlowYearlyDataCallbackMethod);
-                            //_dbInteractivity.RetrieveDCFAnalysisData(EntitySelectionData, RetrieveDCFAnalysisDataCallbackMethod);
-
                             _dbInteractivity.RetrieveDCFCurrentPrice(EntitySelectionData, RetrieveCurrentPriceDataCallbackMethod);
-                            //_dbInteractivity.RetrieveDCFSummaryData(EntitySelectionData, RetrieveDCFSummaryDataCallbackMethod);
-
                             BusyIndicatorNotification(true, "Fetching Data for Selected Security");
                         }
                     }
@@ -843,15 +837,15 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return _numberOfShares; 
+                return _numberOfShares;
             }
-            set 
+            set
             {
                 _numberOfShares = value;
                 this.RaisePropertyChanged(() => this.NumberOfShares);
             }
         }
-        
+
 
         /// <summary>
         /// TerminalValuePresent
@@ -1218,7 +1212,7 @@ namespace GreenField.Gadgets.ViewModels
                 TerminalValueCalculationsDisplayData.AddRange(result);
                 TerminalValuePresent = terminalValuePresent;
 
-                CalculationParameters.Year10CashFlow = (Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
+                CalculationParameters.Year9CashFlow = (Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(8).Year)).
                     Select(a => a.FREE_CASH_FLOW).FirstOrDefault()));
                 CalculationParameters.TerminalGrowthRate = TGR;
                 CalculationParameters.Year10DiscountingFactor = (Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
@@ -1258,6 +1252,8 @@ namespace GreenField.Gadgets.ViewModels
                     }
                 }
                 PresentValueExplicitForecast = periodData.Select(a => Convert.ToDecimal(a.AMOUNT)).Sum();
+                List<decimal> newq = periodData.Select(a => a.DISCOUNTING_FACTOR).ToList();
+                
                 return periodData;
             }
             catch (Exception ex)
@@ -1647,7 +1643,6 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
         }
-
 
         #endregion
 
