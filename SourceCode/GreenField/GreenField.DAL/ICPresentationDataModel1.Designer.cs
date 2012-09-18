@@ -2404,6 +2404,80 @@ namespace GreenField.DAL
         {
             return base.ExecuteFunction<ICPresentationOverviewData>("RetrieveICPresentationOverviewData");
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="emailTo">No Metadata Documentation available.</param>
+        /// <param name="emailCc">No Metadata Documentation available.</param>
+        /// <param name="emailSubject">No Metadata Documentation available.</param>
+        /// <param name="emailMessageBody">No Metadata Documentation available.</param>
+        /// <param name="emailAttachment">No Metadata Documentation available.</param>
+        /// <param name="userName">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> SetMessageInfo(global::System.String emailTo, global::System.String emailCc, global::System.String emailSubject, global::System.String emailMessageBody, global::System.String emailAttachment, global::System.String userName)
+        {
+            ObjectParameter emailToParameter;
+            if (emailTo != null)
+            {
+                emailToParameter = new ObjectParameter("EmailTo", emailTo);
+            }
+            else
+            {
+                emailToParameter = new ObjectParameter("EmailTo", typeof(global::System.String));
+            }
+    
+            ObjectParameter emailCcParameter;
+            if (emailCc != null)
+            {
+                emailCcParameter = new ObjectParameter("EmailCc", emailCc);
+            }
+            else
+            {
+                emailCcParameter = new ObjectParameter("EmailCc", typeof(global::System.String));
+            }
+    
+            ObjectParameter emailSubjectParameter;
+            if (emailSubject != null)
+            {
+                emailSubjectParameter = new ObjectParameter("EmailSubject", emailSubject);
+            }
+            else
+            {
+                emailSubjectParameter = new ObjectParameter("EmailSubject", typeof(global::System.String));
+            }
+    
+            ObjectParameter emailMessageBodyParameter;
+            if (emailMessageBody != null)
+            {
+                emailMessageBodyParameter = new ObjectParameter("EmailMessageBody", emailMessageBody);
+            }
+            else
+            {
+                emailMessageBodyParameter = new ObjectParameter("EmailMessageBody", typeof(global::System.String));
+            }
+    
+            ObjectParameter emailAttachmentParameter;
+            if (emailAttachment != null)
+            {
+                emailAttachmentParameter = new ObjectParameter("EmailAttachment", emailAttachment);
+            }
+            else
+            {
+                emailAttachmentParameter = new ObjectParameter("EmailAttachment", typeof(global::System.String));
+            }
+    
+            ObjectParameter userNameParameter;
+            if (userName != null)
+            {
+                userNameParameter = new ObjectParameter("UserName", userName);
+            }
+            else
+            {
+                userNameParameter = new ObjectParameter("UserName", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetMessageInfo", emailToParameter, emailCcParameter, emailSubjectParameter, emailMessageBodyParameter, emailAttachmentParameter, userNameParameter);
+        }
 
         #endregion
     }

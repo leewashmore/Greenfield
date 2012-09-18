@@ -24,6 +24,7 @@ using GreenField.Gadgets.Views;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.ServiceLocation;
 using GreenField.Gadgets.Helpers;
+using GreenField.DataContracts;
 
 
 
@@ -264,18 +265,18 @@ namespace GreenField.Gadgets.ViewModels
                             MeetingInfo meetingInfo = MeetingInfoDates
                                 .Where(record => record.MeetingDateTime.ToLocalTime().Date == childViewPresentationDateChangeEdit.SelectedPresentationDateTime.Date)
                                 .FirstOrDefault();
-                            
+
                             if (_dbInteractivity != null)
                             {
+                                _sendChangeDateNotification = childViewPresentationDateChangeEdit.AlertNotification;
+                                _originalPresentationDate = Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime);
+                                _updatedPresentationDate = childViewPresentationDateChangeEdit.SelectedPresentationDateTime
+                                    .Add(Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingDateTime).TimeOfDay);
+
                                 BusyIndicatorNotification(true, "Updating Presentation date for the selected presentation...");
                                 _dbInteractivity.UpdateMeetingPresentationDate(UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo.PresentationID
                                     , meetingInfo, UpdateMeetingPresentationDateCallbackMethod);
-                            }
-
-                            if (childViewPresentationDateChangeEdit.AlertNotification)
-                            {
-                                
-                            }
+                            }                            
                         }
                     });
 
@@ -283,6 +284,10 @@ namespace GreenField.Gadgets.ViewModels
                 }
             };
         }
+
+        private Boolean _sendChangeDateNotification = false;
+        private DateTime? _originalPresentationDate = null;
+        private DateTime? _updatedPresentationDate = null;
 
         private bool DecisionEntryCommandValidationMethod(object param)
         {
@@ -508,12 +513,17 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                if (result != null)
+                if (result == true)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    if (result == true)
+                    //Prompt.ShowDialog("Presentation date change was successful");
+                    if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null && _sendChangeDateNotification)
                     {
-                        Prompt.ShowDialog("Presentation date change was successful");
+                        BusyIndicatorNotification(true, "Retrieving presentation associated users...");
+                        _dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod, true);
+                    }
+                    else
+                    {
                         Initialize();
                     }
                 }
@@ -568,7 +578,121 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
             }
-        }        
+        }
+
+        private void RetrievePresentationVoterDataCallbackMethod(List<VoterInfo> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+
+                    List<String> userNames = result.Where(record => record.PostMeetingFlag == false).Select(record => record.Name).ToList();
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving user credentials...");
+                        _dbInteractivity.GetUsersByNames(userNames, GetUsersByNamesCallbackMethod);
+                    }                 
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);                
+            }
+        }
+
+        private void GetUsersByNamesCallbackMethod(List<MembershipUserInfo> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+
+                    MembershipUserInfo presenterCredentials = result.Where(record => record.UserName.ToLower() 
+                        == SelectedPresentationOverviewInfo.Presenter.ToLower()).FirstOrDefault();
+                    if (presenterCredentials == null)
+                        throw new Exception("Presenter credentials could not be retrieved. Alert notification was not successful.");
+
+                    String emailtTo = presenterCredentials.Email;
+
+                    String emailCc = String.Join("|", result.Where(record => record.UserName.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower())
+                        .Select(record => record.Email).ToArray());
+
+                    String messageSubject = "Investment Committee Presentation Change Date notification";
+                    String messageBody = "This is to inform concerned parties that Investment Committee Presentation on company - "
+                        + SelectedPresentationOverviewInfo.SecurityName + " (" + SelectedPresentationOverviewInfo.SecurityTicker + ") originally dated "
+                        + Convert.ToDateTime(_originalPresentationDate).ToString("MM-dd-yyyy h:mm tt") + " UTC has been re-assigned to meeting dated "
+                        + Convert.ToDateTime(_updatedPresentationDate).ToString("MM-dd-yyyy h:mm tt") + " UTC";
+
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Processing alert notification...");
+                        _dbInteractivity.SetMessageInfo(emailtTo, emailCc, messageSubject, messageBody, null
+                            , UserSession.SessionManager.SESSION.UserName, SetMessageInfoCallbackMethod);                        
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+            }
+        }
+
+        private void SetMessageInfoCallbackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result == true)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Initialize();
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);                
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+        }
         #endregion
 
         #region EventUnSubscribe

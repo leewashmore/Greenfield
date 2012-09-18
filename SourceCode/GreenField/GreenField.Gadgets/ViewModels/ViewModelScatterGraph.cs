@@ -709,7 +709,7 @@ namespace GreenField.Gadgets.ViewModels
                 foreach (GF_SECURITY_BASEVIEW record in data)
                 {
                     XElement securityData = new XElement("Issue",
-                        new XAttribute("SecurityId", record.ASEC_SEC_SHORT_NAME.ToString()),
+                        new XAttribute("SecurityId", record.SECURITY_ID.ToString()),
                         new XAttribute("IssueName", record.ISSUE_NAME.ToString()),
                         new XAttribute("IssuerId", record.ISSUER_ID.ToString()));
 

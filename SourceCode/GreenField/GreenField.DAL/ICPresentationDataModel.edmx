@@ -458,6 +458,14 @@
           <Parameter Name="PreMeetingVotingDeadlineDay" Type="varchar" Mode="In" />
           <Parameter Name="PreMeetingVotingDeadlineTime" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="SetMessageInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EmailTo" Type="varchar(max)" Mode="In" />
+          <Parameter Name="EmailCc" Type="varchar(max)" Mode="In" />
+          <Parameter Name="EmailSubject" Type="varchar" Mode="In" />
+          <Parameter Name="EmailMessageBody" Type="varchar(max)" Mode="In" />
+          <Parameter Name="EmailAttachment" Type="varchar(max)" Mode="In" />
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="SetPresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userName" Type="varchar" Mode="In" />
           <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
@@ -856,6 +864,14 @@
             <End Role="VoterInfo" EntitySet="VoterInfoes" />
           </AssociationSet>
           <FunctionImport Name="RetrieveICPresentationOverviewData" ReturnType="Collection(ICPresentationModel.ICPresentationOverviewData)" />
+          <FunctionImport Name="SetMessageInfo" ReturnType="Collection(Int32)">
+            <Parameter Name="EmailTo" Mode="In" Type="String" />
+            <Parameter Name="EmailCc" Mode="In" Type="String" />
+            <Parameter Name="EmailSubject" Mode="In" Type="String" />
+            <Parameter Name="EmailMessageBody" Mode="In" Type="String" />
+            <Parameter Name="EmailAttachment" Mode="In" Type="String" />
+            <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
           <Property Type="Int64" Name="VoterID" Nullable="false" />
@@ -1581,6 +1597,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SetMessageInfo" FunctionName="ICPresentationModel.Store.SetMessageInfo" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

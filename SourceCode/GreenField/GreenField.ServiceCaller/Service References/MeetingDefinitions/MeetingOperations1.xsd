@@ -14,20 +14,15 @@
           <xs:element minOccurs="0" name="AcceptWithoutDiscussionFlag" nillable="true" type="xs:boolean" />
           <xs:element minOccurs="0" name="AdminNotes" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Analyst" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Background" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CommitteeBuyRange" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="CommitteePFVMeasure" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CommitteeRangeEffectiveThrough" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="CommitteeRecommendation" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CommitteeSellRange" nillable="true" type="xs:float" />
-          <xs:element minOccurs="0" name="CompetitiveAdvantage" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CompetitiveDisadvantage" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="CurrentHoldings" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="EarningsOutlook" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="FVCalc" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="InvestmentThesis" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MeetingClosedDateTime" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="MeetingDateTime" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="MeetingVotingClosedDateTime" nillable="true" type="xs:dateTime" />
@@ -57,7 +52,6 @@
           <xs:element minOccurs="0" name="SecuritySellRange" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="StatusType" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Valuations" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="YTDRet_Absolute" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="YTDRet_RELtoEM" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="YTDRet_RELtoLOC" nillable="true" type="xs:string" />
@@ -128,21 +122,16 @@
           <xs:element minOccurs="0" name="AcceptWithoutDiscussionFlag" nillable="true" type="xs:boolean" />
           <xs:element minOccurs="0" name="AdminNotes" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Analyst" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Background" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CommentInfoes" nillable="true" type="tns:ArrayOfCommentInfo" />
           <xs:element minOccurs="0" name="CommitteeBuyRange" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="CommitteePFVMeasure" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CommitteeRangeEffectiveThrough" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="CommitteeRecommendation" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CommitteeSellRange" nillable="true" type="xs:float" />
-          <xs:element minOccurs="0" name="CompetitiveAdvantage" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="CompetitiveDisadvantage" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CreatedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="CurrentHoldings" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="EarningsOutlook" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="FVCalc" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="InvestmentThesis" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MeetingPresentationMappingInfoes" nillable="true" type="tns:ArrayOfMeetingPresentationMappingInfo" />
           <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
@@ -171,7 +160,6 @@
           <xs:element minOccurs="0" name="SecuritySellRange" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="StatusType" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="Valuations" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="VoterInfoes" nillable="true" type="tns:ArrayOfVoterInfo" />
           <xs:element minOccurs="0" name="YTDRet_Absolute" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="YTDRet_RELtoEM" nillable="true" type="xs:string" />

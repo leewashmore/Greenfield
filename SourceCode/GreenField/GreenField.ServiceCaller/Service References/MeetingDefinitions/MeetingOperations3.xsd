@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
-  <xs:import schemaLocation="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
-  <xs:import schemaLocation="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd6" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd5" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:import schemaLocation="http://localhost:59430/Services/MeetingOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
   <xs:element name="RetrievePresentationOverviewData">
     <xs:complexType>
       <xs:sequence />
@@ -15,11 +15,25 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetUsersByNames">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="userNames" nillable="true" type="q2:ArrayOfstring" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetUsersByNamesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="GetUsersByNamesResult" nillable="true" type="q3:ArrayOfMembershipUserInfo" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CreatePresentation">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="presentationOverviewData" nillable="true" type="q2:ICPresentationOverviewData" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="presentationOverviewData" nillable="true" type="q4:ICPresentationOverviewData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -49,23 +63,23 @@
   <xs:element name="RetrieveSecurityDetails">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q3:EntitySelectionData" />
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="presentationOverviewData" nillable="true" type="q4:ICPresentationOverviewData" />
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolio" nillable="true" type="q5:PortfolioSelectionData" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q5:EntitySelectionData" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="presentationOverviewData" nillable="true" type="q6:ICPresentationOverviewData" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolio" nillable="true" type="q7:PortfolioSelectionData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveSecurityDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveSecurityDetailsResult" nillable="true" type="q6:ICPresentationOverviewData" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveSecurityDetailsResult" nillable="true" type="q8:ICPresentationOverviewData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveCurrentPFVMeasures">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PFVTypeInfo" nillable="true" type="q7:ArrayOfstring" />
+        <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="PFVTypeInfo" nillable="true" type="q9:ArrayOfstring" />
         <xs:element minOccurs="0" name="securityTicker" nillable="true" type="xs:string" />
       </xs:sequence>
     </xs:complexType>
@@ -73,7 +87,7 @@
   <xs:element name="RetrieveCurrentPFVMeasuresResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RetrieveCurrentPFVMeasuresResult" nillable="true" type="q8:ArrayOfKeyValueOfstringNullableOfdecimalU6ho3Bhd" />
+        <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RetrieveCurrentPFVMeasuresResult" nillable="true" type="q10:ArrayOfKeyValueOfstringNullableOfdecimalU6ho3Bhd" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -87,7 +101,7 @@
   <xs:element name="RetrievePresentationAttachedFileDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrievePresentationAttachedFileDetailsResult" nillable="true" type="q9:ArrayOfFileMaster" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrievePresentationAttachedFileDetailsResult" nillable="true" type="q11:ArrayOfFileMaster" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -96,7 +110,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="presentationId" type="xs:long" />
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="fileMasterInfo" nillable="true" type="q10:FileMaster" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="fileMasterInfo" nillable="true" type="q12:FileMaster" />
         <xs:element minOccurs="0" name="deletionFlag" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
@@ -116,7 +130,7 @@
   <xs:element name="GetMeetingConfigScheduleResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="GetMeetingConfigScheduleResult" nillable="true" type="q11:MeetingConfigurationSchedule" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="GetMeetingConfigScheduleResult" nillable="true" type="q13:MeetingConfigurationSchedule" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -128,7 +142,7 @@
   <xs:element name="GetAvailablePresentationDatesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="GetAvailablePresentationDatesResult" nillable="true" type="q12:ArrayOfMeetingInfo" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="GetAvailablePresentationDatesResult" nillable="true" type="q14:ArrayOfMeetingInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -136,7 +150,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="meetingConfigurationSchedule" nillable="true" type="q13:MeetingConfigurationSchedule" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="meetingConfigurationSchedule" nillable="true" type="q15:MeetingConfigurationSchedule" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -151,13 +165,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="presentationId" type="xs:long" />
+        <xs:element minOccurs="0" name="includeICAdminInfo" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrievePresentationVoterDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrievePresentationVoterDataResult" nillable="true" type="q14:ArrayOfVoterInfo" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrievePresentationVoterDataResult" nillable="true" type="q16:ArrayOfVoterInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -165,14 +180,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="securityId" nillable="true" type="xs:string" />
-        <xs:element xmlns:q15="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pfvTypeInfo" nillable="true" type="q15:ArrayOfstring" />
+        <xs:element xmlns:q17="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="pfvTypeInfo" nillable="true" type="q17:ArrayOfstring" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveSecurityPFVMeasureCurrentPricesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RetrieveSecurityPFVMeasureCurrentPricesResult" nillable="true" type="q16:ArrayOfKeyValueOfstringNullableOfdecimalU6ho3Bhd" />
+        <xs:element xmlns:q18="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="RetrieveSecurityPFVMeasureCurrentPricesResult" nillable="true" type="q18:ArrayOfKeyValueOfstringNullableOfdecimalU6ho3Bhd" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -180,8 +195,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="presentationOverViewData" nillable="true" type="q17:ICPresentationOverviewData" />
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="voterInfo" nillable="true" type="q18:ArrayOfVoterInfo" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="presentationOverViewData" nillable="true" type="q19:ICPresentationOverviewData" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="voterInfo" nillable="true" type="q20:ArrayOfVoterInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -202,7 +217,7 @@
   <xs:element name="RetrieveMeetingInfoByPresentationStatusResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveMeetingInfoByPresentationStatusResult" nillable="true" type="q19:ArrayOfMeetingInfo" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveMeetingInfoByPresentationStatusResult" nillable="true" type="q21:ArrayOfMeetingInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -216,7 +231,7 @@
   <xs:element name="RetrieveMeetingMinuteDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveMeetingMinuteDetailsResult" nillable="true" type="q20:ArrayOfMeetingMinuteData" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveMeetingMinuteDetailsResult" nillable="true" type="q22:ArrayOfMeetingMinuteData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -230,7 +245,7 @@
   <xs:element name="RetrieveMeetingAttachedFileDetailsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveMeetingAttachedFileDetailsResult" nillable="true" type="q21:ArrayOfFileMaster" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveMeetingAttachedFileDetailsResult" nillable="true" type="q23:ArrayOfFileMaster" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -238,8 +253,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="meetingInfo" nillable="true" type="q22:MeetingInfo" />
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="meetingMinuteData" nillable="true" type="q23:ArrayOfMeetingMinuteData" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="meetingInfo" nillable="true" type="q24:MeetingInfo" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="meetingMinuteData" nillable="true" type="q25:ArrayOfMeetingMinuteData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -255,7 +270,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="meetingId" type="xs:long" />
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="fileMasterInfo" nillable="true" type="q24:FileMaster" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="fileMasterInfo" nillable="true" type="q26:FileMaster" />
         <xs:element minOccurs="0" name="deletionFlag" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
@@ -291,7 +306,7 @@
   <xs:element name="GetAllUsersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="GetAllUsersResult" nillable="true" type="q25:ArrayOfMembershipUserInfo" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="GetAllUsersResult" nillable="true" type="q27:ArrayOfMembershipUserInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -305,7 +320,7 @@
   <xs:element name="RetrievePresentationCommentsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrievePresentationCommentsResult" nillable="true" type="q26:ArrayOfCommentInfo" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrievePresentationCommentsResult" nillable="true" type="q28:ArrayOfCommentInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -321,7 +336,7 @@
   <xs:element name="SetPresentationCommentsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="SetPresentationCommentsResult" nillable="true" type="q27:ArrayOfCommentInfo" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="SetPresentationCommentsResult" nillable="true" type="q29:ArrayOfCommentInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -329,7 +344,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="voterInfo" nillable="true" type="q28:ArrayOfVoterInfo" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="voterInfo" nillable="true" type="q30:ArrayOfVoterInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -345,7 +360,7 @@
       <xs:sequence>
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="presentationId" type="xs:long" />
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="meetingInfo" nillable="true" type="q29:MeetingInfo" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="meetingInfo" nillable="true" type="q31:MeetingInfo" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -353,6 +368,25 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="UpdateMeetingPresentationDateResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetMessageInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="emailTo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="emailCc" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="emailSubject" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="emailMessageBody" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="emailAttachment" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="SetMessageInfoResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="SetMessageInfoResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

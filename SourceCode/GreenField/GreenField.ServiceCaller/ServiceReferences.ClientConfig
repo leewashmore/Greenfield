@@ -1,136 +1,140 @@
 ﻿<configuration>
 	<system.serviceModel>
 		<bindings>
-			<basicHttpBinding>
-				<binding name="DashboardOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-				 receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="LoggingOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-				 receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="SecurityReferenceOperations" closeTimeout="00:50:00"
-				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="SessionOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-				 receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="ExternalResearchOperations" closeTimeout="00:50:00"
-				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="PerformanceOperations" closeTimeout="00:50:00"
-				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="BasicHttpBinding_ModelFXOperations" closeTimeout="00:50:00"
-				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="LoginOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-				 receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="MeetingOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-				 receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="BasicHttpBinding_AlertOperations" closeTimeout="00:50:00"
-				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="BenchmarkHoldingsOperations" closeTimeout="00:50:00"
-				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="DocumentWorkspaceOperations" closeTimeout="00:50:00"
-				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="DCFOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-				 receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="CustomScreeningToolOperations" closeTimeout="00:50:00"
-				 openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
-				 maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-				<binding name="FairValueOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
-				 receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
-				 maxReceivedMessageSize="2147483647">
-					<security mode="None" />
-				</binding>
-			</basicHttpBinding>
-		</bindings>
+   <basicHttpBinding>
+    <binding name="DashboardOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="LoggingOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="SecurityReferenceOperations" closeTimeout="00:50:00"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="SessionOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="ExternalResearchOperations" closeTimeout="00:50:00"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="PerformanceOperations" closeTimeout="00:50:00"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="BasicHttpBinding_ModelFXOperations" closeTimeout="00:50:00"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="LoginOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="MeetingOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="BasicHttpBinding_AlertOperations" closeTimeout="00:50:00"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="BenchmarkHoldingsOperations" closeTimeout="00:50:00"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="DocumentWorkspaceOperations" closeTimeout="00:50:00"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="DCFOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="CustomScreeningToolOperations" closeTimeout="00:50:00"
+     openTimeout="00:50:00" receiveTimeout="00:50:00" sendTimeout="00:50:00"
+     maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="FairValueOperations" closeTimeout="00:50:00" openTimeout="00:50:00"
+     receiveTimeout="00:50:00" sendTimeout="00:50:00" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+    <binding name="MeetingOperations1" maxBufferSize="2147483647"
+     maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
+   </basicHttpBinding>
+  </bindings>
 
 		<client>
-			<endpoint address="http://localhost:59430/Services/LoggingOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="LoggingOperations"
-			 contract="LoggingDefinitions.LoggingOperations" name="LoggingOperations" />
-			<endpoint address="http://localhost:59430/Services/SecurityReferenceOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="SecurityReferenceOperations"
-			 contract="SecurityReferenceDefinitions.SecurityReferenceOperations"
-			 name="SecurityReferenceOperations" />
-			<endpoint address="http://localhost:59430/Services/SessionOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="SessionOperations"
-			 contract="SessionDefinitions.SessionOperations" name="SessionOperations" />
-			<endpoint address="http://localhost:59430/Services/PerformanceOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="PerformanceOperations"
-			 contract="PerformanceDefinitions.PerformanceOperations" name="PerformanceOperations" />
-			<endpoint address="http://localhost:59430/Services/ModelFXOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ModelFXOperations"
-			 contract="ModelFXDefinitions.ModelFXOperations" name="BasicHttpBinding_ModelFXOperations" />
-			<endpoint address="http://localhost:59430/Services/LoginOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="LoginOperations"
-			 contract="LoginDefinitions.LoginOperations" name="LoginOperations" />
-			<endpoint address="http://localhost:59430/Services/AlertOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_AlertOperations"
-			 contract="AlertDefinitions.AlertOperations" name="BasicHttpBinding_AlertOperations" />
-			<endpoint address="http://localhost:59430/Services/DashboardOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="DashboardOperations"
-			 contract="DashboardDefinitions.DashboardOperations" name="DashboardOperations" />
-			<endpoint address="http://localhost:59430/Services/MeetingOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="MeetingOperations"
-			 contract="MeetingDefinitions.MeetingOperations" name="MeetingOperations" />
-			<endpoint address="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="BenchmarkHoldingsOperations"
-			 contract="BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations"
-			 name="BenchmarkHoldingsOperations" />
-			<endpoint address="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="DocumentWorkspaceOperations"
-			 contract="DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations"
-			 name="DocumentWorkspaceOperations" />
-			<endpoint address="http://localhost:59430/Services/CustomScreeningToolOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="CustomScreeningToolOperations"
-			 contract="CustomScreeningDefinitions.CustomScreeningToolOperations"
-			 name="CustomScreeningToolOperations" />
-			<endpoint address="http://localhost:59430/Services/FairValueOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="FairValueOperations"
-			 contract="FairValueDefinitions.FairValueOperations" name="FairValueOperations" />
-			<endpoint address="http://localhost:59430/Services/ExternalResearchOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations"
-			 contract="ExternalResearchDefinitions.ExternalResearchOperations"
-			 name="ExternalResearchOperations" />
-			<endpoint address="http://localhost:59430/Services/DCFOperations.svc"
-			 binding="basicHttpBinding" bindingConfiguration="DCFOperations"
-			 contract="DCFDefinitions.DCFOperations" name="DCFOperations" />
-		</client>
+   <endpoint address="http://localhost:59430/Services/LoggingOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="LoggingOperations"
+    contract="LoggingDefinitions.LoggingOperations" name="LoggingOperations" />
+   <endpoint address="http://localhost:59430/Services/SecurityReferenceOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="SecurityReferenceOperations"
+    contract="SecurityReferenceDefinitions.SecurityReferenceOperations"
+    name="SecurityReferenceOperations" />
+   <endpoint address="http://localhost:59430/Services/SessionOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="SessionOperations"
+    contract="SessionDefinitions.SessionOperations" name="SessionOperations" />
+   <endpoint address="http://localhost:59430/Services/PerformanceOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="PerformanceOperations"
+    contract="PerformanceDefinitions.PerformanceOperations" name="PerformanceOperations" />
+   <endpoint address="http://localhost:59430/Services/ModelFXOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_ModelFXOperations"
+    contract="ModelFXDefinitions.ModelFXOperations" name="BasicHttpBinding_ModelFXOperations" />
+   <endpoint address="http://localhost:59430/Services/LoginOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="LoginOperations"
+    contract="LoginDefinitions.LoginOperations" name="LoginOperations" />
+   <endpoint address="http://localhost:59430/Services/AlertOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="BasicHttpBinding_AlertOperations"
+    contract="AlertDefinitions.AlertOperations" name="BasicHttpBinding_AlertOperations" />
+   <endpoint address="http://localhost:59430/Services/DashboardOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="DashboardOperations"
+    contract="DashboardDefinitions.DashboardOperations" name="DashboardOperations" />
+   <endpoint address="http://localhost:59430/Services/BenchmarkHoldingsOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="BenchmarkHoldingsOperations"
+    contract="BenchmarkHoldingsDefinitions.BenchmarkHoldingsOperations"
+    name="BenchmarkHoldingsOperations" />
+   <endpoint address="http://localhost:59430/Services/DocumentWorkSpaceOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="DocumentWorkspaceOperations"
+    contract="DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations"
+    name="DocumentWorkspaceOperations" />
+   <endpoint address="http://localhost:59430/Services/CustomScreeningToolOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="CustomScreeningToolOperations"
+    contract="CustomScreeningDefinitions.CustomScreeningToolOperations"
+    name="CustomScreeningToolOperations" />
+   <endpoint address="http://localhost:59430/Services/FairValueOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="FairValueOperations"
+    contract="FairValueDefinitions.FairValueOperations" name="FairValueOperations" />
+   <endpoint address="http://localhost:59430/Services/ExternalResearchOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations"
+    contract="ExternalResearchDefinitions.ExternalResearchOperations"
+    name="ExternalResearchOperations" />
+   <endpoint address="http://localhost:59430/Services/DCFOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="DCFOperations"
+    contract="DCFDefinitions.DCFOperations" name="DCFOperations" />
+   <endpoint address="http://localhost:59430/Services/MeetingOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="MeetingOperations"
+    contract="MeetingDefinitions.MeetingOperations" name="MeetingOperations" />
+  </client>
 	</system.serviceModel>
 </configuration>

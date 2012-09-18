@@ -78,6 +78,31 @@ namespace GreenField.Web.Services
             }
 
         }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<MembershipUserInfo> GetUsersByNames(List<String> userNames)
+        {
+            try
+            {
+                List<MembershipUserInfo> membershipUserInfo = new List<MembershipUserInfo>();
+
+                for(int i = 0; i < userNames.Count; i++)
+                {
+                    MembershipUser user = Membership.GetUser(userNames[i]);
+                    membershipUserInfo.Add(ConvertMembershipUser(user));
+                }                
+                    
+                return membershipUserInfo;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+        }
         #endregion
 
         #region New Presentation
@@ -725,12 +750,32 @@ namespace GreenField.Web.Services
         /// <returns> RetrievePresentationInfo_Result</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<VoterInfo> RetrievePresentationVoterData(Int64 presentationId)
+        public List<VoterInfo> RetrievePresentationVoterData(Int64 presentationId, Boolean includeICAdminInfo)
         {
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
-                return entity.VoterInfoes.Where(record => record.PresentationID == presentationId).ToList();
+                List<VoterInfo> result = entity.VoterInfoes.Where(record => record.PresentationID == presentationId).ToList();
+                if (includeICAdminInfo)
+                {
+                    String[] users = Roles.GetUsersInRole("IC_ADMIN");
+                    foreach (String user in users)
+                    {
+                        result.Add(new VoterInfo()
+                        {
+                            Name = user,
+                            PostMeetingFlag = false
+                        });
+
+                        result.Add(new VoterInfo()
+                        {
+                            Name = user,
+                            PostMeetingFlag = true
+                        });                        
+                    }                    
+                }
+
+                return result;
             }
             catch (Exception ex)
             {
@@ -1085,6 +1130,27 @@ namespace GreenField.Web.Services
                 ICPresentationEntities entity = new ICPresentationEntities();
                 Int32? result = entity.SetICPMeetingPresentationDate(userName, presentationId, meetingInfo.MeetingID
                     , meetingInfo.MeetingDateTime, meetingInfo.MeetingClosedDateTime, meetingInfo.MeetingVotingClosedDateTime).FirstOrDefault();
+                return result == 0;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+        #endregion
+
+        #region Messaging
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean SetMessageInfo(String emailTo, String emailCc, String emailSubject
+            , String emailMessageBody, String emailAttachment, String userName)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                Int32? result = entity.SetMessageInfo(emailTo, emailCc, emailSubject, emailMessageBody, emailAttachment, userName).FirstOrDefault();
                 return result == 0;
             }
             catch (Exception ex)

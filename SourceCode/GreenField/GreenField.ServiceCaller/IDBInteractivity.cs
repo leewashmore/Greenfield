@@ -261,7 +261,7 @@ namespace GreenField.ServiceCaller
 
         void RetrievePresentationOverviewData(Action<List<ICPresentationOverviewData>> callback);
 
-        void RetrievePresentationVoterData(Int64 presentationId, Action<List<VoterInfo>> callback);
+        void RetrievePresentationVoterData(Int64 presentationId, Action<List<VoterInfo>> callback, Boolean includeICAdminInfo = false);
 
         void RetrieveSecurityPFVMeasureCurrentPrices(String securityId, List<String> pfvTypeInfo, Action<Dictionary<String, Decimal?>> callback);
 
@@ -298,6 +298,11 @@ namespace GreenField.ServiceCaller
         void RetrieveCurrentPFVMeasures(List<String> PFVTypeInfo, String securityTicker, Action<Dictionary<String, Decimal?>> callback);
 
         void GetAllUsers(Action<List<MembershipUserInfo>> callback);
+
+        void GetUsersByNames(List<String> userNames, Action<List<MembershipUserInfo>> callback);
+
+        void SetMessageInfo(String emailTo, String emailCc, String emailSubject, String emailMessageBody, String emailAttachment
+            , String userName, Action<Boolean?> callback);
         #endregion
 
         #region DCF
