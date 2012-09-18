@@ -602,6 +602,7 @@
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
           <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
           <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+          <Parameter Name="Security_ID" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetDCF_NumberOfShares" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
@@ -764,6 +765,7 @@
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
             <Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
             <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+            <Parameter Name="Security_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetConsensusDetail" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateDetailData)">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
@@ -899,7 +901,7 @@
           <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
-            <Parameter Name="securityBucketXML" Mode="In" Type="String" />
+          <Parameter Name="securityBucketXML" Mode="In" Type="String" />
           </FunctionImport>
 
 

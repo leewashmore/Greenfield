@@ -61,7 +61,7 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private static class ExportTypes
         {
-            public const string PORTFOLIO_DETAILS_UI = "Portfolio Details";
+            public const string DCF_Summary = "DCF Summary";
         }
 
         /// <summary>
@@ -79,9 +79,9 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
-                                new RadExportOptions() { ElementName = ExportTypes.PORTFOLIO_DETAILS_UI, Element = this.dgDCFSummary, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                new RadExportOptions() { ElementName = ExportTypes.DCF_Summary, Element = this.dgDCFSummary, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                         };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.PORTFOLIO_DETAILS_UI);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.DCF_Summary);
                     childExportOptions.Show();
                 }
             }
@@ -119,7 +119,7 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextSource.Logger, methodNamespace);
             try
             {
-                PDFExporter.btnExportPDF_Click(this.dgDCFSummary);
+                PDFExporter.btnExportPDF_Click(this.dgDCFSummary, 12);
             }
             catch (Exception ex)
             {
@@ -144,7 +144,7 @@ namespace GreenField.Gadgets.Views
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    RichTextBox.Document = PDFExporter.Print(dgDCFSummary, 6);
+                    RichTextBox.Document = PDFExporter.Print(dgDCFSummary, 12);
                 }));
 
                 this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
@@ -176,7 +176,7 @@ namespace GreenField.Gadgets.Views
                 return null;
             }
         }
-        
+
 
         #endregion
 

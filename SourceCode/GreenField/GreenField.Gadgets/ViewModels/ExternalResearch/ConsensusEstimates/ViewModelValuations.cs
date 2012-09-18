@@ -52,7 +52,7 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private IEventAggregator _eventAggregator;
 
-      
+
         #endregion
 
         #region Constructor
@@ -442,7 +442,7 @@ namespace GreenField.Gadgets.ViewModels
                     Prompt.ShowDialog("No Issuer linked to the entity " + EntitySelectionInfo.LongName + " (" + EntitySelectionInfo.ShortName + " : " + EntitySelectionInfo.InstrumentID + ")");
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
-               // BusyIndicatorNotification();
+                // BusyIndicatorNotification();
             }
             catch (Exception ex)
             {
@@ -538,7 +538,7 @@ namespace GreenField.Gadgets.ViewModels
                         if (IssuerReferenceInfo.IssuerId != null)
                         {
                             _dbInteractivity.RetrieveConsensusEstimatesValuationsData
-                                (IssuerReferenceInfo.IssuerId, SelectedPeriodType, SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
+                                (IssuerReferenceInfo.IssuerId, Convert.ToString(EntitySelectionInfo.LongName), SelectedPeriodType, SelectedCurrency, RetrieveConsensusEstimateDataCallbackMethod);
                             BusyIndicatorNotification(true, "Updating information based on selected Security");
                         }
                     }
@@ -546,7 +546,8 @@ namespace GreenField.Gadgets.ViewModels
             }
             catch (Exception ex)
             {
-
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
             }
         }
 

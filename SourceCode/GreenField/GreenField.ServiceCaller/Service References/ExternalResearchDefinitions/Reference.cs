@@ -2184,7 +2184,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             "DataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.ExternalResearchDefinitions.ServiceFault), Action="http://tempuri.org/ExternalResearchOperations/RetrieveConsensusEstimatesValuation" +
             "DataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginRetrieveConsensusEstimatesValuationData(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginRetrieveConsensusEstimatesValuationData(string issuerId, string longName, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState);
         
         System.Collections.ObjectModel.ObservableCollection<GreenField.DataContracts.ConsensusEstimatesValuations> EndRetrieveConsensusEstimatesValuationData(System.IAsyncResult result);
         
@@ -3249,8 +3249,8 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveConsensusEstimatesValuationData(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRetrieveConsensusEstimatesValuationData(issuerId, periodType, currency, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations.BeginRetrieveConsensusEstimatesValuationData(string issuerId, string longName, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveConsensusEstimatesValuationData(issuerId, longName, periodType, currency, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3260,9 +3260,10 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
         
         private System.IAsyncResult OnBeginRetrieveConsensusEstimatesValuationData(object[] inValues, System.AsyncCallback callback, object asyncState) {
             string issuerId = ((string)(inValues[0]));
-            GreenField.DataContracts.FinancialStatementPeriodType periodType = ((GreenField.DataContracts.FinancialStatementPeriodType)(inValues[1]));
-            string currency = ((string)(inValues[2]));
-            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveConsensusEstimatesValuationData(issuerId, periodType, currency, callback, asyncState);
+            string longName = ((string)(inValues[1]));
+            GreenField.DataContracts.FinancialStatementPeriodType periodType = ((GreenField.DataContracts.FinancialStatementPeriodType)(inValues[2]));
+            string currency = ((string)(inValues[3]));
+            return ((GreenField.ServiceCaller.ExternalResearchDefinitions.ExternalResearchOperations)(this)).BeginRetrieveConsensusEstimatesValuationData(issuerId, longName, periodType, currency, callback, asyncState);
         }
         
         private object[] OnEndRetrieveConsensusEstimatesValuationData(System.IAsyncResult result) {
@@ -3278,11 +3279,11 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             }
         }
         
-        public void RetrieveConsensusEstimatesValuationDataAsync(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency) {
-            this.RetrieveConsensusEstimatesValuationDataAsync(issuerId, periodType, currency, null);
+        public void RetrieveConsensusEstimatesValuationDataAsync(string issuerId, string longName, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency) {
+            this.RetrieveConsensusEstimatesValuationDataAsync(issuerId, longName, periodType, currency, null);
         }
         
-        public void RetrieveConsensusEstimatesValuationDataAsync(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, object userState) {
+        public void RetrieveConsensusEstimatesValuationDataAsync(string issuerId, string longName, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, object userState) {
             if ((this.onBeginRetrieveConsensusEstimatesValuationDataDelegate == null)) {
                 this.onBeginRetrieveConsensusEstimatesValuationDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveConsensusEstimatesValuationData);
             }
@@ -3294,6 +3295,7 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
             }
             base.InvokeAsync(this.onBeginRetrieveConsensusEstimatesValuationDataDelegate, new object[] {
                         issuerId,
+                        longName,
                         periodType,
                         currency}, this.onEndRetrieveConsensusEstimatesValuationDataDelegate, this.onRetrieveConsensusEstimatesValuationDataCompletedDelegate, userState);
         }
@@ -3895,11 +3897,12 @@ namespace GreenField.ServiceCaller.ExternalResearchDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginRetrieveConsensusEstimatesValuationData(string issuerId, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[3];
+            public System.IAsyncResult BeginRetrieveConsensusEstimatesValuationData(string issuerId, string longName, GreenField.DataContracts.FinancialStatementPeriodType periodType, string currency, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[4];
                 _args[0] = issuerId;
-                _args[1] = periodType;
-                _args[2] = currency;
+                _args[1] = longName;
+                _args[2] = periodType;
+                _args[3] = currency;
                 System.IAsyncResult _result = base.BeginInvoke("RetrieveConsensusEstimatesValuationData", _args, callback, asyncState);
                 return _result;
             }

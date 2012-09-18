@@ -131,7 +131,7 @@ namespace Greenfield.Gadgets.Helpers
 
             if (currentMarketPrice != 0)
             {
-                upside = (dcfValuePerShare / currentMarketPrice) - 1;
+                upside = (dcfValuePerShare / currentMarketPrice) + 1;
             }
             else
             {

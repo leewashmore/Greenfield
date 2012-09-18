@@ -676,7 +676,8 @@ namespace GreenField.DAL
         /// <param name="cURRENCY">No Metadata Documentation available.</param>
         /// <param name="eSTIMATE_ID">No Metadata Documentation available.</param>
         /// <param name="pERIOD_YEAR">No Metadata Documentation available.</param>
-        public ObjectResult<ConsensusEstimateValuation> GetConsensusEstimatesValuation(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String cURRENCY, Nullable<global::System.Int32> eSTIMATE_ID, Nullable<global::System.Int32> pERIOD_YEAR)
+        /// <param name="security_ID">No Metadata Documentation available.</param>
+        public ObjectResult<ConsensusEstimateValuation> GetConsensusEstimatesValuation(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, global::System.String fISCAL_TYPE, global::System.String cURRENCY, Nullable<global::System.Int32> eSTIMATE_ID, Nullable<global::System.Int32> pERIOD_YEAR, global::System.String security_ID)
         {
             ObjectParameter iSSUER_IDParameter;
             if (iSSUER_ID != null)
@@ -748,7 +749,17 @@ namespace GreenField.DAL
                 pERIOD_YEARParameter = new ObjectParameter("PERIOD_YEAR", typeof(global::System.Int32));
             }
     
-            return base.ExecuteFunction<ConsensusEstimateValuation>("GetConsensusEstimatesValuation", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter, eSTIMATE_IDParameter, pERIOD_YEARParameter);
+            ObjectParameter security_IDParameter;
+            if (security_ID != null)
+            {
+                security_IDParameter = new ObjectParameter("Security_ID", security_ID);
+            }
+            else
+            {
+                security_IDParameter = new ObjectParameter("Security_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ConsensusEstimateValuation>("GetConsensusEstimatesValuation", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, fISCAL_TYPEParameter, cURRENCYParameter, eSTIMATE_IDParameter, pERIOD_YEARParameter, security_IDParameter);
         }
     
         /// <summary>

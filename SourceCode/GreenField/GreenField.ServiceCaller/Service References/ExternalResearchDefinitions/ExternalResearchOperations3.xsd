@@ -151,6 +151,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="issuerId" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="longName" nillable="true" type="xs:string" />
         <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="periodType" type="q22:FinancialStatementPeriodType" />
         <xs:element minOccurs="0" name="currency" nillable="true" type="xs:string" />
       </xs:sequence>

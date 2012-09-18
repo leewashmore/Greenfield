@@ -55,7 +55,7 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private static class ExportTypes
         {
-            public const string PORTFOLIO_DETAILS_UI = "Portfolio Details";
+            public const string Sensitivity_BVPS = "Sensitivity BVPS";
         }
 
         /// <summary>
@@ -73,9 +73,9 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
-                                new RadExportOptions() { ElementName = ExportTypes.PORTFOLIO_DETAILS_UI, Element = this.dgDCFSensitivity, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                new RadExportOptions() { ElementName = ExportTypes.Sensitivity_BVPS, Element = this.dgDCFSensitivity, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                         };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.PORTFOLIO_DETAILS_UI);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.Sensitivity_BVPS);
                     childExportOptions.Show();
                 }
             }
@@ -113,7 +113,7 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextSource.Logger, methodNamespace);
             try
             {
-                PDFExporter.btnExportPDF_Click(this.dgDCFSensitivity);
+                PDFExporter.btnExportPDF_Click(this.dgDCFSensitivity,12);
             }
             catch (Exception ex)
             {
@@ -138,7 +138,7 @@ namespace GreenField.Gadgets.Views
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    RichTextBox.Document = PDFExporter.Print(dgDCFSensitivity, 6);
+                    RichTextBox.Document = PDFExporter.Print(dgDCFSensitivity, 12);
                 }));
 
                 this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;

@@ -2681,10 +2681,10 @@ namespace GreenField.ServiceCaller
         /// <param name="periodType">Selected Period Type</param>
         /// <param name="currency">Selected Currency</param>
         /// <param name="callback">Collection of ConsensusEstimateValuations</param>
-        public void RetrieveConsensusEstimatesValuationsData(string issuerId, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimatesValuations>> callback)
+        public void RetrieveConsensusEstimatesValuationsData(string issuerId, string longName, FinancialStatementPeriodType periodType, String currency, Action<List<ConsensusEstimatesValuations>> callback)
         {
             ExternalResearchOperationsClient client = new ExternalResearchOperationsClient();
-            client.RetrieveConsensusEstimatesValuationDataAsync(issuerId, periodType, currency);
+            client.RetrieveConsensusEstimatesValuationDataAsync(issuerId, longName, periodType, currency);
             client.RetrieveConsensusEstimatesValuationDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -4621,7 +4621,7 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
-            client.RetrieveSecurityDataAsync(portfolio,benchmark,region,country,sector,industry,userPreference);
+            client.RetrieveSecurityDataAsync(portfolio, benchmark, region, country, sector, industry, userPreference);
             client.RetrieveSecurityDataCompleted += (se, e) =>
             {
                 if (e.Error == null)
@@ -4826,14 +4826,14 @@ namespace GreenField.ServiceCaller
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
-            client.SaveUserDataPointsPreferenceAsync(userPreference,username);
+            client.SaveUserDataPointsPreferenceAsync(userPreference, username);
             client.SaveUserDataPointsPreferenceCompleted += (se, e) =>
             {
                 if (e.Error == null)
                 {
                     if (callback != null)
                     {
-                          callback(e.Result);
+                        callback(e.Result);
                     }
                 }
                 else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>)
@@ -4854,7 +4854,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-         public void GetCustomScreeningUserPreferences(string username, Action<List<CSTUserPreferenceInfo>> callback)
+        public void GetCustomScreeningUserPreferences(string username, Action<List<CSTUserPreferenceInfo>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");

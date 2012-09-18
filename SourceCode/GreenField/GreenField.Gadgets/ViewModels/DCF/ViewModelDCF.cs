@@ -16,6 +16,7 @@ using GreenField.Gadgets.Models;
 using Greenfield.Gadgets.Helpers;
 using GreenField.ServiceCaller.DCFDefinitions;
 using Greenfield.Gadgets.Models;
+using System.Globalization;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -1253,7 +1254,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 PresentValueExplicitForecast = periodData.Select(a => Convert.ToDecimal(a.AMOUNT)).Sum();
                 List<decimal> newq = periodData.Select(a => a.DISCOUNTING_FACTOR).ToList();
-                
+
                 return periodData;
             }
             catch (Exception ex)
@@ -1279,6 +1280,10 @@ namespace GreenField.Gadgets.ViewModels
                 decimal weightOfEquity;
                 decimal costOfDebt;
                 decimal resultWACC;
+
+                NumberFormatInfo provider = new NumberFormatInfo();
+                
+
                 result.Add(new DCFDisplayData() { PropertyName = "Market Risk Premium", Value = Convert.ToString(Math.Round((Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault() * 100)), 1)) + "%" });
                 result.Add(new DCFDisplayData() { PropertyName = "Beta (*)", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()), 2)) });
                 result.Add(new DCFDisplayData() { PropertyName = "Risk Free Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault() * 100), 1)) + " %" });
@@ -1300,7 +1305,7 @@ namespace GreenField.Gadgets.ViewModels
 
                 costOfDebt = Convert.ToDecimal(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.CostOfDebt).FirstOrDefault() / 100), 4));
                 result.Add(new DCFDisplayData() { PropertyName = "Cost of Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(costOfDebt) * 100, 1)) + "%" });
-                result.Add(new DCFDisplayData() { PropertyName = "Market Cap", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()), 0)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Market Cap", Value = (Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()), 0))) });
                 result.Add(new DCFDisplayData() { PropertyName = "Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()), 0)) });
                 if ((Convert.ToDecimal(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault())) == 0))
                 {

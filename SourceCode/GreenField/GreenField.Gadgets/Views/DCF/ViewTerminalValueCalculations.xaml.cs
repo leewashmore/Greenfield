@@ -78,7 +78,7 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private static class ExportTypes
         {
-            public const string PORTFOLIO_DETAILS_UI = "Portfolio Details";
+            public const string Terminal_Value_Calculations = "Terminal Value Calculations";
         }
 
         /// <summary>
@@ -96,9 +96,9 @@ namespace GreenField.Gadgets.Views
                 {
                     List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
                         {
-                                new RadExportOptions() { ElementName = ExportTypes.PORTFOLIO_DETAILS_UI, Element = this.dgTerminalValueCalculations, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                new RadExportOptions() { ElementName = ExportTypes.Terminal_Value_Calculations, Element = this.dgTerminalValueCalculations, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                         };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.PORTFOLIO_DETAILS_UI);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.Terminal_Value_Calculations);
                     childExportOptions.Show();
                 }
             }
@@ -110,8 +110,9 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-                
+
         #region PDFExport
+
         /// <summary>
         /// Event handler when user wants to Export the Grid to PDF
         /// </summary>
@@ -123,7 +124,7 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextSource.Logger, methodNamespace);
             try
             {
-                PDFExporter.btnExportPDF_Click(this.dgTerminalValueCalculations);
+                PDFExporter.btnExportPDF_Click(this.dgTerminalValueCalculations, 12);
             }
             catch (Exception ex)
             {
@@ -131,6 +132,7 @@ namespace GreenField.Gadgets.Views
                 Logging.LogException(this.DataContextSource.Logger, ex);
             }
         }
+
         #endregion
 
         #region Printing the DataGrid
@@ -148,7 +150,7 @@ namespace GreenField.Gadgets.Views
             {
                 Dispatcher.BeginInvoke((Action)(() =>
                 {
-                    RichTextBox.Document = PDFExporter.Print(dgTerminalValueCalculations, 6);
+                    RichTextBox.Document = PDFExporter.Print(dgTerminalValueCalculations, 12);
                 }));
 
                 this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
@@ -195,6 +197,6 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
-                
+
     }
 }
