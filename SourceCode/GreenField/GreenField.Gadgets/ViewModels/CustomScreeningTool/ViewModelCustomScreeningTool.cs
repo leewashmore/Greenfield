@@ -25,6 +25,8 @@ using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.ServiceLocation;
 using GreenField.Gadgets.Helpers;
 using GreenField.DataContracts;
+using System.Text;
+using System.Xml;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -40,6 +42,10 @@ namespace GreenField.Gadgets.ViewModels
         private List<PortfolioSelectionData> _portfolioSelectionData;
         private IRegionManager _regionManager;
         private List<EntitySelectionData> _benchmarkSelectionData;
+
+        private StringBuilder output = new StringBuilder();
+        private StringBuilder sb = new StringBuilder();
+        private XmlWriterSettings xws = new XmlWriterSettings();
 
         #endregion
 
@@ -855,6 +861,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     SecurityData = result;
+                    CreateXML();
                     ResultsListVisibility = Visibility.Visible;
                 }
                 else
@@ -887,6 +894,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     SavedDataListInfo = (from res in result select new { ListName = res.ListName }).AsEnumerable().Select(t => t.ListName).Distinct()
                                   .ToList();
+                 //   CreateXML();
                     BusyIndicatorNotification();
                 }
                 else
@@ -906,6 +914,151 @@ namespace GreenField.Gadgets.ViewModels
                 //BusyIndicatorNotification();
             }
         }
+
+        private void CreateXML()
+        {
+            xws.OmitXmlDeclaration = true;
+            xws.Indent = true;
+
+
+            using (XmlWriter xw = XmlWriter.Create(sb, xws))
+            {
+                xw.WriteStartDocument();
+
+                xw.WriteStartElement("data");
+
+                xw.WriteStartElement("columns");
+
+                xw.WriteStartElement("column");
+
+                xw.WriteAttributeString("name", String.Empty);
+                xw.WriteAttributeString("source", String.Empty);
+                xw.WriteAttributeString("yeartype", String.Empty);
+                xw.WriteAttributeString("year", String.Empty);
+
+                xw.WriteEndElement();
+
+                xw.WriteStartElement("column");
+
+                xw.WriteAttributeString("name", String.Empty);
+                xw.WriteAttributeString("source", String.Empty);
+                xw.WriteAttributeString("yeartype", String.Empty);
+                xw.WriteAttributeString("year", String.Empty);
+
+                xw.WriteEndElement();
+
+
+                foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
+                {
+
+
+                    xw.WriteStartElement("column");
+
+                    xw.WriteAttributeString("name", info.DataDescription);
+                    xw.WriteAttributeString("source", info.DataSource);
+                    xw.WriteAttributeString("yeartype", info.YearType);
+                    xw.WriteAttributeString("periodtype", info.PeriodType);
+                    xw.WriteAttributeString("year", Convert.ToString(info.FromDate));
+
+                    xw.WriteEndElement();
+                }
+                xw.WriteEndElement();
+                //  xw.WriteEndElement();
+
+                xw.WriteStartElement("row");
+                foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
+                {
+                    xw.WriteStartElement("Element");
+
+                    xw.WriteAttributeString("name", info.DataDescription);
+                    //if (info.DataSource == null && info.YearType == null && info.PeriodType == null && info.FromDate == null)
+                    //{
+                    //    xw.WriteStartElement(info.DataDescription);
+                    //    xw.WriteString(String.Empty);
+                    //    xw.WriteEndElement();
+
+                    //}
+                    //else
+                    {
+                        //xw.WriteStartElement(info.DataDescription);
+                        xw.WriteString(Convert.ToString(info.FromDate));
+                        //xw.WriteEndElement();
+                    }
+                    xw.WriteEndElement();
+                }
+                xw.WriteEndElement();
+                xw.WriteStartElement("row");
+                foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
+                {
+                    xw.WriteStartElement("Element");
+                    xw.WriteAttributeString("name", info.DataDescription);
+                    //if (info.DataSource == null && info.YearType == null && info.PeriodType == null && info.FromDate == null)
+                    //{
+                    //    xw.WriteStartElement(info.DataDescription);
+                    //    xw.WriteString(String.Empty);
+                    //    xw.WriteEndElement();
+
+                    //}
+                    //else
+                    {
+                       // xw.WriteStartElement(info.DataDescription);
+                        xw.WriteString(Convert.ToString(info.PeriodType));
+                      //  xw.WriteEndElement();
+                    }
+                    xw.WriteEndElement();
+
+                }
+                xw.WriteEndElement();
+                xw.WriteStartElement("row");
+                foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
+                {
+                    xw.WriteStartElement("Element");
+                    xw.WriteAttributeString("name", info.DataDescription);
+                    //if (info.DataSource == null && info.YearType == null && info.PeriodType == null && info.FromDate == null)
+                    //{
+                    //    xw.WriteStartElement(info.DataDescription);
+                    //    xw.WriteString(String.Empty);
+                    //    xw.WriteEndElement();
+
+                    //}
+                    //else
+                    {
+                       // xw.WriteStartElement(info.DataDescription);
+                        xw.WriteString(Convert.ToString(info.YearType));
+                       // xw.WriteEndElement();
+                    }
+                    xw.WriteEndElement();
+                }
+                xw.WriteEndElement();
+                xw.WriteStartElement("row");
+                foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
+                {
+                    xw.WriteStartElement("Element");
+                    xw.WriteAttributeString("name", info.DataDescription);
+                    //if (info.DataSource == null && info.YearType == null && info.PeriodType == null && info.FromDate == 0)
+                    //{
+                    //    xw.WriteStartElement(info.DataDescription);
+                    //    xw.WriteString(String.Empty);
+                    //    xw.WriteEndElement();
+                    //}
+                    //else
+                    {
+                       // xw.WriteStartElement(info.DataDescription);
+                          xw.WriteString(Convert.ToString(info.DataSource));
+                       // xw.WriteEndElement();
+                    }
+                    xw.WriteEndElement();
+                }
+                xw.WriteEndElement();
+
+                xw.WriteEndElement();
+                xw.WriteEndDocument();
+
+            }
+            output.Append(sb.ToString() + Environment.NewLine);
+            RetrieveCustomXmlDataCompletedEvent(new RetrieveCustomXmlDataCompleteEventArgs() { XmlInfo = output.ToString() });
+        }
+
 
         #endregion
 
@@ -988,6 +1141,15 @@ namespace GreenField.Gadgets.ViewModels
                                                         SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
             }
         }
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Event for the Retrieval of Data 
+        /// </summary>
+        public event RetrieveCustomXmlDataCompleteEventHandler RetrieveCustomXmlDataCompletedEvent;      
+
         #endregion
     }
 }

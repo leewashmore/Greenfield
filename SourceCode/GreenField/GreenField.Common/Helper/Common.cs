@@ -180,6 +180,12 @@ namespace GreenField.Common
         public string CurrencyName { get; set; }
     }
 
+    public delegate void RetrieveCustomXmlDataCompleteEventHandler(RetrieveCustomXmlDataCompleteEventArgs e);
+    public class RetrieveCustomXmlDataCompleteEventArgs : EventArgs
+    {
+        public String XmlInfo { get; set; }
+    }
+
     #region IC PRESENTATION
 
     public static class StatusType

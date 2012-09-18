@@ -24,6 +24,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -135,6 +136,8 @@
                                    Content="SUBMIT" Grid.Column="0"
                                Style="{StaticResource RadButtonStyle}"/>
 
+               
+
                 </Grid>
 
                 <Grid x:Name="gDataListSelection" Grid.Column="1"
@@ -195,6 +198,14 @@
             <Border BorderThickness="4" HorizontalAlignment="Stretch"/>
                 </StackPanel>
             </Grid>
+            <Grid Grid.Row="3">
+                <telerik:RadGridView x:Name="dgCustomSecurity" Visibility="{Binding ResultsListVisibility}"
+                    AutoGenerateColumns="False"  EnableColumnVirtualization="False">
+                    <!--<i:Interaction.Behaviors>
+                        <helpers:FrozenRowsBehavior/>
+                    </i:Interaction.Behaviors>-->
+                </telerik:RadGridView>
+            </Grid>
             
             <Grid Grid.Row="2" Visibility="{Binding ResultsListVisibility}">
                 <telerik:RadGridView x:Name="dgSecurityResultList"
@@ -234,8 +245,7 @@
                                                 IsFilterable="True"/>
                     </telerik:RadGridView.Columns>-->
                 </telerik:RadGridView>
-            </Grid>
-
+            </Grid>           
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>
