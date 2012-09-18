@@ -103,12 +103,14 @@
                                                            Width="50" Height="20" Grid.Row="0"
                                                            HorizontalAlignment="Center"
                                                            VerticalAlignment="Center"
+                                                           IsEnabled="{Binding IsAddButtonEnabled}"
                                                            Visibility="Visible" Content=">>"/>
 
                                         <telerik:RadButton x:Name="btnCustomControlRemoveSecurityRef" Command="{Binding RemoveCommand}"
                                                        Width="50" Height="20" Grid.Row="1"
                                                        HorizontalAlignment="Center"
                                                        VerticalAlignment="Center"
+                                                       IsEnabled="{Binding IsRemoveButtonEnabled}"
                                                        Visibility="Visible" Content="&lt;&lt;"/>
                                     </Grid>
                                 </Grid>
@@ -602,11 +604,11 @@
                                  UseLayoutRounding="True"
                                  IsReadOnly="True"                                 
                                  RowIndicatorVisibility="Collapsed"
-                                 ScrollMode="RealTime"
+                                 ScrollMode="RealTime" 
                                  AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                  AlternationCount="2" 
                                  EnableRowVirtualization="False"
-                                 EnableColumnVirtualization="False"                             
+                                 EnableColumnVirtualization="False"                                           
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  SelectedItem="{Binding SelectedDataField, Mode=TwoWay}"
                                  RowStyle="{StaticResource GridViewRowStyle}">

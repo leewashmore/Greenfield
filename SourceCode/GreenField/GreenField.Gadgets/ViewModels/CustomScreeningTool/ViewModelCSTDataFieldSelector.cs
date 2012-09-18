@@ -86,6 +86,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedDataField = value;
                 RaisePropertyChanged(() => this.SelectedDataField);
+                RaisePropertyChanged(() => this.RemoveCommand);
             }
         }
 
@@ -111,6 +112,7 @@ namespace GreenField.Gadgets.ViewModels
                 _selectedSecurityReferenceData = value;
                 RaisePropertyChanged(() => this.SelectedSecurityReferenceData);
                 RaisePropertyChanged(() => this.AddSecurityRefCommand);
+                RaisePropertyChanged(() => this.RemoveCommand);
             }
         }
 
@@ -134,6 +136,7 @@ namespace GreenField.Gadgets.ViewModels
                 _selectedPeriodFinancialsData = value;
                 RaisePropertyChanged(() => this.SelectedPeriodFinancialsData);
                 RaisePropertyChanged(() => this.AddPeriodFinCommand);
+                RaisePropertyChanged(() => this.RemoveCommand);
             }
         }
 
@@ -157,6 +160,7 @@ namespace GreenField.Gadgets.ViewModels
                 _selectedCurrentFinancialsData = value;
                 RaisePropertyChanged(() => this.SelectedCurrentFinancialsData);
                 RaisePropertyChanged(() => this.AddCurrentFinCommand);
+                RaisePropertyChanged(() => this.RemoveCommand);
             }
         }
 
@@ -180,6 +184,7 @@ namespace GreenField.Gadgets.ViewModels
                 _selectedFairValueData = value;
                 RaisePropertyChanged(() => this.SelectedFairValueData);
                 RaisePropertyChanged(() => this.AddFairValueCommand);
+                RaisePropertyChanged(() => this.RemoveCommand);
             }
         }
 
@@ -279,6 +284,26 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        public bool _isAddButtonEnabled = false;
+        public bool IsAddButtonEnabled
+        {
+            get { return _isAddButtonEnabled; }
+            set
+            {
+                _isAddButtonEnabled = value;
+            }
+        }
+
+        public bool _isRemoveButtonEnabled = false;
+        public bool IsRemoveButtonEnabled
+        {
+            get { return _isRemoveButtonEnabled; }
+            set
+            {
+                _isRemoveButtonEnabled = value;
+            }
+        }
+
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
@@ -348,8 +373,6 @@ namespace GreenField.Gadgets.ViewModels
             get { return new DelegateCommand<object>(AddFairValueCommandMethod, AddFairValueCommandValidationMethod); }
         }
 
-
-
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
@@ -372,11 +395,21 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedSecurityReferenceData.ScreeningId))
                 {
+                    IsAddButtonEnabled = false;
                     return false;
                 }
+                else
+                {
+                    IsAddButtonEnabled = true;
+                    return true;
+                }
             }
-
-            return true;
+            else
+            {
+                IsAddButtonEnabled = false;
+                return false;
+            }
+           
         }
 
         private void AddSecurityRefCommandMethod(object param)
@@ -427,11 +460,20 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId))
                 {
+                    IsAddButtonEnabled = false;
                     return false;
                 }
+                else
+                {
+                    IsAddButtonEnabled = true;
+                    return true;
+                }
             }
-
-            return true;
+            else
+            {
+                IsAddButtonEnabled = false;
+                return false;
+            }
         }
 
         private void AddPeriodFinCommandMethod(object param)
@@ -481,7 +523,6 @@ namespace GreenField.Gadgets.ViewModels
                 });
             }
             SelectedFieldsDataList = temp;
-            //RaisePropertyChanged(() => this.SelectedFieldsDataList);
         }
 
 
@@ -489,13 +530,22 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (SelectedPeriodFinancialsData != null && SelectedFieldsDataList != null)
             {
-                if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId))
+                if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedCurrentFinancialsData.ScreeningId))
                 {
+                    IsAddButtonEnabled = false;
                     return false;
                 }
+                else
+                {
+                    IsAddButtonEnabled = true;
+                    return true;
+                }
             }
-
-            return true;
+            else
+            {
+                IsAddButtonEnabled = false;
+                return false;
+            }
         }
 
         private void AddCurrentFinCommandMethod(object param)
@@ -538,20 +588,28 @@ namespace GreenField.Gadgets.ViewModels
                 DataPointsOrder = tempOrder++
             });
             SelectedFieldsDataList = temp;
-            //RaisePropertyChanged(() => this.SelectedFieldsDataList);
         }
 
         private bool AddFairValueCommandValidationMethod(object param)
         {
             if (SelectedPeriodFinancialsData != null && SelectedFieldsDataList != null)
             {
-                if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId))
+                if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedFairValueData.ScreeningId))
                 {
+                    IsAddButtonEnabled = false;
                     return false;
                 }
+                else
+                {
+                    IsAddButtonEnabled = true;
+                    return true;
+                }
             }
-
-            return true;
+            else
+            {
+                IsAddButtonEnabled = false;
+                return false;
+            }
         }
 
         private void AddFairValueCommandMethod(object param)
@@ -605,8 +663,18 @@ namespace GreenField.Gadgets.ViewModels
             {
                 return false;
             }
-
-            return true;
+            else
+            {
+                if (SelectedDataField != null)
+                {
+                    IsRemoveButtonEnabled = true;
+                    return true;
+                }
+                else
+                {
+                    return false; ;
+                }
+            }
         }
 
         private void RemoveCommandMethod(object param)
@@ -660,6 +728,7 @@ namespace GreenField.Gadgets.ViewModels
                                 {
                                     if (_dbInteractivity != null)
                                     {
+                                        CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Edited");
                                         CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, SelectedFieldsDataList.ToList());
                                         _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
                                     }
@@ -890,6 +959,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result == true)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Created");
                     CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, SelectedFieldsDataList.ToList());
                     _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
                 }

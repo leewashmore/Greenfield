@@ -296,7 +296,7 @@ namespace GreenField.Gadgets.ViewModels
 
 
 
-        private Visibility _portfolioSelectionVisibility = Visibility.Collapsed;
+        public Visibility _portfolioSelectionVisibility = Visibility.Collapsed;
         public Visibility PortfolioSelectionVisibility
         {
             get
@@ -311,7 +311,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private Visibility _benchmarkSelectionVisibility = Visibility.Collapsed;
+        public Visibility _benchmarkSelectionVisibility = Visibility.Collapsed;
         public Visibility BenchmarkSelectionVisibility
         {
             get
@@ -326,7 +326,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private Visibility _customSelectionVisibility = Visibility.Collapsed;
+        public Visibility _customSelectionVisibility = Visibility.Collapsed;
         public Visibility CustomSelectionVisibility
         {
             get
@@ -342,7 +342,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
 
-        private Visibility _securitySelectionGridViewVisibility = Visibility.Visible;
+        public Visibility _securitySelectionGridViewVisibility = Visibility.Visible;
         public Visibility SecuritySelectionGridViewVisibility
         {
             get
@@ -367,7 +367,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Data List Selector
 
-        private List<CSTUserPreferenceInfo> _cstUserPreferenceInfo;
+        public List<CSTUserPreferenceInfo> _cstUserPreferenceInfo;
         public List<CSTUserPreferenceInfo> CSTUserPreference
         {
             get { return _cstUserPreferenceInfo; }
@@ -406,6 +406,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SelectedDataListInfo);
                 SelectedSavedDataList = CSTUserPreference.Where(a => a.ListName == _selectedDataListInfo).ToList();
                 ResultsListVisibility = Visibility.Collapsed;
+                RaisePropertyChanged(() => this.OkCommand);
             }
         }
 
@@ -421,7 +422,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private Visibility _dataListSelectionGridViewVisibility = Visibility.Collapsed;
+        public Visibility _dataListSelectionGridViewVisibility = Visibility.Collapsed;
         public Visibility DataListSelectionGridViewVisibility
         {
             get
@@ -436,7 +437,7 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private Visibility _resultsListVisibility = Visibility.Collapsed;
+        public Visibility _resultsListVisibility = Visibility.Collapsed;
         public Visibility ResultsListVisibility
         {
             get
@@ -451,7 +452,16 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
+        public bool _isOkButtonEnabled = false;
+        public bool IsOkButtonEnabled
+        {
+		    get { return _isOkButtonEnabled;}
+		    set 
+            { 
+                _isOkButtonEnabled = value;
+                RaisePropertyChanged(() => this.IsOkButtonEnabled);
+            }
+        }
 
         public ICommand OkCommand
         {
@@ -460,7 +470,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public ICommand CreateDataListCommand
         {
-            get { return new DelegateCommand<object>(CreateDataListCommandCommandMethod, CreateDataListCommandCommandValidationMethod); }
+            get { return new DelegateCommand<object>(CreateDataListCommandMethod, CreateDataListCommandValidationMethod); }
         }
 
         #endregion
@@ -558,19 +568,16 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool OkCommandValidationMethod(object param)
         {
-            //if (UserSession.SessionManager.SESSION == null
-            //    || SelectedSavedDataList == null)
-            //    return false;
-
-            if (UserSession.SessionManager.SESSION == null)
+            if (UserSession.SessionManager.SESSION == null || SelectedDataListInfo == null)
+            {
+                IsOkButtonEnabled = false;
                 return false;
-
-            //Check if user is creater of data list
-            // bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedSavedDataList.Presenter;
-
-
-            // return userRoleValidation;
-            return true;
+            }
+            else
+            {
+                IsOkButtonEnabled = true;
+                return true;
+            }
         }
 
         private void OkCommandMethod(object param)
@@ -600,17 +607,17 @@ namespace GreenField.Gadgets.ViewModels
                         b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
                         _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
                                                                 SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);                    
-                    }
-                    else
-                    {
-                        CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
-                        //redirect to results views
-                    }
+                    }                   
                 });
+            }
+            else
+            {
+                CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
+                //redirect to results views
             }
         }
 
-        private bool CreateDataListCommandCommandValidationMethod(object param)
+        private bool CreateDataListCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null)
                 return false;
@@ -618,7 +625,7 @@ namespace GreenField.Gadgets.ViewModels
                 return true;
         }
 
-        private void CreateDataListCommandCommandMethod(object param)
+        private void CreateDataListCommandMethod(object param)
         {
             CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, null);
             _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
@@ -1083,9 +1090,7 @@ namespace GreenField.Gadgets.ViewModels
         public void Initialize()
         {
             SelectionRaisePropertyChanged();
-
-            CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, null);
-            CSTNavigation.UpdateString(CSTNavigationInfo.Flag, null);
+            CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, null);            
             CSTNavigation.UpdateString(CSTNavigationInfo.ListName, null);
             //CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, null);
 
@@ -1099,7 +1104,7 @@ namespace GreenField.Gadgets.ViewModels
                 //fetch final list of securities
                 RetrieveResultsList();
             }
-            
+            CSTNavigation.UpdateString(CSTNavigationInfo.Flag, null);
         }
 
         private void SelectionRaisePropertyChanged()
@@ -1129,16 +1134,22 @@ namespace GreenField.Gadgets.ViewModels
 
         public void RetrieveResultsList()
         {
-            SelectedSavedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
-            if (SelectedSavedDataList != null)
-            {
-                PortfolioSelectionData p = new PortfolioSelectionData();
-                p = _portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
+            string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
 
-                EntitySelectionData b = new EntitySelectionData();
-                b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
-                _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
-                                                        SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
+            if (flag == "Created" || flag == "Edited")
+            {
+                SelectedSavedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
+
+                if (SelectedSavedDataList != null)
+                {
+                    PortfolioSelectionData p = new PortfolioSelectionData();
+                    p = _portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
+
+                    EntitySelectionData b = new EntitySelectionData();
+                    b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
+                    _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
+                                                            SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
+                }
             }
         }
         #endregion

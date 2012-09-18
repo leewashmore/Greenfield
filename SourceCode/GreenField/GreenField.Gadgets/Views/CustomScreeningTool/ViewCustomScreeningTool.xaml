@@ -186,6 +186,7 @@
                                    VerticalAlignment="Center"
                                    Width="75"
                                    Visibility="Visible"
+                                   IsEnabled="{Binding IsOkButtonEnabled}"
                                    HorizontalAlignment="Left"
                                    Content="OK"
                                Style="{StaticResource RadButtonStyle}"/>
