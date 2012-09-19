@@ -2,8 +2,8 @@ set noexec off
 
 --declare  current and required version
 --also do it an the end of the script
-declare @RequiredDBVersion as nvarchar(100) = '00072'
-declare @CurrentScriptVersion as nvarchar(100) = '00073'
+declare @RequiredDBVersion as nvarchar(100) = '00074'
+declare @CurrentScriptVersion as nvarchar(100) = '00075'
 
 --if current version already in DB, just skip
 if exists(select 1 from ChangeScripts  where ScriptVersion = @CurrentScriptVersion)
@@ -56,5 +56,5 @@ END
 
 GO
 --indicate thet current script is executed
-declare @CurrentScriptVersion as nvarchar(100) = '00073'
+declare @CurrentScriptVersion as nvarchar(100) = '00075'
 insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
