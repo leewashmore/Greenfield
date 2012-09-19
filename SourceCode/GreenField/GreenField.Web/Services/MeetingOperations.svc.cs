@@ -25,6 +25,8 @@ using System.Web.Security;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Presentation;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace GreenField.Web.Services
 {
@@ -986,6 +988,62 @@ namespace GreenField.Web.Services
 
         }
 
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Byte[] GenerateMeetingMinutesReport(Int64 meetingId)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                List<MeetingMinutesReportData> metaData = entity.GetMeetingMinutesReportDetails(meetingId).ToList();
+                return GeneratePostMeetingReport(metaData);
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Byte[] GeneratePreMeetingVotingReport(Int64 presentationId)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+
+                PresentationInfo presentationInfo = entity.PresentationInfoes.Where(record => record.PresentationID == presentationId).FirstOrDefault();
+                if (presentationInfo == null)
+                    return null;
+
+                String securityName = presentationInfo.SecurityName;
+                String securityTicker = presentationInfo.SecurityTicker;
+
+                GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.ISSUE_NAME == securityName && record.TICKER == securityTicker).FirstOrDefault();
+
+                String securityDescription = String.Empty;
+                if (securityRecord != null)
+                {
+                    securityDescription = securityRecord.ASHEMM_ONE_LINER_DESCRIPTION;
+                }
+
+
+                List<PresentationVotingDeadlineDetails> metaData = entity.GetPreMeetingVotingReportDetails(presentationId).ToList();
+                return GeneratePreMeetingReport(metaData, securityDescription);
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+
+        }
+
         /// <summary>
         /// Convert System.Web.Security.MembershipUser to GreenField.Web.DataContracts.MembershipUserInfo
         /// </summary>
@@ -1060,6 +1118,422 @@ namespace GreenField.Web.Services
 
             return xmlDoc;
         }
+
+        private static Byte[] GeneratePostMeetingReport(List<MeetingMinutesReportData> presentationFinalizeInfo)
+        {
+            if (presentationFinalizeInfo == null)
+                return null;
+
+            MeetingMinutesReportData presentationFinalizeDetails = presentationFinalizeInfo.FirstOrDefault();
+            if (presentationFinalizeDetails == null)
+                return null;
+
+            Document doc = new Document(PageSize.A4, 10F, 10F, 10F, 10F);
+
+            DateTime meetingDate = Convert.ToDateTime(presentationFinalizeDetails.MeetingDateTime);
+            String reportOutputFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPMeetingMinutes.pdf";
+
+            PdfWriter.GetInstance(doc, new FileStream(reportOutputFile, FileMode.Create));
+            doc.Open();
+            Rectangle page = doc.PageSize;
+
+            PdfPTable topHeaderTableContent = new PdfPTable(1);
+            topHeaderTableContent.WidthPercentage = 100;
+
+            PdfPCell topHeaderCell = new PdfPCell(new Phrase("INVESTMENT COMMITTEE - MEETING MINUTES", PDFFontStyle.STYLE_0));
+            AddTextCell(topHeaderTableContent, topHeaderCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+
+            String meetingDayOfTheWeek = meetingDate.DayOfWeek.ToString().ToUpper();
+            PdfPCell topSubHeaderCell = new PdfPCell(new Phrase(meetingDayOfTheWeek + " " + meetingDate.ToString("MMMM dd, yyyy"), PDFFontStyle.STYLE_4));
+            topSubHeaderCell.PaddingTop = 5;
+            AddTextCell(topHeaderTableContent, topSubHeaderCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+
+            String attendees = String.Join(", ", presentationFinalizeInfo.Where(record => record.AttendanceType == "Attended")
+                .Select(record => record.Name).ToList().Distinct().ToArray());
+            String videoconference = String.Join(", ", presentationFinalizeInfo.Where(record => record.AttendanceType == "Video Conference")
+                .Select(record => record.Name).ToList().Distinct().ToArray());
+            String teleconference = String.Join(", ", presentationFinalizeInfo.Where(record => record.AttendanceType == "Tele Conference")
+                .Select(record => record.Name).ToList().Distinct().ToArray());
+
+            Paragraph attendeePara = new Paragraph();
+            attendeePara.Add(new Phrase("Attendees: ", PDFFontStyle.STYLE_2));
+            attendeePara.Add(new Phrase(attendees, PDFFontStyle.STYLE_3));
+            PdfPCell attendeesCell = new PdfPCell(attendeePara);
+            attendeesCell.PaddingTop = 20;
+            AddTextCell(topHeaderTableContent, attendeesCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+            Paragraph videoConferencePara = new Paragraph();
+            videoConferencePara.Add(new Phrase("Videoconference: ", PDFFontStyle.STYLE_2)); ;
+            videoConferencePara.Add(new Phrase(videoconference, PDFFontStyle.STYLE_3));
+            PdfPCell videoConferenceCell = new PdfPCell(videoConferencePara);
+            videoConferenceCell.PaddingTop = 5;
+            AddTextCell(topHeaderTableContent, videoConferenceCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+            Paragraph teleConferencePara = new Paragraph();
+            teleConferencePara.Add(new Phrase("Teleconference: ", PDFFontStyle.STYLE_2)); ;
+            teleConferencePara.Add(new Phrase(teleconference, PDFFontStyle.STYLE_3));
+            PdfPCell teleConferenceCell = new PdfPCell(teleConferencePara);
+            teleConferenceCell.PaddingTop = 5;
+            AddTextCell(topHeaderTableContent, teleConferenceCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+            PdfPCell discussionStatementCell = new PdfPCell(new Phrase("The following items were discussed at the IC meeting at " + meetingDate.ToString("h:mm tt") + " UTC:"
+                , PDFFontStyle.STYLE_3));
+            discussionStatementCell.PaddingTop = 20;
+            AddTextCell(topHeaderTableContent, discussionStatementCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
+
+            doc.Add(topHeaderTableContent);
+
+            Boolean industryReportPresent = presentationFinalizeInfo.Where(record => record.Category == "Industry Report").Count() > 0;
+
+            ZapfDingbatsList discussionList = new ZapfDingbatsList(118, 10);
+            discussionList.IndentationLeft = 2;
+            discussionList.Symbol.Font.Size = 7F;
+            discussionList.Add(new ListItem(new Phrase("Industry reports: " + (industryReportPresent ? "" : "No ") + "Industry reports were presented", PDFFontStyle.STYLE_3)));
+            discussionList.Add(new ListItem(new Phrase(presentationFinalizeDetails.MeetingDescription, PDFFontStyle.STYLE_3)));
+            doc.Add(discussionList);
+
+            Paragraph securityDescriptor = new Paragraph(new Phrase("The following company reports were discussed during this week’s investment committee meeting:", PDFFontStyle.STYLE_3));
+            securityDescriptor.SpacingBefore = 5;
+            doc.Add(securityDescriptor);
+
+            List<Int64?> distinctMeetingPresentationIds = presentationFinalizeInfo.Select(record => record.PresentationID).ToList().Distinct().ToList();
+            Int32 securityCounter = 0;
+
+            foreach (Int64 presentationId in distinctMeetingPresentationIds)
+            {
+                List<MeetingMinutesReportData> distinctPresentationFinalizeDetails = presentationFinalizeInfo
+                    .Where(record => record.PresentationID == presentationId).ToList();
+
+                if (distinctPresentationFinalizeDetails.Count == 0)
+                    continue;
+
+                Paragraph securityName = new Paragraph(new Phrase((++securityCounter).ToString() + ". "
+                    + distinctPresentationFinalizeDetails.First().SecurityName, PDFFontStyle.STYLE_4));
+                securityName.SpacingBefore = 10;
+                doc.Add(securityName);
+
+                ZapfDingbatsList securityDescriptionList = new ZapfDingbatsList(108, 10);
+                securityDescriptionList.IndentationLeft = 20;
+                securityDescriptionList.Symbol.Font.Size = 5F;
+                securityDescriptionList.Lettered = true;
+
+                Paragraph countryPara = new Paragraph();
+                countryPara.SpacingBefore = -5;
+                countryPara.Add(new Phrase("Country: ", PDFFontStyle.STYLE_2));
+                countryPara.Add(new Phrase(distinctPresentationFinalizeDetails.First().SecurityCountry, PDFFontStyle.STYLE_3));
+                securityDescriptionList.Add(new ListItem(countryPara));
+
+                Paragraph industryPara = new Paragraph();
+                industryPara.SpacingBefore = -5;
+                industryPara.Add(new Phrase("Industry: ", PDFFontStyle.STYLE_2));
+                industryPara.Add(new Phrase(distinctPresentationFinalizeDetails.First().SecurityIndustry, PDFFontStyle.STYLE_3));
+                securityDescriptionList.Add(new ListItem(industryPara));
+
+                Paragraph presenterPara = new Paragraph();
+                presenterPara.SpacingBefore = -5;
+                presenterPara.Add(new Phrase("Presented By: ", PDFFontStyle.STYLE_2));
+                presenterPara.Add(new Phrase(distinctPresentationFinalizeDetails.First().Presenter, PDFFontStyle.STYLE_3));
+                securityDescriptionList.Add(new ListItem(presenterPara));
+
+                doc.Add(securityDescriptionList);
+
+                PdfPTable icdecisionTable = new PdfPTable(4);
+                icdecisionTable.WidthPercentage = 100;
+                icdecisionTable.SpacingBefore = 10;
+                icdecisionTable.SetWidths(new float[] { 1, 1, 1, 1 });
+
+                PdfPCell recommendationCell = new PdfPCell(new Phrase("RECOMMENDATION", PDFFontStyle.STYLE_2));
+                recommendationCell.BackgroundColor = new BaseColor(255, 240, 240);
+                AddTextCell(icdecisionTable, recommendationCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP);
+
+                PdfPCell presentedBuySellRangeCell = new PdfPCell(new Phrase("BUY/SELL (PRESENTED)", PDFFontStyle.STYLE_2));
+                presentedBuySellRangeCell.BackgroundColor = new BaseColor(255, 240, 240);
+                AddTextCell(icdecisionTable, presentedBuySellRangeCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT_TOP);
+
+                PdfPCell decisionCell = new PdfPCell(new Phrase("DECISION", PDFFontStyle.STYLE_2));
+                decisionCell.BackgroundColor = new BaseColor(255, 240, 240);
+                AddTextCell(icdecisionTable, decisionCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT_TOP);
+
+                PdfPCell committeeBuySellRangeCell = new PdfPCell(new Phrase("BUY/SELL (COMMITTEE)", PDFFontStyle.STYLE_2));
+                committeeBuySellRangeCell.BackgroundColor = new BaseColor(255, 240, 240);
+                AddTextCell(icdecisionTable, committeeBuySellRangeCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT_TOP);
+
+                doc.Add(icdecisionTable);
+
+                PdfPTable icdecisionValueTable = new PdfPTable(4);
+                icdecisionValueTable.WidthPercentage = 100;
+                icdecisionValueTable.SetWidths(new float[] { 1, 1, 1, 1 });
+
+                PdfPCell recommendationValueCell = new PdfPCell(new Phrase(distinctPresentationFinalizeDetails.First().SecurityRecommendation, PDFFontStyle.STYLE_3));
+                AddTextCell(icdecisionValueTable, recommendationValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                String buySellPresented = String.Format("{0} {1:n4}-{2:n4}", distinctPresentationFinalizeDetails.First().SecurityPFVMeasure
+                    , distinctPresentationFinalizeDetails.First().SecurityBuyRange, distinctPresentationFinalizeDetails.First().SecuritySellRange);
+
+                PdfPCell presentedBuySellRangeValueCell = new PdfPCell(new Phrase(buySellPresented, PDFFontStyle.STYLE_3));
+                AddTextCell(icdecisionValueTable, presentedBuySellRangeValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT_TOP_BOTTOM);
+
+                PdfPCell decisionValueCell = new PdfPCell(new Phrase(distinctPresentationFinalizeDetails.First().CommitteeRecommendation, PDFFontStyle.STYLE_3));
+                AddTextCell(icdecisionValueTable, decisionValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT_TOP_BOTTOM);
+
+                String buySellCommittee = String.Format("{0} {1:n4}-{2:n4}", distinctPresentationFinalizeDetails.First().CommitteePFVMeasure
+                    , distinctPresentationFinalizeDetails.First().CommitteeBuyRange, distinctPresentationFinalizeDetails.First().CommitteeSellRange);
+
+                PdfPCell committeeBuySellRangeValueCell = new PdfPCell(new Phrase(buySellCommittee, PDFFontStyle.STYLE_3));
+                AddTextCell(icdecisionValueTable, committeeBuySellRangeValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT_TOP_BOTTOM);
+
+                doc.Add(icdecisionValueTable);
+
+
+                PdfPTable votingTable = new PdfPTable(7);
+                votingTable.WidthPercentage = 100;
+                votingTable.SpacingBefore = 10;
+                votingTable.SetWidths(new float[] { 4, 1, 1, 1, 4, 1, 1 });
+
+                PdfPCell voterCell = new PdfPCell();
+                AddTextCell(votingTable, voterCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                PdfPCell abstainCell = new PdfPCell(new Phrase("ABSTAIN", PDFFontStyle.STYLE_2));
+                abstainCell.BackgroundColor = new BaseColor(255, 240, 240);
+                AddTextCell(votingTable, abstainCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                PdfPCell agreeCell = new PdfPCell(new Phrase("AGREE", PDFFontStyle.STYLE_2));
+                agreeCell.BackgroundColor = new BaseColor(255, 240, 240);
+                AddTextCell(votingTable, agreeCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                PdfPCell modifyCell = new PdfPCell(new Phrase("MODIFY", PDFFontStyle.STYLE_2));
+                modifyCell.BackgroundColor = new BaseColor(255, 240, 240);
+                AddTextCell(votingTable, modifyCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                PdfPCell pfvCell = new PdfPCell(new Phrase("P/FV", PDFFontStyle.STYLE_2));
+                pfvCell.BackgroundColor = new BaseColor(255, 240, 240);
+                AddTextCell(votingTable, pfvCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                PdfPCell buyCell = new PdfPCell(new Phrase("BUY", PDFFontStyle.STYLE_2));
+                buyCell.BackgroundColor = new BaseColor(255, 240, 240);
+                AddTextCell(votingTable, buyCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                PdfPCell sellCell = new PdfPCell(new Phrase("SELL", PDFFontStyle.STYLE_2));
+                sellCell.BackgroundColor = new BaseColor(255, 240, 240);
+                AddTextCell(votingTable, sellCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                doc.Add(votingTable);
+
+                foreach (MeetingMinutesReportData voterDetails in distinctPresentationFinalizeDetails)
+                {
+                    if (voterDetails.VoteType == null)
+                        continue;
+
+                    PdfPTable votingValueTable = new PdfPTable(7);
+                    votingValueTable.WidthPercentage = 100;
+                    votingValueTable.SetWidths(new float[] { 4, 1, 1, 1, 4, 1, 1 });
+
+                    PdfPCell voterValueCell = new PdfPCell(new Phrase(voterDetails.Name, PDFFontStyle.STYLE_3));
+                    AddTextCell(votingValueTable, voterValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                    PdfPCell abstainValueCell = new PdfPCell(new Phrase((voterDetails.VoteType == "Abstain" ? "X" : ""), PDFFontStyle.STYLE_3));
+                    AddTextCell(votingValueTable, abstainValueCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                    PdfPCell agreeValueCell = new PdfPCell(new Phrase((voterDetails.VoteType == "Agree" ? "X" : ""), PDFFontStyle.STYLE_3));
+                    AddTextCell(votingValueTable, agreeValueCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                    PdfPCell modifyValueCell = new PdfPCell(new Phrase((voterDetails.VoteType == "Modify" ? "X" : ""), PDFFontStyle.STYLE_3));
+                    AddTextCell(votingValueTable, modifyValueCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                    PdfPCell pfvValueCell = new PdfPCell(new Phrase(voterDetails.VoterPFVMeasure, PDFFontStyle.STYLE_3));
+                    AddTextCell(votingValueTable, pfvValueCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                    PdfPCell buyValueCell = new PdfPCell(new Phrase(String.Format("{0:n4}", voterDetails.VoterBuyRange), PDFFontStyle.STYLE_3));
+                    AddTextCell(votingValueTable, buyValueCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                    PdfPCell sellValueCell = new PdfPCell(new Phrase(String.Format("{0:n4}", voterDetails.VoterSellRange), PDFFontStyle.STYLE_3));
+                    AddTextCell(votingValueTable, sellValueCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP_BOTTOM);
+
+                    doc.Add(votingValueTable);
+
+                }
+
+                Paragraph notes = new Paragraph();
+                notes.Add(new Phrase("NOTES: ", PDFFontStyle.STYLE_2));
+                notes.Add(new Phrase(distinctPresentationFinalizeDetails.First().AdminNotes, PDFFontStyle.STYLE_3));
+                securityDescriptor.SpacingBefore = 10;
+                doc.Add(notes);
+            }
+
+            doc.Close();
+            Byte[] result = File.ReadAllBytes(reportOutputFile);
+            File.Delete(reportOutputFile);
+            return result;
+        }
+
+        private static Byte[] GeneratePreMeetingReport(List<PresentationVotingDeadlineDetails> presentationDeadlineInfo, String securityDesc)
+        {
+            if (presentationDeadlineInfo == null)
+                return null;
+
+            PresentationVotingDeadlineDetails presentationDetails = presentationDeadlineInfo.FirstOrDefault();
+            if (presentationDetails == null)
+                return null;
+
+            String securityTicker = presentationDetails.SecurityTicker;
+            String meetingDate = Convert.ToDateTime(presentationDetails.MeetingDateTime).ToString("MM-dd-yyyy");
+            Document doc = new Document(PageSize.A4, 10F, 10F, 10F, 10F);
+
+            String reportOutputFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPPreMeetingReport.pdf";
+            PdfWriter.GetInstance(doc, new FileStream(reportOutputFile, FileMode.Create));
+            doc.Open();
+            Rectangle page = doc.PageSize;
+
+            PdfPTable topHeaderTableContent = new PdfPTable(5);
+            topHeaderTableContent.WidthPercentage = 100;
+            topHeaderTableContent.SetWidths(new float[] { 4, 1, 1, 1, 1 });
+
+            Paragraph securityPara = new Paragraph();
+            securityPara.Add(new Phrase(presentationDetails.SecurityName, PDFFontStyle.STYLE_1));
+            securityPara.Add(new Phrase(" (" + presentationDetails.SecurityTicker + ")", PDFFontStyle.STYLE_5));
+
+            PdfPCell securityName = new PdfPCell(securityPara);
+            securityName.PaddingLeft = 5;
+
+            AddTextCell(topHeaderTableContent, securityName, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, PDFBorderType.LEFT_TOP);
+
+            PdfPCell securityCountry = new PdfPCell(new Phrase(presentationDetails.SecurityCountry, PDFFontStyle.STYLE_5));
+            AddTextCell(topHeaderTableContent, securityCountry, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, PDFBorderType.TOP);
+            PdfPCell securityPFVMeasure = new PdfPCell(new Phrase(presentationDetails.SecurityPFVMeasure, PDFFontStyle.STYLE_5));
+            AddTextCell(topHeaderTableContent, securityPFVMeasure, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, PDFBorderType.TOP);
+            String presentationSecurityBuySellRange = String.Format("{0:n4} to {1:n4}", presentationDetails.SecurityBuyRange, presentationDetails.SecuritySellRange);
+            PdfPCell securityBuySellRange = new PdfPCell(new Phrase(presentationSecurityBuySellRange, PDFFontStyle.STYLE_5));
+            AddTextCell(topHeaderTableContent, securityBuySellRange, Element.ALIGN_LEFT, Element.ALIGN_BOTTOM, PDFBorderType.TOP);
+            PdfPCell securityRecommendation = new PdfPCell(new Phrase(presentationDetails.SecurityRecommendation, PDFFontStyle.STYLE_5));
+            securityRecommendation.RightIndent = 5;
+            AddTextCell(topHeaderTableContent, securityRecommendation, Element.ALIGN_RIGHT, Element.ALIGN_BOTTOM, PDFBorderType.RIGHT_TOP);
+
+            doc.Add(topHeaderTableContent);
+
+            PdfPTable topHeaderTableDesc = new PdfPTable(1);
+            topHeaderTableDesc.WidthPercentage = 100;
+            topHeaderTableDesc.SetWidths(new float[] { 1 });
+
+            PdfPCell securityDescription = new PdfPCell(new Phrase(securityDesc, PDFFontStyle.STYLE_3));
+            securityDescription.PaddingLeft = 5;
+            securityDescription.PaddingBottom = 5;
+            AddTextCell(topHeaderTableDesc, securityDescription, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_BOTTOM);
+
+            doc.Add(topHeaderTableDesc);
+
+            PdfPTable contentTable = new PdfPTable(6);
+            contentTable.WidthPercentage = 100;
+            contentTable.SpacingBefore = 20;
+            contentTable.SpacingAfter = 1;
+            contentTable.SetWidths(new float[] { 1, 1, 1, 1, 1, 4 });
+
+            PdfPCell voterNameContent = new PdfPCell(new Phrase("VoterName", PDFFontStyle.STYLE_2));
+            voterNameContent.PaddingLeft = 5;
+            AddTextCell(contentTable, voterNameContent, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+
+            PdfPCell voteContent = new PdfPCell(new Phrase("Vote", PDFFontStyle.STYLE_2));
+            voteContent.PaddingLeft = 5;
+            AddTextCell(contentTable, voteContent, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+
+            PdfPCell modifiedBuyContent = new PdfPCell(new Phrase("Modified Buy", PDFFontStyle.STYLE_2));
+            modifiedBuyContent.PaddingLeft = 5;
+            AddTextCell(contentTable, modifiedBuyContent, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+
+            PdfPCell modifiedSellContent = new PdfPCell(new Phrase("Modified Sell", PDFFontStyle.STYLE_2));
+            modifiedSellContent.PaddingLeft = 5;
+            AddTextCell(contentTable, modifiedSellContent, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+
+            PdfPCell discussionContent = new PdfPCell(new Phrase("Discussion", PDFFontStyle.STYLE_2));
+            discussionContent.PaddingLeft = 5;
+            AddTextCell(contentTable, discussionContent, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+
+            PdfPCell notesContent = new PdfPCell(new Phrase("Notes", PDFFontStyle.STYLE_2));
+            notesContent.PaddingLeft = 5;
+            AddTextCell(contentTable, notesContent, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
+
+            doc.Add(contentTable);
+
+            for (int i = 0; i < presentationDeadlineInfo.Count; i++)
+            {
+                PdfPTable contentTableRow = new PdfPTable(6);
+                contentTableRow.WidthPercentage = 100;
+                contentTableRow.SetWidths(new float[] { 1, 1, 1, 1, 1, 4 });
+
+                PdfPCell voterName = new PdfPCell(new Phrase(presentationDeadlineInfo[i].Name, PDFFontStyle.STYLE_3));
+                voterName.PaddingLeft = 5;
+                if (i % 2 == 0)
+                {
+                    voterName.BackgroundColor = new BaseColor(255, 240, 240);
+                }
+                AddTextCell(contentTableRow, voterName, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+                PdfPCell vote = new PdfPCell(new Phrase(presentationDeadlineInfo[i].VoteType, PDFFontStyle.STYLE_3));
+                vote.PaddingLeft = 5;
+                if (i % 2 == 0)
+                {
+                    vote.BackgroundColor = new BaseColor(255, 240, 240);
+                }
+                AddTextCell(contentTableRow, vote, Element.ALIGN_CENTER, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+                PdfPCell modifiedBuy = new PdfPCell(new Phrase(presentationDeadlineInfo[i].VoteType == "Modify"
+                    ? String.Format("{0:n4}", presentationDeadlineInfo[i].VoterBuyRange) : "", PDFFontStyle.STYLE_3));
+                modifiedBuy.PaddingLeft = 5;
+                if (i % 2 == 0)
+                {
+                    modifiedBuy.BackgroundColor = new BaseColor(255, 240, 240);
+                }
+                AddTextCell(contentTableRow, modifiedBuy, Element.ALIGN_CENTER, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+                PdfPCell modifiedSell = new PdfPCell(new Phrase(presentationDeadlineInfo[i].VoteType == "Modify"
+                    ? String.Format("{0:n4}", presentationDeadlineInfo[i].VoterSellRange) : "", PDFFontStyle.STYLE_3));
+                modifiedSell.PaddingLeft = 5;
+                if (i % 2 == 0)
+                {
+                    modifiedSell.BackgroundColor = new BaseColor(255, 240, 240);
+                }
+                AddTextCell(contentTableRow, modifiedSell, Element.ALIGN_CENTER, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+                PdfPCell discussion = new PdfPCell(new Phrase(presentationDeadlineInfo[i].DiscussionFlag == true ? "X" : "", PDFFontStyle.STYLE_3));
+                discussion.PaddingLeft = 5;
+                if (i % 2 == 0)
+                {
+                    discussion.BackgroundColor = new BaseColor(255, 240, 240);
+                }
+                AddTextCell(contentTableRow, discussion, Element.ALIGN_CENTER, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+                PdfPCell notes = new PdfPCell(new Phrase(presentationDeadlineInfo[i].Notes, PDFFontStyle.STYLE_3));
+                notes.PaddingLeft = 5;
+                if (i % 2 == 0)
+                {
+                    notes.BackgroundColor = new BaseColor(255, 240, 240);
+                }
+                AddTextCell(contentTableRow, notes, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
+
+
+                doc.Add(contentTableRow);
+
+            }
+
+            doc.Close();
+            Byte[] result = File.ReadAllBytes(reportOutputFile);
+            File.Delete(reportOutputFile);
+            return result;
+
+        }
+
+        private static void AddTextCell(PdfPTable table, PdfPCell cell, int HorizontalAlignment = Element.ALIGN_LEFT, int VerticalAlignment = Element.ALIGN_MIDDLE, int Border = 0)
+        {
+            //cell.Colspan = Colspan;
+            cell.HorizontalAlignment = HorizontalAlignment; //0=Left, 1=Centre, 2=Right
+            cell.VerticalAlignment = VerticalAlignment;
+            cell.Border = Border;
+            cell.BorderWidth = 1;
+            //cell.Rowspan = Rowspan;
+            table.AddCell(cell);
+        }
+        
         #endregion
 
         #region Presentation Vote

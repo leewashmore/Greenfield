@@ -192,11 +192,11 @@
                     <telerik:RadMenuItem x:Name="rmItemCreateEdit" Header="Create/Edit"
                                                 Command="{Binding DashboardInvestmentCommitteeCreateEditCommand}"
                                                />
-                    <telerik:RadMenuItem x:Name="rmItemVote" Header="Vote" Command="{Binding DashboardInvestmentCommitteeVoteCommand}"/>
-                    <telerik:RadMenuItem x:Name="rmItemPreMeetingReport" IsEnabled="{Binding RoleIsICAdmin}" Header="Pre-Meeting Report" Command="{Binding DashboardInvestmentCommitteePreMeetingReportCommand}"/>
+                    <!--<telerik:RadMenuItem x:Name="rmItemVote" Header="Vote" Command="{Binding DashboardInvestmentCommitteeVoteCommand}"/>-->
+                    <!--<telerik:RadMenuItem x:Name="rmItemPreMeetingReport" IsEnabled="{Binding RoleIsICAdmin}" Header="Pre-Meeting Report" Command="{Binding DashboardInvestmentCommitteePreMeetingReportCommand}"/>-->
                     <telerik:RadMenuItem x:Name="rmItemMeetingMinutes" IsEnabled="{Binding RoleIsICAdmin}" Header="Meeting Minutes" Command="{Binding DashboardInvestmentCommitteeMeetingMinutesCommand}"/>
                     <telerik:RadMenuItem x:Name="rmItemSummaryReport" IsEnabled="{Binding RoleIsICAdmin}" Header="Summary Report" Command="{Binding DashboardInvestmentCommitteeSummaryReportCommand}"/>
-                    <telerik:RadMenuItem x:Name="rmItemMetricsReport" IsEnabled="{Binding RoleIsICAdmin}" Header="Metrics Report" Command="{Binding DashboardInvestmentCommitteeMetricsReportCommand}"/>
+                    <!--<telerik:RadMenuItem x:Name="rmItemMetricsReport" IsEnabled="{Binding RoleIsICAdmin}" Header="Metrics Report" Command="{Binding DashboardInvestmentCommitteeMetricsReportCommand}"/>-->
                 </telerik:RadMenu>
             </telerik:RadPanelBarItem>
 
@@ -205,10 +205,10 @@
                 <telerik:RadMenu x:Name="radMenuAdmin" ClickToOpen="False" Orientation="Vertical"  
                              VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
                     <telerik:RadMenuItem x:Name="rmItemInvestmentCommittee" Header="Investment Committee">
-                        <telerik:RadMenuItem x:Name="rmItemViewAgenda" Header="View Agenda" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <!--<telerik:RadMenuItem x:Name="rmItemViewAgenda" Header="View Agenda" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
                         <telerik:RadMenuItem x:Name="rmItemEditDate" IsEnabled="{Binding RoleIsICAdmin}" Header="Edit Date" Style="{StaticResource RadSecondLevelMenuItemStyle}"
                                              Command="{Binding DashboardAdminInvestmentCommitteeChangeDateCommand}"/>
-                        <telerik:RadMenuItem x:Name="rmItemMeetingDetails" Header="Meeting Details" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>
+                        <!--<telerik:RadMenuItem x:Name="rmItemMeetingDetails" Header="Meeting Details" Style="{StaticResource RadSecondLevelMenuItemStyle}"/>-->
                     </telerik:RadMenuItem>
                     <telerik:RadMenuItem x:Name="rmItemBrokerResearch" Header="Broker Research"/>
                 </telerik:RadMenu>

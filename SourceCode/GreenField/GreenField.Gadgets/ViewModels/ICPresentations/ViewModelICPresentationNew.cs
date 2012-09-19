@@ -28,7 +28,6 @@ using Microsoft.Practices.Prism.Logging;
 using GreenField.UserSession;
 using GreenField.DataContracts;
 
-
 namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelICPresentationNew : NotificationObject
@@ -92,12 +91,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (value)
                 {
                     Initialize();
-
-                    //EntitySelectionData handling
-                    if (_entitySelectionInfo != null)
-                    {
-                        HandleSecurityReferenceSet(_entitySelectionInfo);
-                    }
+                    HandleSecurityReferenceSet(_entitySelectionInfo);
                 }
             }
         }
@@ -145,10 +139,10 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         AcceptWithoutDiscussionFlag = true,
                         StatusType = StatusType.IN_PROGRESS,
-                        Presenter = SessionManager.SESSION.UserName,
-                        CreatedBy = SessionManager.SESSION.UserName,
+                        Presenter = SessionManager.SESSION.UserName.ToLower(),
+                        CreatedBy = SessionManager.SESSION.UserName.ToLower(),
                         CreatedOn = DateTime.UtcNow,
-                        ModifiedBy = SessionManager.SESSION.UserName,
+                        ModifiedBy = SessionManager.SESSION.UserName.ToLower(),
                         ModifiedOn = DateTime.UtcNow
                     };
                 }
@@ -381,10 +375,20 @@ namespace GreenField.Gadgets.ViewModels
             MeetingInfo meetingInfo = ICNavigation.Fetch(ICNavigationInfo.MeetingInfo) as MeetingInfo;
             if (meetingInfo != null)
             {
-                ICPresentationOverviewInfo.MeetingDateTime = meetingInfo.MeetingDateTime;
-                ICPresentationOverviewInfo.CommitteeRangeEffectiveThrough = meetingInfo.MeetingDateTime.Date.AddMonths(3);
-                ICPresentationOverviewInfo.MeetingClosedDateTime = meetingInfo.MeetingClosedDateTime;
-                ICPresentationOverviewInfo.MeetingVotingClosedDateTime = meetingInfo.MeetingVotingClosedDateTime;
+                ICPresentationOverviewInfo = new ICPresentationOverviewData()
+                {
+                    AcceptWithoutDiscussionFlag = true,
+                    StatusType = StatusType.IN_PROGRESS,
+                    Presenter = SessionManager.SESSION.UserName.ToLower(),
+                    CreatedBy = SessionManager.SESSION.UserName.ToLower(),
+                    CreatedOn = DateTime.UtcNow,
+                    ModifiedBy = SessionManager.SESSION.UserName.ToLower(),
+                    ModifiedOn = DateTime.UtcNow,
+                    MeetingDateTime = meetingInfo.MeetingDateTime,
+                    CommitteeRangeEffectiveThrough = meetingInfo.MeetingDateTime.Date.AddMonths(3),
+                    MeetingClosedDateTime = meetingInfo.MeetingClosedDateTime,
+                    MeetingVotingClosedDateTime = meetingInfo.MeetingVotingClosedDateTime
+                };
             }
         }
 

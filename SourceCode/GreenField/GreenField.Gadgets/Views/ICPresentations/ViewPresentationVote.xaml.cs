@@ -110,6 +110,15 @@ namespace GreenField.Gadgets.Views
         
         #endregion
 
+        private void btnPreview_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog() { Filter = "PDF (*.pdf) |*.pdf" };
+            if (dialog.ShowDialog() == true)
+            {
+                DataContextViewModelPresentationVote.DownloadStream = dialog.OpenFile();
+            }
+        }
+
         
 
        

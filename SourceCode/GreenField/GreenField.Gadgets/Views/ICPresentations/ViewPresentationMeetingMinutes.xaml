@@ -32,6 +32,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="15"/>
             </Grid.RowDefinitions>
             <!--Selected Presentation Details-->
             <Grid>
@@ -316,18 +317,18 @@
                 </Grid>
             </Grid>
             <!--Application Section-->
-            <Grid Grid.Row="5" Margin="0,2,0,10">
+            <Grid Grid.Row="5" Margin="0,2,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <telerik:RadButton Content="PREVIEW" Grid.Column="0" Width="100" 
-                               Command="{Binding}" Style="{StaticResource RadButtonStyle}"/>
+                </Grid.ColumnDefinitions>                
+                <telerik:RadButton x:Name="btnPreview" Content="PREVIEW" Grid.Column="0" Width="100" Command="{Binding PreviewCommand}"
+                                   Click="btnPreview_Click" Style="{StaticResource RadButtonStyle}"/>
                 <telerik:RadButton Content="SUBMIT" Grid.Column="1" Width="100" Command="{Binding SubmitCommand}" Style="{StaticResource RadButtonStyle}"/>
-                <telerik:RadButton Content="SAVE" Grid.Column="2" Width="100"
-                               Command="{Binding SaveCommand}" Style="{StaticResource RadButtonStyle}"/>
+                <telerik:RadButton Content="SAVE" Grid.Column="2" Width="100" Command="{Binding SaveCommand}" Style="{StaticResource RadButtonStyle}"/>
             </Grid>
+            
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

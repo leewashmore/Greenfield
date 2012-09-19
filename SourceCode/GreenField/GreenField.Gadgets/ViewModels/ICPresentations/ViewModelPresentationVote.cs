@@ -278,6 +278,33 @@ namespace GreenField.Gadgets.ViewModels
             get { return new DelegateCommand<object>(RefreshCommentCommandMethod); }
         }
 
+        private Visibility _previewReportVisibility = Visibility.Collapsed;
+        public Visibility PreviewReportVisibility
+        {
+            get { return _previewReportVisibility; }
+            set
+            {
+                _previewReportVisibility = value;
+                RaisePropertyChanged(() => this.PreviewReportVisibility);
+            }
+        }
+        
+
+        private Stream _downloadStream;
+        public Stream DownloadStream
+        {
+            get { return _downloadStream; }
+            set
+            {
+                _downloadStream = value;
+                if (value != null && _dbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Downloading generated pre-meeting voting report...");
+                    _dbInteractivity.GeneratePreMeetingVotingReport(SelectedPresentationOverviewInfo.PresentationID, GeneratePreMeetingVotingReportCallbackMethod);
+                }
+            }
+        }
+
         #region Busy Indicator Notification
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
@@ -632,6 +659,37 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification();
             }
         }
+
+        private void GeneratePreMeetingVotingReportCallbackMethod(Byte[] result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    DownloadStream.Write(result, 0, result.Length);
+                    DownloadStream.Close();
+                    DownloadStream = null;
+                }
+                else
+                {
+                    Prompt.ShowDialog("An Error ocurred while downloading the preview report from server.");
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+        }
         #endregion
 
         #region Helper Methods
@@ -654,6 +712,14 @@ namespace GreenField.Gadgets.ViewModels
             {
                 SelectedPresentationOverviewInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
                 ViewPluginFlagEnumeration flag = (ViewPluginFlagEnumeration)ICNavigation.Fetch(ICNavigationInfo.ViewPluginFlagEnumerationInfo);
+
+                if (UserSession.SessionManager.SESSION != null)
+                {
+                    if (UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN))
+                        PreviewReportVisibility = Visibility.Visible;
+                    else
+                        PreviewReportVisibility = Visibility.Collapsed;
+                }
             }
         }
 

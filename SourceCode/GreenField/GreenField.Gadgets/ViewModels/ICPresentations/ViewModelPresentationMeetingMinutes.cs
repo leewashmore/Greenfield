@@ -347,6 +347,22 @@ namespace GreenField.Gadgets.ViewModels
             get { return new DelegateCommand<object>(SubmitCommandMethod); }
         }
 
+        private Stream _downloadStream;
+        public Stream DownloadStream
+        {
+            get { return _downloadStream; }
+            set
+            {
+                _downloadStream = value;
+                if (value != null && _dbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Downloading generated meeting minutes report...");
+                    _dbInteractivity.GenerateMeetingMinutesReport(SelectedClosedForVotingMeetingInfo.MeetingID, GenerateMeetingMinutesReportCallbackMethod);
+                }
+            }
+        }
+        
+
         #region Busy Indicator Notification
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
@@ -451,7 +467,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    ClosedForVotingMeetingMinuteInfo = result.Where(record => record.Name != record.Presenter).ToList();
+                    ClosedForVotingMeetingMinuteInfo = result.Where(record => record.Name.ToLower() != record.Presenter.ToLower()).ToList();
                     if (_dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving Attached document details for the selected meeting");
@@ -648,6 +664,37 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification();
             }
         }
+
+        private void GenerateMeetingMinutesReportCallbackMethod(Byte[] result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    DownloadStream.Write(result, 0, result.Length);
+                    DownloadStream.Close();
+                    DownloadStream = null;
+                }
+                else
+                {
+                    Prompt.ShowDialog("An Error ocurred while downloading the preview report from server.");
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+        }
         #endregion              
 
         #region ICommand Methods
@@ -812,6 +859,11 @@ namespace GreenField.Gadgets.ViewModels
 
         public void Dispose()
         {
+        }
+
+        public void ExportMeetingMinutesPreview(Stream fileStream)
+        {
+
         }
 
         /// <summary>

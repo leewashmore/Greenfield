@@ -262,6 +262,7 @@ namespace GreenField.Common
         public static String ADDITIONAL_ATTACHMENT = "Additional Attachment";
         public static String INDUSTRY_REPORT = "Industry Report";
         public static String OTHER_DOCUMENT = "Other Document";
+        public static String IC_PACKET = "Investment Committee Packet";
     }
 
     public enum VIEWVOTEFLAG { VIEW, VOTE } ;

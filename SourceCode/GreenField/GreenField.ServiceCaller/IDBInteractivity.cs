@@ -303,6 +303,10 @@ namespace GreenField.ServiceCaller
 
         void SetMessageInfo(String emailTo, String emailCc, String emailSubject, String emailMessageBody, String emailAttachment
             , String userName, Action<Boolean?> callback);
+
+        void GenerateMeetingMinutesReport(Int64 meetingId, Action<Byte[]> callback);
+
+        void GeneratePreMeetingVotingReport(Int64 presentationId, Action<Byte[]> callback);
         #endregion
 
         #region DCF
