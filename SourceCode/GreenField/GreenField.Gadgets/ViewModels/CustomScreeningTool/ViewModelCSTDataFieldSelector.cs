@@ -391,14 +391,22 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool AddSecurityRefCommandValidationMethod(object param)
         {
-            if (SelectedSecurityReferenceData != null && SelectedFieldsDataList != null)
+            if (SelectedSecurityReferenceData != null )
             {
-                if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedSecurityReferenceData.ScreeningId))
+                if(SelectedFieldsDataList != null)
                 {
-                    IsAddButtonEnabled = false;
-                    return false;
+                    if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedSecurityReferenceData.ScreeningId))
+                    {
+                        IsAddButtonEnabled = false;
+                        return false;
+                    }
+                    else
+                    {
+                        IsAddButtonEnabled = true;
+                        return true;
+                    }
                 }
-                else
+                else 
                 {
                     IsAddButtonEnabled = true;
                     return true;
@@ -456,12 +464,20 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool AddPeriodFinCommandValidationMethod(object param)
         {
-            if (SelectedPeriodFinancialsData != null && SelectedFieldsDataList != null)
+            if (SelectedPeriodFinancialsData != null)
             {
-                if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId))
+                if (SelectedFieldsDataList != null)
                 {
-                    IsAddButtonEnabled = false;
-                    return false;
+                    if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId))
+                    {
+                        IsAddButtonEnabled = false;
+                        return false;
+                    }
+                    else
+                    {
+                        IsAddButtonEnabled = true;
+                        return true;
+                    }
                 }
                 else
                 {
@@ -525,15 +541,22 @@ namespace GreenField.Gadgets.ViewModels
             SelectedFieldsDataList = temp;
         }
 
-
         private bool AddCurrentFinCommandValidationMethod(object param)
         {
-            if (SelectedPeriodFinancialsData != null && SelectedFieldsDataList != null)
+            if (SelectedCurrentFinancialsData != null)
             {
-                if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedCurrentFinancialsData.ScreeningId))
+                if (SelectedFieldsDataList != null)
                 {
-                    IsAddButtonEnabled = false;
-                    return false;
+                    if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedCurrentFinancialsData.ScreeningId))
+                    {
+                        IsAddButtonEnabled = false;
+                        return false;
+                    }
+                    else
+                    {
+                        IsAddButtonEnabled = true;
+                        return true;
+                    }
                 }
                 else
                 {
@@ -592,12 +615,20 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool AddFairValueCommandValidationMethod(object param)
         {
-            if (SelectedPeriodFinancialsData != null && SelectedFieldsDataList != null)
+            if (SelectedFairValueData != null)
             {
-                if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedFairValueData.ScreeningId))
+                if (SelectedFieldsDataList != null)
                 {
-                    IsAddButtonEnabled = false;
-                    return false;
+                    if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedFairValueData.ScreeningId))
+                    {
+                        IsAddButtonEnabled = false;
+                        return false;
+                    }
+                    else
+                    {
+                        IsAddButtonEnabled = true;
+                        return true;
+                    }
                 }
                 else
                 {
