@@ -211,12 +211,13 @@ namespace GreenField.DashboardModule.Views
                 if (table != null)
                 {
                     DCFReport.Add(table);
-                }             
+                }
             }
             if (DCFReport != null)
             {
                 finalReport = MergeDocuments(DCFReport);
-                PDFExporter.ExportPDF_RadDocument(finalReport, 12);
+                finalReport.SectionDefaultPageMargin = new Telerik.Windows.Documents.Layout.Padding() { All = 10 };
+                PDFExporter.ExportPDF_RadDocument(finalReport, 10);
             }
         }
 
@@ -242,14 +243,56 @@ namespace GreenField.DashboardModule.Views
         {
             RadDocument mergedDocument = new RadDocument();
             Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
+            Telerik.Windows.Documents.Model.Section newSection = new Telerik.Windows.Documents.Model.Section();
             Table documentTable = new Table(tables.Count(), 1);
             mergedDocument.Sections.Add(section);
+            mergedDocument.Sections.Add(newSection);
+            int i = 0;
             foreach (Table item in tables)
             {
-                Telerik.Windows.Documents.Model.Section mainSection = new Telerik.Windows.Documents.Model.Section();
-                section.Blocks.Add(item);
+                Telerik.Windows.Documents.Model.Paragraph para = new Telerik.Windows.Documents.Model.Paragraph() { SpacingBefore = 10 };
+                if (i < 4)
+                {
+                    Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span(ReturnGadgetName(i));
+                    span.FontSize = 10;
+                    para.Children.Add(span);
+                    section.Blocks.Add(para);
+                    section.Blocks.Add(item);
+                }
+                else
+                {
+                    Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span(ReturnGadgetName(i));
+                    span.FontSize = 10;
+                    para.Children.Add(span);
+                    newSection.Blocks.Add(para);
+                    newSection.Blocks.Add(item);
+                }
+                i++;
             }
             return mergedDocument;
+        }
+
+        private string ReturnGadgetName(int order)
+        {
+            switch (order)
+            {
+                case 0:
+                    return "ASSUMPTIONS";
+                case 1:
+                    return "FREE CASH FLOWS";
+                case 2:
+                    return "TERMINAL VALUE CALCULATIONS";
+                case 3:
+                    return "SUMMARY";
+                case 4:
+                    return "SENSITIVITY";
+                case 5:
+                    return "SENSITIVITY EPS";
+                case 6:
+                    return "SENSITIVITY BVPS";
+                default:
+                    return string.Empty;
+            }
         }
     }
 }

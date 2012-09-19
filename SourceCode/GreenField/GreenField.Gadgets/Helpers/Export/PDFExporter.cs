@@ -209,7 +209,7 @@ namespace GreenField.Gadgets.Helpers
                                                      select c).ToList();
 
             Table table = new Table();
-
+            fontSizePDF = fontSize;
             if (grid.ShowColumnHeaders)
             {
                 TableRow headerRow = new TableRow();
