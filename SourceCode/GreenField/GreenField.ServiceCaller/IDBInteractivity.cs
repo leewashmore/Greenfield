@@ -345,6 +345,8 @@ namespace GreenField.ServiceCaller
 
         void GetCustomScreeningUserPreferences(string username, Action<List<CSTUserPreferenceInfo>> callback);
 
+        void UpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility, Action<Boolean?> callback);
+
         #endregion
 
         #region Documents

@@ -5039,7 +5039,39 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        public void UpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility, Action<Boolean?> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
+            CustomScreeningToolOperationsClient client = new CustomScreeningToolOperationsClient();
+            client.UpdateUserDataPointsPreferenceAsync(userPreference, username, existingListname, newListname, accessibility);
+            client.UpdateUserDataPointsPreferenceCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        callback(e.Result);
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.MeetingDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
         #endregion
 
         #region Documents

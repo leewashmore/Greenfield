@@ -153,9 +153,9 @@
           <Property Name="DataPointId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ListId" Type="bigint" Nullable="false" />
           <Property Name="ScreeningId" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="DataDescription" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="DataDescription" Type="nvarchar(max)" Nullable="false" />
           <Property Name="DataSource" Type="varchar" MaxLength="50" />
-          <Property Name="PeriodType" Type="char" MaxLength="2" />
+          <Property Name="PeriodType" Type="varchar" MaxLength="10" />
           <Property Name="YearType" Type="char" MaxLength="8" />
           <Property Name="FromDate" Type="int" />
           <Property Name="ToDate" Type="int" />
@@ -215,6 +215,13 @@
           <Parameter Name="userPreference" Type="varchar(max)" Mode="In" />
           <Parameter Name="username" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="UpdateCustomScreeningDataPointsPreference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="userPreference" Type="varchar(max)" Mode="In" />
+          <Parameter Name="username" Type="nvarchar" Mode="In" />
+          <Parameter Name="existingListname" Type="nvarchar" Mode="In" />
+          <Parameter Name="newListname" Type="nvarchar" Mode="In" />
+          <Parameter Name="accessibility" Type="nvarchar" Mode="In" />
+        </Function>
       </Schema></edmx:StorageModels>
 		<!-- CSDL content -->
 		<edmx:ConceptualModels>
@@ -223,22 +230,22 @@
 					<EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" />
 					<EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" />
 					<FunctionImport Name="GetFinancialTabDataDescriptions" ReturnType="Collection(CustomScreeningToolModel.FinancialTabDataDescriptions)">
-          <Parameter Name="tabName" Mode="In" Type="String" />
+					<Parameter Name="tabName" Mode="In" Type="String" />
           </FunctionImport>
 					<EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" />
 					<FunctionImport Name="GetCustomScreeningFVAData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFVAData)">
-            <Parameter Name="securityIdsList" Mode="In" Type="String" />
+						<Parameter Name="securityIdsList" Mode="In" Type="String" />
             <Parameter Name="dataSource" Mode="In" Type="String" />
           </FunctionImport>
 					<EntitySet Name="UserCustomisedListInfoes" EntityType="CustomScreeningToolModel.UserCustomisedListInfo" />
 					<FunctionImport Name="GetCustomScreeningCURData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningCURData)">
-            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
+						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
             <Parameter Name="securityIdsList" Mode="In" Type="String" />
             <Parameter Name="dataID" Mode="In" Type="Int32" />
             <Parameter Name="dataSource" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetCustomScreeningFINData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFINData)">
-            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
+						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
             <Parameter Name="securityIdsList" Mode="In" Type="String" />
             <Parameter Name="dataID" Mode="In" Type="Int32" />
             <Parameter Name="periodType" Mode="In" Type="String" />
@@ -247,10 +254,10 @@
             <Parameter Name="dataSource" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetCustomScreeningREFData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningREFData)">
-          <Parameter Name="securityIdsList" Mode="In" Type="String" />
+					<Parameter Name="securityIdsList" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetCustomScreeningMarketCap" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningMarketCap)">
-            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
+						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
             <Parameter Name="securityIdsList" Mode="In" Type="String" />
           </FunctionImport>
 					<EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" />
@@ -259,11 +266,18 @@
 						<End Role="UserCustomisedListInfo" EntitySet="UserCustomisedListInfoes" />
 						<End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfoes" />
 					</AssociationSet>
-					<FunctionImport Name="GetCustomScreeningUserPreferences" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningUserPreferences)">
-          <Parameter Name="username" Mode="In" Type="String" />
+					<FunctionImport Name="SaveCustomScreeningDataPointsPreference" ReturnType="Collection(Int32)">
+						<Parameter Name="userPreference" Mode="In" Type="String" />
+            <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SaveCustomScreeningDataPointsPreference" ReturnType="Collection(Int32)">
-            <Parameter Name="userPreference" Mode="In" Type="String" />
+					<FunctionImport Name="UpdateCustomScreeningDataPointsPreference" ReturnType="Collection(Int32)">
+						<Parameter Name="userPreference" Mode="In" Type="String" />
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="existingListname" Mode="In" Type="String" />
+            <Parameter Name="newListname" Mode="In" Type="String" />
+            <Parameter Name="accessibility" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetCustomScreeningUserPreferences" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningUserPreferences)">
             <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
 				</EntityContainer>
@@ -442,9 +456,9 @@
 					<Property Type="Int64" Name="DataPointId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
 					<Property Type="Int64" Name="ListId" Nullable="false" />
 					<Property Type="String" Name="ScreeningId" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="DataDescription" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="DataDescription" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
 					<Property Type="String" Name="DataSource" MaxLength="50" FixedLength="false" Unicode="false" />
-					<Property Type="String" Name="PeriodType" MaxLength="2" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="PeriodType" MaxLength="10" FixedLength="false" Unicode="false" />
 					<Property Type="String" Name="YearType" MaxLength="8" FixedLength="true" Unicode="false" />
 					<Property Type="Int32" Name="FromDate" />
 					<Property Type="Int32" Name="ToDate" />
@@ -467,21 +481,21 @@
 						</Dependent>
 					</ReferentialConstraint>
 				</Association>
-				<ComplexType Name="CustomScreeningUserPreferences">
-					<Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
-					<Property Type="Int64" Name="ListId" Nullable="false" />
-					<Property Type="String" Name="ListName" Nullable="false" MaxLength="50" />
-					<Property Type="String" Name="Accessibilty" Nullable="false" MaxLength="10" />
-					<Property Type="String" Name="ScreeningId" Nullable="true" MaxLength="50" />
-					<Property Type="String" Name="DataDescription" Nullable="true" MaxLength="100" />
-					<Property Type="String" Name="DataSource" Nullable="true" MaxLength="50" />
-					<Property Type="String" Name="PeriodType" Nullable="true" MaxLength="2" />
-					<Property Type="String" Name="YearType" Nullable="true" MaxLength="8" />
-					<Property Type="Int32" Name="FromDate" Nullable="true" />
-					<Property Type="Int32" Name="ToDate" Nullable="true" />
-					<Property Type="Int32" Name="DataPointsOrder" Nullable="true" />
-          <Property Type="String" Name="TableColumn" Nullable="true" />
-				</ComplexType>
+        <ComplexType Name="CustomScreeningUserPreferences">
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="50" />
+          <Property Type="Int64" Name="ListId" Nullable="false" />
+          <Property Type="String" Name="ListName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Accessibilty" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="ScreeningId" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="DataDescription" Nullable="true" />
+          <Property Type="String" Name="TableColumn" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="DataSource" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PeriodType" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="YearType" Nullable="true" MaxLength="8" />
+          <Property Type="Int32" Name="FromDate" Nullable="true" />
+          <Property Type="Int32" Name="ToDate" Nullable="true" />
+          <Property Type="Int32" Name="DataPointsOrder" Nullable="true" />
+        </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -691,25 +705,27 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
-					<FunctionImportMapping FunctionImportName="GetCustomScreeningUserPreferences" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningUserPreferences">
-						<ResultMapping>
-							<ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningUserPreferences">
-								<ScalarProperty Name="UserName" ColumnName="UserName" />
-								<ScalarProperty Name="ListId" ColumnName="ListId" />
-								<ScalarProperty Name="ListName" ColumnName="ListName" />
-								<ScalarProperty Name="Accessibilty" ColumnName="Accessibilty" />
-								<ScalarProperty Name="ScreeningId" ColumnName="ScreeningId" />
-								<ScalarProperty Name="DataDescription" ColumnName="DataDescription" />
-								<ScalarProperty Name="DataSource" ColumnName="DataSource" />
-								<ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-								<ScalarProperty Name="YearType" ColumnName="YearType" />
-								<ScalarProperty Name="FromDate" ColumnName="FromDate" />
-								<ScalarProperty Name="ToDate" ColumnName="ToDate" />
-								<ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
-							</ComplexTypeMapping>
-						</ResultMapping>
-					</FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SaveCustomScreeningDataPointsPreference" FunctionName="CustomScreeningToolModel.Store.SaveCustomScreeningDataPointsPreference" />
+					<FunctionImportMapping FunctionImportName="SaveCustomScreeningDataPointsPreference" FunctionName="CustomScreeningToolModel.Store.SaveCustomScreeningDataPointsPreference" />
+					<FunctionImportMapping FunctionImportName="UpdateCustomScreeningDataPointsPreference" FunctionName="CustomScreeningToolModel.Store.UpdateCustomScreeningDataPointsPreference" />
+          <FunctionImportMapping FunctionImportName="GetCustomScreeningUserPreferences" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningUserPreferences">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningUserPreferences">
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ListId" ColumnName="ListId" />
+                <ScalarProperty Name="ListName" ColumnName="ListName" />
+                <ScalarProperty Name="Accessibilty" ColumnName="Accessibilty" />
+                <ScalarProperty Name="ScreeningId" ColumnName="ScreeningId" />
+                <ScalarProperty Name="DataDescription" ColumnName="DataDescription" />
+                <ScalarProperty Name="TableColumn" ColumnName="TableColumn" />
+                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
+                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+                <ScalarProperty Name="YearType" ColumnName="YearType" />
+                <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+                <ScalarProperty Name="ToDate" ColumnName="ToDate" />
+                <ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
 				</EntityContainerMapping>
 			</Mapping>
 		</edmx:Mappings>
@@ -736,10 +752,10 @@
 				<EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" Width="2.25" PointX="8" PointY="0.625" Height="2.1725878906249996" />
 				<EntityTypeShape EntityType="CustomScreeningToolModel.UserCustomisedListInfo" Width="1.5" PointX="0.75" PointY="1.375" Height="2.5571907552083317" />
 				<EntityTypeShape EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" Width="2.625" PointX="5" PointY="4" Height="2.7494921874999996" />
-				<EntityTypeShape EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" Width="1.5" PointX="3.25" PointY="1.25" Height="3.9033007812499996" />
+				<EntityTypeShape EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" Width="1.5" PointX="3.125" PointY="1" Height="3.9033007812499996" />
 				<AssociationConnector Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo" >
 					<ConnectorPoint PointX="2.25" PointY="2.6535953776041667" />
-					<ConnectorPoint PointX="3.25" PointY="2.6535953776041667" />
+					<ConnectorPoint PointX="3.125" PointY="2.6535953776041667" />
 				</AssociationConnector>
 			</Diagram>
 		</Diagrams>

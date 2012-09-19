@@ -458,25 +458,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="username">No Metadata Documentation available.</param>
-        public ObjectResult<CustomScreeningUserPreferences> GetCustomScreeningUserPreferences(global::System.String username)
-        {
-            ObjectParameter usernameParameter;
-            if (username != null)
-            {
-                usernameParameter = new ObjectParameter("username", username);
-            }
-            else
-            {
-                usernameParameter = new ObjectParameter("username", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<CustomScreeningUserPreferences>("GetCustomScreeningUserPreferences", usernameParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="userPreference">No Metadata Documentation available.</param>
         /// <param name="username">No Metadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> SaveCustomScreeningDataPointsPreference(global::System.String userPreference, global::System.String username)
@@ -502,6 +483,88 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("SaveCustomScreeningDataPointsPreference", userPreferenceParameter, usernameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userPreference">No Metadata Documentation available.</param>
+        /// <param name="username">No Metadata Documentation available.</param>
+        /// <param name="existingListname">No Metadata Documentation available.</param>
+        /// <param name="newListname">No Metadata Documentation available.</param>
+        /// <param name="accessibility">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> UpdateCustomScreeningDataPointsPreference(global::System.String userPreference, global::System.String username, global::System.String existingListname, global::System.String newListname, global::System.String accessibility)
+        {
+            ObjectParameter userPreferenceParameter;
+            if (userPreference != null)
+            {
+                userPreferenceParameter = new ObjectParameter("userPreference", userPreference);
+            }
+            else
+            {
+                userPreferenceParameter = new ObjectParameter("userPreference", typeof(global::System.String));
+            }
+    
+            ObjectParameter usernameParameter;
+            if (username != null)
+            {
+                usernameParameter = new ObjectParameter("username", username);
+            }
+            else
+            {
+                usernameParameter = new ObjectParameter("username", typeof(global::System.String));
+            }
+    
+            ObjectParameter existingListnameParameter;
+            if (existingListname != null)
+            {
+                existingListnameParameter = new ObjectParameter("existingListname", existingListname);
+            }
+            else
+            {
+                existingListnameParameter = new ObjectParameter("existingListname", typeof(global::System.String));
+            }
+    
+            ObjectParameter newListnameParameter;
+            if (newListname != null)
+            {
+                newListnameParameter = new ObjectParameter("newListname", newListname);
+            }
+            else
+            {
+                newListnameParameter = new ObjectParameter("newListname", typeof(global::System.String));
+            }
+    
+            ObjectParameter accessibilityParameter;
+            if (accessibility != null)
+            {
+                accessibilityParameter = new ObjectParameter("accessibility", accessibility);
+            }
+            else
+            {
+                accessibilityParameter = new ObjectParameter("accessibility", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdateCustomScreeningDataPointsPreference", userPreferenceParameter, usernameParameter, existingListnameParameter, newListnameParameter, accessibilityParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="username">No Metadata Documentation available.</param>
+        public ObjectResult<CustomScreeningUserPreferences> GetCustomScreeningUserPreferences(global::System.String username)
+        {
+            ObjectParameter usernameParameter;
+            if (username != null)
+            {
+                usernameParameter = new ObjectParameter("username", username);
+            }
+            else
+            {
+                usernameParameter = new ObjectParameter("username", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<CustomScreeningUserPreferences>("GetCustomScreeningUserPreferences", usernameParameter);
         }
 
         #endregion
@@ -4174,6 +4237,30 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public global::System.String TableColumn
+        {
+            get
+            {
+                return _TableColumn;
+            }
+            set
+            {
+                OnTableColumnChanging(value);
+                ReportPropertyChanging("TableColumn");
+                _TableColumn = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TableColumn");
+                OnTableColumnChanged();
+            }
+        }
+        private global::System.String _TableColumn;
+        partial void OnTableColumnChanging(global::System.String value);
+        partial void OnTableColumnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public global::System.String DataSource
         {
             get
@@ -4312,30 +4399,6 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _DataPointsOrder;
         partial void OnDataPointsOrderChanging(Nullable<global::System.Int32> value);
         partial void OnDataPointsOrderChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String TableColumn
-        {
-            get
-            {
-                return _TableColumn;
-            }
-            set
-            {
-                OnTableColumnChanging(value);
-                ReportPropertyChanging("TableColumn");
-                _TableColumn = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("TableColumn");
-                OnTableColumnChanged();
-            }
-        }
-        private global::System.String _TableColumn;
-        partial void OnTableColumnChanging(global::System.String value);
-        partial void OnTableColumnChanged();
 
         #endregion
     }

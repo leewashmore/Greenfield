@@ -42,6 +42,8 @@ namespace GreenField.Gadgets.ViewModels
         private IManageSessions _manageSessions;
         private IRegionManager _regionManager;
 
+        string userEnteredListName;
+        string userEnteredAccessibility;
         #endregion
 
         #region Constructor
@@ -687,7 +689,6 @@ namespace GreenField.Gadgets.ViewModels
             //RaisePropertyChanged(() => this.SelectedFieldsDataList);
         }
 
-
         private bool RemoveCommandValidationMethod(object param)
         {
             if (SelectedFieldsDataList == null)
@@ -742,8 +743,8 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             if (result == MessageBoxResult.OK)
                             {
-                                string userEnteredListName = childViewCSTDataListSave.txtDataListName.Text;
-                                string userEnteredAccessibility = childViewCSTDataListSave.SelectedAccessibility;
+                               userEnteredListName = childViewCSTDataListSave.txtDataListName.Text;
+                               userEnteredAccessibility = childViewCSTDataListSave.SelectedAccessibility;
                                 if (Flag != "Edit")
                                 {
                                     if (_dbInteractivity != null)
@@ -757,11 +758,14 @@ namespace GreenField.Gadgets.ViewModels
                                 }
                                 else if (Flag == "Edit")
                                 {
-                                    if (_dbInteractivity != null)
+                                    if (_dbInteractivity != null && SelectedFieldsDataList[0].ListName != null && SelectedFieldsDataList[0].Accessibility != null)
                                     {
-                                        CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Edited");
-                                        CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, SelectedFieldsDataList.ToList());
-                                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
+                                        string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList.ToList(), SelectedFieldsDataList[0].ListName, SelectedFieldsDataList[0].Accessibility);
+                                        if (xmlData != null)
+                                        {
+                                            _dbInteractivity.UpdateUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName,
+                                                SelectedFieldsDataList[0].ListName, userEnteredListName, userEnteredAccessibility, UpdateUserDataPointsPreferenceCallBackMethod);
+                                        }
                                     }
                                 }
                             }
@@ -784,65 +788,60 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (userName != null && userPreference != null)
                 {
-
-
                     XElement root = new XElement("Root");
+                        foreach (CSTUserPreferenceInfo preference in userPreference)
+                        {
+                            XElement createRow = new XElement("CreateRow", new XAttribute("ListName", listName));
+                            XElement createRowEntity = new XElement("CreateRowEntity");
 
-                    foreach (CSTUserPreferenceInfo preference in userPreference)
-                    {
-                        XElement createRow = new XElement("CreateRow", new XAttribute("ListName", listName));
-                        XElement createRowEntity = new XElement("CreateRowEntity");
+                            createRowEntity.Add(new XAttribute("UserName", userName));
+                            createRowEntity.Add(new XAttribute("ListName", listName));
+                            createRowEntity.Add(new XAttribute("Accessibilty", accessibility));
+                            createRowEntity.Add(new XAttribute("CreatedOn", DateTime.Now));
+                            createRowEntity.Add(new XAttribute("ModifiedBy", userName));
+                            createRowEntity.Add(new XAttribute("ModifiedOn", DateTime.Now));
 
-                        createRowEntity.Add(new XAttribute("UserName", userName));
-                        createRowEntity.Add(new XAttribute("ListName", listName));
-                        createRowEntity.Add(new XAttribute("Accessibilty", accessibility));
-                        createRowEntity.Add(new XAttribute("CreatedOn", DateTime.Now));
-                        createRowEntity.Add(new XAttribute("ModifiedBy", userName));
-                        createRowEntity.Add(new XAttribute("ModifiedOn", DateTime.Now));
+                            createRow.Add(createRowEntity);
+                            XElement createRowPreference = new XElement("CreateRowPreference");
 
-                        createRow.Add(createRowEntity);
+                            createRowPreference.Add(new XAttribute("UserName", userName));
+                            createRowPreference.Add(new XAttribute("ListName", listName));
+                            createRowPreference.Add(new XAttribute("ScreeningId", preference.ScreeningId));
+                            createRowPreference.Add(new XAttribute("DataDescription", preference.DataDescription));
+                            if (preference.DataSource != null)
+                                createRowPreference.Add(new XAttribute("DataSource", preference.DataSource));
+                            else
+                                createRowPreference.Add(new XAttribute("DataSource", string.Empty));
 
-                        XElement createRowPreference = new XElement("CreateRowPreference");
+                            if (preference.PeriodType != null)
+                                createRowPreference.Add(new XAttribute("PeriodType", preference.PeriodType));
+                            else
+                                createRowPreference.Add(new XAttribute("PeriodType", string.Empty));
 
-                        createRowPreference.Add(new XAttribute("UserName", userName));
-                        createRowPreference.Add(new XAttribute("ListName", listName));
-                        createRowPreference.Add(new XAttribute("ScreeningId", preference.ScreeningId));
-                        createRowPreference.Add(new XAttribute("DataDescription", preference.DataDescription));
-                        if(preference.DataSource != null)
-                        createRowPreference.Add(new XAttribute("DataSource", preference.DataSource));
-                        else
-                        createRowPreference.Add(new XAttribute("DataSource", string.Empty));
+                            if (preference.YearType != null)
+                                createRowPreference.Add(new XAttribute("YearType", preference.YearType));
+                            else
+                                createRowPreference.Add(new XAttribute("YearType", string.Empty));
 
-                        if(preference.PeriodType != null)
-                        createRowPreference.Add(new XAttribute("PeriodType", preference.PeriodType));
-                        else
-                        createRowPreference.Add(new XAttribute("PeriodType", string.Empty));
+                            if (preference.FromDate != null)
+                                createRowPreference.Add(new XAttribute("FromDate", preference.FromDate));
+                            else
+                                createRowPreference.Add(new XAttribute("FromDate", string.Empty));
 
-                        if (preference.YearType != null)
-                        createRowPreference.Add(new XAttribute("YearType", preference.YearType));
-                        else
-                        createRowPreference.Add(new XAttribute("YearType", string.Empty));
+                            if (preference.ToDate != null)
+                                createRowPreference.Add(new XAttribute("ToDate", preference.ToDate));
+                            else
+                                createRowPreference.Add(new XAttribute("ToDate", string.Empty));
 
-                         if (preference.FromDate != null)
-                        createRowPreference.Add(new XAttribute("FromDate", preference.FromDate));
-                        else
-                          createRowPreference.Add(new XAttribute("FromDate", string.Empty));
+                            createRowPreference.Add(new XAttribute("DataPointsOrder", preference.DataPointsOrder));
+                            createRowPreference.Add(new XAttribute("CreatedBy", userName));
+                            createRowPreference.Add(new XAttribute("CreatedOn", DateTime.Now));
+                            createRowPreference.Add(new XAttribute("ModifiedBy", userName));
+                            createRowPreference.Add(new XAttribute("ModifiedOn", DateTime.Now));
 
-                         if (preference.ToDate != null)
-                        createRowPreference.Add(new XAttribute("ToDate", preference.ToDate));
-                        else
-                        createRowPreference.Add(new XAttribute("ToDate", string.Empty));
-
-                        createRowPreference.Add(new XAttribute("DataPointsOrder", preference.DataPointsOrder));
-                        createRowPreference.Add(new XAttribute("CreatedBy", userName));
-                        createRowPreference.Add(new XAttribute("CreatedOn", DateTime.Now));
-                        createRowPreference.Add(new XAttribute("ModifiedBy", userName));
-                        createRowPreference.Add(new XAttribute("ModifiedOn", DateTime.Now));
-
-                        createRow.Add(createRowPreference);
-                        root.Add(createRow);
-                    }
-
+                            createRow.Add(createRowPreference);
+                            root.Add(createRow);
+                        } 
                     XDocument doc = new XDocument(
                        new XDeclaration("1.0", "utf-8", "yes"),
                        new XComment("Custom screening Tool save as preference details"), root);
@@ -991,6 +990,43 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                     CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Created");
+                    CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, SelectedFieldsDataList.ToList());
+                    _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
+                }
+                else if (result == false)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                }
+                else
+                {
+                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+
+        }
+
+        private void UpdateUserDataPointsPreferenceCallBackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+
+            try
+            {
+                if (result == true)
+                {
+                    foreach (CSTUserPreferenceInfo item in SelectedFieldsDataList)
+                    {
+                        item.ListName = userEnteredListName;
+                        item.Accessibility = userEnteredAccessibility;
+                    }
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Edited");
                     CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, SelectedFieldsDataList.ToList());
                     _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
                 }

@@ -115,6 +115,14 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         System.IAsyncResult BeginRetrieveSecurityData(GreenField.DataContracts.PortfolioSelectionData portfolio, GreenField.DataContracts.EntitySelectionData benchmark, string region, string country, string sector, string industry, System.Collections.Generic.List<GreenField.DataContracts.CSTUserPreferenceInfo> userPreference, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> EndRetrieveSecurityData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/UpdateUserDataPointsPreference", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/UpdateUserDataPointsPreferenceRe" +
+            "sponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/UpdateUserDataPointsPreferenceSe" +
+            "rviceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginUpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility, System.AsyncCallback callback, object asyncState);
+        
+        System.Nullable<bool> EndUpdateUserDataPointsPreference(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -275,6 +283,25 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class UpdateUserDataPointsPreferenceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public UpdateUserDataPointsPreferenceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Nullable<bool> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Nullable<bool>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class CustomScreeningToolOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations>, GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations {
         
         private BeginOperationDelegate onBeginRetrieveCustomControlsListDelegate;
@@ -324,6 +351,12 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         private EndOperationDelegate onEndRetrieveSecurityDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveSecurityDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginUpdateUserDataPointsPreferenceDelegate;
+        
+        private EndOperationDelegate onEndUpdateUserDataPointsPreferenceDelegate;
+        
+        private System.Threading.SendOrPostCallback onUpdateUserDataPointsPreferenceCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -393,6 +426,8 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         public event System.EventHandler<GetCustomScreeningUserPreferencesCompletedEventArgs> GetCustomScreeningUserPreferencesCompleted;
         
         public event System.EventHandler<RetrieveSecurityDataCompletedEventArgs> RetrieveSecurityDataCompleted;
+        
+        public event System.EventHandler<UpdateUserDataPointsPreferenceCompletedEventArgs> UpdateUserDataPointsPreferenceCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -772,6 +807,60 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                         userPreference}, this.onEndRetrieveSecurityDataDelegate, this.onRetrieveSecurityDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginUpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdateUserDataPointsPreference(userPreference, username, existingListname, newListname, accessibility, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Nullable<bool> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndUpdateUserDataPointsPreference(System.IAsyncResult result) {
+            return base.Channel.EndUpdateUserDataPointsPreference(result);
+        }
+        
+        private System.IAsyncResult OnBeginUpdateUserDataPointsPreference(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string userPreference = ((string)(inValues[0]));
+            string username = ((string)(inValues[1]));
+            string existingListname = ((string)(inValues[2]));
+            string newListname = ((string)(inValues[3]));
+            string accessibility = ((string)(inValues[4]));
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginUpdateUserDataPointsPreference(userPreference, username, existingListname, newListname, accessibility, callback, asyncState);
+        }
+        
+        private object[] OnEndUpdateUserDataPointsPreference(System.IAsyncResult result) {
+            System.Nullable<bool> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndUpdateUserDataPointsPreference(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnUpdateUserDataPointsPreferenceCompleted(object state) {
+            if ((this.UpdateUserDataPointsPreferenceCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.UpdateUserDataPointsPreferenceCompleted(this, new UpdateUserDataPointsPreferenceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void UpdateUserDataPointsPreferenceAsync(string userPreference, string username, string existingListname, string newListname, string accessibility) {
+            this.UpdateUserDataPointsPreferenceAsync(userPreference, username, existingListname, newListname, accessibility, null);
+        }
+        
+        public void UpdateUserDataPointsPreferenceAsync(string userPreference, string username, string existingListname, string newListname, string accessibility, object userState) {
+            if ((this.onBeginUpdateUserDataPointsPreferenceDelegate == null)) {
+                this.onBeginUpdateUserDataPointsPreferenceDelegate = new BeginOperationDelegate(this.OnBeginUpdateUserDataPointsPreference);
+            }
+            if ((this.onEndUpdateUserDataPointsPreferenceDelegate == null)) {
+                this.onEndUpdateUserDataPointsPreferenceDelegate = new EndOperationDelegate(this.OnEndUpdateUserDataPointsPreference);
+            }
+            if ((this.onUpdateUserDataPointsPreferenceCompletedDelegate == null)) {
+                this.onUpdateUserDataPointsPreferenceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUpdateUserDataPointsPreferenceCompleted);
+            }
+            base.InvokeAsync(this.onBeginUpdateUserDataPointsPreferenceDelegate, new object[] {
+                        userPreference,
+                        username,
+                        existingListname,
+                        newListname,
+                        accessibility}, this.onEndUpdateUserDataPointsPreferenceDelegate, this.onUpdateUserDataPointsPreferenceCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -952,6 +1041,23 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             public System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> EndRetrieveSecurityData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.CustomScreeningSecurityData>)(base.EndInvoke("RetrieveSecurityData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginUpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[5];
+                _args[0] = userPreference;
+                _args[1] = username;
+                _args[2] = existingListname;
+                _args[3] = newListname;
+                _args[4] = accessibility;
+                System.IAsyncResult _result = base.BeginInvoke("UpdateUserDataPointsPreference", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Nullable<bool> EndUpdateUserDataPointsPreference(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("UpdateUserDataPointsPreference", _args, result)));
                 return _result;
             }
         }
