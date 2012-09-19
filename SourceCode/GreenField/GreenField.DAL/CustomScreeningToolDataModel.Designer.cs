@@ -4312,6 +4312,30 @@ namespace GreenField.DAL
         private Nullable<global::System.Int32> _DataPointsOrder;
         partial void OnDataPointsOrderChanging(Nullable<global::System.Int32> value);
         partial void OnDataPointsOrderChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String TableColumn
+        {
+            get
+            {
+                return _TableColumn;
+            }
+            set
+            {
+                OnTableColumnChanging(value);
+                ReportPropertyChanging("TableColumn");
+                _TableColumn = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("TableColumn");
+                OnTableColumnChanged();
+            }
+        }
+        private global::System.String _TableColumn;
+        partial void OnTableColumnChanging(global::System.String value);
+        partial void OnTableColumnChanged();
 
         #endregion
     }

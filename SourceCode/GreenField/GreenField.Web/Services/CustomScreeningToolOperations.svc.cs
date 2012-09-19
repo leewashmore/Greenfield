@@ -380,6 +380,7 @@ namespace GreenField.Web.Services
                         //LongDescription = item.LONG_DESC,
                         //DataColumn = item.TABLE_COLUMN
                         ListName = item.ListName,
+                        TableColumn = item.TableColumn,
                         Accessibility = item.Accessibilty,
                         DataSource = item.DataSource,
                         PeriodType = item.PeriodType,
@@ -528,26 +529,33 @@ namespace GreenField.Web.Services
                           if (item.ScreeningId.StartsWith("FIN"))
                           {
                               List<CustomScreeningFINData> temp = new List<CustomScreeningFINData>();
-                              temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.PeriodType, item.FromDate, item.YearType, item.DataSource).ToList();
-
-                              foreach (CustomScreeningFINData record in temp)
+                              if (item.PeriodType != null)
                               {
-                                  CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
-                                  fillData.SecurityId = record.SecurityId;
-                                  fillData.IssuerId = record.IssuerId;
-                                  fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId).Select(a => a.IssueName).FirstOrDefault();
-                                  fillData.Type = item.DataDescription;
-                                  fillData.Multiplier = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.MULTIPLIER).FirstOrDefault();
-                                  decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
-                                  fillData.DataSource = item.DataSource;
-                                  fillData.PeriodYear = record.PeriodYear;
-                                  fillData.PeriodType = item.PeriodType;
-                                  fillData.YearType = item.YearType;
-                                  fillData.Decimals = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.DECIMAL).FirstOrDefault();
-                                  fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.PERCENTAGE).FirstOrDefault();
-                                  _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
-                                  fillData.Value = fillData.IsPercentage == "Y" ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount);
-                                  result.Add(fillData);
+                                  if(item.PeriodType.StartsWith("A"))
+                                  {
+                                    temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.PeriodType.Substring(0,1), item.FromDate, item.YearType, item.DataSource).ToList();
+                                  }
+                                  else
+                                      temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.PeriodType, item.FromDate, item.YearType, item.DataSource).ToList();
+                                  foreach (CustomScreeningFINData record in temp)
+                                  {
+                                      CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
+                                      fillData.SecurityId = record.SecurityId;
+                                      fillData.IssuerId = record.IssuerId;
+                                      fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId).Select(a => a.IssueName).FirstOrDefault();
+                                      fillData.Type = item.DataDescription;
+                                      fillData.Multiplier = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.MULTIPLIER).FirstOrDefault();
+                                      decimal _amount = fillData.Multiplier != null ? Convert.ToDecimal(record.Amount * fillData.Multiplier) : record.Amount;
+                                      fillData.DataSource = item.DataSource;
+                                      fillData.PeriodYear = record.PeriodYear;
+                                      fillData.PeriodType = item.PeriodType;
+                                      fillData.YearType = item.YearType;
+                                      fillData.Decimals = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.DECIMAL).FirstOrDefault();
+                                      fillData.IsPercentage = cstEntity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.PERCENTAGE).FirstOrDefault();
+                                      _amount = fillData.Decimals != null ? Math.Round(Convert.ToDecimal(_amount), Convert.ToInt16(fillData.Decimals)) : _amount;
+                                      fillData.Value = fillData.IsPercentage == "Y" ? Convert.ToString(_amount) + "%" : Convert.ToString(_amount);
+                                      result.Add(fillData);
+                                  }
                               }
                           }
                       }

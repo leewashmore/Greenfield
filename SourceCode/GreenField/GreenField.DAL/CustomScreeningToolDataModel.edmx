@@ -480,6 +480,7 @@
 					<Property Type="Int32" Name="FromDate" Nullable="true" />
 					<Property Type="Int32" Name="ToDate" Nullable="true" />
 					<Property Type="Int32" Name="DataPointsOrder" Nullable="true" />
+          <Property Type="String" Name="TableColumn" Nullable="true" />
 				</ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>

@@ -37,6 +37,7 @@
       <xs:element minOccurs="0" name="ListName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ScreeningId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TableColumn" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="TableColumnName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ToDate" type="xs:int" />
       <xs:element minOccurs="0" name="UserName" nillable="true" type="xs:string" />

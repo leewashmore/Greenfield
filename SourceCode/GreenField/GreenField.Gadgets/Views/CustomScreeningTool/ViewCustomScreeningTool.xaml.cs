@@ -20,7 +20,7 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewCustomScreeningTool : ViewBaseUserControl
     {
-        ObservableCollection<MyDataRow> _data = new ObservableCollection<MyDataRow>();
+       
 
         #region Properties
         /// <summary>
@@ -86,6 +86,8 @@ namespace GreenField.Gadgets.Views
         private void dataContextSource_RetrieveCustomXmlDataCompletedEvent(Common.RetrieveCustomXmlDataCompleteEventArgs e)
         {
 
+            ObservableCollection<MyDataRow> _data = new ObservableCollection<MyDataRow>();
+            Dictionary<string,string> columnMapping = new Dictionary<string,string>();
 
             this.dgCustomSecurity.ItemsSource = null;
             this.dgCustomSecurity.Columns.Clear();
@@ -94,21 +96,30 @@ namespace GreenField.Gadgets.Views
             XDocument xmlDoc = XDocument.Parse(e.XmlInfo);
 
             // find the columns
-            List<string> columnNames = xmlDoc.Descendants("column")
+            List<String> columnNames = xmlDoc.Descendants("column")
                                              .Attributes("name")
                                              .Select(a => a.Value)
                                              .ToList();
 
-            // add them to the grid
-            foreach (string columnName in columnNames)
+            foreach(string colName in columnNames)
             {
-                GridViewDataColumn column = new GridViewDataColumn();
-                //  column.DataMemberBinding = new Binding(columnName);
+                string displayName = xmlDoc.Descendants("column")
+                                             .Attributes("displayname")
+                                             .Where(a => a.PreviousAttribute.Value == colName)
+                                             .FirstOrDefault().Value;
+                
+                columnMapping.Add(colName, displayName);
+            }
 
-                column.Header = columnName;
-                column.UniqueName = columnName;
+            foreach (KeyValuePair<string, string> kvp in columnMapping)
+            {
+                GridViewDataColumn column = new GridViewDataColumn();               
+                column.Header = kvp.Value;
+                column.UniqueName = kvp.Key;
+                column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key);
+                column.IsFilterable = true;
+                column.IsGroupable = true;
                 this.dgCustomSecurity.Columns.Add(column);
-
             }
 
 
@@ -119,20 +130,21 @@ namespace GreenField.Gadgets.Views
             {
                 MyDataRow rowData = new MyDataRow();
 
-                foreach (string colName in columnNames)
+                foreach (KeyValuePair<string, string> kvp in columnMapping)
                 {
-                    var cells = row.Descendants("Element").Where(a=>a.Attribute("name").Value == colName).ToList();
+                    var cells = row.Descendants("Element").Where(a => a.Attribute("name").Value == kvp.Key).ToList();
                     foreach (var cell in cells)
                     {
-                        rowData[colName] = cell.Value;
+                        rowData[kvp.Key] = cell.Value;
                     }
                 }
                 _data.Add(rowData);
             }
 
             this.dgCustomSecurity.ItemsSource = _data;
-            //this.dgCustomSecurity.on;
-            // (this.dgCustomSecurity.Items[0])
+            this.dgCustomSecurity.IsFilteringAllowed = true;
+            
+        
         }
     
 

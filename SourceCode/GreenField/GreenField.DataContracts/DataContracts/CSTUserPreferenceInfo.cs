@@ -48,5 +48,8 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public int DataPointsOrder { get; set; }
+
+        [DataMember]
+        public String TableColumn { get; set; }
     }
 }
