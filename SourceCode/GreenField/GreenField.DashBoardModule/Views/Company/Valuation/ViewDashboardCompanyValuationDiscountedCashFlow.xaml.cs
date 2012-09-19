@@ -24,6 +24,7 @@ using GreenField.Gadgets.ViewModels;
 using Microsoft.Practices.Prism.Regions;
 using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Documents.Model;
+using System.Windows.Media.Imaging;
 
 namespace GreenField.DashboardModule.Views
 {
@@ -35,14 +36,14 @@ namespace GreenField.DashboardModule.Views
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
 
-        private RadDocument[] _dcfReport;
-        public RadDocument[] DCFReport
+        private List<Table> _dcfReport;
+        public List<Table> DCFReport
         {
             get
             {
                 if (_dcfReport == null)
-                { 
-                    _dcfReport= new RadDocument[7];
+                {
+                    _dcfReport = new List<Table>();
                 }
                 return _dcfReport;
             }
@@ -199,22 +200,18 @@ namespace GreenField.DashboardModule.Views
         /// <param name="e"></param>
         private void btnPDF_Click(object sender, RoutedEventArgs e)
         {
+            RadDocument mergedDocument = new RadDocument();
+
             RadDocument finalReport = new RadDocument();
             int i = 0;
             foreach (RadTileViewItem item in this.rtvDashboard.Items)
             {
                 ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
-                RadDocument document = control.CreateDocument();
-                if (document != null)
+                Table table = control.CreateDocument();
+                if (table != null)
                 {
-                    DCFReport[i] = document;
-                    
-                }
-                else
-                {
-                    DCFReport[i] = new RadDocument();
-                }
-                i++;
+                    DCFReport.Add(table);
+                }             
             }
             if (DCFReport != null)
             {
@@ -223,22 +220,34 @@ namespace GreenField.DashboardModule.Views
             }
         }
 
+        private RadDocument _finalReport;
+        public RadDocument FinalReport
+        {
+            get
+            {
+                if (_finalReport == null)
+                    _finalReport = new RadDocument();
+                return _finalReport;
+            }
+            set { _finalReport = value; }
+        }
+
+
         /// <summary>
         /// Method to Merge Multiple RadDocuments
         /// </summary>
-        /// <param name="documents">Array of type RadDocuments</param>
+        /// <param name="tables">Array of type RadDocuments</param>
         /// <returns>Merged Documents</returns>
-        private RadDocument MergeDocuments(RadDocument[] documents)
+        private RadDocument MergeDocuments(List<Table> tables)
         {
-            RadDocument mergedDocument = new RadDocument();           
-            foreach (RadDocument document in documents)
+            RadDocument mergedDocument = new RadDocument();
+            Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
+            Table documentTable = new Table(tables.Count(), 1);
+            mergedDocument.Sections.Add(section);
+            foreach (Table item in tables)
             {
-                foreach (Telerik.Windows.Documents.Model.Section section in document.Sections)
-                {
-                    Telerik.Windows.Documents.Model.Section copySection = section.CreateDeepCopy() as Telerik.Windows.Documents.Model.Section;
-                    document.Sections.Remove(section);
-                    mergedDocument.Sections.Add(copySection);
-                }
+                Telerik.Windows.Documents.Model.Section mainSection = new Telerik.Windows.Documents.Model.Section();
+                section.Blocks.Add(item);
             }
             return mergedDocument;
         }

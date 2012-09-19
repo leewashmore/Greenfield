@@ -16,7 +16,7 @@ namespace GreenField.Gadgets.Helpers
     {
         public virtual bool IsActive { get; set; }
         public virtual void Dispose(){}
-        public virtual RadDocument CreateDocument() 
+        public virtual Table CreateDocument() 
         {
             return null;
         }

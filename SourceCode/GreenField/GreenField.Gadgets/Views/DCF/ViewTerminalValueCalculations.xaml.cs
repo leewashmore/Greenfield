@@ -182,11 +182,18 @@ namespace GreenField.Gadgets.Views
         /// create RadDocument from the DataGrid
         /// </summary>
         /// <returns>Returns the RadDcoument for the Grid</returns>
-        public override RadDocument CreateDocument()
+        public override Table CreateDocument()
         {
             try
             {
-                return PDFExporter.ExportArray(dgTerminalValueCalculations, 12);
+                if (dgTerminalValueCalculations.Items.Count > 0)
+                {
+                    return PDFExporter.CreateTable(dgTerminalValueCalculations, 12);
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {
