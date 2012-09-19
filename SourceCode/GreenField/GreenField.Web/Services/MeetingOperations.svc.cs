@@ -132,6 +132,12 @@ namespace GreenField.Web.Services
                     xmlDoc.Root.Add(element);
                 }
 
+                if (!votingUsers.Contains(userName) && !chiefExecutiveUsers.Contains(userName))
+                {
+                    XElement element = new XElement("VotingUser", userName.ToLower());
+                    xmlDoc.Root.Add(element);
+                }
+
                 String xmlScript = xmlDoc.ToString();
                 Int64? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();
 
