@@ -19,21 +19,30 @@ end
 
 GO
 
-UPDATE [dbo].[UserListDataPointMappingInfo]
-   SET [ListId] = <ListId, bigint,>
-      ,[ScreeningId] = <ScreeningId, varchar(50),>
-      ,[DataDescription] = <DataDescription, nvarchar(max),>
-      ,[DataSource] = <DataSource, varchar(50),>
-      ,[PeriodType] = <PeriodType, varchar(10),>
-      ,[YearType] = <YearType, char(8),>
-      ,[FromDate] = <FromDate, int,>
-      ,[ToDate] = <ToDate, int,>
-      ,[DataPointsOrder] = <DataPointsOrder, int,>
-      ,[CreatedBy] = <CreatedBy, nvarchar(50),>
-      ,[CreatedOn] = <CreatedOn, datetime,>
-      ,[ModifiedBy] = <ModifiedBy, nvarchar(50),>
-      ,[ModifiedOn] = <ModifiedOn, datetime,>
- WHERE <Search Conditions,,>
+IF OBJECT_ID ('dbo.UserListDataPointMappingInfo') IS NOT NULL
+	DROP TABLE dbo.UserListDataPointMappingInfo
+GO
+
+CREATE TABLE dbo.UserListDataPointMappingInfo
+	(
+	DataPointId     BIGINT IDENTITY NOT NULL,
+	ListId          BIGINT NOT NULL,
+	ScreeningId     VARCHAR (50) NOT NULL,
+	DataDescription NVARCHAR (max) NOT NULL,
+	DataSource      VARCHAR (50) NULL,
+	PeriodType      VARCHAR (10) NULL,
+	YearType        CHAR (8) NULL,
+	FromDate        INT NULL,
+	ToDate          INT NULL,
+	DataPointsOrder INT NOT NULL,
+	CreatedBy       NVARCHAR (50) NOT NULL,
+	CreatedOn       DATETIME NOT NULL,
+	ModifiedBy      NVARCHAR (50) NOT NULL,
+	ModifiedOn      DATETIME NOT NULL,
+	CONSTRAINT PK_tblUserListDataPointMappingInfo PRIMARY KEY (DataPointId),
+	CONSTRAINT FK_UserListDataPointMappingInfo_UserCustomisedListInfo FOREIGN KEY (ListId) REFERENCES dbo.UserCustomisedListInfo (ListId) ON DELETE CASCADE ON UPDATE CASCADE
+	)
+
 GO
 --indicate thet current script is executed
 declare @CurrentScriptVersion as nvarchar(100) = '00076'
