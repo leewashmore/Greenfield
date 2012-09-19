@@ -127,13 +127,16 @@ namespace GreenField.Web.Services
 
                foreach (SCREENING_DISPLAY_REFERENCE item in data)
                {
-                   result.Add(new CustomSelectionData()
-                   { 
-                       ScreeningId = item.SCREENING_ID,
-                       DataDescription = item.DATA_DESC,
-                       LongDescription = item.LONG_DESC,
-                       DataColumn = item.TABLE_COLUMN
-                   });
+                   if (item.DATA_DESC != null && item.SCREENING_ID != null)
+                   {
+                       result.Add(new CustomSelectionData()
+                       {
+                           ScreeningId = item.SCREENING_ID,
+                           DataDescription = item.DATA_DESC,
+                           LongDescription = item.LONG_DESC,
+                           DataColumn = item.TABLE_COLUMN
+                       });
+                   }
                }
                 return result;
             }
@@ -173,16 +176,19 @@ namespace GreenField.Web.Services
 
                 foreach (FinancialTabDataDescriptions item in data)
                 {
-                    result.Add(new CustomSelectionData()
+                    if (item.DATA_DESC != null && item.SCREENING_ID != null)
                     {
-                        ScreeningId = item.SCREENING_ID,
-                        DataDescription = item.DATA_DESC,
-                       // LongDescription = item.LONG_DESC
-                       Quaterly = item.QUARTERLY,
-                       Annual = item.ANNUAL,
-                       DataID = item.DATA_ID,
-                       EstimateID = item.ESTIMATE_ID
-                    });
+                        result.Add(new CustomSelectionData()
+                        {
+                            ScreeningId = item.SCREENING_ID,
+                            DataDescription = item.DATA_DESC,
+                            // LongDescription = item.LONG_DESC
+                            Quaterly = item.QUARTERLY,
+                            Annual = item.ANNUAL,
+                            DataID = item.DATA_ID,
+                            EstimateID = item.ESTIMATE_ID
+                        });
+                    }
                 }
                 return result;
             }
@@ -222,16 +228,19 @@ namespace GreenField.Web.Services
 
                 foreach (FinancialTabDataDescriptions item in data)
                 {
-                    result.Add(new CustomSelectionData()
+                    if (item.DATA_DESC != null && item.SCREENING_ID != null)
                     {
-                        ScreeningId = item.SCREENING_ID,
-                        DataDescription = item.DATA_DESC,
-                        // LongDescription = item.LONG_DESC
-                        Quaterly = item.QUARTERLY,
-                        Annual = item.ANNUAL,
-                        DataID = item.DATA_ID,
-                        EstimateID = item.ESTIMATE_ID
-                    });
+                        result.Add(new CustomSelectionData()
+                        {
+                            ScreeningId = item.SCREENING_ID,
+                            DataDescription = item.DATA_DESC,
+                            // LongDescription = item.LONG_DESC
+                            Quaterly = item.QUARTERLY,
+                            Annual = item.ANNUAL,
+                            DataID = item.DATA_ID,
+                            EstimateID = item.ESTIMATE_ID
+                        });
+                    }
                 }
                 return result;
             }
@@ -271,13 +280,16 @@ namespace GreenField.Web.Services
 
                 foreach (SCREENING_DISPLAY_FAIRVALUE item in data)
                 {
-                    result.Add(new CustomSelectionData()
+                    if (item.DATA_DESC != null && item.SCREENING_ID != null)
                     {
-                        ScreeningId = item.SCREENING_ID,
-                        DataDescription = item.DATA_DESC,
-                        LongDescription = item.LONG_DESC,
-                        DataColumn = item.TABLE_COLUMN
-                    });
+                        result.Add(new CustomSelectionData()
+                        {
+                            ScreeningId = item.SCREENING_ID,
+                            DataDescription = item.DATA_DESC,
+                            LongDescription = item.LONG_DESC,
+                            DataColumn = item.TABLE_COLUMN
+                        });
+                    }
                 }
                 return result;
             }
