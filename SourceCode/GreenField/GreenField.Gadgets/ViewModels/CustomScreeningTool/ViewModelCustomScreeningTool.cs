@@ -563,7 +563,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
         #region Data List Selector
 
         private bool OkCommandValidationMethod(object param)
@@ -1205,7 +1204,6 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Helpers
 
-
         public void Initialize()
         {
             SelectionRaisePropertyChanged();
@@ -1255,6 +1253,18 @@ namespace GreenField.Gadgets.ViewModels
         {
             string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
 
+            //if (flag == null)
+            //{
+            //    SelectedPortfolio = null;
+            //    SelectedBenchmark = null;
+            //    SelectedCountry = null;
+            //    SelectedIndustry = null;
+            //    SelectedRegion = null; 
+            //    SelectedSector = null;
+            //    SecurityData = null;
+            //    SelectedSavedDataList = new List<CSTUserPreferenceInfo>();
+            //}else 
+
             if (flag == "Created" || flag == "Edited")
             {
                 SelectedSavedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
@@ -1290,7 +1300,6 @@ namespace GreenField.Gadgets.ViewModels
 
             return replacedStr;
         }
-
 
         #endregion
 
