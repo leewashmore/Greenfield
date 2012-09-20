@@ -103,7 +103,7 @@ namespace GreenField.Web.Services
                 data.Beta = (securityDetails.BARRA_BETA == null) ?
                     (Convert.ToDecimal(securityDetails.BETA)) : (Convert.ToDecimal(securityDetails.BARRA_BETA));
                 data.CostOfDebt = Convert.ToDecimal(securityDetails.WACC_COST_DEBT);
-                data.MarginalTaxRate = dbResult.Where(a => a.DATA_ID == 289 && a.PERIOD_TYPE == "C").Select(a => a.AMOUNT).FirstOrDefault();
+                data.MarginalTaxRate = dbResult.Where(a => a.DATA_ID == 289 && a.PERIOD_TYPE.Trim() == "C").Select(a => a.AMOUNT).FirstOrDefault();
                 data.GrossDebt = dbResult.Where(a => a.DATA_ID == 256 && a.PERIOD_TYPE == "C").Select(a => a.AMOUNT).FirstOrDefault();
                 data.MarketCap = Convert.ToDecimal(marketCap);
 
@@ -453,10 +453,17 @@ namespace GreenField.Web.Services
             {
                 valueROIC = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 162 && a.FISCAL == "CALENDAR")
                     .Select(a => a.AMOUNT).FirstOrDefault();
-                collectionROIC.Add(valueROIC);
+                if (valueROIC != null)
+                {
+                    collectionROIC.Add(valueROIC);
+                }
                 valueSustainableDividendPayoutRatio = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 141 && a.FISCAL == "FISCAL")
                     .Select(a => a.AMOUNT).FirstOrDefault();
-                collectionSustainableDividendPayoutRatio.Add(valueSustainableDividendPayoutRatio);
+
+                if (valueSustainableDividendPayoutRatio != null)
+                {
+                    collectionSustainableDividendPayoutRatio.Add(valueSustainableDividendPayoutRatio);
+                }
             }
 
             if (collectionROIC.Any(a => a.Value != null))
