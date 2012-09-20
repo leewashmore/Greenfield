@@ -238,8 +238,13 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgDCFAnalysisSummary_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
         {
-            if (stockSpecificDiscount != null || stockSpecificDiscount != "")
-                this.DataContextSource.StockSpecificDiscount = Convert.ToDecimal(stockSpecificDiscount);
+            if (stockSpecificDiscount != null)
+            {
+                if (stockSpecificDiscount != "")
+                {
+                    this.DataContextSource.StockSpecificDiscount = Convert.ToDecimal(stockSpecificDiscount);
+                }
+            }
         }
 
         /// <summary>

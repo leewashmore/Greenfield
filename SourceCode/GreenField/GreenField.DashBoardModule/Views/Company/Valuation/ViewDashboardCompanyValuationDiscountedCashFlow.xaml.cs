@@ -36,6 +36,21 @@ namespace GreenField.DashboardModule.Views
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
 
+        private List<string> _EPS_BVPS;
+        public List<string> EPS_BVPS
+        {
+            get
+            {
+                if (_EPS_BVPS == null)
+                {
+                    _EPS_BVPS = new List<string>();
+                }
+                return _EPS_BVPS;
+            }
+            set { _EPS_BVPS = value; }
+        }
+
+
         private List<Table> _dcfReport;
         public List<Table> DCFReport
         {
@@ -200,6 +215,7 @@ namespace GreenField.DashboardModule.Views
         /// <param name="e"></param>
         private void btnPDF_Click(object sender, RoutedEventArgs e)
         {
+            DCFReport = new List<Table>();
             RadDocument mergedDocument = new RadDocument();
 
             RadDocument finalReport = new RadDocument();
@@ -212,6 +228,11 @@ namespace GreenField.DashboardModule.Views
                 {
                     DCFReport.Add(table);
                 }
+
+                //if ((item.Content as Telerik.Windows.Controls.HeaderedContentControl).Content == "FORWARD EPS")
+                //{
+                //    EPS_BVPS = control.EPS_BVPS();
+                //}
             }
             if (DCFReport != null)
             {
@@ -274,6 +295,12 @@ namespace GreenField.DashboardModule.Views
 
         private string ReturnGadgetName(int order)
         {
+            if (EPS_BVPS.Count == 0)
+            {
+                EPS_BVPS.Add(" ");
+                EPS_BVPS.Add(" ");
+            }
+
             switch (order)
             {
                 case 0:
@@ -287,9 +314,9 @@ namespace GreenField.DashboardModule.Views
                 case 4:
                     return "SENSITIVITY";
                 case 5:
-                    return "SENSITIVITY EPS";
+                    return "SENSITIVITY EPS ";// + "EPS= " + Convert.ToString(EPS_BVPS[0]);
                 case 6:
-                    return "SENSITIVITY BVPS";
+                    return "SENSITIVITY BVPS ";// + "BVPS= " + Convert.ToString(EPS_BVPS[1]);
                 default:
                     return string.Empty;
             }
