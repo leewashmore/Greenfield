@@ -104,7 +104,7 @@ namespace GreenField.Web.Services
                     (Convert.ToDecimal(securityDetails.BETA)) : (Convert.ToDecimal(securityDetails.BARRA_BETA));
                 data.CostOfDebt = Convert.ToDecimal(securityDetails.WACC_COST_DEBT);
                 data.MarginalTaxRate = dbResult.Where(a => a.DATA_ID == 289 && a.PERIOD_TYPE.Trim() == "C").Select(a => a.AMOUNT).FirstOrDefault();
-                data.GrossDebt = dbResult.Where(a => a.DATA_ID == 256 && a.PERIOD_TYPE == "C").Select(a => a.AMOUNT).FirstOrDefault();
+                data.GrossDebt = dbResult.Where(a => a.DATA_ID == 256 && a.PERIOD_TYPE.Trim() == "C").Select(a => a.AMOUNT).FirstOrDefault();
                 data.MarketCap = Convert.ToDecimal(marketCap);
 
                 if (modelData != null)
