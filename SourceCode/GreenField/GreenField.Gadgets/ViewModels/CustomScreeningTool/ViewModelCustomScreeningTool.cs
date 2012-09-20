@@ -581,7 +581,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private void OkCommandMethod(object param)
         {
-            //if user the creater of datalist, prompt for edit of data fileds
+            //prompt for either view or edit the data fileds
             //if user says 'yes', data fileds selector screen appears with all data fields pre populated in selected fields list.
             //if user says'no' open resluts screen            
 
@@ -597,7 +597,6 @@ namespace GreenField.Gadgets.ViewModels
                     }
                     else if (result == MessageBoxResult.Cancel)
                     {
-                        CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
                         //redirect to results views
                         PortfolioSelectionData p = new PortfolioSelectionData();
                         p = _portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
@@ -612,7 +611,20 @@ namespace GreenField.Gadgets.ViewModels
             else
             {
                 CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
-                //redirect to results views
+                Prompt.ShowDialog("Do you wish to view the data fields?", "Confirmation", MessageBoxButton.OKCancel, (result) =>
+                {
+                    if (result == MessageBoxResult.OK)
+                    {
+                        //open pre populated selected fields list
+                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
+                    }
+                    else if (result == MessageBoxResult.Cancel)
+                    {
+                        CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
+                        //redirect to results views
+                        RetrieveResultsList();
+                    }
+                });
             }
         }
 
@@ -1248,6 +1260,19 @@ namespace GreenField.Gadgets.ViewModels
             {
                 SelectedSavedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
 
+                if (SelectedSavedDataList != null)
+                {
+                    PortfolioSelectionData p = new PortfolioSelectionData();
+                    p = _portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
+
+                    EntitySelectionData b = new EntitySelectionData();
+                    b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
+                    _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
+                                                            SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
+                }
+            }
+            else if (flag == "View")
+            {
                 if (SelectedSavedDataList != null)
                 {
                     PortfolioSelectionData p = new PortfolioSelectionData();

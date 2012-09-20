@@ -393,7 +393,13 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool AddSecurityRefCommandValidationMethod(object param)
         {
-            if (SelectedSecurityReferenceData != null )
+            string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+            if (flag == "View")
+            {
+                IsAddButtonEnabled = false;
+                return false;
+            }
+            else if (SelectedSecurityReferenceData != null )
             {
                 if(SelectedFieldsDataList != null)
                 {
@@ -467,7 +473,13 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool AddPeriodFinCommandValidationMethod(object param)
         {
-            if (SelectedPeriodFinancialsData != null)
+            string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+            if (flag == "View")
+            {
+                IsAddButtonEnabled = false;
+                return false;
+            }
+            else if (SelectedPeriodFinancialsData != null)
             {
                 if (SelectedFieldsDataList != null)
                 {
@@ -547,7 +559,13 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool AddCurrentFinCommandValidationMethod(object param)
         {
-            if (SelectedCurrentFinancialsData != null)
+            string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+            if (flag == "View")
+            {
+                IsAddButtonEnabled = false;
+                return false;
+            }
+            else if (SelectedCurrentFinancialsData != null)
             {
                 if (SelectedFieldsDataList != null)
                 {
@@ -620,7 +638,13 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool AddFairValueCommandValidationMethod(object param)
         {
-            if (SelectedFairValueData != null)
+            string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+            if (flag == "View")
+            {
+                IsAddButtonEnabled = false;
+                return false;
+            }
+            else if (SelectedFairValueData != null)
             {
                 if (SelectedFieldsDataList != null)
                 {
@@ -695,7 +719,12 @@ namespace GreenField.Gadgets.ViewModels
 
         private bool RemoveCommandValidationMethod(object param)
         {
-            if (SelectedFieldsDataList == null)
+            string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+            if (flag == "View")
+            {
+                return false;
+            }
+            else if (SelectedFieldsDataList == null)
             {
                 return false;
             }
@@ -727,55 +756,64 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         private void SubmitCommandMethod(object param)
-        {
-            CSTNavigation.UpdateString(CSTNavigationInfo.ListName, SelectedFieldsDataList[0].ListName);
-            CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, SelectedFieldsDataList[0].Accessibility);
-
+        {            
+            string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+            if (flag == "View")
+            {
+                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
+            }
             //prompt to ask if user wants to save list
             //if yes open child window
-
             //also need to send the user data selection list to the child view so that it can be updated when save clicked in child window
 
-            ChildViewCSTDataListSave childViewCSTDataListSave = new ChildViewCSTDataListSave();
-            childViewCSTDataListSave.Show();
-
-            childViewCSTDataListSave.Unloaded += (se, e) =>
+            else
             {
-                if (childViewCSTDataListSave.DialogResult == true)
+                if (SelectedFieldsDataList != null)
                 {
-                    Prompt.ShowDialog("Confirm to save the list", "Save", MessageBoxButton.OKCancel, (result) =>
-                        {
-                            if (result == MessageBoxResult.OK)
-                            {
-                               userEnteredListName = childViewCSTDataListSave.txtDataListName.Text;
-                               userEnteredAccessibility = childViewCSTDataListSave.SelectedAccessibility;
-                                if (Flag != "Edit")
-                                {
-                                    if (_dbInteractivity != null)
-                                    {
-                                        string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList.ToList(), userEnteredListName, userEnteredAccessibility);
-                                        if (xmlData != null)
-                                        {
-                                            _dbInteractivity.SaveUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName, SaveUserDataPointsPreferenceCallBackMethod);
-                                        }
-                                    }
-                                }
-                                else if (Flag == "Edit")
-                                {
-                                    if (_dbInteractivity != null && SelectedFieldsDataList[0].ListName != null && SelectedFieldsDataList[0].Accessibility != null)
-                                    {
-                                        string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList.ToList(), SelectedFieldsDataList[0].ListName, SelectedFieldsDataList[0].Accessibility);
-                                        if (xmlData != null)
-                                        {
-                                            _dbInteractivity.UpdateUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName,
-                                                SelectedFieldsDataList[0].ListName, userEnteredListName, userEnteredAccessibility, UpdateUserDataPointsPreferenceCallBackMethod);
-                                        }
-                                    }
-                                }
-                            }
-                        });
+                    CSTNavigation.UpdateString(CSTNavigationInfo.ListName, SelectedFieldsDataList[0].ListName);
+                    CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, SelectedFieldsDataList[0].Accessibility);
                 }
-            };
+                ChildViewCSTDataListSave childViewCSTDataListSave = new ChildViewCSTDataListSave();
+                childViewCSTDataListSave.Show();
+
+                childViewCSTDataListSave.Unloaded += (se, e) =>
+                {
+                    if (childViewCSTDataListSave.DialogResult == true)
+                    {
+                        Prompt.ShowDialog("Confirm to save the list", "Save", MessageBoxButton.OKCancel, (result) =>
+                            {
+                                if (result == MessageBoxResult.OK)
+                                {
+                                    userEnteredListName = childViewCSTDataListSave.txtDataListName.Text;
+                                    userEnteredAccessibility = childViewCSTDataListSave.SelectedAccessibility;
+                                    if (Flag != "Edit")
+                                    {
+                                        if (_dbInteractivity != null)
+                                        {
+                                            string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList.ToList(), userEnteredListName, userEnteredAccessibility);
+                                            if (xmlData != null)
+                                            {
+                                                _dbInteractivity.SaveUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName, SaveUserDataPointsPreferenceCallBackMethod);
+                                            }
+                                        }
+                                    }
+                                    else if (Flag == "Edit")
+                                    {
+                                        if (_dbInteractivity != null && SelectedFieldsDataList[0].ListName != null && SelectedFieldsDataList[0].Accessibility != null)
+                                        {
+                                            string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList.ToList(), SelectedFieldsDataList[0].ListName, SelectedFieldsDataList[0].Accessibility);
+                                            if (xmlData != null)
+                                            {
+                                                _dbInteractivity.UpdateUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName,
+                                                    SelectedFieldsDataList[0].ListName, userEnteredListName, userEnteredAccessibility, UpdateUserDataPointsPreferenceCallBackMethod);
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                    }
+                };
+            }
         }
 
         #endregion
@@ -1052,6 +1090,36 @@ namespace GreenField.Gadgets.ViewModels
 
         }
 
+        private void RetrieveFairValueTabSourceCallbackMethod(List<string> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                   // SecurityReferenceData = result;
+                }
+                else
+                {
+                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+        }
+
         #endregion
 
         #region EventUnSubscribe
@@ -1082,6 +1150,8 @@ namespace GreenField.Gadgets.ViewModels
                 _dbInteractivity.RetrieveCurrentFinancialsTabDataPoints(CurrentFinancialsTabDataPointsCallbackMethod);
                 BusyIndicatorNotification(true, "Retrieving Fair Value Data...");
                 _dbInteractivity.RetrieveFairValueTabDataPoints(FairValueTabDataPointsCallbackMethod);
+                BusyIndicatorNotification(true, "Retrieving Fair Value DataSource...");
+                _dbInteractivity.RetrieveFairValueTabSource(RetrieveFairValueTabSourceCallbackMethod);
             }
         }
 
