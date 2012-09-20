@@ -119,6 +119,9 @@ namespace GreenField.Gadgets.Views
                 column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key);
                 column.IsFilterable = true;
                 column.IsGroupable = true;
+                column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
+                column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
+                column.Width = new GridViewLength(1, GridViewLengthUnitType.Star);
                 this.dgCustomSecurity.Columns.Add(column);
             }
 
@@ -143,8 +146,6 @@ namespace GreenField.Gadgets.Views
 
             this.dgCustomSecurity.ItemsSource = _data;
             this.dgCustomSecurity.IsFilteringAllowed = true;
-            
-        
         }
     
 
