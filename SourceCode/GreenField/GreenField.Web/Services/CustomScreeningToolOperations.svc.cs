@@ -395,6 +395,11 @@ namespace GreenField.Web.Services
             {
                 List<CustomScreeningSecurityData> result = new List<CustomScreeningSecurityData>();
 
+                if(userPreference.Count == 1 && userPreference[0].ScreeningId == null)
+                {
+                    return result;
+                }
+
                 //checking if the service is down
                 bool isServiceUp;
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
@@ -641,6 +646,31 @@ namespace GreenField.Web.Services
                 }
 
                 return isSaveSuccessful;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Retrieving Fair Value Tab Source List
+        /// </summary>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<string> RetrieveFairValueTabSource()
+        {
+            try
+            {
+                List<string> result = new List<string>();
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+
+                result = entity.FAIR_VALUE.Select(a => a.VALUE_TYPE).Distinct().ToList();
+
+                return result;
             }
             catch (Exception ex)
             {

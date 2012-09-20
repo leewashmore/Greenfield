@@ -123,6 +123,14 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         System.IAsyncResult BeginUpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<bool> EndUpdateUserDataPointsPreference(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabSource", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabSourceRespon" +
+            "se")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabSourceServic" +
+            "eFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveFairValueTabSource(System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<string> EndRetrieveFairValueTabSource(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -302,6 +310,25 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveFairValueTabSourceCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveFairValueTabSourceCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<string> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<string>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class CustomScreeningToolOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations>, GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations {
         
         private BeginOperationDelegate onBeginRetrieveCustomControlsListDelegate;
@@ -357,6 +384,12 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         private EndOperationDelegate onEndUpdateUserDataPointsPreferenceDelegate;
         
         private System.Threading.SendOrPostCallback onUpdateUserDataPointsPreferenceCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveFairValueTabSourceDelegate;
+        
+        private EndOperationDelegate onEndRetrieveFairValueTabSourceDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveFairValueTabSourceCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -428,6 +461,8 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         public event System.EventHandler<RetrieveSecurityDataCompletedEventArgs> RetrieveSecurityDataCompleted;
         
         public event System.EventHandler<UpdateUserDataPointsPreferenceCompletedEventArgs> UpdateUserDataPointsPreferenceCompleted;
+        
+        public event System.EventHandler<RetrieveFairValueTabSourceCompletedEventArgs> RetrieveFairValueTabSourceCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -861,6 +896,50 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
                         accessibility}, this.onEndUpdateUserDataPointsPreferenceDelegate, this.onUpdateUserDataPointsPreferenceCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveFairValueTabSource(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveFairValueTabSource(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<string> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveFairValueTabSource(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveFairValueTabSource(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveFairValueTabSource(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrieveFairValueTabSource(callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveFairValueTabSource(System.IAsyncResult result) {
+            System.Collections.Generic.List<string> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveFairValueTabSource(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveFairValueTabSourceCompleted(object state) {
+            if ((this.RetrieveFairValueTabSourceCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveFairValueTabSourceCompleted(this, new RetrieveFairValueTabSourceCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveFairValueTabSourceAsync() {
+            this.RetrieveFairValueTabSourceAsync(null);
+        }
+        
+        public void RetrieveFairValueTabSourceAsync(object userState) {
+            if ((this.onBeginRetrieveFairValueTabSourceDelegate == null)) {
+                this.onBeginRetrieveFairValueTabSourceDelegate = new BeginOperationDelegate(this.OnBeginRetrieveFairValueTabSource);
+            }
+            if ((this.onEndRetrieveFairValueTabSourceDelegate == null)) {
+                this.onEndRetrieveFairValueTabSourceDelegate = new EndOperationDelegate(this.OnEndRetrieveFairValueTabSource);
+            }
+            if ((this.onRetrieveFairValueTabSourceCompletedDelegate == null)) {
+                this.onRetrieveFairValueTabSourceCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveFairValueTabSourceCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveFairValueTabSourceDelegate, null, this.onEndRetrieveFairValueTabSourceDelegate, this.onRetrieveFairValueTabSourceCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1058,6 +1137,18 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             public System.Nullable<bool> EndUpdateUserDataPointsPreference(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Nullable<bool> _result = ((System.Nullable<bool>)(base.EndInvoke("UpdateUserDataPointsPreference", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveFairValueTabSource(System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[0];
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveFairValueTabSource", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<string> EndRetrieveFairValueTabSource(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<string> _result = ((System.Collections.Generic.List<string>)(base.EndInvoke("RetrieveFairValueTabSource", _args, result)));
                 return _result;
             }
         }

@@ -15,6 +15,7 @@ using GreenField.Common;
 using GreenField.ServiceCaller;
 using Telerik.Windows.Documents.Model;
 using Telerik.Windows.Controls;
+using GreenField.Gadgets.Models;
 
 namespace GreenField.Gadgets.Views
 {
@@ -26,6 +27,15 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextSource; }
             set { _dataContextSource = value; }
         }
+
+        private string _minorityInvestment = "";
+        public string MinorityInvestment
+        {
+            get { return _minorityInvestment; }
+            set { _minorityInvestment = value; }
+        }
+
+
 
         /// <summary>
         /// To check whether the Dashboard is Active or not
@@ -179,6 +189,66 @@ namespace GreenField.Gadgets.Views
 
 
         #endregion
+
+        private void dgDCFSummary_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            if (e.Row != null)
+            {
+                if (e.Row.DataContext != null)
+                {
+                    var data = e.Row.DataContext as DCFDisplayData;
+                    if (data == null)
+                        return;
+                    if ((e.Row.DataContext as DCFDisplayData).PropertyName == "(-) FV of Minorities")
+                    {
+                        e.Row.Background = new SolidColorBrush(Colors.Yellow);
+                    }
+                }
+            }
+        }
+
+        private void dgDCFSummary_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
+        {
+            int Index = this.dgDCFSummary.Items.IndexOf(e.Cell.ParentRow.Item);
+            if (Index != 6)
+            {
+                e.Cancel = true;
+            }
+            else
+            {
+                e.Cell.Value = "";
+            }
+        }
+
+        private void dgDCFSummary_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
+        {
+            if (MinorityInvestment != null)
+            {
+                if (MinorityInvestment != "")
+                {
+                    this.DataContextSource.MinorityInvestments = Convert.ToDecimal(MinorityInvestment);
+                }
+            }
+        }
+
+        private void dgDCFSummary_CellValidating(object sender, GridViewCellValidatingEventArgs e)
+        {
+            if (e.Cell.Column.UniqueName == "Values")
+            {
+                decimal value;
+                var textEntered = e.NewValue as string;
+
+                if (!Decimal.TryParse(textEntered, out value))
+                {
+                    e.IsValid = false;
+                    e.ErrorMessage = "The Entered value should be a valid number";
+                }
+                else
+                {
+                    this.MinorityInvestment = textEntered;
+                }
+            }
+        }
 
     }
 }

@@ -347,6 +347,7 @@ namespace GreenField.ServiceCaller
 
         void UpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility, Action<Boolean?> callback);
 
+        void RetrieveFairValueTabSource(Action<List<string>> callback);
         #endregion
 
         #region Documents

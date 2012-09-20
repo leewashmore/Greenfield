@@ -90,6 +90,15 @@
   <wsdl:message name="CustomScreeningToolOperations_UpdateUserDataPointsPreference_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveFairValueTabSource_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveFairValueTabSource" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveFairValueTabSource_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveFairValueTabSourceResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveFairValueTabSource_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="CustomScreeningToolOperations">
     <wsdl:operation name="RetrieveCustomControlsList">
       <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomControlsList" message="tns:CustomScreeningToolOperations_RetrieveCustomControlsList_InputMessage" />
@@ -135,6 +144,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/UpdateUserDataPointsPreference" message="tns:CustomScreeningToolOperations_UpdateUserDataPointsPreference_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/UpdateUserDataPointsPreferenceResponse" message="tns:CustomScreeningToolOperations_UpdateUserDataPointsPreference_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/UpdateUserDataPointsPreferenceServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_UpdateUserDataPointsPreference_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveFairValueTabSource">
+      <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabSource" message="tns:CustomScreeningToolOperations_RetrieveFairValueTabSource_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabSourceResponse" message="tns:CustomScreeningToolOperations_RetrieveFairValueTabSource_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabSourceServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_RetrieveFairValueTabSource_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CustomScreeningToolOperations" type="tns:CustomScreeningToolOperations">
@@ -237,6 +251,18 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateUserDataPointsPreference">
       <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/UpdateUserDataPointsPreference" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveFairValueTabSource">
+      <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabSource" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
