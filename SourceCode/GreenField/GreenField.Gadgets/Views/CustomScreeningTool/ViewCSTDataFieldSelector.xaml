@@ -536,8 +536,8 @@
                                             <telerik:RadComboBox x:Name="cbCSTFairvalueDataSource"
                                                                  Grid.Row="1"
                                                                  Margin="2,2,0,2"
-                                                                 ItemsSource="{Binding DataSourceInfo}"
-                                                                 SelectedItem="{Binding SelectedDataSourceInfo, Mode=TwoWay}"
+                                                                 ItemsSource="{Binding FairvalueDataSourceInfo}"
+                                                                 SelectedItem="{Binding FairvalueSelectedDataSourceInfo, Mode=TwoWay}"
                                                                  HorizontalContentAlignment="Left"  
                                                                  Height="{StaticResource DefaultControlMinHeight}"
                                                                  Style="{StaticResource RadComboBoxStyle}"/>

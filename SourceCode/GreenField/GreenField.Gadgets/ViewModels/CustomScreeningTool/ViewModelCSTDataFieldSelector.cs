@@ -207,6 +207,31 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private List<string> _fairvalueDataSourceInfo;
+        public List<string> FairvalueDataSourceInfo
+        {
+            get { return _fairvalueDataSourceInfo; }
+            set
+            {
+                if (_fairvalueDataSourceInfo != value)
+                {
+                    _fairvalueDataSourceInfo = value;
+                    RaisePropertyChanged(() => FairvalueDataSourceInfo);
+                }
+            }
+        }
+
+        public String _fairvalueSelectedDataSourceInfo = "PRIMARY";
+        public String FairvalueSelectedDataSourceInfo
+        {
+            get { return _fairvalueSelectedDataSourceInfo; }
+            set
+            {
+                _fairvalueSelectedDataSourceInfo = value;
+                RaisePropertyChanged(() => this.FairvalueSelectedDataSourceInfo);
+            }
+        }
+
         public List<String> YearTypeInfo
         {
             get { return new List<String> { "CALENDAR", "FISCAL" }; }
@@ -674,47 +699,62 @@ namespace GreenField.Gadgets.ViewModels
 
         private void AddFairValueCommandMethod(object param)
         {
-            ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
-            int tempOrder;
-            string listName;
-            string accessibility;
-            if (Flag == "Edit")
-            {
-                temp = this.SelectedFieldsDataList;
-                tempOrder = temp.Count();
-                listName = SelectedFieldsDataList[0].ListName;
-                accessibility = SelectedFieldsDataList[0].Accessibility;
-            }
-            else
-            {
-                if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
-                {
-                    tempOrder = -1;
-                    listName = string.Empty;
-                    accessibility = string.Empty;
-                }
-                else
+            //if (SelectedFieldsDataList != null)
+            //{
+            //    if (SelectedFieldsDataList.Count == 1 && SelectedFieldsDataList[0].ScreeningId == null)
+            //    {
+            //        return;
+            //    }
+            //    else if (!(SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedFairValueData.ScreeningId)))
+                 
+            //    {
+            //        return;
+            //    }
+            //}
+            //else
+            //{
+                ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
+                int tempOrder;
+                string listName;
+                string accessibility;
+                if (Flag == "Edit")
                 {
                     temp = this.SelectedFieldsDataList;
                     tempOrder = temp.Count();
                     listName = SelectedFieldsDataList[0].ListName;
                     accessibility = SelectedFieldsDataList[0].Accessibility;
                 }
-            }
+                else
+                {
+                    if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                    {
+                        tempOrder = -1;
+                        listName = string.Empty;
+                        accessibility = string.Empty;
+                    }
+                    else
+                    {
+                        temp = this.SelectedFieldsDataList;
+                        tempOrder = temp.Count();
+                        listName = SelectedFieldsDataList[0].ListName;
+                        accessibility = SelectedFieldsDataList[0].Accessibility;
+                    }
+                }
 
-            temp.Add(new CSTUserPreferenceInfo()
-            {
-                ScreeningId = SelectedFairValueData.ScreeningId,
-                DataDescription = SelectedFairValueData.DataDescription,
-                UserName = UserSession.SessionManager.SESSION.UserName,
-                ListName = listName,
-                Accessibility = accessibility,
-                DataSource = SelectedDataSourceInfo,
-                DataPointsOrder = tempOrder++,
-                TableColumn = SelectedFairValueData.DataColumn
-            });
-            SelectedFieldsDataList = temp;
-            //RaisePropertyChanged(() => this.SelectedFieldsDataList);
+                temp.Add(new CSTUserPreferenceInfo()
+                {
+                    ScreeningId = SelectedFairValueData.ScreeningId,
+                    DataDescription = SelectedFairValueData.DataDescription,
+                    UserName = UserSession.SessionManager.SESSION.UserName,
+                    ListName = listName,
+                    Accessibility = accessibility,
+                    DataSource = FairvalueSelectedDataSourceInfo,
+                    DataPointsOrder = tempOrder++,
+                    TableColumn = SelectedFairValueData.DataColumn
+                });
+                SelectedFieldsDataList = temp;
+                //RaisePropertyChanged(() => this.SelectedFieldsDataList);
+           // }
         }
 
         private bool RemoveCommandValidationMethod(object param)
@@ -817,87 +857,6 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
-
-        /// <summary>
-        /// Construct XML for Save As Event
-        /// </summary>
-        /// <returns></returns>
-        private string SaveAsXmlBuilder(String userName, List<CSTUserPreferenceInfo> userPreference, string listName, string accessibility)
-        {
-            string saveAsXml = String.Empty;
-
-            try
-            {
-                if (userName != null && userPreference != null)
-                {
-                    XElement root = new XElement("Root");
-                        foreach (CSTUserPreferenceInfo preference in userPreference)
-                        {
-                            XElement createRow = new XElement("CreateRow", new XAttribute("ListName", listName));
-                            XElement createRowEntity = new XElement("CreateRowEntity");
-
-                            createRowEntity.Add(new XAttribute("UserName", userName));
-                            createRowEntity.Add(new XAttribute("ListName", listName));
-                            createRowEntity.Add(new XAttribute("Accessibilty", accessibility));
-                            createRowEntity.Add(new XAttribute("CreatedOn", DateTime.Now));
-                            createRowEntity.Add(new XAttribute("ModifiedBy", userName));
-                            createRowEntity.Add(new XAttribute("ModifiedOn", DateTime.Now));
-
-                            createRow.Add(createRowEntity);
-                            XElement createRowPreference = new XElement("CreateRowPreference");
-
-                            createRowPreference.Add(new XAttribute("UserName", userName));
-                            createRowPreference.Add(new XAttribute("ListName", listName));
-                            createRowPreference.Add(new XAttribute("ScreeningId", preference.ScreeningId));
-                            createRowPreference.Add(new XAttribute("DataDescription", preference.DataDescription));
-                            if (preference.DataSource != null)
-                                createRowPreference.Add(new XAttribute("DataSource", preference.DataSource));
-                            else
-                                createRowPreference.Add(new XAttribute("DataSource", string.Empty));
-
-                            if (preference.PeriodType != null)
-                                createRowPreference.Add(new XAttribute("PeriodType", preference.PeriodType));
-                            else
-                                createRowPreference.Add(new XAttribute("PeriodType", string.Empty));
-
-                            if (preference.YearType != null)
-                                createRowPreference.Add(new XAttribute("YearType", preference.YearType));
-                            else
-                                createRowPreference.Add(new XAttribute("YearType", string.Empty));
-
-                            if (preference.FromDate != null)
-                                createRowPreference.Add(new XAttribute("FromDate", preference.FromDate));
-                            else
-                                createRowPreference.Add(new XAttribute("FromDate", string.Empty));
-
-                            if (preference.ToDate != null)
-                                createRowPreference.Add(new XAttribute("ToDate", preference.ToDate));
-                            else
-                                createRowPreference.Add(new XAttribute("ToDate", string.Empty));
-
-                            createRowPreference.Add(new XAttribute("DataPointsOrder", preference.DataPointsOrder));
-                            createRowPreference.Add(new XAttribute("CreatedBy", userName));
-                            createRowPreference.Add(new XAttribute("CreatedOn", DateTime.Now));
-                            createRowPreference.Add(new XAttribute("ModifiedBy", userName));
-                            createRowPreference.Add(new XAttribute("ModifiedOn", DateTime.Now));
-
-                            createRow.Add(createRowPreference);
-                            root.Add(createRow);
-                        } 
-                    XDocument doc = new XDocument(
-                       new XDeclaration("1.0", "utf-8", "yes"),
-                       new XComment("Custom screening Tool save as preference details"), root);
-
-                    saveAsXml = doc.ToString();
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog(ex.Message);
-            }
-
-            return saveAsXml;
-        }
 
         #region CallBack Methods
 
@@ -1100,7 +1059,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-                   // SecurityReferenceData = result;
+                    FairvalueDataSourceInfo = result;
                 }
                 else
                 {
@@ -1193,47 +1152,86 @@ namespace GreenField.Gadgets.ViewModels
             BusyIndicatorIsBusy = showBusyIndicator;
         }
 
-        //public void CreateCSTSelectorDataGrid(List<CSTUserPreferenceInfo> preference)
-        //{
-        //    List<CSTUserPreferenceInfo> temp = new List<CSTUserPreferenceInfo>();
-        //    foreach (var item in preference)
-        //    {
-        //        switch (item.ScreeningId.Substring(0,2))
-        //        {
-        //            case "REF":
-        //                temp.Add(new CSTUserPreferenceInfo() 
-        //                {
-        //                    UserName = item.UserName,
-        //                    ScreeningId = item.ScreeningId,
-        //                    DataDescription = SecurityReferenceData.Where(a=>a.ScreeningId == item.ScreeningId).Select(a=>a.DataDescription).FirstOrDefault(),
-        //                    //LongDescription = item.LONG_DESC,
-        //                    //DataColumn = item.TABLE_COLUMN
-        //                    ListName = item.ListName,
-        //                    Accessibility = item.Accessibility,
-        //                    DataSource = item.DataSource,
-        //                    PeriodType = item.PeriodType,
-        //                    YearType = item.YearType,
-        //                    FromDate = Convert.ToInt32(item.FromDate),
-        //                    ToDate = Convert.ToInt32(item.ToDate),
-        //                    DataPointsOrder = Convert.ToInt32(item.DataPointsOrder)
-        //                });
-        //                break;
-        //            case "FIN":
+        /// <summary>
+        /// Construct XML for Save As Event
+        /// </summary>
+        /// <returns></returns>
+        private string SaveAsXmlBuilder(String userName, List<CSTUserPreferenceInfo> userPreference, string listName, string accessibility)
+        {
+            string saveAsXml = String.Empty;
 
-        //                break;
-        //            case "CUR":
+            try
+            {
+                if (userName != null && userPreference != null)
+                {
+                    XElement root = new XElement("Root");
+                    foreach (CSTUserPreferenceInfo preference in userPreference)
+                    {
+                        XElement createRow = new XElement("CreateRow", new XAttribute("ListName", listName));
+                        XElement createRowEntity = new XElement("CreateRowEntity");
 
-        //                break;
-        //            case "FVA":
+                        createRowEntity.Add(new XAttribute("UserName", userName));
+                        createRowEntity.Add(new XAttribute("ListName", listName));
+                        createRowEntity.Add(new XAttribute("Accessibilty", accessibility));
+                        createRowEntity.Add(new XAttribute("CreatedOn", DateTime.Now));
+                        createRowEntity.Add(new XAttribute("ModifiedBy", userName));
+                        createRowEntity.Add(new XAttribute("ModifiedOn", DateTime.Now));
 
-        //                break;
-        //            default:
-        //                break;
-        //        } 
-        //    }
+                        createRow.Add(createRowEntity);
+                        XElement createRowPreference = new XElement("CreateRowPreference");
 
-        //    SelectedFieldsDataList = temp;           
-        //}
+                        createRowPreference.Add(new XAttribute("UserName", userName));
+                        createRowPreference.Add(new XAttribute("ListName", listName));
+                        createRowPreference.Add(new XAttribute("ScreeningId", preference.ScreeningId));
+                        createRowPreference.Add(new XAttribute("DataDescription", preference.DataDescription));
+                        if (preference.DataSource != null)
+                            createRowPreference.Add(new XAttribute("DataSource", preference.DataSource));
+                        else
+                            createRowPreference.Add(new XAttribute("DataSource", string.Empty));
+
+                        if (preference.PeriodType != null)
+                            createRowPreference.Add(new XAttribute("PeriodType", preference.PeriodType));
+                        else
+                            createRowPreference.Add(new XAttribute("PeriodType", string.Empty));
+
+                        if (preference.YearType != null)
+                            createRowPreference.Add(new XAttribute("YearType", preference.YearType));
+                        else
+                            createRowPreference.Add(new XAttribute("YearType", string.Empty));
+
+                        if (preference.FromDate != null)
+                            createRowPreference.Add(new XAttribute("FromDate", preference.FromDate));
+                        else
+                            createRowPreference.Add(new XAttribute("FromDate", string.Empty));
+
+                        if (preference.ToDate != null)
+                            createRowPreference.Add(new XAttribute("ToDate", preference.ToDate));
+                        else
+                            createRowPreference.Add(new XAttribute("ToDate", string.Empty));
+
+                        createRowPreference.Add(new XAttribute("DataPointsOrder", preference.DataPointsOrder));
+                        createRowPreference.Add(new XAttribute("CreatedBy", userName));
+                        createRowPreference.Add(new XAttribute("CreatedOn", DateTime.Now));
+                        createRowPreference.Add(new XAttribute("ModifiedBy", userName));
+                        createRowPreference.Add(new XAttribute("ModifiedOn", DateTime.Now));
+
+                        createRow.Add(createRowPreference);
+                        root.Add(createRow);
+                    }
+                    XDocument doc = new XDocument(
+                       new XDeclaration("1.0", "utf-8", "yes"),
+                       new XComment("Custom screening Tool save as preference details"), root);
+
+                    saveAsXml = doc.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+
+            return saveAsXml;
+        }
 
         #endregion
 
