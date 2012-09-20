@@ -459,7 +459,8 @@ namespace GreenField.Gadgets.ViewModels
                 UserName = UserSession.SessionManager.SESSION.UserName,
                 ListName = listName,
                 Accessibility = accessibility,
-                DataPointsOrder = tempOrder++
+                DataPointsOrder = tempOrder++,
+                TableColumn = SelectedSecurityReferenceData.DataColumn
             });
             SelectedFieldsDataList = temp;
         }
@@ -537,7 +538,8 @@ namespace GreenField.Gadgets.ViewModels
                     YearType = SelectedYearTypeInfo,
                     FromDate = i,
                     ToDate = SelectedToYearInfo,
-                    DataPointsOrder = tempOrder++
+                    DataPointsOrder = tempOrder++,
+                    TableColumn = SelectedPeriodFinancialsData.DataDescription
                 });
             }
             SelectedFieldsDataList = temp;
@@ -610,7 +612,8 @@ namespace GreenField.Gadgets.ViewModels
                 ListName = listName,
                 Accessibility = accessibility,
                 DataSource = SelectedDataSourceInfo,
-                DataPointsOrder = tempOrder++
+                DataPointsOrder = tempOrder++,
+                TableColumn = SelectedCurrentFinancialsData.DataDescription
             });
             SelectedFieldsDataList = temp;
         }
@@ -683,7 +686,8 @@ namespace GreenField.Gadgets.ViewModels
                 ListName = listName,
                 Accessibility = accessibility,
                 DataSource = SelectedDataSourceInfo,
-                DataPointsOrder = tempOrder++
+                DataPointsOrder = tempOrder++,
+                TableColumn = SelectedFairValueData.DataColumn
             });
             SelectedFieldsDataList = temp;
             //RaisePropertyChanged(() => this.SelectedFieldsDataList);
