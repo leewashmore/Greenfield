@@ -1130,10 +1130,9 @@ namespace GreenField.Gadgets.ViewModels
                 if (securityData != null)
                 {
                     List<String> distinctIssueNames = securityData.Select(a => a.IssueName).Distinct().ToList();
-
-                    int errorCount = 0;
-                    try
-                    {
+                  
+                    //try
+                    //{
                         foreach (String issueName in distinctIssueNames)
                         {
                             xw.WriteStartElement("row");
@@ -1187,13 +1186,13 @@ namespace GreenField.Gadgets.ViewModels
 
                             xw.WriteEndElement();
 
-                            errorCount++;
+                            
                         }
-                    }
-                    catch (Exception ex)
-                    {
-                        throw new Exception(ex.Message + errorCount.ToString());
-                    }
+                    //}
+                    //catch (Exception ex)
+                    //{
+                    //    throw new Exception(ex.Message + errorCount.ToString());
+                    //}
                 }
                 xw.WriteEndElement();
                 xw.WriteEndDocument();
