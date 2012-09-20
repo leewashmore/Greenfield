@@ -22,10 +22,9 @@
 
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>                
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -136,9 +135,6 @@
                                    HorizontalAlignment="Center"
                                    Content="SUBMIT" Grid.Column="0"
                                Style="{StaticResource RadButtonStyle}"/>
-
-               
-
                 </Grid>
 
                 <Grid x:Name="gDataListSelection" Grid.Column="1"
@@ -192,15 +188,11 @@
                                    Content="OK"
                                Style="{StaticResource RadButtonStyle}"/>
                 </Grid>
-
+            </Grid>            
+            <Grid Grid.Row="1">                
+            <Border BorderThickness="1" HorizontalAlignment="Stretch" BorderBrush="Gray" Visibility="Visible"/>                
             </Grid>
-            
-            <Grid Grid.Row="1">
-                <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
-            <Border BorderThickness="4" HorizontalAlignment="Stretch"/>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="2">
                 <telerik:RadGridView x:Name="dgCustomSecurity" Visibility="{Binding ResultsListVisibility}"
                     AutoGenerateColumns="False"   CanUserReorderColumns ="False" 
                                              CanUserSelect="True"
