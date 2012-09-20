@@ -77,7 +77,6 @@ namespace GreenField.Web.Helpers
             {
                 var excelApp = new Excel.Application();
                 Workbook workBook = excelApp.Workbooks.Add(Type.Missing);
-                //Sheets mySheets = workBook.Worksheets;
 
                 int firstYear = financialData.Select(a => a.PeriodYear).OrderBy(a => a).FirstOrDefault();
                 int lastYear = financialData.Select(a => a.PeriodYear).OrderByDescending(a => a).FirstOrDefault();
@@ -85,55 +84,26 @@ namespace GreenField.Web.Helpers
 
                 Excel.Worksheet workSheetReuters;
                 Excel.Worksheet workSheetConsensus;
-                //Sheets xlsheets = null;
-                //xlsheets = workBook.Sheets;
-
-                //workBook.Sheets.Add(Type.Missing, Type.Missing, 2, Type.Missing);
-
-                //mySheets = workBook.Worksheets;
-
-                //workSheetReuters = (Worksheet)xlsheets.Add(xlsheets[1], Type.Missing, Type.Missing, Type.Missing);
-                //workSheetReuters = (Worksheet)mySheets.get_Item(1);
-
-                //workBook.Sheets.Delete();
 
                 int abv = workBook.Sheets.Count;
                 workSheetReuters = (Excel.Worksheet)workBook.Sheets[1];
-                //workBook.Sheets.Add(Type.Missing, Type.Missing, 1, Type.Missing);
-                //excelApp.Workbook(workSheetReuters).Activate();
+
                 workSheetReuters = GenerateReutersColumnHeaders(workSheetReuters, firstYear, lastYear);
                 workSheetReuters = DisplayReutersData(workSheetReuters, financialData);
                 workSheetReuters.Name = "Reuters Reported";
 
-                //xlsheets = workBook.Sheets;
-                //workSheetConsensus = (Worksheet)xlsheets.Add(xlsheets[1], Type.Missing, Type.Missing, Type.Missing);
-
                 firstYear = consensusData.Select(a => a.PERIOD_YEAR).OrderBy(a => a).FirstOrDefault();
                 lastYear = consensusData.Select(a => a.PERIOD_YEAR).OrderByDescending(a => a).FirstOrDefault();
 
-
-
                 workSheetConsensus = (Excel.Worksheet)workBook.Sheets[2];
-                //workBook.Sheets.Add(Type.Missing, Type.Missing, 1, Type.Missing);
                 workSheetConsensus = GenerateConsensusColumnHeaders(workSheetConsensus, firstYear, lastYear);
                 workSheetConsensus = DisplayConsensusData(workSheetConsensus, consensusData);
                 workSheetConsensus.Name = "Consensus Reported";
 
-
-
-
-
-
                 string fileName = GetFileName();
-
-
-
-
-
-
                 workBook.SaveAs(fileName, Excel.XlFileFormat.xlWorkbookDefault, Missing.Value, Missing.Value, false, false,
-                        Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, true,
-                        Missing.Value, Missing.Value, Missing.Value);
+        Excel.XlSaveAsAccessMode.xlNoChange, Excel.XlSaveConflictResolution.xlUserResolution, true,
+        Missing.Value, Missing.Value, Missing.Value);
                 workBook.Saved = true;
                 workBook.Close(false, Type.Missing, Type.Missing);
 
@@ -338,5 +308,10 @@ namespace GreenField.Web.Helpers
                 return null;
             }
         }
+
+        
+
+
+
     }
 }

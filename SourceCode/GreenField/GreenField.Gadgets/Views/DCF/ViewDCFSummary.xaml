@@ -66,7 +66,7 @@
                                          CanUserFreezeColumns="False" 
                                          CanUserDeleteRows="False"
                                          CanUserInsertRows="False"
-                                         IsReadOnly="True"
+                                         IsReadOnly="False"
                                          CanUserReorderColumns="False" 
                                          CanUserSortColumns="False"
                                          RowIndicatorVisibility="Collapsed" 
@@ -86,6 +86,10 @@
                                          EnableRowVirtualization="False"
                                          EnableColumnVirtualization="False"
                                          GridLinesVisibility="None"
+                                         RowLoaded="dgDCFSummary_RowLoaded"
+                                         BeginningEdit="dgDCFSummary_BeginningEdit"
+                                         RowEditEnded="dgDCFSummary_RowEditEnded"
+                                         CellValidating="dgDCFSummary_CellValidating"
                                      >
                     <telerik:RadGridView.Columns>
                         <telerik:GridViewDataColumn Header="Summary" UniqueName="Summary" DataMemberBinding="{Binding PropertyName,Mode=TwoWay}" 

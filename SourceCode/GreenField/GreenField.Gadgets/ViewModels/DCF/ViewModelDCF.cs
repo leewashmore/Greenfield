@@ -478,6 +478,28 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         /// <summary>
+        /// OverRide the value of MinorityInvestments
+        /// </summary>
+        private decimal? _minorityInvestments;
+        public decimal? MinorityInvestments
+        {
+            get
+            {
+                return _minorityInvestments;
+            }
+            set
+            {
+                _minorityInvestments = value;
+                if (SummaryDisplayData.Count != 0)
+                {
+                    SetAnalysisSummaryDisplayData();
+                }
+                this.RaisePropertyChanged(() => this.MinorityInvestments);
+            }
+        }
+
+
+        /// <summary>
         /// Yearly Calculated Data
         /// </summary>
         private List<DCFCashFlowData> _yearlyCalculatedData;
@@ -1107,6 +1129,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     SummaryData = result;
+                    MinorityInvestments = SummaryData.Select(a => a.FVMinorities).FirstOrDefault();
                 }
                 else
                 {
@@ -1293,7 +1316,7 @@ namespace GreenField.Gadgets.ViewModels
                     Value = Convert.ToString(Math.Round(Convert.ToDecimal(StockSpecificDiscount), 1)) + "%"
                 });
 
-                result.Add(new DCFDisplayData() { PropertyName = "Marginal Tax Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault() * 100), 1)) + "%" });
+                result.Add(new DCFDisplayData() { PropertyName = "Marginal Tax Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault()), 1)) + "%" });
 
 
                 costOfEquity = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()) * Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault()) + Convert.ToDecimal(StockSpecificDiscount / Convert.ToDecimal(100));
@@ -1315,7 +1338,7 @@ namespace GreenField.Gadgets.ViewModels
                 else
                 {
                     weightOfEquity = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) / (Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()));
-                    resultWACC = (weightOfEquity * costOfEquity) + ((1 - weightOfEquity) * ((costOfDebt) * (1 - Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault()))));
+                    resultWACC = (weightOfEquity * costOfEquity) + ((1 - weightOfEquity) * ((costOfDebt) * (1 - Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault()) / 100M)));
                 }
                 result.Add(new DCFDisplayData() { PropertyName = "Weight of Equity", Value = Convert.ToString(Math.Round(Convert.ToDecimal(weightOfEquity * 100), 1)) + "%" });
                 result.Add(new DCFDisplayData() { PropertyName = "WACC", Value = Convert.ToString(Math.Round(Convert.ToDecimal(resultWACC * 100), 1)) + "%" });
@@ -1328,7 +1351,7 @@ namespace GreenField.Gadgets.ViewModels
                 CalculationParameters.CostOfEquity = costOfEquity;
                 CalculationParameters.CostOfDebt = costOfDebt;
                 CalculationParameters.MarketCap = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault());
-                CalculationParameters.MarginalTaxRate = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault());
+                CalculationParameters.MarginalTaxRate = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarginalTaxRate).FirstOrDefault()) / 100M;
                 CalculationParameters.GrossDebtA = Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault());
                 SetTerminalValueCalculationsDisplayData();
             }
@@ -1374,11 +1397,14 @@ namespace GreenField.Gadgets.ViewModels
             {
                 List<DCFDisplayData> result = new List<DCFDisplayData>();
                 decimal DCFValuePerShare;
+                decimal FVMinorities;
                 decimal totalEnterpriseValue = DCFCalculations.CalculateTotalEnterpriseValue(PresentValueExplicitForecast, Convert.ToDecimal(TerminalValuePresent));
                 decimal cash = SummaryData.Select(a => a.Cash).FirstOrDefault();
                 decimal FVInvestments = SummaryData.Select(a => a.FVInvestments).FirstOrDefault();
                 decimal grossDebt = SummaryData.Select(a => a.GrossDebt).FirstOrDefault();
-                decimal FVMinorities = SummaryData.Select(a => a.FVMinorities).FirstOrDefault();
+
+                FVMinorities = Convert.ToDecimal(MinorityInvestments);
+                
                 decimal equityValue = DCFCalculations.CalculateEquityValue(totalEnterpriseValue, cash, FVInvestments, grossDebt, FVMinorities);
                 decimal numberOfShares = SummaryData.Select(a => a.NumberOfShares).FirstOrDefault();
                 NumberOfShares = numberOfShares;
