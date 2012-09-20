@@ -603,6 +603,7 @@ namespace GreenField.Gadgets.ViewModels
 
                         EntitySelectionData b = new EntitySelectionData();
                         b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
+                        BusyIndicatorNotification(true, "Retrieving Data for display");
                         _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
                                                                 SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
                     }
@@ -881,6 +882,7 @@ namespace GreenField.Gadgets.ViewModels
                     SecurityData = result;
                     CreateXML(SecurityData);
                     ResultsListVisibility = Visibility.Visible;
+                    BusyIndicatorNotification();
                 }
                 else
                 {
@@ -891,11 +893,12 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
             }
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                //BusyIndicatorNotification();
+                BusyIndicatorNotification();
             }
         }
 
@@ -1279,6 +1282,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     EntitySelectionData b = new EntitySelectionData();
                     b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
+                    BusyIndicatorNotification(true, "Retrieving Data for display");
                     _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
                                                             SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
                 }
@@ -1292,6 +1296,7 @@ namespace GreenField.Gadgets.ViewModels
 
                     EntitySelectionData b = new EntitySelectionData();
                     b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
+                    BusyIndicatorNotification(true, "Retrieving Data for display");
                     _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
                                                             SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
                 }
@@ -1327,7 +1332,6 @@ namespace GreenField.Gadgets.ViewModels
         public event RetrieveCustomXmlDataCompleteEventHandler RetrieveCustomXmlDataCompletedEvent;
 
         #endregion
-
 
     }
 }
