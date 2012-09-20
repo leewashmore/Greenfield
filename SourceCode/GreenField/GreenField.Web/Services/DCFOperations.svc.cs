@@ -92,7 +92,7 @@ namespace GreenField.Web.Services
                 if (issuerId == null)
                     return new List<DCFAnalysisSummaryData>();
 
-                dbResult = entity.RetrieveDCFAnalysisSummaryData(issuerId, "PRIMARY", "A", "FISCAL", "USD").ToList();
+                dbResult = entity.RetrieveDCFAnalysisSummaryData(issuerId, "PRIMARY", "C", "FISCAL", "USD").ToList();
                 modelData = entity.GetDCFRiskFreeRate(Convert.ToString(securityDetails.ISO_COUNTRY_CODE)).FirstOrDefault();
                 marketCap = Convert.ToDecimal(entity.GetDCFMarketCap(Convert.ToString(securityDetails.SECURITY_ID)).FirstOrDefault());
 
@@ -103,12 +103,9 @@ namespace GreenField.Web.Services
                 data.Beta = (securityDetails.BARRA_BETA == null) ?
                     (Convert.ToDecimal(securityDetails.BETA)) : (Convert.ToDecimal(securityDetails.BARRA_BETA));
                 data.CostOfDebt = Convert.ToDecimal(securityDetails.WACC_COST_DEBT);
-                data.MarginalTaxRate = dbResult.Where(a => a.DATA_ID == 232).Select(a => a.AMOUNT).FirstOrDefault();
-                data.GrossDebt = dbResult.Where(a => a.DATA_ID == 90).Select(a => a.AMOUNT).FirstOrDefault();
+                data.MarginalTaxRate = dbResult.Where(a => a.DATA_ID == 289 && a.PERIOD_TYPE.Trim() == "C").Select(a => a.AMOUNT).FirstOrDefault();
+                data.GrossDebt = dbResult.Where(a => a.DATA_ID == 256 && a.PERIOD_TYPE.Trim() == "C").Select(a => a.AMOUNT).FirstOrDefault();
                 data.MarketCap = Convert.ToDecimal(marketCap);
-
-
-
 
                 if (modelData != null)
                 {
@@ -454,23 +451,30 @@ namespace GreenField.Web.Services
 
             for (int i = 0; i < 5; i++)
             {
-                valueROIC = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 162)
+                valueROIC = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 162 && a.FISCAL == "CALENDAR")
                     .Select(a => a.AMOUNT).FirstOrDefault();
-                collectionROIC.Add(valueROIC);
-                valueSustainableDividendPayoutRatio = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 141)
+                if (valueROIC != null)
+                {
+                    collectionROIC.Add(valueROIC);
+                }
+                valueSustainableDividendPayoutRatio = entity.GetDCF_ROIC(issuerid, currentYear + i, "PRIMARY", "A", "FISCAL", "USD").Where(a => a.DATA_ID == 141 && a.FISCAL == "FISCAL")
                     .Select(a => a.AMOUNT).FirstOrDefault();
-                collectionSustainableDividendPayoutRatio.Add(valueSustainableDividendPayoutRatio);
+
+                if (valueSustainableDividendPayoutRatio != null)
+                {
+                    collectionSustainableDividendPayoutRatio.Add(valueSustainableDividendPayoutRatio);
+                }
             }
 
             if (collectionROIC.Any(a => a.Value != null))
             {
                 if (Convert.ToDecimal(collectionROIC.Average()) != 0)
-                { 
-                    result.Add("ROIC", Convert.ToDecimal(collectionROIC.Average())); 
+                {
+                    result.Add("ROIC", Convert.ToDecimal(collectionROIC.Average()));
                 }
                 else
                 {
-                    result.Add("ROIC", Convert.ToDecimal(0.3333)); 
+                    result.Add("ROIC", Convert.ToDecimal(0.3333));
                 }
             }
             if (collectionSustainableDividendPayoutRatio.Any(a => a.Value != null))

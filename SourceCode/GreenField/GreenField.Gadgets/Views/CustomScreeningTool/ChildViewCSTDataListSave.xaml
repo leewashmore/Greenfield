@@ -17,9 +17,10 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
-        <StackPanel Grid.Row="0" 
+        <TextBlock x:Name="txtMessage" Grid.Row="0" FontFamily="Arial" FontSize="7" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+        <StackPanel Grid.Row="1" 
                     Orientation="Horizontal"
                     HorizontalAlignment="left"
                     VerticalAlignment="Top">
@@ -32,10 +33,11 @@
                         Margin="10,0,0,0"
                        Width="194" FontFamily="Arial"
                        FontSize="11"
-                       FontWeight="Normal"/>
+                       FontWeight="Normal"
+                       TextChanged="tbListName_TextChanged"/>
         </StackPanel>
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -52,14 +54,14 @@
 
         </Grid>
 
-        <StackPanel Grid.Row="2"
+        <StackPanel Grid.Row="3"
                     Orientation="Horizontal"
                     HorizontalAlignment="left"
                     VerticalAlignment="Center">
             <Button x:Name="btnSave" 
                     Content="Save"
                     Margin="50,0,0,0"
-                    Width="75" Height="23" 
+                    Width="75" Height="23" IsEnabled="True"
                     HorizontalAlignment="Right" Click="btnSave_Click" />
             <Button x:Name="btnCancel" 
                     Content="Cancel"

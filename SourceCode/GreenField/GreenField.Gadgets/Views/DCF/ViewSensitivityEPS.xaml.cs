@@ -154,7 +154,7 @@ namespace GreenField.Gadgets.Views
         /// create RadDocument from the DataGrid
         /// </summary>
         /// <returns>Returns the RadDcoument for the Grid</returns>
-        public override RadDocument CreateDocument()
+        public override Table CreateDocument()
         {
             try
             {
@@ -162,7 +162,7 @@ namespace GreenField.Gadgets.Views
                 {
                     return null;
                 }
-                return PDFExporter.ExportArray(dgDCFSensitivity, 12);
+                return PDFExporter.CreateTable(dgDCFSensitivity, 12);
             }
             catch (Exception ex)
             {
@@ -200,6 +200,40 @@ namespace GreenField.Gadgets.Views
             var r = new Regex(rStr, RegexOptions.IgnoreCase);
             e.Handled = !r.IsMatch(s);
         }
+
+        public override List<string> EPS_BVPS()
+        {
+            List<string> result = new List<string>();
+
+            try
+            {
+                if (this.DataContextSource.FWDEPS != null)
+                {
+                    result.Add(this.DataContextSource.FWDEPS.ToString());
+                }
+                else
+                {
+                    result.Add(null);
+                }
+
+                if (this.DataContextSource.FWDBVPS != null)
+                {
+                    result.Add(this.DataContextSource.FWDBVPS.ToString());
+                }
+                else
+                {
+                    result.Add(null);
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextSource.Logger, ex);
+                return null;
+            }
+        }
+        
         #endregion
     }
 }

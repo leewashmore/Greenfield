@@ -20,7 +20,7 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewFreeCashFlows : ViewBaseUserControl
     {
-        
+
         #region PropertyDeclaration
 
         /// <summary>
@@ -96,7 +96,7 @@ namespace GreenField.Gadgets.Views
                 //dgFreeCashFlows.Columns[8].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
                 //dgFreeCashFlows.Columns[9].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
                 //dgFreeCashFlows.Columns[10].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-                
+
             }
 
         }
@@ -222,11 +222,18 @@ namespace GreenField.Gadgets.Views
         /// create RadDocument from the DataGrid
         /// </summary>
         /// <returns>Returns the RadDcoument for the Grid</returns>
-        public override RadDocument CreateDocument()
+        public override Table CreateDocument()
         {
             try
             {
-                return PDFExporter.ExportArray(dgFreeCashFlows, 8);
+                if (dgFreeCashFlows.Items.Count > 0)
+                {
+                    return PDFExporter.CreateTable(dgFreeCashFlows, 12);
+                }
+                else
+                {
+                    return null;
+                }
             }
             catch (Exception ex)
             {

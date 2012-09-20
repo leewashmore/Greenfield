@@ -133,58 +133,6 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        //private void btnBrowseOtherDocuments_Click(object sender, RoutedEventArgs e)
-        //{
-            
-        //    OpenFileDialog dialog = new OpenFileDialog() { Multiselect = false };
-        //    if (dialog.ShowDialog() == true)
-        //    {
-        //        DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification(true, "Uploading file...");
-        //        if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo != null)
-        //        {
-        //            if (DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingAttachedFileInfo
-        //                        .Any(record => record.MeetingAttachedFileData.Name == dialog.File.Name))
-        //            {
-        //                Prompt.ShowDialog("File '" + dialog.File.Name + "' already exists as an attachment. Please change the name of the file and upload again.");
-        //                DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
-        //                return;
-        //            } 
-        //        }
-
-        //        String securityName = String.Empty;
-        //        String securityTicker = String.Empty;
-        //        String presenters = String.Empty;
-        //        foreach (MeetingMinuteData item in DataContextViewPresentationMeetingMinutes.ClosedForVotingMeetingMinuteDistinctPresentationInfo)
-        //        {
-        //            securityName += item.SecurityName + ";";
-        //            securityTicker += item.SecurityTicker + ";";
-        //            presenters += item.Presenter + ";";
-        //        }
-
-        //        FileMaster meetingAttachedFileData
-        //            = new FileMaster()
-        //            {
-        //                Name = dialog.File.Name,
-        //                SecurityName = securityName,
-        //                SecurityTicker = securityTicker,
-        //                Type = EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(DocumentCategoryType.IC_PRESENTATIONS),
-        //                MetaTags = "Other Document;" + presenters + DataContextViewPresentationMeetingMinutes.SelectedClosedForVotingMeetingInfo.MeetingDateTime.ToShortDateString()
-        //            };
-
-        //        FileStream fileStream = dialog.File.OpenRead();
-
-        //        DataContextViewPresentationMeetingMinutes.SelectedIndustryReportFileStreamData
-        //            = new MeetingAttachedFileStreamData()
-        //            {
-        //                MeetingAttachedFileData = meetingAttachedFileData,
-        //                FileStream = ReadFully(fileStream)
-        //            };
-
-        //        DataContextViewPresentationMeetingMinutes.SelectedIndustryReports = dialog.File.Name;
-        //        DataContextViewPresentationMeetingMinutes.BusyIndicatorNotification();
-        //    }
-        //}
-
         private Byte[] ReadFully(Stream input)
         {
             Byte[] buffer = new byte[16 * 1024];
@@ -198,6 +146,16 @@ namespace GreenField.Gadgets.Views
                 }
                 return ms.ToArray();
             }
+        }
+
+        private void btnPreview_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog() { Filter = "PDF (*.pdf) |*.pdf" };
+            if (dialog.ShowDialog() == true)
+            {
+                DataContextViewPresentationMeetingMinutes.DownloadStream = dialog.OpenFile();                
+            }
+
         }
     }
 }

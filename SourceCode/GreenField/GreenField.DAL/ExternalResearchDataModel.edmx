@@ -1381,6 +1381,7 @@
         <ComplexType Name="DCF_ROICResult">
           <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
           <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="String" Name="FISCAL" Nullable="false" MaxLength="8" />
         </ComplexType>
         <ComplexType Name="ModelConsensusEstimatesData">
           <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
@@ -2031,6 +2032,7 @@
               <ComplexTypeMapping TypeName="ExternalResearchModel.DCF_ROICResult">
                 <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
                 <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="FISCAL" ColumnName="FISCAL" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

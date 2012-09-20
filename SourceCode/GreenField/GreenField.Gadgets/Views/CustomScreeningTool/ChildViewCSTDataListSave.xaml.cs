@@ -121,13 +121,29 @@ namespace GreenField.Gadgets.Views
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
+            if (SelectedAccessibility == null || txtDataListName.Text.Count() < 0 || txtDataListName.Text == "")
+            {
+                this.txtMessage.Text = "*Neither ListName nor Accessibility can be left empty.";
+                this.txtMessage.Visibility = System.Windows.Visibility.Visible;
+                return;
+            }
             this.DialogResult = true;            
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
-        }       
+        }
+
+        /// <summary>
+        /// tbSnapshotName TextChanged Event Handler
+        /// </summary>
+        /// <param name="sender">Sender</param>
+        /// <param name="e">TextChangedEventArgs</param>
+        private void tbListName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+           // this.btnSave.IsEnabled = this.txtDataListName.Text.Count() > 0;
+        } 
 
         #endregion
 

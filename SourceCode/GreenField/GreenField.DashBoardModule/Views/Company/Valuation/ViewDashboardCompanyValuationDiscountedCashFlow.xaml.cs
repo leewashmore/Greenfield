@@ -24,6 +24,7 @@ using GreenField.Gadgets.ViewModels;
 using Microsoft.Practices.Prism.Regions;
 using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Documents.Model;
+using System.Windows.Media.Imaging;
 
 namespace GreenField.DashboardModule.Views
 {
@@ -35,14 +36,29 @@ namespace GreenField.DashboardModule.Views
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
 
-        private RadDocument[] _dcfReport;
-        public RadDocument[] DCFReport
+        private List<string> _EPS_BVPS;
+        public List<string> EPS_BVPS
+        {
+            get
+            {
+                if (_EPS_BVPS == null)
+                {
+                    _EPS_BVPS = new List<string>();
+                }
+                return _EPS_BVPS;
+            }
+            set { _EPS_BVPS = value; }
+        }
+
+
+        private List<Table> _dcfReport;
+        public List<Table> DCFReport
         {
             get
             {
                 if (_dcfReport == null)
-                { 
-                    _dcfReport= new RadDocument[7];
+                {
+                    _dcfReport = new List<Table>();
                 }
                 return _dcfReport;
             }
@@ -199,48 +215,111 @@ namespace GreenField.DashboardModule.Views
         /// <param name="e"></param>
         private void btnPDF_Click(object sender, RoutedEventArgs e)
         {
+            DCFReport = new List<Table>();
+            RadDocument mergedDocument = new RadDocument();
+
             RadDocument finalReport = new RadDocument();
             int i = 0;
             foreach (RadTileViewItem item in this.rtvDashboard.Items)
             {
                 ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
-                RadDocument document = control.CreateDocument();
-                if (document != null)
+                Table table = control.CreateDocument();
+                if (table != null)
                 {
-                    DCFReport[i] = document;
-                    
+                    DCFReport.Add(table);
                 }
-                else
-                {
-                    DCFReport[i] = new RadDocument();
-                }
-                i++;
+
+                //if ((item.Content as Telerik.Windows.Controls.HeaderedContentControl).Content == "FORWARD EPS")
+                //{
+                //    EPS_BVPS = control.EPS_BVPS();
+                //}
             }
             if (DCFReport != null)
             {
                 finalReport = MergeDocuments(DCFReport);
-                PDFExporter.ExportPDF_RadDocument(finalReport, 12);
+                finalReport.SectionDefaultPageMargin = new Telerik.Windows.Documents.Layout.Padding() { All = 10 };
+                PDFExporter.ExportPDF_RadDocument(finalReport, 10);
             }
         }
+
+        private RadDocument _finalReport;
+        public RadDocument FinalReport
+        {
+            get
+            {
+                if (_finalReport == null)
+                    _finalReport = new RadDocument();
+                return _finalReport;
+            }
+            set { _finalReport = value; }
+        }
+
 
         /// <summary>
         /// Method to Merge Multiple RadDocuments
         /// </summary>
-        /// <param name="documents">Array of type RadDocuments</param>
+        /// <param name="tables">Array of type RadDocuments</param>
         /// <returns>Merged Documents</returns>
-        private RadDocument MergeDocuments(RadDocument[] documents)
+        private RadDocument MergeDocuments(List<Table> tables)
         {
-            RadDocument mergedDocument = new RadDocument();           
-            foreach (RadDocument document in documents)
+            RadDocument mergedDocument = new RadDocument();
+            Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
+            Telerik.Windows.Documents.Model.Section newSection = new Telerik.Windows.Documents.Model.Section();
+            Table documentTable = new Table(tables.Count(), 1);
+            mergedDocument.Sections.Add(section);
+            mergedDocument.Sections.Add(newSection);
+            int i = 0;
+            foreach (Table item in tables)
             {
-                foreach (Telerik.Windows.Documents.Model.Section section in document.Sections)
+                Telerik.Windows.Documents.Model.Paragraph para = new Telerik.Windows.Documents.Model.Paragraph() { SpacingBefore = 10 };
+                if (i < 4)
                 {
-                    Telerik.Windows.Documents.Model.Section copySection = section.CreateDeepCopy() as Telerik.Windows.Documents.Model.Section;
-                    document.Sections.Remove(section);
-                    mergedDocument.Sections.Add(copySection);
+                    Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span(ReturnGadgetName(i));
+                    span.FontSize = 10;
+                    para.Children.Add(span);
+                    section.Blocks.Add(para);
+                    section.Blocks.Add(item);
                 }
+                else
+                {
+                    Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span(ReturnGadgetName(i));
+                    span.FontSize = 10;
+                    para.Children.Add(span);
+                    newSection.Blocks.Add(para);
+                    newSection.Blocks.Add(item);
+                }
+                i++;
             }
             return mergedDocument;
+        }
+
+        private string ReturnGadgetName(int order)
+        {
+            if (EPS_BVPS.Count == 0)
+            {
+                EPS_BVPS.Add(" ");
+                EPS_BVPS.Add(" ");
+            }
+
+            switch (order)
+            {
+                case 0:
+                    return "ASSUMPTIONS";
+                case 1:
+                    return "FREE CASH FLOWS";
+                case 2:
+                    return "TERMINAL VALUE CALCULATIONS";
+                case 3:
+                    return "SUMMARY";
+                case 4:
+                    return "SENSITIVITY";
+                case 5:
+                    return "SENSITIVITY EPS ";// + "EPS= " + Convert.ToString(EPS_BVPS[0]);
+                case 6:
+                    return "SENSITIVITY BVPS ";// + "BVPS= " + Convert.ToString(EPS_BVPS[1]);
+                default:
+                    return string.Empty;
+            }
         }
     }
 }

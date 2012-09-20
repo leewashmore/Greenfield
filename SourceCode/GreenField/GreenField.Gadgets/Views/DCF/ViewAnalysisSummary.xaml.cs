@@ -143,7 +143,7 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextSource.Logger, methodNamespace);
             try
             {
-                PDFExporter.btnExportPDF_Click(this.dgDCFAnalysisSummary,12);
+                PDFExporter.btnExportPDF_Click(this.dgDCFAnalysisSummary, 12);
             }
             catch (Exception ex)
             {
@@ -190,7 +190,7 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgDCFAnalysisSummary_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
         {
-            int Index = this.dgDCFAnalysisSummary.Items.IndexOf(e.Cell.DataColumn);
+            int Index = this.dgDCFAnalysisSummary.Items.IndexOf(e.Cell.ParentRow.Item);
             if (Index != 3)
             {
                 e.Cancel = true;
@@ -238,7 +238,13 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgDCFAnalysisSummary_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
         {
-            this.DataContextSource.StockSpecificDiscount = Convert.ToDecimal(stockSpecificDiscount);
+            if (stockSpecificDiscount != null)
+            {
+                if (stockSpecificDiscount != "")
+                {
+                    this.DataContextSource.StockSpecificDiscount = Convert.ToDecimal(stockSpecificDiscount);
+                }
+            }
         }
 
         /// <summary>
@@ -267,11 +273,11 @@ namespace GreenField.Gadgets.Views
         /// create RadDocument from the DataGrid
         /// </summary>
         /// <returns>Returns the RadDcoument for the Grid</returns>
-        public override RadDocument CreateDocument()
+        public override Table CreateDocument()
         {
             try
             {
-                return PDFExporter.ExportArray(dgDCFAnalysisSummary, 12);
+                return PDFExporter.CreateTable(dgDCFAnalysisSummary, 12);
             }
             catch (Exception ex)
             {

@@ -7635,11 +7635,13 @@ namespace GreenField.DAL
         /// </summary>
         /// <param name="aMOUNT">Initial value of the AMOUNT property.</param>
         /// <param name="dATA_ID">Initial value of the DATA_ID property.</param>
-        public static DCF_ROICResult CreateDCF_ROICResult(global::System.Decimal aMOUNT, global::System.Int32 dATA_ID)
+        /// <param name="fISCAL">Initial value of the FISCAL property.</param>
+        public static DCF_ROICResult CreateDCF_ROICResult(global::System.Decimal aMOUNT, global::System.Int32 dATA_ID, global::System.String fISCAL)
         {
             DCF_ROICResult dCF_ROICResult = new DCF_ROICResult();
             dCF_ROICResult.AMOUNT = aMOUNT;
             dCF_ROICResult.DATA_ID = dATA_ID;
+            dCF_ROICResult.FISCAL = fISCAL;
             return dCF_ROICResult;
         }
 
@@ -7693,6 +7695,30 @@ namespace GreenField.DAL
         private global::System.Int32 _DATA_ID;
         partial void OnDATA_IDChanging(global::System.Int32 value);
         partial void OnDATA_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String FISCAL
+        {
+            get
+            {
+                return _FISCAL;
+            }
+            set
+            {
+                OnFISCALChanging(value);
+                ReportPropertyChanging("FISCAL");
+                _FISCAL = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("FISCAL");
+                OnFISCALChanged();
+            }
+        }
+        private global::System.String _FISCAL;
+        partial void OnFISCALChanging(global::System.String value);
+        partial void OnFISCALChanged();
 
         #endregion
     }

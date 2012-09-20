@@ -80,7 +80,7 @@ namespace GreenField.Gadgets.Helpers
 
         }
 
-        public static void ExportPDF_RadDocument(RadDocument document, int fontSize)
+        public static void ExportPDF_RadDocument(RadDocument document, int fontSize = 12)
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.DefaultExt = "*.pdf";
@@ -200,6 +200,52 @@ namespace GreenField.Gadgets.Helpers
             }
 
             return document;
+        }
+
+        public static Table CreateTable(RadGridView grid, int fontSize)
+        {
+            List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
+                                                     orderby c.DisplayIndex
+                                                     select c).ToList();
+
+            Table table = new Table();
+            fontSizePDF = fontSize;
+            if (grid.ShowColumnHeaders)
+            {
+                TableRow headerRow = new TableRow();
+                if (grid.GroupDescriptors.Count() > 0)
+                {
+                    TableCell indentCell = new TableCell();
+                    indentCell.PreferredWidth = new TableWidthUnit(grid.GroupDescriptors.Count() * 20);
+                    indentCell.Background = Colors.Gray;
+                    headerRow.Cells.Add(indentCell);
+                }
+
+                for (int i = 0; i < columns.Count(); i++)
+                {
+                    TableCell cell = new TableCell();
+                    cell.Background = Color.FromArgb(255, 228, 229, 229);
+                    AddCellValue(cell, columns[i].UniqueName);
+                    cell.PreferredWidth = new TableWidthUnit((float)columns[i].ActualWidth);
+                    headerRow.Cells.Add(cell);
+                }
+
+                table.Rows.Add(headerRow);
+            }
+
+            if (grid.Items.Groups != null)
+            {
+                for (int i = 0; i < grid.Items.Groups.Count(); i++)
+                {
+                    AddGroupRow(table, grid.Items.Groups[i] as QueryableCollectionViewGroup, columns, grid);
+                }
+            }
+            else
+            {
+                AddDataRows(table, grid.Items, columns, grid);
+            }
+
+            return table;
         }
 
         /// <summary>

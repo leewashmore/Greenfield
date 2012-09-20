@@ -1400,20 +1400,6 @@ namespace GreenField.Web.Services
                 List<CalculatedValuesForValuation> valuesBenchForNetGrowth = new List<CalculatedValuesForValuation>();
 
 
-                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPRevenue = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForEVEBITDA = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPE = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPCE = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForROE = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForDividendYield = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForRevGrowth = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForNetGrowth = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                //List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForPBV = new List<GreenField.DAL.ValuationQualityGrowthData>();
-                //  List<GreenField.DAL.ValuationQualityGrowthData> storedProcResultPortForAll = new List<GreenField.DAL.ValuationQualityGrowthData>();
-
-
-
-
                 int check = 1;
                 int checkBen = 1;
                 String benchmarkId = null;

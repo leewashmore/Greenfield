@@ -5,7 +5,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"                        
-    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"                             
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
     d:DesignHeight="300" d:DesignWidth="700">
 
     <helpers:ViewBaseUserControl.Resources>
@@ -21,10 +22,9 @@
 
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
+                <RowDefinition Height="150"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>                
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -135,9 +135,6 @@
                                    HorizontalAlignment="Center"
                                    Content="SUBMIT" Grid.Column="0"
                                Style="{StaticResource RadButtonStyle}"/>
-
-               
-
                 </Grid>
 
                 <Grid x:Name="gDataListSelection" Grid.Column="1"
@@ -191,38 +188,19 @@
                                    Content="OK"
                                Style="{StaticResource RadButtonStyle}"/>
                 </Grid>
-
+            </Grid>            
+            <Grid Grid.Row="1">                
+            <Border BorderThickness="1" HorizontalAlignment="Stretch" BorderBrush="Gray" Visibility="Visible"/>                
             </Grid>
-            
-            <Grid Grid.Row="1">
-                <StackPanel Orientation="Horizontal" Margin="0,2,0,2">
-            <Border BorderThickness="4" HorizontalAlignment="Stretch"/>
-                </StackPanel>
-            </Grid>
-            <Grid Grid.Row="3">
+            <Grid Grid.Row="2">
                 <telerik:RadGridView x:Name="dgCustomSecurity" Visibility="{Binding ResultsListVisibility}"
-                    AutoGenerateColumns="False"  EnableColumnVirtualization="False">
-                    <!--<i:Interaction.Behaviors>
-                        <helpers:FrozenRowsBehavior/>
-                    </i:Interaction.Behaviors>-->
-                </telerik:RadGridView>
-            </Grid>
-            
-            <Grid Grid.Row="2" Visibility="{Binding ResultsListVisibility}">
-                <telerik:RadGridView x:Name="dgSecurityResultList"
-                                             Margin="2,2,0,2"
-                                             ItemsSource="{Binding SecurityData}"
-                                             telerik:StyleManager.Theme="Metro"
-                                             CanUserReorderColumns ="False" 
+                    AutoGenerateColumns="False"   CanUserReorderColumns ="False" 
                                              CanUserSelect="True"
                                              CanUserSortColumns="False"
                                              IsFilteringAllowed="False"
-                                             AutoGenerateColumns="True"
                                              CanUserInsertRows="False"
                                              CanUserDeleteRows="False"
-                                             ShowGroupFooters="False"
-                                             ShowColumnFooters="False"
-                                             ShowGroupPanel="False"
+                                             ShowGroupPanel="True"
                                              UseLayoutRounding="True" 
                                              IsReadOnly="True"
                                              RowIndicatorVisibility="Collapsed"
@@ -233,20 +211,11 @@
                                              EnableColumnVirtualization="False"                                              
                                              HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                              RowStyle="{StaticResource GridViewRowStyle}" >
-
-                    <!--<telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn x:Name="dgSelectedSecurityReferenceDataItem"                                            
-                                                Width="Auto"
-                                                Header="Data Fields"
-                                                DataMemberBinding="{Binding DataDescription}"
-                                                HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                CellStyle="{StaticResource GridViewCellStyle}"
-                                                HeaderTextAlignment="Left"
-                                                TextAlignment="Left"
-                                                IsFilterable="True"/>
-                    </telerik:RadGridView.Columns>-->
+                    <!--<i:Interaction.Behaviors>
+                        <helpers:FrozenRowsBehavior/>
+                    </i:Interaction.Behaviors>-->
                 </telerik:RadGridView>
-            </Grid>           
+            </Grid>            
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

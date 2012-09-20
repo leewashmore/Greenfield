@@ -26,8 +26,6 @@ using Microsoft.Practices.ServiceLocation;
 using GreenField.Gadgets.Helpers;
 using GreenField.DataContracts;
 
-
-
 namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelPresentations : NotificationObject
@@ -516,7 +514,6 @@ namespace GreenField.Gadgets.ViewModels
                 if (result == true)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    //Prompt.ShowDialog("Presentation date change was successful");
                     if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null && _sendChangeDateNotification)
                     {
                         BusyIndicatorNotification(true, "Retrieving presentation associated users...");
@@ -532,6 +529,7 @@ namespace GreenField.Gadgets.ViewModels
                     Prompt.ShowDialog("An Error ocurred while updating presentation date");
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     BusyIndicatorNotification();
+                    Initialize();
                 }
             }
             catch (Exception ex)
@@ -539,6 +537,7 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
                 BusyIndicatorNotification();
+                Initialize();
             }
             finally
             {
@@ -595,12 +594,17 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         BusyIndicatorNotification(true, "Retrieving user credentials...");
                         _dbInteractivity.GetUsersByNames(userNames, GetUsersByNamesCallbackMethod);
-                    }                 
+                    }
+                    else
+                    {
+                        Initialize();
+                    }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     BusyIndicatorNotification();
+                    Initialize();
                 }
             }
             catch (Exception ex)
@@ -608,6 +612,7 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
                 BusyIndicatorNotification();
+                Initialize();
             }
             finally
             {
@@ -635,11 +640,11 @@ namespace GreenField.Gadgets.ViewModels
                     String emailCc = String.Join("|", result.Where(record => record.UserName.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower())
                         .Select(record => record.Email).ToArray());
 
-                    String messageSubject = "Investment Committee Presentation Change Date notification";
-                    String messageBody = "This is to inform concerned parties that Investment Committee Presentation on company - "
-                        + SelectedPresentationOverviewInfo.SecurityName + " (" + SelectedPresentationOverviewInfo.SecurityTicker + ") originally dated "
-                        + Convert.ToDateTime(_originalPresentationDate).ToString("MM-dd-yyyy h:mm tt") + " UTC has been re-assigned to meeting dated "
-                        + Convert.ToDateTime(_updatedPresentationDate).ToString("MM-dd-yyyy h:mm tt") + " UTC";
+                    String messageSubject = "Presentation Date Change Notification – " + SelectedPresentationOverviewInfo.SecurityName;
+                    String messageBody = "The Investment Committee Admin has changed the presentation date for "
+                        + SelectedPresentationOverviewInfo.SecurityName + " from "
+                        + Convert.ToDateTime(_originalPresentationDate).ToString("MMMM dd, yyyy") + " UTC to "
+                        + Convert.ToDateTime(_updatedPresentationDate).ToString("MMMM dd, yyyy") + " UTC*. Please contact the Investment Committee Admin with any questions or concerns.";
 
                     if (_dbInteractivity != null)
                     {
@@ -647,11 +652,16 @@ namespace GreenField.Gadgets.ViewModels
                         _dbInteractivity.SetMessageInfo(emailtTo, emailCc, messageSubject, messageBody, null
                             , UserSession.SessionManager.SESSION.UserName, SetMessageInfoCallbackMethod);                        
                     }
+                    else
+                    {
+                        Initialize();   
+                    }
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     BusyIndicatorNotification();
+                    Initialize();
                 }
             }
             catch (Exception ex)
@@ -659,6 +669,7 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
                 BusyIndicatorNotification();
+                Initialize();
             }
             finally
             {
@@ -674,8 +685,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result == true)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    Initialize();
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);                    
                 }
                 else
                 {
@@ -691,6 +701,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
                 BusyIndicatorNotification();
+                Initialize();
             }
         }
         #endregion

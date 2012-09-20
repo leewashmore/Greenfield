@@ -303,6 +303,10 @@ namespace GreenField.ServiceCaller
 
         void SetMessageInfo(String emailTo, String emailCc, String emailSubject, String emailMessageBody, String emailAttachment
             , String userName, Action<Boolean?> callback);
+
+        void GenerateMeetingMinutesReport(Int64 meetingId, Action<Byte[]> callback);
+
+        void GeneratePreMeetingVotingReport(Int64 presentationId, Action<Byte[]> callback);
         #endregion
 
         #region DCF
@@ -340,6 +344,8 @@ namespace GreenField.ServiceCaller
         void SaveUserDataPointsPreference(string userPreference, string username, Action<Boolean?> callback);
 
         void GetCustomScreeningUserPreferences(string username, Action<List<CSTUserPreferenceInfo>> callback);
+
+        void UpdateUserDataPointsPreference(string userPreference, string username, string existingListname, string newListname, string accessibility, Action<Boolean?> callback);
 
         #endregion
 
