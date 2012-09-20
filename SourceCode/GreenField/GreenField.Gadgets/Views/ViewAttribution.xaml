@@ -32,7 +32,7 @@
                                   CanUserInsertRows="False"                              
                                   CanUserDeleteRows="False" 
                                   IsReadOnly="True"
-                                  CanUserSortColumns="False" 
+                                  CanUserSortColumns="True" 
                                   ScrollMode="Deferred"  
                                   RowIndicatorVisibility="Collapsed" 
                                   ShowGroupPanel="False" 
