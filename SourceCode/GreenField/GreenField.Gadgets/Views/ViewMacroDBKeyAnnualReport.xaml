@@ -94,7 +94,6 @@
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
                                          AutoExpandGroups="True"
-                                         RowLoaded="dgMacroDBKeyReport_RowLoaded"
                                          EnableRowVirtualization="False"
                                          EnableColumnVirtualization="False"
                                          ElementExporting="dgMacroDBKeyReport_ElementExporting">

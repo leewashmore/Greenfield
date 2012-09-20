@@ -172,15 +172,7 @@ namespace GreenField.Gadgets.Views
             dgMacroDBKeyReport.Columns[9].Header = "Five Year Average" + "(" + (currentYear - 4).ToString() + "-" + (currentYear).ToString() + ")";
 
         }
-        /// <summary>
-        /// When the row gets loaded
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgMacroDBKeyReport_RowLoaded(object sender, RowLoadedEventArgs e)
-        {
-            
-        }
+      
 
         /// <summary>
         /// Method to catch Click Event of Export to Excel

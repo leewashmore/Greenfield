@@ -15,6 +15,8 @@ using Telerik.Windows.Controls;
 using System.Xml.Linq;
 using Telerik.Windows.Data;
 using System.Collections.ObjectModel;
+using GreenField.ServiceCaller;
+using GreenField.Common;
 
 namespace GreenField.Gadgets.Views
 {
@@ -147,6 +149,44 @@ namespace GreenField.Gadgets.Views
             this.dgCustomSecurity.ItemsSource = _data;
             this.dgCustomSecurity.IsFilteringAllowed = true;
         }
+
+        /// <summary>
+        /// Method to catch Click Event of Export to Excel
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (this.dgCustomSecurity.Visibility == Visibility.Visible)
+                {
+                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                    {                  
+                        new RadExportOptions() { ElementName = "Custom Screening Tool", Element = this.dgCustomSecurity, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                    };
+                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.CUSTOM_SCREENING_TOOL);
+                    childExportOptions.Show();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+
+        #region PDFExport
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        {
+            PDFExporter.btnExportPDF_Click(this.dgCustomSecurity);
+        }
+        #endregion
     
 
     }

@@ -927,8 +927,11 @@ namespace GreenField.Gadgets.ViewModels
 
             foreach (String a in SelectedSavedDataList.Select(a => a.TableColumn).Distinct())
             {
-                String b = ReplaceSpecialCharacters(a);
-                changedColumnNames.Add(a, b);
+                if (a != null)
+                {
+                    String b = ReplaceSpecialCharacters(a);
+                    changedColumnNames.Add(a, b);
+                }
             }
 
             StringBuilder output = new StringBuilder();
@@ -950,19 +953,11 @@ namespace GreenField.Gadgets.ViewModels
 
                 xw.WriteAttributeString("name", "Security Ticker");
                 xw.WriteAttributeString("displayname", String.Empty);
-                xw.WriteAttributeString("source", String.Empty);
-                xw.WriteAttributeString("yeartype", String.Empty);
-                xw.WriteAttributeString("year", String.Empty);
-
                 xw.WriteEndElement();
 
                 xw.WriteStartElement("column");
                 xw.WriteAttributeString("name", "Security Name");
                 xw.WriteAttributeString("displayname", String.Empty);
-                xw.WriteAttributeString("source", String.Empty);
-                xw.WriteAttributeString("yeartype", String.Empty);
-                xw.WriteAttributeString("year", String.Empty);
-
                 xw.WriteEndElement();
 
 
@@ -973,10 +968,6 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("column");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + 0);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteAttributeString("source", info.DataSource);
-                        xw.WriteAttributeString("yeartype", info.YearType);
-                        xw.WriteAttributeString("periodtype", info.PeriodType);
-                        xw.WriteAttributeString("year", Convert.ToString(0));
                         xw.WriteEndElement();
                     }
                     else
@@ -984,10 +975,6 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("column");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteAttributeString("source", info.DataSource);
-                        xw.WriteAttributeString("yeartype", info.YearType);
-                        xw.WriteAttributeString("periodtype", info.PeriodType);
-                        xw.WriteAttributeString("year", Convert.ToString(info.FromDate));
                         xw.WriteEndElement();
 
                     }
@@ -1001,7 +988,6 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + 0);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteAttributeString("year", Convert.ToString(0));
                         xw.WriteString(String.Empty);
                         xw.WriteEndElement();
                     }
@@ -1010,7 +996,6 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteAttributeString("year", Convert.ToString(info.FromDate));
                         xw.WriteString(Convert.ToString(info.FromDate));
                         xw.WriteEndElement();
                     }
@@ -1036,7 +1021,6 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + 0);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteAttributeString("year", Convert.ToString(0));
                         xw.WriteString(Convert.ToString(info.PeriodType));
                         xw.WriteEndElement();
                     }
@@ -1045,7 +1029,6 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteAttributeString("year", Convert.ToString(info.FromDate));
                         xw.WriteString(Convert.ToString(info.PeriodType));
                         xw.WriteEndElement();
 
@@ -1072,7 +1055,6 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + 0);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteAttributeString("year", Convert.ToString(0));
                         xw.WriteString(Convert.ToString(info.YearType));
                         xw.WriteEndElement();
                     }
@@ -1080,11 +1062,9 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
-                        xw.WriteAttributeString("displayname",info.TableColumn);
-                        xw.WriteAttributeString("year", Convert.ToString(info.FromDate));
+                        xw.WriteAttributeString("displayname", info.TableColumn);
                         xw.WriteString(Convert.ToString(info.YearType));
                         xw.WriteEndElement();
-
                     }
                 }
                 xw.WriteStartElement("Element");
@@ -1107,8 +1087,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + 0);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteAttributeString("year", Convert.ToString(0));
+                        xw.WriteAttributeString("displayname", info.TableColumn);                       
                         xw.WriteString(Convert.ToString(info.DataSource));
                         xw.WriteEndElement();
                     }
@@ -1116,8 +1095,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteAttributeString("year", Convert.ToString(info.FromDate));
+                        xw.WriteAttributeString("displayname", info.TableColumn);                       
                         xw.WriteString(Convert.ToString(info.DataSource));
                         xw.WriteEndElement();
                     }
@@ -1139,7 +1117,8 @@ namespace GreenField.Gadgets.ViewModels
 
                 if (securityData != null)
                 {
-                    foreach (String issueName in securityData.Select(a => a.IssueName).Distinct())
+                    List<String> distinctIssueNames = securityData.Select(a => a.IssueName).Distinct().ToList();
+                    foreach (String issueName in distinctIssueNames)
                     {
                         xw.WriteStartElement("row");
                         foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
@@ -1150,7 +1129,7 @@ namespace GreenField.Gadgets.ViewModels
                                 xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + Convert.ToString(0));
                                 xw.WriteAttributeString("displayname", info.TableColumn);
                                 CustomScreeningSecurityData selectedSec = (from p in securityData
-                                                                           where p.Type.ToLower() == info.TableColumn.ToLower()
+                                                                           where p.Type == info.TableColumn
                                                                            && p.PeriodYear == 0 && p.IssueName == issueName
                                                                            select p).FirstOrDefault();
 
@@ -1164,7 +1143,7 @@ namespace GreenField.Gadgets.ViewModels
                                 xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
                                 xw.WriteAttributeString("displayname", info.TableColumn);
                                 CustomScreeningSecurityData selectedSec = (from p in securityData
-                                                                           where p.Type.ToLower() == info.TableColumn.ToLower()
+                                                                           where p.Type == info.TableColumn
                                                                            && p.PeriodYear == info.FromDate && p.IssueName == issueName
                                                                            select p).FirstOrDefault();
 
@@ -1178,7 +1157,7 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", "Security Ticker");
                         xw.WriteAttributeString("displayname", String.Empty);
-                        String securityId = securityData.Where(a => a.IssueName == issueName).Select(a => a.SecurityId).FirstOrDefault().ToString();
+                        String securityId = securityData.Where(a => a.IssueName == issueName).Select(a => a.SecurityId).FirstOrDefault();                       
                         xw.WriteString(securityId);
                         xw.WriteEndElement();
 
