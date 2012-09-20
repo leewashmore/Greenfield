@@ -109,12 +109,6 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
-                if (!isServiceUp)
-                    throw new Exception("Services are not available");
-
                 List<CustomSelectionData> result = new List<CustomSelectionData>();
 
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
@@ -158,12 +152,6 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
-                if (!isServiceUp)
-                    throw new Exception("Services are not available");
-
                 List<CustomSelectionData> result = new List<CustomSelectionData>();
 
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
@@ -182,7 +170,7 @@ namespace GreenField.Web.Services
                         {
                             ScreeningId = item.SCREENING_ID,
                             DataDescription = item.DATA_DESC,
-                            // LongDescription = item.LONG_DESC
+                            LongDescription = item.LONG_DESC,
                             Quaterly = item.QUARTERLY,
                             Annual = item.ANNUAL,
                             DataID = item.DATA_ID,
@@ -210,12 +198,6 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
-                if (!isServiceUp)
-                    throw new Exception("Services are not available");
-
                 List<CustomSelectionData> result = new List<CustomSelectionData>();
 
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
@@ -234,7 +216,7 @@ namespace GreenField.Web.Services
                         {
                             ScreeningId = item.SCREENING_ID,
                             DataDescription = item.DATA_DESC,
-                            // LongDescription = item.LONG_DESC
+                            LongDescription = item.LONG_DESC,
                             Quaterly = item.QUARTERLY,
                             Annual = item.ANNUAL,
                             DataID = item.DATA_ID,
@@ -262,12 +244,6 @@ namespace GreenField.Web.Services
         {
             try
             {
-                bool isServiceUp;
-                isServiceUp = CheckServiceAvailability.ServiceAvailability();
-
-                if (!isServiceUp)
-                    throw new Exception("Services are not available");
-
                 List<CustomSelectionData> result = new List<CustomSelectionData>();
 
                 CustomScreeningToolEntities entity = new CustomScreeningToolEntities();

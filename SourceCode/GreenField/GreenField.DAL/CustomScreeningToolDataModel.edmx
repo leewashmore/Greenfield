@@ -229,23 +229,20 @@
 				<EntityContainer Name="CustomScreeningToolEntities" annotation:LazyLoadingEnabled="true">
 					<EntitySet Name="SCREENING_DISPLAY_CURRENT" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_CURRENT" />
 					<EntitySet Name="SCREENING_DISPLAY_FAIRVALUE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_FAIRVALUE" />
-					<FunctionImport Name="GetFinancialTabDataDescriptions" ReturnType="Collection(CustomScreeningToolModel.FinancialTabDataDescriptions)">
-					<Parameter Name="tabName" Mode="In" Type="String" />
-          </FunctionImport>
 					<EntitySet Name="SCREENING_DISPLAY_PERIOD" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD" />
 					<FunctionImport Name="GetCustomScreeningFVAData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFVAData)">
-						<Parameter Name="securityIdsList" Mode="In" Type="String" />
+            <Parameter Name="securityIdsList" Mode="In" Type="String" />
             <Parameter Name="dataSource" Mode="In" Type="String" />
           </FunctionImport>
 					<EntitySet Name="UserCustomisedListInfoes" EntityType="CustomScreeningToolModel.UserCustomisedListInfo" />
 					<FunctionImport Name="GetCustomScreeningCURData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningCURData)">
-						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
+            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
             <Parameter Name="securityIdsList" Mode="In" Type="String" />
             <Parameter Name="dataID" Mode="In" Type="Int32" />
             <Parameter Name="dataSource" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetCustomScreeningFINData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningFINData)">
-						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
+            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
             <Parameter Name="securityIdsList" Mode="In" Type="String" />
             <Parameter Name="dataID" Mode="In" Type="Int32" />
             <Parameter Name="periodType" Mode="In" Type="String" />
@@ -254,10 +251,10 @@
             <Parameter Name="dataSource" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetCustomScreeningREFData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningREFData)">
-					<Parameter Name="securityIdsList" Mode="In" Type="String" />
+          <Parameter Name="securityIdsList" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetCustomScreeningMarketCap" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningMarketCap)">
-						<Parameter Name="issuerIdsList" Mode="In" Type="String" />
+            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
             <Parameter Name="securityIdsList" Mode="In" Type="String" />
           </FunctionImport>
 					<EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" />
@@ -267,18 +264,21 @@
 						<End Role="UserListDataPointMappingInfo" EntitySet="UserListDataPointMappingInfoes" />
 					</AssociationSet>
 					<FunctionImport Name="SaveCustomScreeningDataPointsPreference" ReturnType="Collection(Int32)">
-						<Parameter Name="userPreference" Mode="In" Type="String" />
+            <Parameter Name="userPreference" Mode="In" Type="String" />
             <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="UpdateCustomScreeningDataPointsPreference" ReturnType="Collection(Int32)">
-						<Parameter Name="userPreference" Mode="In" Type="String" />
+            <Parameter Name="userPreference" Mode="In" Type="String" />
             <Parameter Name="username" Mode="In" Type="String" />
             <Parameter Name="existingListname" Mode="In" Type="String" />
             <Parameter Name="newListname" Mode="In" Type="String" />
             <Parameter Name="accessibility" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetCustomScreeningUserPreferences" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningUserPreferences)">
-            <Parameter Name="username" Mode="In" Type="String" />
+          <Parameter Name="username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetFinancialTabDataDescriptions" ReturnType="Collection(CustomScreeningToolModel.FinancialTabDataDescriptions)">
+            <Parameter Name="tabName" Mode="In" Type="String" />
           </FunctionImport>
 				</EntityContainer>
 				<EntityType Name="SCREENING_DISPLAY_CURRENT">
@@ -313,14 +313,6 @@
 					<Property Name="DECIMAL" Type="Int32" />
 					<Property Name="PERCENTAGE" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
 				</EntityType>
-				<ComplexType Name="FinancialTabDataDescriptions" >
-					<Property Type="String" Name="SCREENING_ID" Nullable="false" />
-					<Property Type="String" Name="DATA_DESC" Nullable="false" />
-					<Property Type="String" Name="QUARTERLY" Nullable="true" />
-					<Property Type="String" Name="ANNUAL" Nullable="true" />
-					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
-					<Property Type="Int32" Name="ESTIMATE_ID" Nullable="true" />
-				</ComplexType>
 				<EntityType Name="SCREENING_DISPLAY_PERIOD">
 					<Key>
 						<PropertyRef Name="SCREENING_ID" />
@@ -496,6 +488,15 @@
           <Property Type="Int32" Name="ToDate" Nullable="true" />
           <Property Type="Int32" Name="DataPointsOrder" Nullable="true" />
         </ComplexType>
+				<ComplexType Name="FinancialTabDataDescriptions">
+					<Property Type="String" Name="SCREENING_ID" Nullable="false" />
+					<Property Type="String" Name="DATA_DESC" Nullable="false" />
+					<Property Type="String" Name="LONG_DESC" Nullable="true" />
+					<Property Type="String" Name="QUARTERLY" Nullable="true" />
+					<Property Type="String" Name="ANNUAL" Nullable="true" />
+					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
+					<Property Type="Int32" Name="ESTIMATE_ID" Nullable="true" />
+				</ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -529,18 +530,6 @@
 							</MappingFragment>
 						</EntityTypeMapping>
 					</EntitySetMapping>
-					<FunctionImportMapping FunctionImportName="GetFinancialTabDataDescriptions" FunctionName="CustomScreeningToolModel.Store.GetFinancialTabDataDescriptions">
-						<ResultMapping>
-							<ComplexTypeMapping TypeName="CustomScreeningToolModel.FinancialTabDataDescriptions">
-								<ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
-								<ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
-								<ScalarProperty Name="QUARTERLY" ColumnName="QUARTERLY" />
-								<ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
-								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-								<ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
-							</ComplexTypeMapping>
-						</ResultMapping>
-					</FunctionImportMapping>
 					<EntitySetMapping Name="SCREENING_DISPLAY_PERIOD">
 						<EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_PERIOD">
 							<MappingFragment StoreEntitySet="SCREENING_DISPLAY_PERIOD">
@@ -723,6 +712,19 @@
                 <ScalarProperty Name="FromDate" ColumnName="FromDate" />
                 <ScalarProperty Name="ToDate" ColumnName="ToDate" />
                 <ScalarProperty Name="DataPointsOrder" ColumnName="DataPointsOrder" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetFinancialTabDataDescriptions" FunctionName="CustomScreeningToolModel.Store.GetFinancialTabDataDescriptions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CustomScreeningToolModel.FinancialTabDataDescriptions">
+                <ScalarProperty Name="SCREENING_ID" ColumnName="SCREENING_ID" />
+                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+                <ScalarProperty Name="LONG_DESC" ColumnName="LONG_DESC" />
+                <ScalarProperty Name="QUARTERLY" ColumnName="QUARTERLY" />
+                <ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

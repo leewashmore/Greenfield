@@ -223,25 +223,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="tabName">No Metadata Documentation available.</param>
-        public ObjectResult<FinancialTabDataDescriptions> GetFinancialTabDataDescriptions(global::System.String tabName)
-        {
-            ObjectParameter tabNameParameter;
-            if (tabName != null)
-            {
-                tabNameParameter = new ObjectParameter("tabName", tabName);
-            }
-            else
-            {
-                tabNameParameter = new ObjectParameter("tabName", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<FinancialTabDataDescriptions>("GetFinancialTabDataDescriptions", tabNameParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="securityIdsList">No Metadata Documentation available.</param>
         /// <param name="dataSource">No Metadata Documentation available.</param>
         public ObjectResult<CustomScreeningFVAData> GetCustomScreeningFVAData(global::System.String securityIdsList, global::System.String dataSource)
@@ -565,6 +546,25 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<CustomScreeningUserPreferences>("GetCustomScreeningUserPreferences", usernameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="tabName">No Metadata Documentation available.</param>
+        public ObjectResult<FinancialTabDataDescriptions> GetFinancialTabDataDescriptions(global::System.String tabName)
+        {
+            ObjectParameter tabNameParameter;
+            if (tabName != null)
+            {
+                tabNameParameter = new ObjectParameter("tabName", tabName);
+            }
+            else
+            {
+                tabNameParameter = new ObjectParameter("tabName", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FinancialTabDataDescriptions>("GetFinancialTabDataDescriptions", tabNameParameter);
         }
 
         #endregion
@@ -4478,6 +4478,30 @@ namespace GreenField.DAL
         private global::System.String _DATA_DESC;
         partial void OnDATA_DESCChanging(global::System.String value);
         partial void OnDATA_DESCChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String LONG_DESC
+        {
+            get
+            {
+                return _LONG_DESC;
+            }
+            set
+            {
+                OnLONG_DESCChanging(value);
+                ReportPropertyChanging("LONG_DESC");
+                _LONG_DESC = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("LONG_DESC");
+                OnLONG_DESCChanged();
+            }
+        }
+        private global::System.String _LONG_DESC;
+        partial void OnLONG_DESCChanging(global::System.String value);
+        partial void OnLONG_DESCChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

@@ -249,19 +249,19 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void dgDCFAnalysisSummary_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
-            //if (e.Row != null)
-            //{
-            //    if (e.Row.DataContext != null)
-            //    {
-            //        var data = e.Row.DataContext as DCFDisplayData;
-            //        if (data == null)
-            //            return;
-            //        if ((e.Row.DataContext as DCFDisplayData).PropertyName == "Stock Specific Discount")
-            //        {
-            //            e.Row.Background = new SolidColorBrush(Colors.Yellow);
-            //        }
-            //    }
-            //}
+            if (e.Row != null)
+            {
+                if (e.Row.DataContext != null)
+                {
+                    var data = e.Row.DataContext as DCFDisplayData;
+                    if (data == null)
+                        return;
+                    if ((e.Row.DataContext as DCFDisplayData).PropertyName == "Stock Specific Discount")
+                    {
+                        e.Row.Background = new SolidColorBrush(Colors.Yellow);
+                    }
+                }
+            }
         }
 
         /// <summary>
