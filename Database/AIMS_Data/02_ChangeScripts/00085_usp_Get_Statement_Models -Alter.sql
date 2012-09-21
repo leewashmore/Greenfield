@@ -19,7 +19,7 @@ end
 
 GO
 
-IF OBJECT_ID ('[dbo].[[Get_Statement_Models]]') IS NOT NULL
+IF OBJECT_ID ('[dbo].[Get_Statement_Models]') IS NOT NULL
 	DROP PROCEDURE [dbo].[Get_Statement_Models]
 GO
 
