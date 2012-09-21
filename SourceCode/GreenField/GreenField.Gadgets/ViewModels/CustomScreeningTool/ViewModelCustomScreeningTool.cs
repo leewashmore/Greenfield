@@ -375,6 +375,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _cstUserPreferenceInfo = value;
                 RaisePropertyChanged(() => this.CSTUserPreference);
+                CSTNavigation.Update(CSTNavigationInfo.CSTUserPreference, CSTUserPreference);
             }
         }
 
@@ -640,6 +641,7 @@ namespace GreenField.Gadgets.ViewModels
         private void CreateDataListCommandMethod(object param)
         {
             CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, null);
+            CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Create");
             _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
         }
 

@@ -19,7 +19,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock x:Name="txtMessage" Grid.Row="0" FontFamily="Arial" FontSize="7" Foreground="Red" HorizontalAlignment="Left" VerticalAlignment="Center" Visibility="Collapsed"/>
+        <TextBlock x:Name="txtMessage" Grid.Row="0" FontFamily="Arial" FontSize="7" Foreground="Red" HorizontalAlignment="Left" 
+                   VerticalAlignment="Center" Visibility="Collapsed"/>
         <StackPanel Grid.Row="1" 
                     Orientation="Horizontal"
                     HorizontalAlignment="left"

@@ -20,7 +20,8 @@ namespace GreenField.Gadgets.Models
         SelectedDataList,
         Flag,
         ListName,
-        Accessibility
+        Accessibility,
+        CSTUserPreference
     }
 
     public static class CSTNavigation
