@@ -1033,7 +1033,8 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
                             + info.PeriodType + info.YearType.Substring(0, 1));
-                        xw.WriteAttributeString("displayname", Convert.ToString(info.FromDate));
+                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteString(Convert.ToString(info.FromDate));
                         xw.WriteEndElement();
                     }
 
@@ -1075,7 +1076,8 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
                             + info.PeriodType + info.YearType.Substring(0, 1));
-                        xw.WriteAttributeString("displayname", Convert.ToString(info.PeriodType));
+                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteString(Convert.ToString(info.PeriodType));
                         xw.WriteEndElement();
                     }
                 }
@@ -1116,7 +1118,8 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
                             + info.PeriodType + info.YearType.Substring(0, 1));
-                        xw.WriteAttributeString("displayname", Convert.ToString(info.YearType));
+                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteString(Convert.ToString(info.YearType));
                         xw.WriteEndElement();
                     }
                 }
@@ -1157,7 +1160,8 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("Element");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
                             + info.PeriodType + info.YearType.Substring(0, 1));
-                        xw.WriteAttributeString("displayname", Convert.ToString(info.DataSource));
+                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteString(info.DataSource);
                         xw.WriteEndElement();
                     }
                 }
@@ -1176,12 +1180,12 @@ namespace GreenField.Gadgets.ViewModels
 
                 xw.WriteEndElement();
 
-                List<String> curOrFinTypes = SelectedSavedDataList.Where(a => a.ScreeningId.StartsWith("CUR") || a.ScreeningId.StartsWith("FVA") || a.ScreeningId.StartsWith("FIN")).Select(a => a.TableColumn).ToList();
-                foreach (String a in curOrFinTypes)
-                {
-                    List<CustomScreeningSecurityData> ab = new List<CustomScreeningSecurityData>();
-                    ab = securityData.Where(k => k.Type == a).ToList();
-                }
+                //List<String> curOrFinTypes = SelectedSavedDataList.Where(a => a.ScreeningId.StartsWith("CUR") || a.ScreeningId.StartsWith("FVA") || a.ScreeningId.StartsWith("FIN")).Select(a => a.TableColumn).ToList();
+                //foreach (String a in curOrFinTypes)
+                //{
+                //    List<CustomScreeningSecurityData> ab = new List<CustomScreeningSecurityData>();
+                //    ab = securityData.Where(k => k.Type == a).ToList();
+                //}
 
                 if (securityData != null)
                 {
