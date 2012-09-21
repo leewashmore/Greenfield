@@ -453,6 +453,11 @@ namespace GreenField.Web.Services
         [FaultContract(typeof(ServiceFault))]
         public byte[] RetrieveStatementData(EntitySelectionData selectedSecurity)
         {
+            List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
+            List<FinancialStatementData> resultReuters = new List<FinancialStatementData>();
+            List<FinancialStatementData> resultStatement = new List<FinancialStatementData>();
+            string currencyReuters = "";
+            string currencyConsensus = "";
             try
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
@@ -479,65 +484,45 @@ namespace GreenField.Web.Services
                 {
                     return new byte[1];
                 }
-
-                List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
-                List<FinancialStatementData> resultReuters = new List<FinancialStatementData>();
-                List<FinancialStatementData> resultStatement = new List<FinancialStatementData>();
-                List<FinancialStatementType> statementType = new List<FinancialStatementType>() { FinancialStatementType.INCOME_STATEMENT, FinancialStatementType.BALANCE_SHEET, FinancialStatementType.CASH_FLOW_STATEMENT };
-
-                List<FinancialStatementPeriodType> periodType = new List<FinancialStatementPeriodType>() { FinancialStatementPeriodType.ANNUAL, FinancialStatementPeriodType.QUARTERLY };
-
-
-                foreach (FinancialStatementType item in statementType)
+                if (currency != null)
                 {
-                    string statement = EnumUtils.ToString(item);
-                    foreach (FinancialStatementPeriodType period in periodType)
+                    resultReuters = RetrieveFinancialData(issuerID, currency);
+                    resultConsensus = RetrieveModelConsensusData(issuerID, currency);
+                    currencyReuters = currency;
+                    currencyConsensus = currency;
+                }
+                if (resultReuters != null)
+                {
+                    resultReuters = resultReuters.Where(a => a.PeriodYear != 2300).ToList();
+                }
+                if (resultReuters == null || resultReuters.Count == 0)
+                {
+                    if (currency != "USD")
                     {
-                        if (currency != null)
-                        {
-                            resultStatement = entity.Get_Statement_Models(issuerID, "REUTERS", EnumUtils.ToString(period).Substring(0, 1), "FISCAL", statement, currency).ToList();
-                        }
-                        if (resultStatement == null || resultStatement.Count == 0)
-                        {
-                            if (currency != "USD")
-                            {
-                                resultStatement = entity.Get_Statement_Models(issuerID, "REUTERS", EnumUtils.ToString(period).Substring(0, 1), "FISCAL", statement, "USD").ToList();
-                            }
-                        }
-
-                        if (resultStatement != null)
-                        {
-                            resultReuters.AddRange(resultStatement);
-                        }
+                        resultReuters = RetrieveFinancialData(issuerID, "USD");
+                        currencyReuters = "USD";
+                    }
+                    else
+                    {
+                        resultReuters = new List<FinancialStatementData>();
                     }
                 }
                 resultReuters = resultReuters.Where(a => a.PeriodYear != 2300).ToList();
 
-                List<ModelConsensusEstimatesData> data = new List<ModelConsensusEstimatesData>();
-
-                foreach (FinancialStatementPeriodType item in periodType)
+                if (resultConsensus == null || resultConsensus.Count == 0)
                 {
-                    if (currency != null)
+                    if (currency != "USD")
                     {
-                        data = entity.GetModelConsensusEstimates(issuerID, "REUTERS", EnumUtils.ToString(item).Substring(0, 1), "FISCAL", currency).ToList();
+                        resultConsensus = RetrieveModelConsensusData(issuerID, "USD");
+                        currencyConsensus = "USD";
                     }
-                    if (data == null || data.Count == 0)
+                    else
                     {
-                        if (currency != "USD")
-                        {
-                            data = entity.GetModelConsensusEstimates(issuerID, "REUTERS", EnumUtils.ToString(item).Substring(0, 1), "FISCAL", "USD").ToList();
-                        }
-                    }
-                    if (data != null)
-                    {
-                        resultConsensus.AddRange(data);
+                        resultConsensus = new List<ModelConsensusEstimatesData>();
                     }
                 }
 
-                resultConsensus = resultConsensus.Where(a => a.PERIOD_YEAR != null).ToList();
-                return GenerateOpenXMLExcelModel.GenerateExcel(resultReuters, resultConsensus);
-
-                //GenerateExcelModel.GenerateExcel(resultReuters, resultConsensus);
+                return GenerateOpenXMLExcelModel.GenerateExcel(resultReuters, resultConsensus, currencyReuters, currencyConsensus);
             }
             catch (Exception ex)
             {
@@ -575,6 +560,82 @@ namespace GreenField.Web.Services
 
             return resultConsensus;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="currency"></param>
+        /// <returns></returns>
+        private List<FinancialStatementData> RetrieveFinancialData(string issuerId, string currency)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                List<FinancialStatementData> resultReuters = new List<FinancialStatementData>();
+                List<FinancialStatementType> statementType = new List<FinancialStatementType>() { FinancialStatementType.INCOME_STATEMENT, FinancialStatementType.BALANCE_SHEET, FinancialStatementType.CASH_FLOW_STATEMENT };
+                List<FinancialStatementPeriodType> periodType = new List<FinancialStatementPeriodType>() { FinancialStatementPeriodType.ANNUAL, FinancialStatementPeriodType.QUARTERLY };
+                List<FinancialStatementData> resultStatement = new List<FinancialStatementData>();
+
+                foreach (FinancialStatementType item in statementType)
+                {
+                    string statement = EnumUtils.ToString(item);
+                    foreach (FinancialStatementPeriodType period in periodType)
+                    {
+                        resultStatement = entity.Get_Statement_Models(issuerId, "REUTERS", EnumUtils.ToString(period).Substring(0, 1), "FISCAL", statement, currency).ToList();
+                        if (resultStatement != null)
+                        {
+                            resultReuters.AddRange(resultStatement);
+                        }
+                    }
+                }
+                return resultReuters;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="currency"></param>
+        /// <returns></returns>
+        private List<ModelConsensusEstimatesData> RetrieveModelConsensusData(string issuerId, string currency)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
+
+                List<ModelConsensusEstimatesData> data = new List<ModelConsensusEstimatesData>();
+
+                List<FinancialStatementType> statementType = new List<FinancialStatementType>() { FinancialStatementType.INCOME_STATEMENT, FinancialStatementType.BALANCE_SHEET, FinancialStatementType.CASH_FLOW_STATEMENT };
+                List<FinancialStatementPeriodType> periodType = new List<FinancialStatementPeriodType>() { FinancialStatementPeriodType.ANNUAL, FinancialStatementPeriodType.QUARTERLY };
+
+                foreach (FinancialStatementPeriodType item in periodType)
+                {
+                    data = entity.GetModelConsensusEstimates(issuerId, "REUTERS", EnumUtils.ToString(item).Substring(0, 1), "FISCAL", currency).ToList();
+                    if (data != null)
+                    {
+                        resultConsensus.AddRange(data);
+                    }
+                }
+
+                return resultConsensus;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                return null;
+            }
+        }
+
 
         #endregion
 

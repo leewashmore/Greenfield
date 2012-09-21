@@ -13,7 +13,14 @@ namespace GreenField.Web.ExcelModel
 {
     public static class GenerateOpenXMLExcelModel
     {
-        public static byte[] GenerateExcel(List<FinancialStatementData> financialData, List<ModelConsensusEstimatesData> consensusData)
+
+        /// <summary>
+        /// Method to Generate Byte[] for the Excel File
+        /// </summary>
+        /// <param name="financialData"></param>
+        /// <param name="consensusData"></param>
+        /// <returns></returns>
+        public static byte[] GenerateExcel(List<FinancialStatementData> financialData, List<ModelConsensusEstimatesData> consensusData, string currencyReuters, string currencyConsensus)
         {
             try
             {
@@ -42,7 +49,7 @@ namespace GreenField.Web.ExcelModel
                                 SheetId = sheetId,
                                 Name = "Reuters Repoted"
                             });
-                    GenerateReutersHeaders(worksheetPart, financialData);
+                    GenerateReutersHeaders(worksheetPart, financialData, currencyReuters);
                     InsertValuesInWorksheet(worksheetPart, financialData);
                     workbookpart.Workbook.Save();
 
@@ -58,7 +65,7 @@ namespace GreenField.Web.ExcelModel
                         SheetId = sheetId,
                         Name = "Consensus Data"
                     });
-                    GenerateConsensusHeaders(worksheetPartConsensus, consensusData);
+                    GenerateConsensusHeaders(worksheetPartConsensus, consensusData, currencyConsensus);
                     InsertConsensusDataInWorksheet(worksheetPartConsensus, consensusData);
 
                     workbookpart.Workbook.Save();
@@ -216,7 +223,12 @@ namespace GreenField.Web.ExcelModel
             }
         }
 
-        private static void GenerateReutersHeaders(WorksheetPart worksheetPart, List<FinancialStatementData> financialData)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="worksheetPart"></param>
+        /// <param name="financialData"></param>
+        private static void GenerateReutersHeaders(WorksheetPart worksheetPart, List<FinancialStatementData> financialData, string currency)
         {
             var worksheet = worksheetPart.Worksheet;
             SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
@@ -229,21 +241,21 @@ namespace GreenField.Web.ExcelModel
 
             Columns sheetColumns = new Columns();
             Column mergeColumns;
-            
+
             var cell = new Cell();
 
-            cell = CreateTextCell("Data Id");
+            cell = CreateTextCell(" ");
             row.InsertAt(cell, 0);
 
             cell = new Cell();
-            cell = CreateTextCell("Data Description");
+            cell = CreateTextCell("Data In " + Convert.ToString(currency) + " (Millions)");
             row.InsertAt(cell, 1);
 
             for (int i = 0; i <= numberOfYears * 5; i = i + 5)
             {
                 Columns column = new DocumentFormat.OpenXml.Spreadsheet.Columns();
                 mergeColumns = new DocumentFormat.OpenXml.Spreadsheet.Column();
-                
+
                 cell = new Cell();
                 cell = CreateTextCell(firstYear + " Q1");
                 row.InsertAt(cell, i + 2);
@@ -274,7 +286,12 @@ namespace GreenField.Web.ExcelModel
             worksheet.Append(sheetData);
         }
 
-        private static void GenerateConsensusHeaders(WorksheetPart worksheetPart, List<ModelConsensusEstimatesData> consensusData)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="worksheetPart"></param>
+        /// <param name="consensusData"></param>
+        private static void GenerateConsensusHeaders(WorksheetPart worksheetPart, List<ModelConsensusEstimatesData> consensusData, string currency)
         {
             var worksheet = worksheetPart.Worksheet;
             //var sheetData = worksheet.GetFirstChild<SheetData>();
@@ -296,7 +313,7 @@ namespace GreenField.Web.ExcelModel
             row.InsertAt(cell, 0);
 
             cell = new Cell();
-            cell = CreateTextCell("Data Description");
+            cell = CreateTextCell("Data in " + Convert.ToString(currency) + " (Millions)");
             row.InsertAt(cell, 1);
 
             for (int i = 0; i <= numberOfYears * 5; i = i + 5)
@@ -330,6 +347,11 @@ namespace GreenField.Web.ExcelModel
             worksheet.Append(sheetData);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cellValue"></param>
+        /// <returns></returns>
         private static Cell CreateTextCell(string cellValue)
         {
             Cell cell = new Cell();
@@ -338,6 +360,11 @@ namespace GreenField.Web.ExcelModel
             return cell;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cellValue"></param>
+        /// <returns></returns>
         private static Cell CreateNumberCell(Decimal? cellValue)
         {
             Cell cell = new Cell();
@@ -346,6 +373,10 @@ namespace GreenField.Web.ExcelModel
             return cell;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private static string GetFileName()
         {
             string fileName = Path.GetTempPath() + Guid.NewGuid() + "_Model.xlsx";
