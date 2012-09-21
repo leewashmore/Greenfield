@@ -534,9 +534,9 @@ namespace GreenField.Web.Services
                 }
 
                 resultConsensus = resultConsensus.Where(a => a.PERIOD_YEAR != null).ToList();
-                GenerateOpenXMLExcelModel.GenerateExcel(resultReuters, resultConsensus);
+                return GenerateOpenXMLExcelModel.GenerateExcel(resultReuters, resultConsensus);
 
-                return GenerateExcelModel.GenerateExcel(resultReuters, resultConsensus);
+                //GenerateExcelModel.GenerateExcel(resultReuters, resultConsensus);
             }
             catch (Exception ex)
             {
