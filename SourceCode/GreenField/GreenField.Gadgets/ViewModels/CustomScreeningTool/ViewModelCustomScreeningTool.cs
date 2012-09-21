@@ -881,7 +881,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    SecurityData = result;                  
+                    SecurityData = result;
                     if (SelectedSavedDataList != null && SelectedSavedDataList.Count > 0 && SelectedSavedDataList[0].ScreeningId != null)
                     {
                         CreateXML(SecurityData);
@@ -983,17 +983,26 @@ namespace GreenField.Gadgets.ViewModels
 
                 foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
                 {
-                    if (info.FromDate == null || info.FromDate == 0)
+                    if (info.ScreeningId.StartsWith("REF"))
                     {
                         xw.WriteStartElement("column");
-                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + 0);
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
                         xw.WriteAttributeString("displayname", info.TableColumn);
                         xw.WriteEndElement();
                     }
-                    else
+                    else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
                     {
                         xw.WriteStartElement("column");
-                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
+                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteEndElement();
+                        //+ info.DataSource + info.PeriodType + info.YearType
+                    }
+                    else if (info.ScreeningId.StartsWith("FIN"))
+                    {
+                        xw.WriteStartElement("column");
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
+                            + info.PeriodType + info.YearType.Substring(0, 1));
                         xw.WriteAttributeString("displayname", info.TableColumn);
                         xw.WriteEndElement();
 
@@ -1003,22 +1012,31 @@ namespace GreenField.Gadgets.ViewModels
                 xw.WriteStartElement("row");
                 foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
                 {
-                    if (info.FromDate == null || info.FromDate == 0)
+                    if (info.ScreeningId.StartsWith("REF"))
                     {
                         xw.WriteStartElement("Element");
-                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + 0);
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
                         xw.WriteAttributeString("displayname", info.TableColumn);
                         xw.WriteString(String.Empty);
                         xw.WriteEndElement();
                     }
-                    else
+                    else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
                     {
                         xw.WriteStartElement("Element");
-                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteString(Convert.ToString(info.FromDate));
+                        xw.WriteString(Convert.ToString(String.Empty));
                         xw.WriteEndElement();
                     }
+                    else if (info.ScreeningId.StartsWith("FIN"))
+                    {
+                        xw.WriteStartElement("Element");
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
+                            + info.PeriodType + info.YearType.Substring(0, 1));
+                        xw.WriteAttributeString("displayname", Convert.ToString(info.FromDate));
+                        xw.WriteEndElement();
+                    }
+
                 }
                 xw.WriteStartElement("Element");
                 xw.WriteAttributeString("name", "Security Ticker");
@@ -1036,22 +1054,29 @@ namespace GreenField.Gadgets.ViewModels
                 xw.WriteStartElement("row");
                 foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
                 {
-                    if (info.FromDate == null || info.FromDate == 0)
+                    if (info.ScreeningId.StartsWith("REF"))
                     {
                         xw.WriteStartElement("Element");
-                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + 0);
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteString(Convert.ToString(info.PeriodType));
+                        xw.WriteString(String.Empty);
                         xw.WriteEndElement();
                     }
-                    else
+                    else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
                     {
                         xw.WriteStartElement("Element");
-                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteString(Convert.ToString(info.PeriodType));
+                        xw.WriteString(String.Empty);
                         xw.WriteEndElement();
-
+                    }
+                    else if (info.ScreeningId.StartsWith("FIN"))
+                    {
+                        xw.WriteStartElement("Element");
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
+                            + info.PeriodType + info.YearType.Substring(0, 1));
+                        xw.WriteAttributeString("displayname", Convert.ToString(info.PeriodType));
+                        xw.WriteEndElement();
                     }
                 }
                 xw.WriteStartElement("Element");
@@ -1070,20 +1095,28 @@ namespace GreenField.Gadgets.ViewModels
                 xw.WriteStartElement("row");
                 foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
                 {
-                    if (info.FromDate == null || info.FromDate == 0)
+                    if (info.ScreeningId.StartsWith("REF"))
                     {
                         xw.WriteStartElement("Element");
-                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + 0);
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteString(Convert.ToString(info.YearType));
+                        xw.WriteString(String.Empty);
                         xw.WriteEndElement();
                     }
-                    else
+                    else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
                     {
                         xw.WriteStartElement("Element");
-                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
                         xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteString(Convert.ToString(info.YearType));
+                        xw.WriteString(String.Empty);
+                        xw.WriteEndElement();
+                    }
+                    else if (info.ScreeningId.StartsWith("FIN"))
+                    {
+                        xw.WriteStartElement("Element");
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
+                            + info.PeriodType + info.YearType.Substring(0, 1));
+                        xw.WriteAttributeString("displayname", Convert.ToString(info.YearType));
                         xw.WriteEndElement();
                     }
                 }
@@ -1103,20 +1136,28 @@ namespace GreenField.Gadgets.ViewModels
                 xw.WriteStartElement("row");
                 foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
                 {
-                    if (info.FromDate == null || info.FromDate == 0)
+                    if (info.ScreeningId.StartsWith("REF"))
                     {
                         xw.WriteStartElement("Element");
-                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + 0);
-                        xw.WriteAttributeString("displayname", info.TableColumn);                       
-                        xw.WriteString(Convert.ToString(info.DataSource));
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
+                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteString(String.Empty);
                         xw.WriteEndElement();
                     }
-                    else
+                    else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
                     {
                         xw.WriteStartElement("Element");
-                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
-                        xw.WriteAttributeString("displayname", info.TableColumn);                       
-                        xw.WriteString(Convert.ToString(info.DataSource));
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
+                        xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteString(info.DataSource);
+                        xw.WriteEndElement();
+                    }
+                    else if (info.ScreeningId.StartsWith("FIN"))
+                    {
+                        xw.WriteStartElement("Element");
+                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
+                            + info.PeriodType + info.YearType.Substring(0, 1));
+                        xw.WriteAttributeString("displayname", Convert.ToString(info.DataSource));
                         xw.WriteEndElement();
                     }
                 }
@@ -1135,67 +1176,94 @@ namespace GreenField.Gadgets.ViewModels
 
                 xw.WriteEndElement();
 
+                List<String> curOrFinTypes = SelectedSavedDataList.Where(a => a.ScreeningId.StartsWith("CUR") || a.ScreeningId.StartsWith("FVA") || a.ScreeningId.StartsWith("FIN")).Select(a => a.TableColumn).ToList();
+                foreach (String a in curOrFinTypes)
+                {
+                    List<CustomScreeningSecurityData> ab = new List<CustomScreeningSecurityData>();
+                    ab = securityData.Where(k => k.Type == a).ToList();
+                }
+
                 if (securityData != null)
                 {
                     List<String> distinctIssueNames = securityData.Select(a => a.IssueName).Distinct().ToList();
-                  
+
                     //try
                     //{
-                        foreach (String issueName in distinctIssueNames)
+                    foreach (String issueName in distinctIssueNames)
+                    {
+                        xw.WriteStartElement("row");
+                        foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
                         {
-                            xw.WriteStartElement("row");
-                            foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
+                            if (info.ScreeningId.StartsWith("REF"))
                             {
-                                if (info.FromDate == null || info.FromDate == 0)
-                                {
-                                    xw.WriteStartElement("Element");
-                                    xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + Convert.ToString(0));
-                                    xw.WriteAttributeString("displayname", info.TableColumn);
-                                    CustomScreeningSecurityData selectedSec = (from p in securityData
-                                                                               where p.Type == info.TableColumn
-                                                                               && p.PeriodYear == 0 && p.IssueName == issueName
-                                                                               select p).FirstOrDefault();
+                                xw.WriteStartElement("Element");
+                                xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
+                                xw.WriteAttributeString("displayname", info.TableColumn);
+                                CustomScreeningSecurityData selectedSec = (from p in securityData
+                                                                           where p.Type == info.TableColumn                                                                       
+                                                                           && p.IssueName == issueName                                                                          
+                                                                           select p).FirstOrDefault();
 
-                                    string attributeValue = (selectedSec == null || selectedSec.Value == null) ? 
-                                        String.Empty : selectedSec.Value.ToString();
-                                    xw.WriteString(attributeValue);
-                                    xw.WriteEndElement();
-                                }
-                                else
-                                {
-                                    xw.WriteStartElement("Element");
-                                    xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate);
-                                    xw.WriteAttributeString("displayname", info.TableColumn);
-                                    CustomScreeningSecurityData selectedSec = (from p in securityData
-                                                                               where p.Type == info.TableColumn
-                                                                               && p.PeriodYear == info.FromDate && p.IssueName == issueName
-                                                                               select p).FirstOrDefault();
-
-                                    string attributeValue = (selectedSec == null || selectedSec.Value == null) ? 
-                                        String.Empty : selectedSec.Value.ToString();
-                                    xw.WriteString(attributeValue);
-                                    xw.WriteEndElement();
-
-                                }
+                                string attributeValue = (selectedSec == null || selectedSec.Value == null) ?
+                                    String.Empty : selectedSec.Value.ToString();
+                                xw.WriteString(attributeValue);
+                                xw.WriteEndElement();
                             }
+                            else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
+                            {
+                                xw.WriteStartElement("Element");
+                                xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
+                                xw.WriteAttributeString("displayname", info.TableColumn);
+                                CustomScreeningSecurityData selectedSec = (from p in securityData
+                                                                           where p.Type == info.TableColumn
+                                                                              && p.IssueName == issueName     
+                                                                           && p.DataSource == info.DataSource                                                                          
+                                                                           select p).FirstOrDefault();
 
-                            xw.WriteStartElement("Element");
-                            xw.WriteAttributeString("name", "Security Ticker");
-                            xw.WriteAttributeString("displayname", String.Empty);
-                            String securityId = securityData.Where(a => a.IssueName == issueName).Select(a => a.SecurityId).FirstOrDefault();
-                            xw.WriteString(securityId);
-                            xw.WriteEndElement();
+                                string attributeValue = (selectedSec == null || selectedSec.Value == null) ?
+                                    String.Empty : selectedSec.Value.ToString();
+                                xw.WriteString(attributeValue);
+                                xw.WriteEndElement();
+                            }
+                            else if (info.ScreeningId.StartsWith("FIN"))
+                            {
+                                xw.WriteStartElement("Element");
+                                xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
+                               + info.PeriodType + info.YearType.Substring(0, 1));
+                                xw.WriteAttributeString("displayname", info.TableColumn);
+                                CustomScreeningSecurityData selectedSec = (from p in securityData
+                                                                           where p.Type == info.TableColumn
+                                                                           && p.PeriodYear == info.FromDate
+                                                                           && p.IssueName == issueName
+                                                                           && p.PeriodType == info.PeriodType
+                                                                           && p.DataSource == info.DataSource
+                                                                           && p.YearType == info.YearType
+                                                                           select p).FirstOrDefault();
 
-                            xw.WriteStartElement("Element");
-                            xw.WriteAttributeString("name", "Security Name");
-                            xw.WriteAttributeString("displayname", String.Empty);
-                            xw.WriteString(issueName);
-                            xw.WriteEndElement();
-
-                            xw.WriteEndElement();
-
-                            
+                                string attributeValue = (selectedSec == null || selectedSec.Value == null) ?
+                                    String.Empty : selectedSec.Value.ToString();
+                                xw.WriteString(attributeValue);
+                                xw.WriteEndElement();
+                            }
                         }
+
+                        xw.WriteStartElement("Element");
+                        xw.WriteAttributeString("name", "Security Ticker");
+                        xw.WriteAttributeString("displayname", String.Empty);
+                        String securityId = securityData.Where(a => a.IssueName == issueName).Select(a => a.SecurityId).FirstOrDefault();
+                        xw.WriteString(securityId);
+                        xw.WriteEndElement();
+
+                        xw.WriteStartElement("Element");
+                        xw.WriteAttributeString("name", "Security Name");
+                        xw.WriteAttributeString("displayname", String.Empty);
+                        xw.WriteString(issueName);
+                        xw.WriteEndElement();
+
+                        xw.WriteEndElement();
+
+
+                    }
                     //}
                     //catch (Exception ex)
                     //{
