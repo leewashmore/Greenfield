@@ -169,8 +169,8 @@ namespace GreenField.Web.ExcelModel
             //SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
             var row = new Row { RowIndex = 2 };
             sheetData.Append(row);
-            List<string> dataDescriptors = financialData.Select(a => a.Description).Distinct().ToList();
-            var maxRowCount = dataDescriptors.Count + 2;
+            List<int> dataIds = financialData.Select(a => Convert.ToInt32((a.DataId))).Distinct().ToList();
+            var maxRowCount = dataIds.Count + 2;
             int rowIndex = 2;
             List<int> financialPeriodYears = financialData.Select(a => a.PeriodYear).OrderBy(a => a).Distinct().ToList();
 
@@ -180,39 +180,39 @@ namespace GreenField.Web.ExcelModel
             int numberOfYears = lastYear - firstYear;
             while (row.RowIndex < maxRowCount)
             {
-                foreach (string item in dataDescriptors)
+                foreach (int item in dataIds)
                 {
                     firstYear = financialData.Select(a => a.PeriodYear).OrderBy(a => a).FirstOrDefault();
-                    var cell = CreateNumberCell(Convert.ToDecimal(financialData.Where(a => a.Description == item).Select(a => a.DataId).FirstOrDefault()));
+                    var cell = CreateNumberCell(Convert.ToDecimal(financialData.Where(a => a.DataId == item).Select(a => a.DataId).FirstOrDefault()));
                     row.InsertAt(cell, 0);
                     cell = new Cell();
-                    cell = CreateTextCell(financialData.Where(a => a.Description == item).Select(a => a.Description).FirstOrDefault());
+                    cell = CreateTextCell(financialData.Where(a => a.DataId == item).Select(a => a.Description).FirstOrDefault());
                     row.InsertAt(cell, 1);
 
                     for (int i = 0; i <= numberOfYears * 5; i = i + 5)
                     {
                         cell = new Cell();
-                        cell = CreateNumberCell(financialData.Where(a => a.PeriodYear == (firstYear) && a.Description == item && a.PeriodType.Trim() == "Q1").
+                        cell = CreateNumberCell(financialData.Where(a => a.PeriodYear == (firstYear) && a.DataId == item && a.PeriodType.Trim() == "Q1").
             Select(a => a.Amount).FirstOrDefault());
                         row.InsertAt(cell, i + 2);
 
                         cell = new Cell();
-                        cell = CreateNumberCell(financialData.Where(a => a.PeriodYear == (firstYear) && a.Description == item && a.PeriodType.Trim() == "Q2").
+                        cell = CreateNumberCell(financialData.Where(a => a.PeriodYear == (firstYear) && a.DataId == item && a.PeriodType.Trim() == "Q2").
             Select(a => a.Amount).FirstOrDefault());
                         row.InsertAt(cell, i + 3);
 
                         cell = new Cell();
-                        cell = CreateNumberCell(financialData.Where(a => a.PeriodYear == (firstYear) && a.Description == item && a.PeriodType.Trim() == "Q3").
+                        cell = CreateNumberCell(financialData.Where(a => a.PeriodYear == (firstYear) && a.DataId == item && a.PeriodType.Trim() == "Q3").
             Select(a => a.Amount).FirstOrDefault());
                         row.InsertAt(cell, i + 4);
 
                         cell = new Cell();
-                        cell = CreateNumberCell(financialData.Where(a => a.PeriodYear == (firstYear) && a.Description == item && a.PeriodType.Trim() == "Q4").
+                        cell = CreateNumberCell(financialData.Where(a => a.PeriodYear == (firstYear) && a.DataId == item && a.PeriodType.Trim() == "Q4").
             Select(a => a.Amount).FirstOrDefault());
                         row.InsertAt(cell, i + 5);
 
                         cell = new Cell();
-                        cell = CreateNumberCell(financialData.Where(a => a.PeriodYear == (firstYear) && a.Description == item && a.PeriodType.Trim() == "A").
+                        cell = CreateNumberCell(financialData.Where(a => a.PeriodYear == (firstYear) && a.DataId == item && a.PeriodType.Trim() == "A").
             Select(a => a.Amount).FirstOrDefault());
                         row.InsertAt(cell, i + 6);
                         firstYear++;
@@ -246,7 +246,7 @@ namespace GreenField.Web.ExcelModel
 
             DoubleValue maxWidth = GetColumnWidth(maxLengthStr);
 
-            Column firstColumn = new Column() { Min = 2U, Max = 2U, Width = maxWidth };         
+            Column firstColumn = new Column() { Min = 2U, Max = 2U, Width = maxWidth };
 
             Columns sheetColumns = new Columns();
             Column mergeColumns;
@@ -320,7 +320,7 @@ namespace GreenField.Web.ExcelModel
 
             DoubleValue maxWidth = GetColumnWidth(maxLengthStr);
 
-            Column firstColumn = new Column() { Min = 2U, Max = 2U, Width = maxWidth};
+            Column firstColumn = new Column() { Min = 2U, Max = 2U, Width = maxWidth };
 
             sheetColumns.Append(firstColumn);
 
