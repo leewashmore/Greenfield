@@ -7,8 +7,8 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml;
-using DocumentFormat.OpenXml.Spreadsheet;
 using System.Drawing;
+using X14 = DocumentFormat.OpenXml.Office2010.Excel;
 
 namespace GreenField.Web.ExcelModel
 {
@@ -40,6 +40,11 @@ namespace GreenField.Web.ExcelModel
                     // Add a WorksheetPart to the WorkbookPart.
                     WorksheetPart worksheetPart = workbookpart.AddNewPart<WorksheetPart>("rId3");
                     worksheetPart.Worksheet = new Worksheet();
+
+                    // add styles to sheet
+                    WorkbookStylesPart wbsp = workbookpart.AddNewPart<WorkbookStylesPart>();                   
+                    wbsp.Stylesheet = CreateStylesheet();
+                    wbsp.Stylesheet.Save();
 
                     // Add Sheets to the Workbook.
                     spreadsheetDocument.WorkbookPart.Workbook.AppendChild(new Sheets());
@@ -255,11 +260,11 @@ namespace GreenField.Web.ExcelModel
 
             var cell = new Cell();
 
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 0);
 
             cell = new Cell();
-            cell = CreateTextCell("Data In " + Convert.ToString(currency) + " (Millions)");
+            cell = CreateHeaderCell("Data In " + Convert.ToString(currency) + " (Millions)");
             row.InsertAt(cell, 1);
 
             for (int i = 0; i <= numberOfYears * 5; i = i + 5)
@@ -268,23 +273,23 @@ namespace GreenField.Web.ExcelModel
                 mergeColumns = new DocumentFormat.OpenXml.Spreadsheet.Column();
 
                 cell = new Cell();
-                cell = CreateTextCell(firstYear + " Q1");
+                cell = CreateHeaderCell(firstYear + " Q1");
                 row.InsertAt(cell, i + 2);
 
                 cell = new Cell();
-                cell = CreateTextCell(firstYear + " Q2");
+                cell = CreateHeaderCell(firstYear + " Q2");
                 row.InsertAt(cell, i + 3);
 
                 cell = new Cell();
-                cell = CreateTextCell(firstYear + " Q3");
+                cell = CreateHeaderCell(firstYear + " Q3");
                 row.InsertAt(cell, i + 4);
 
                 cell = new Cell();
-                cell = CreateTextCell(firstYear + " Q4");
+                cell = CreateHeaderCell(firstYear + " Q4");
                 row.InsertAt(cell, i + 5);
 
                 cell = new Cell();
-                cell = CreateTextCell(firstYear + " A");
+                cell = CreateHeaderCell(firstYear + " A");
                 row.InsertAt(cell, i + 6);
                 firstYear++;
 
@@ -330,33 +335,33 @@ namespace GreenField.Web.ExcelModel
 
             var cell = new Cell();
 
-            cell = CreateTextCell("Data Id");
+            cell = CreateHeaderCell("Data Id");
             row.InsertAt(cell, 0);
 
             cell = new Cell();
-            cell = CreateTextCell("Data in " + Convert.ToString(currency) + " (Millions)");
+            cell = CreateHeaderCell("Data in " + Convert.ToString(currency) + " (Millions)");
             row.InsertAt(cell, 1);
 
             for (int i = 0; i <= numberOfYears * 5; i = i + 5)
             {
                 cell = new Cell();
-                cell = CreateTextCell(firstYear + " Q1");
+                cell = CreateHeaderCell(firstYear + " Q1");
                 row.InsertAt(cell, i + 2);
 
                 cell = new Cell();
-                cell = CreateTextCell(firstYear + " Q2");
+                cell = CreateHeaderCell(firstYear + " Q2");
                 row.InsertAt(cell, i + 3);
 
                 cell = new Cell();
-                cell = CreateTextCell(firstYear + " Q3");
+                cell = CreateHeaderCell(firstYear + " Q3");
                 row.InsertAt(cell, i + 4);
 
                 cell = new Cell();
-                cell = CreateTextCell(firstYear + " Q4");
+                cell = CreateHeaderCell(firstYear + " Q4");
                 row.InsertAt(cell, i + 5);
 
                 cell = new Cell();
-                cell = CreateTextCell(firstYear + " A");
+                cell = CreateHeaderCell(firstYear + " A");
                 row.InsertAt(cell, i + 6);
                 firstYear++;
                 mergeColumns = new Column() { Min = Convert.ToUInt32(i + 3), Max = Convert.ToUInt32(i + 6), CustomWidth = true, OutlineLevel = 1, Hidden = false };
@@ -394,7 +399,25 @@ namespace GreenField.Web.ExcelModel
             return cell;
         }
 
+        /// <summary>
+        /// Creating Header Cell
+        /// </summary>
+        /// <param name="cellValue">value to fill in teh cell</param>
+        /// <returns></returns>
+        private static Cell CreateHeaderCell(String cellValue)
+        {
+            Cell cell = new Cell();
+            cell.DataType = CellValues.String;
+            cell.CellValue = new CellValue(cellValue);
+            cell.StyleIndex = (UInt32Value)2U;
+            return cell;
+        }
 
+        /// <summary>
+        /// Get Width of the column for longest string
+        /// </summary>
+        /// <param name="sILT">longest String</param>
+        /// <returns>width</returns>
         private static DoubleValue GetColumnWidth(string sILT)
         {
             double fSimpleWidth = 0.0f;
@@ -425,6 +448,140 @@ namespace GreenField.Web.ExcelModel
 
             return fTruncWidth;
 
+        }
+
+        /// <summary>
+        /// StyleSheet for the excel File
+        /// </summary>
+        /// <returns></returns>
+        private static Stylesheet CreateStylesheet()
+        {
+            Stylesheet stylesheet1 = new Stylesheet() { MCAttributes = new MarkupCompatibilityAttributes() { Ignorable = "x14ac" } };
+            stylesheet1.AddNamespaceDeclaration("mc", "http://schemas.openxmlformats.org/markup-compatibility/2006");
+            stylesheet1.AddNamespaceDeclaration("x14ac", "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac");
+
+            Fonts fonts1 = new Fonts() { Count = (UInt32Value)1U, KnownFonts = true };
+
+            DocumentFormat.OpenXml.Spreadsheet.Font font1 = new DocumentFormat.OpenXml.Spreadsheet.Font();
+            FontSize fontSize1 = new FontSize() { Val = 11D };
+            DocumentFormat.OpenXml.Spreadsheet.Color color1 = new DocumentFormat.OpenXml.Spreadsheet.Color() { Theme = (UInt32Value)1U };
+            FontName fontName1 = new FontName() { Val = "Calibri" };
+            FontFamilyNumbering fontFamilyNumbering1 = new FontFamilyNumbering() { Val = 2 };
+            FontScheme fontScheme1 = new FontScheme() { Val = FontSchemeValues.Minor };
+
+            font1.Append(fontSize1);
+            font1.Append(color1);
+            font1.Append(fontName1);
+            font1.Append(fontFamilyNumbering1);
+            font1.Append(fontScheme1);
+
+            fonts1.Append(font1);
+
+            Fills fills1 = new Fills() { Count = (UInt32Value)5U };
+
+            // FillId = 0
+            Fill fill1 = new Fill();
+            PatternFill patternFill1 = new PatternFill() { PatternType = PatternValues.None };
+            fill1.Append(patternFill1);
+
+            // FillId = 1
+            Fill fill2 = new Fill();
+            PatternFill patternFill2 = new PatternFill() { PatternType = PatternValues.Gray125 };
+            fill2.Append(patternFill2);
+
+            // FillId = 2,RED
+            Fill fill3 = new Fill();
+            PatternFill patternFill3 = new PatternFill() { PatternType = PatternValues.Solid };
+            ForegroundColor foregroundColor1 = new ForegroundColor() { Rgb = "FFFF0000" };
+            BackgroundColor backgroundColor1 = new BackgroundColor() { Indexed = (UInt32Value)64U };
+            patternFill3.Append(foregroundColor1);
+            patternFill3.Append(backgroundColor1);
+            fill3.Append(patternFill3);
+
+            // FillId = 3,BLUE
+            Fill fill4 = new Fill();
+            PatternFill patternFill4 = new PatternFill() { PatternType = PatternValues.Solid };
+            ForegroundColor foregroundColor2 = new ForegroundColor() { Theme = (UInt32Value)3U, Tint = 0.79998168889431442D };// { Rgb = "FF0070C0" };
+            BackgroundColor backgroundColor2 = new BackgroundColor() { Indexed = (UInt32Value)64U };
+            patternFill4.Append(foregroundColor2);
+            patternFill4.Append(backgroundColor2);
+            fill4.Append(patternFill4);
+
+            // FillId = 4,YELLO
+            Fill fill5 = new Fill();
+            PatternFill patternFill5 = new PatternFill() { PatternType = PatternValues.Solid };
+            ForegroundColor foregroundColor3 = new ForegroundColor() { Rgb = "FFFFFF00" };
+            BackgroundColor backgroundColor3 = new BackgroundColor() { Indexed = (UInt32Value)64U };
+            patternFill5.Append(foregroundColor3);
+            patternFill5.Append(backgroundColor3);
+            fill5.Append(patternFill5);
+
+            fills1.Append(fill1);
+            fills1.Append(fill2);
+            fills1.Append(fill3);
+            fills1.Append(fill4);
+            fills1.Append(fill5);
+
+            Borders borders1 = new Borders() { Count = (UInt32Value)1U };
+
+            Border border1 = new Border();
+            LeftBorder leftBorder1 = new LeftBorder();
+            RightBorder rightBorder1 = new RightBorder();
+            TopBorder topBorder1 = new TopBorder();
+            BottomBorder bottomBorder1 = new BottomBorder();
+            DiagonalBorder diagonalBorder1 = new DiagonalBorder();
+
+            border1.Append(leftBorder1);
+            border1.Append(rightBorder1);
+            border1.Append(topBorder1);
+            border1.Append(bottomBorder1);
+            border1.Append(diagonalBorder1);
+
+            borders1.Append(border1);
+
+            CellStyleFormats cellStyleFormats1 = new CellStyleFormats() { Count = (UInt32Value)1U };
+            CellFormat cellFormat1 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, BorderId = (UInt32Value)0U };
+
+            cellStyleFormats1.Append(cellFormat1);
+
+            CellFormats cellFormats1 = new CellFormats() { Count = (UInt32Value)4U };
+            CellFormat cellFormat2 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U };
+            CellFormat cellFormat3 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)2U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
+            CellFormat cellFormat4 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)3U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
+            CellFormat cellFormat5 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)4U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
+
+            cellFormats1.Append(cellFormat2);
+            cellFormats1.Append(cellFormat3);
+            cellFormats1.Append(cellFormat4);
+            cellFormats1.Append(cellFormat5);
+
+            CellStyles cellStyles1 = new CellStyles() { Count = (UInt32Value)1U };
+            CellStyle cellStyle1 = new CellStyle() { Name = "Normal", FormatId = (UInt32Value)0U, BuiltinId = (UInt32Value)0U };
+
+            cellStyles1.Append(cellStyle1);
+            DifferentialFormats differentialFormats1 = new DifferentialFormats() { Count = (UInt32Value)0U };
+            TableStyles tableStyles1 = new TableStyles() { Count = (UInt32Value)0U, DefaultTableStyle = "TableStyleMedium2", DefaultPivotStyle = "PivotStyleMedium9" };
+
+            StylesheetExtensionList stylesheetExtensionList1 = new StylesheetExtensionList();
+
+            StylesheetExtension stylesheetExtension1 = new StylesheetExtension() { Uri = "{EB79DEF2-80B8-43e5-95BD-54CBDDF9020C}" };
+            stylesheetExtension1.AddNamespaceDeclaration("x14", "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main");
+            X14.SlicerStyles slicerStyles1 = new X14.SlicerStyles() { DefaultSlicerStyle = "SlicerStyleLight1" };
+
+            stylesheetExtension1.Append(slicerStyles1);
+
+            stylesheetExtensionList1.Append(stylesheetExtension1);
+
+            stylesheet1.Append(fonts1);
+            stylesheet1.Append(fills1);
+            stylesheet1.Append(borders1);
+            stylesheet1.Append(cellStyleFormats1);
+            stylesheet1.Append(cellFormats1);
+            stylesheet1.Append(cellStyles1);
+            stylesheet1.Append(differentialFormats1);
+            stylesheet1.Append(tableStyles1);
+            stylesheet1.Append(stylesheetExtensionList1);
+            return stylesheet1;
         }
 
 
