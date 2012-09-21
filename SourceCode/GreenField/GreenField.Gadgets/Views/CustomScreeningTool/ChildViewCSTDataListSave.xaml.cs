@@ -142,11 +142,11 @@ namespace GreenField.Gadgets.Views
             else if (FetchedFlag == "Edit")
             {
                 List<CSTUserPreferenceInfo> temp = new List<CSTUserPreferenceInfo>();
-                if (FetchedListName.Equals(txtDataListName.Text))
-                {
+                //if (FetchedListName.Equals(txtDataListName.Text))
+                //{
                     temp = this.FetchedCSTUserPreference;
                     List<CSTUserPreferenceInfo> t = new List<CSTUserPreferenceInfo>();
-                    t = temp.Where(r => r.ListName == txtDataListName.Text).Distinct().ToList();
+                    t = temp.Where(r => r.ListName == FetchedListName).Distinct().ToList();
                     foreach (CSTUserPreferenceInfo item in t)
                     {
                         temp.Remove(item);
@@ -157,7 +157,7 @@ namespace GreenField.Gadgets.Views
                        this.txtMessage.Visibility = System.Windows.Visibility.Visible;
                        return;
                    }
-                }
+                //}
             }
             this.DialogResult = true;            
         }

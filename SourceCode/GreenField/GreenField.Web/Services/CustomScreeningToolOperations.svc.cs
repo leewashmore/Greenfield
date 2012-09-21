@@ -60,35 +60,43 @@ namespace GreenField.Web.Services
                     throw new Exception("Services are not available");
 
                 List<string> result = new List<string>();
+                List<string> temp = new List<string>();
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
 
                 switch (parameter)
                 {
                     case "Region":
-                        result = (from iry in entity.GF_SECURITY_BASEVIEW
+                        temp = (from iry in entity.GF_SECURITY_BASEVIEW
                                   select new { ASEC_SEC_COUNTRY_ZONE_NAME = iry.ASEC_SEC_COUNTRY_ZONE_NAME }).AsEnumerable().Select(t => t.ASEC_SEC_COUNTRY_ZONE_NAME).Distinct()
                                   .ToList();
                         break;
                     case "Country":
-                        result = (from iry in entity.GF_SECURITY_BASEVIEW
+                        temp = (from iry in entity.GF_SECURITY_BASEVIEW
                                   select new { ASEC_SEC_COUNTRY_ZONE_NAME = iry.ASEC_SEC_COUNTRY_NAME }).AsEnumerable().Select(t => t.ASEC_SEC_COUNTRY_ZONE_NAME).Distinct()
                                   .ToList();
                         break;
                     case "Sector":
-                        result = (from iry in entity.GF_SECURITY_BASEVIEW
+                        temp = (from iry in entity.GF_SECURITY_BASEVIEW
                                   select new { ASEC_SEC_COUNTRY_ZONE_NAME = iry.GICS_SECTOR_NAME }).AsEnumerable().Select(t => t.ASEC_SEC_COUNTRY_ZONE_NAME).Distinct()
                                   .ToList();
                         break;
                     case "Industry":
-                        result = (from iry in entity.GF_SECURITY_BASEVIEW
+                        temp = (from iry in entity.GF_SECURITY_BASEVIEW
                                   select new { ASEC_SEC_COUNTRY_ZONE_NAME = iry.GICS_INDUSTRY_NAME }).AsEnumerable().Select(t => t.ASEC_SEC_COUNTRY_ZONE_NAME).Distinct()
                                   .ToList();
                         break;
                     default:
                         break;
                 }
-
+                foreach (string item in temp)
+                {
+                    if (item == " " || item == null)
+                    {
+                        result.Add("Unknown");
+                    }
+                    else { result.Add(item); }
+                }
                 return result;
             }
             catch (Exception ex)
@@ -514,10 +522,12 @@ namespace GreenField.Web.Services
                             {
                                 if (item.PeriodType.StartsWith("A"))
                                 {
+                                    cstEntity.CommandTimeout = 5000;
                                     temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.PeriodType.Substring(0, 1), item.FromDate, item.YearType, item.DataSource).ToList(); 
                                 }
                                 else
-                                { 
+                                {
+                                    cstEntity.CommandTimeout = 5000;
                                     temp = cstEntity.GetCustomScreeningFINData(_issuerIds, _securityIds, item.DataID, item.PeriodType, item.FromDate, item.YearType, item.DataSource).ToList(); 
                                 }
 
@@ -557,6 +567,7 @@ namespace GreenField.Web.Services
                         if (item.ScreeningId.StartsWith("CUR"))
                         {
                             List<CustomScreeningCURData> temp = new List<CustomScreeningCURData>();
+                            cstEntity.CommandTimeout = 5000;
                             temp = cstEntity.GetCustomScreeningCURData(_issuerIds, _securityIds, item.DataID, item.DataSource).ToList();
 
                             foreach (CustomScreeningCURData record in temp)
@@ -591,6 +602,7 @@ namespace GreenField.Web.Services
                         {
                             if (item.ScreeningId.StartsWith("FVA"))
                             {
+                                cstEntity.CommandTimeout = 5000;
                                 List<CustomScreeningFVAData> data = cstEntity.GetCustomScreeningFVAData(_securityIds, item.DataSource).ToList();
                                 foreach (CustomScreeningFVAData record in data)
                                 {
@@ -752,44 +764,47 @@ namespace GreenField.Web.Services
                     }
                     return securityList;
                 }
-                else if (region != null)
+                else
                 {
-                    List<GF_SECURITY_BASEVIEW> securitiesInRegion = new List<GF_SECURITY_BASEVIEW>();
-                    securitiesInRegion = entity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_COUNTRY_ZONE_NAME == region).ToList();
-                    if (securitiesInRegion != null)
+                    if (region != null)
                     {
-                        securitiesInRegion = securitiesInRegion.Distinct().ToList();
-                        securitiesFromCustomControls.AddRange(securitiesInRegion);
+                        List<GF_SECURITY_BASEVIEW> securitiesInRegion = new List<GF_SECURITY_BASEVIEW>();
+                        securitiesInRegion = entity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_COUNTRY_ZONE_NAME == region).ToList();
+                        if (securitiesInRegion != null)
+                        {
+                            securitiesInRegion = securitiesInRegion.Distinct().ToList();
+                            securitiesFromCustomControls.AddRange(securitiesInRegion);
+                        }
                     }
-                }
-                else if (country != null)
-                {
-                    List<GF_SECURITY_BASEVIEW> securitiesInCountry = new List<GF_SECURITY_BASEVIEW>();
-                    securitiesInCountry = entity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_COUNTRY_NAME == country).ToList();
-                    if (securitiesInCountry != null)
+                    if (country != null)
                     {
-                        securitiesInCountry = securitiesInCountry.Distinct().ToList();
-                        securitiesFromCustomControls.AddRange(securitiesInCountry);
+                        List<GF_SECURITY_BASEVIEW> securitiesInCountry = new List<GF_SECURITY_BASEVIEW>();
+                        securitiesInCountry = entity.GF_SECURITY_BASEVIEW.Where(record => record.ASEC_SEC_COUNTRY_NAME == country).ToList();
+                        if (securitiesInCountry != null)
+                        {
+                            securitiesInCountry = securitiesInCountry.Distinct().ToList();
+                            securitiesFromCustomControls.AddRange(securitiesInCountry);
+                        }
                     }
-                }
-                else if (sector != null)
-                {
-                    List<GF_SECURITY_BASEVIEW> securitiesInSector = new List<GF_SECURITY_BASEVIEW>();
-                    securitiesInSector = entity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_SECTOR_NAME == sector).ToList();
-                    if (securitiesInSector != null)
+                    if (sector != null)
                     {
-                        securitiesInSector = securitiesInSector.Distinct().ToList();
-                        securitiesFromCustomControls.AddRange(securitiesInSector);
+                        List<GF_SECURITY_BASEVIEW> securitiesInSector = new List<GF_SECURITY_BASEVIEW>();
+                        securitiesInSector = entity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_SECTOR_NAME == sector).ToList();
+                        if (securitiesInSector != null)
+                        {
+                            securitiesInSector = securitiesInSector.Distinct().ToList();
+                            securitiesFromCustomControls.AddRange(securitiesInSector);
+                        }
                     }
-                }
-                else if (industry != null)
-                {
-                    List<GF_SECURITY_BASEVIEW> securitiesInIndustry = new List<GF_SECURITY_BASEVIEW>();
-                    securitiesInIndustry = entity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_INDUSTRY_NAME == industry).ToList();
-                    if (securitiesInIndustry != null)
+                    if (industry != null)
                     {
-                        securitiesInIndustry = securitiesInIndustry.Distinct().ToList();
-                        securitiesFromCustomControls.AddRange(securitiesInIndustry);
+                        List<GF_SECURITY_BASEVIEW> securitiesInIndustry = new List<GF_SECURITY_BASEVIEW>();
+                        securitiesInIndustry = entity.GF_SECURITY_BASEVIEW.Where(record => record.GICS_INDUSTRY_NAME == industry).ToList();
+                        if (securitiesInIndustry != null)
+                        {
+                            securitiesInIndustry = securitiesInIndustry.Distinct().ToList();
+                            securitiesFromCustomControls.AddRange(securitiesInIndustry);
+                        }
                     }
                 }
                 if (securitiesFromCustomControls == null)
