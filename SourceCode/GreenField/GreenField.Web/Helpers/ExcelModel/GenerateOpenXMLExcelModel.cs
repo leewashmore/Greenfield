@@ -110,7 +110,7 @@ namespace GreenField.Web.ExcelModel
                 foreach (string item in dataDescriptors)
                 {
                     firstYear = consensusData.Select(a => a.PERIOD_YEAR).OrderBy(a => a).FirstOrDefault();
-                    var cell = CreateTextCell(Convert.ToString(consensusData.Where(a => a.ESTIMATE_DESC == item).Select(a => a.ESTIMATE_ID).FirstOrDefault()));
+                    var cell = CreateNumberCell(Convert.ToDecimal(consensusData.Where(a => a.ESTIMATE_DESC == item).Select(a => a.ESTIMATE_ID).FirstOrDefault()));
                     row.InsertAt(cell, 0);
                     cell = new Cell();
                     cell = CreateTextCell(Convert.ToString(consensusData.Where(a => a.ESTIMATE_DESC == item).Select(a => a.ESTIMATE_DESC).FirstOrDefault()));
@@ -183,7 +183,7 @@ namespace GreenField.Web.ExcelModel
                 foreach (string item in dataDescriptors)
                 {
                     firstYear = financialData.Select(a => a.PeriodYear).OrderBy(a => a).FirstOrDefault();
-                    var cell = CreateTextCell(Convert.ToString(financialData.Where(a => a.Description == item).Select(a => a.DataId).FirstOrDefault()));
+                    var cell = CreateNumberCell(Convert.ToDecimal(financialData.Where(a => a.Description == item).Select(a => a.DataId).FirstOrDefault()));
                     row.InsertAt(cell, 0);
                     cell = new Cell();
                     cell = CreateTextCell(financialData.Where(a => a.Description == item).Select(a => a.Description).FirstOrDefault());
