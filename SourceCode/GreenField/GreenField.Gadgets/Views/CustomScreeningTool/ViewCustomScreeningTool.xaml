@@ -191,18 +191,24 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
                     <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                       Margin="0,0,15,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export" Visibility="{Binding ResultsListVisibility}">
+                                       Margin="0,0,40,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export" Visibility="{Binding ResultsListVisibility}">
                         <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
                     </telerik:RadButton>
-                    <telerik:RadButton Grid.Column="0"  HorizontalAlignment="Right" Height="15" Width="15" IsEnabled="True"
-                                              VerticalAlignment="Center" ToolTipService.ToolTip="Export Results to PDF"
+                <telerik:RadButton Grid.Row="0" HorizontalAlignment="Right" Height="15" Width="15" IsEnabled="True"
+                                             Margin="0,0,20,0" VerticalAlignment="Center" ToolTipService.ToolTip="Export Results to PDF"
                                             HorizontalContentAlignment="Center" Name="btnExportPDF" Click="btnExportPDF_Click" Visibility="{Binding ResultsListVisibility}">
                         <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
                     </telerik:RadButton>
-                    <telerik:RadGridView x:Name="dgCustomSecurity" Visibility="{Binding ResultsListVisibility}"
+                <telerik:RadButton  Grid.Row="0" HorizontalAlignment="Right" Height="15" Width="15" Visibility="{Binding ResultsListVisibility}" IsEnabled="True"
+                                              VerticalAlignment="Center" ToolTipService.ToolTip="Send Results to a Printer"
+                                                HorizontalContentAlignment="Center" Name="btnPrint" Click="btnPrint_Click">
+                    <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                </telerik:RadButton>
+                <telerik:RadGridView x:Name="dgCustomSecurity" Visibility="{Binding ResultsListVisibility}"
                     AutoGenerateColumns="False" Grid.Row="1"  CanUserReorderColumns ="False" 
                                              CanUserSelect="True"
                                              CanUserSortColumns="False"
@@ -224,7 +230,12 @@
                         <helpers:FrozenRowsBehavior/>
                     </i:Interaction.Behaviors>-->
                     </telerik:RadGridView>
-                </Grid>           
+                <Grid Grid.Row="2">
+                    <telerik:RadRichTextBox x:Name="RichTextBox" Width="0" Height="0">
+                        <!--For Printing the grid-->
+                    </telerik:RadRichTextBox>
+                </Grid>
+            </Grid>           
         </Grid>
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

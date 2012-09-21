@@ -17,6 +17,7 @@ using Telerik.Windows.Data;
 using System.Collections.ObjectModel;
 using GreenField.ServiceCaller;
 using GreenField.Common;
+using Telerik.Windows.Documents.Model;
 
 namespace GreenField.Gadgets.Views
 {
@@ -117,7 +118,7 @@ namespace GreenField.Gadgets.Views
             {
                 GridViewDataColumn column = new GridViewDataColumn();               
                 column.Header = kvp.Value;
-                column.UniqueName = kvp.Key;
+                column.UniqueName = kvp.Value;
                 column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key);
                 column.IsFilterable = true;
                 column.IsGroupable = true;
@@ -187,7 +188,30 @@ namespace GreenField.Gadgets.Views
             PDFExporter.btnExportPDF_Click(this.dgCustomSecurity);
         }
         #endregion
-    
+
+        #region Print grid
+
+        #region Printing the DataGrid
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.BeginInvoke((Action)(() =>
+            {
+                RichTextBox.Document = PDFExporter.Print(dgCustomSecurity, 6);
+            }));
+
+            this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+            RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+        }
+
+        #endregion 
+        #endregion
+
 
     }
 }
