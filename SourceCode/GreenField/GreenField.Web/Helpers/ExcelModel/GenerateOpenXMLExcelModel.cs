@@ -8,6 +8,7 @@ using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Spreadsheet;
+using System.Drawing;
 
 namespace GreenField.Web.ExcelModel
 {
@@ -239,8 +240,18 @@ namespace GreenField.Web.ExcelModel
             int lastYear = financialData.Select(a => a.PeriodYear).OrderByDescending(a => a).FirstOrDefault();
             int numberOfYears = lastYear - firstYear;
 
+            var maxLength = financialData.Max(s => s.Description.Length);
+
+            var maxLengthStr = financialData.FirstOrDefault(s => s.Description.Length == maxLength).Description;
+
+            DoubleValue maxWidth = GetColumnWidth(maxLengthStr);
+
+            Column firstColumn = new Column() { Min = 2U, Max = 2U, Width = maxWidth };         
+
             Columns sheetColumns = new Columns();
             Column mergeColumns;
+
+            sheetColumns.Append(firstColumn);
 
             var cell = new Cell();
 
@@ -302,6 +313,16 @@ namespace GreenField.Web.ExcelModel
 
             Columns sheetColumns = new Columns();
             Column mergeColumns;
+
+            var maxLength = consensusData.Max(s => s.ESTIMATE_DESC.Length);
+
+            var maxLengthStr = consensusData.FirstOrDefault(s => s.ESTIMATE_DESC.Length == maxLength).ESTIMATE_DESC;
+
+            DoubleValue maxWidth = GetColumnWidth(maxLengthStr);
+
+            Column firstColumn = new Column() { Min = 2U, Max = 2U, Width = maxWidth};
+
+            sheetColumns.Append(firstColumn);
 
             int firstYear = consensusData.Select(a => a.PERIOD_YEAR).OrderBy(a => a).FirstOrDefault();
             int lastYear = consensusData.Select(a => a.PERIOD_YEAR).OrderByDescending(a => a).FirstOrDefault();
@@ -372,6 +393,40 @@ namespace GreenField.Web.ExcelModel
             cell.CellValue = new CellValue(Convert.ToString(cellValue));
             return cell;
         }
+
+
+        private static DoubleValue GetColumnWidth(string sILT)
+        {
+            double fSimpleWidth = 0.0f;
+            double fWidthOfZero = 0.0f;
+            double fDigitWidth = 0.0f;
+            double fMaxDigitWidth = 0.0f;
+            double fTruncWidth = 0.0f;
+
+            System.Drawing.Font drawfont = new System.Drawing.Font("Calibri", 11);
+            // I just need a Graphics object. Any reasonable bitmap size will do.
+            Graphics g = Graphics.FromImage(new Bitmap(200, 200));
+            fWidthOfZero = (double)g.MeasureString("0", drawfont).Width;
+            fSimpleWidth = (double)g.MeasureString(sILT, drawfont).Width;
+            fSimpleWidth = fSimpleWidth / fWidthOfZero;
+
+            for (int i = 0; i < 10; ++i)
+            {
+                fDigitWidth = (double)g.MeasureString(i.ToString(), drawfont).Width;
+                if (fDigitWidth > fMaxDigitWidth)
+                {
+                    fMaxDigitWidth = fDigitWidth;
+                }
+            }
+            g.Dispose();
+
+            // Truncate([{Number of Characters} * {Maximum Digit Width} + {5 pixel padding}] / {Maximum Digit Width} * 256) / 256
+            fTruncWidth = Math.Truncate((sILT.ToCharArray().Count() * fMaxDigitWidth + 5.0) / fMaxDigitWidth * 256.0) / 256.0;
+
+            return fTruncWidth;
+
+        }
+
 
         /// <summary>
         /// 
