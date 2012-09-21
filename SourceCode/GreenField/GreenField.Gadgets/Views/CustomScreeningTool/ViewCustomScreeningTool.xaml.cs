@@ -117,8 +117,8 @@ namespace GreenField.Gadgets.Views
             foreach (KeyValuePair<string, string> kvp in columnMapping)
             {
                 GridViewDataColumn column = new GridViewDataColumn();               
-                column.Header = kvp.Value;
-                column.UniqueName = kvp.Value;
+                column.Header = kvp.Value;              
+                column.UniqueName = kvp.Value;                
                 column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key);
                 column.IsFilterable = true;
                 column.IsGroupable = true;

@@ -881,8 +881,11 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    SecurityData = result;
-                    CreateXML(SecurityData);
+                    SecurityData = result;                  
+                    if (SelectedSavedDataList != null && SelectedSavedDataList.Count > 0 && SelectedSavedDataList[0].ScreeningId != null)
+                    {
+                        CreateXML(SecurityData);
+                    }
                     ResultsListVisibility = Visibility.Visible;
                     BusyIndicatorNotification();
                 }
