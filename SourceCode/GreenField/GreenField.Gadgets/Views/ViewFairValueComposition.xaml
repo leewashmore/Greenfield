@@ -65,7 +65,7 @@
                                      CanUserInsertRows="False" 
                                      telerik:StyleManager.Theme="Metro"
                                      CanUserDeleteRows="False" 
-                                     IsReadOnly="True" 
+                                     IsReadOnly="False" 
                                      CanUserSortColumns="False" 
                                      ScrollMode="Deferred"
                                      RowIndicatorVisibility="Collapsed" 
@@ -81,7 +81,8 @@
                                     RowLoaded="dgFairValueComposition_RowLoaded"
                                     RowEditEnded="dgFairValueComposition_RowEditEnded"
                                     BeginningEdit="dgFairValueComposition_BeginningEdit"
-                                    CellValidating="dgFairValueComposition_CellValidating">
+                                    CellValidating="dgFairValueComposition_CellValidating"
+                                         DataLoaded="dgFairValueComposition_DataLoaded">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Source" 
                                                         UniqueName="Source"
@@ -89,8 +90,9 @@
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Left" 
-                                                        TextAlignment="Left">
-                                <telerik:GridViewDataColumn.CellEditTemplate>
+                                                        TextAlignment="Left"
+                                                        IsReadOnly="True">
+                                <!--<telerik:GridViewDataColumn.CellEditTemplate>
                                     <DataTemplate>
                                         <telerik:RadComboBox x:Name="cbMeasureSelector"                                        
                                          SelectedValue="{Binding DataContextFairValueCompositionSummary.MeasureId,Mode=TwoWay}"
@@ -110,33 +112,44 @@
                                         >
                                         </telerik:RadComboBox>
                                     </DataTemplate>
-                                </telerik:GridViewDataColumn.CellEditTemplate>
-                            </telerik:GridViewDataColumn>                            
+                                                        DisplayMemberPath="Measures"
+                                </telerik:GridViewDataColumn.CellEditTemplate> -->
+                                <!--ItemsSourceBinding="{Binding MEASURES_LIST}"-->
+                                <!--  DataMemberBinding ="{Binding MEASURES_LIST,Mode=TwoWay}"-->
+                            </telerik:GridViewDataColumn>
+                            <telerik:GridViewComboBoxColumn Header="Measure" 
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Left" 
+                                                        IsReadOnly="False"
+                                                        TextAlignment="Left"
+                                                        Width="*"/>
                             <telerik:GridViewDataColumn Header="Buy" 
                                                         UniqueName="Buy"
                                                         DataMemberBinding="{Binding BUY, StringFormat=\{0:n1\},Mode=TwoWay}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
-                                                        TextAlignment="Right">
-                             
-                            </telerik:GridViewDataColumn>
+                                                        TextAlignment="Right"
+                                                        IsReadOnly="False"/>                             
                             <telerik:GridViewDataColumn Header="Sell" 
                                                         UniqueName="Sell"
                                                         DataMemberBinding="{Binding SELL, StringFormat=\{0:n1\},Mode=TwoWay}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
-                                                        HeaderTextAlignment="Right" 
-                                                        TextAlignment="Right"/>
+                                                        HeaderTextAlignment="Right"
+                                                        TextAlignment="Right"
+                                                        IsReadOnly="False"/>
                             <telerik:GridViewDataColumn Header="Upside" 
                                                         UniqueName="Upside"
-                                                        DataMemberBinding="{Binding UPSIDE,Converter={StaticResource ConverterPercValTwoDecPlace},Mode=TwoWay}"
+                                                        DataMemberBinding="{Binding UPSIDE,Converter={StaticResource ConverterPercValTwoDecPlace}}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"/>
                             <telerik:GridViewDataColumn Header="Date" 
-                                                        UniqueName="Date"
+                                                        UniqueName="Date" 
+                                                        IsReadOnly="True"
                                                         DataMemberBinding="{Binding DATE,Mode=TwoWay}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 

@@ -135,6 +135,7 @@
     <Compile Include="Helpers\Converters\EntityDisplayConverter.cs" />
     <Compile Include="Helpers\Converters\GroupAggregationToVisibilityConverter.cs" />
     <Compile Include="Helpers\Converters\ReportedCurrencyConverter.cs" />
+    <Compile Include="Helpers\CurrentFairValueMeasures.cs" />
     <Compile Include="Helpers\DataContextProxy.cs" />
     <Compile Include="Helpers\Converters\DraggedItemTemplateConverter.cs" />
     <Compile Include="Helpers\DCFCalculations.cs" />

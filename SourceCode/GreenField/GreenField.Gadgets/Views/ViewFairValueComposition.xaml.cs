@@ -16,6 +16,7 @@ using GreenField.ServiceCaller;
 using Telerik.Windows.Documents.Model;
 using GreenField.DataContracts;
 using Telerik.Windows.Controls;
+using System.Windows.Data;
 
 namespace GreenField.Gadgets.Views
 {
@@ -54,7 +55,9 @@ namespace GreenField.Gadgets.Views
                     DataContextFairValueComposition.IsActive = _isActive;
             }
         }
+
         #endregion
+
         #region CONSTRUCTOR
         /// <summary>
         /// CONSTRUCTOR
@@ -242,6 +245,7 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
+
         #region EventsUnsubscribe
 
         /// <summary>
@@ -255,6 +259,13 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
+
+        private void dgFairValueComposition_DataLoaded(object sender, EventArgs e)
+        {
+            (dgFairValueComposition.Columns[1] as GridViewComboBoxColumn).ItemsSource = DataContextFairValueComposition.MeasuresData;
+            (dgFairValueComposition.Columns[1] as GridViewComboBoxColumn).SelectedValueMemberPath = "DataId";
+            (dgFairValueComposition.Columns[1] as GridViewComboBoxColumn).DisplayMemberPath = "Measures";
+        }
 
     }
 }

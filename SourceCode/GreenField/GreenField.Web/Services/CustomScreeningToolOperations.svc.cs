@@ -612,6 +612,7 @@ namespace GreenField.Web.Services
                                     fillData.Type = cstEntity.SCREENING_DISPLAY_FAIRVALUE.Where(a => a.SCREENING_ID == item.ScreeningId).Select(a => a.TABLE_COLUMN).FirstOrDefault();//item.TableColumnName;
                                     fillData.DataSource = item.DataSource;
                                     fillData.Value = record.GetType().GetProperty(fillData.Type).GetValue(record, null);
+                                    fillData.DataSource = item.DataSource;
                                     result.Add(fillData);
                                 }
                             }
