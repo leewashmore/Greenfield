@@ -7,8 +7,9 @@ using DocumentFormat.OpenXml.Spreadsheet;
 using System.IO;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Spreadsheet;
 
-namespace GreenField.Web.Helpers
+namespace GreenField.Web.ExcelModel
 {
     public static class GenerateOpenXMLExcelModel
     {
@@ -30,7 +31,7 @@ namespace GreenField.Web.Helpers
 
                     // Add a WorksheetPart to the WorkbookPart.
                     WorksheetPart worksheetPart = workbookpart.AddNewPart<WorksheetPart>("rId3");
-                    worksheetPart.Worksheet = new Worksheet(new SheetData());
+                    worksheetPart.Worksheet = new Worksheet();
 
                     // Add Sheets to the Workbook.
                     spreadsheetDocument.WorkbookPart.Workbook.AppendChild(new Sheets());
@@ -47,7 +48,7 @@ namespace GreenField.Web.Helpers
 
                     // Add a WorksheetPart to the WorkbookPart.
                     WorksheetPart worksheetPartConsensus = workbookpart.AddNewPart<WorksheetPart>("rId2");
-                    worksheetPartConsensus.Worksheet = new Worksheet(new SheetData());
+                    worksheetPartConsensus.Worksheet = new Worksheet();
                     worksheetPartConsensus.Worksheet.Save();
                     sheetId = 2;
 
@@ -59,6 +60,7 @@ namespace GreenField.Web.Helpers
                     });
                     GenerateConsensusHeaders(worksheetPartConsensus, consensusData);
                     InsertConsensusDataInWorksheet(worksheetPartConsensus, consensusData);
+
                     workbookpart.Workbook.Save();
                     workbookpart.Workbook.Save();
 
@@ -69,7 +71,7 @@ namespace GreenField.Web.Helpers
             }
             catch (Exception ex)
             {
-                ExceptionTrace.LogException(ex);
+                //ExceptionTrace.LogException(ex);
                 return null;
             }
         }
@@ -83,6 +85,7 @@ namespace GreenField.Web.Helpers
         {
             var worksheet = worksheetPart.Worksheet;
             var sheetData = worksheet.GetFirstChild<SheetData>();
+            //SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
             var row = new Row { RowIndex = 2 };
             sheetData.Append(row);
             int rowIndex = 2;
@@ -94,7 +97,6 @@ namespace GreenField.Web.Helpers
             int lastYear = consensusData.Select(a => a.PERIOD_YEAR).OrderByDescending(a => a).FirstOrDefault();
             int numberOfYears = lastYear - firstYear;
 
-
             while (row.RowIndex < maxRowCount)
             {
                 foreach (string item in dataDescriptors)
@@ -105,31 +107,25 @@ namespace GreenField.Web.Helpers
                     cell = new Cell();
                     cell = CreateTextCell(Convert.ToString(consensusData.Where(a => a.ESTIMATE_DESC == item).Select(a => a.ESTIMATE_DESC).FirstOrDefault()));
                     row.InsertAt(cell, 1);
-
                     for (int i = 0; i <= numberOfYears * 5; i = i + 5)
                     {
-                        decimal? ab = consensusData.Where(a => a.PERIOD_YEAR == (firstYear) && a.ESTIMATE_DESC == item && a.PERIOD_TYPE.Trim() == "Q1").
-                            Select(a => a.AMOUNT).FirstOrDefault();
-
-                        if (ab == null)
-                        { 
-                        
-                        }
-
                         cell = new Cell();
                         cell = CreateNumberCell(consensusData.Where(a => a.PERIOD_YEAR == (firstYear) && a.ESTIMATE_DESC == item && a.PERIOD_TYPE.Trim() == "Q1").
                             Select(a => a.AMOUNT).FirstOrDefault());
                         row.InsertAt(cell, i + 2);
+
 
                         cell = new Cell();
                         cell = CreateNumberCell(consensusData.Where(a => a.PERIOD_YEAR == (firstYear) && a.ESTIMATE_DESC == item && a.PERIOD_TYPE.Trim() == "Q2")
                             .Select(a => a.AMOUNT).FirstOrDefault());
                         row.InsertAt(cell, i + 3);
 
+
                         cell = new Cell();
                         cell = CreateNumberCell(consensusData.Where(a => a.PERIOD_YEAR == (firstYear) && a.ESTIMATE_DESC == item && a.PERIOD_TYPE.Trim() == "Q3")
                             .Select(a => a.AMOUNT).FirstOrDefault());
                         row.InsertAt(cell, i + 4);
+
 
                         cell = new Cell();
                         cell = CreateNumberCell(consensusData.Where(a => a.PERIOD_YEAR == (firstYear) && a.ESTIMATE_DESC == item && a.PERIOD_TYPE.Trim() == "Q4")
@@ -142,8 +138,10 @@ namespace GreenField.Web.Helpers
                             .Select(a => a.AMOUNT).FirstOrDefault());
                         row.InsertAt(cell, i + 6);
 
+
                         firstYear++;
                     }
+
                     ++rowIndex;
                     row = new Row { RowIndex = Convert.ToUInt32(rowIndex) };
                     sheetData.Append(row);
@@ -160,6 +158,7 @@ namespace GreenField.Web.Helpers
         {
             var worksheet = worksheetPart.Worksheet;
             var sheetData = worksheet.GetFirstChild<SheetData>();
+            //SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
             var row = new Row { RowIndex = 2 };
             sheetData.Append(row);
             List<string> dataDescriptors = financialData.Select(a => a.Description).Distinct().ToList();
@@ -220,14 +219,17 @@ namespace GreenField.Web.Helpers
         private static void GenerateReutersHeaders(WorksheetPart worksheetPart, List<FinancialStatementData> financialData)
         {
             var worksheet = worksheetPart.Worksheet;
-            var sheetData = worksheet.GetFirstChild<SheetData>();
+            SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
+            SheetFormatProperties sheetFormatProperties1;
             var row = new Row { RowIndex = 1 };
             sheetData.Append(row);
-
             int firstYear = financialData.Select(a => a.PeriodYear).OrderBy(a => a).FirstOrDefault();
             int lastYear = financialData.Select(a => a.PeriodYear).OrderByDescending(a => a).FirstOrDefault();
             int numberOfYears = lastYear - firstYear;
 
+            Columns sheetColumns = new Columns();
+            Column mergeColumns;
+            
             var cell = new Cell();
 
             cell = CreateTextCell("Data Id");
@@ -239,6 +241,9 @@ namespace GreenField.Web.Helpers
 
             for (int i = 0; i <= numberOfYears * 5; i = i + 5)
             {
+                Columns column = new DocumentFormat.OpenXml.Spreadsheet.Columns();
+                mergeColumns = new DocumentFormat.OpenXml.Spreadsheet.Column();
+                
                 cell = new Cell();
                 cell = CreateTextCell(firstYear + " Q1");
                 row.InsertAt(cell, i + 2);
@@ -259,15 +264,27 @@ namespace GreenField.Web.Helpers
                 cell = CreateTextCell(firstYear + " A");
                 row.InsertAt(cell, i + 6);
                 firstYear++;
+
+                mergeColumns = new Column() { Min = Convert.ToUInt32(i + 3), Max = Convert.ToUInt32(i + 6), CustomWidth = true, OutlineLevel = 1, Hidden = false };
+                sheetColumns.Append(mergeColumns);
             }
+            sheetFormatProperties1 = new SheetFormatProperties() { DefaultRowHeight = 15D, OutlineLevelColumn = 1, DyDescent = 0.25D };
+            worksheet.Append(sheetFormatProperties1);
+            worksheet.Append(sheetColumns);
+            worksheet.Append(sheetData);
         }
 
         private static void GenerateConsensusHeaders(WorksheetPart worksheetPart, List<ModelConsensusEstimatesData> consensusData)
         {
             var worksheet = worksheetPart.Worksheet;
-            var sheetData = worksheet.GetFirstChild<SheetData>();
+            //var sheetData = worksheet.GetFirstChild<SheetData>();
+            SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
             var row = new Row { RowIndex = 1 };
+            SheetFormatProperties sheetFormatProperties1;
             sheetData.Append(row);
+
+            Columns sheetColumns = new Columns();
+            Column mergeColumns;
 
             int firstYear = consensusData.Select(a => a.PERIOD_YEAR).OrderBy(a => a).FirstOrDefault();
             int lastYear = consensusData.Select(a => a.PERIOD_YEAR).OrderByDescending(a => a).FirstOrDefault();
@@ -304,7 +321,13 @@ namespace GreenField.Web.Helpers
                 cell = CreateTextCell(firstYear + " A");
                 row.InsertAt(cell, i + 6);
                 firstYear++;
+                mergeColumns = new Column() { Min = Convert.ToUInt32(i + 3), Max = Convert.ToUInt32(i + 6), CustomWidth = true, OutlineLevel = 1, Hidden = false };
+                sheetColumns.Append(mergeColumns);
             }
+            sheetFormatProperties1 = new SheetFormatProperties() { DefaultRowHeight = 15D, OutlineLevelColumn = 1, DyDescent = 0.25D };
+            worksheet.Append(sheetFormatProperties1);
+            worksheet.Append(sheetColumns);
+            worksheet.Append(sheetData);
         }
 
         private static Cell CreateTextCell(string cellValue)
@@ -349,7 +372,7 @@ namespace GreenField.Web.Helpers
             }
             catch (Exception ex)
             {
-                ExceptionTrace.LogException(ex);
+                //ExceptionTrace.LogException(ex);
                 return null;
             }
         }
