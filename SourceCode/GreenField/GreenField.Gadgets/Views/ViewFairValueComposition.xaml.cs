@@ -262,9 +262,7 @@ namespace GreenField.Gadgets.Views
 
         private void dgFairValueComposition_DataLoaded(object sender, EventArgs e)
         {
-            (dgFairValueComposition.Columns[1] as GridViewComboBoxColumn).ItemsSource = DataContextFairValueComposition.MeasuresData;
-            (dgFairValueComposition.Columns[1] as GridViewComboBoxColumn).SelectedValueMemberPath = "DataId";
-            (dgFairValueComposition.Columns[1] as GridViewComboBoxColumn).DisplayMemberPath = "Measures";
+            (dgFairValueComposition.Columns[1] as GridViewComboBoxColumn).ItemsSource = DataContextFairValueComposition.MeasuresData;            
         }
 
     }

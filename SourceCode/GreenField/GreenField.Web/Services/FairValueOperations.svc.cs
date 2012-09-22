@@ -105,8 +105,7 @@ namespace GreenField.Web.Services
                     item.UPSIDE = record.UPSIDE;
                     if (record.DATE != null)
                         item.DATE = record.DATE.Value;
-                    item.DATA_ID = record.DATA_ID;
-                    item.MEASURES_LIST = GetMeasureList();
+                    item.DATA_ID = record.DATA_ID;                    
                     result.Add(item);
                 }
                 return result;
@@ -117,38 +116,6 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        }
-
-        #region Helper Methods
-
-        public List<MeasuresList> GetMeasureList()
-        {
-            List<MeasuresList> MeasuresData = new List<MeasuresList>();
-            MeasuresData.Add(new MeasuresList() { DataId = 236, Measures = "Forward Dividend Yield" });
-            MeasuresData.Add(new MeasuresList() { DataId = 198, Measures = "Forward EV/EBITDA" });
-            MeasuresData.Add(new MeasuresList() { DataId = 246, Measures = "Forward EV/EBITDA relative to Country" });
-            MeasuresData.Add(new MeasuresList() { DataId = 247, Measures = "Forward EV/EBITDA relative to Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 248, Measures = "Forward EV/EBITDA relative to Country Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 237, Measures = "Forward EV/Revenue" });
-            MeasuresData.Add(new MeasuresList() { DataId = 238, Measures = "Forward P/NAV" });
-            MeasuresData.Add(new MeasuresList() { DataId = 239, Measures = "Forward P/Appraisal Value" });
-            MeasuresData.Add(new MeasuresList() { DataId = 188, Measures = "Forward P/BV" });
-            MeasuresData.Add(new MeasuresList() { DataId = 249, Measures = "Forward P/BV relative to Country" });
-            MeasuresData.Add(new MeasuresList() { DataId = 250, Measures = "Forward P/BV relative to Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 251, Measures = "Forward P/BV relative to Country Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 189, Measures = "Forward P/CE" });
-            MeasuresData.Add(new MeasuresList() { DataId = 187, Measures = "Forward P/E" });
-            MeasuresData.Add(new MeasuresList() { DataId = 252, Measures = "Forward P/E relative to Country" });
-            MeasuresData.Add(new MeasuresList() { DataId = 253, Measures = "Forward P/E relative to Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 254, Measures = "Forward P/E relative to Country Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 241, Measures = "Forward P/E to 2 Year Growth" });
-            MeasuresData.Add(new MeasuresList() { DataId = 242, Measures = "Forward P/E to 3 Year Growth" });
-            MeasuresData.Add(new MeasuresList() { DataId = 245, Measures = "Forward P/Embedded Value" });
-            MeasuresData.Add(new MeasuresList() { DataId = 197, Measures = "Forward P/Revenue" });
-
-            return MeasuresData;
-        }
-
-        #endregion
+        }       
     }
 }

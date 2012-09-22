@@ -74,14 +74,14 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private List<MeasuresList> _measuresData;
-        public List<MeasuresList> MeasuresData
+        private List<Measure> _measuresData;
+        public List<Measure> MeasuresData
         {
             get
             {
                 if (_measuresData == null)
                 {
-                    _measuresData = new List<MeasuresList>();
+                    _measuresData = new List<Measure>();
                 }
                 return _measuresData;
             }
@@ -90,66 +90,8 @@ namespace GreenField.Gadgets.ViewModels
                 _measuresData = value;
                 this.RaisePropertyChanged(() => this.MeasuresData);
             }
-        }
-        
+        }       
 
-
-        //// <summary>
-        ///// Store selected measureId
-        ///// </summary>
-        //private string _measureId = string.Empty;
-        //public string MeasureId
-        //{
-        //    get
-        //    {
-        //        return _measureId;
-        //    }
-        //    set
-        //    {
-        //        _measureId = value;
-        //        RaisePropertyChanged(() => this.MeasureId);
-
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Stores Measure List
-        ///// </summary>
-        //private List<FairValueMeasureDataId> _measureList = null;
-        //public List<FairValueMeasureDataId> MeasureList
-        //{
-        //    get
-        //    {
-        //        return _measureList;
-        //    }
-        //    set
-        //    {
-        //        _measureList = value;
-        //        RaisePropertyChanged(() => this.MeasureList);
-        //    }
-        //}
-
-        ///// <summary>
-        ///// Stores Measure List
-        ///// </summary>
-        ///// 
-        //private List<MeasuresList> _measuresList = new List<MeasuresList>();
-        //public List<MeasuresList> MeasuresList
-        //{
-        //    get
-        //    {
-        //        if (_measuresList == null)
-        //        {
-        //            _measuresList = new List<MeasuresList>();
-        //        }
-        //        return _measuresList;
-        //    }
-        //    set
-        //    {
-        //        _measuresList = value;
-        //        RaisePropertyChanged(() => this.MeasuresList);
-        //    }
-        //}
 
 
         /// <summary>
@@ -283,7 +225,7 @@ namespace GreenField.Gadgets.ViewModels
                         SELL = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.SELL).FirstOrDefault() : null,
                         UPSIDE = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.UPSIDE).FirstOrDefault() : null,
                         DATE = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.DATE).FirstOrDefault() : null,
-                        MEASURES_LIST = result[0].MEASURES_LIST
+                        DATA_ID = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.DATA_ID).FirstOrDefault() : null,
                     });
                     temp.Add(new FairValueCompositionSummaryData()
                     {
@@ -293,7 +235,7 @@ namespace GreenField.Gadgets.ViewModels
                         SELL = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.SELL).FirstOrDefault() : null,
                         UPSIDE = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.UPSIDE).FirstOrDefault() : null,
                         DATE = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.DATE).FirstOrDefault() : null,
-                        MEASURES_LIST = result[0].MEASURES_LIST
+                        DATA_ID = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.DATA_ID).FirstOrDefault() : null,
                     });
                     if (result != null && result.Count > 0)
                     {
@@ -345,29 +287,29 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Helper Method
 
-        public List<MeasuresList> GetMeasureList()
+        public List<Measure> GetMeasureList()
         {
-            MeasuresData.Add(new MeasuresList() { DataId = 236, Measures = "Forward Dividend Yield" });
-            MeasuresData.Add(new MeasuresList() { DataId = 198, Measures = "Forward EV/EBITDA" });
-            MeasuresData.Add(new MeasuresList() { DataId = 246, Measures = "Forward EV/EBITDA relative to Country" });
-            MeasuresData.Add(new MeasuresList() { DataId = 247, Measures = "Forward EV/EBITDA relative to Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 248, Measures = "Forward EV/EBITDA relative to Country Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 237, Measures = "Forward EV/Revenue" });
-            MeasuresData.Add(new MeasuresList() { DataId = 238, Measures = "Forward P/NAV" });
-            MeasuresData.Add(new MeasuresList() { DataId = 239, Measures = "Forward P/Appraisal Value" });
-            MeasuresData.Add(new MeasuresList() { DataId = 188, Measures = "Forward P/BV" });
-            MeasuresData.Add(new MeasuresList() { DataId = 249, Measures = "Forward P/BV relative to Country" });
-            MeasuresData.Add(new MeasuresList() { DataId = 250, Measures = "Forward P/BV relative to Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 251, Measures = "Forward P/BV relative to Country Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 189, Measures = "Forward P/CE" });
-            MeasuresData.Add(new MeasuresList() { DataId = 187, Measures = "Forward P/E" });
-            MeasuresData.Add(new MeasuresList() { DataId = 252, Measures = "Forward P/E relative to Country" });
-            MeasuresData.Add(new MeasuresList() { DataId = 253, Measures = "Forward P/E relative to Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 254, Measures = "Forward P/E relative to Country Industry" });
-            MeasuresData.Add(new MeasuresList() { DataId = 241, Measures = "Forward P/E to 2 Year Growth" });
-            MeasuresData.Add(new MeasuresList() { DataId = 242, Measures = "Forward P/E to 3 Year Growth" });
-            MeasuresData.Add(new MeasuresList() { DataId = 245, Measures = "Forward P/Embedded Value" });
-            MeasuresData.Add(new MeasuresList() { DataId = 197, Measures = "Forward P/Revenue" });
+            MeasuresData.Add(new Measure() { DataId = 236, Measures = "Forward Dividend Yield" });
+            MeasuresData.Add(new Measure() { DataId = 198, Measures = "Forward EV/EBITDA" });
+            MeasuresData.Add(new Measure() { DataId = 246, Measures = "Forward EV/EBITDA relative to Country" });
+            MeasuresData.Add(new Measure() { DataId = 247, Measures = "Forward EV/EBITDA relative to Industry" });
+            MeasuresData.Add(new Measure() { DataId = 248, Measures = "Forward EV/EBITDA relative to Country Industry" });
+            MeasuresData.Add(new Measure() { DataId = 237, Measures = "Forward EV/Revenue" });
+            MeasuresData.Add(new Measure() { DataId = 238, Measures = "Forward P/NAV" });
+            MeasuresData.Add(new Measure() { DataId = 239, Measures = "Forward P/Appraisal Value" });
+            MeasuresData.Add(new Measure() { DataId = 188, Measures = "Forward P/BV" });
+            MeasuresData.Add(new Measure() { DataId = 249, Measures = "Forward P/BV relative to Country" });
+            MeasuresData.Add(new Measure() { DataId = 250, Measures = "Forward P/BV relative to Industry" });
+            MeasuresData.Add(new Measure() { DataId = 251, Measures = "Forward P/BV relative to Country Industry" });
+            MeasuresData.Add(new Measure() { DataId = 189, Measures = "Forward P/CE" });
+            MeasuresData.Add(new Measure() { DataId = 187, Measures = "Forward P/E" });
+            MeasuresData.Add(new Measure() { DataId = 252, Measures = "Forward P/E relative to Country" });
+            MeasuresData.Add(new Measure() { DataId = 253, Measures = "Forward P/E relative to Industry" });
+            MeasuresData.Add(new Measure() { DataId = 254, Measures = "Forward P/E relative to Country Industry" });
+            MeasuresData.Add(new Measure() { DataId = 241, Measures = "Forward P/E to 2 Year Growth" });
+            MeasuresData.Add(new Measure() { DataId = 242, Measures = "Forward P/E to 3 Year Growth" });
+            MeasuresData.Add(new Measure() { DataId = 245, Measures = "Forward P/Embedded Value" });
+            MeasuresData.Add(new Measure() { DataId = 197, Measures = "Forward P/Revenue" });
 
             return MeasuresData;
         }

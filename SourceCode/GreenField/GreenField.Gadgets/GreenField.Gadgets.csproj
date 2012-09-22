@@ -155,6 +155,7 @@
     <Compile Include="Helpers\ItemStyleSelector.cs" />
     <Compile Include="Helpers\Converters\PercentageValueConverter.cs" />
     <Compile Include="Helpers\ListUtils.cs" />
+    <Compile Include="Helpers\Measure.cs" />
     <Compile Include="Helpers\MyDataRow.cs" />
     <Compile Include="Helpers\PeriodColumnNavigationEvent.cs" />
     <Compile Include="Helpers\PeriodColumns.cs" />

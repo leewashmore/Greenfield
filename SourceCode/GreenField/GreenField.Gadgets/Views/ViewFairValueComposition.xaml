@@ -82,7 +82,7 @@
                                     RowEditEnded="dgFairValueComposition_RowEditEnded"
                                     BeginningEdit="dgFairValueComposition_BeginningEdit"
                                     CellValidating="dgFairValueComposition_CellValidating"
-                                         DataLoaded="dgFairValueComposition_DataLoaded">
+                                    DataLoaded="dgFairValueComposition_DataLoaded">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Source" 
                                                         UniqueName="Source"
@@ -91,33 +91,12 @@
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Left" 
                                                         TextAlignment="Left"
-                                                        IsReadOnly="True">
-                                <!--<telerik:GridViewDataColumn.CellEditTemplate>
-                                    <DataTemplate>
-                                        <telerik:RadComboBox x:Name="cbMeasureSelector"                                        
-                                         SelectedValue="{Binding DataContextFairValueCompositionSummary.MeasureId,Mode=TwoWay}"
-                                         Width="150" 
-                                         Margin="5,0,0,0"
-                                         IsEditable="True"
-                                         ItemsSource="{Binding DataContextFairValueCompositionSummary.MeasureList}"                                        
-                                         CanAutocompleteSelectItems="True" 
-                                         TextOptions.TextHintingMode="Fixed"
-                                         CanKeyboardNavigationSelectItems="False" 
-                                         HorizontalAlignment="Left"
-                                         OpenDropDownOnFocus="True"
-                                         StaysOpenOnEdit="True"                                        
-                                         IsTextSearchEnabled="False" 
-                                         EmptyText="Select Fair Value Measure..."
-                                         Style="{StaticResource RadComboBoxStyle}"
-                                        >
-                                        </telerik:RadComboBox>
-                                    </DataTemplate>
-                                                        DisplayMemberPath="Measures"
-                                </telerik:GridViewDataColumn.CellEditTemplate> -->
-                                <!--ItemsSourceBinding="{Binding MEASURES_LIST}"-->
-                                <!--  DataMemberBinding ="{Binding MEASURES_LIST,Mode=TwoWay}"-->
+                                                        IsReadOnly="True">                                
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewComboBoxColumn Header="Measure" 
+                                                        DataMemberBinding="{Binding DATA_ID}"
+                                                        SelectedValueMemberPath="DataId"
+                                                        DisplayMemberPath="Measures"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Left" 
