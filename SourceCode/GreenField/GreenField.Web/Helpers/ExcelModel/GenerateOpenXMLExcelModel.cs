@@ -475,7 +475,23 @@ namespace GreenField.Web.ExcelModel
             font1.Append(fontFamilyNumbering1);
             font1.Append(fontScheme1);
 
+            DocumentFormat.OpenXml.Spreadsheet.Font font2 = new DocumentFormat.OpenXml.Spreadsheet.Font();
+            FontSize fontSize2 = new FontSize() { Val = 11D };
+            DocumentFormat.OpenXml.Spreadsheet.Color color2 = new DocumentFormat.OpenXml.Spreadsheet.Color() { Theme = (UInt32Value)1U };
+            FontName fontName2 = new FontName() { Val = "Calibri" };
+            FontFamilyNumbering fontFamilyNumbering2 = new FontFamilyNumbering() { Val = 2 };
+            FontScheme fontScheme2 = new FontScheme() { Val = FontSchemeValues.Minor };
+            Bold bold2 = new Bold();
+
+            font2.Append(fontSize2);
+            font2.Append(color2);
+            font2.Append(fontName2);
+            font2.Append(fontFamilyNumbering2);
+            font2.Append(fontScheme2);
+            font2.Append(bold2);
+
             fonts1.Append(font1);
+            fonts1.Append(font2);
 
             Fills fills1 = new Fills() { Count = (UInt32Value)5U };
 
@@ -547,7 +563,7 @@ namespace GreenField.Web.ExcelModel
             CellFormats cellFormats1 = new CellFormats() { Count = (UInt32Value)4U };
             CellFormat cellFormat2 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)0U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U };
             CellFormat cellFormat3 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)2U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
-            CellFormat cellFormat4 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)3U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
+            CellFormat cellFormat4 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)1U, FillId = (UInt32Value)3U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
             CellFormat cellFormat5 = new CellFormat() { NumberFormatId = (UInt32Value)0U, FontId = (UInt32Value)0U, FillId = (UInt32Value)4U, BorderId = (UInt32Value)0U, FormatId = (UInt32Value)0U, ApplyFill = true };
 
             cellFormats1.Append(cellFormat2);
