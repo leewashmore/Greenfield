@@ -50,9 +50,6 @@
       <End Role="PresentationInfo" EntitySet="PresentationInfoes" />
       <End Role="VoterInfo" EntitySet="VoterInfoes" />
     </AssociationSet>
-    <FunctionImport Name="GetPresentationVotingDeadlineDetails" ReturnType="Collection(ICPModel.PresentationVotingDeadlineDetails)">
-      <Parameter Name="ScheduleMinutes" Mode="In" Type="Int32" />
-    </FunctionImport>
     <EntitySet Name="MessageInfoes" EntityType="ICPModel.MessageInfo" />
     <FunctionImport Name="SetMessageInfo" ReturnType="Collection(Int32)">
       <Parameter Name="EmailTo" Mode="In" Type="String" />
@@ -61,11 +58,6 @@
       <Parameter Name="EmailMessageBody" Mode="In" Type="String" />
       <Parameter Name="EmailAttachment" Mode="In" Type="String" />
       <Parameter Name="UserName" Mode="In" Type="String" />
-    </FunctionImport>
-    <FunctionImport Name="SetICPMeetingPresentationStatus" ReturnType="Collection(Int32)">
-      <Parameter Name="UserName" Mode="In" Type="String" />
-      <Parameter Name="MeetingId" Mode="In" Type="Int64" />
-      <Parameter Name="Status" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="GetPresentationDeadlineDetails" ReturnType="Collection(ICPModel.PresentationDeadlineDetails)">
       <Parameter Name="ScheduleMinutes" Mode="In" Type="Int32" />
@@ -98,6 +90,14 @@
       <Parameter Name="Type" Mode="In" Type="String" />
       <Parameter Name="FileId" Mode="In" Type="Int64" />
       <Parameter Name="DeletionFlag" Mode="In" Type="Boolean" />
+    </FunctionImport>
+    <FunctionImport Name="GetPresentationVotingDeadlineDetails" ReturnType="Collection(ICPModel.PresentationVotingDeadlineDetails)">
+      <Parameter Name="ScheduleMinutes" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="SetICPMeetingPresentationStatus" ReturnType="Collection(Int32)">
+      <Parameter Name="UserName" Mode="In" Type="String" />
+      <Parameter Name="MeetingId" Mode="In" Type="Int64" />
+      <Parameter Name="Status" Mode="In" Type="String" />
     </FunctionImport>
   </EntityContainer>
   <EntityType Name="CommentInfo">
@@ -381,31 +381,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <ComplexType Name="PresentationVotingDeadlineDetails">
-    <Property Type="Int64" Name="MeetingID" Nullable="true" />
-    <Property Type="DateTime" Name="MeetingDateTime" Nullable="true" Precision="23" />
-    <Property Type="DateTime" Name="MeetingClosedDateTime" Nullable="true" Precision="23" />
-    <Property Type="Int64" Name="PresentationID" Nullable="true" />
-    <Property Type="String" Name="SecurityName" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="SecurityTicker" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="SecurityCountry" Nullable="true" MaxLength="50" />
-    <Property Type="Single" Name="SecurityBuyRange" Nullable="true" />
-    <Property Type="Single" Name="SecuritySellRange" Nullable="true" />
-    <Property Type="String" Name="SecurityPFVMeasure" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="SecurityRecommendation" Nullable="true" MaxLength="50" />
-    <Property Type="Int64" Name="VoterID" Nullable="true" />
-    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="VoteType" Nullable="true" MaxLength="50" />
-    <Property Type="Single" Name="VoterBuyRange" Nullable="true" />
-    <Property Type="Single" Name="VoterSellRange" Nullable="true" />
-    <Property Type="Boolean" Name="DiscussionFlag" Nullable="true" />
-    <Property Type="String" Name="Notes" Nullable="true" MaxLength="255" />
-    <Property Type="Int64" Name="FileID" Nullable="true" />
-    <Property Type="String" Name="Type" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="Category" Nullable="true" MaxLength="50" />
-    <Property Type="String" Name="FileName" Nullable="true" MaxLength="255" />
-    <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
-  </ComplexType>
   <EntityType Name="MessageInfo">
     <Key>
       <PropertyRef Name="EmailId" />
@@ -477,6 +452,32 @@
     <Property Type="Boolean" Name="DiscussionFlag" Nullable="true" />
     <Property Type="String" Name="Notes" Nullable="true" MaxLength="255" />
     <Property Type="String" Name="AttendanceType" Nullable="true" MaxLength="50" />
+    <Property Type="Int64" Name="FileID" Nullable="true" />
+    <Property Type="String" Name="Type" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Category" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="FileName" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="PresentationVotingDeadlineDetails">
+    <Property Type="Int64" Name="MeetingID" Nullable="true" />
+    <Property Type="DateTime" Name="MeetingDateTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="MeetingClosedDateTime" Nullable="true" Precision="23" />
+    <Property Type="Int64" Name="PresentationID" Nullable="true" />
+    <Property Type="String" Name="Presenter" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityTicker" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityCountry" Nullable="true" MaxLength="50" />
+    <Property Type="Single" Name="SecurityBuyRange" Nullable="true" />
+    <Property Type="Single" Name="SecuritySellRange" Nullable="true" />
+    <Property Type="String" Name="SecurityPFVMeasure" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityRecommendation" Nullable="true" MaxLength="50" />
+    <Property Type="Int64" Name="VoterID" Nullable="true" />
+    <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="VoteType" Nullable="true" MaxLength="50" />
+    <Property Type="Single" Name="VoterBuyRange" Nullable="true" />
+    <Property Type="Single" Name="VoterSellRange" Nullable="true" />
+    <Property Type="Boolean" Name="DiscussionFlag" Nullable="true" />
+    <Property Type="String" Name="Notes" Nullable="true" MaxLength="255" />
     <Property Type="Int64" Name="FileID" Nullable="true" />
     <Property Type="String" Name="Type" Nullable="true" MaxLength="50" />
     <Property Type="String" Name="Category" Nullable="true" MaxLength="50" />
