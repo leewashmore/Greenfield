@@ -1,0 +1,90 @@
+2012-09-21 12:59:45,336 DEBUG ICPSystemAlert.Program - Application initiated
+2012-09-21 12:59:45,407 INFO ICPSystemAlert.Program - Scheduled run minutes - 5 min(s)
+2012-09-21 12:59:45,408 INFO ICPSystemAlert.Program - default run
+2012-09-21 12:59:45,492 ERROR ICPSystemAlert.Program - Void PreVotingReportImplementation()
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at ICPSystemAlert.Program.PreVotingReportImplementation() in D:\ICPSystemAlert\ICPSystemAlert\Program.cs:line 89
+2012-09-21 12:59:45,544 ERROR ICPSystemAlert.Program - Void PreMeetingReportImplementation()
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at ICPSystemAlert.Program.PreMeetingReportImplementation() in D:\ICPSystemAlert\ICPSystemAlert\Program.cs:line 172
+2012-09-21 12:59:45,587 ERROR ICPSystemAlert.Program - Void PostMeetingReportImplementation()
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at ICPSystemAlert.Program.PostMeetingReportImplementation() in D:\ICPSystemAlert\ICPSystemAlert\Program.cs:line 255
+2012-09-21 13:06:24,068 DEBUG ICPSystemAlert.Program - Application initiated
+2012-09-21 13:06:24,492 INFO ICPSystemAlert.Program - Scheduled run minutes - 5 min(s)
+2012-09-21 13:06:24,492 INFO ICPSystemAlert.Program - default run
+2012-09-21 13:06:41,317 ERROR ICPSystemAlert.Program - Void PreVotingReportImplementation()
+System.Data.EntityException: The underlying provider failed on Open. ---> System.Data.SqlClient.SqlException: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+   at System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning()
+   at System.Data.SqlClient.TdsParser.Connect(ServerInfo serverInfo, SqlInternalConnectionTds connHandler, Boolean ignoreSniOpenTimeout, Int64 timerExpire, Boolean encrypt, Boolean trustServerCert, Boolean integratedSecurity)
+   at System.Data.SqlClient.SqlInternalConnectionTds.AttemptOneLogin(ServerInfo serverInfo, String newPassword, Boolean ignoreSniOpenTimeout, TimeoutTimer timeout, SqlConnection owningObject)
+   at System.Data.SqlClient.SqlInternalConnectionTds.LoginNoFailover(ServerInfo serverInfo, String newPassword, Boolean redirectedUserInstance, SqlConnection owningObject, SqlConnectionString connectionOptions, TimeoutTimer timeout)
+   at System.Data.SqlClient.SqlInternalConnectionTds.OpenLoginEnlist(SqlConnection owningObject, TimeoutTimer timeout, SqlConnectionString connectionOptions, String newPassword, Boolean redirectedUserInstance)
+   at System.Data.SqlClient.SqlInternalConnectionTds..ctor(DbConnectionPoolIdentity identity, SqlConnectionString connectionOptions, Object providerInfo, String newPassword, SqlConnection owningObject, Boolean redirectedUserInstance)
+   at System.Data.SqlClient.SqlConnectionFactory.CreateConnection(DbConnectionOptions options, Object poolGroupProviderInfo, DbConnectionPool pool, DbConnection owningConnection)
+   at System.Data.ProviderBase.DbConnectionFactory.CreatePooledConnection(DbConnection owningConnection, DbConnectionPool pool, DbConnectionOptions options)
+   at System.Data.ProviderBase.DbConnectionPool.CreateObject(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionPool.UserCreateRequest(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionPool.GetConnection(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionFactory.GetConnection(DbConnection owningConnection)
+   at System.Data.ProviderBase.DbConnectionClosed.OpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   --- End of inner exception stack trace ---
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   at System.Data.EntityClient.EntityConnection.Open()
+   at System.Data.Objects.ObjectContext.EnsureConnection()
+   at System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, EntitySet entitySet, EdmType edmType, MergeOption mergeOption)
+   at System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   at System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   at ICPSystemAlert.ICPEntities.GetPresentationDeadlineDetails(Nullable`1 scheduleMinutes) in D:\ICPSystemAlert\ICPSystemAlert\EntityModel.Designer.cs:line 494
+   at ICPSystemAlert.Program.PreVotingReportImplementation() in D:\ICPSystemAlert\ICPSystemAlert\Program.cs:line 103
+2012-09-21 13:06:41,411 ERROR ICPSystemAlert.Program - Void PreMeetingReportImplementation()
+System.Data.EntityException: The underlying provider failed on Open. ---> System.Data.SqlClient.SqlException: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+   at System.Data.ProviderBase.DbConnectionPool.GetConnection(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionFactory.GetConnection(DbConnection owningConnection)
+   at System.Data.ProviderBase.DbConnectionClosed.OpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   --- End of inner exception stack trace ---
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   at System.Data.EntityClient.EntityConnection.Open()
+   at System.Data.Objects.ObjectContext.EnsureConnection()
+   at System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, EntitySet entitySet, EdmType edmType, MergeOption mergeOption)
+   at System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   at System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   at ICPSystemAlert.ICPEntities.GetPresentationVotingDeadlineDetails(Nullable`1 scheduleMinutes) in D:\ICPSystemAlert\ICPSystemAlert\EntityModel.Designer.cs:line 360
+   at ICPSystemAlert.Program.PreMeetingReportImplementation() in D:\ICPSystemAlert\ICPSystemAlert\Program.cs:line 186
+2012-09-21 13:06:41,489 ERROR ICPSystemAlert.Program - Void PostMeetingReportImplementation()
+System.Data.EntityException: The underlying provider failed on Open. ---> System.Data.SqlClient.SqlException: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+   at System.Data.ProviderBase.DbConnectionPool.GetConnection(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionFactory.GetConnection(DbConnection owningConnection)
+   at System.Data.ProviderBase.DbConnectionClosed.OpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   --- End of inner exception stack trace ---
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   at System.Data.EntityClient.EntityConnection.Open()
+   at System.Data.Objects.ObjectContext.EnsureConnection()
+   at System.Data.Objects.ObjectContext.CreateFunctionObjectResult[TElement](EntityCommand entityCommand, EntitySet entitySet, EdmType edmType, MergeOption mergeOption)
+   at System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, MergeOption mergeOption, ObjectParameter[] parameters)
+   at System.Data.Objects.ObjectContext.ExecuteFunction[TElement](String functionName, ObjectParameter[] parameters)
+   at ICPSystemAlert.ICPEntities.GetPresentationFinalizeDetails(Nullable`1 scheduleMinutes) in D:\ICPSystemAlert\ICPSystemAlert\EntityModel.Designer.cs:line 513
+   at ICPSystemAlert.Program.PostMeetingReportImplementation() in D:\ICPSystemAlert\ICPSystemAlert\Program.cs:line 269
+2012-09-21 13:06:41,598 ERROR ICPSystemAlert.Program - Void MessagePush()
+System.Data.EntityException: The underlying provider failed on Open. ---> System.Data.SqlClient.SqlException: A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: SQL Network Interfaces, error: 26 - Error Locating Server/Instance Specified)
+   at System.Data.ProviderBase.DbConnectionPool.GetConnection(DbConnection owningObject)
+   at System.Data.ProviderBase.DbConnectionFactory.GetConnection(DbConnection owningConnection)
+   at System.Data.ProviderBase.DbConnectionClosed.OpenConnection(DbConnection outerConnection, DbConnectionFactory connectionFactory)
+   at System.Data.SqlClient.SqlConnection.Open()
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   --- End of inner exception stack trace ---
+   at System.Data.EntityClient.EntityConnection.OpenStoreConnectionIf(Boolean openCondition, DbConnection storeConnectionToOpen, DbConnection originalConnection, String exceptionCode, String attemptedOperation, Boolean& closeStoreConnectionOnFailure)
+   at System.Data.EntityClient.EntityConnection.Open()
+   at System.Data.Objects.ObjectContext.EnsureConnection()
+   at System.Data.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   at System.Data.Objects.ObjectQuery`1.System.Collections.Generic.IEnumerable<T>.GetEnumerator()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at ICPSystemAlert.Program.MessagePush() in D:\ICPSystemAlert\ICPSystemAlert\Program.cs:line 332

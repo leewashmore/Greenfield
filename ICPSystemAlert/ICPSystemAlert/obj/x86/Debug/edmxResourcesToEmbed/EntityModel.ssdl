@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ICPModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="ICPModelStoreContainer">
+    <EntitySet Name="CommentInfo" EntityType="ICPModel.Store.CommentInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FileMaster" EntityType="ICPModel.Store.FileMaster" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MeetingAttachedFileInfo" EntityType="ICPModel.Store.MeetingAttachedFileInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MeetingInfo" EntityType="ICPModel.Store.MeetingInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MeetingPresentationMappingInfo" EntityType="ICPModel.Store.MeetingPresentationMappingInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="MessageInfo" EntityType="ICPModel.Store.MessageInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PresentationAttachedFileInfo" EntityType="ICPModel.Store.PresentationAttachedFileInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PresentationInfo" EntityType="ICPModel.Store.PresentationInfo" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="VoterInfo" EntityType="ICPModel.Store.VoterInfo" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_AttachedFileInfo_PresentationInfo" Association="ICPModel.Store.FK_AttachedFileInfo_PresentationInfo">
+      <End Role="PresentationInfo" EntitySet="PresentationInfo" />
+      <End Role="PresentationAttachedFileInfo" EntitySet="PresentationAttachedFileInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CommentInfo_FileMaster" Association="ICPModel.Store.FK_CommentInfo_FileMaster">
+      <End Role="FileMaster" EntitySet="FileMaster" />
+      <End Role="CommentInfo" EntitySet="CommentInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CommentInfo_PresentationInfo" Association="ICPModel.Store.FK_CommentInfo_PresentationInfo">
+      <End Role="PresentationInfo" EntitySet="PresentationInfo" />
+      <End Role="CommentInfo" EntitySet="CommentInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MeetingAttachedFileInfo_FileMaster" Association="ICPModel.Store.FK_MeetingAttachedFileInfo_FileMaster">
+      <End Role="FileMaster" EntitySet="FileMaster" />
+      <End Role="MeetingAttachedFileInfo" EntitySet="MeetingAttachedFileInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MeetingAttachedFileInfo_MeetingInfo" Association="ICPModel.Store.FK_MeetingAttachedFileInfo_MeetingInfo">
+      <End Role="MeetingInfo" EntitySet="MeetingInfo" />
+      <End Role="MeetingAttachedFileInfo" EntitySet="MeetingAttachedFileInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MeetingPresentationMappingInfo_MeetingInfo" Association="ICPModel.Store.FK_MeetingPresentationMappingInfo_MeetingInfo">
+      <End Role="MeetingInfo" EntitySet="MeetingInfo" />
+      <End Role="MeetingPresentationMappingInfo" EntitySet="MeetingPresentationMappingInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MeetingPresentationMappingInfo_PresentationInfo" Association="ICPModel.Store.FK_MeetingPresentationMappingInfo_PresentationInfo">
+      <End Role="PresentationInfo" EntitySet="PresentationInfo" />
+      <End Role="MeetingPresentationMappingInfo" EntitySet="MeetingPresentationMappingInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PresentationAttachedFileInfo_FileMaster" Association="ICPModel.Store.FK_PresentationAttachedFileInfo_FileMaster">
+      <End Role="FileMaster" EntitySet="FileMaster" />
+      <End Role="PresentationAttachedFileInfo" EntitySet="PresentationAttachedFileInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VoterInfo_PresentationInfo" Association="ICPModel.Store.FK_VoterInfo_PresentationInfo">
+      <End Role="PresentationInfo" EntitySet="PresentationInfo" />
+      <End Role="VoterInfo" EntitySet="VoterInfo" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="CommentInfo">
+    <Key>
+      <PropertyRef Name="CommentID" />
+    </Key>
+    <Property Name="CommentID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PresentationID" Type="bigint" />
+    <Property Name="FileID" Type="bigint" />
+    <Property Name="Comment" Type="varchar" MaxLength="255" />
+    <Property Name="CommentBy" Type="varchar" MaxLength="50" />
+    <Property Name="CommentOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="FileMaster">
+    <Key>
+      <PropertyRef Name="FileID" />
+    </Key>
+    <Property Name="FileID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="varchar" MaxLength="255" />
+    <Property Name="SecurityName" Type="varchar" MaxLength="255" />
+    <Property Name="SecurityTicker" Type="varchar" MaxLength="50" />
+    <Property Name="Location" Type="varchar" MaxLength="255" />
+    <Property Name="MetaTags" Type="varchar" MaxLength="255" />
+    <Property Name="Type" Type="varchar" MaxLength="50" />
+    <Property Name="Category" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="MeetingAttachedFileInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FileID" Type="bigint" Nullable="false" />
+    <Property Name="MeetingID" Type="bigint" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MeetingInfo">
+    <Key>
+      <PropertyRef Name="MeetingID" />
+    </Key>
+    <Property Name="MeetingID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="MeetingDateTime" Type="datetime" Nullable="false" />
+    <Property Name="MeetingClosedDateTime" Type="datetime" Nullable="false" />
+    <Property Name="MeetingVotingClosedDateTime" Type="datetime" Nullable="false" />
+    <Property Name="MeetingDescription" Type="varchar" MaxLength="255" />
+    <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MeetingPresentationMappingInfo">
+    <Key>
+      <PropertyRef Name="MappingID" />
+    </Key>
+    <Property Name="MappingID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="MeetingID" Type="bigint" Nullable="false" />
+    <Property Name="PresentationID" Type="bigint" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="ModifedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MessageInfo">
+    <Key>
+      <PropertyRef Name="EmailId" />
+    </Key>
+    <Property Name="EmailId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="EmailTo" Type="varchar(max)" />
+    <Property Name="EmailCc" Type="varchar(max)" />
+    <Property Name="EmailSubject" Type="varchar" MaxLength="255" />
+    <Property Name="EmailMessageBody" Type="varchar(max)" />
+    <Property Name="EmailAttachment" Type="varchar(max)" />
+    <Property Name="EmailSent" Type="bit" />
+    <Property Name="CreatedBy" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" />
+    <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="datetime" />
+  </EntityType>
+  <EntityType Name="PresentationAttachedFileInfo">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="FileID" Type="bigint" Nullable="false" />
+    <Property Name="PresentationID" Type="bigint" Nullable="false" />
+    <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PresentationInfo">
+    <Key>
+      <PropertyRef Name="PresentationID" />
+    </Key>
+    <Property Name="PresentationID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Presenter" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="StatusType" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="SecurityTicker" Type="varchar" MaxLength="50" />
+    <Property Name="SecurityName" Type="varchar" MaxLength="50" />
+    <Property Name="SecurityCountry" Type="varchar" MaxLength="50" />
+    <Property Name="SecurityCountryCode" Type="varchar" MaxLength="50" />
+    <Property Name="SecurityIndustry" Type="varchar" MaxLength="50" />
+    <Property Name="SecurityCashPosition" Type="real" />
+    <Property Name="SecurityPosition" Type="bigint" />
+    <Property Name="SecurityMSCIStdWeight" Type="real" />
+    <Property Name="SecurityMSCIIMIWeight" Type="real" />
+    <Property Name="SecurityGlobalActiveWeight" Type="real" />
+    <Property Name="SecurityLastClosingPrice" Type="real" />
+    <Property Name="SecurityMarketCapitalization" Type="real" />
+    <Property Name="SecurityPFVMeasure" Type="varchar" MaxLength="50" />
+    <Property Name="SecurityBuyRange" Type="real" />
+    <Property Name="SecuritySellRange" Type="real" />
+    <Property Name="SecurityRecommendation" Type="varchar" MaxLength="50" />
+    <Property Name="CommitteePFVMeasure" Type="varchar" MaxLength="255" />
+    <Property Name="CommitteeBuyRange" Type="real" />
+    <Property Name="CommitteeSellRange" Type="real" />
+    <Property Name="CommitteeRecommendation" Type="varchar" MaxLength="50" />
+    <Property Name="CommitteeRangeEffectiveThrough" Type="datetime" />
+    <Property Name="AcceptWithoutDiscussionFlag" Type="bit" />
+    <Property Name="AdminNotes" Type="varchar" MaxLength="255" />
+    <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+    <Property Name="Analyst" Type="varchar" MaxLength="50" />
+    <Property Name="Price" Type="varchar" MaxLength="50" />
+    <Property Name="FVCalc" Type="varchar" MaxLength="50" />
+    <Property Name="SecurityBuySellvsCrnt" Type="varchar" MaxLength="50" />
+    <Property Name="CurrentHoldings" Type="varchar" MaxLength="50" />
+    <Property Name="PercentEMIF" Type="varchar" MaxLength="50" />
+    <Property Name="SecurityBMWeight" Type="varchar" MaxLength="50" />
+    <Property Name="SecurityActiveWeight" Type="varchar" MaxLength="50" />
+    <Property Name="YTDRet_Absolute" Type="varchar" MaxLength="50" />
+    <Property Name="YTDRet_RELtoLOC" Type="varchar" MaxLength="50" />
+    <Property Name="YTDRet_RELtoEM" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="VoterInfo">
+    <Key>
+      <PropertyRef Name="VoterID" />
+    </Key>
+    <Property Name="VoterID" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="PresentationID" Type="bigint" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Notes" Type="varchar" MaxLength="255" />
+    <Property Name="VoteType" Type="varchar" MaxLength="50" />
+    <Property Name="AttendanceType" Type="varchar" MaxLength="50" />
+    <Property Name="PostMeetingFlag" Type="bit" />
+    <Property Name="DiscussionFlag" Type="bit" />
+    <Property Name="VoterPFVMeasure" Type="varchar" MaxLength="50" />
+    <Property Name="VoterBuyRange" Type="real" />
+    <Property Name="VoterSellRange" Type="real" />
+    <Property Name="VoterRecommendation" Type="varchar" MaxLength="50" />
+    <Property Name="CreatedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+    <Property Name="ModifiedBy" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ModifiedOn" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AttachedFileInfo_PresentationInfo">
+    <End Role="PresentationInfo" Type="ICPModel.Store.PresentationInfo" Multiplicity="1" />
+    <End Role="PresentationAttachedFileInfo" Type="ICPModel.Store.PresentationAttachedFileInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PresentationInfo">
+        <PropertyRef Name="PresentationID" />
+      </Principal>
+      <Dependent Role="PresentationAttachedFileInfo">
+        <PropertyRef Name="PresentationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CommentInfo_FileMaster">
+    <End Role="FileMaster" Type="ICPModel.Store.FileMaster" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CommentInfo" Type="ICPModel.Store.CommentInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileMaster">
+        <PropertyRef Name="FileID" />
+      </Principal>
+      <Dependent Role="CommentInfo">
+        <PropertyRef Name="FileID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CommentInfo_PresentationInfo">
+    <End Role="PresentationInfo" Type="ICPModel.Store.PresentationInfo" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CommentInfo" Type="ICPModel.Store.CommentInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PresentationInfo">
+        <PropertyRef Name="PresentationID" />
+      </Principal>
+      <Dependent Role="CommentInfo">
+        <PropertyRef Name="PresentationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MeetingAttachedFileInfo_FileMaster">
+    <End Role="FileMaster" Type="ICPModel.Store.FileMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MeetingAttachedFileInfo" Type="ICPModel.Store.MeetingAttachedFileInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileMaster">
+        <PropertyRef Name="FileID" />
+      </Principal>
+      <Dependent Role="MeetingAttachedFileInfo">
+        <PropertyRef Name="FileID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MeetingAttachedFileInfo_MeetingInfo">
+    <End Role="MeetingInfo" Type="ICPModel.Store.MeetingInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MeetingAttachedFileInfo" Type="ICPModel.Store.MeetingAttachedFileInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MeetingInfo">
+        <PropertyRef Name="MeetingID" />
+      </Principal>
+      <Dependent Role="MeetingAttachedFileInfo">
+        <PropertyRef Name="MeetingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MeetingPresentationMappingInfo_MeetingInfo">
+    <End Role="MeetingInfo" Type="ICPModel.Store.MeetingInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MeetingPresentationMappingInfo" Type="ICPModel.Store.MeetingPresentationMappingInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MeetingInfo">
+        <PropertyRef Name="MeetingID" />
+      </Principal>
+      <Dependent Role="MeetingPresentationMappingInfo">
+        <PropertyRef Name="MeetingID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MeetingPresentationMappingInfo_PresentationInfo">
+    <End Role="PresentationInfo" Type="ICPModel.Store.PresentationInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MeetingPresentationMappingInfo" Type="ICPModel.Store.MeetingPresentationMappingInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PresentationInfo">
+        <PropertyRef Name="PresentationID" />
+      </Principal>
+      <Dependent Role="MeetingPresentationMappingInfo">
+        <PropertyRef Name="PresentationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PresentationAttachedFileInfo_FileMaster">
+    <End Role="FileMaster" Type="ICPModel.Store.FileMaster" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PresentationAttachedFileInfo" Type="ICPModel.Store.PresentationAttachedFileInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FileMaster">
+        <PropertyRef Name="FileID" />
+      </Principal>
+      <Dependent Role="PresentationAttachedFileInfo">
+        <PropertyRef Name="FileID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VoterInfo_PresentationInfo">
+    <End Role="PresentationInfo" Type="ICPModel.Store.PresentationInfo" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="VoterInfo" Type="ICPModel.Store.VoterInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PresentationInfo">
+        <PropertyRef Name="PresentationID" />
+      </Principal>
+      <Dependent Role="VoterInfo">
+        <PropertyRef Name="PresentationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="GetPresentationDeadlineDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ScheduleMinutes" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetPresentationFinalizeDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ScheduleMinutes" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetPresentationVotingDeadlineDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="ScheduleMinutes" Type="int" Mode="In" />
+  </Function>
+  <Function Name="SetICPMeetingAttachedFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="MeetingId" Type="bigint" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="SecurityName" Type="varchar" Mode="In" />
+    <Parameter Name="SecurityTicker" Type="varchar" Mode="In" />
+    <Parameter Name="Location" Type="varchar" Mode="In" />
+    <Parameter Name="MetaTags" Type="varchar" Mode="In" />
+    <Parameter Name="Category" Type="varchar" Mode="In" />
+    <Parameter Name="Type" Type="varchar" Mode="In" />
+    <Parameter Name="FileId" Type="bigint" Mode="In" />
+    <Parameter Name="DeletionFlag" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="SetICPMeetingPresentationStatus" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="MeetingId" Type="bigint" Mode="In" />
+    <Parameter Name="Status" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="SetICPresentationAttachedFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+    <Parameter Name="PresentationId" Type="bigint" Mode="In" />
+    <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="SecurityName" Type="varchar" Mode="In" />
+    <Parameter Name="SecurityTicker" Type="varchar" Mode="In" />
+    <Parameter Name="Location" Type="varchar" Mode="In" />
+    <Parameter Name="MetaTags" Type="varchar" Mode="In" />
+    <Parameter Name="Category" Type="varchar" Mode="In" />
+    <Parameter Name="Type" Type="varchar" Mode="In" />
+    <Parameter Name="FileId" Type="bigint" Mode="In" />
+    <Parameter Name="DeletionFlag" Type="bit" Mode="In" />
+  </Function>
+  <Function Name="SetMessageInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmailTo" Type="varchar(max)" Mode="In" />
+    <Parameter Name="EmailCc" Type="varchar(max)" Mode="In" />
+    <Parameter Name="EmailSubject" Type="varchar" Mode="In" />
+    <Parameter Name="EmailMessageBody" Type="varchar(max)" Mode="In" />
+    <Parameter Name="EmailAttachment" Type="varchar(max)" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="UpdateMessageInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="EmailId" Type="bigint" Mode="In" />
+    <Parameter Name="EmailSent" Type="bit" Mode="In" />
+    <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+</Schema>

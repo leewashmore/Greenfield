@@ -1,0 +1,30 @@
+E:\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe.config
+E:\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe
+E:\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.pdb
+E:\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.dll
+E:\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.pdfa.dll
+E:\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.exe
+E:\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.pdb
+D:\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe.config
+D:\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.exe
+D:\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.pdb
+D:\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe
+D:\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.pdb
+D:\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.dll
+D:\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.pdfa.dll
+D:\ICPSystemAlert\ICPSystemAlert\bin\Debug\CommandLine.dll
+E:\Repository\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe.config
+E:\Repository\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.exe
+E:\Repository\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.pdb
+C:\Documents and Settings\HSDev\Desktop\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe.config
+C:\Documents and Settings\HSDev\Desktop\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.exe
+C:\Documents and Settings\HSDev\Desktop\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.pdb
+C:\Documents and Settings\HSDev\Desktop\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe
+C:\Documents and Settings\HSDev\Desktop\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.pdb
+C:\Documents and Settings\HSDev\Desktop\ICPSystemAlert\ICPSystemAlert\bin\Debug\CommandLine.dll
+C:\Documents and Settings\HSDev\Desktop\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.dll
+C:\Documents and Settings\HSDev\Desktop\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.pdfa.dll
+C:\Documents and Settings\HSDev\Desktop\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\ICPSystemAlert\ICPSystemAlert\bin\Debug\CommandLine.dll
