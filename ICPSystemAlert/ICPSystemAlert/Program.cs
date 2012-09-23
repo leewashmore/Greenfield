@@ -276,10 +276,10 @@ namespace ICPSystemAlert
 
                         List<PresentationVotingDeadlineDetails> distinctMeetingPresentationFileInfo = presentationVotingDeadlineInfo
                             .Where(record => record.MeetingID == meetingId && record.PresentationID == presentationId && record.FileID == fileID).ToList();
-                        
+
                         String securityDescription = String.Empty;
                         String securityName = distinctMeetingPresentationRecord.First().SecurityName;
-                        
+
                         DimensionServiceReference.GF_SECURITY_BASEVIEW securityDescriptionRecord
                             = _dimensionEntity.GF_SECURITY_BASEVIEW.Where(record => record.ISSUE_NAME == securityName).FirstOrDefault();
 
@@ -422,7 +422,8 @@ namespace ICPSystemAlert
                         List<String> tempLocations = new List<String>();
 
                         MailMessage mm = new MailMessage();
-                        mm.From = new MailAddress(_networkWebmasterEmail);
+                        if (_networkWebmasterEmail != "")
+                            mm.From = new MailAddress(_networkWebmasterEmail);
 
                         if (messageInfo.EmailTo == null)
                             continue;
@@ -474,9 +475,11 @@ namespace ICPSystemAlert
                         smtpClient.EnableSsl = true;
 
                         NetworkCredential NetworkCred = new NetworkCredential();
-                        NetworkCred.UserName = _networkCredentialUsername;
+                        if (_networkCredentialUsername != null)
+                            NetworkCred.UserName = _networkCredentialUsername;
                         NetworkCred.Domain = _networkCredentialDomain;
-                        NetworkCred.Password = _networkCredentialPassword;
+                        if (_networkCredentialPassword != "")
+                            NetworkCred.Password = _networkCredentialPassword;
                         smtpClient.Credentials = NetworkCred;
 
                         ServicePointManager.ServerCertificateValidationCallback = delegate(object s
