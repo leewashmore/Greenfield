@@ -54,6 +54,18 @@ namespace GreenField.ServiceCaller.FairValueDefinitions {
         System.IAsyncResult BeginRetrieveFairValueCompostionSummary(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> EndRetrieveFairValueCompostionSummary(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FairValueOperations/RetrieveFairValueDataWithNewUpside", ReplyAction="urn:FairValueOperations/RetrieveFairValueDataWithNewUpsideResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.FairValueDefinitions.ServiceFault), Action="urn:FairValueOperations/RetrieveFairValueDataWithNewUpsideServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveFairValueDataWithNewUpside(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.DataContracts.FairValueCompositionSummaryData editedFairValueData, System.AsyncCallback callback, object asyncState);
+        
+        GreenField.DataContracts.FairValueCompositionSummaryData EndRetrieveFairValueDataWithNewUpside(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="urn:FairValueOperations/SaveUpdatedFairValueData", ReplyAction="urn:FairValueOperations/SaveUpdatedFairValueDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.FairValueDefinitions.ServiceFault), Action="urn:FairValueOperations/SaveUpdatedFairValueDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginSaveUpdatedFairValueData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> editedFairValueData, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> EndSaveUpdatedFairValueData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -81,6 +93,44 @@ namespace GreenField.ServiceCaller.FairValueDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveFairValueDataWithNewUpsideCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveFairValueDataWithNewUpsideCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public GreenField.DataContracts.FairValueCompositionSummaryData Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((GreenField.DataContracts.FairValueCompositionSummaryData)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class SaveUpdatedFairValueDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public SaveUpdatedFairValueDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class FairValueOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.FairValueDefinitions.FairValueOperations>, GreenField.ServiceCaller.FairValueDefinitions.FairValueOperations {
         
         private BeginOperationDelegate onBeginRetrieveFairValueCompostionSummaryDelegate;
@@ -88,6 +138,18 @@ namespace GreenField.ServiceCaller.FairValueDefinitions {
         private EndOperationDelegate onEndRetrieveFairValueCompostionSummaryDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveFairValueCompostionSummaryCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveFairValueDataWithNewUpsideDelegate;
+        
+        private EndOperationDelegate onEndRetrieveFairValueDataWithNewUpsideDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveFairValueDataWithNewUpsideCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginSaveUpdatedFairValueDataDelegate;
+        
+        private EndOperationDelegate onEndSaveUpdatedFairValueDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onSaveUpdatedFairValueDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -144,6 +206,10 @@ namespace GreenField.ServiceCaller.FairValueDefinitions {
         
         public event System.EventHandler<RetrieveFairValueCompostionSummaryCompletedEventArgs> RetrieveFairValueCompostionSummaryCompleted;
         
+        public event System.EventHandler<RetrieveFairValueDataWithNewUpsideCompletedEventArgs> RetrieveFairValueDataWithNewUpsideCompleted;
+        
+        public event System.EventHandler<SaveUpdatedFairValueDataCompletedEventArgs> SaveUpdatedFairValueDataCompleted;
+        
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CloseCompleted;
@@ -192,6 +258,102 @@ namespace GreenField.ServiceCaller.FairValueDefinitions {
             }
             base.InvokeAsync(this.onBeginRetrieveFairValueCompostionSummaryDelegate, new object[] {
                         entitySelectionData}, this.onEndRetrieveFairValueCompostionSummaryDelegate, this.onRetrieveFairValueCompostionSummaryCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.FairValueDefinitions.FairValueOperations.BeginRetrieveFairValueDataWithNewUpside(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.DataContracts.FairValueCompositionSummaryData editedFairValueData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveFairValueDataWithNewUpside(entitySelectionData, editedFairValueData, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        GreenField.DataContracts.FairValueCompositionSummaryData GreenField.ServiceCaller.FairValueDefinitions.FairValueOperations.EndRetrieveFairValueDataWithNewUpside(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveFairValueDataWithNewUpside(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveFairValueDataWithNewUpside(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            GreenField.DataContracts.FairValueCompositionSummaryData editedFairValueData = ((GreenField.DataContracts.FairValueCompositionSummaryData)(inValues[1]));
+            return ((GreenField.ServiceCaller.FairValueDefinitions.FairValueOperations)(this)).BeginRetrieveFairValueDataWithNewUpside(entitySelectionData, editedFairValueData, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveFairValueDataWithNewUpside(System.IAsyncResult result) {
+            GreenField.DataContracts.FairValueCompositionSummaryData retVal = ((GreenField.ServiceCaller.FairValueDefinitions.FairValueOperations)(this)).EndRetrieveFairValueDataWithNewUpside(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveFairValueDataWithNewUpsideCompleted(object state) {
+            if ((this.RetrieveFairValueDataWithNewUpsideCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveFairValueDataWithNewUpsideCompleted(this, new RetrieveFairValueDataWithNewUpsideCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveFairValueDataWithNewUpsideAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.DataContracts.FairValueCompositionSummaryData editedFairValueData) {
+            this.RetrieveFairValueDataWithNewUpsideAsync(entitySelectionData, editedFairValueData, null);
+        }
+        
+        public void RetrieveFairValueDataWithNewUpsideAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.DataContracts.FairValueCompositionSummaryData editedFairValueData, object userState) {
+            if ((this.onBeginRetrieveFairValueDataWithNewUpsideDelegate == null)) {
+                this.onBeginRetrieveFairValueDataWithNewUpsideDelegate = new BeginOperationDelegate(this.OnBeginRetrieveFairValueDataWithNewUpside);
+            }
+            if ((this.onEndRetrieveFairValueDataWithNewUpsideDelegate == null)) {
+                this.onEndRetrieveFairValueDataWithNewUpsideDelegate = new EndOperationDelegate(this.OnEndRetrieveFairValueDataWithNewUpside);
+            }
+            if ((this.onRetrieveFairValueDataWithNewUpsideCompletedDelegate == null)) {
+                this.onRetrieveFairValueDataWithNewUpsideCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveFairValueDataWithNewUpsideCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveFairValueDataWithNewUpsideDelegate, new object[] {
+                        entitySelectionData,
+                        editedFairValueData}, this.onEndRetrieveFairValueDataWithNewUpsideDelegate, this.onRetrieveFairValueDataWithNewUpsideCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.FairValueDefinitions.FairValueOperations.BeginSaveUpdatedFairValueData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> editedFairValueData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSaveUpdatedFairValueData(entitySelectionData, editedFairValueData, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> GreenField.ServiceCaller.FairValueDefinitions.FairValueOperations.EndSaveUpdatedFairValueData(System.IAsyncResult result) {
+            return base.Channel.EndSaveUpdatedFairValueData(result);
+        }
+        
+        private System.IAsyncResult OnBeginSaveUpdatedFairValueData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> editedFairValueData = ((System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData>)(inValues[1]));
+            return ((GreenField.ServiceCaller.FairValueDefinitions.FairValueOperations)(this)).BeginSaveUpdatedFairValueData(entitySelectionData, editedFairValueData, callback, asyncState);
+        }
+        
+        private object[] OnEndSaveUpdatedFairValueData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> retVal = ((GreenField.ServiceCaller.FairValueDefinitions.FairValueOperations)(this)).EndSaveUpdatedFairValueData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnSaveUpdatedFairValueDataCompleted(object state) {
+            if ((this.SaveUpdatedFairValueDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.SaveUpdatedFairValueDataCompleted(this, new SaveUpdatedFairValueDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void SaveUpdatedFairValueDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> editedFairValueData) {
+            this.SaveUpdatedFairValueDataAsync(entitySelectionData, editedFairValueData, null);
+        }
+        
+        public void SaveUpdatedFairValueDataAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> editedFairValueData, object userState) {
+            if ((this.onBeginSaveUpdatedFairValueDataDelegate == null)) {
+                this.onBeginSaveUpdatedFairValueDataDelegate = new BeginOperationDelegate(this.OnBeginSaveUpdatedFairValueData);
+            }
+            if ((this.onEndSaveUpdatedFairValueDataDelegate == null)) {
+                this.onEndSaveUpdatedFairValueDataDelegate = new EndOperationDelegate(this.OnEndSaveUpdatedFairValueData);
+            }
+            if ((this.onSaveUpdatedFairValueDataCompletedDelegate == null)) {
+                this.onSaveUpdatedFairValueDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnSaveUpdatedFairValueDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginSaveUpdatedFairValueDataDelegate, new object[] {
+                        entitySelectionData,
+                        editedFairValueData}, this.onEndSaveUpdatedFairValueDataDelegate, this.onSaveUpdatedFairValueDataCompletedDelegate, userState);
         }
         
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
@@ -280,6 +442,34 @@ namespace GreenField.ServiceCaller.FairValueDefinitions {
             public System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> EndRetrieveFairValueCompostionSummary(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData>)(base.EndInvoke("RetrieveFairValueCompostionSummary", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveFairValueDataWithNewUpside(GreenField.DataContracts.EntitySelectionData entitySelectionData, GreenField.DataContracts.FairValueCompositionSummaryData editedFairValueData, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = entitySelectionData;
+                _args[1] = editedFairValueData;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveFairValueDataWithNewUpside", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public GreenField.DataContracts.FairValueCompositionSummaryData EndRetrieveFairValueDataWithNewUpside(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                GreenField.DataContracts.FairValueCompositionSummaryData _result = ((GreenField.DataContracts.FairValueCompositionSummaryData)(base.EndInvoke("RetrieveFairValueDataWithNewUpside", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginSaveUpdatedFairValueData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> editedFairValueData, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = entitySelectionData;
+                _args[1] = editedFairValueData;
+                System.IAsyncResult _result = base.BeginInvoke("SaveUpdatedFairValueData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> EndSaveUpdatedFairValueData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.FairValueCompositionSummaryData>)(base.EndInvoke("SaveUpdatedFairValueData", _args, result)));
                 return _result;
             }
         }

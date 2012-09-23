@@ -1846,6 +1846,77 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<RatioComparisonData>("RetrieveRatioComparisonData", securityBucketXMLParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="sECURITY_ID">No Metadata Documentation available.</param>
+        /// <param name="dATA_ID">No Metadata Documentation available.</param>
+        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Decimal>> GetAmountForUpsideCalculation(global::System.String sECURITY_ID, Nullable<global::System.Int32> dATA_ID, global::System.String dATA_SOURCE)
+        {
+            ObjectParameter sECURITY_IDParameter;
+            if (sECURITY_ID != null)
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", sECURITY_ID);
+            }
+            else
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter dATA_IDParameter;
+            if (dATA_ID.HasValue)
+            {
+                dATA_IDParameter = new ObjectParameter("DATA_ID", dATA_ID);
+            }
+            else
+            {
+                dATA_IDParameter = new ObjectParameter("DATA_ID", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter dATA_SOURCEParameter;
+            if (dATA_SOURCE != null)
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
+            }
+            else
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Decimal>>("GetAmountForUpsideCalculation", sECURITY_IDParameter, dATA_IDParameter, dATA_SOURCEParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="securityId">No Metadata Documentation available.</param>
+        /// <param name="xmlScript">No Metadata Documentation available.</param>
+        public ObjectResult<GetFairValueComposition_Result> SaveUpdatedFairValueMeasures(global::System.String securityId, global::System.String xmlScript)
+        {
+            ObjectParameter securityIdParameter;
+            if (securityId != null)
+            {
+                securityIdParameter = new ObjectParameter("securityId", securityId);
+            }
+            else
+            {
+                securityIdParameter = new ObjectParameter("securityId", typeof(global::System.String));
+            }
+    
+            ObjectParameter xmlScriptParameter;
+            if (xmlScript != null)
+            {
+                xmlScriptParameter = new ObjectParameter("xmlScript", xmlScript);
+            }
+            else
+            {
+                xmlScriptParameter = new ObjectParameter("xmlScript", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<GetFairValueComposition_Result>("SaveUpdatedFairValueMeasures", securityIdParameter, xmlScriptParameter);
+        }
 
         #endregion
     }

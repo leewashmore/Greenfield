@@ -5206,6 +5206,104 @@ namespace GreenField.ServiceCaller
             };
 
         }
+
+        /// <summary>
+        /// Gets the updated UpSide value
+        /// </summary>
+        /// <param name="entitySelectionData"></param>
+        /// <param name="callback"></param>
+        public void RetrieveFairValueDataWithNewUpside(EntitySelectionData entitySelectionData, FairValueCompositionSummaryData editedFairValueData
+            , Action<FairValueCompositionSummaryData> callback)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            FairValueOperationsClient client = new FairValueOperationsClient();
+            client.RetrieveFairValueDataWithNewUpsideAsync(entitySelectionData, editedFairValueData);
+            client.RetrieveFairValueDataWithNewUpsideCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result);
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+        }
+
+        /// <summary>
+        /// Save the updated values
+        /// </summary>
+        /// <param name="entitySelectionData"></param>
+        /// <param name="callback"></param>
+        public void SaveUpdatedFairValueData(EntitySelectionData entitySelectionData, List<FairValueCompositionSummaryData> editedFairValueDataList
+            , Action<List<FairValueCompositionSummaryData>> callback)
+        {
+
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            FairValueOperationsClient client = new FairValueOperationsClient();
+            client.SaveUpdatedFairValueDataAsync(entitySelectionData, editedFairValueDataList);
+            client.SaveUpdatedFairValueDataCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+        }
         #endregion
 
     }

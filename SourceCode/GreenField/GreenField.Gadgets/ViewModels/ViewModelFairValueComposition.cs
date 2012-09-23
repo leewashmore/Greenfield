@@ -17,6 +17,7 @@ using Microsoft.Practices.Prism.ViewModel;
 using System.Collections.Generic;
 using System.Linq;
 using GreenField.Gadgets.Helpers;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -57,8 +58,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores fcf arranged data
         /// </summary>
-        private List<FairValueCompositionSummaryData> _fairValueCompositionData;
-        public List<FairValueCompositionSummaryData> FairValueCompositionData
+        private RangeObservableCollection<FairValueData> _fairValueCompositionData;
+        public RangeObservableCollection<FairValueData> FairValueCompositionData
         {
             get
             {
@@ -74,6 +75,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// List of DataId and Corresponding Measures
+        /// </summary>
         private List<Measure> _measuresData;
         public List<Measure> MeasuresData
         {
@@ -132,6 +136,43 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
             }
         }
+
+        /// <summary>
+        /// Instance when a sell property of specific row is edited in the gridView
+        /// </summary>
+        private FairValueData _editedSellPropertyFairValueRow;
+        public FairValueData EditedSellPropertyFairValueRow
+        {
+            get
+            {
+                return _editedSellPropertyFairValueRow;
+            }
+            set
+            {
+                _editedSellPropertyFairValueRow = value;
+                RetrieveInstanceWithUpdatedUpsideValue(_editedSellPropertyFairValueRow);
+            }
+        }
+
+        /// <summary>
+        /// Instance when a sell property of specific row is edited in the gridView
+        /// </summary>
+        private FairValueData _editedMeasurePropertyFairValueRow;
+        public FairValueData EditedMeasurePropertyFairValueRow
+        {
+            get
+            {
+                return _editedMeasurePropertyFairValueRow;
+            }
+            set
+            {
+                _editedMeasurePropertyFairValueRow = value;
+                UpdateRowAssociatedWithSource(_editedMeasurePropertyFairValueRow);
+            }
+        }
+
+        
+
         #endregion
 
         #region CONSTRUCTOR
@@ -159,11 +200,53 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
+        #region ICommand
+
+        public ICommand SaveFairValueChangeCommand
+        {
+            get { return new DelegateCommand<object>(SaveFairValueChangeCommandMethod); }
+        }
+
+        #endregion
+
+        #region ICommand Methods
+
+        private void SaveFairValueChangeCommandMethod(object param)
+        {
+            if (FairValueCompositionData != null && _dbInteractivity != null)
+            {
+                BusyIndicatorStatus = true;
+
+                List<FairValueCompositionSummaryData> data = new List<FairValueCompositionSummaryData>();
+
+                var updatedItems = FairValueCompositionData.Where(p => p.IsUpdated == true).ToList();
+
+                foreach (FairValueData item in updatedItems)
+                {
+                    data.Add(new FairValueCompositionSummaryData() 
+                    {
+                        SOURCE = item.Source,
+                        MEASURE = item.Measure,
+                        DATA_ID = item.DataId,
+                        BUY = item.Buy,
+                        SELL = item.Sell,
+                        UPSIDE = item.Upside,
+                        DATE = item.Date
+                    });
+                }
+
+                if (data.Count > 0)
+                {
+                    _dbInteractivity.SaveUpdatedFairValueData(_securitySelectionData, data
+                        , RetrieveFairValueCompositionSummaryDataCallbackMethod);
+                }
+                
+            }
+        }
+
+        #endregion
+
         #region EVENTHANDLERS
-        ///// <summary>
-        ///// event to handle data
-        ///// </summary>
-        //public event RetrieveFairValueCompositionSummaryDataCompletedEventHandler RetrieveFairValueCompositionSummaryDataCompleteEvent;
 
         /// <summary>
         /// Event Handler to subscribed event 'SecurityReferenceSet'
@@ -197,6 +280,74 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
         }
+
+        private void RetrieveInstanceWithUpdatedUpsideValue(FairValueData editedFairValueRow)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (_securitySelectionData != null && editedFairValueRow != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, _securitySelectionData, 1);
+
+                    FairValueCompositionSummaryData editedData = new FairValueCompositionSummaryData() 
+                    {
+                        SOURCE = editedFairValueRow.Source,
+                        MEASURE = editedFairValueRow.Measure,
+                        BUY = editedFairValueRow.Buy,
+                        SELL = editedFairValueRow.Sell,
+                        UPSIDE = editedFairValueRow.Upside,
+                        DATE = editedFairValueRow.Date,
+                        DATA_ID = editedFairValueRow.DataId,
+                    };
+                    _dbInteractivity.RetrieveFairValueDataWithNewUpside(_securitySelectionData, editedData,
+                        RetrieveFairValueDataWithNewUpsideCallbackMethod);
+                    BusyIndicatorStatus = true;
+                    
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+        }
+
+        private void UpdateRowAssociatedWithSource(FairValueData _editedMeasurePropertyFairValueRow)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+
+                if (_editedMeasurePropertyFairValueRow != null)
+                {
+                    var item = FairValueCompositionData.FirstOrDefault(i => i.Source == _editedMeasurePropertyFairValueRow.Source);
+
+                    if (item != null)
+                    {
+                        item.Buy = 0;
+                        item.Sell = 0;
+                        item.Upside = null;
+                        item.Date = DateTime.Now;
+                        item.IsUpdated = true;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+        }  
+
         #endregion
 
         #region CALLBACK METHOD
@@ -211,45 +362,89 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 //MeasuresList = GetMeasureList();
-                FairValueCompositionData = new List<FairValueCompositionSummaryData>();
-                List<FairValueCompositionSummaryData> temp = new List<FairValueCompositionSummaryData>();
+                FairValueCompositionData = new RangeObservableCollection<FairValueData>();
+                RangeObservableCollection<FairValueData> temp = new RangeObservableCollection<FairValueData>();
                 //FreeCashFlowGadgetVisibility = Visibility.Collapsed;
                 
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
 
-                    temp.Add(new FairValueCompositionSummaryData()
+                    temp.Add(new FairValueData()
                     {
-                        SOURCE = "Primary Analyst",
-                        MEASURE = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.MEASURE).FirstOrDefault() : null,
-                        BUY = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.BUY).FirstOrDefault() : null,
-                        SELL = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.SELL).FirstOrDefault() : null,
-                        UPSIDE = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.UPSIDE).FirstOrDefault() : null,
-                        DATE = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.DATE).FirstOrDefault() : null,
-                        DATA_ID = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.DATA_ID).FirstOrDefault() : null,
+                        Source = "Primary Analyst",
+                        Measure = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.MEASURE).FirstOrDefault() : null,
+                        Buy = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.BUY).FirstOrDefault() : null,
+                        Sell = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.SELL).FirstOrDefault() : null,
+                        Upside = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.UPSIDE).FirstOrDefault() : null,
+                        Date = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.DATE).FirstOrDefault() : null,
+                        DataId = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.DATA_ID).FirstOrDefault() : null,
                     });
-                    temp.Add(new FairValueCompositionSummaryData()
+                    temp.Add(new FairValueData()
                     {
-                        SOURCE = "Industry Analyst",
-                        MEASURE = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.MEASURE).FirstOrDefault() : null,
-                        BUY = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.BUY).FirstOrDefault() : null,
-                        SELL = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.SELL).FirstOrDefault() : null,
-                        UPSIDE = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.UPSIDE).FirstOrDefault() : null,
-                        DATE = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.DATE).FirstOrDefault() : null,
-                        DATA_ID = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.DATA_ID).FirstOrDefault() : null,
+                        Source = "Industry Analyst",
+                        Measure = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.MEASURE).FirstOrDefault() : null,
+                        Buy = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.BUY).FirstOrDefault() : null,
+                        Sell = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.SELL).FirstOrDefault() : null,
+                        Upside = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.UPSIDE).FirstOrDefault() : null,
+                        Date = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.DATE).FirstOrDefault() : null,
+                        DataId = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.DATA_ID).FirstOrDefault() : null,
                     });
                     if (result != null && result.Count > 0)
                     {
                         foreach (FairValueCompositionSummaryData item in result)
                         {
                             if (item.SOURCE == "Primary Analyst" || item.SOURCE == "Industry Analyst")
-                            { continue; }
+                            { 
+                                continue; 
+                            }
                             else
                             {
-                                temp.Add(item);
+                                temp.Add(new FairValueData()
+                                {
+                                    Source = item.SOURCE,
+                                    Measure = item.MEASURE,
+                                    Buy = item.BUY,
+                                    Sell = item.SELL,
+                                    Upside = item.UPSIDE,
+                                    Date = item.DATE,
+                                    DataId = item.DATA_ID,
+                                });
                             }
                         }
                     }
                     FairValueCompositionData = temp;
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally { BusyIndicatorStatus = false; }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Callback method that assigns value to the BAsicDataInfo property
+        /// </summary>
+        /// <param name="result">basic data </param>
+        private void RetrieveFairValueDataWithNewUpsideCallbackMethod(FairValueCompositionSummaryData result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+
+                if (result != null)
+                {
+                    var item = FairValueCompositionData.FirstOrDefault(i => i.Source == result.SOURCE); 
+                    
+                    if (item != null) 
+                    { 
+                        item.Upside = result.UPSIDE;
+                        item.IsUpdated = true;
+                    }
+                }
+               
             }
             catch (Exception ex)
             {

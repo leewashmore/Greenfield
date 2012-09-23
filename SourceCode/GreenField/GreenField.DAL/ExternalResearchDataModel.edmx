@@ -581,6 +581,11 @@
           <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
+        <Function Name="GetAmountForUpsideCalculation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_ID" Type="int" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetBasicData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SecurityID" Type="varchar" Mode="In" />
         </Function>
@@ -676,6 +681,10 @@
         <Function Name="RetrieveSecurityPFVMeasureCurrentPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SecurityId" Type="varchar" Mode="In" />
           <Parameter Name="PFVMeasure" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="SaveUpdatedFairValueMeasures" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="securityId" Type="varchar" Mode="In" />
+          <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="usp_GetDataForPeriodGadgets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cSource" Type="varchar" Mode="In" />
@@ -902,6 +911,15 @@
           </FunctionImport>
           <FunctionImport Name="RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
           <Parameter Name="securityBucketXML" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetAmountForUpsideCalculation" ReturnType="Collection(Decimal)">
+            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+            <Parameter Name="DATA_ID" Mode="In" Type="Int32" />
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SaveUpdatedFairValueMeasures" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
+            <Parameter Name="securityId" Mode="In" Type="String" />
+            <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -2107,6 +2125,20 @@
                 <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
                 <ScalarProperty Name="FINANCIAL" ColumnName="FINANCIAL" />
                 <ScalarProperty Name="VALUATION" ColumnName="VALUATION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetAmountForUpsideCalculation" FunctionName="ExternalResearchModel.Store.GetAmountForUpsideCalculation" />
+          <FunctionImportMapping FunctionImportName="SaveUpdatedFairValueMeasures" FunctionName="ExternalResearchModel.Store.SaveUpdatedFairValueMeasures">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.GetFairValueComposition_Result">
+                <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
+                <ScalarProperty Name="MEASURE" ColumnName="MEASURE" />
+                <ScalarProperty Name="BUY" ColumnName="BUY" />
+                <ScalarProperty Name="SELL" ColumnName="SELL" />
+                <ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
+                <ScalarProperty Name="DATE" ColumnName="DATE" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -17,11 +17,39 @@
   <wsdl:message name="FairValueOperations_RetrieveFairValueCompostionSummary_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q1:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="FairValueOperations_RetrieveFairValueDataWithNewUpside_InputMessage">
+    <wsdl:part name="parameters" element="RetrieveFairValueDataWithNewUpside" />
+  </wsdl:message>
+  <wsdl:message name="FairValueOperations_RetrieveFairValueDataWithNewUpside_OutputMessage">
+    <wsdl:part name="parameters" element="RetrieveFairValueDataWithNewUpsideResponse" />
+  </wsdl:message>
+  <wsdl:message name="FairValueOperations_RetrieveFairValueDataWithNewUpside_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q2:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="FairValueOperations_SaveUpdatedFairValueData_InputMessage">
+    <wsdl:part name="parameters" element="SaveUpdatedFairValueData" />
+  </wsdl:message>
+  <wsdl:message name="FairValueOperations_SaveUpdatedFairValueData_OutputMessage">
+    <wsdl:part name="parameters" element="SaveUpdatedFairValueDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="FairValueOperations_SaveUpdatedFairValueData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q3:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="FairValueOperations">
     <wsdl:operation name="RetrieveFairValueCompostionSummary">
       <wsdl:input wsaw:Action="urn:FairValueOperations/RetrieveFairValueCompostionSummary" message="FairValueOperations_RetrieveFairValueCompostionSummary_InputMessage" />
       <wsdl:output wsaw:Action="urn:FairValueOperations/RetrieveFairValueCompostionSummaryResponse" message="FairValueOperations_RetrieveFairValueCompostionSummary_OutputMessage" />
       <wsdl:fault wsaw:Action="urn:FairValueOperations/RetrieveFairValueCompostionSummaryServiceFaultFault" name="ServiceFaultFault" message="FairValueOperations_RetrieveFairValueCompostionSummary_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveFairValueDataWithNewUpside">
+      <wsdl:input wsaw:Action="urn:FairValueOperations/RetrieveFairValueDataWithNewUpside" message="FairValueOperations_RetrieveFairValueDataWithNewUpside_InputMessage" />
+      <wsdl:output wsaw:Action="urn:FairValueOperations/RetrieveFairValueDataWithNewUpsideResponse" message="FairValueOperations_RetrieveFairValueDataWithNewUpside_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:FairValueOperations/RetrieveFairValueDataWithNewUpsideServiceFaultFault" name="ServiceFaultFault" message="FairValueOperations_RetrieveFairValueDataWithNewUpside_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SaveUpdatedFairValueData">
+      <wsdl:input wsaw:Action="urn:FairValueOperations/SaveUpdatedFairValueData" message="FairValueOperations_SaveUpdatedFairValueData_InputMessage" />
+      <wsdl:output wsaw:Action="urn:FairValueOperations/SaveUpdatedFairValueDataResponse" message="FairValueOperations_SaveUpdatedFairValueData_OutputMessage" />
+      <wsdl:fault wsaw:Action="urn:FairValueOperations/SaveUpdatedFairValueDataServiceFaultFault" name="ServiceFaultFault" message="FairValueOperations_SaveUpdatedFairValueData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
 </wsdl:definitions>

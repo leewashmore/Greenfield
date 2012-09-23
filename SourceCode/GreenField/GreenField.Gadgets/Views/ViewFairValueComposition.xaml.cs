@@ -17,6 +17,8 @@ using Telerik.Windows.Documents.Model;
 using GreenField.DataContracts;
 using Telerik.Windows.Controls;
 using System.Windows.Data;
+using Telerik.Windows;
+using Telerik.Windows.Controls.GridView;
 
 namespace GreenField.Gadgets.Views
 {
@@ -68,7 +70,8 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = DataContextFairValueComposition;
             this.DataContextFairValueComposition = DataContextFairValueComposition;
-            //this.DataContextFairValueComposition.RetrieveFairValueCompositionSummaryDataCompleteEvent += new RetrieveFairValueCompositionSummaryDataCompletedEventHandler(RetrieveFairValueCompositionSummaryDataCompletedEvent);
+            this.AddHandler(RadComboBox.SelectionChangedEvent,
+                new Telerik.Windows.Controls.SelectionChangedEventHandler(ComboSelectionChanged));
         }
         #endregion
 
@@ -98,7 +101,7 @@ namespace GreenField.Gadgets.Views
             if (e.Cell.Column.UniqueName == "Sell")
             {
                 decimal value;
-                var textEntered = e.NewValue as string;
+                var textEntered = e.NewValue.ToString();
 
                 if (!Decimal.TryParse(textEntered, out value))
                 {
@@ -137,6 +140,28 @@ namespace GreenField.Gadgets.Views
                     //}
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets called when combob selection changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
+        void ComboSelectionChanged(object sender, RadRoutedEventArgs args)
+        {
+            RadComboBox comboBox = (RadComboBox)args.OriginalSource;
+
+            var row = comboBox.ParentOfType<GridViewRow>();
+
+            FairValueData data = row.DataContext as FairValueData;
+
+            if (data.DataId != Convert.ToInt16(comboBox.SelectedValue))
+            {
+                data.DataId = Convert.ToInt16(comboBox.SelectedValue);
+                data.Measure = comboBox.Text;
+                DataContextFairValueComposition.EditedMeasurePropertyFairValueRow = data;
+            }
+            
         }
 
 
@@ -263,6 +288,19 @@ namespace GreenField.Gadgets.Views
         private void dgFairValueComposition_DataLoaded(object sender, EventArgs e)
         {
             (dgFairValueComposition.Columns[1] as GridViewComboBoxColumn).ItemsSource = DataContextFairValueComposition.MeasuresData;            
+        }
+
+        private void dgFairValueComposition_CellEditEnded(object sender, GridViewCellEditEndedEventArgs e)
+        {
+            if (e.Cell.Column.UniqueName == "Sell")
+            {
+                FairValueData data = e.Cell.DataContext as FairValueData;
+
+                if (data != null && DataContextFairValueComposition != null)
+                {
+                    DataContextFairValueComposition.EditedSellPropertyFairValueRow = data;
+                }
+            }
         }
 
     }

@@ -23,6 +23,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
+                <RowDefinition Height="30"/>
                 <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
 
@@ -59,7 +60,7 @@
                 <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
                     <telerik:RadGridView Name="dgFairValueComposition" 
                                      AutoGenerateColumns="false" 
-                                     ItemsSource="{Binding FairValueCompositionData}" 
+                                     ItemsSource="{Binding FairValueCompositionData, Mode=TwoWay}" 
                                      CanUserSelect="False" 
                                      CanUserReorderColumns="False" 
                                      CanUserInsertRows="False" 
@@ -82,11 +83,12 @@
                                     RowEditEnded="dgFairValueComposition_RowEditEnded"
                                     BeginningEdit="dgFairValueComposition_BeginningEdit"
                                     CellValidating="dgFairValueComposition_CellValidating"
-                                    DataLoaded="dgFairValueComposition_DataLoaded">
+                                    DataLoaded="dgFairValueComposition_DataLoaded"
+                                    CellEditEnded="dgFairValueComposition_CellEditEnded">
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="Source" 
                                                         UniqueName="Source"
-                                                        DataMemberBinding="{Binding SOURCE}"
+                                                        DataMemberBinding="{Binding Source}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Left" 
@@ -94,7 +96,7 @@
                                                         IsReadOnly="True">                                
                             </telerik:GridViewDataColumn>
                             <telerik:GridViewComboBoxColumn Header="Measure" 
-                                                        DataMemberBinding="{Binding DATA_ID}"
+                                                        DataMemberBinding="{Binding DataId, Mode=TwoWay}"
                                                         SelectedValueMemberPath="DataId"
                                                         DisplayMemberPath="Measures"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
@@ -105,7 +107,7 @@
                                                         Width="*"/>
                             <telerik:GridViewDataColumn Header="Buy" 
                                                         UniqueName="Buy"
-                                                        DataMemberBinding="{Binding BUY, StringFormat=\{0:n1\},Mode=TwoWay}"
+                                                        DataMemberBinding="{Binding Buy, StringFormat=\{0:n1\},Mode=TwoWay}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
@@ -113,7 +115,7 @@
                                                         IsReadOnly="False"/>                             
                             <telerik:GridViewDataColumn Header="Sell" 
                                                         UniqueName="Sell"
-                                                        DataMemberBinding="{Binding SELL, StringFormat=\{0:n1\},Mode=TwoWay}"
+                                                        DataMemberBinding="{Binding Sell, StringFormat=\{0:n1\},Mode=TwoWay}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right"
@@ -121,7 +123,7 @@
                                                         IsReadOnly="False"/>
                             <telerik:GridViewDataColumn Header="Upside" 
                                                         UniqueName="Upside"
-                                                        DataMemberBinding="{Binding UPSIDE,Converter={StaticResource ConverterPercValTwoDecPlace}}"
+                                                        DataMemberBinding="{Binding UpSide,Converter={StaticResource ConverterPercValTwoDecPlace},Mode=TwoWay}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
@@ -129,7 +131,7 @@
                             <telerik:GridViewDataColumn Header="Date" 
                                                         UniqueName="Date" 
                                                         IsReadOnly="True"
-                                                        DataMemberBinding="{Binding DATE,Mode=TwoWay}"
+                                                        DataMemberBinding="{Binding Date}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
@@ -137,10 +139,10 @@
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
                 </Border>
-            </Grid>
-            <telerik:RadRichTextBox Grid.Row="2" x:Name="RichTextBox" >
-
-            </telerik:RadRichTextBox>
-        </Grid>
+            </Grid>            
+            <telerik:RadButton Grid.Row="2" Margin="2,2,2,2" Content="Save" Style="{StaticResource RadButtonStyle}"
+                             Width="50"      HorizontalAlignment="Right" Command="{Binding SaveFairValueChangeCommand}"/>
+            <telerik:RadRichTextBox Grid.Row="3" x:Name="RichTextBox" />
+        </Grid>               
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

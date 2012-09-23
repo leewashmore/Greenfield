@@ -143,6 +143,7 @@
     <Compile Include="Helpers\Converters\FlattenGroupConverter.cs" />
     <Compile Include="Helpers\Export\PDFExporter.cs" />
     <Compile Include="Helpers\ExtendedDataWraper.cs" />
+    <Compile Include="Helpers\FairValueData.cs" />
     <Compile Include="Helpers\Flipper.cs" />
     <Compile Include="Helpers\FrozenRowsBehavior.cs" />
     <Compile Include="Helpers\Grid Row Reordering Behavior\BeginningDragEventArgs.cs" />
