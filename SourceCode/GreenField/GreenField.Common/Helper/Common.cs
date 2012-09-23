@@ -263,6 +263,8 @@ namespace GreenField.Common
         public static String INDUSTRY_REPORT = "Industry Report";
         public static String OTHER_DOCUMENT = "Other Document";
         public static String IC_PACKET = "Investment Committee Packet";
+        public static String IC_PRE_MEETING_VOTING_REPORT = "Investment Committee Pre-Meeting Voting Report";
+        public static String IC_MEETING_MINUTES_REPORT = "Investment Committee Meeting Minutes Report";
     }
 
     public enum VIEWVOTEFLAG { VIEW, VOTE } ;
