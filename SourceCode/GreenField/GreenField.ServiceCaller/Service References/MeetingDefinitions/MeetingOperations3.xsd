@@ -418,4 +418,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveSummaryReportData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
+        <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveSummaryReportDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveSummaryReportDataResult" nillable="true" type="q32:ArrayOfSummaryReportData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

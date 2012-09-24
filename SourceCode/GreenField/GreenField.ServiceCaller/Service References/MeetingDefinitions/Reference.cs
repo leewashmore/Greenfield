@@ -30,6 +30,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private string CommitteePFVMeasureField;
         
+        private System.Nullable<decimal> CommitteePFVMeasureValueField;
+        
         private System.Nullable<System.DateTime> CommitteeRangeEffectiveThroughField;
         
         private string CommitteeRecommendationField;
@@ -76,21 +78,17 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private string SecurityCountryCodeField;
         
-        private System.Nullable<float> SecurityGlobalActiveWeightField;
-        
         private string SecurityIndustryField;
         
         private System.Nullable<float> SecurityLastClosingPriceField;
-        
-        private System.Nullable<float> SecurityMSCIIMIWeightField;
-        
-        private System.Nullable<float> SecurityMSCIStdWeightField;
         
         private System.Nullable<float> SecurityMarketCapitalizationField;
         
         private string SecurityNameField;
         
         private string SecurityPFVMeasureField;
+        
+        private System.Nullable<decimal> SecurityPFVMeasureValueField;
         
         private System.Nullable<long> SecurityPositionField;
         
@@ -169,6 +167,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.CommitteePFVMeasureField, value) != true)) {
                     this.CommitteePFVMeasureField = value;
                     this.RaisePropertyChanged("CommitteePFVMeasure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> CommitteePFVMeasureValue {
+            get {
+                return this.CommitteePFVMeasureValueField;
+            }
+            set {
+                if ((this.CommitteePFVMeasureValueField.Equals(value) != true)) {
+                    this.CommitteePFVMeasureValueField = value;
+                    this.RaisePropertyChanged("CommitteePFVMeasureValue");
                 }
             }
         }
@@ -473,19 +484,6 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<float> SecurityGlobalActiveWeight {
-            get {
-                return this.SecurityGlobalActiveWeightField;
-            }
-            set {
-                if ((this.SecurityGlobalActiveWeightField.Equals(value) != true)) {
-                    this.SecurityGlobalActiveWeightField = value;
-                    this.RaisePropertyChanged("SecurityGlobalActiveWeight");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string SecurityIndustry {
             get {
                 return this.SecurityIndustryField;
@@ -507,32 +505,6 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((this.SecurityLastClosingPriceField.Equals(value) != true)) {
                     this.SecurityLastClosingPriceField = value;
                     this.RaisePropertyChanged("SecurityLastClosingPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<float> SecurityMSCIIMIWeight {
-            get {
-                return this.SecurityMSCIIMIWeightField;
-            }
-            set {
-                if ((this.SecurityMSCIIMIWeightField.Equals(value) != true)) {
-                    this.SecurityMSCIIMIWeightField = value;
-                    this.RaisePropertyChanged("SecurityMSCIIMIWeight");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<float> SecurityMSCIStdWeight {
-            get {
-                return this.SecurityMSCIStdWeightField;
-            }
-            set {
-                if ((this.SecurityMSCIStdWeightField.Equals(value) != true)) {
-                    this.SecurityMSCIStdWeightField = value;
-                    this.RaisePropertyChanged("SecurityMSCIStdWeight");
                 }
             }
         }
@@ -572,6 +544,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.SecurityPFVMeasureField, value) != true)) {
                     this.SecurityPFVMeasureField = value;
                     this.RaisePropertyChanged("SecurityPFVMeasure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> SecurityPFVMeasureValue {
+            get {
+                return this.SecurityPFVMeasureValueField;
+            }
+            set {
+                if ((this.SecurityPFVMeasureValueField.Equals(value) != true)) {
+                    this.SecurityPFVMeasureValueField = value;
+                    this.RaisePropertyChanged("SecurityPFVMeasureValue");
                 }
             }
         }
@@ -696,6 +681,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingConfigurationSchedule))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ComplexObject))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingMinuteData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData))]
     public partial class StructuralObject : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -1143,6 +1129,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private string CommitteePFVMeasureField;
         
+        private System.Nullable<decimal> CommitteePFVMeasureValueField;
+        
         private System.Nullable<System.DateTime> CommitteeRangeEffectiveThroughField;
         
         private string CommitteeRecommendationField;
@@ -1187,21 +1175,17 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private string SecurityCountryCodeField;
         
-        private System.Nullable<float> SecurityGlobalActiveWeightField;
-        
         private string SecurityIndustryField;
         
         private System.Nullable<float> SecurityLastClosingPriceField;
-        
-        private System.Nullable<float> SecurityMSCIIMIWeightField;
-        
-        private System.Nullable<float> SecurityMSCIStdWeightField;
         
         private System.Nullable<float> SecurityMarketCapitalizationField;
         
         private string SecurityNameField;
         
         private string SecurityPFVMeasureField;
+        
+        private System.Nullable<decimal> SecurityPFVMeasureValueField;
         
         private System.Nullable<long> SecurityPositionField;
         
@@ -1295,6 +1279,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.CommitteePFVMeasureField, value) != true)) {
                     this.CommitteePFVMeasureField = value;
                     this.RaisePropertyChanged("CommitteePFVMeasure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> CommitteePFVMeasureValue {
+            get {
+                return this.CommitteePFVMeasureValueField;
+            }
+            set {
+                if ((this.CommitteePFVMeasureValueField.Equals(value) != true)) {
+                    this.CommitteePFVMeasureValueField = value;
+                    this.RaisePropertyChanged("CommitteePFVMeasureValue");
                 }
             }
         }
@@ -1586,19 +1583,6 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<float> SecurityGlobalActiveWeight {
-            get {
-                return this.SecurityGlobalActiveWeightField;
-            }
-            set {
-                if ((this.SecurityGlobalActiveWeightField.Equals(value) != true)) {
-                    this.SecurityGlobalActiveWeightField = value;
-                    this.RaisePropertyChanged("SecurityGlobalActiveWeight");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public string SecurityIndustry {
             get {
                 return this.SecurityIndustryField;
@@ -1620,32 +1604,6 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((this.SecurityLastClosingPriceField.Equals(value) != true)) {
                     this.SecurityLastClosingPriceField = value;
                     this.RaisePropertyChanged("SecurityLastClosingPrice");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<float> SecurityMSCIIMIWeight {
-            get {
-                return this.SecurityMSCIIMIWeightField;
-            }
-            set {
-                if ((this.SecurityMSCIIMIWeightField.Equals(value) != true)) {
-                    this.SecurityMSCIIMIWeightField = value;
-                    this.RaisePropertyChanged("SecurityMSCIIMIWeight");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<float> SecurityMSCIStdWeight {
-            get {
-                return this.SecurityMSCIStdWeightField;
-            }
-            set {
-                if ((this.SecurityMSCIStdWeightField.Equals(value) != true)) {
-                    this.SecurityMSCIStdWeightField = value;
-                    this.RaisePropertyChanged("SecurityMSCIStdWeight");
                 }
             }
         }
@@ -1685,6 +1643,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.SecurityPFVMeasureField, value) != true)) {
                     this.SecurityPFVMeasureField = value;
                     this.RaisePropertyChanged("SecurityPFVMeasure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> SecurityPFVMeasureValue {
+            get {
+                return this.SecurityPFVMeasureValueField;
+            }
+            set {
+                if ((this.SecurityPFVMeasureValueField.Equals(value) != true)) {
+                    this.SecurityPFVMeasureValueField = value;
+                    this.RaisePropertyChanged("SecurityPFVMeasureValue");
                 }
             }
         }
@@ -2972,6 +2943,7 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ComplexObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingMinuteData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData))]
     public partial class ComplexObject : GreenField.ServiceCaller.MeetingDefinitions.StructuralObject {
     }
@@ -3119,6 +3091,342 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SummaryReportData", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class SummaryReportData : GreenField.ServiceCaller.MeetingDefinitions.ComplexObject {
+        
+        private string AnalystField;
+        
+        private string CommitteeBuySellRangeField;
+        
+        private string CommitteePFVMeasureField;
+        
+        private System.Nullable<decimal> CommitteePFVMeasureValueField;
+        
+        private string CommitteeRecommendationField;
+        
+        private string CurrentBuySellRangeField;
+        
+        private System.Nullable<float> CurrentCashPositionField;
+        
+        private string CurrentPFVMeasureField;
+        
+        private System.Nullable<decimal> CurrentPFVMeasureValueField;
+        
+        private System.Nullable<long> CurrentPositionField;
+        
+        private System.Nullable<float> CurrentUpsideField;
+        
+        private System.Nullable<System.DateTime> MeetingDateTimeField;
+        
+        private string SecurityBuySellRangeField;
+        
+        private System.Nullable<float> SecurityCashPositionField;
+        
+        private string SecurityCountryField;
+        
+        private string SecurityNameField;
+        
+        private string SecurityPFVMeasureField;
+        
+        private System.Nullable<decimal> SecurityPFVMeasureValueField;
+        
+        private System.Nullable<long> SecurityPositionField;
+        
+        private string SecurityRecommendationField;
+        
+        private string SecurityTickerField;
+        
+        private System.Nullable<long> SnoField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Analyst {
+            get {
+                return this.AnalystField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AnalystField, value) != true)) {
+                    this.AnalystField = value;
+                    this.RaisePropertyChanged("Analyst");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommitteeBuySellRange {
+            get {
+                return this.CommitteeBuySellRangeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommitteeBuySellRangeField, value) != true)) {
+                    this.CommitteeBuySellRangeField = value;
+                    this.RaisePropertyChanged("CommitteeBuySellRange");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommitteePFVMeasure {
+            get {
+                return this.CommitteePFVMeasureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommitteePFVMeasureField, value) != true)) {
+                    this.CommitteePFVMeasureField = value;
+                    this.RaisePropertyChanged("CommitteePFVMeasure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> CommitteePFVMeasureValue {
+            get {
+                return this.CommitteePFVMeasureValueField;
+            }
+            set {
+                if ((this.CommitteePFVMeasureValueField.Equals(value) != true)) {
+                    this.CommitteePFVMeasureValueField = value;
+                    this.RaisePropertyChanged("CommitteePFVMeasureValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommitteeRecommendation {
+            get {
+                return this.CommitteeRecommendationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommitteeRecommendationField, value) != true)) {
+                    this.CommitteeRecommendationField = value;
+                    this.RaisePropertyChanged("CommitteeRecommendation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentBuySellRange {
+            get {
+                return this.CurrentBuySellRangeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentBuySellRangeField, value) != true)) {
+                    this.CurrentBuySellRangeField = value;
+                    this.RaisePropertyChanged("CurrentBuySellRange");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<float> CurrentCashPosition {
+            get {
+                return this.CurrentCashPositionField;
+            }
+            set {
+                if ((this.CurrentCashPositionField.Equals(value) != true)) {
+                    this.CurrentCashPositionField = value;
+                    this.RaisePropertyChanged("CurrentCashPosition");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CurrentPFVMeasure {
+            get {
+                return this.CurrentPFVMeasureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CurrentPFVMeasureField, value) != true)) {
+                    this.CurrentPFVMeasureField = value;
+                    this.RaisePropertyChanged("CurrentPFVMeasure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> CurrentPFVMeasureValue {
+            get {
+                return this.CurrentPFVMeasureValueField;
+            }
+            set {
+                if ((this.CurrentPFVMeasureValueField.Equals(value) != true)) {
+                    this.CurrentPFVMeasureValueField = value;
+                    this.RaisePropertyChanged("CurrentPFVMeasureValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> CurrentPosition {
+            get {
+                return this.CurrentPositionField;
+            }
+            set {
+                if ((this.CurrentPositionField.Equals(value) != true)) {
+                    this.CurrentPositionField = value;
+                    this.RaisePropertyChanged("CurrentPosition");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<float> CurrentUpside {
+            get {
+                return this.CurrentUpsideField;
+            }
+            set {
+                if ((this.CurrentUpsideField.Equals(value) != true)) {
+                    this.CurrentUpsideField = value;
+                    this.RaisePropertyChanged("CurrentUpside");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> MeetingDateTime {
+            get {
+                return this.MeetingDateTimeField;
+            }
+            set {
+                if ((this.MeetingDateTimeField.Equals(value) != true)) {
+                    this.MeetingDateTimeField = value;
+                    this.RaisePropertyChanged("MeetingDateTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityBuySellRange {
+            get {
+                return this.SecurityBuySellRangeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityBuySellRangeField, value) != true)) {
+                    this.SecurityBuySellRangeField = value;
+                    this.RaisePropertyChanged("SecurityBuySellRange");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<float> SecurityCashPosition {
+            get {
+                return this.SecurityCashPositionField;
+            }
+            set {
+                if ((this.SecurityCashPositionField.Equals(value) != true)) {
+                    this.SecurityCashPositionField = value;
+                    this.RaisePropertyChanged("SecurityCashPosition");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityCountry {
+            get {
+                return this.SecurityCountryField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityCountryField, value) != true)) {
+                    this.SecurityCountryField = value;
+                    this.RaisePropertyChanged("SecurityCountry");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityName {
+            get {
+                return this.SecurityNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityNameField, value) != true)) {
+                    this.SecurityNameField = value;
+                    this.RaisePropertyChanged("SecurityName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityPFVMeasure {
+            get {
+                return this.SecurityPFVMeasureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityPFVMeasureField, value) != true)) {
+                    this.SecurityPFVMeasureField = value;
+                    this.RaisePropertyChanged("SecurityPFVMeasure");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> SecurityPFVMeasureValue {
+            get {
+                return this.SecurityPFVMeasureValueField;
+            }
+            set {
+                if ((this.SecurityPFVMeasureValueField.Equals(value) != true)) {
+                    this.SecurityPFVMeasureValueField = value;
+                    this.RaisePropertyChanged("SecurityPFVMeasureValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> SecurityPosition {
+            get {
+                return this.SecurityPositionField;
+            }
+            set {
+                if ((this.SecurityPositionField.Equals(value) != true)) {
+                    this.SecurityPositionField = value;
+                    this.RaisePropertyChanged("SecurityPosition");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityRecommendation {
+            get {
+                return this.SecurityRecommendationField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityRecommendationField, value) != true)) {
+                    this.SecurityRecommendationField = value;
+                    this.RaisePropertyChanged("SecurityRecommendation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SecurityTicker {
+            get {
+                return this.SecurityTickerField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SecurityTickerField, value) != true)) {
+                    this.SecurityTickerField = value;
+                    this.RaisePropertyChanged("SecurityTicker");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<long> Sno {
+            get {
+                return this.SnoField;
+            }
+            set {
+                if ((this.SnoField.Equals(value) != true)) {
+                    this.SnoField = value;
+                    this.RaisePropertyChanged("Sno");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="EntityKey", Namespace="http://schemas.datacontract.org/2004/07/System.Data", IsReference=true)]
     public partial class EntityKey : object, System.ComponentModel.INotifyPropertyChanged {
         
@@ -3217,6 +3525,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingInfo>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.MeetingMinuteData>))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.MeetingMinuteData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData))]
     public partial class EntityKeyMember : object, System.ComponentModel.INotifyPropertyChanged {
         
         private string KeyField;
@@ -3542,6 +3852,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         System.IAsyncResult BeginSetMessageInfo(string emailTo, string emailCc, string emailSubject, string emailMessageBody, string emailAttachment, string userName, System.AsyncCallback callback, object asyncState);
         
         bool EndSetMessageInfo(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/RetrieveSummaryReportData", ReplyAction="http://tempuri.org/MeetingOperations/RetrieveSummaryReportDataResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/RetrieveSummaryReportDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveSummaryReportData(System.DateTime startDate, System.DateTime endDate, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData> EndRetrieveSummaryReportData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -4082,6 +4398,25 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveSummaryReportDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveSummaryReportDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class MeetingOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations>, GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations {
         
         private BeginOperationDelegate onBeginRetrievePresentationOverviewDataDelegate;
@@ -4252,6 +4587,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private System.Threading.SendOrPostCallback onSetMessageInfoCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRetrieveSummaryReportDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveSummaryReportDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveSummaryReportDataCompletedDelegate;
+        
         private BeginOperationDelegate onBeginOpenDelegate;
         
         private EndOperationDelegate onEndOpenDelegate;
@@ -4360,6 +4701,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         public event System.EventHandler<UpdateMeetingPresentationDateCompletedEventArgs> UpdateMeetingPresentationDateCompleted;
         
         public event System.EventHandler<SetMessageInfoCompletedEventArgs> SetMessageInfoCompleted;
+        
+        public event System.EventHandler<RetrieveSummaryReportDataCompletedEventArgs> RetrieveSummaryReportDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -5707,6 +6050,54 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                         userName}, this.onEndSetMessageInfoDelegate, this.onSetMessageInfoCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginRetrieveSummaryReportData(System.DateTime startDate, System.DateTime endDate, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveSummaryReportData(startDate, endDate, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData> GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndRetrieveSummaryReportData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveSummaryReportData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveSummaryReportData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.DateTime startDate = ((System.DateTime)(inValues[0]));
+            System.DateTime endDate = ((System.DateTime)(inValues[1]));
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginRetrieveSummaryReportData(startDate, endDate, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveSummaryReportData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData> retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndRetrieveSummaryReportData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveSummaryReportDataCompleted(object state) {
+            if ((this.RetrieveSummaryReportDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveSummaryReportDataCompleted(this, new RetrieveSummaryReportDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveSummaryReportDataAsync(System.DateTime startDate, System.DateTime endDate) {
+            this.RetrieveSummaryReportDataAsync(startDate, endDate, null);
+        }
+        
+        public void RetrieveSummaryReportDataAsync(System.DateTime startDate, System.DateTime endDate, object userState) {
+            if ((this.onBeginRetrieveSummaryReportDataDelegate == null)) {
+                this.onBeginRetrieveSummaryReportDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveSummaryReportData);
+            }
+            if ((this.onEndRetrieveSummaryReportDataDelegate == null)) {
+                this.onEndRetrieveSummaryReportDataDelegate = new EndOperationDelegate(this.OnEndRetrieveSummaryReportData);
+            }
+            if ((this.onRetrieveSummaryReportDataCompletedDelegate == null)) {
+                this.onRetrieveSummaryReportDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveSummaryReportDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveSummaryReportDataDelegate, new object[] {
+                        startDate,
+                        endDate}, this.onEndRetrieveSummaryReportDataDelegate, this.onRetrieveSummaryReportDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -6171,6 +6562,20 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             public bool EndSetMessageInfo(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("SetMessageInfo", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveSummaryReportData(System.DateTime startDate, System.DateTime endDate, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = startDate;
+                _args[1] = endDate;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveSummaryReportData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData> EndRetrieveSummaryReportData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.SummaryReportData>)(base.EndInvoke("RetrieveSummaryReportData", _args, result)));
                 return _result;
             }
         }

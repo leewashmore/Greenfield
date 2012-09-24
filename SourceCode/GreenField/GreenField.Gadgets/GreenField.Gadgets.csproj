@@ -189,6 +189,7 @@
     <Compile Include="ViewModels\DCF\ViewModelTerminalValueCalculations.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
+    <Compile Include="ViewModels\ICPresentations\ViewModelSummaryReport.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPreMeetingVoteReport.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelMeetingConfigSchedule.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentationVote.cs" />
@@ -198,7 +199,6 @@
     <Compile Include="ViewModels\Documents\ViewModelDocuments.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelCreateUpdatePresentations.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelMeetings.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelMeetingsAgenda.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentations.cs" />
     <Compile Include="ViewModels\ViewModelCOASpecific.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelValuations.cs" />
@@ -311,6 +311,9 @@
     </Compile>
     <Compile Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml.cs">
       <DependentUpon>ChildViewPresentationMeetingMinutesAddAttendee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ViewSummaryReport.xaml.cs">
+      <DependentUpon>ViewSummaryReport.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ICPresentations\ViewPreMeetingVoteReport.xaml.cs">
       <DependentUpon>ViewPreMeetingVoteReport.xaml</DependentUpon>
@@ -581,6 +584,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ViewSummaryReport.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

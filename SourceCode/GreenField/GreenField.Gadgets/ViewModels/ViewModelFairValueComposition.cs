@@ -178,6 +178,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _isReadOnly = value;
+                base.RaisePropertyChanged("SaveFairValueChangeCommand");
                 this.RaisePropertyChanged(() => this.IsReadOnly);
             }
         }
@@ -213,7 +214,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public ICommand SaveFairValueChangeCommand
         {
-            get { return new DelegateCommand<object>(SaveFairValueChangeCommandMethod); }
+            get { return new DelegateCommand<object>(SaveFairValueChangeCommandMethod, CanUserSubmit); }
         }
 
         #endregion
@@ -251,6 +252,11 @@ namespace GreenField.Gadgets.ViewModels
                 }
 
             }
+        }
+
+        private bool CanUserSubmit(object param)
+        {
+            return !IsReadOnly;
         }
 
         #endregion

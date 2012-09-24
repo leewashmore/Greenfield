@@ -264,6 +264,15 @@
   <wsdl:message name="MeetingOperations_SetMessageInfo_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q28="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q28:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="MeetingOperations_RetrieveSummaryReportData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSummaryReportData" />
+  </wsdl:message>
+  <wsdl:message name="MeetingOperations_RetrieveSummaryReportData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveSummaryReportDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="MeetingOperations_RetrieveSummaryReportData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q29="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q29:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="MeetingOperations">
     <wsdl:operation name="RetrievePresentationOverviewData">
       <wsdl:input wsaw:Action="http://tempuri.org/MeetingOperations/RetrievePresentationOverviewData" message="tns:MeetingOperations_RetrievePresentationOverviewData_InputMessage" />
@@ -404,6 +413,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/MeetingOperations/SetMessageInfo" message="tns:MeetingOperations_SetMessageInfo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/MeetingOperations/SetMessageInfoResponse" message="tns:MeetingOperations_SetMessageInfo_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/MeetingOperations/SetMessageInfoServiceFaultFault" name="ServiceFaultFault" message="tns:MeetingOperations_SetMessageInfo_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSummaryReportData">
+      <wsdl:input wsaw:Action="http://tempuri.org/MeetingOperations/RetrieveSummaryReportData" message="tns:MeetingOperations_RetrieveSummaryReportData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/MeetingOperations/RetrieveSummaryReportDataResponse" message="tns:MeetingOperations_RetrieveSummaryReportData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/MeetingOperations/RetrieveSummaryReportDataServiceFaultFault" name="ServiceFaultFault" message="tns:MeetingOperations_RetrieveSummaryReportData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="MeetingOperations" type="tns:MeetingOperations">
@@ -734,6 +748,18 @@
     </wsdl:operation>
     <wsdl:operation name="SetMessageInfo">
       <soap:operation soapAction="http://tempuri.org/MeetingOperations/SetMessageInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveSummaryReportData">
+      <soap:operation soapAction="http://tempuri.org/MeetingOperations/RetrieveSummaryReportData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

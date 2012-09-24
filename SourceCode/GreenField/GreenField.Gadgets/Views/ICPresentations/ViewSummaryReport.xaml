@@ -1,0 +1,304 @@
+﻿<helpers:ViewBaseUserControl x:Class="GreenField.Gadgets.Views.ViewSummaryReport"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" FontFamily="Arial" FontSize="7"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
+    d:DesignHeight="300" d:DesignWidth="800">
+
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                <ResourceDictionary>
+                    <helpers:UTCToLocalDateTimeConverter x:Key="UTCToLocalDateTimeConverter"/>
+                </ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
+
+    <telerik:RadBusyIndicator BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+        <Grid x:Name="LayoutRoot">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="0"/>
+            </Grid.RowDefinitions>
+            <!--Filters-->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,2,0,0">
+                    <TextBlock Text="Start Date" Margin="2,0,0,0" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                    <telerik:RadDatePicker x:Name="dtpStartDate" Margin="5,2,0,0" Width="150" Style="{StaticResource RadDatePickerStyle}"
+                                           SelectionChanged="dtpStartDate_SelectionChanged"
+                                           SelectedDate="{Binding SelectedStartDate, Mode=TwoWay}"/>
+                    <TextBlock Text="End Date" Margin="5,0,0,0" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+                    <telerik:RadDatePicker x:Name="dtpEndDate" Margin="5,2,0,0" Width="150" Style="{StaticResource RadDatePickerStyle}"
+                                           SelectionChanged="dtpEndDate_SelectionChanged"
+                                           SelectedDate="{Binding SelectedEndDate, Mode=TwoWay}"/>
+                    <telerik:RadButton Margin="2,0,0,0" Content="Search" Height="18" Width="75" VerticalAlignment="Bottom" 
+                                       Style="{StaticResource RadButtonStyle}"
+                                       Command="{Binding SearchCommand}"/>                    
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Margin="2,2,2,0">
+                    <telerik:RadButton x:Name="btnExcelExport" BorderBrush="White" Background="White" ToolTipService.ToolTip="Export Results to Excel" Width="18" Height="18"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Style="{StaticResource RadButtonStyle}"
+                                       Click="btnExcelExport_Click">
+                        <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png" />
+                    </telerik:RadButton>
+                    <telerik:RadButton x:Name="btnPDFExport" BorderBrush="White" Background="White" ToolTipService.ToolTip="Export Results to PDF" Width="18" Height="18"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Style="{StaticResource RadButtonStyle}"
+                                       Click="btnPDFExport_Click">
+                        <Image Source="/GreenField.Gadgets;component/Images/PDF.png" />
+                    </telerik:RadButton>
+                    <telerik:RadButton x:Name="btnPrinterExport" BorderBrush="White" Background="White" ToolTipService.ToolTip="Send Results to a Printer" Width="18" Height="18"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Style="{StaticResource RadButtonStyle}"
+                                       Click="btnPrinterExport_Click">
+                        <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
+                    </telerik:RadButton>                    
+                </StackPanel>
+            </Grid>
+            <!--Data Grid-->
+            <telerik:RadGridView x:Name="dgICPSummaryReport"
+                             ItemsSource="{Binding SummaryReportInfo}"
+                             Grid.Row="1" Margin="0,2"
+                             telerik:StyleManager.Theme="Metro"
+                             CanUserReorderColumns ="False" 
+                             CanUserSelect="True"
+                             CanUserSortColumns="true"
+                             AutoGenerateColumns="False"
+                             CanUserInsertRows="False"
+                             CanUserDeleteRows="False"
+                             ShowGroupFooters="False"
+                             ShowColumnFooters="False"
+                             ShowGroupPanel="False"
+                             UseLayoutRounding="True"
+                             IsReadOnly="True"
+                             RowIndicatorVisibility="Collapsed"
+                             ScrollMode="RealTime"
+                             FontSize="7"
+                             FontFamily="Arial"
+                             AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
+                             AlternationCount="2" 
+                             EnableRowVirtualization="False"
+                             EnableColumnVirtualization="False"   
+                                 ElementExporting="dgICPSummaryReport_ElementExporting"
+                             HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
+                             SelectedItem="{Binding SelectedPresentationOverviewInfo, Mode=TwoWay}"
+                             RowStyle="{StaticResource GridViewRowStyle}">
+                <telerik:RadGridView.Columns>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="ID"
+                                            DataMemberBinding="{Binding Sno}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Ticker"
+                                            DataMemberBinding="{Binding SecurityTicker}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Name"
+                                            DataMemberBinding="{Binding SecurityName}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Country"
+                                            DataMemberBinding="{Binding SecurityCountry}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn
+                                            Width="Auto"
+                                            Header="Presentation Date"
+                                            DataMemberBinding="{Binding MeetingDateTime, Converter={StaticResource UTCToLocalDateTimeConverter}, StringFormat='MM/dd/yyyy'}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Right"
+                                            TextAlignment="Right"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Analyst"
+                                            DataMemberBinding="{Binding Analyst}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn
+                                            Width="Auto"
+                                            Header="EMM Holdings ($US) (Presented)"
+                                            DataMemberBinding="{Binding SecurityCashPosition, StringFormat=c}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Right"
+                                            TextAlignment="Right"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="EMM Holdings (Shares) (Presented)"
+                                            DataMemberBinding="{Binding SecurityPosition, StringFormat=n}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Right"
+                                            TextAlignment="Right"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="P/FV Measure (Presented)"
+                                            DataMemberBinding="{Binding SecurityPFVMeasure}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Buy-Sell (Presented)"    
+                                            DataMemberBinding="{Binding SecurityBuySellRange}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Value (Presented)"
+                                            DataMemberBinding="{Binding SecurityPFVMeasureValue, StringFormat='\{0:n2\}'}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Right"
+                                            TextAlignment="Right"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Recommendation (Presented)"
+                                            DataMemberBinding="{Binding SecurityRecommendation}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="P/FV Measure (Committee)"
+                                            DataMemberBinding="{Binding CommitteePFVMeasure}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Buy-Sell (Committee)"    
+                                            DataMemberBinding="{Binding CommitteeBuySellRange}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Value (Committee)"
+                                            DataMemberBinding="{Binding CommitteePFVMeasureValue, StringFormat='\{0:n2\}'}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Right"
+                                            TextAlignment="Right"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Recommendation (Committee)"
+                                            DataMemberBinding="{Binding CommitteeRecommendation}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn
+                                            Width="Auto"
+                                            Header="EMM Holdings ($US) (Current)"
+                                            DataMemberBinding="{Binding CurrentCashPosition, StringFormat=c}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Right"
+                                            TextAlignment="Right"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="EMM Holdings (Shares) (Current)"
+                                            DataMemberBinding="{Binding CurrentPosition, StringFormat=n}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Right"
+                                            TextAlignment="Right"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="P/FV Measure (Current)"
+                                            DataMemberBinding="{Binding CurrentPFVMeasure}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Buy-Sell (Current)" 
+                                            DataMemberBinding="{Binding CurrentBuySellRange}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Left"
+                                            TextAlignment="Left"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Value (Current)"
+                                            DataMemberBinding="{Binding CurrentPFVMeasureValue, StringFormat='\{0:n2\}'}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Right"
+                                            TextAlignment="Right"
+                                            IsFilterable="True"/>
+                    <telerik:GridViewDataColumn 
+                                            Width="Auto"
+                                            Header="Upside (Current)"
+                                            DataMemberBinding="{Binding CurrentUpside, StringFormat=p}"
+                                            HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                            CellStyle="{StaticResource GridViewCellStyle}"
+                                            HeaderTextAlignment="Right"
+                                            TextAlignment="Right"
+                                            IsFilterable="True"/>
+                </telerik:RadGridView.Columns>
+            </telerik:RadGridView>
+            <Grid Grid.Row="2">
+                <telerik:RadRichTextBox x:Name="richTextBox" Width="0">
+                    <!--For Printing the grid-->
+                </telerik:RadRichTextBox>
+            </Grid>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</helpers:ViewBaseUserControl>

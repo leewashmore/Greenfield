@@ -16,6 +16,7 @@
           <xs:element minOccurs="0" name="Analyst" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CommitteeBuyRange" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="CommitteePFVMeasure" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CommitteePFVMeasureValue" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="CommitteeRangeEffectiveThrough" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="CommitteeRecommendation" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CommitteeSellRange" nillable="true" type="xs:float" />
@@ -39,14 +40,12 @@
           <xs:element minOccurs="0" name="SecurityCashPosition" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityCountry" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityCountryCode" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="SecurityGlobalActiveWeight" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityIndustry" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityLastClosingPrice" nillable="true" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityMSCIIMIWeight" nillable="true" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityMSCIStdWeight" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityMarketCapitalization" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityPFVMeasure" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityPFVMeasureValue" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="SecurityPosition" nillable="true" type="xs:long" />
           <xs:element minOccurs="0" name="SecurityRecommendation" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecuritySellRange" nillable="true" type="xs:float" />
@@ -125,6 +124,7 @@
           <xs:element minOccurs="0" name="CommentInfoes" nillable="true" type="tns:ArrayOfCommentInfo" />
           <xs:element minOccurs="0" name="CommitteeBuyRange" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="CommitteePFVMeasure" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CommitteePFVMeasureValue" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="CommitteeRangeEffectiveThrough" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="CommitteeRecommendation" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="CommitteeSellRange" nillable="true" type="xs:float" />
@@ -147,14 +147,12 @@
           <xs:element minOccurs="0" name="SecurityCashPosition" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityCountry" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityCountryCode" nillable="true" type="xs:string" />
-          <xs:element minOccurs="0" name="SecurityGlobalActiveWeight" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityIndustry" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityLastClosingPrice" nillable="true" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityMSCIIMIWeight" nillable="true" type="xs:float" />
-          <xs:element minOccurs="0" name="SecurityMSCIStdWeight" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityMarketCapitalization" nillable="true" type="xs:float" />
           <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecurityPFVMeasure" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityPFVMeasureValue" nillable="true" type="xs:decimal" />
           <xs:element minOccurs="0" name="SecurityPosition" nillable="true" type="xs:long" />
           <xs:element minOccurs="0" name="SecurityRecommendation" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SecuritySellRange" nillable="true" type="xs:float" />
@@ -352,4 +350,41 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="MeetingMinuteData" nillable="true" type="tns:MeetingMinuteData" />
+  <xs:complexType name="ArrayOfSummaryReportData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SummaryReportData" nillable="true" type="tns:SummaryReportData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSummaryReportData" nillable="true" type="tns:ArrayOfSummaryReportData" />
+  <xs:complexType name="SummaryReportData">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q12="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q12:ComplexObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Analyst" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CommitteeBuySellRange" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CommitteePFVMeasure" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CommitteePFVMeasureValue" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="CommitteeRecommendation" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CurrentBuySellRange" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CurrentCashPosition" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="CurrentPFVMeasure" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CurrentPFVMeasureValue" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="CurrentPosition" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="CurrentUpside" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="MeetingDateTime" nillable="true" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SecurityBuySellRange" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityCashPosition" nillable="true" type="xs:float" />
+          <xs:element minOccurs="0" name="SecurityCountry" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityPFVMeasure" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityPFVMeasureValue" nillable="true" type="xs:decimal" />
+          <xs:element minOccurs="0" name="SecurityPosition" nillable="true" type="xs:long" />
+          <xs:element minOccurs="0" name="SecurityRecommendation" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Sno" nillable="true" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="SummaryReportData" nillable="true" type="tns:SummaryReportData" />
 </xs:schema>
