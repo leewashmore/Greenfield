@@ -10682,7 +10682,8 @@ namespace GreenField.DAL
         /// <param name="sOURCE_CURRENCY">Initial value of the SOURCE_CURRENCY property.</param>
         /// <param name="dATA_SOURCE">Initial value of the DATA_SOURCE property.</param>
         /// <param name="dATA_SOURCE_DATE">Initial value of the DATA_SOURCE_DATE property.</param>
-        public static ModelConsensusEstimatesData CreateModelConsensusEstimatesData(global::System.String iSSUER_ID, global::System.Int32 eSTIMATE_ID, global::System.String eSTIMATE_DESC, global::System.String aMOUNT_TYPE, global::System.Int32 pERIOD_YEAR, global::System.String pERIOD_TYPE, global::System.Decimal aMOUNT, global::System.Int32 nUMBER_OF_ESTIMATES, global::System.Decimal hIGH, global::System.Decimal lOW, global::System.Decimal sTANDARD_DEVIATION, global::System.String sOURCE_CURRENCY, global::System.String dATA_SOURCE, global::System.DateTime dATA_SOURCE_DATE)
+        /// <param name="sortOrder">Initial value of the SortOrder property.</param>
+        public static ModelConsensusEstimatesData CreateModelConsensusEstimatesData(global::System.String iSSUER_ID, global::System.Int32 eSTIMATE_ID, global::System.String eSTIMATE_DESC, global::System.String aMOUNT_TYPE, global::System.Int32 pERIOD_YEAR, global::System.String pERIOD_TYPE, global::System.Decimal aMOUNT, global::System.Int32 nUMBER_OF_ESTIMATES, global::System.Decimal hIGH, global::System.Decimal lOW, global::System.Decimal sTANDARD_DEVIATION, global::System.String sOURCE_CURRENCY, global::System.String dATA_SOURCE, global::System.DateTime dATA_SOURCE_DATE, global::System.Int32 sortOrder)
         {
             ModelConsensusEstimatesData modelConsensusEstimatesData = new ModelConsensusEstimatesData();
             modelConsensusEstimatesData.ISSUER_ID = iSSUER_ID;
@@ -10699,6 +10700,7 @@ namespace GreenField.DAL
             modelConsensusEstimatesData.SOURCE_CURRENCY = sOURCE_CURRENCY;
             modelConsensusEstimatesData.DATA_SOURCE = dATA_SOURCE;
             modelConsensusEstimatesData.DATA_SOURCE_DATE = dATA_SOURCE_DATE;
+            modelConsensusEstimatesData.SortOrder = sortOrder;
             return modelConsensusEstimatesData;
         }
 
@@ -11064,6 +11066,30 @@ namespace GreenField.DAL
         private global::System.DateTime _DATA_SOURCE_DATE;
         partial void OnDATA_SOURCE_DATEChanging(global::System.DateTime value);
         partial void OnDATA_SOURCE_DATEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SortOrder
+        {
+            get
+            {
+                return _SortOrder;
+            }
+            set
+            {
+                OnSortOrderChanging(value);
+                ReportPropertyChanging("SortOrder");
+                _SortOrder = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SortOrder");
+                OnSortOrderChanged();
+            }
+        }
+        private global::System.Int32 _SortOrder;
+        partial void OnSortOrderChanging(global::System.Int32 value);
+        partial void OnSortOrderChanged();
 
         #endregion
     }

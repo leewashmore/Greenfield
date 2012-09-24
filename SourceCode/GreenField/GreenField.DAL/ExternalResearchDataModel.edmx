@@ -1417,6 +1417,7 @@
           <Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" />
           <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
           <Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="SortOrder" Nullable="false" />
         </ComplexType>
         <EntityType Name="External_Country_Master">
           <Key>
@@ -1901,6 +1902,7 @@
                 <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
                 <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
                 <ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

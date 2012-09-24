@@ -626,13 +626,58 @@ namespace GreenField.Web.Services
                     }
                 }
 
-                return resultConsensus;
+                foreach (ModelConsensusEstimatesData item in resultConsensus)
+                {
+                    item.SortOrder = ReturnSortOrder(item.ESTIMATE_ID);
+                }
+
+                return resultConsensus.OrderBy(a => a.SortOrder).ThenBy(a => a.PERIOD_YEAR).ThenBy(a => a.PERIOD_TYPE).ToList();
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Return the Sort Order in the grid
+        /// </summary>
+        /// <param name="dataId"></param>
+        /// <returns></returns>
+        private int ReturnSortOrder(int dataId)
+        {
+            switch (dataId)
+            {
+                case 17:
+                    return 0;
+                case 7:
+                    return 1;
+                case 6:
+                    return 2;
+                case 14:
+                    return 3;
+                case 11:
+                    return 4;
+                case 8:
+                    return 5;
+                case 10:
+                    return 6;
+                case 1:
+                    return 7;
+                case 18:
+                    return 8;
+                case 19:
+                    return 9;
+                case 2:
+                    return 10;
+                case 3:
+                    return 11;
+                case 4:
+                    return 12;
+                default:
+                    return 13;
             }
         }
 
