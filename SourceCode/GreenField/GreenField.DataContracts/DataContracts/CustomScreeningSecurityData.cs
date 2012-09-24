@@ -7,9 +7,6 @@ namespace GreenField.DataContracts
      [DataContract]
     public class CustomScreeningSecurityData
     {
-        //[DataMember]
-        //public string SecurityName { get; set; }
-
         [DataMember]
         public string SecurityId { get; set; }
 
@@ -43,8 +40,8 @@ namespace GreenField.DataContracts
         [DataMember]
         public string YearType { get; set; }
 
-        //[DataMember]
-        //public Object Amount { get; set; }
+        [DataMember]
+        public Object MarketCapAmount { get; set; }
 
         [DataMember]
         public int? Decimals { get; set; }

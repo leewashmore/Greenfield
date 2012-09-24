@@ -97,6 +97,7 @@ namespace GreenField.Web.Services
                     }
                     else { result.Add(item); }
                 }
+                result = result.OrderBy(a => a).ToList();
                 return result;
             }
             catch (Exception ex)
@@ -617,6 +618,20 @@ namespace GreenField.Web.Services
                                 }
                             }
                         }
+                    }
+                }
+
+                #endregion
+
+                #region Market Cap Data
+                List<CustomScreeningMarketCap> marketCapData = new List<CustomScreeningMarketCap>();
+                marketCapData = cstEntity.GetCustomScreeningMarketCap(_securityIds).ToList();
+
+                if (marketCapData != null && marketCapData.Count != 0 && result != null)
+                {
+                    foreach (CustomScreeningSecurityData item in result)
+                    {
+                        item.MarketCapAmount = marketCapData.Where(a => a.SecurityId == item.SecurityId).Select(a => a.Amount).FirstOrDefault();
                     }
                 }
 

@@ -199,7 +199,6 @@
           <Parameter Name="dataSource" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetCustomScreeningMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="issuerIdsList" Type="varchar(max)" Mode="In" />
           <Parameter Name="securityIdsList" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="GetCustomScreeningREFData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -253,10 +252,6 @@
 					<FunctionImport Name="GetCustomScreeningREFData" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningREFData)">
           <Parameter Name="securityIdsList" Mode="In" Type="String" />
           </FunctionImport>
-					<FunctionImport Name="GetCustomScreeningMarketCap" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningMarketCap)">
-            <Parameter Name="issuerIdsList" Mode="In" Type="String" />
-            <Parameter Name="securityIdsList" Mode="In" Type="String" />
-          </FunctionImport>
 					<EntitySet Name="SCREENING_DISPLAY_REFERENCE" EntityType="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE" />
 					<EntitySet Name="UserListDataPointMappingInfoes" EntityType="CustomScreeningToolModel.UserListDataPointMappingInfo" />
 					<AssociationSet Name="FK_UserListDataPointMappingInfo_UserCustomisedListInfo" Association="CustomScreeningToolModel.FK_UserListDataPointMappingInfo_UserCustomisedListInfo">
@@ -278,7 +273,10 @@
           <Parameter Name="username" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetFinancialTabDataDescriptions" ReturnType="Collection(CustomScreeningToolModel.FinancialTabDataDescriptions)">
-            <Parameter Name="tabName" Mode="In" Type="String" />
+          <Parameter Name="tabName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetCustomScreeningMarketCap" ReturnType="Collection(CustomScreeningToolModel.CustomScreeningMarketCap)">
+          <Parameter Name="securityIdsList" Mode="In" Type="String" />
           </FunctionImport>
 				</EntityContainer>
 				<EntityType Name="SCREENING_DISPLAY_CURRENT">
@@ -417,11 +415,6 @@
 					<Property Type="DateTime" Name="LAST_CLOSE_DATE" Nullable="true" Precision="23" />
 					<Property Type="Double" Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" Nullable="true" />
 				</ComplexType>
-				<ComplexType Name="CustomScreeningMarketCap">
-					<Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
-					<Property Type="String" Name="IssuerId" Nullable="true" MaxLength="20" />
-					<Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
-				</ComplexType>
 				<EntityType Name="SCREENING_DISPLAY_REFERENCE">
 					<Key>
 						<PropertyRef Name="SCREENING_ID" />
@@ -497,6 +490,10 @@
 					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
 					<Property Type="Int32" Name="ESTIMATE_ID" Nullable="true" />
 				</ComplexType>
+        <ComplexType Name="CustomScreeningMarketCap">
+          <Property Type="String" Name="SecurityId" Nullable="true" MaxLength="20" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="32" Scale="6" />
+        </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -650,15 +647,6 @@
 							</ComplexTypeMapping>
 						</ResultMapping>
 					</FunctionImportMapping>
-					<FunctionImportMapping FunctionImportName="GetCustomScreeningMarketCap" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningMarketCap">
-						<ResultMapping>
-							<ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningMarketCap">
-								<ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
-								<ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
-								<ScalarProperty Name="Amount" ColumnName="Amount" />
-							</ComplexTypeMapping>
-						</ResultMapping>
-					</FunctionImportMapping>
 					<EntitySetMapping Name="SCREENING_DISPLAY_REFERENCE">
 						<EntityTypeMapping TypeName="CustomScreeningToolModel.SCREENING_DISPLAY_REFERENCE">
 							<MappingFragment StoreEntitySet="SCREENING_DISPLAY_REFERENCE">
@@ -725,6 +713,14 @@
                 <ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
                 <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
                 <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCustomScreeningMarketCap" FunctionName="CustomScreeningToolModel.Store.GetCustomScreeningMarketCap">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CustomScreeningToolModel.CustomScreeningMarketCap">
+                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -409,36 +409,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="issuerIdsList">No Metadata Documentation available.</param>
-        /// <param name="securityIdsList">No Metadata Documentation available.</param>
-        public ObjectResult<CustomScreeningMarketCap> GetCustomScreeningMarketCap(global::System.String issuerIdsList, global::System.String securityIdsList)
-        {
-            ObjectParameter issuerIdsListParameter;
-            if (issuerIdsList != null)
-            {
-                issuerIdsListParameter = new ObjectParameter("issuerIdsList", issuerIdsList);
-            }
-            else
-            {
-                issuerIdsListParameter = new ObjectParameter("issuerIdsList", typeof(global::System.String));
-            }
-    
-            ObjectParameter securityIdsListParameter;
-            if (securityIdsList != null)
-            {
-                securityIdsListParameter = new ObjectParameter("securityIdsList", securityIdsList);
-            }
-            else
-            {
-                securityIdsListParameter = new ObjectParameter("securityIdsList", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<CustomScreeningMarketCap>("GetCustomScreeningMarketCap", issuerIdsListParameter, securityIdsListParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="userPreference">No Metadata Documentation available.</param>
         /// <param name="username">No Metadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> SaveCustomScreeningDataPointsPreference(global::System.String userPreference, global::System.String username)
@@ -565,6 +535,25 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<FinancialTabDataDescriptions>("GetFinancialTabDataDescriptions", tabNameParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="securityIdsList">No Metadata Documentation available.</param>
+        public ObjectResult<CustomScreeningMarketCap> GetCustomScreeningMarketCap(global::System.String securityIdsList)
+        {
+            ObjectParameter securityIdsListParameter;
+            if (securityIdsList != null)
+            {
+                securityIdsListParameter = new ObjectParameter("securityIdsList", securityIdsList);
+            }
+            else
+            {
+                securityIdsListParameter = new ObjectParameter("securityIdsList", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<CustomScreeningMarketCap>("GetCustomScreeningMarketCap", securityIdsListParameter);
         }
 
         #endregion
@@ -2673,30 +2662,6 @@ namespace GreenField.DAL
         private global::System.String _SecurityId;
         partial void OnSecurityIdChanging(global::System.String value);
         partial void OnSecurityIdChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public global::System.String IssuerId
-        {
-            get
-            {
-                return _IssuerId;
-            }
-            set
-            {
-                OnIssuerIdChanging(value);
-                ReportPropertyChanging("IssuerId");
-                _IssuerId = StructuralObject.SetValidValue(value, true);
-                ReportPropertyChanged("IssuerId");
-                OnIssuerIdChanged();
-            }
-        }
-        private global::System.String _IssuerId;
-        partial void OnIssuerIdChanging(global::System.String value);
-        partial void OnIssuerIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

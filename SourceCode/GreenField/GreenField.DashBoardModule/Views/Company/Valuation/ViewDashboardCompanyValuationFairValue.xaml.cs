@@ -68,7 +68,7 @@ namespace GreenField.DashboardModule.Views
                         12,
                     FontFamily = new FontFamily("Arial")
                 },
-                Content = new ViewFairValueComposition(new ViewModelFairValueComposition(param))
+                Content = null//new ViewFairValueComposition(new ViewModelFairValueComposition(param))
             });
         }
 
