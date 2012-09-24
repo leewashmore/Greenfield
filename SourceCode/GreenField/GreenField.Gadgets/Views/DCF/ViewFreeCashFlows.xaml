@@ -76,7 +76,9 @@
                                      RowStyle="{StaticResource GridViewRowStyle}"                                    
                                      AlternationCount="2"
                                      GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                     AlternateRowStyle ="{StaticResource GridViewAlternateRowStyle}">
+                                     AlternateRowStyle ="{StaticResource GridViewAlternateRowStyle}"
+                                     RowLoaded = "dgFreeCashFlows_RowLoaded">
+                        
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn Header="" 
                                                         DataMemberBinding="{Binding FieldName}"
@@ -113,7 +115,39 @@
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
-                                                        TextAlignment="Right"/>                
+                                                        TextAlignment="Right"/>
+                            <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY5}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+
+                            <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY6}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+
+                            <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY7}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                            <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY8}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
+                            <telerik:GridViewDataColumn Header="" 
+                                                        DataMemberBinding="{Binding ValueY9}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyle}" 
+                                                        HeaderTextAlignment="Right" 
+                                                        TextAlignment="Right"/>
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
                 </Border>

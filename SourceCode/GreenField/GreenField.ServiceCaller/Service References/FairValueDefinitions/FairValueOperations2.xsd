@@ -15,33 +15,47 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="RetrieveFairValueDataWithNewUpside">
+  <xs:element name="RetrieveFairValueCompostionSummaryData">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q3:EntitySelectionData" />
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="editedFairValueData" nillable="true" type="q4:FairValueCompositionSummaryData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveFairValueCompostionSummaryDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveFairValueCompostionSummaryDataResult" nillable="true" type="q4:ArrayOfFairValueCompositionSummaryData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveFairValueDataWithNewUpside">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q5:EntitySelectionData" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="editedFairValueData" nillable="true" type="q6:FairValueCompositionSummaryData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RetrieveFairValueDataWithNewUpsideResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveFairValueDataWithNewUpsideResult" nillable="true" type="q5:FairValueCompositionSummaryData" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveFairValueDataWithNewUpsideResult" nillable="true" type="q7:FairValueCompositionSummaryData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveUpdatedFairValueData">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q6:EntitySelectionData" />
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="editedFairValueData" nillable="true" type="q7:ArrayOfFairValueCompositionSummaryData" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q8:EntitySelectionData" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="editedFairValueData" nillable="true" type="q9:ArrayOfFairValueCompositionSummaryData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="SaveUpdatedFairValueDataResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="SaveUpdatedFairValueDataResult" nillable="true" type="q8:ArrayOfFairValueCompositionSummaryData" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="SaveUpdatedFairValueDataResult" nillable="true" type="q10:ArrayOfFairValueCompositionSummaryData" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

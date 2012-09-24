@@ -80,25 +80,89 @@ namespace GreenField.Gadgets.Views
                 dgFreeCashFlows.Columns[3].Header = System.DateTime.Now.Year + 2 + "\n" + "Y3";
                 dgFreeCashFlows.Columns[4].Header = System.DateTime.Now.Year + 3 + "\n" + "Y4";
                 dgFreeCashFlows.Columns[5].Header = System.DateTime.Now.Year + 4 + "\n" + "Y5";
-                //dgFreeCashFlows.Columns[6].Header = System.DateTime.Now.Year + 5 + "\n" + "Y6";
-                //dgFreeCashFlows.Columns[7].Header = System.DateTime.Now.Year + 6 + "\n" + "Y7";
-                //dgFreeCashFlows.Columns[8].Header = System.DateTime.Now.Year + 7 + "\n" + "Y8";
-                //dgFreeCashFlows.Columns[9].Header = System.DateTime.Now.Year + 8 + "\n" + "Y9";
-                //dgFreeCashFlows.Columns[10].Header = System.DateTime.Now.Year + 9 + "\n" + "Y10";
+                dgFreeCashFlows.Columns[6].Header = System.DateTime.Now.Year + 5 + "\n" + "Y6";
+                dgFreeCashFlows.Columns[7].Header = System.DateTime.Now.Year + 6 + "\n" + "Y7";
+                dgFreeCashFlows.Columns[8].Header = System.DateTime.Now.Year + 7 + "\n" + "Y8";
+                dgFreeCashFlows.Columns[9].Header = System.DateTime.Now.Year + 8 + "\n" + "Y9";
+                dgFreeCashFlows.Columns[10].Header = System.DateTime.Now.Year + 9 + "\n" + "Y10";
 
                 dgFreeCashFlows.Columns[1].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
                 dgFreeCashFlows.Columns[2].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
                 dgFreeCashFlows.Columns[3].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
                 dgFreeCashFlows.Columns[4].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
                 dgFreeCashFlows.Columns[5].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-                //dgFreeCashFlows.Columns[6].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-                //dgFreeCashFlows.Columns[7].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-                //dgFreeCashFlows.Columns[8].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-                //dgFreeCashFlows.Columns[9].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
-                //dgFreeCashFlows.Columns[10].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[6].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[7].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[8].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[9].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+                dgFreeCashFlows.Columns[10].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
 
+            }           
+
+        }
+
+        private void dgFreeCashFlows_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
+        {
+            if (e.Row != null)
+            {
+                if(e.Row.DataContext != null)
+                {
+                   var item = (e.Row.DataContext) as FreeCashFlowsData;
+                   if(item != null)
+                   {
+                       if (item.ValueY0 != null)
+                       {
+                           if (item.ValueY0.Contains("("))
+                               e.Row.Cells[1].Foreground = new SolidColorBrush(Colors.Red);
+                       }
+                       if (item.ValueY1 != null)
+                       {
+                           if (item.ValueY1.Contains("("))
+                               e.Row.Cells[2].Foreground = new SolidColorBrush(Colors.Red);
+                       }
+                       if (item.ValueY2 != null)
+                       {
+                           if (item.ValueY2.Contains("("))
+                               e.Row.Cells[3].Foreground = new SolidColorBrush(Colors.Red);
+                       }
+                       if (item.ValueY3 != null)
+                       {
+                           if (item.ValueY3.Contains("("))
+                               e.Row.Cells[4].Foreground = new SolidColorBrush(Colors.Red);
+                       }
+                       if (item.ValueY4 != null)
+                       {
+                           if (item.ValueY4.Contains("("))
+                               e.Row.Cells[5].Foreground = new SolidColorBrush(Colors.Red);
+                       }
+                       if (item.ValueY5 != null)
+                       {
+                           if (item.ValueY5.Contains("("))
+                               e.Row.Cells[6].Foreground = new SolidColorBrush(Colors.Red);
+                       }
+                       if (item.ValueY6 != null)
+                       {
+                           if (item.ValueY6.Contains("("))
+                               e.Row.Cells[7].Foreground = new SolidColorBrush(Colors.Red);
+                       }
+                       if (item.ValueY7 != null)
+                       {
+                           if (item.ValueY7.Contains("("))
+                               e.Row.Cells[8].Foreground = new SolidColorBrush(Colors.Red);
+                       }
+                       if (item.ValueY8 != null)
+                       {
+                           if (item.ValueY8.Contains("("))
+                               e.Row.Cells[9].Foreground = new SolidColorBrush(Colors.Red);
+                       }
+                       if (item.ValueY9 != null)
+                       {
+                           if (item.ValueY9.Contains("("))
+                               e.Row.Cells[10].Foreground = new SolidColorBrush(Colors.Red);
+                       }
+                   }
+                }
             }
-
         }
         #endregion
         #region ExcelExport

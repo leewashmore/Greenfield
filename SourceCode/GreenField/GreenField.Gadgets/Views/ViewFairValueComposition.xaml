@@ -90,6 +90,12 @@
                                                         UniqueName="Source"
                                                         DataMemberBinding="{Binding Source}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                                                        CellStyle="{StaticResource GridViewCellStyleBoldText}" 
+                                                        HeaderTextAlignment="Left" 
+                                                        TextAlignment="Left"/>
+                            <telerik:GridViewDataColumn Header="Measure" 
+                                                        DataMemberBinding="{Binding MEASURE}"
+                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Left" 
                                                         TextAlignment="Left"

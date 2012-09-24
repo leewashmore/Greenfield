@@ -358,6 +358,7 @@ namespace GreenField.ServiceCaller
 
         #region FAIR VALUE 
         void RetrieveFairValueCompostionSummary(EntitySelectionData entitySelectionData, Action<List<FairValueCompositionSummaryData>> callback);
+        void RetrieveFairValueCompostionSummaryData(EntitySelectionData entitySelectionData, Action<List<FairValueCompositionSummaryData>> callback);
 
         void RetrieveFairValueDataWithNewUpside(EntitySelectionData entitySelectionData, FairValueCompositionSummaryData editedFairValueData
             ,Action<FairValueCompositionSummaryData> callback);

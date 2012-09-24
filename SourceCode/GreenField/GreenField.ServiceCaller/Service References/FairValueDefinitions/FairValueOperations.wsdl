@@ -16,6 +16,18 @@
         <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="RetrieveFairValueCompostionSummaryData">
+      <soap:operation soapAction="urn:FairValueOperations/RetrieveFairValueCompostionSummaryData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="RetrieveFairValueDataWithNewUpside">
       <soap:operation soapAction="urn:FairValueOperations/RetrieveFairValueDataWithNewUpside" style="document" />
       <wsdl:input>

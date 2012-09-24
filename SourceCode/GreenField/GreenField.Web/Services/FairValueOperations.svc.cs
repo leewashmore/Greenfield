@@ -122,6 +122,89 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
+        }
+        /// <summary>
+        /// Gets FAIR VALUE COMPOSITION SUMMARY  Data
+        /// </summary>
+        /// <param name="securityId"></param>
+        /// <returns>FairValueCompositionSummary data</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<FairValueCompositionSummaryData> RetrieveFairValueCompostionSummaryData(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                List<FairValueCompositionSummaryData> result = new List<FairValueCompositionSummaryData>();
+                List<GetFairValueComposition_Result> resultDB = new List<GetFairValueComposition_Result>();
+                ExternalResearchEntities fairValueCompSummary = new ExternalResearchEntities();
+
+                if (entitySelectionData == null)
+                    return null;
+
+                //Retrieving data from security view
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
+
+                if (data == null)
+                    return null;
+
+                ////Retrieving data from Period Financials table
+                resultDB = fairValueCompSummary.ExecuteStoreQuery<GetFairValueComposition_Result>("exec GetFairValueCompositionSummaryData @SECURITY_ID={0}", Convert.ToString(data.SECURITY_ID)).ToList();
+
+                string sourceNames = string.Empty;
+                foreach (GetFairValueComposition_Result record in resultDB)
+                {
+                    FairValueCompositionSummaryData item = new FairValueCompositionSummaryData();
+                    if (!String.IsNullOrEmpty(record.SOURCE))
+                    {
+                        if (record.SOURCE.ToUpper() == "PRIMARY")
+                        {
+                            item.Source = "Primary Analyst";
+                        }
+                        else if (record.SOURCE.ToUpper() == "INDUSTRY")
+                        {
+                            item.Source = "Industry Analyst";
+                        }
+                        else if(record.SOURCE.ToUpper() == "PFV_PE")
+                        {
+                            item.Source = "DCF-PE";
+                        }
+                        else if(record.SOURCE.ToUpper() == "PFV_PBV")
+                        {
+                            item.Source = "DCF-PBV";
+                        }
+                        else
+                        {
+                            item.Source = record.SOURCE;
+                        }
+                       
+                    }
+                    sourceNames += item.Source + ",";
+                    item.Measure = record.MEASURE;
+                    item.Buy = record.BUY;
+                    item.Sell = record.SELL;
+                    item.Upside = record.UPSIDE;
+                    if (record.DATE != null)
+                        item.Date = record.DATE.Value;
+                    item.DataId = record.DATA_ID;
+                    result.Add(item);
+                }
+                if (!sourceNames.Contains("Primary Analyst"))
+                    result.Add(new FairValueCompositionSummaryData { Source = "Primary Analyst" });
+                if (!sourceNames.Contains("Industry Analyst"))
+                    result.Add(new FairValueCompositionSummaryData { Source = "Industry Analyst" });
+                if (!sourceNames.Contains("DCF-PE"))
+                    result.Add(new FairValueCompositionSummaryData { Source = "DCF-PE" });
+                if (!sourceNames.Contains("DCF-PBV"))
+                    result.Add(new FairValueCompositionSummaryData { Source = "DCF-PBV" });
+               
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
         }        
 
         /// <summary>
