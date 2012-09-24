@@ -155,11 +155,14 @@ namespace GreenField.Gadgets.Views
 
             FairValueData data = row.DataContext as FairValueData;
 
-            if (data.DataId != Convert.ToInt16(comboBox.SelectedValue))
+            if (comboBox.SelectedValue != null)
             {
-                data.DataId = Convert.ToInt16(comboBox.SelectedValue);
-                data.Measure = comboBox.Text;
-                DataContextFairValueComposition.EditedMeasurePropertyFairValueRow = data;
+                if (data.DataId != Convert.ToInt16(comboBox.SelectedValue))
+                {
+                    data.DataId = Convert.ToInt16(comboBox.SelectedValue);
+                    data.Measure = comboBox.Text;
+                    DataContextFairValueComposition.EditedMeasurePropertyFairValueRow = data;
+                }
             }
             
         }
@@ -287,7 +290,10 @@ namespace GreenField.Gadgets.Views
 
         private void dgFairValueComposition_DataLoaded(object sender, EventArgs e)
         {
-            (dgFairValueComposition.Columns[1] as GridViewComboBoxColumn).ItemsSource = DataContextFairValueComposition.MeasuresData;            
+            if ((dgFairValueComposition.Columns[1] as GridViewComboBoxColumn) != null)
+            {
+                (dgFairValueComposition.Columns[1] as GridViewComboBoxColumn).ItemsSource = DataContextFairValueComposition.MeasuresData;
+            }
         }
 
         private void dgFairValueComposition_CellEditEnded(object sender, GridViewCellEditEndedEventArgs e)

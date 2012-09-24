@@ -54,7 +54,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores fcf arranged data
         /// </summary>
-        private RangeObservableCollection<FairValueData> _fairValueCompositionData;
+        private RangeObservableCollection<FairValueData> _fairValueCompositionData
+            = new RangeObservableCollection<FairValueData>();
         public RangeObservableCollection<FairValueData> FairValueCompositionData
         {
             get
@@ -368,8 +369,7 @@ namespace GreenField.Gadgets.ViewModels
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
-            {
-                FairValueCompositionData = new RangeObservableCollection<FairValueData>();
+            {                
                 RangeObservableCollection<FairValueData> temp = new RangeObservableCollection<FairValueData>();               
 
                 Logging.LogMethodParameter(_logger, methodNamespace, result, 1);

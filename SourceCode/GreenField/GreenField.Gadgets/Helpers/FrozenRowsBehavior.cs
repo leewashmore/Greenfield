@@ -18,33 +18,42 @@ using System.Collections.ObjectModel;
 
 namespace GreenField.Gadgets.Helpers
 {
-	public class FrozenRowsBehavior : Behavior<RadGridView>
-	{
-		protected override void OnAttached()
-		{
-			base.OnAttached();
-			this.AssociatedObject.LayoutUpdated += new EventHandler(AssociatedObject_LayoutUpdated);
-		}
+    public class FrozenRowsBehavior : Behavior<RadGridView>
+    {
+        protected override void OnAttached()
+        {
+            base.OnAttached();
+            this.AssociatedObject.LayoutUpdated += new EventHandler(AssociatedObject_LayoutUpdated);
+            this.AssociatedObject.ColumnWidthChanged += new EventHandler<ColumnWidthChangedEventArgs>(AssociatedObject_ColumnWidthChanged);
 
-		private ObservableCollection<Object> PinnedItems = new ObservableCollection<object>();
+        }
 
-		private RadGridView frozenRowsContainer;
+        void AssociatedObject_DataLoaded(object sender, EventArgs e)
+        {
+            SyncColumnWidths();
+        }
 
-		void AssociatedObject_LayoutUpdated(object sender, EventArgs e)
-		{
-            if (AssociatedObject.Items.Count == 0)
-            {
+        void AssociatedObject_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
+        {
+            SyncColumnWidths();
+        }
+
+        private ObservableCollection<Object> PinnedItems = new ObservableCollection<object>();
+
+        private RadGridView frozenRowsContainer;
+
+        void AssociatedObject_LayoutUpdated(object sender, EventArgs e)
+        {
+            if (AssociatedObject != null || AssociatedObject.Items.Count == 0)
                 return;
-            }
 
             GridViewHeaderRow headerRow = AssociatedObject.ChildrenOfType<GridViewHeaderRow>().FirstOrDefault();
             if (headerRow == null)
-            {
                 return;
-            }
 
-            this.AssociatedObject.LayoutUpdated -= new EventHandler(AssociatedObject_LayoutUpdated);            
-            this.frozenRowsContainer = new RadGridView();            
+            this.AssociatedObject.LayoutUpdated -= new EventHandler(AssociatedObject_LayoutUpdated);
+            this.frozenRowsContainer = new RadGridView();
+            GenerateHeader();
             SelectiveScrollingGrid grid = headerRow.ChildrenOfType<SelectiveScrollingGrid>().FirstOrDefault();
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition());
@@ -61,53 +70,77 @@ namespace GreenField.Gadgets.Helpers
             frozenRowsContainer.SetValue(ScrollViewer.HorizontalScrollBarVisibilityProperty, ScrollBarVisibility.Hidden);
 
             frozenRowsContainer.HorizontalAlignment = HorizontalAlignment.Left;
+
+
             grid.Children.Add(frozenRowsContainer);
-            
+
             var scrollViewer = this.AssociatedObject.ChildrenOfType<GridViewScrollViewer>().FirstOrDefault();
             scrollViewer.ScrollChanged += new ScrollChangedEventHandler(scrollViewer_ScrollChanged);
             this.frozenRowsContainer.SetBinding(FrameworkElement.WidthProperty, new Binding("ActualWidth") { Source = headerRow });
             this.frozenRowsContainer.Margin = new Thickness(-1, 0, 0, 0);
-            this.frozenRowsContainer.SetBinding(RadGridView.FrozenColumnCountProperty, new Binding("FrozenColumnCount") { Source = this.AssociatedObject, Mode = BindingMode.TwoWay });
+            this.frozenRowsContainer.SetBinding(RadGridView.FrozenColumnCountProperty,
+                new Binding("FrozenColumnCount") { Source = this.AssociatedObject, Mode = BindingMode.TwoWay });
 
-            if (AssociatedObject.Items.Count > 0)
-            {                
-                this.PinnedItems.Add(AssociatedObject.Items[0]);
-                this.PinnedItems.Add(AssociatedObject.Items[1]);
-                this.PinnedItems.Add(AssociatedObject.Items[2]);
-                this.PinnedItems.Add(AssociatedObject.Items[3]);
-                AssociatedObject.Items.RemoveAt(0);
-                AssociatedObject.Items.RemoveAt(1);
-                AssociatedObject.Items.RemoveAt(2);
-                AssociatedObject.Items.RemoveAt(3);
-                SyncColumnWidths();
+            this.PinItem(AssociatedObject.Items[0]);
+            this.PinItem(AssociatedObject.Items[1]);
+            this.PinItem(AssociatedObject.Items[2]);
+            this.PinItem(AssociatedObject.Items[3]);
+
+            SyncColumnWidths();
+        }
+
+        private void GenerateHeader()
+        {
+            this.frozenRowsContainer.Columns.Clear();
+            foreach (GridViewDataColumn c in this.AssociatedObject.Columns)
+            {
+                GridViewDataColumn col = new GridViewDataColumn();
+                col.Width = c.ActualWidth;
+                col.Header = c.Header;
+                col.DataMemberBinding = c.DataMemberBinding;
+                this.frozenRowsContainer.Columns.Add(col);
             }
-		}
+        }
 
-		private void SyncColumnWidths()
-		{
-			foreach (GridViewColumn c in this.AssociatedObject.Columns)
-			{
-				this.frozenRowsContainer.Columns[this.AssociatedObject.Columns.IndexOf(c)].Width = c.ActualWidth;
-			}
-		}		
+        private void SyncColumnWidths()
+        {
+            foreach (GridViewColumn c in this.AssociatedObject.Columns)
+            {
+                this.frozenRowsContainer.Columns[this.AssociatedObject.Columns.IndexOf(c)].Width = c.ActualWidth;
+            }
+        }
 
-		void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
-		{
-			if (e.HorizontalChange == 0)
-				return;
+        private void UnpinItem(object item)
+        {
+            this.PinnedItems.Remove(item);
+        }
 
-			this.frozenRowsContainer.ChildrenOfType<GridViewScrollViewer>().FirstOrDefault().ScrollToHorizontalOffset(e.HorizontalOffset);
-		}
+        private void PinItem(object item)
+        {
+            if (this.PinnedItems.Contains(item))
+                return;
 
-		void AssociatedObject_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
-		{
-			if (frozenRowsContainer.Columns.Count != this.AssociatedObject.Columns.Count)
-				return;
+            this.PinnedItems.Add(item);
+            SyncColumnWidths();
+        }
 
-			for (int columnIndex = 0; columnIndex < this.AssociatedObject.Columns.Count; columnIndex++)
-			{
-				this.frozenRowsContainer.Columns[columnIndex].Width = this.AssociatedObject.Columns[columnIndex].ActualWidth;
-			}
-		}
-	}	
+        void scrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (e.HorizontalChange == 0)
+                return;
+
+            this.frozenRowsContainer.ChildrenOfType<GridViewScrollViewer>().FirstOrDefault().ScrollToHorizontalOffset(e.HorizontalOffset);
+        }
+
+        void AssociatedObject_ColumnWidthChanging(object sender, ColumnWidthChangingEventArgs e)
+        {
+            if (frozenRowsContainer.Columns.Count != this.AssociatedObject.Columns.Count)
+                return;
+
+            for (int columnIndex = 0; columnIndex < this.AssociatedObject.Columns.Count; columnIndex++)
+            {
+                this.frozenRowsContainer.Columns[columnIndex].Width = this.AssociatedObject.Columns[columnIndex].ActualWidth;
+            }
+        }
+    }	
 }

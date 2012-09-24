@@ -92,15 +92,7 @@
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyleBoldText}" 
                                                         HeaderTextAlignment="Left" 
-                                                        TextAlignment="Left"/>
-                            <telerik:GridViewDataColumn Header="Measure" 
-                                                        DataMemberBinding="{Binding MEASURE}"
-                                                        HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
-                                                        CellStyle="{StaticResource GridViewCellStyle}" 
-                                                        HeaderTextAlignment="Left" 
-                                                        TextAlignment="Left"
-                                                        IsReadOnly="True">                                
-                            </telerik:GridViewDataColumn>
+                                                        TextAlignment="Left"/>                          
                             <telerik:GridViewComboBoxColumn Header="Measure" 
                                                         DataMemberBinding="{Binding DataId, Mode=TwoWay}"
                                                         SelectedValueMemberPath="DataId"
