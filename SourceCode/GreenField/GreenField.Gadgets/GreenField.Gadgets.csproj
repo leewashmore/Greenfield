@@ -254,6 +254,7 @@
     <Compile Include="ViewModels\ViewModelTopBenchmarkSecurities.cs" />
     <Compile Include="ViewModels\ViewModelUnrealizedGainLoss.cs" />
     <Compile Include="ViewModels\ViewModelValuationQualityGrowth.cs" />
+    <Compile Include="Helpers\Converters\BasisPointsConverter.cs" />
     <Compile Include="Views\CustomScreeningTool\ChildViewCSTDataListSave.xaml.cs">
       <DependentUpon>ChildViewCSTDataListSave.xaml</DependentUpon>
     </Compile>
