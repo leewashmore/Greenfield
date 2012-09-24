@@ -76,6 +76,12 @@ namespace GreenField.Web.Services
                 ////Retrieving data from Period Financials table
                 resultDB = fairValueCompSummary.ExecuteStoreQuery<GetFairValueComposition_Result>("exec GetFairValueCompositionSummaryData @SECURITY_ID={0}", Convert.ToString(data.SECURITY_ID)).ToList();
 
+                if (resultDB == null || resultDB.Count == 0)
+                {
+                    List<FairValueCompositionSummaryData> items = GetSummaryDataIfDatabaseContaisnNorecords(data);
+                    result.AddRange(items);
+                }
+
                 foreach (GetFairValueComposition_Result record in resultDB)
                 {
                     FairValueCompositionSummaryData item = new FairValueCompositionSummaryData();
@@ -83,27 +89,29 @@ namespace GreenField.Web.Services
                     {
                         if (record.SOURCE.ToUpper() == "PRIMARY")
                         {
-                            item.SOURCE = "Primary Analyst";
+                            item.Source = "Primary Analyst";
                         }
                         else
                         {
                             if (record.SOURCE.ToUpper() == "INDUSTRY")
                             {
-                                item.SOURCE = "Industry Analyst";
+                                item.Source = "Industry Analyst";
                             }
                             else
                             {
-                                item.SOURCE = record.SOURCE;
+                                item.Source = record.SOURCE;
                             }
                         }
                     }
-                    item.MEASURE = record.MEASURE;
-                    item.BUY = record.BUY;
-                    item.SELL = record.SELL;
-                    item.UPSIDE = record.UPSIDE;
+                    item.Measure = record.MEASURE;
+                    item.Buy = record.BUY;
+                    item.Sell = record.SELL;
+                    item.Upside = record.UPSIDE;
                     if (record.DATE != null)
-                        item.DATE = record.DATE.Value;
-                    item.DATA_ID = record.DATA_ID;                    
+                        item.Date = record.DATE.Value;
+                    item.DataId = record.DATA_ID;
+                    item.PrimaryAnalyst = data.ASHMOREEMM_PRIMARY_ANALYST;
+                    item.IndustryAnalyst = data.ASHMOREEMM_INDUSTRY_ANALYST;
                     result.Add(item);
                 }
                 return result;
@@ -114,7 +122,7 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        }
+        }        
 
         /// <summary>
         /// Gets FAIR VALUE COMPOSITION SUMMARY  Data
@@ -143,8 +151,8 @@ namespace GreenField.Web.Services
                     return null;
 
                 string securityId = Convert.ToString(data.SECURITY_ID);
-                int? dataId = editedFairValueData.DATA_ID;
-                string dataSource = editedFairValueData.SOURCE;
+                int? dataId = editedFairValueData.DataId;
+                string dataSource = editedFairValueData.Source;
 
                 ExternalResearchEntities entity = new ExternalResearchEntities();
 
@@ -152,13 +160,13 @@ namespace GreenField.Web.Services
 
                 if (amountValue != null)
                 {
-                    if (amountValue == 0 || editedFairValueData.SELL == null)
+                    if (amountValue == 0 || editedFairValueData.Sell == null)
                     {
                         upsideValue = 0;
                     }
                     else
-                    {                        
-                        upsideValue = (decimal)(editedFairValueData.SELL / amountValue) - 1;
+                    {
+                        upsideValue = (decimal)(editedFairValueData.Sell / amountValue) - 1;
                     }
                 }
 
@@ -212,17 +220,19 @@ namespace GreenField.Web.Services
                         if (!String.IsNullOrEmpty(record.SOURCE))
                         {
                             if (record.SOURCE.ToUpper() == "PRIMARY")
-                                item.SOURCE = "Primary Analyst";
+                                item.Source = "Primary Analyst";
                             else if (record.SOURCE.ToUpper() == "INDUSTRY")
-                                item.SOURCE = "Industry Analyst";                            
+                                item.Source = "Industry Analyst";                            
                         }
-                        item.MEASURE = record.MEASURE;
-                        item.BUY = record.BUY;
-                        item.SELL = record.SELL;
-                        item.UPSIDE = record.UPSIDE;
+                        item.Measure = record.MEASURE;
+                        item.Buy = record.BUY;
+                        item.Sell = record.SELL;
+                        item.Upside = record.UPSIDE;
                         if (record.DATE != null)
-                            item.DATE = record.DATE.Value;
-                        item.DATA_ID = record.DATA_ID;
+                            item.Date = record.DATE.Value;
+                        item.DataId = record.DATA_ID;
+                        item.PrimaryAnalyst = data.ASHMOREEMM_PRIMARY_ANALYST;
+                        item.IndustryAnalyst = data.ASHMOREEMM_INDUSTRY_ANALYST;
 
                         result.Add(item);
                     }
@@ -242,13 +252,13 @@ namespace GreenField.Web.Services
         {
             FairValueCompositionSummaryData data = new FairValueCompositionSummaryData()
             {
-                BUY = editedFairValueData.BUY,
-                SELL = editedFairValueData.SELL,
-                UPSIDE = upsideValue,
-                SOURCE = editedFairValueData.SOURCE,
-                DATA_ID = editedFairValueData.DATA_ID,
-                DATE = editedFairValueData.DATE,
-                MEASURE= editedFairValueData.MEASURE                
+                Buy = editedFairValueData.Buy,
+                Sell = editedFairValueData.Sell,
+                Upside = upsideValue,
+                Source = editedFairValueData.Source,
+                DataId = editedFairValueData.DataId,
+                Date = editedFairValueData.Date,
+                Measure= editedFairValueData.Measure                
             };            
 
             return data;
@@ -258,10 +268,10 @@ namespace GreenField.Web.Services
         {            
             foreach (FairValueCompositionSummaryData data in dataList)
             {
-                if (data.SOURCE == "Primary Analyst")
-                    data.SOURCE = "PRIMARY";
-                if (data.SOURCE == "Industry Analyst")
-                    data.SOURCE = "INDUSTRY";
+                if (data.Source == "Primary Analyst")
+                    data.Source = "PRIMARY";
+                if (data.Source == "Industry Analyst")
+                    data.Source = "INDUSTRY";
             }
         }
 
@@ -331,6 +341,35 @@ namespace GreenField.Web.Services
                 throw;
             }
             return xmlDoc;
+        }
+
+        private List<FairValueCompositionSummaryData> GetSummaryDataIfDatabaseContaisnNorecords(GF_SECURITY_BASEVIEW data)
+        {
+            List<FairValueCompositionSummaryData> dataList = new List<FairValueCompositionSummaryData>();
+
+            FairValueCompositionSummaryData item1 = new FairValueCompositionSummaryData();
+            item1.Source = "Primary Analyst";
+            item1.Measure = null;
+            item1.Buy = null;
+            item1.Sell = null;
+            item1.Upside = null;
+            item1.DataId = null;
+            item1.PrimaryAnalyst = data.ASHMOREEMM_PRIMARY_ANALYST;
+            item1.IndustryAnalyst = data.ASHMOREEMM_INDUSTRY_ANALYST;
+            dataList.Add(item1);
+
+            FairValueCompositionSummaryData item2 = new FairValueCompositionSummaryData();
+            item2.Source = "Industry Analyst";
+            item2.Measure = null;
+            item2.Buy = null;
+            item2.Sell = null;
+            item2.Upside = null;
+            item2.DataId = null;
+            item2.PrimaryAnalyst = data.ASHMOREEMM_PRIMARY_ANALYST;
+            item2.IndustryAnalyst = data.ASHMOREEMM_INDUSTRY_ANALYST;
+            dataList.Add(item2);
+
+            return dataList;
         }
     }
 }

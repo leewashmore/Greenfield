@@ -19,13 +19,15 @@
   <xs:element name="ArrayOfFairValueCompositionSummaryData" nillable="true" type="tns:ArrayOfFairValueCompositionSummaryData" />
   <xs:complexType name="FairValueCompositionSummaryData">
     <xs:sequence>
-      <xs:element minOccurs="0" name="BUY" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="DATA_ID" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" name="DATE" nillable="true" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="MEASURE" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SELL" nillable="true" type="xs:decimal" />
-      <xs:element minOccurs="0" name="SOURCE" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="UPSIDE" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Buy" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="DataId" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Date" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="IndustryAnalyst" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Measure" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PrimaryAnalyst" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Sell" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="Source" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Upside" nillable="true" type="xs:decimal" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="FairValueCompositionSummaryData" nillable="true" type="tns:FairValueCompositionSummaryData" />

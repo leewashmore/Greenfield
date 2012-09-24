@@ -65,11 +65,11 @@
                                      CanUserReorderColumns="False" 
                                      CanUserInsertRows="False" 
                                      telerik:StyleManager.Theme="Metro"
-                                     CanUserDeleteRows="False" 
-                                     IsReadOnly="False" 
+                                     CanUserDeleteRows="False"                                      
                                      CanUserSortColumns="False" 
                                      ScrollMode="Deferred"
-                                     RowIndicatorVisibility="Collapsed" 
+                                     RowIndicatorVisibility="Collapsed"
+                                     IsReadOnly="{Binding IsReadOnly}"
                                      ShowGroupPanel="False" 
                                      UseLayoutRounding="True"                                     
                                      GroupPanelBackground="#e4e5e5"
@@ -104,7 +104,7 @@
                                                         EditorStyle="{StaticResource RadComboBoxStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"                                                        
                                                         HeaderTextAlignment="Left" 
-                                                        IsReadOnly="False"
+                                                        IsReadOnly="{Binding IsReadOnly}"
                                                         TextAlignment="Left"
                                                         Width="*"/>
                             <telerik:GridViewDataColumn Header="Buy" 
@@ -114,7 +114,7 @@
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"
-                                                        IsReadOnly="False"/>                             
+                                                        IsReadOnly="{Binding IsReadOnly}"/>                             
                             <telerik:GridViewDataColumn Header="Sell" 
                                                         UniqueName="Sell"
                                                         DataMemberBinding="{Binding Sell, StringFormat=\{0:n1\},Mode=TwoWay}"
@@ -122,14 +122,15 @@
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right"
                                                         TextAlignment="Right"
-                                                        IsReadOnly="False"/>
+                                                        IsReadOnly="{Binding IsReadOnly}"/>
                             <telerik:GridViewDataColumn Header="Upside" 
                                                         UniqueName="Upside"
                                                         DataMemberBinding="{Binding UpSide,Converter={StaticResource ConverterPercValTwoDecPlace},Mode=TwoWay}"
                                                         HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
-                                                        TextAlignment="Right"/>
+                                                        TextAlignment="Right"
+                                                        IsReadOnly="True"/>
                             <telerik:GridViewDataColumn Header="Date" 
                                                         UniqueName="Date" 
                                                         IsReadOnly="True"

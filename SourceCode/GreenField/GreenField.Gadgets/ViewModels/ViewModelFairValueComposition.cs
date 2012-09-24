@@ -43,10 +43,6 @@ namespace GreenField.Gadgets.ViewModels
 
 
         /// <summary>
-        /// Private member to store basic data gadget visibilty
-        /// </summary>
-        private Visibility _freeCashFlowGadgetVisibility = Visibility.Collapsed;
-        /// <summary>
         /// Private member to store Selected Security ID
         /// </summary>
         private EntitySelectionData _securitySelectionData = null;
@@ -94,7 +90,7 @@ namespace GreenField.Gadgets.ViewModels
                 _measuresData = value;
                 this.RaisePropertyChanged(() => this.MeasuresData);
             }
-        }       
+        }
 
 
 
@@ -171,7 +167,19 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        
+        private bool _isReadOnly = true;
+        public bool IsReadOnly
+        {
+            get
+            {
+                return _isReadOnly;
+            }
+            set
+            {
+                _isReadOnly = value;
+                this.RaisePropertyChanged(() => this.IsReadOnly);
+            }
+        }
 
         #endregion
 
@@ -223,15 +231,15 @@ namespace GreenField.Gadgets.ViewModels
 
                 foreach (FairValueData item in updatedItems)
                 {
-                    data.Add(new FairValueCompositionSummaryData() 
+                    data.Add(new FairValueCompositionSummaryData()
                     {
-                        SOURCE = item.Source,
-                        MEASURE = item.Measure,
-                        DATA_ID = item.DataId,
-                        BUY = item.Buy,
-                        SELL = item.Sell,
-                        UPSIDE = item.Upside,
-                        DATE = item.Date
+                        Source = item.Source,
+                        Measure = item.Measure,
+                        DataId = item.DataId,
+                        Buy = item.Buy,
+                        Sell = item.Sell,
+                        Upside = item.Upside,
+                        Date = item.Date
                     });
                 }
 
@@ -240,7 +248,7 @@ namespace GreenField.Gadgets.ViewModels
                     _dbInteractivity.SaveUpdatedFairValueData(_securitySelectionData, data
                         , RetrieveFairValueCompositionSummaryDataCallbackMethod);
                 }
-                
+
             }
         }
 
@@ -291,20 +299,20 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, _securitySelectionData, 1);
 
-                    FairValueCompositionSummaryData editedData = new FairValueCompositionSummaryData() 
+                    FairValueCompositionSummaryData editedData = new FairValueCompositionSummaryData()
                     {
-                        SOURCE = editedFairValueRow.Source,
-                        MEASURE = editedFairValueRow.Measure,
-                        BUY = editedFairValueRow.Buy,
-                        SELL = editedFairValueRow.Sell,
-                        UPSIDE = editedFairValueRow.Upside,
-                        DATE = editedFairValueRow.Date,
-                        DATA_ID = editedFairValueRow.DataId,
+                        Source = editedFairValueRow.Source,
+                        Measure = editedFairValueRow.Measure,
+                        Buy = editedFairValueRow.Buy,
+                        Sell = editedFairValueRow.Sell,
+                        Upside = editedFairValueRow.Upside,
+                        Date = editedFairValueRow.Date,
+                        DataId = editedFairValueRow.DataId,
                     };
                     _dbInteractivity.RetrieveFairValueDataWithNewUpside(_securitySelectionData, editedData,
                         RetrieveFairValueDataWithNewUpsideCallbackMethod);
                     BusyIndicatorStatus = true;
-                    
+
                 }
                 else
                 {
@@ -346,7 +354,7 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-        }  
+        }
 
         #endregion
 
@@ -361,57 +369,60 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogBeginMethod(_logger, methodNamespace);
             try
             {
-                //MeasuresList = GetMeasureList();
                 FairValueCompositionData = new RangeObservableCollection<FairValueData>();
-                RangeObservableCollection<FairValueData> temp = new RangeObservableCollection<FairValueData>();
-                //FreeCashFlowGadgetVisibility = Visibility.Collapsed;
-                
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                RangeObservableCollection<FairValueData> temp = new RangeObservableCollection<FairValueData>();               
 
-                    temp.Add(new FairValueData()
+                Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+
+                if (result != null)
+                {
+                    SetIsEditableProprty(result);
+                }
+
+                temp.Add(new FairValueData()
+                {
+                    Source = "Primary Analyst",
+                    Measure = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.Measure).FirstOrDefault() : null,
+                    Buy = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.Buy).FirstOrDefault() : null,
+                    Sell = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.Sell).FirstOrDefault() : null,
+                    Upside = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.Upside).FirstOrDefault() : null,
+                    Date = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.Date).FirstOrDefault() : null,
+                    DataId = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.DataId).FirstOrDefault() : null,
+                });
+                temp.Add(new FairValueData()
+                {
+                    Source = "Industry Analyst",
+                    Measure = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Measure).FirstOrDefault() : null,
+                    Buy = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Buy).FirstOrDefault() : null,
+                    Sell = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Sell).FirstOrDefault() : null,
+                    Upside = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Upside).FirstOrDefault() : null,
+                    Date = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Date).FirstOrDefault() : null,
+                    DataId = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.DataId).FirstOrDefault() : null,
+                });
+                if (result != null && result.Count > 0)
+                {
+                    foreach (FairValueCompositionSummaryData item in result)
                     {
-                        Source = "Primary Analyst",
-                        Measure = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.MEASURE).FirstOrDefault() : null,
-                        Buy = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.BUY).FirstOrDefault() : null,
-                        Sell = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.SELL).FirstOrDefault() : null,
-                        Upside = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.UPSIDE).FirstOrDefault() : null,
-                        Date = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.DATE).FirstOrDefault() : null,
-                        DataId = result.Select(a => a.SOURCE).Contains("Primary Analyst") ? result.Where(a => a.SOURCE == "Primary Analyst").Select(a => a.DATA_ID).FirstOrDefault() : null,
-                    });
-                    temp.Add(new FairValueData()
-                    {
-                        Source = "Industry Analyst",
-                        Measure = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.MEASURE).FirstOrDefault() : null,
-                        Buy = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.BUY).FirstOrDefault() : null,
-                        Sell = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.SELL).FirstOrDefault() : null,
-                        Upside = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.UPSIDE).FirstOrDefault() : null,
-                        Date = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.DATE).FirstOrDefault() : null,
-                        DataId = result.Select(a => a.SOURCE).Contains("Industry Analyst") ? result.Where(a => a.SOURCE == "Industry Analyst").Select(a => a.DATA_ID).FirstOrDefault() : null,
-                    });
-                    if (result != null && result.Count > 0)
-                    {
-                        foreach (FairValueCompositionSummaryData item in result)
+                        if (item.Source == "Primary Analyst" || item.Source == "Industry Analyst")
+                        {                            
+                            continue;
+                        }
+                        else
                         {
-                            if (item.SOURCE == "Primary Analyst" || item.SOURCE == "Industry Analyst")
-                            { 
-                                continue; 
-                            }
-                            else
+                            temp.Add(new FairValueData()
                             {
-                                temp.Add(new FairValueData()
-                                {
-                                    Source = item.SOURCE,
-                                    Measure = item.MEASURE,
-                                    Buy = item.BUY,
-                                    Sell = item.SELL,
-                                    Upside = item.UPSIDE,
-                                    Date = item.DATE,
-                                    DataId = item.DATA_ID,
-                                });
-                            }
+                                Source = item.Source,
+                                Measure = item.Measure,
+                                Buy = item.Buy,
+                                Sell = item.Sell,
+                                Upside = item.Upside,
+                                Date = item.Date,
+                                DataId = item.DataId,
+                            });
                         }
                     }
-                    FairValueCompositionData = temp;
+                }
+                FairValueCompositionData = temp;
             }
             catch (Exception ex)
             {
@@ -421,6 +432,7 @@ namespace GreenField.Gadgets.ViewModels
             finally { BusyIndicatorStatus = false; }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
+        
 
         /// <summary>
         /// Callback method that assigns value to the BAsicDataInfo property
@@ -436,15 +448,15 @@ namespace GreenField.Gadgets.ViewModels
 
                 if (result != null)
                 {
-                    var item = FairValueCompositionData.FirstOrDefault(i => i.Source == result.SOURCE); 
-                    
-                    if (item != null) 
-                    { 
-                        item.Upside = result.UPSIDE;
+                    var item = FairValueCompositionData.FirstOrDefault(i => i.Source == result.Source);
+
+                    if (item != null)
+                    {
+                        item.Upside = result.Upside;
                         item.IsUpdated = true;
                     }
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -455,7 +467,7 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        #endregion       
+        #endregion
 
         #region SERVICE CALL METOHD
         /// <summary>
@@ -507,6 +519,27 @@ namespace GreenField.Gadgets.ViewModels
             MeasuresData.Add(new Measure() { DataId = 197, Measures = "Forward P/Revenue" });
 
             return MeasuresData;
+        }
+
+        /// <summary>
+        /// Set IsEditable based upon the primary/industry analyst property
+        /// </summary>
+        /// <param name="item"></param>
+        private void SetIsEditableProprty(List<FairValueCompositionSummaryData> item)
+        {
+            string user = UserSession.SessionManager.SESSION.UserName;
+
+            string primaryAnalyst = (from p in item
+                                     select p.PrimaryAnalyst).FirstOrDefault();
+
+            string industryAnalyst = (from p in item
+                                     select p.IndustryAnalyst).FirstOrDefault();
+
+            if (String.Equals(user, primaryAnalyst, StringComparison.InvariantCultureIgnoreCase)
+                || String.Equals(user, industryAnalyst, StringComparison.InvariantCultureIgnoreCase))
+            {
+                IsReadOnly = false;
+            }
         }
 
         #endregion

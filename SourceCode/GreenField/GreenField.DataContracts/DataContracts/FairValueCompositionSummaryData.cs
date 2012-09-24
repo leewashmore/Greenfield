@@ -9,24 +9,30 @@ namespace GreenField.DataContracts
     public class FairValueCompositionSummaryData
     {
         [DataMember]
-        public string SOURCE{get; set;}
+        public string Source{get; set;}
 
         [DataMember]
-        public string MEASURE{get;set;}
+        public string Measure{get;set;}
 
         [DataMember]
-        public decimal? BUY{get; set;}
+        public decimal? Buy{get; set;}
 
         [DataMember]
-        public decimal? SELL { get; set; }
+        public decimal? Sell { get; set; }
 
         [DataMember]
-        public decimal? UPSIDE { get; set; }
+        public decimal? Upside { get; set; }
 
         [DataMember]
-        public DateTime? DATE { get; set; }
+        public DateTime? Date { get; set; }
 
         [DataMember]
-        public Int32? DATA_ID { get; set; }
+        public Int32? DataId { get; set; }
+
+        [DataMember]
+        public String PrimaryAnalyst { get; set; }
+
+        [DataMember]
+        public String IndustryAnalyst { get; set; }
     }    
 }
