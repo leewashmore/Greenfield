@@ -41,27 +41,38 @@ BEGIN
 		SELECT @UpdationFairValueMeasureRecordCount = COUNT(*) FROM OPENXML(@idoc, '/Root/FairValueCompositionSummaryData', 1)			
 			
 		IF @UpdationFairValueMeasureRecordCount <> 0
-		BEGIN
-			SELECT * INTO #FairValueMeasureData FROM OPENXML(@idoc, '/Root/FairValueCompositionSummaryData', 1)
+		BEGIN   												
+			SELECT _MMVI.[SOURCE],
+				   _MMVI.[BUY],
+				   _MMVI.[SELL],
+				   _MMVI.[UPSIDE],
+				   _MMVI.[DATA_ID],
+				   _MMVI.[DATE]
+			INTO #FairValueMeasureData 
+			FROM OPENXML(@idoc, '/Root/FairValueCompositionSummaryData', 1)
 				WITH ( 
 					[SOURCE]		VARCHAR(20),
 					[BUY]			DECIMAL (32,6),
 					[SELL]			DECIMAL (32,6),
 					[UPSIDE]		DECIMAL (32,6),
-					[DATA_ID]    INT,
-					[DATE]          DATETIME )			
+					[DATA_ID]    	INT,
+					[DATE]          DATETIME ) _MMVI							
+					
+			MERGE INTO FAIR_VALUE _VI
+			USING #FairValueMeasureData _MMVD
+			ON _VI.[SECURITY_ID] = @securityId AND _VI.VALUE_TYPE = _MMVD.[SOURCE]
+			WHEN MATCHED THEN
+			UPDATE SET
+				[FV_BUY]				= _MMVD.[BUY],
+				[FV_SELL]				= _MMVD.[SELL],
+				[UPSIDE]				= _MMVD.[UPSIDE],
+				[FV_MEASURE]	        = _MMVD.[DATA_ID],
+				[UPDATED]				=  GETUTCDATE()
+			WHEN NOT MATCHED THEN
+			INSERT (VALUE_TYPE, SECURITY_ID, FV_MEASURE, FV_BUY, FV_SELL, CURRENT_MEASURE_VALUE,UPSIDE, UPDATED)
+			VALUES (_MMVD.[SOURCE], @securityId,_MMVD.[DATA_ID], _MMVD.[BUY],_MMVD.[SELL],0,_MMVD.[UPSIDE],GETUTCDATE());		   
 			
-			UPDATE FAIR_VALUE 
-			SET 
-				[FV_BUY]				= _IMMD.[BUY],
-				[FV_SELL]				= _IMMD.[SELL],
-				[UPSIDE]				= _IMMD.[UPSIDE],
-				[FV_MEASURE]	        = _IMMD.[DATA_ID],
-				[UPDATED]				= _IMMD.[DATE]				
-			FROM #FairValueMeasureData _IMMD
-			WHERE FAIR_VALUE.[SECURITY_ID] = @securityId AND VALUE_TYPE = _IMMD.[SOURCE]
-						
-			DROP TABLE #FairValueMeasureData			
+			DROP TABLE #FairValueMeasureData	
 			
 		END
 

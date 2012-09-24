@@ -81,14 +81,21 @@ namespace GreenField.Web.Services
                     FairValueCompositionSummaryData item = new FairValueCompositionSummaryData();
                     if (!String.IsNullOrEmpty(record.SOURCE))
                     {
-                        if(record.SOURCE.ToUpper() == "PRIMARY")
+                        if (record.SOURCE.ToUpper() == "PRIMARY")
+                        {
                             item.SOURCE = "Primary Analyst";
-                        else if (record.SOURCE.ToUpper() == "INDUSTRY")
-                            item.SOURCE = "Industry Analyst";
-                        else if (record.SOURCE.ToUpper() == "PFV_PE")
-                            item.SOURCE = "DCF-PE";
-                        else if (record.SOURCE.ToUpper() == "PFV_PBV")
-                            item.SOURCE = "DCF-PBV";
+                        }
+                        else
+                        {
+                            if (record.SOURCE.ToUpper() == "INDUSTRY")
+                            {
+                                item.SOURCE = "Industry Analyst";
+                            }
+                            else
+                            {
+                                item.SOURCE = record.SOURCE;
+                            }
+                        }
                     }
                     item.MEASURE = record.MEASURE;
                     item.BUY = record.BUY;
@@ -207,11 +214,7 @@ namespace GreenField.Web.Services
                             if (record.SOURCE.ToUpper() == "PRIMARY")
                                 item.SOURCE = "Primary Analyst";
                             else if (record.SOURCE.ToUpper() == "INDUSTRY")
-                                item.SOURCE = "Industry Analyst";
-                            else if (record.SOURCE.ToUpper() == "PFV_PE")
-                                item.SOURCE = "DCF-PE";
-                            else if (record.SOURCE.ToUpper() == "PFV_PBV")
-                                item.SOURCE = "DCF-PBV";
+                                item.SOURCE = "Industry Analyst";                            
                         }
                         item.MEASURE = record.MEASURE;
                         item.BUY = record.BUY;
@@ -223,8 +226,7 @@ namespace GreenField.Web.Services
 
                         result.Add(item);
                     }
-                }
-                
+                }                
             }
             catch (Exception ex)
             {
@@ -326,11 +328,8 @@ namespace GreenField.Web.Services
             }
             catch (Exception)
             {
-
                 throw;
             }
-
-
             return xmlDoc;
         }
     }

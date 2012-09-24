@@ -894,6 +894,7 @@
         <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="OpenDropDownOnFocus" Value="True" />
     </Style>
 
     <!--RadComboBox Style-->
