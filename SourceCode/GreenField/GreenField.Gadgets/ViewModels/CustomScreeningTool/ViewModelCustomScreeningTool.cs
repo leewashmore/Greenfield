@@ -668,12 +668,6 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                     _portfolioSelectionData = result;
                     PortfolioSelectionInfo = result.Select(o => o.PortfolioId).ToList();
-
-                    if (_dbInteractivity != null)
-                    {
-                        BusyIndicatorNotification(true, "Retrieving Data...");
-                        _dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
-                    }
                 }
                 else
                 {
@@ -686,12 +680,11 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
             }
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                //BusyIndicatorNotification();
+                BusyIndicatorNotification();
             }
         }
 
@@ -706,17 +699,8 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
 
-                    List<string> res = new List<string>();
                     _benchmarkSelectionData = result;
                     BenchmarkSelectionInfo = result.Where(a => a.Type.Equals("BENCHMARK")).Select(a => a.LongName).ToList();
-                    //res = result.Where(a => a.Type.Equals("BENCHMARK")).Select(a => a.LongName).ToList();
-                    //retrieve custom selection data
-                    //RetrieveCustomSelectionData();
-                    if (_dbInteractivity != null)
-                    {
-                        BusyIndicatorNotification(true, "Retrieving Data...");
-                        _dbInteractivity.RetrieveCustomControlsList("Region", CustomControlsListRegionCallbackMethod);
-                    }
                 }
                 else
                 {
@@ -747,12 +731,6 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CustomSelectionRegionInfo = result;
-                    if (_dbInteractivity != null)
-                    {
-                        BusyIndicatorNotification(true, "Retrieving Data...");
-                        _dbInteractivity.RetrieveCustomControlsList("Country", CustomControlsListCountryCallbackMethod);
-                    }
-
                 }
                 else
                 {
@@ -781,11 +759,6 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CustomSelectionCountryInfo = result;
-                    if (_dbInteractivity != null)
-                    {
-                        BusyIndicatorNotification(true, "Retrieving Data...");
-                        _dbInteractivity.RetrieveCustomControlsList("Sector", CustomControlsListSectorCallbackMethod);
-                    }
                 }
                 else
                 {
@@ -814,11 +787,6 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CustomSelectionSectorInfo = result;
-                    if (_dbInteractivity != null)
-                    {
-                        BusyIndicatorNotification(true, "Retrieving Data...");
-                        _dbInteractivity.RetrieveCustomControlsList("Industry", CustomControlsListIndustryCallbackMethod);
-                    }
                 }
                 else
                 {
@@ -847,7 +815,6 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CustomSelectionIndustryInfo = result;
-                    BusyIndicatorNotification();
                 }
                 else
                 {
@@ -858,12 +825,11 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
             }
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                //BusyIndicatorNotification();
+                BusyIndicatorNotification();
             }
         }
 
@@ -882,7 +848,6 @@ namespace GreenField.Gadgets.ViewModels
                         CreateXML(SecurityData);
                     }
                     ResultsListVisibility = Visibility.Visible;
-                    BusyIndicatorNotification();
                 }
                 else
                 {
@@ -893,7 +858,6 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
             }
             finally
             {
@@ -912,11 +876,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CSTUserPreference = result;
-
-                    SavedDataListInfo = (from res in result select new { ListName = res.ListName }).AsEnumerable().Select(t => t.ListName).Distinct()
-                                  .ToList();
-                    //   CreateXML();
-                    BusyIndicatorNotification();
+                    SavedDataListInfo = (from res in result select new { ListName = res.ListName }).AsEnumerable().Select(t => t.ListName).Distinct().ToList();
                 }
                 else
                 {
@@ -927,12 +887,11 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
             }
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                //BusyIndicatorNotification();
+                BusyIndicatorNotification();
             }
         }
 
@@ -1292,10 +1251,9 @@ namespace GreenField.Gadgets.ViewModels
             {
                 SecuritySelectionGridViewVisibility = Visibility.Visible;
                 DataListSelectionGridViewVisibility = Visibility.Collapsed;
-                BusyIndicatorNotification(true, "Retrieving Data...");
 
                 //fetch PortfolioId list 
-                _dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
+                FetchSelectionCriteriaData();
 
                 //fetch final list of securities
                 RetrieveResultsList();
@@ -1393,6 +1351,22 @@ namespace GreenField.Gadgets.ViewModels
             }
 
             return replacedStr;
+        }
+
+        public void FetchSelectionCriteriaData()
+        {
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            _dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            _dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            _dbInteractivity.RetrieveCustomControlsList("Region", CustomControlsListRegionCallbackMethod);
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            _dbInteractivity.RetrieveCustomControlsList("Country", CustomControlsListCountryCallbackMethod);
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            _dbInteractivity.RetrieveCustomControlsList("Sector", CustomControlsListSectorCallbackMethod);
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            _dbInteractivity.RetrieveCustomControlsList("Industry", CustomControlsListIndustryCallbackMethod);
         }
 
         #endregion
