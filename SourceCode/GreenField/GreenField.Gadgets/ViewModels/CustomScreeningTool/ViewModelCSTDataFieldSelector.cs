@@ -519,6 +519,9 @@ namespace GreenField.Gadgets.ViewModels
                 if (SelectedFieldsDataList != null)
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId))
+                        //&& SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId)
+                        //&& SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId)
+                        //&& SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId))
                     {
                         IsAddButtonEnabled = false;
                         return false;
