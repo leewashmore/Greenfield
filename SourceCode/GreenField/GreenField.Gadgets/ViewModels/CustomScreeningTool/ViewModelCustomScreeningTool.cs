@@ -294,14 +294,11 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
-
         public Visibility _portfolioSelectionVisibility = Visibility.Collapsed;
         public Visibility PortfolioSelectionVisibility
         {
             get
             {
-                //_portfolioSelectionVisibility = Visibility.Visible;
                 return _portfolioSelectionVisibility;
             }
             set
@@ -316,7 +313,6 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                //_benchmarkSelectionVisibility = Visibility.Visible;
                 return _benchmarkSelectionVisibility;
             }
             set
@@ -331,7 +327,6 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                //_customSelectionVisibility = Visibility.Visible;
                 return _customSelectionVisibility;
             }
             set
@@ -1292,15 +1287,16 @@ namespace GreenField.Gadgets.ViewModels
             SelectionRaisePropertyChanged();
             CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, null);
             CSTNavigation.UpdateString(CSTNavigationInfo.ListName, null);
-            //CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, null);
 
             if (_dbInteractivity != null && IsActive)
             {
                 SecuritySelectionGridViewVisibility = Visibility.Visible;
                 DataListSelectionGridViewVisibility = Visibility.Collapsed;
                 BusyIndicatorNotification(true, "Retrieving Data...");
+
                 //fetch PortfolioId list 
                 _dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
+
                 //fetch final list of securities
                 RetrieveResultsList();
             }

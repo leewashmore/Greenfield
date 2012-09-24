@@ -44,6 +44,10 @@ namespace GreenField.Gadgets.ViewModels
 
         string userEnteredListName;
         string userEnteredAccessibility;
+        int flagRefAdd = 0;
+        int flagFinAdd = 0;
+        int flagCurAdd = 0;
+        int flagFvaAdd = 0;
         #endregion
 
         #region Constructor
@@ -271,8 +275,8 @@ namespace GreenField.Gadgets.ViewModels
             get
             {
                 int currentYear = DateTime.Now.Year;
-                return new List<int> { currentYear, currentYear - 10, currentYear - 9, currentYear - 8, currentYear - 7, currentYear - 6, currentYear - 5,
-                                       currentYear - 4, currentYear - 3, currentYear - 2, currentYear - 1, currentYear + 1, currentYear + 2,
+                return new List<int> { currentYear - 10, currentYear - 9, currentYear - 8, currentYear - 7, currentYear - 6, currentYear - 5,
+                                       currentYear - 4, currentYear - 3, currentYear - 2, currentYear - 1, currentYear, currentYear + 1, currentYear + 2,
                                        currentYear + 3, currentYear + 4, currentYear + 5 };
             }
 
@@ -294,8 +298,8 @@ namespace GreenField.Gadgets.ViewModels
             get
             {
                 int currentYear = DateTime.Now.Year;
-                return new List<int> { currentYear, currentYear - 10, currentYear - 9, currentYear - 8, currentYear - 7, currentYear - 6, currentYear - 5,
-                                       currentYear - 4, currentYear - 3, currentYear - 2, currentYear - 1, currentYear + 1, currentYear + 2,
+                return new List<int> { currentYear - 10, currentYear - 9, currentYear - 8, currentYear - 7, currentYear - 6, currentYear - 5,
+                                       currentYear - 4, currentYear - 3, currentYear - 2, currentYear - 1, currentYear, currentYear + 1, currentYear + 2,
                                        currentYear + 3, currentYear + 4, currentYear + 5};
             }
         }
@@ -436,12 +440,14 @@ namespace GreenField.Gadgets.ViewModels
                     else
                     {
                         IsAddButtonEnabled = true;
+                        flagRefAdd = 1;
                         return true;
                     }
                 }
                 else 
                 {
                     IsAddButtonEnabled = true;
+                    flagRefAdd = 1;
                     return true;
                 }
             }
@@ -455,45 +461,49 @@ namespace GreenField.Gadgets.ViewModels
 
         private void AddSecurityRefCommandMethod(object param)
         {
-            ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
-            string listName;
-            string accessibility;
-            int tempOrder;
-            if (Flag == "Edit")
+            if (flagRefAdd == 1)
             {
-                temp = this.SelectedFieldsDataList;
-                tempOrder = temp.Count;
-
-                listName = SelectedFieldsDataList[0].ListName;
-                accessibility = SelectedFieldsDataList[0].Accessibility;
-            }
-            else
-            {
-                if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
+                string listName;
+                string accessibility;
+                int tempOrder;
+                if (Flag == "Edit")
                 {
-                    listName = string.Empty;
-                    accessibility = string.Empty;
-                    tempOrder = -1;
+                    temp = this.SelectedFieldsDataList;
+                    tempOrder = temp.Count;
+
+                    listName = SelectedFieldsDataList[0].ListName;
+                    accessibility = SelectedFieldsDataList[0].Accessibility;
                 }
                 else
                 {
-                    listName = SelectedFieldsDataList[0].ListName;
-                    accessibility = SelectedFieldsDataList[0].Accessibility;
-                    temp = this.SelectedFieldsDataList;
-                    tempOrder = SelectedFieldsDataList.Count;
-                }              
+                    if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                    {
+                        listName = string.Empty;
+                        accessibility = string.Empty;
+                        tempOrder = -1;
+                    }
+                    else
+                    {
+                        listName = SelectedFieldsDataList[0].ListName;
+                        accessibility = SelectedFieldsDataList[0].Accessibility;
+                        temp = this.SelectedFieldsDataList;
+                        tempOrder = SelectedFieldsDataList.Count;
+                    }
+                }
+                temp.Add(new CSTUserPreferenceInfo()
+                {
+                    ScreeningId = SelectedSecurityReferenceData.ScreeningId,
+                    DataDescription = SelectedSecurityReferenceData.DataDescription,
+                    UserName = UserSession.SessionManager.SESSION.UserName,
+                    ListName = listName,
+                    Accessibility = accessibility,
+                    DataPointsOrder = tempOrder++,
+                    TableColumn = SelectedSecurityReferenceData.DataColumn
+                });
+                SelectedFieldsDataList = temp;
+                flagRefAdd = 0;
             }
-            temp.Add(new CSTUserPreferenceInfo()
-            {
-                ScreeningId = SelectedSecurityReferenceData.ScreeningId,
-                DataDescription = SelectedSecurityReferenceData.DataDescription,
-                UserName = UserSession.SessionManager.SESSION.UserName,
-                ListName = listName,
-                Accessibility = accessibility,
-                DataPointsOrder = tempOrder++,
-                TableColumn = SelectedSecurityReferenceData.DataColumn
-            });
-            SelectedFieldsDataList = temp;
         }
 
         private bool AddPeriodFinCommandValidationMethod(object param)
@@ -516,12 +526,14 @@ namespace GreenField.Gadgets.ViewModels
                     else
                     {
                         IsAddButtonEnabled = true;
+                        flagFinAdd = 1;
                         return true;
                     }
                 }
                 else
                 {
                     IsAddButtonEnabled = true;
+                    flagFinAdd = 1;
                     return true;
                 }
             }
@@ -534,52 +546,56 @@ namespace GreenField.Gadgets.ViewModels
 
         private void AddPeriodFinCommandMethod(object param)
         {
-            ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
-            int tempOrder;
-            string listName;
-            string accessibility;
-            if (Flag == "Edit")
+            if (flagFinAdd == 1)
             {
-                temp = this.SelectedFieldsDataList;
-                tempOrder = temp.Count();
-                listName = SelectedFieldsDataList[0].ListName;
-                accessibility = SelectedFieldsDataList[0].Accessibility;
-            }
-            else
-            {
-                if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
+                int tempOrder;
+                string listName;
+                string accessibility;
+                if (Flag == "Edit")
                 {
-                    tempOrder = -1;
-                    listName = string.Empty;
-                    accessibility = string.Empty;
+                    temp = this.SelectedFieldsDataList;
+                    tempOrder = temp.Count();
+                    listName = SelectedFieldsDataList[0].ListName;
+                    accessibility = SelectedFieldsDataList[0].Accessibility;
                 }
                 else
                 {
-                    temp = this.SelectedFieldsDataList;
-                    tempOrder = SelectedFieldsDataList.Count;
-                    listName = SelectedFieldsDataList[0].ListName;
-                    accessibility = SelectedFieldsDataList[0].Accessibility;
-                }               
-            }
-            for (int i = SelectedFromYearInfo; i <= SelectedToYearInfo; i++)
-            {
-                temp.Add(new CSTUserPreferenceInfo()
+                    if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                    {
+                        tempOrder = -1;
+                        listName = string.Empty;
+                        accessibility = string.Empty;
+                    }
+                    else
+                    {
+                        temp = this.SelectedFieldsDataList;
+                        tempOrder = SelectedFieldsDataList.Count;
+                        listName = SelectedFieldsDataList[0].ListName;
+                        accessibility = SelectedFieldsDataList[0].Accessibility;
+                    }
+                }
+                for (int i = SelectedFromYearInfo; i <= SelectedToYearInfo; i++)
                 {
-                    ScreeningId = SelectedPeriodFinancialsData.ScreeningId,
-                    DataDescription = SelectedPeriodFinancialsData.DataDescription,
-                    UserName = UserSession.SessionManager.SESSION.UserName,
-                    ListName = listName,
-                    Accessibility = accessibility,
-                    DataSource = SelectedDataSourceInfo,
-                    PeriodType = SelectedPeriodTypeInfo,
-                    YearType = SelectedYearTypeInfo,
-                    FromDate = i,
-                    ToDate = SelectedToYearInfo,
-                    DataPointsOrder = tempOrder++,
-                    TableColumn = SelectedPeriodFinancialsData.DataDescription
-                });
+                    temp.Add(new CSTUserPreferenceInfo()
+                    {
+                        ScreeningId = SelectedPeriodFinancialsData.ScreeningId,
+                        DataDescription = SelectedPeriodFinancialsData.DataDescription,
+                        UserName = UserSession.SessionManager.SESSION.UserName,
+                        ListName = listName,
+                        Accessibility = accessibility,
+                        DataSource = SelectedDataSourceInfo,
+                        PeriodType = SelectedPeriodTypeInfo,
+                        YearType = SelectedYearTypeInfo,
+                        FromDate = i,
+                        ToDate = SelectedToYearInfo,
+                        DataPointsOrder = tempOrder++,
+                        TableColumn = SelectedPeriodFinancialsData.DataDescription
+                    });
+                }
+                SelectedFieldsDataList = temp;
+                flagFinAdd = 0;
             }
-            SelectedFieldsDataList = temp;
         }
 
         private bool AddCurrentFinCommandValidationMethod(object param)
@@ -602,12 +618,14 @@ namespace GreenField.Gadgets.ViewModels
                     else
                     {
                         IsAddButtonEnabled = true;
+                        flagCurAdd = 1;
                         return true;
                     }
                 }
                 else
                 {
                     IsAddButtonEnabled = true;
+                    flagCurAdd = 1;
                     return true;
                 }
             }
@@ -620,45 +638,49 @@ namespace GreenField.Gadgets.ViewModels
 
         private void AddCurrentFinCommandMethod(object param)
         {
-            ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
-            int tempOrder;
-            string listName;
-            string accessibility;
-            if (Flag == "Edit")
+            if (flagCurAdd == 1)
             {
-                listName = SelectedFieldsDataList[0].ListName;
-                accessibility = SelectedFieldsDataList[0].Accessibility;
-                temp = this.SelectedFieldsDataList;
-                tempOrder = temp.Count();               
-            }
-            else
-            {
-                if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
-                {
-                    tempOrder = -1;
-                    listName = string.Empty;
-                    accessibility = string.Empty;
-                }
-                else
+                ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
+                int tempOrder;
+                string listName;
+                string accessibility;
+                if (Flag == "Edit")
                 {
                     listName = SelectedFieldsDataList[0].ListName;
                     accessibility = SelectedFieldsDataList[0].Accessibility;
                     temp = this.SelectedFieldsDataList;
-                    tempOrder = SelectedFieldsDataList.Count;
+                    tempOrder = temp.Count();
                 }
-             }
-            temp.Add(new CSTUserPreferenceInfo()
-            {
-                ScreeningId = SelectedCurrentFinancialsData.ScreeningId,
-                DataDescription = SelectedCurrentFinancialsData.DataDescription,
-                UserName = UserSession.SessionManager.SESSION.UserName,
-                ListName = listName,
-                Accessibility = accessibility,
-                DataSource = SelectedDataSourceInfo,
-                DataPointsOrder = tempOrder++,
-                TableColumn = SelectedCurrentFinancialsData.DataDescription
-            });
-            SelectedFieldsDataList = temp;
+                else
+                {
+                    if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                    {
+                        tempOrder = -1;
+                        listName = string.Empty;
+                        accessibility = string.Empty;
+                    }
+                    else
+                    {
+                        listName = SelectedFieldsDataList[0].ListName;
+                        accessibility = SelectedFieldsDataList[0].Accessibility;
+                        temp = this.SelectedFieldsDataList;
+                        tempOrder = SelectedFieldsDataList.Count;
+                    }
+                }
+                temp.Add(new CSTUserPreferenceInfo()
+                {
+                    ScreeningId = SelectedCurrentFinancialsData.ScreeningId,
+                    DataDescription = SelectedCurrentFinancialsData.DataDescription,
+                    UserName = UserSession.SessionManager.SESSION.UserName,
+                    ListName = listName,
+                    Accessibility = accessibility,
+                    DataSource = SelectedDataSourceInfo,
+                    DataPointsOrder = tempOrder++,
+                    TableColumn = SelectedCurrentFinancialsData.DataDescription
+                });
+                SelectedFieldsDataList = temp;
+                flagCurAdd = 0;
+            }
         }
 
         private bool AddFairValueCommandValidationMethod(object param)
@@ -681,12 +703,14 @@ namespace GreenField.Gadgets.ViewModels
                     else
                     {
                         IsAddButtonEnabled = true;
+                        flagFvaAdd = 1;
                         return true;
                     }
                 }
                 else
                 {
                     IsAddButtonEnabled = true;
+                    flagFvaAdd = 1;
                     return true;
                 }
             }
@@ -699,20 +723,8 @@ namespace GreenField.Gadgets.ViewModels
 
         private void AddFairValueCommandMethod(object param)
         {
-            //if (SelectedFieldsDataList != null)
-            //{
-            //    if (SelectedFieldsDataList.Count == 1 && SelectedFieldsDataList[0].ScreeningId == null)
-            //    {
-            //        return;
-            //    }
-            //    else if (!(SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedFairValueData.ScreeningId)))
-                 
-            //    {
-            //        return;
-            //    }
-            //}
-            //else
-            //{
+            if (flagFvaAdd == 1)
+            {
                 ObservableCollection<CSTUserPreferenceInfo> temp = new ObservableCollection<CSTUserPreferenceInfo>();
                 int tempOrder;
                 string listName;
@@ -753,8 +765,8 @@ namespace GreenField.Gadgets.ViewModels
                     TableColumn = SelectedFairValueData.DataColumn
                 });
                 SelectedFieldsDataList = temp;
-                //RaisePropertyChanged(() => this.SelectedFieldsDataList);
-           // }
+                flagFvaAdd = 0;
+            }
         }
 
         private bool RemoveCommandValidationMethod(object param)
@@ -1116,7 +1128,6 @@ namespace GreenField.Gadgets.ViewModels
 
         public void Initialize()
         {
-            //SelectedFieldsDataList = null;
             //fetch tabs data
             FetchTabsData();
             List<CSTUserPreferenceInfo> temp = new List<CSTUserPreferenceInfo>();
@@ -1125,21 +1136,20 @@ namespace GreenField.Gadgets.ViewModels
             Flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
             if (Flag != null)
             {
-                if (Flag == "Edit")
+                if (Flag == "Edit" || Flag == "View")
                 {
                     temp = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
                     foreach (CSTUserPreferenceInfo item in temp)
                     {
                         userPref.Add(item);
                     }
-                    //SelectedFieldsDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as ObservableCollection<CSTUserPreferenceInfo>;
                     SelectedFieldsDataList = userPref;
                 }
-            }
-            else
-            {
-                SelectedFieldsDataList = null;
-            }
+                else
+                {
+                    SelectedFieldsDataList = null;
+                }
+            }          
         }
 
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)

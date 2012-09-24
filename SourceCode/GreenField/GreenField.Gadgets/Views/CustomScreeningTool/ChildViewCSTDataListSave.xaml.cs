@@ -76,34 +76,6 @@ namespace GreenField.Gadgets.Views
 
         public List<CSTUserPreferenceInfo> FetchedCSTUserPreference { get; set; }
 
-        //public string ListName { get; set; }
-        
-
-        //private bool _isSelectedRbtnPublic = true;
-        //public bool IsSelectedRbtnPublic
-        //{
-        //    get { return _isSelectedRbtnPublic; }
-        //    set
-        //    {
-        //        if (_isSelectedRbtnPublic != value)
-        //        {
-        //            _isSelectedRbtnPublic = value;
-        //        }
-        //    }
-        //}
-
-        //private bool _isSelectedRbtnPrivate = false;
-        //public bool IsSelectedRbtnPrivate
-        //{
-        //    get { return _isSelectedRbtnPrivate; }
-        //    set
-        //    {
-        //        if (_isSelectedRbtnPrivate != value)
-        //        {
-        //            _isSelectedRbtnPrivate = value;
-        //        }              
-        //    }
-        //}
         #endregion
 
         #region Events
@@ -111,7 +83,6 @@ namespace GreenField.Gadgets.Views
         private void HandleCheck(object sender, RoutedEventArgs e)
         {
             RadioButton rb = sender as RadioButton;
-            //choiceTextBlock.Text = "You chose: " + rb.GroupName + ": " + rb.Name;
             if (Convert.ToBoolean(rbtnPublic.IsChecked))
             {
                 SelectedAccessibility = "Public";
@@ -124,7 +95,7 @@ namespace GreenField.Gadgets.Views
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedAccessibility == null || txtDataListName.Text.Count() < 0 || txtDataListName.Text == "")
+            if (SelectedAccessibility == null || string.IsNullOrWhiteSpace(txtDataListName.Text))
             {
                 this.txtMessage.Text = "*Neither ListName nor Accessibility can be left empty.";
                 this.txtMessage.Visibility = System.Windows.Visibility.Visible;
