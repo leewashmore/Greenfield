@@ -197,8 +197,22 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
                 if (value != null && _dbInteractivity != null)
                 {
+                    if (value.AcceptWithoutDiscussionFlag == null)
+                    {
+                        value.AcceptWithoutDiscussionFlag = true;
+                    }
+
                     AcceptWithoutDiscussionIsChecked = value.AcceptWithoutDiscussionFlag;
                     ICDecisionIsEnable = !(Convert.ToBoolean(value.AcceptWithoutDiscussionFlag));
+
+                    if (AcceptWithoutDiscussionIsChecked == true)
+                    {
+                        value.CommitteePFVMeasure = value.SecurityPFVMeasure;
+                        value.CommitteeBuyRange = value.SecurityBuyRange;
+                        value.CommitteeSellRange = value.SecuritySellRange;
+                        value.CommitteeRecommendation = value.SecurityRecommendation;
+                    }
+
                     BusyIndicatorNotification(true, "Retrieving Voting information for the selected presentation");
                     _dbInteractivity.RetrievePresentationVoterData(value.PresentationID, RetrievePresentationVoterDataCallbackMethod);
                 }
@@ -332,6 +346,24 @@ namespace GreenField.Gadgets.ViewModels
                     PresentationPostMeetingVoterInfo = result
                         .Where(record => record.PostMeetingFlag == true && record.Name.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower())
                         .OrderBy(record => record.Name).ToList();
+
+                    foreach (VoterInfo postMeetingVoterInfo in PresentationPostMeetingVoterInfo)
+                    {
+                        if (postMeetingVoterInfo.VoteType == null)
+                        {
+                            VoterInfo preMeetingVoterInfo = PresentationPreMeetingVoterInfo
+                                .Where(record => record.Name == postMeetingVoterInfo.Name).FirstOrDefault();
+                            if(preMeetingVoterInfo != null)
+                            {
+                                postMeetingVoterInfo.VoteType = preMeetingVoterInfo.VoteType;
+                                postMeetingVoterInfo.VoterPFVMeasure = preMeetingVoterInfo.VoterPFVMeasure;
+                                postMeetingVoterInfo.VoterBuyRange = preMeetingVoterInfo.VoterBuyRange;
+                                postMeetingVoterInfo.VoterSellRange = preMeetingVoterInfo.VoterSellRange;
+                                postMeetingVoterInfo.VoterRecommendation = preMeetingVoterInfo.VoterRecommendation;
+                            }
+                        }                        
+                    }
+
                     SecurityIsHeld = SelectedPresentationOverviewInfo.CurrentHoldings.ToLower() == "yes";
 
                     if (_dbInteractivity != null)

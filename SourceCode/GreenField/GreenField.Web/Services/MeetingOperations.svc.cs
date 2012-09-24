@@ -367,6 +367,9 @@ namespace GreenField.Web.Services
                 presentationOverviewData.SecurityCountryCode = securityData.ISO_COUNTRY_CODE;
                 presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
                 presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
+                if (securityData.CLOSING_PRICE != null)
+                    presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
+
                 presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : securityData.CLOSING_PRICE.ToString())
                     + " " + (securityData.TRADING_CURRENCY == null ? "" : securityData.TRADING_CURRENCY.ToString()); 
                 #endregion
@@ -377,6 +380,19 @@ namespace GreenField.Web.Services
                 if (lastBusinessRecord != null)
                     if (lastBusinessRecord.PORTFOLIO_DATE != null)
                         lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+                
+                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> securityHoldingData = entity.GF_PORTFOLIO_HOLDINGS.Where(
+                    record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID && record.PORTFOLIO_DATE == lastBusinessDate
+                    && record.DIRTY_VALUE_PC > 0)
+                    .ToList();
+
+                decimal? sumSecDirtyValuePC = securityHoldingData.Sum(record => record.DIRTY_VALUE_PC);
+                decimal? sumSecBalanceNominal = securityHoldingData.Sum(record => record.BALANCE_NOMINAL);
+                if (sumSecDirtyValuePC != null)
+                {
+                    presentationOverviewData.SecurityCashPosition = Convert.ToSingle(sumSecDirtyValuePC);
+                    presentationOverviewData.SecurityPosition = Convert.ToInt64(sumSecBalanceNominal);
+                }
 
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> portfolioData = entity.GF_PORTFOLIO_HOLDINGS.Where(
                     record => record.PORTFOLIO_ID == portfolio.PortfolioId && record.PORTFOLIO_DATE == lastBusinessDate)
@@ -441,10 +457,10 @@ namespace GreenField.Web.Services
                         presentationOverviewData.SecurityPFVMeasure = dataMasterRecord.DATA_DESC;
                         presentationOverviewData.SecurityBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
                         presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
-
-                        presentationOverviewData.CommitteePFVMeasure = dataMasterRecord.DATA_DESC;
-                        presentationOverviewData.CommitteeBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
-                        presentationOverviewData.CommitteeSellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
+                        presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
+                        //presentationOverviewData.CommitteePFVMeasure = dataMasterRecord.DATA_DESC;
+                        //presentationOverviewData.CommitteeBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
+                        //presentationOverviewData.CommitteeSellRange = Convert.ToSingle(fairValueRecord.FV_SELL);                        
 
                         presentationOverviewData.SecurityBuySellvsCrnt = securityData.TRADING_CURRENCY + " " +
                             String.Format("{0:n4}", fairValueRecord.FV_BUY) +
@@ -457,15 +473,15 @@ namespace GreenField.Web.Services
                         {
                             presentationOverviewData.SecurityRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= upperLimit
                                 ? "Hold" : "Sell";
-                            presentationOverviewData.CommitteeRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= upperLimit
-                                ? "Hold" : "Sell";
+                            //presentationOverviewData.CommitteeRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= upperLimit
+                            //    ? "Hold" : "Sell";
                         }
                         else
                         {
                             presentationOverviewData.SecurityRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= lowerLimit
                                 ? "Buy" : "Watch";
-                            presentationOverviewData.CommitteeRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= lowerLimit
-                                ? "Buy" : "Watch";
+                            //presentationOverviewData.CommitteeRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= lowerLimit
+                            //    ? "Buy" : "Watch";
                         }
 
 
@@ -836,7 +852,7 @@ namespace GreenField.Web.Services
             {
                 XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverViewData }
                     , strictlyInclusiveProperties: new List<string> { "PresentationID", "AdminNotes", "CommitteePFVMeasure", "CommitteeBuyRange",
-                    "CommitteeSellRange" });
+                    "CommitteeSellRange", "CommitteeRecommendation" });
                 xmlDoc = GetEntityXml<VoterInfo>(parameters: voterInfo, xmlDoc: xmlDoc, strictlyInclusiveProperties: new List<string> { "VoterID",
                     "VoterPFVMeasure", "VoterBuyRange", "VoterSellRange", "VoteType" });
                 String xmlScript = xmlDoc.ToString();
@@ -1641,6 +1657,76 @@ namespace GreenField.Web.Services
             }
         }
         #endregion
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<SummaryReportData> RetrieveSummaryReportData(DateTime startDate, DateTime endDate)
+        {
+            try
+            {
+                ICPresentationEntities iCPEntity = new ICPresentationEntities();
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                ExternalResearchEntities externalResearchEntity = new ExternalResearchEntities();
+
+                List<SummaryReportData> result = iCPEntity.RetrieveSummaryReportDetails(startDate, endDate).ToList();
+
+                DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
+                GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                if (lastBusinessRecord != null)
+                    if (lastBusinessRecord.PORTFOLIO_DATE != null)
+                        lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+
+                foreach (SummaryReportData item in result)
+                {
+
+                    DimensionEntitiesService.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
+                            .Where(record => record.TICKER == item.SecurityTicker
+                                && record.ISSUE_NAME == item.SecurityName)
+                            .FirstOrDefault();
+
+                    List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> securityHoldingData = entity.GF_PORTFOLIO_HOLDINGS.Where(
+                    record => record.ISSUE_NAME == item.SecurityName && record.TICKER == item.SecurityTicker && record.PORTFOLIO_DATE == lastBusinessDate
+                    && record.DIRTY_VALUE_PC > 0)
+                    .ToList();
+
+                    decimal? sumSecDirtyValuePC = securityHoldingData.Sum(record => record.DIRTY_VALUE_PC);
+                    decimal? sumSecBalanceNominal = securityHoldingData.Sum(record => record.BALANCE_NOMINAL);
+                    if (sumSecDirtyValuePC != null)
+                    {
+                        item.CurrentCashPosition = Convert.ToSingle(sumSecDirtyValuePC);
+                        item.CurrentPosition = Convert.ToInt64(sumSecBalanceNominal);
+                    }
+
+                    String securityId = securityData.SECURITY_ID == null ? null : securityData.SECURITY_ID.ToString();
+                    FAIR_VALUE fairValueRecord = externalResearchEntity.FAIR_VALUE.Where(record => record.VALUE_TYPE == "PRIMARY"
+                        && record.SECURITY_ID == securityId).FirstOrDefault();
+
+                    if (fairValueRecord != null)
+                    {
+                        DATA_MASTER dataMasterRecord = externalResearchEntity.DATA_MASTER
+                            .Where(record => record.DATA_ID == fairValueRecord.FV_MEASURE).FirstOrDefault();
+
+                        if (dataMasterRecord != null)
+                        {
+                            item.CurrentPFVMeasure = dataMasterRecord.DATA_DESC;
+                            item.CurrentBuySellRange = String.Format("{0:n2} - {1:n2}",fairValueRecord.FV_BUY, fairValueRecord.FV_SELL);
+                            item.CurrentPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
+                            if(fairValueRecord.UPSIDE != null)
+                                item.CurrentUpside = Convert.ToSingle(fairValueRecord.UPSIDE);
+                        }       
+                    }
+                }
+
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
 
     }
 }

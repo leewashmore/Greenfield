@@ -227,7 +227,7 @@ namespace GreenField.Common
 
         public static string ICPRESENTATION_MEETING_MINUTES = "IC Admin Meeting Minutes";
 
-        public static string ICPRESENTATION_SUMMARY_REPORT = "IC SRD 4.2.4";
+        public static string ICPRESENTATION_SUMMARY_REPORT = "Investment Committee Summary Report";
 
         public static string ICPRESENTATION_METRICS_REPORT = "IC SRD 4.2.3";
 
