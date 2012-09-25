@@ -75,7 +75,7 @@
                         <telerik:GridViewDataColumn x:Name="dgSecurityName" Header="Security Name" DataMemberBinding="{Binding SecurityName}" Width="Auto"  
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" HeaderTextAlignment="Left" TextAlignment="Left"
                                                      CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
-                        <telerik:GridViewDataColumn x:Name="dgBasisPts" Header="Basis Pts" DataMemberBinding="{Binding SecurityAlpha, StringFormat=\{0:n0\}, Converter={StaticResource basisPointsConverter}}" Width="*" TextAlignment="Right" 
+                        <telerik:GridViewDataColumn x:Name="dgBasisPts" Header="Basis Pts" DataMemberBinding="{Binding SecurityAlpha, Converter={StaticResource basisPointsConverter}}" Width="*" TextAlignment="Right" 
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" HeaderTextAlignment="Right"
                                                      CellStyleSelector="{StaticResource GridRowMarkerStyle}"/>
                         <telerik:GridViewDataColumn x:Name="dgSector" Header="Sector" DataMemberBinding="{Binding SecuritySectorName}" Width="Auto"  
