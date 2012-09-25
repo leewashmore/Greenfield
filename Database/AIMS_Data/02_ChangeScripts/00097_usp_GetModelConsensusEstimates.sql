@@ -59,9 +59,9 @@ as
 	   and cce.CURRENCY = @CURRENCY
 	   and cce.AMOUNT_TYPE = 'ESTIMATE'
 	 order by cm.ESTIMATE_DESC, cce.PERIOD_YEAR,cce.PERIOD_TYPE
-	 ;
-END
+	 
 
+GO
 --indicate thet current script is executed
 declare @CurrentScriptVersion as nvarchar(100) = '00097'
 insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())
