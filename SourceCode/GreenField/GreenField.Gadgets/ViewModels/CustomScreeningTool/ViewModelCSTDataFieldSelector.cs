@@ -208,6 +208,8 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _selectedDataSourceInfo = value;
                 RaisePropertyChanged(() => this.SelectedDataSourceInfo);
+                RaisePropertyChanged(() => this.AddPeriodFinCommand);
+                RaisePropertyChanged(() => this.AddCurrentFinCommand);
             }
         }
 
@@ -233,6 +235,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _fairvalueSelectedDataSourceInfo = value;
                 RaisePropertyChanged(() => this.FairvalueSelectedDataSourceInfo);
+                RaisePropertyChanged(() => this.AddFairValueCommand);
             }
         }
 
@@ -248,8 +251,12 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedYearTypeInfo; }
             set
             {
-                _selectedYearTypeInfo = value;
-                RaisePropertyChanged(() => this.SelectedYearTypeInfo);
+                if (_selectedYearTypeInfo != value)
+                {
+                    _selectedYearTypeInfo = value;
+                    RaisePropertyChanged(() => this.SelectedYearTypeInfo);
+                    RaisePropertyChanged(() => this.AddPeriodFinCommand);
+                }
             }
         }
 
@@ -265,8 +272,12 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedPeriodTypeInfo; }
             set
             {
-                _selectedPeriodTypeInfo = value;
-                RaisePropertyChanged(() => this.SelectedPeriodTypeInfo);
+                if (_selectedPeriodTypeInfo != value)
+                {
+                    _selectedPeriodTypeInfo = value;
+                    RaisePropertyChanged(() => this.SelectedPeriodTypeInfo);
+                    RaisePropertyChanged(() => this.AddPeriodFinCommand);
+                }
             }
         }
 
@@ -519,12 +530,23 @@ namespace GreenField.Gadgets.ViewModels
                 if (SelectedFieldsDataList != null)
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId))
-                        //&& SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId)
-                        //&& SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId)
-                        //&& SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId))
                     {
-                        IsAddButtonEnabled = false;
-                        return false;
+                        CSTUserPreferenceInfo temp = new CSTUserPreferenceInfo();
+                        temp = SelectedFieldsDataList.Where(a => a.ScreeningId == SelectedPeriodFinancialsData.ScreeningId
+                                                                 && a.DataSource == SelectedDataSourceInfo
+                                                                 && a.PeriodType == SelectedPeriodTypeInfo
+                                                                 && a.YearType == SelectedYearTypeInfo).FirstOrDefault();
+                        if (temp != null)
+                        {
+                            IsAddButtonEnabled = false;
+                            return false;
+                        }
+                        else
+                        {
+                            IsAddButtonEnabled = true;
+                            flagFinAdd = 1;
+                            return true;
+                        }
                     }
                     else
                     {
@@ -615,8 +637,19 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedCurrentFinancialsData.ScreeningId))
                     {
-                        IsAddButtonEnabled = false;
-                        return false;
+                        List<CSTUserPreferenceInfo> existingRow = new List<CSTUserPreferenceInfo>();
+                        existingRow = SelectedFieldsDataList.Where(a => a.ScreeningId == SelectedCurrentFinancialsData.ScreeningId).ToList();
+                        if (existingRow.Select(a => a.DataSource).Contains(SelectedDataSourceInfo))
+                        {
+                            IsAddButtonEnabled = false;
+                            return false;
+                        }
+                        else
+                        {
+                            IsAddButtonEnabled = true;
+                            flagCurAdd = 1;
+                            return true;
+                        }
                     }
                     else
                     {
@@ -700,8 +733,19 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedFairValueData.ScreeningId))
                     {
-                        IsAddButtonEnabled = false;
-                        return false;
+                        List<CSTUserPreferenceInfo> existingRow = new List<CSTUserPreferenceInfo>();
+                        existingRow = SelectedFieldsDataList.Where(a => a.ScreeningId == SelectedFairValueData.ScreeningId).ToList();
+                        if (existingRow.Select(a => a.DataSource).Contains(FairvalueSelectedDataSourceInfo))
+                        {
+                            IsAddButtonEnabled = false;
+                            return false;
+                        }
+                        else
+                        {
+                            IsAddButtonEnabled = true;
+                            flagFvaAdd = 1;
+                            return true;
+                        }
                     }
                     else
                     {

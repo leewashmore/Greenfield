@@ -543,10 +543,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private void SubmitCommandMethod(object param)
         {
-            //create list of selected options and save in the user class and fecth the securities based on filter selctions
-            //SecuritySelectionGridViewVisibility = Visibility.Collapsed;
-            //DataListSelectionGridViewVisibility = Visibility.Visible;
-
+            //create list of selected options and save in the user class and fetch the securities based on filter selctions
             DataListSelectionGridViewVisibility = Visibility.Visible;
             RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
 
@@ -684,7 +681,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
+                //BusyIndicatorNotification();
             }
         }
 
@@ -717,7 +714,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
+               // BusyIndicatorNotification();
             }
         }
 
@@ -745,7 +742,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
+               // BusyIndicatorNotification();
             }
         }
 
@@ -773,7 +770,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
+               // BusyIndicatorNotification();
             }
         }
 
@@ -829,7 +826,7 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
+               // BusyIndicatorNotification();
             }
         }
 
@@ -876,22 +873,26 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CSTUserPreference = result;
-                    SavedDataListInfo = (from res in result select new { ListName = res.ListName }).AsEnumerable().Select(t => t.ListName).Distinct().ToList();
+                    //SavedDataListInfo = (from res in result select new { ListName = res.ListName }).AsEnumerable().Select(t => t.ListName).Distinct().ToList();
+                    SavedDataListInfo = result.Select(a => a.ListName).Distinct().ToList();
+                    BusyIndicatorNotification();
                 }
                 else
                 {
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
                 }
             }
             catch (Exception ex)
             {
+                BusyIndicatorNotification();
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
+               // BusyIndicatorNotification();
             }
         }
 
