@@ -1917,6 +1917,63 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<GetFairValueComposition_Result>("SaveUpdatedFairValueMeasures", securityIdParameter, xmlScriptParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        public ObjectResult<DataPointsModelUploadData> RetrieveDataPointsModelUpload(global::System.String iSSUER_ID)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<DataPointsModelUploadData>("RetrieveDataPointsModelUpload", iSSUER_IDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        public ObjectResult<INTERNAL_ISSUER> RetrieveCOAType(global::System.String iSSUER_ID)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<INTERNAL_ISSUER>("RetrieveCOAType", iSSUER_IDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        public ObjectResult<INTERNAL_ISSUER> RetrieveCOAType(global::System.String iSSUER_ID, MergeOption mergeOption)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<INTERNAL_ISSUER>("RetrieveCOAType", mergeOption, iSSUER_IDParameter);
+        }
 
         #endregion
     }
@@ -7687,6 +7744,107 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _ACTUAL;
         partial void OnACTUALChanging(Nullable<global::System.Decimal> value);
         partial void OnACTUALChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="DataPointsModelUploadData")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class DataPointsModelUploadData : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new DataPointsModelUploadData object.
+        /// </summary>
+        /// <param name="sORT_ORDER">Initial value of the SORT_ORDER property.</param>
+        /// <param name="dATA_DESCRIPTION">Initial value of the DATA_DESCRIPTION property.</param>
+        public static DataPointsModelUploadData CreateDataPointsModelUploadData(global::System.Int32 sORT_ORDER, global::System.String dATA_DESCRIPTION)
+        {
+            DataPointsModelUploadData dataPointsModelUploadData = new DataPointsModelUploadData();
+            dataPointsModelUploadData.SORT_ORDER = sORT_ORDER;
+            dataPointsModelUploadData.DATA_DESCRIPTION = dATA_DESCRIPTION;
+            return dataPointsModelUploadData;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String COA
+        {
+            get
+            {
+                return _COA;
+            }
+            set
+            {
+                OnCOAChanging(value);
+                ReportPropertyChanging("COA");
+                _COA = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("COA");
+                OnCOAChanged();
+            }
+        }
+        private global::System.String _COA;
+        partial void OnCOAChanging(global::System.String value);
+        partial void OnCOAChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SORT_ORDER
+        {
+            get
+            {
+                return _SORT_ORDER;
+            }
+            set
+            {
+                OnSORT_ORDERChanging(value);
+                ReportPropertyChanging("SORT_ORDER");
+                _SORT_ORDER = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SORT_ORDER");
+                OnSORT_ORDERChanged();
+            }
+        }
+        private global::System.Int32 _SORT_ORDER;
+        partial void OnSORT_ORDERChanging(global::System.Int32 value);
+        partial void OnSORT_ORDERChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String DATA_DESCRIPTION
+        {
+            get
+            {
+                return _DATA_DESCRIPTION;
+            }
+            set
+            {
+                OnDATA_DESCRIPTIONChanging(value);
+                ReportPropertyChanging("DATA_DESCRIPTION");
+                _DATA_DESCRIPTION = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("DATA_DESCRIPTION");
+                OnDATA_DESCRIPTIONChanged();
+            }
+        }
+        private global::System.String _DATA_DESCRIPTION;
+        partial void OnDATA_DESCRIPTIONChanging(global::System.String value);
+        partial void OnDATA_DESCRIPTIONChanged();
 
         #endregion
     }

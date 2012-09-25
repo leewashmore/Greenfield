@@ -9,11 +9,43 @@ using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml;
 using System.Drawing;
 using X14 = DocumentFormat.OpenXml.Office2010.Excel;
+using GreenField.Web.DataContracts;
 
 namespace GreenField.Web.ExcelModel
 {
     public static class GenerateOpenXMLExcelModel
     {
+
+        #region PropertyDeclaration
+
+        private static ExcelModelData _modelData;
+        public static ExcelModelData ModelData
+        {
+            get { return _modelData; }
+            set { _modelData = value; }
+        }
+
+        private static List<DataPointsModelUploadData> _modelUploadDataPoints;
+        public static List<DataPointsModelUploadData> ModelUploadDataPoints
+        {
+            get
+            {
+                return _modelUploadDataPoints;
+            }
+            set
+            {
+                _modelUploadDataPoints = value;
+            }
+        }
+
+        private static ModelReferenceDataPoints _modelReferenceData;
+        public static ModelReferenceDataPoints ModelReferenceData
+        {
+            get { return _modelReferenceData; }
+            set { _modelReferenceData = value; }
+        }
+
+        #endregion
 
         /// <summary>
         /// Method to Generate Byte[] for the Excel File
@@ -21,11 +53,14 @@ namespace GreenField.Web.ExcelModel
         /// <param name="financialData"></param>
         /// <param name="consensusData"></param>
         /// <returns></returns>
-        public static byte[] GenerateExcel(List<FinancialStatementData> financialData, List<ModelConsensusEstimatesData> consensusData, string currencyReuters, string currencyConsensus)
+        public static byte[] GenerateExcel(List<FinancialStatementData> financialData, List<ModelConsensusEstimatesData> consensusData, string currencyReuters, string currencyConsensus, ExcelModelData modelData)
         {
             try
             {
                 string fileName = GetFileName();
+                ModelData = modelData;
+                ModelReferenceData = modelData.ModelReferenceData;
+                ModelUploadDataPoints = modelData.ModelUploadDataPoints;
 
                 // Create a spreadsheet document by supplying the filepath.
                 // By default, AutoSave = true, Editable = true, and Type = xlsx.
@@ -42,10 +77,11 @@ namespace GreenField.Web.ExcelModel
                     worksheetPart.Worksheet = new Worksheet();
 
                     // add styles to sheet
-                    WorkbookStylesPart wbsp = workbookpart.AddNewPart<WorkbookStylesPart>();                   
+                    WorkbookStylesPart wbsp = workbookpart.AddNewPart<WorkbookStylesPart>();
                     wbsp.Stylesheet = CreateStylesheet();
                     wbsp.Stylesheet.Save();
 
+                    #region Reuters Reported
                     // Add Sheets to the Workbook.
                     spreadsheetDocument.WorkbookPart.Workbook.AppendChild(new Sheets());
                     sheetId = 1;
@@ -58,7 +94,10 @@ namespace GreenField.Web.ExcelModel
                     GenerateReutersHeaders(worksheetPart, financialData, currencyReuters);
                     InsertValuesInWorksheet(worksheetPart, financialData);
                     workbookpart.Workbook.Save();
+                    #endregion
 
+                    #region ConsensusData
+                    //Generating 2nd WorkSheet
                     // Add a WorksheetPart to the WorkbookPart.
                     WorksheetPart worksheetPartConsensus = workbookpart.AddNewPart<WorksheetPart>("rId2");
                     worksheetPartConsensus.Worksheet = new Worksheet();
@@ -73,8 +112,43 @@ namespace GreenField.Web.ExcelModel
                     });
                     GenerateConsensusHeaders(worksheetPartConsensus, consensusData, currencyConsensus);
                     InsertConsensusDataInWorksheet(worksheetPartConsensus, consensusData);
+                    #endregion
 
-                    workbookpart.Workbook.Save();
+                    #region ModelUpload
+
+                    // Add a WorksheetPart to the WorkbookPart.
+                    WorksheetPart worksheetPartModelUpload = workbookpart.AddNewPart<WorksheetPart>("rId1");
+                    worksheetPartModelUpload.Worksheet = new Worksheet();
+                    worksheetPartModelUpload.Worksheet.Save();
+                    sheetId = 3;
+
+                    spreadsheetDocument.WorkbookPart.Workbook.GetFirstChild<Sheets>().AppendChild(new DocumentFormat.OpenXml.Spreadsheet.Sheet()
+                    {
+                        Id = spreadsheetDocument.WorkbookPart.GetIdOfPart(worksheetPartModelUpload),
+                        SheetId = sheetId,
+                        Name = "Model Upload"
+                    });
+                    GenerateModelUploadHeaders(worksheetPartModelUpload);
+                    GenerateDataModelUpload(worksheetPartModelUpload);
+                    #endregion
+
+                    #region Model Reference
+
+                    // Add a WorksheetPart to the WorkbookPart.
+                    WorksheetPart worksheetPartModelReference = workbookpart.AddNewPart<WorksheetPart>("rId0");
+                    worksheetPartModelReference.Worksheet = new Worksheet();
+                    worksheetPartModelReference.Worksheet.Save();
+                    sheetId = 4;
+
+                    spreadsheetDocument.WorkbookPart.Workbook.GetFirstChild<Sheets>().AppendChild(new DocumentFormat.OpenXml.Spreadsheet.Sheet()
+                    {
+                        Id = spreadsheetDocument.WorkbookPart.GetIdOfPart(worksheetPartModelReference),
+                        SheetId = sheetId,
+                        Name = "Model Reference"
+                    });
+                    GenerateModelReferenceData(worksheetPartModelReference);
+                    #endregion
+
                     workbookpart.Workbook.Save();
 
                     // Close the document.
@@ -244,10 +318,16 @@ namespace GreenField.Web.ExcelModel
             int firstYear = financialData.Select(a => a.PeriodYear).OrderBy(a => a).FirstOrDefault();
             int lastYear = financialData.Select(a => a.PeriodYear).OrderByDescending(a => a).FirstOrDefault();
             int numberOfYears = lastYear - firstYear;
-
-            var maxLength = financialData.Max(s => s.Description.Length);
-
-            var maxLengthStr = financialData.FirstOrDefault(s => s.Description.Length == maxLength).Description;
+            string maxLengthStr;
+            if (financialData.Count != 0)
+            {
+                var maxLength = financialData.Max(s => s.Description.Length);
+                maxLengthStr = financialData.FirstOrDefault(s => s.Description.Length == maxLength).Description;
+            }
+            else
+            {
+                maxLengthStr = "Data Description";
+            }
 
             DoubleValue maxWidth = GetColumnWidth(maxLengthStr);
 
@@ -302,6 +382,286 @@ namespace GreenField.Web.ExcelModel
             worksheet.Append(sheetData);
         }
 
+        #region ExcelModel- Model Upload
+
+        /// <summary>
+        /// Generate Headers for Model Upload Sheet
+        /// </summary>
+        /// <param name="worksheetPart"></param>
+        private static void GenerateModelUploadHeaders(WorksheetPart worksheetPart)
+        {
+            var worksheet = worksheetPart.Worksheet;
+            SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
+            var row = new Row { RowIndex = 1 };
+            sheetData.Append(row);
+            int firstYear = DateTime.Today.Year;
+
+            var cell = new Cell();
+
+            cell = CreateHeaderCell(" ");
+            row.InsertAt(cell, 0);
+
+            cell = new Cell();
+            cell = CreateHeaderCell(" ");
+            row.InsertAt(cell, 1);
+
+            for (int i = 1; i <= 6; i++)
+            {
+                cell = new Cell();
+                cell = CreateHeaderCell((firstYear + (i - 1)).ToString());
+                row.InsertAt(cell, i + 1);
+            }
+            worksheet.Append(sheetData);
+            GenerateSecondRowModelUpload(worksheetPart);
+            GenerateThirdRowModelUpload(worksheetPart);
+            GenerateFourthRowModelUpload(worksheetPart);
+            GenerateFifthRowModelUpload(worksheetPart);
+            GenerateSixthRowModelUpload(worksheetPart);
+        }
+
+        private static void GenerateSecondRowModelUpload(WorksheetPart worksheetPart)
+        {
+            var worksheet = worksheetPart.Worksheet;
+            var sheetData = worksheet.GetFirstChild<SheetData>();
+            var row = new Row { RowIndex = 2 };
+            sheetData.Append(row);
+
+            #region PeriodEndDate
+
+            var cell = new Cell();
+            cell = CreateHeaderCell(" ");
+            row.InsertAt(cell, 0);
+
+            cell = new Cell();
+            cell = CreateTextCell("Period EndDate");
+            row.InsertAt(cell, 1);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 2);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 3);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 4);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 5);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 6);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 7);
+
+            #endregion
+        }
+
+        private static void GenerateThirdRowModelUpload(WorksheetPart worksheetPart)
+        {
+            var worksheet = worksheetPart.Worksheet;
+            var sheetData = worksheet.GetFirstChild<SheetData>();
+            var row = new Row { RowIndex = 3 };
+            sheetData.Append(row);
+
+            #region PeriodLength
+
+            var cell = new Cell();
+            cell = CreateHeaderCell(" ");
+            row.InsertAt(cell, 0);
+
+            cell = new Cell();
+            cell = CreateTextCell("Period Length (In Months) ");
+            row.InsertAt(cell, 1);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 2);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 3);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 4);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 5);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 6);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 7);
+
+            #endregion
+        }
+
+        private static void GenerateFourthRowModelUpload(WorksheetPart worksheetPart)
+        {
+            var worksheet = worksheetPart.Worksheet;
+            var sheetData = worksheet.GetFirstChild<SheetData>();
+            var row = new Row { RowIndex = 4 };
+            sheetData.Append(row);
+
+            #region PeriodLength
+
+            var cell = new Cell();
+            cell = CreateHeaderCell(" ");
+            row.InsertAt(cell, 0);
+
+            cell = new Cell();
+            cell = CreateTextCell("Actual(Reported) Override");
+            row.InsertAt(cell, 1);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 2);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 3);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 4);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 5);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 6);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 7);
+
+            #endregion
+        }
+
+        private static void GenerateFifthRowModelUpload(WorksheetPart worksheetPart)
+        {
+            var worksheet = worksheetPart.Worksheet;
+            var sheetData = worksheet.GetFirstChild<SheetData>();
+            var row = new Row { RowIndex = 5 };
+            sheetData.Append(row);
+
+            #region CommodityMeasure
+
+            var cell = new Cell();
+            cell = CreateHeaderCell(" ");
+            row.InsertAt(cell, 0);
+
+            cell = new Cell();
+            cell = CreateTextCell("Commodity Measure");
+            row.InsertAt(cell, 1);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 2);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 3);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 4);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 5);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 6);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 7);
+
+            #endregion
+        }
+
+        private static void GenerateSixthRowModelUpload(WorksheetPart worksheetPart)
+        {
+            var worksheet = worksheetPart.Worksheet;
+            var sheetData = worksheet.GetFirstChild<SheetData>();
+            var row = new Row { RowIndex = 6 };
+            sheetData.Append(row);
+
+            #region PeriodLength
+
+            var cell = new Cell();
+            cell = CreateHeaderCell(" ");
+            row.InsertAt(cell, 0);
+
+            cell = new Cell();
+            cell = CreateTextCell("Commodity Forecast Used");
+            row.InsertAt(cell, 1);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 2);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 3);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 4);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 5);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 6);
+
+            cell = new Cell();
+            cell = CreateTextCell(" ");
+            row.InsertAt(cell, 7);
+
+            #endregion
+        }
+
+        private static void GenerateDataModelUpload(WorksheetPart worksheetPart)
+        {
+            var worksheet = worksheetPart.Worksheet;
+            var sheetData = worksheet.GetFirstChild<SheetData>();
+
+            var row = new Row { RowIndex = 7 };
+            
+            UInt32 rowIndex = 7;
+            foreach (DataPointsModelUploadData item in ModelUploadDataPoints)
+            {
+                var cell = CreateTextCell(item.COA);
+                row.InsertAt(cell, 0);
+                cell = new Cell();
+                cell = CreateTextCell(item.DATA_DESCRIPTION);
+                row.InsertAt(cell, 1);
+                sheetData.Append(row);
+                ++rowIndex;
+                row = new Row { RowIndex = rowIndex };
+            }
+        }
+
+        #endregion
+
         /// <summary>
         /// 
         /// </summary>
@@ -318,10 +678,17 @@ namespace GreenField.Web.ExcelModel
 
             Columns sheetColumns = new Columns();
             Column mergeColumns;
+            string maxLengthStr;
 
-            var maxLength = consensusData.Max(s => s.ESTIMATE_DESC.Length);
-
-            var maxLengthStr = consensusData.FirstOrDefault(s => s.ESTIMATE_DESC.Length == maxLength).ESTIMATE_DESC;
+            if (consensusData.Count != 0)
+            {
+                var maxLength = consensusData.Max(s => s.ESTIMATE_DESC.Length);
+                maxLengthStr = consensusData.FirstOrDefault(s => s.ESTIMATE_DESC.Length == maxLength).ESTIMATE_DESC;
+            }
+            else
+            {
+                maxLengthStr = "Data Description";
+            }
 
             DoubleValue maxWidth = GetColumnWidth(maxLengthStr);
 
@@ -373,6 +740,74 @@ namespace GreenField.Web.ExcelModel
             worksheet.Append(sheetData);
         }
 
+        #region ExcelModel- ModelReference
+
+        private static void GenerateModelReferenceData(WorksheetPart worksheetPart)
+        {
+            var worksheet = worksheetPart.Worksheet;
+            SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
+
+            var row = new Row { RowIndex = 1 };
+            var cell = CreateTextCell("Issuer ID");
+            row.InsertAt(cell, 0);
+            cell = CreateTextCell(ModelReferenceData.IssuerId);
+            row.InsertAt(cell, 1);
+            sheetData.Append(row);
+
+            row = new Row { RowIndex = 2 };
+            cell = CreateTextCell("Issuer Name");
+            row.InsertAt(cell, 0);
+            cell = CreateTextCell(ModelReferenceData.IssuerName);
+            row.InsertAt(cell, 1);
+            sheetData.Append(row);
+
+            row = new Row { RowIndex = 3 };
+            cell = CreateTextCell("COA Type");
+            row.InsertAt(cell, 0);
+            cell = CreateTextCell(ModelReferenceData.COATypes);
+            row.InsertAt(cell, 1);
+            sheetData.Append(row);
+
+            row = new Row { RowIndex = 4 };
+            cell = CreateTextCell("Currency");
+            row.InsertAt(cell, 0);
+            cell = CreateTextCell(ModelReferenceData.Currencies.FirstOrDefault());
+            row.InsertAt(cell, 1);
+            sheetData.Append(row);
+
+            row = new Row { RowIndex = 5 };
+            cell = CreateTextCell("Units");
+            row.InsertAt(cell, 0);
+            sheetData.Append(row);
+
+            row = new Row { RowIndex = 6 };
+            cell = CreateTextCell("Q1 OverRide %");
+            row.InsertAt(cell, 0);
+            sheetData.Append(row);
+
+            row = new Row { RowIndex = 7 };
+            cell = CreateTextCell("Q2 OverRide %");
+            row.InsertAt(cell, 0);
+            sheetData.Append(row);
+
+            row = new Row { RowIndex = 8 };
+            cell = CreateTextCell("Q3 OverRide %");
+            row.InsertAt(cell, 0);
+            sheetData.Append(row);
+
+            row = new Row { RowIndex = 9 };
+            cell = CreateTextCell("Q4 OverRide %");
+            row.InsertAt(cell, 0);
+            sheetData.Append(row);
+
+            worksheet.Append(sheetData);
+        }
+
+        #endregion
+
+
+
+        #region Helper Methods
         /// <summary>
         /// 
         /// </summary>
@@ -600,7 +1035,6 @@ namespace GreenField.Web.ExcelModel
             return stylesheet1;
         }
 
-
         /// <summary>
         /// 
         /// </summary>
@@ -636,5 +1070,6 @@ namespace GreenField.Web.ExcelModel
             }
         }
 
+        #endregion
     }
 }
