@@ -144,12 +144,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContracts\ExcelModelDataPoints.cs" />
     <Compile Include="DataContracts\IssuerReferenceData.cs" />
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
     <Compile Include="DataContracts\MeetingAttachedFileStreamData.cs" />
     <Compile Include="DataContracts\PopulatedMarketPerformanceSnapshotData.cs" />
     <Compile Include="Helpers\ExcelModel\GeneratedClass.cs" />
     <Compile Include="Helpers\ExcelModel\GenerateOpenXMLExcelModel.cs" />
+    <Compile Include="Helpers\ExcelModel\ReadOpenXMLModel.cs" />
     <Compile Include="Helpers\ITextPDF.cs" />
     <Compile Include="Services\CustomScreeningToolOperations.svc.cs">
       <DependentUpon>CustomScreeningToolOperations.svc</DependentUpon>

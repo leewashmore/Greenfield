@@ -19,6 +19,7 @@ using GreenField.Web.ListsDefinitions;
 using System.Xml;
 using GreenField.Web.DimensionEntitiesService;
 using GreenField.Web.ExcelModel;
+using GreenField.Web.DataContracts;
 
 namespace GreenField.Web.Services
 {
@@ -456,6 +457,9 @@ namespace GreenField.Web.Services
             List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
             List<FinancialStatementData> resultReuters = new List<FinancialStatementData>();
             List<FinancialStatementData> resultStatement = new List<FinancialStatementData>();
+            ExcelModelData modelData = new ExcelModelData();
+            List<DataPointsModelUploadData> dataPointsExcelUpload = new List<DataPointsModelUploadData>();
+            ModelReferenceDataPoints dataPointsModelReference = new ModelReferenceDataPoints();
             string currencyReuters = "";
             string currencyConsensus = "";
             try
@@ -522,7 +526,12 @@ namespace GreenField.Web.Services
                     }
                 }
 
-                return GenerateOpenXMLExcelModel.GenerateExcel(resultReuters, resultConsensus, currencyReuters, currencyConsensus);
+                dataPointsExcelUpload = RetrieveModelUploadDataPoints(issuerID);
+                dataPointsModelReference = RetrieveExcelModelReferenceData(issuerID, securityDetails);
+                ExcelModelData excelModelData = new ExcelModelData();
+                excelModelData.ModelReferenceData = dataPointsModelReference;
+                excelModelData.ModelUploadDataPoints = dataPointsExcelUpload;
+                return GenerateOpenXMLExcelModel.GenerateExcel(resultReuters, resultConsensus, currencyReuters, currencyConsensus, excelModelData);
             }
             catch (Exception ex)
             {
@@ -681,6 +690,49 @@ namespace GreenField.Web.Services
             }
         }
 
+        private List<DataPointsModelUploadData> RetrieveModelUploadDataPoints(string issuerId)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                List<DataPointsModelUploadData> result = new List<DataPointsModelUploadData>();
+
+                result = entity.RetrieveDataPointsModelUpload(issuerId).ToList();
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                return null;
+            }
+        }
+
+        private ModelReferenceDataPoints RetrieveExcelModelReferenceData(string issuerId, GF_SECURITY_BASEVIEW securityDetails)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                ModelReferenceDataPoints data = new ModelReferenceDataPoints();
+                data.IssuerId = issuerId;
+                data.IssuerName = securityDetails.ISSUER_NAME;
+                INTERNAL_ISSUER issuerData = entity.RetrieveCOAType(issuerId).FirstOrDefault();
+
+                if (issuerData != null)
+                {
+                    data.COATypes = issuerData.COA_TYPE;
+                }
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                return null;
+            }
+        }
 
         #endregion
 

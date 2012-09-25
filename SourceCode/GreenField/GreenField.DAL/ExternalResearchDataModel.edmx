@@ -675,6 +675,12 @@
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="RetrieveCOAType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RetrieveDataPointsModelUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="RetrieveRatioComparisonData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityBucketXML" Type="varchar(max)" Mode="In" />
         </Function>
@@ -920,6 +926,12 @@
           <FunctionImport Name="SaveUpdatedFairValueMeasures" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
             <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="xmlScript" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveDataPointsModelUpload" ReturnType="Collection(ExternalResearchModel.DataPointsModelUploadData)">
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveCOAType" EntitySet="INTERNAL_ISSUER" ReturnType="Collection(ExternalResearchModel.INTERNAL_ISSUER)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -1490,6 +1502,11 @@
           <Property Type="Decimal" Name="UPSIDE" Nullable="true" />
           <Property Type="DateTime" Name="DATE" Nullable="true" />
           <Property Type="Int32" Name="DATA_ID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="DataPointsModelUploadData">
+          <Property Type="String" Name="COA" Nullable="true" MaxLength="8" />
+          <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
+          <Property Type="String" Name="DATA_DESCRIPTION" Nullable="false" MaxLength="100" />
         </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -2144,6 +2161,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveDataPointsModelUpload" FunctionName="ExternalResearchModel.Store.RetrieveDataPointsModelUpload">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.DataPointsModelUploadData">
+                <ScalarProperty Name="COA" ColumnName="COA" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="DATA_DESCRIPTION" ColumnName="DATA_DESCRIPTION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveCOAType" FunctionName="ExternalResearchModel.Store.RetrieveCOAType" />
           <!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
