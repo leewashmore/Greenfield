@@ -213,7 +213,7 @@
                                              CanUserSelect="True"
                                              CanUserSortColumns="False"
                                              IsFilteringAllowed="False"
-                                             CanUserInsertRows="False"
+                                             CanUserInsertRows="False"                                            
                                              CanUserDeleteRows="False"
                                              ShowGroupPanel="True"
                                              UseLayoutRounding="True" 

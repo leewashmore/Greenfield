@@ -928,11 +928,13 @@ namespace GreenField.Gadgets.ViewModels
 
                 xw.WriteAttributeString("name", "Security Ticker");
                 xw.WriteAttributeString("displayname", String.Empty);
+                xw.WriteAttributeString("isaggregate", "false");
                 xw.WriteEndElement();
 
                 xw.WriteStartElement("column");
                 xw.WriteAttributeString("name", "Security Name");
                 xw.WriteAttributeString("displayname", String.Empty);
+                xw.WriteAttributeString("isaggregate", "false");
                 xw.WriteEndElement();
 
 
@@ -943,14 +945,27 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteStartElement("column");
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
                         xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteAttributeString("isaggregate", "false");
                         xw.WriteEndElement();
                     }
                     else if (info.ScreeningId.StartsWith("CUR") || info.ScreeningId.StartsWith("FVA"))
                     {
-                        xw.WriteStartElement("column");
-                        xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
-                        xw.WriteAttributeString("displayname", info.TableColumn);
-                        xw.WriteEndElement();
+                        if (info.ScreeningId.StartsWith("CUR"))
+                        {
+                            xw.WriteStartElement("column");
+                            xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
+                            xw.WriteAttributeString("displayname", info.TableColumn);
+                            xw.WriteAttributeString("isaggregate", "true");
+                            xw.WriteEndElement();
+                        }
+                        else
+                        {
+                            xw.WriteStartElement("column");
+                            xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
+                            xw.WriteAttributeString("displayname", info.TableColumn);
+                            xw.WriteAttributeString("isaggregate", "false");
+                            xw.WriteEndElement();
+                        }
                         //+ info.DataSource + info.PeriodType + info.YearType
                     }
                     else if (info.ScreeningId.StartsWith("FIN"))
@@ -959,6 +974,7 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
                             + info.PeriodType + info.YearType.Substring(0, 1));
                         xw.WriteAttributeString("displayname", info.TableColumn);
+                        xw.WriteAttributeString("isaggregate", "true");
                         xw.WriteEndElement();
 
                     }
