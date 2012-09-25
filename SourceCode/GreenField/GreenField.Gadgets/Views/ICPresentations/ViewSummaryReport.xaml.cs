@@ -117,7 +117,7 @@ namespace GreenField.Gadgets.Views
             Logging.LogBeginMethod(this.DataContextViewModelSummaryReport._logger, methodNamespace);
             try
             {
-                PDFExporter.btnExportPDF_Click(this.dgICPSummaryReport, layoutMode: DocumentLayoutMode.Paged);
+                PDFExporter.btnExportPDF_Click(this.dgICPSummaryReport, orientation: PageOrientation.Landscape);
             }
             catch (Exception ex)
             {

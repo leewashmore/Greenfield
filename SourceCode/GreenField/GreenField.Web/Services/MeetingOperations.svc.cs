@@ -852,7 +852,7 @@ namespace GreenField.Web.Services
             {
                 XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverViewData }
                     , strictlyInclusiveProperties: new List<string> { "PresentationID", "AdminNotes", "CommitteePFVMeasure", "CommitteeBuyRange",
-                    "CommitteeSellRange", "CommitteeRecommendation" });
+                    "CommitteeSellRange", "CommitteeRecommendation", "CommitteePFVMeasureValue" });
                 xmlDoc = GetEntityXml<VoterInfo>(parameters: voterInfo, xmlDoc: xmlDoc, strictlyInclusiveProperties: new List<string> { "VoterID",
                     "VoterPFVMeasure", "VoterBuyRange", "VoterSellRange", "VoteType" });
                 String xmlScript = xmlDoc.ToString();
