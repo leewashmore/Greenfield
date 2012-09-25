@@ -102,9 +102,36 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _iCDecisionIsEnable = value;
-                RaisePropertyChanged(() => this.ICDecisionIsEnable);
+                RaisePropertyChanged(() => this.ICDecisionIsEnable); 
             }
         }
+
+        private Boolean? _acceptWithoutDiscussionIsChecked = true;
+        public Boolean? AcceptWithoutDiscussionIsChecked
+        {
+            get { return _acceptWithoutDiscussionIsChecked; }
+            set
+            {
+                _acceptWithoutDiscussionIsChecked = value;
+                RaisePropertyChanged(() => this.AcceptWithoutDiscussionIsChecked);
+                if (value != null)
+                {
+                    ICDecisionIsEnable = !Convert.ToBoolean(value);
+                    SelectedPresentationOverviewInfo.AcceptWithoutDiscussionFlag = Convert.ToBoolean(value);
+
+                    if (Convert.ToBoolean(value))
+                    {
+                        SelectedPresentationOverviewInfo.CommitteePFVMeasure = SelectedPresentationOverviewInfo.SecurityPFVMeasure;
+                        SelectedPresentationOverviewInfo.CommitteePFVMeasureValue = SecurityPFVMeasureCurrentPrices != null
+                            ? SecurityPFVMeasureCurrentPrices[SelectedPresentationOverviewInfo.SecurityPFVMeasure] : null;
+                        SelectedPresentationOverviewInfo.CommitteeBuyRange = SelectedPresentationOverviewInfo.SecurityBuyRange;
+                        SelectedPresentationOverviewInfo.CommitteeSellRange = SelectedPresentationOverviewInfo.SecuritySellRange;
+                        SelectedPresentationOverviewInfo.CommitteeRecommendation = SelectedPresentationOverviewInfo.SecurityRecommendation;
+                    }
+                    RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);                     
+                }
+            }
+        }        
 
         private Dictionary<String, Decimal?> _securityPFVMeasureCurrentPrices;
         public Dictionary<String, Decimal?> SecurityPFVMeasureCurrentPrices
@@ -139,7 +166,14 @@ namespace GreenField.Gadgets.ViewModels
                 //}
                 return _securityPFVMeasureCurrentPrices;
             }
-            set { _securityPFVMeasureCurrentPrices = value; }
+            set
+            {
+                _securityPFVMeasureCurrentPrices = value;
+                if (value != null)
+                {
+                    SelectedPresentationOverviewInfo.CommitteePFVMeasureValue = value[SelectedPresentationOverviewInfo.CommitteePFVMeasure];
+                }
+            }
         }
 
         Boolean SecurityIsHeld { get; set; }
@@ -173,49 +207,34 @@ namespace GreenField.Gadgets.ViewModels
                     PFVType.FORWARD_P_REVENUE
                 };
             }
-        }
-
-        private Boolean? _acceptWithoutDiscussionIsChecked = true;
-        public Boolean? AcceptWithoutDiscussionIsChecked
-        {
-            get { return _acceptWithoutDiscussionIsChecked; }
-            set 
-            {
-                _acceptWithoutDiscussionIsChecked = value;
-                RaisePropertyChanged(() => this.AcceptWithoutDiscussionIsChecked);
-            }
-        }
-        
+        }        
 
         private ICPresentationOverviewData _selectedPresentationOverviewInfo;
         public ICPresentationOverviewData SelectedPresentationOverviewInfo
         {
             get { return _selectedPresentationOverviewInfo; }
             set
-            {
-                _selectedPresentationOverviewInfo = value;
-                RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
-                if (value != null && _dbInteractivity != null)
+            {                
+                if (value != null)
                 {
                     if (value.AcceptWithoutDiscussionFlag == null)
                     {
                         value.AcceptWithoutDiscussionFlag = true;
-                    }
-
-                    AcceptWithoutDiscussionIsChecked = value.AcceptWithoutDiscussionFlag;
-                    ICDecisionIsEnable = !(Convert.ToBoolean(value.AcceptWithoutDiscussionFlag));
-
-                    if (AcceptWithoutDiscussionIsChecked == true)
-                    {
                         value.CommitteePFVMeasure = value.SecurityPFVMeasure;
                         value.CommitteeBuyRange = value.SecurityBuyRange;
                         value.CommitteeSellRange = value.SecuritySellRange;
                         value.CommitteeRecommendation = value.SecurityRecommendation;
                     }
 
-                    BusyIndicatorNotification(true, "Retrieving Voting information for the selected presentation");
-                    _dbInteractivity.RetrievePresentationVoterData(value.PresentationID, RetrievePresentationVoterDataCallbackMethod);
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Voting information for the selected presentation");
+                        _dbInteractivity.RetrievePresentationVoterData(value.PresentationID, RetrievePresentationVoterDataCallbackMethod); 
+                    }
                 }
+                _selectedPresentationOverviewInfo = value;                
+                RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
+                AcceptWithoutDiscussionIsChecked = value.AcceptWithoutDiscussionFlag;
             }
         }
 
@@ -287,26 +306,24 @@ namespace GreenField.Gadgets.ViewModels
         #region ICommand Methods
         private void SubmitCommandMethod(object param)
         {
-            if (SelectedPresentationOverviewInfo.AcceptWithoutDiscussionFlag == false)
+            if (SecurityPFVMeasureCurrentPrices == null)
             {
-                if (SecurityPFVMeasureCurrentPrices == null)
-                {
-                    Prompt.ShowDialog("Decision Entry form could not be submitted owing to unavailability of current P/FV Measure prices for the selected security");
-                    return;
-                }
-                if (SecurityPFVMeasureCurrentPrices[SelectedPresentationOverviewInfo.CommitteePFVMeasure] == null)
-                {
-                    Prompt.ShowDialog("Decision Entry form could not be submitted owing to unavailability of current P/FV Measure price for the selected security and P/FV measure in IC Decision section");
-                    return;
-                }
+                Prompt.ShowDialog("Decision Entry form could not be submitted owing to unavailability of current P/FV Measure prices for the selected security");
+                return;
+            }
+            if (SecurityPFVMeasureCurrentPrices[SelectedPresentationOverviewInfo.CommitteePFVMeasure] == null)
+            {
+                Prompt.ShowDialog("Decision Entry form could not be submitted owing to unavailability of current P/FV Measure price for the selected security and P/FV measure in IC Decision section");
+                return;
+            }
 
-                if (SelectedPresentationOverviewInfo.CommitteePFVMeasure == null
-                    || SelectedPresentationOverviewInfo.CommitteeBuyRange == null
-                    || SelectedPresentationOverviewInfo.CommitteeSellRange == null)
-                {
-                    Prompt.ShowDialog("'Modify' Vote input has not been supplemented with valid P/FV Measure, Buy and Sell Range for one or more voting members");
-                    return;
-                }
+            if (SelectedPresentationOverviewInfo.CommitteePFVMeasure == null
+                || SelectedPresentationOverviewInfo.CommitteeBuyRange == null
+                || SelectedPresentationOverviewInfo.CommitteeSellRange == null
+                || SelectedPresentationOverviewInfo.CommitteePFVMeasureValue == null)
+            {
+                Prompt.ShowDialog("'Modify' Vote input has not been supplemented with valid P/FV Measure, Buy and Sell Range for one or more voting members");
+                return;
             }
 
             foreach (VoterInfo info in PresentationPostMeetingVoterInfo)
@@ -467,31 +484,9 @@ namespace GreenField.Gadgets.ViewModels
             BusyIndicatorIsBusy = showBusyIndicator;
         }
 
-        public void UpdateICDecisionAsPresented(Boolean iCDecisionIsEnable)
-        {
-            ICDecisionIsEnable = iCDecisionIsEnable;
-            SelectedPresentationOverviewInfo.AcceptWithoutDiscussionFlag = !iCDecisionIsEnable;
-            //if (SelectedPresentationOverviewInfo.AcceptWithoutDiscussionFlag == true)
-            //{
-            //    SelectedPresentationOverviewInfo.CommitteePFVMeasure = SelectedPresentationOverviewInfo.SecurityPFVMeasure;
-            //    SelectedPresentationOverviewInfo.CommitteeBuyRange = SelectedPresentationOverviewInfo.SecurityBuyRange;
-            //    SelectedPresentationOverviewInfo.CommitteeSellRange = SelectedPresentationOverviewInfo.SecuritySellRange;
-            //    SelectedPresentationOverviewInfo.CommitteeRecommendation = SelectedPresentationOverviewInfo.SecurityRecommendation;
-            //}
-
-            if (!iCDecisionIsEnable)
-            {
-                SelectedPresentationOverviewInfo.CommitteePFVMeasure = SelectedPresentationOverviewInfo.SecurityPFVMeasure;
-                SelectedPresentationOverviewInfo.CommitteeBuyRange = SelectedPresentationOverviewInfo.SecurityBuyRange;
-                SelectedPresentationOverviewInfo.CommitteeSellRange = SelectedPresentationOverviewInfo.SecuritySellRange;
-                SelectedPresentationOverviewInfo.CommitteeRecommendation = SelectedPresentationOverviewInfo.SecurityRecommendation;
-            }
-            RaisePropertyChanged(() => this.SelectedPresentationOverviewInfo);
-        }
-
         public void UpdateICDecisionRecommendation(String selectedPFVMeasure, Decimal buyRange, Decimal sellRange)
         {
-            if (selectedPFVMeasure == null)
+            if (selectedPFVMeasure == null || SecurityPFVMeasureCurrentPrices == null)
                 return;
 
             Decimal? CurrentPFVMeasurePrice = SecurityPFVMeasureCurrentPrices[selectedPFVMeasure];
@@ -503,6 +498,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             SelectedPresentationOverviewInfo.CommitteeBuyRange = Convert.ToSingle(buyRange);
             SelectedPresentationOverviewInfo.CommitteeSellRange = Convert.ToSingle(sellRange);
+            SelectedPresentationOverviewInfo.CommitteePFVMeasureValue = Convert.ToDecimal(CurrentPFVMeasurePrice);
 
 
             Decimal lowerLimit = buyRange <= sellRange ? buyRange : sellRange;
@@ -536,8 +532,12 @@ namespace GreenField.Gadgets.ViewModels
 
         public void Initialize()
         {
+            PresentationVoterInfo = null;
+            PresentationPreMeetingVoterInfo = null;
+            PresentationPostMeetingVoterInfo = null;
+            SecurityIsHeld = false;
+            SecurityPFVMeasureCurrentPrices = null;            
             SelectedPresentationOverviewInfo = ICNavigation.Fetch(ICNavigationInfo.PresentationOverviewInfo) as ICPresentationOverviewData;
-
         }
 
         public void RaiseUpdateFinalVoteType(VoterInfo voterInfo)

@@ -46,7 +46,11 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Instance of LoggerFacade
         /// </summary>
-        private ILoggerFacade _logger;        
+        private ILoggerFacade _logger;
+
+        private Boolean _sendChangeDateNotification = false;
+        private DateTime? _originalPresentationDate = null;
+        private DateTime? _updatedPresentationDate = null;
         #endregion
 
         #region Constructor
@@ -281,11 +285,7 @@ namespace GreenField.Gadgets.ViewModels
 
                 }
             };
-        }
-
-        private Boolean _sendChangeDateNotification = false;
-        private DateTime? _originalPresentationDate = null;
-        private DateTime? _updatedPresentationDate = null;
+        }        
 
         private bool DecisionEntryCommandValidationMethod(object param)
         {
@@ -325,7 +325,8 @@ namespace GreenField.Gadgets.ViewModels
                 || SelectedPresentationOverviewInfo == null)
                 return false;
 
-            bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter;
+            bool userRoleValidation = UserSession.SessionManager.SESSION.UserName == SelectedPresentationOverviewInfo.Presenter
+                && !(UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN));
             bool statusValidation = SelectedPresentationOverviewInfo.StatusType == StatusType.IN_PROGRESS
                 || SelectedPresentationOverviewInfo.StatusType == StatusType.READY_FOR_VOTING;
 

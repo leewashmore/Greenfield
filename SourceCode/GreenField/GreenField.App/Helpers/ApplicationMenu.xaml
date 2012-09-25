@@ -186,7 +186,8 @@
             </telerik:RadPanelBarItem>
 
             <!--InvestmentCommittee SubMenu-->
-            <telerik:RadPanelBarItem Header="Investment Committee" x:Name="pbItemInvestmentCommittee" Style="{StaticResource PanelBarItemStyle}">
+            <telerik:RadPanelBarItem Header="Investment Committee" x:Name="pbItemInvestmentCommittee" Style="{StaticResource PanelBarItemStyle}"
+                                     IsEnabled="{Binding RoleIsNonIC}">
                 <telerik:RadMenu x:Name="radMenuInvestmentCommittee" ClickToOpen="False" Orientation="Vertical"  
                                  VerticalAlignment="Top" HorizontalAlignment="Stretch" Style="{StaticResource RadMenuStyle}">
                     <telerik:RadMenuItem x:Name="rmItemCreateEdit" Header="Create/Edit"

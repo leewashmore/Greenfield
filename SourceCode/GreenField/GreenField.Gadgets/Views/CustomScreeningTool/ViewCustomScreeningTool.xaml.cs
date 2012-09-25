@@ -113,20 +113,26 @@ namespace GreenField.Gadgets.Views
                 
                 columnMapping.Add(colName, displayName);
             }
-
+            int count = 0;
             foreach (KeyValuePair<string, string> kvp in columnMapping)
             {
+               
                 GridViewDataColumn column = new GridViewDataColumn();               
                 column.Header = kvp.Value;              
                 column.UniqueName = kvp.Value;                
-                column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key);
+                column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key); 
                 column.IsFilterable = true;
                 column.IsGroupable = true;
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
                 column.Width = new GridViewLength(1, GridViewLengthUnitType.Star);
-                this.dgCustomSecurity.Columns.Add(column);
-            }
+                //AggregateFunction fn = new MinFunction();    // MaxFunction/MinFunction work! 
+                //fn.Caption = "Avg: ";
+                //column.AggregateFunctions.Add(fn);
+                this.dgCustomSecurity.Columns.Add(column);            }
+           //  this.dgCustomSecurity.CalculateAggregates();
+             this.dgCustomSecurity.ShowColumnFooters = true;
+              
 
 
 
@@ -143,12 +149,22 @@ namespace GreenField.Gadgets.Views
                     {
                         rowData[kvp.Key] = cell.Value;
                     }
+
+                    //SumFunction f = new SumFunction();
+                    //f.SourceField = kvp.Key;
+                    //((GridViewDataColumn)this.dgCustomSecurity.Columns[kvp.Key]).AggregateFunctions.Add(f);
+
                 }
                 _data.Add(rowData);
             }
 
             this.dgCustomSecurity.ItemsSource = _data;
             this.dgCustomSecurity.IsFilteringAllowed = true;
+            //this.dgCustomSecurity.Columns[4].AggregateFunctions.Add(new SumFunction());
+            //CountFunction f = new CountFunction();
+            //((GridViewDataColumn)this.dgCustomSecurity.Columns["ID"]).AggregateFunctions.Add(f);
+            //this.dgCustomSecurity.CalculateAggregates();
+            //this.dgCustomSecurity.Rebind();
         }
 
         /// <summary>

@@ -48,7 +48,8 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public static void btnExportPDF_Click(RadGridView dataGrid, int fontSize = 6, DocumentLayoutMode layoutMode = DocumentLayoutMode.Paged)
+        public static void btnExportPDF_Click(RadGridView dataGrid, int fontSize = 6, DocumentLayoutMode layoutMode = DocumentLayoutMode.Paged,
+            PageOrientation orientation = PageOrientation.Portrait)
         {
             try
             {
@@ -62,7 +63,8 @@ namespace GreenField.Gadgets.Helpers
                 {
                     RadDocument document = CreateDocument(dataGrid);
 
-                    document.LayoutMode = layoutMode;                        
+                    document.LayoutMode = layoutMode;
+                    document.SectionDefaultPageOrientation = orientation;
                     document.Measure(RadDocument.MAX_DOCUMENT_SIZE);
                     document.Arrange(new RectangleF(PointF.Empty, document.DesiredSize));
 

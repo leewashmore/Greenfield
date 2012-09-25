@@ -21,9 +21,9 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewPresentationDecisionEntry : ViewBaseUserControl
     {
-        private Decimal _committeeBuyRange;
-        private Decimal _committeeSellRange;
-        private String _committeePFVMeasure;
+        private Decimal _committeeBuyRange = 0;
+        private Decimal _committeeSellRange = 0;
+        private String _committeePFVMeasure = null;
 
         #region Properties
         /// <summary>
@@ -36,8 +36,6 @@ namespace GreenField.Gadgets.Views
             set { _dataContextViewModelPresentationDecisionEntry = value; }
         }
 
-
-
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
@@ -48,8 +46,15 @@ namespace GreenField.Gadgets.Views
             set
             {
                 _isActive = value;
+                if (value)
+                {
+                    _committeeBuyRange = 0;
+                    _committeeSellRange = 0;
+                    _committeePFVMeasure = null;
+                }
                 if (DataContextViewModelPresentationDecisionEntry != null) //DataContext instance
                     DataContextViewModelPresentationDecisionEntry.IsActive = _isActive;
+                
             }
         }
         #endregion
@@ -80,41 +85,44 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Event Handlers
-        private void chkbAcceptWithoutDiscussion_Checked(object sender, RoutedEventArgs e)
-        {
-            if (this.chkbAcceptWithoutDiscussion == null)
-                return;
+        //private void chkbAcceptWithoutDiscussion_Checked(object sender, RoutedEventArgs e)
+        //{            
+        //    if (this.chkbAcceptWithoutDiscussion == null)
+        //        return;
 
-            if (this.chkbAcceptWithoutDiscussion.IsChecked != null)
-            {
-                DataContextViewModelPresentationDecisionEntry.UpdateICDecisionAsPresented(false);
-            }
-        }
+        //    if (this.chkbAcceptWithoutDiscussion.IsChecked != null)
+        //    {                
+        //        DataContextViewModelPresentationDecisionEntry.UpdateICDecisionAsPresented(false);
+        //    }
+        //}
 
-        private void chkbAcceptWithoutDiscussion_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (this.chkbAcceptWithoutDiscussion == null)
-                return;
+        //private void chkbAcceptWithoutDiscussion_Unchecked(object sender, RoutedEventArgs e)
+        //{
+        //    if (this.chkbAcceptWithoutDiscussion == null)
+        //        return;
 
-            if (this.chkbAcceptWithoutDiscussion.IsChecked != null)
-            {
-                DataContextViewModelPresentationDecisionEntry.UpdateICDecisionAsPresented(true);
-            }
-        }
+        //    if (this.chkbAcceptWithoutDiscussion.IsChecked != null)
+        //    {
+        //        DataContextViewModelPresentationDecisionEntry.UpdateICDecisionAsPresented(true);
+        //    }
+        //}
 
         private void cbPFVICDecision_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-            RaiseUpdateICDecisionRecommendation();
+            if(this.cbPFVICDecision.SelectedValue as string != _committeePFVMeasure)
+                RaiseUpdateICDecisionRecommendation();
         }
 
         private void txtbPFVICDecisionBuy_LostFocus(object sender, RoutedEventArgs e)
         {
-            RaiseUpdateICDecisionRecommendation();
+            if(this.txtbPFVICDecisionBuy.Text != _committeeBuyRange.ToString())
+                RaiseUpdateICDecisionRecommendation();
         }
 
         private void txtbPFVICDecisionSell_LostFocus(object sender, RoutedEventArgs e)
         {
-            RaiseUpdateICDecisionRecommendation();
+            if (this.txtbPFVICDecisionSell.Text != _committeeSellRange.ToString())
+                RaiseUpdateICDecisionRecommendation();
         }
 
         private void cbFinalVoteType_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
@@ -135,19 +143,22 @@ namespace GreenField.Gadgets.Views
             if (this.cbPFVICDecision.SelectedItem == null)
                 return;
 
+            if (DataContextViewModelPresentationDecisionEntry.SecurityPFVMeasureCurrentPrices != null)
+            {
+                if (DataContextViewModelPresentationDecisionEntry
+                        .SecurityPFVMeasureCurrentPrices[this.cbPFVICDecision.SelectedItem as String] == null)
+                {
+                    Prompt.ShowDialog("Error: missing current value of P/FV measure: " + this.cbPFVICDecision.SelectedItem as String);
+                    this.cbPFVICDecision.SelectedValue = _committeePFVMeasure;
+                    this.txtbPFVICDecisionBuy.Text = _committeeBuyRange.ToString();
+                    this.txtbPFVICDecisionSell.Text = _committeeSellRange.ToString();
+                    return;
+                }
+            }
+
             if (this.cbPFVICDecision.SelectedItem as String != _committeePFVMeasure)
             {
-                pfvChanged = true;
-                if (DataContextViewModelPresentationDecisionEntry.SecurityPFVMeasureCurrentPrices != null)
-                {
-                    if (DataContextViewModelPresentationDecisionEntry
-                            .SecurityPFVMeasureCurrentPrices[this.cbPFVICDecision.SelectedItem as String] == null)
-                    {
-                        this.cbPFVICDecision.SelectedValue = _committeePFVMeasure;
-                        Prompt.ShowDialog("Error: missing current value of P/FV measure: " + this.cbPFVICDecision.SelectedItem as String);
-                        return;
-                    }
-                }
+                pfvChanged = true;                
             }
 
             _committeePFVMeasure = this.cbPFVICDecision.SelectedItem as String;
@@ -161,18 +172,7 @@ namespace GreenField.Gadgets.Views
 
             Boolean buyRangeChanged = true;
             if (_committeeBuyRange == committeeBuyRange)
-                buyRangeChanged = false;
-
-            if (DataContextViewModelPresentationDecisionEntry.SecurityPFVMeasureCurrentPrices != null)
-            {
-                if (DataContextViewModelPresentationDecisionEntry
-                        .SecurityPFVMeasureCurrentPrices[this.cbPFVICDecision.SelectedItem as String] == null)
-                {
-                    this.cbPFVICDecision.SelectedValue = _committeePFVMeasure;
-                    Prompt.ShowDialog("Error: missing current value of P/FV measure: " + this.cbPFVICDecision.SelectedItem as String);
-                    return;
-                }
-            }
+                buyRangeChanged = false;            
 
             _committeeBuyRange = committeeBuyRange;
 
