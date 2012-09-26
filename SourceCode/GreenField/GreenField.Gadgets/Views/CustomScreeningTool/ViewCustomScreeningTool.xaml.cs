@@ -23,7 +23,7 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewCustomScreeningTool : ViewBaseUserControl
     {
-       
+
 
         #region Properties
         /// <summary>
@@ -64,10 +64,10 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextViewModelCustomScreeningTool = dataContextSource;
-            dataContextSource.RetrieveCustomXmlDataCompletedEvent +=new Common.RetrieveCustomXmlDataCompleteEventHandler(dataContextSource_RetrieveCustomXmlDataCompletedEvent);
+            dataContextSource.RetrieveCustomXmlDataCompletedEvent += new Common.RetrieveCustomXmlDataCompleteEventHandler(dataContextSource_RetrieveCustomXmlDataCompletedEvent);
         }
 
-     
+
         #endregion
 
         #region Dispose Method
@@ -90,7 +90,8 @@ namespace GreenField.Gadgets.Views
         {
 
             ObservableCollection<MyDataRow> _data = new ObservableCollection<MyDataRow>();
-            Dictionary<string,string> columnMapping = new Dictionary<string,string>();
+            Dictionary<string, string> columnMapping = new Dictionary<string, string>();
+            Dictionary<string, string> columnMappingForAggregates = new Dictionary<string, string>();
 
             this.dgCustomSecurity.ItemsSource = null;
             this.dgCustomSecurity.Columns.Clear();
@@ -100,41 +101,73 @@ namespace GreenField.Gadgets.Views
 
             // find the columns
             List<String> columnNames = xmlDoc.Descendants("column")
-                                             .Attributes("name")
-                                             .Select(a => a.Value)
-                                             .ToList();
+                .Where(a => a.Attribute("isaggregate").Value == "false")
+                .Attributes("name")                                             
+                .Select(a => a.Value)
+                .ToList();
 
-            foreach(string colName in columnNames)
+            foreach (string colName in columnNames)
             {
                 string displayName = xmlDoc.Descendants("column")
                                              .Attributes("displayname")
                                              .Where(a => a.PreviousAttribute.Value == colName)
                                              .FirstOrDefault().Value;
-                
+
                 columnMapping.Add(colName, displayName);
             }
-            int count = 0;
+
             foreach (KeyValuePair<string, string> kvp in columnMapping)
             {
-               
-                GridViewDataColumn column = new GridViewDataColumn();               
-                column.Header = kvp.Value;              
-                column.UniqueName = kvp.Value;                
-                column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key); 
+                GridViewDataColumn column = new GridViewDataColumn();
+                column.Header = kvp.Value;
+                column.UniqueName = kvp.Value;
+                column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key);
+                column.IsFilterable = true;
+                column.IsGroupable = true;
+                column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
+                column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
+                column.Width = new GridViewLength(1, GridViewLengthUnitType.Star);               
+                this.dgCustomSecurity.Columns.Add(column);
+            }
+
+            List<String> columnNamesWithAggregation = xmlDoc.Descendants("column")
+                .Where(a => a.Attribute("isaggregate").Value == "true")
+                .Attributes("name")
+                .Select(a => a.Value)
+                .ToList();
+
+            foreach (string colName in columnNamesWithAggregation)
+            {
+                string displayName = xmlDoc.Descendants("column")
+                                             .Attributes("displayname")
+                                             .Where(a => a.PreviousAttribute.Value == colName)
+                                             .FirstOrDefault().Value;
+
+                columnMappingForAggregates.Add(colName, displayName);
+            }
+
+            foreach (KeyValuePair<string, string> kvp in columnMappingForAggregates)
+            {
+                GridViewDataColumn column = new GridViewDataColumn();
+                column.Header = kvp.Value;
+                column.UniqueName = kvp.Value;
+                column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key);
                 column.IsFilterable = true;
                 column.IsGroupable = true;
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
                 column.Width = new GridViewLength(1, GridViewLengthUnitType.Star);
-                //AggregateFunction fn = new MinFunction();    // MaxFunction/MinFunction work! 
-                //fn.Caption = "Avg: ";
-                //column.AggregateFunctions.Add(fn);
-                this.dgCustomSecurity.Columns.Add(column);            }
-           //  this.dgCustomSecurity.CalculateAggregates();
-             this.dgCustomSecurity.ShowColumnFooters = true;
-              
+                //column.AggregateFunctions.Add(new HarmonicMeanCalculation { SourceField = kvp.Key });
+                column.AggregateFunctions.Add(new HarmonicMeanCalculation ());
+                this.dgCustomSecurity.Columns.Add(column);
+            }
 
+            this.dgCustomSecurity.ShowColumnFooters = true;
 
+            foreach (KeyValuePair<string, string> kvp in columnMappingForAggregates)
+            {
+                columnMapping.Add(kvp.Key, kvp.Value);
+            }
 
             // add the rows
             var rows = xmlDoc.Descendants("row");
@@ -225,7 +258,7 @@ namespace GreenField.Gadgets.Views
             RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
         }
 
-        #endregion 
+        #endregion
         #endregion
 
 
