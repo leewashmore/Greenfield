@@ -31,7 +31,7 @@ CREATE procedure [dbo].[GetModelConsensusEstimates](
 ,	@CURRENCY			char(3)	= 'USD'				-- USD or the currency of the country (local)
 )
 as
-	
+Begin	
 	-- Select the Estimated data
 	select cce.ISSUER_ID
 		,  cce.ESTIMATE_ID
@@ -59,7 +59,7 @@ as
 	   and cce.CURRENCY = @CURRENCY
 	   and cce.AMOUNT_TYPE = 'ESTIMATE'
 	 order by cm.ESTIMATE_DESC, cce.PERIOD_YEAR,cce.PERIOD_TYPE
-	 
+	END 
 
 GO
 --indicate thet current script is executed
