@@ -9,41 +9,58 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
+using Telerik.Windows.Controls;
 using GreenField.Common;
+using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
+using GreenField.ServiceCaller;
+
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewBasicData : ViewBaseUserControl
     {
+        #region PROPERTIES
 
-        private ViewModelBasicData _dataContextSource = null;
+        /// <summary>
+        /// Private variable to hold data
+        /// </summary>
+        private ViewModelBasicData dataContextSource = null;
         public ViewModelBasicData DataContextSourceModel
         {
             get
             {
-                return _dataContextSource;
+                return dataContextSource;
             }
             set
             {
                 if (value != null)
-                    _dataContextSource = value;
-            }
-        } 
-
-        private bool _isActive;
-        public override bool IsActive
-        {
-            get { return _isActive; }
-            set
-            {
-                _isActive = value;
-                if (DataContextSourceModel != null) //DataContext instance
-                    DataContextSourceModel.IsActive = _isActive;
+                    dataContextSource = value;
             }
         }
+        /// <summary>
+        /// Private variable to hold IsActive property of parent user control
+        /// </summary>
+        private bool isActive;
+        public override bool IsActive
+        {
+            get { return isActive; }
+            set
+            {
+                isActive = value;
+                if (DataContextSourceModel != null) //DataContext instance
+                    DataContextSourceModel.IsActive = isActive;
+            }
+        }
+        #endregion
+
         #region CONSTRUCTOR
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="DataContextSource"></param>
         public ViewBasicData(ViewModelBasicData DataContextSource)
         {
             InitializeComponent();
@@ -55,6 +72,7 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Event
+
         /// <summary>
         /// event to handle RadBusyIndicator
         /// </summary>

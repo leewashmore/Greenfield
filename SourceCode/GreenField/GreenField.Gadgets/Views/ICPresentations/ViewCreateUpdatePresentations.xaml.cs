@@ -103,7 +103,7 @@ namespace GreenField.Gadgets.Views
                 }
                 else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
                 {
-                    if (dialog.File.Extension != ".pdf" || dialog.File.Extension != ".jpeg")
+                    if (dialog.File.Extension != ".pdf" && dialog.File.Extension != ".jpeg")
                         return;                    
                 }
                 else

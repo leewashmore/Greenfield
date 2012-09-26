@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,17 +10,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Common;
 using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.DataContracts;
-using System.Linq;
-using GreenField.DataContracts.DataContracts;
-using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
-using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.Charting;
+using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.DataContracts.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.ServiceCaller;
 
 
 namespace GreenField.Gadgets.ViewModels
@@ -32,27 +32,27 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Event Aggregator
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// Instance of Service Caller Class
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// Instance of LoggerFacade
         /// </summary>
-        private ILoggerFacade _logger;
+        private ILoggerFacade logger;
 
         /// <summary>
         /// Details of selected Security
         /// </summary>
-        private EntitySelectionData _securitySelectionData;
+        private EntitySelectionData securitySelectionData;
 
         /// <summary>
         /// Stores Chart data
         /// </summary>
-        private RangeObservableCollection<PRevenueData> _EVEBITDAPlottedData;
+        private RangeObservableCollection<PRevenueData> eVEBITDAPlottedData;
 
         /// <summary>
         /// Stores chart title
@@ -67,12 +67,12 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="eventAggregator">MEF Eventaggregator instance</param>
         public ViewModelEVEBITDA(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            if (_eventAggregator != null)
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            if (eventAggregator != null)
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
             CallingWebMethod();
         }
         #endregion
@@ -86,11 +86,11 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return _securitySelectionData;
+                return securitySelectionData;
             }
             set
             {
-                _securitySelectionData = value;
+                securitySelectionData = value;
                 this.RaisePropertyChanged(() => this.SelectedSecurity);
             }
         }
@@ -99,13 +99,13 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                if (_EVEBITDAPlottedData == null)
-                    _EVEBITDAPlottedData = new RangeObservableCollection<PRevenueData>();
-                return _EVEBITDAPlottedData;
+                if (eVEBITDAPlottedData == null)
+                    eVEBITDAPlottedData = new RangeObservableCollection<PRevenueData>();
+                return eVEBITDAPlottedData;
             }
             set
             {
-                _EVEBITDAPlottedData = value;
+                eVEBITDAPlottedData = value;
                 RaisePropertyChanged(() => this.EVEBITDAPlottedData);
             }
 
@@ -236,6 +236,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
         #region ICommand
         /// <summary>
         /// Zoom In Command Method
@@ -286,6 +287,7 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
+
         #region Helper Methods
 
         /// <summary>
@@ -326,6 +328,7 @@ namespace GreenField.Gadgets.ViewModels
 
 
         #endregion
+
         #region EVENTHANDLERS
         /// <summary>
         /// Event Handler to subscribed event 'SecurityReferenceSet'
@@ -334,25 +337,25 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                _securitySelectionData = entitySelectionData;
+                securitySelectionData = entitySelectionData;
                 if (entitySelectionData != null && IsActive)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, entitySelectionData, 1);
                     CallingWebMethod();
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
         /// <summary>
@@ -375,27 +378,27 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveEVEBITDADataCallbackMethod(List<PRevenueData> pRevenueData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (pRevenueData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, pRevenueData, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, pRevenueData, 1);
                     EVEBITDAPlottedData.Clear();
                     EVEBITDAPlottedData.AddRange(pRevenueData.ToList());
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally { BusyIndicatorStatus = false; }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -403,9 +406,9 @@ namespace GreenField.Gadgets.ViewModels
         #region WEB SERVICE CALL
         private void CallingWebMethod()
         {
-            if (_securitySelectionData != null && IsActive)
+            if (securitySelectionData != null && IsActive)
             {
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, _chartTitle, RetrieveEVEBITDADataCallbackMethod);
+                dbInteractivity.RetrievePRevenueData(securitySelectionData, _chartTitle, RetrieveEVEBITDADataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
         }
@@ -418,9 +421,9 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
 
             }
         }

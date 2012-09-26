@@ -25,20 +25,7 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public decimal? DailyClosingPrice { get; set; }
-
-
-        //[DataMember]
-        //public decimal? GPToday { get; set; }
-
-        //[DataMember]
-        //public decimal? GPLastYearEnd { get; set; }
-
-        //[DataMember]
-        //public decimal? GP12MonthsAgo { get; set; }
-
-        //[DataMember]
-        //public decimal? GP36MonthsAgo { get; set; }
-        
+                
         [DataMember]
         public decimal? YTD { get; set; }
 

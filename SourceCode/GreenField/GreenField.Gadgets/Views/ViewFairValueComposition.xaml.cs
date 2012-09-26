@@ -187,7 +187,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextFairValueComposition._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextFairValueComposition.logger, methodNamespace);
             try
             {
                 if (this.dgFairValueComposition.Visibility == Visibility.Visible)
@@ -203,7 +203,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextFairValueComposition._logger, ex);
+                Logging.LogException(this.DataContextFairValueComposition.logger, ex);
             }
         }
 
@@ -231,7 +231,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportPDF_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextFairValueComposition._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextFairValueComposition.logger, methodNamespace);
             try
             {
                 PDFExporter.btnExportPDF_Click(this.dgFairValueComposition);
@@ -239,7 +239,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextFairValueComposition._logger, ex);
+                Logging.LogException(this.DataContextFairValueComposition.logger, ex);
             }
         }
         #endregion
@@ -254,7 +254,7 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextFairValueComposition._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextFairValueComposition.logger, methodNamespace);
             try
             {
                 Dispatcher.BeginInvoke((Action)(() =>
@@ -268,7 +268,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextFairValueComposition._logger, ex);
+                Logging.LogException(this.DataContextFairValueComposition.logger, ex);
             }
         }
 

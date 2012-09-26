@@ -2493,25 +2493,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="presentationId">No Metadata Documentation available.</param>
-        public ObjectResult<PresentationVotingDeadlineDetails> GetPreMeetingVotingReportDetails(Nullable<global::System.Int64> presentationId)
-        {
-            ObjectParameter presentationIdParameter;
-            if (presentationId.HasValue)
-            {
-                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
-            }
-            else
-            {
-                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
-            }
-    
-            return base.ExecuteFunction<PresentationVotingDeadlineDetails>("GetPreMeetingVotingReportDetails", presentationIdParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectResult<ICPresentationOverviewData> RetrieveICPresentationOverviewData()
         {
             return base.ExecuteFunction<ICPresentationOverviewData>("RetrieveICPresentationOverviewData");
@@ -2545,6 +2526,25 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<SummaryReportData>("RetrieveSummaryReportDetails", startDateParameter, endDateParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        public ObjectResult<PresentationVotingDeadlineDetails> GetPreMeetingVotingReportDetails(Nullable<global::System.Int64> presentationId)
+        {
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<PresentationVotingDeadlineDetails>("GetPreMeetingVotingReportDetails", presentationIdParameter);
         }
 
         #endregion
@@ -9116,6 +9116,30 @@ namespace GreenField.DAL
         private Nullable<global::System.Int64> _PresentationID;
         partial void OnPresentationIDChanging(Nullable<global::System.Int64> value);
         partial void OnPresentationIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String Presenter
+        {
+            get
+            {
+                return _Presenter;
+            }
+            set
+            {
+                OnPresenterChanging(value);
+                ReportPropertyChanging("Presenter");
+                _Presenter = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Presenter");
+                OnPresenterChanged();
+            }
+        }
+        private global::System.String _Presenter;
+        partial void OnPresenterChanging(global::System.String value);
+        partial void OnPresenterChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

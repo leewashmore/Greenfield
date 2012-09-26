@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,14 +10,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Common;
-using GreenField.DataContracts;
-using Microsoft.Practices.Prism.ViewModel;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.ModelFXDefinitions;
 using System.Collections.Generic;
-using System.Linq;
+using GreenField.Common.Helper;
+using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using Microsoft.Practices.Prism.Commands;
 
@@ -29,23 +32,23 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// private member object of the IDBInteractivity for interaction with the Service Caller
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        public ILoggerFacade _logger;
+        public ILoggerFacade logger;
 
 
         /// <summary>
         /// Private member to store Selected Security ID
         /// </summary>
-        private EntitySelectionData _securitySelectionData = null;
+        private EntitySelectionData securitySelectionData = null;
 
         #endregion
 
@@ -108,9 +111,9 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     _isActive = value;
                 }
-                if (_securitySelectionData != null && IsActive)
+                if (securitySelectionData != null && IsActive)
                 {
-                    if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
+                    if (securitySelectionData.InstrumentID != null && securitySelectionData.InstrumentID != string.Empty)
                     {
                         CallingWebMethod();
                     }
@@ -188,19 +191,19 @@ namespace GreenField.Gadgets.ViewModels
         #region CONSTRUCTOR
         public ViewModelFairValueComposition(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
             MeasuresData = GetMeasureList();
 
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
             }
-            if (_securitySelectionData != null && IsActive)
+            if (securitySelectionData != null && IsActive)
             {
-                if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
+                if (securitySelectionData.InstrumentID != null && securitySelectionData.InstrumentID != string.Empty)
                 {
                     CallingWebMethod();
                 }
@@ -223,7 +226,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private void SaveFairValueChangeCommandMethod(object param)
         {
-            if (FairValueCompositionData != null && _dbInteractivity != null)
+            if (FairValueCompositionData != null && dbInteractivity != null)
             {
                 BusyIndicatorStatus = true;
 
@@ -247,7 +250,7 @@ namespace GreenField.Gadgets.ViewModels
 
                 if (data.Count > 0)
                 {
-                    _dbInteractivity.SaveUpdatedFairValueData(_securitySelectionData, data
+                    dbInteractivity.SaveUpdatedFairValueData(securitySelectionData, data
                         , RetrieveFairValueCompositionSummaryDataCallbackMethod);
                 }
 
@@ -270,41 +273,41 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (entitySelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    _securitySelectionData = entitySelectionData;
+                    Logging.LogMethodParameter(logger, methodNamespace, entitySelectionData, 1);
+                    securitySelectionData = entitySelectionData;
 
-                    if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
+                    if (securitySelectionData.InstrumentID != null && securitySelectionData.InstrumentID != string.Empty)
                     {
                         CallingWebMethod();
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
         private void RetrieveInstanceWithUpdatedUpsideValue(FairValueData editedFairValueRow)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                if (_securitySelectionData != null && editedFairValueRow != null)
+                if (securitySelectionData != null && editedFairValueRow != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, _securitySelectionData, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, securitySelectionData, 1);
 
                     FairValueCompositionSummaryData editedData = new FairValueCompositionSummaryData()
                     {
@@ -316,28 +319,28 @@ namespace GreenField.Gadgets.ViewModels
                         Date = editedFairValueRow.Date,
                         DataId = editedFairValueRow.DataId,
                     };
-                    _dbInteractivity.RetrieveFairValueDataWithNewUpside(_securitySelectionData, editedData,
+                    dbInteractivity.RetrieveFairValueDataWithNewUpside(securitySelectionData, editedData,
                         RetrieveFairValueDataWithNewUpsideCallbackMethod);
                     BusyIndicatorStatus = true;
 
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
         private void UpdateRowAssociatedWithSource(FairValueData _editedMeasurePropertyFairValueRow)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
 
@@ -359,7 +362,7 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
 
@@ -373,12 +376,12 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveFairValueCompositionSummaryDataCallbackMethod(List<FairValueCompositionSummaryData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {                
                 RangeObservableCollection<FairValueData> temp = new RangeObservableCollection<FairValueData>();               
 
-                Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                Logging.LogMethodParameter(logger, methodNamespace, result, 1);
 
                 if (result != null)
                 {
@@ -433,10 +436,10 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally { BusyIndicatorStatus = false; }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         
 
@@ -447,10 +450,10 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveFairValueDataWithNewUpsideCallbackMethod(FairValueCompositionSummaryData result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
-                Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                Logging.LogMethodParameter(logger, methodNamespace, result, 1);
 
                 if (result != null)
                 {
@@ -467,10 +470,10 @@ namespace GreenField.Gadgets.ViewModels
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally { BusyIndicatorStatus = false; }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -481,9 +484,9 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private void CallingWebMethod()
         {
-            if (_securitySelectionData != null && IsActive)
+            if (securitySelectionData != null && IsActive)
             {
-                _dbInteractivity.RetrieveFairValueCompostionSummary(_securitySelectionData, RetrieveFairValueCompositionSummaryDataCallbackMethod);
+                dbInteractivity.RetrieveFairValueCompostionSummary(securitySelectionData, RetrieveFairValueCompositionSummaryDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
 
@@ -494,7 +497,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public void Dispose()
         {
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
         }
         #endregion
 

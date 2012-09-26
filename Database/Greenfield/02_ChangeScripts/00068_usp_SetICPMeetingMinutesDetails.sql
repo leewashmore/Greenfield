@@ -1,3 +1,5 @@
+set noexec off
+
 --declare  current and required version
 declare @RequiredDBVersion as nvarchar(100) = '00067'
 declare @CurrentScriptVersion as nvarchar(100) = '00068'

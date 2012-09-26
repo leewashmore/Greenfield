@@ -81,6 +81,9 @@
      maxReceivedMessageSize="2147483647">
      <security mode="None" />
     </binding>
+    <binding name="DCFOperations1" maxBufferSize="2147483647" maxReceivedMessageSize="2147483647">
+     <security mode="None" />
+    </binding>
    </basicHttpBinding>
   </bindings>
 
@@ -129,12 +132,12 @@
     binding="basicHttpBinding" bindingConfiguration="ExternalResearchOperations"
     contract="ExternalResearchDefinitions.ExternalResearchOperations"
     name="ExternalResearchOperations" />
-   <endpoint address="http://localhost:59430/Services/DCFOperations.svc"
-    binding="basicHttpBinding" bindingConfiguration="DCFOperations"
-    contract="DCFDefinitions.DCFOperations" name="DCFOperations" />
    <endpoint address="http://localhost:59430/Services/MeetingOperations.svc"
     binding="basicHttpBinding" bindingConfiguration="MeetingOperations"
     contract="MeetingDefinitions.MeetingOperations" name="MeetingOperations" />
+   <endpoint address="http://localhost:59430/Services/DCFOperations.svc"
+    binding="basicHttpBinding" bindingConfiguration="DCFOperations"
+    contract="DCFDefinitions.DCFOperations" name="DCFOperations" />
   </client>
 	</system.serviceModel>
 </configuration>

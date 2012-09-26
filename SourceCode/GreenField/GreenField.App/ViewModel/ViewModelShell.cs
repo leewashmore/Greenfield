@@ -84,6 +84,9 @@ namespace GreenField.App.ViewModel
                                     if (session.Roles != null)
                                     {
                                         RoleIsICAdmin = session.Roles.Contains(MemberGroups.IC_ADMIN);
+                                        RoleIsIC = session.Roles.Any(record => record == MemberGroups.IC_ADMIN
+                                            || record == MemberGroups.IC_CHIEF_EXECUTIVE || record == MemberGroups.IC_VOTING_MEMBER 
+                                            || record == MemberGroups.IC_NON_VOTING_MEMBER);
                                     }
 
                                     Logging.LogSessionStart(_logger);
@@ -141,6 +144,17 @@ namespace GreenField.App.ViewModel
             {
                 _roleIsICAdmin = value;
                 RaisePropertyChanged(() => this.RoleIsICAdmin);
+            }
+        }
+
+        private Boolean _roleIsIC = true;
+        public Boolean RoleIsIC
+        {
+            get { return _roleIsIC; }
+            set
+            {
+                _roleIsIC = value;
+                RaisePropertyChanged(() => this.RoleIsIC);
             }
         }
         

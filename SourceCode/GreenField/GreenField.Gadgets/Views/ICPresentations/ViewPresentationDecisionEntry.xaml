@@ -129,9 +129,9 @@
             <!--Accept Without Discussion Section-->
             <Grid Grid.Row="2" Margin="0,2">
                 <CheckBox x:Name="chkbAcceptWithoutDiscussion" Content="ACCEPT WITHOUT DISCUSSION" IsThreeState="False"
-                      IsChecked="{Binding AcceptWithoutDiscussionIsChecked}"
-                      HorizontalAlignment="Left" Style="{StaticResource CheckBoxStyle}" Checked="chkbAcceptWithoutDiscussion_Checked" Unchecked="chkbAcceptWithoutDiscussion_Unchecked"
-                      />
+                      IsChecked="{Binding AcceptWithoutDiscussionIsChecked, Mode=TwoWay}"
+                      HorizontalAlignment="Left" Style="{StaticResource CheckBoxStyle}" />
+                          <!--Checked="chkbAcceptWithoutDiscussion_Checked" Unchecked="chkbAcceptWithoutDiscussion_Unchecked"/>-->
             </Grid>
             <!--IC Decision Section-->
             <Grid Grid.Row="3" Margin="0,5" x:Name="grdICDecision">
@@ -214,8 +214,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="50"/>
-                        <ColumnDefinition Width="50"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
@@ -282,8 +282,8 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
-                                    <TextBox VerticalAlignment="Center" Text="{Binding VoterBuyRange, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"
-                                         IsEnabled="{Binding VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"/>
+                                    <TextBox VerticalAlignment="Center" Text="{Binding VoterBuyRange, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"                                             
+                                         Width="50" IsEnabled="{Binding VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"/>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -295,7 +295,7 @@
                             <DataTemplate>
                                 <Grid Margin="5,2,2,2" Height="{StaticResource DefaultControlMinHeight}">
                                     <TextBox VerticalAlignment="Center" Text="{Binding VoterSellRange, Mode=TwoWay}" Style="{StaticResource TextBoxStyle}"
-                                         IsEnabled="{Binding VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"/>
+                                         Width="50" IsEnabled="{Binding VoteType, Converter={StaticResource MeetingDecisionEntryPFVBuySellInputEnabledConverter}}"/>
                                 </Grid>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>

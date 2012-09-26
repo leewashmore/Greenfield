@@ -9,12 +9,12 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.Helpers;
-using GreenField.Gadgets.ViewModels;
+using Telerik.Windows.Controls;
 using GreenField.Common;
 using GreenField.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Controls;
 
 
 
@@ -24,50 +24,71 @@ namespace GreenField.Gadgets.Views
     {
         # region PRIVATE FIELDS
 
-        private List<FXCommodityData> _commodityInfo;
-        private int _NextYear = DateTime.Now.Year + 1;
-        private int _TwoYearsFuture = DateTime.Now.Year + 2;
+        /// <summary>
+        /// Private variable to hold data
+        /// </summary>
+        private List<FXCommodityData> commodityInfo;
+
+        /// <summary>
+        /// Private variable to hold next year's value
+        /// </summary>
+        private int nextYear = DateTime.Now.Year + 1;
+
+        /// <summary>
+        /// Private variable to hold next to next year's value
+        /// </summary>
+        private int twoYearsFuture = DateTime.Now.Year + 2;
 
         #endregion
 
         #region PROPERTIES
-
-        private ViewModelCommodityIndex _dataContextSource = null;
+        /// <summary>
+        /// Private variable to hold ViewModel property
+        /// </summary>
+        private ViewModelCommodityIndex dataContextSource = null;        
         public ViewModelCommodityIndex DataContextSource
         {
             get
             {
-                return _dataContextSource;
+                return dataContextSource;
             }
             set
             {
                 if (value != null)
-                    _dataContextSource = value;
+                {
+                    dataContextSource = value;
+                }
             }
         }
-
-        private bool _isActive;
+        /// <summary>
+        /// Private variable to hold IsActive property of parent user control
+        /// </summary>
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextSource != null) //DataContext instance
-                    DataContextSource.IsActive = _isActive;
+                isActive = value;
+                if (DataContextSource != null)
+                {
+                    DataContextSource.IsActive = isActive;
+                }
             }
         }
 
         #endregion
 
         #region CONSTRUCTOR
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewCommodityIndex(ViewModelCommodityIndex dataContextSource)
         {
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextSource = dataContextSource;
-            //dataContextSource.CommodityDataLoadEvent += new DataRetrievalProgressIndicatorEventHandler(DataContextSourceCommodityLoadEvent);
             dataContextSource.RetrieveCommodityDataCompleteEvent += new RetrieveCommodityDataCompleteEventHandler(RetrieveCommodityDataCompletedEvent);
 
         }
@@ -75,23 +96,16 @@ namespace GreenField.Gadgets.Views
         #endregion
         #region Event
         /// <summary>
-        /// event to handle RadBusyIndicator
+        /// Data completed Event
         /// </summary>
         /// <param name="e"></param>
-        //void DataContextSourceCommodityLoadEvent(DataRetrievalProgressIndicatorEventArgs e)
-        //{
-        //    if (e.ShowBusy)
-        //        this.gridBusyIndicator.IsBusy = true;
-        //    else
-        //        this.gridBusyIndicator.IsBusy = false;
-        //}
         public void RetrieveCommodityDataCompletedEvent(RetrieveCommodityDataCompleteEventArgs e)
         {
-            _commodityInfo = e.CommodityInfo;
-            if (_commodityInfo != null)
+            commodityInfo = e.CommodityInfo;
+            if (commodityInfo != null)
             {                
-                dgCommodity.Columns[5].Header = "Price(" + _NextYear.ToString() + ")";
-                dgCommodity.Columns[6].Header = "Price(" + _TwoYearsFuture.ToString() + ")";
+                dgCommodity.Columns[5].Header = "Price(" + nextYear.ToString() + ")";
+                dgCommodity.Columns[6].Header = "Price(" + twoYearsFuture.ToString() + ")";
             }
         }
         #endregion

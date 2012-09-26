@@ -1123,7 +1123,7 @@ namespace GreenField.Web.Services
                 if (chartTitle == "EV/EBITDA")
                 {
                     resultDB_EV_EBITDA = extResearch.ExecuteStoreQuery<GetEV_EBITDAData_Result>("exec Get_EV_EBITDA @SecurityID={0},@issuerId={1},@chartTitle={2}", Convert.ToString(svcData.SECURITY_ID), svcData.ISSUER_ID, chartTitle).ToList();
-                    //resultDB_EV_EBITDA = extResearch.ExecuteStoreQuery<GetEV_EBITDAData_Result>("exec Get_EV_EBITDA @SecurityID={0},@issuerId={1},@chartTitle={2}", "157240", "8233223", chartTitle).ToList();
+                    
                     //Comparer to fetch only unique rows
                     if (resultDB_EV_EBITDA != null && resultDB_EV_EBITDA.Count > 1)
                     {
@@ -1134,7 +1134,6 @@ namespace GreenField.Web.Services
                     for (int _index = 0; _index < resultDB_EV_EBITDA.Count; _index++)
                     {
                         PRevenueData data = new PRevenueData();
-                        decimal? sumAmount = null;
                         decimal? sumNetDebt = null;
                         decimal? sumEBITDA = null;
                         data.PeriodLabel = resultDB_EV_EBITDA[_index].PeriodLabel;
@@ -1189,8 +1188,7 @@ namespace GreenField.Web.Services
                     {
                         PRevenueData data = new PRevenueData();
                         decimal? sumAmount = null;
-                        decimal? sumNetDebt = null;
-                        decimal? sumEBITDA = null;
+                       
                         data.PeriodLabel = resultDB[_index].PeriodLabel;
 
                         if ((resultDB[_index].USDPrice == null || resultDB[_index].USDPrice == 0) || (resultDB[_index].Shares_Outstanding == null || resultDB[_index].Shares_Outstanding == 0))

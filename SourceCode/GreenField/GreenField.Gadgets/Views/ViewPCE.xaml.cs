@@ -9,12 +9,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
 using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
@@ -40,34 +41,36 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
-        private ViewModelPCE _dataContextPCE;
+        private ViewModelPCE dataContextPCE;
         public ViewModelPCE DataContextPCE
         {
             get
             {
-                return _dataContextPCE;
+                return dataContextPCE;
             }
             set
             {
-                _dataContextPCE = value;
+                dataContextPCE = value;
             }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextPCE != null) //DataContext instance
-                    DataContextPCE.IsActive = _isActive;
+                    DataContextPCE.IsActive = isActive;
             }
         }
         #endregion
+
+        #region CONSTRUCTOR
 
         public ViewPCE(ViewModelPCE dataContextSource)
         {
@@ -78,10 +81,14 @@ namespace GreenField.Gadgets.Views
             this.chPCE.DataBound += dataContextSource.ChartDataBound;
             this.ApplyChartStyles();
         }
-        private void dgPCE_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-           
-        }
+        #endregion
+
+        #region EVENT
+        /// <summary>
+        /// Chart laoded event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void chPCE_Loaded(object sender, RoutedEventArgs e)
         {
             if (chPCE.DefaultView.ChartLegend.Items.Count != 0)
@@ -90,13 +97,16 @@ namespace GreenField.Gadgets.Views
                 this.chPCE.DefaultView.ChartLegend.Items.Remove(var);
             }
         }
+        #endregion
 
+        #region Helper Methods
         private void ApplyChartStyles()
         {
             this.chPCE.DefaultView.ChartArea.AxisX.TicksDistance = 50;
             this.chPCE.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chPCE.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
         }
+        #endregion
 
         #region Export
 

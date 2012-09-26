@@ -108,53 +108,6 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="UpdateMessageInfo" FunctionName="ICPModel.Store.UpdateMessageInfo" />
-    <EntitySetMapping Name="PresentationInfoes">
-      <EntityTypeMapping TypeName="ICPModel.PresentationInfo">
-        <MappingFragment StoreEntitySet="PresentationInfo">
-          <ScalarProperty Name="YTDRet_RELtoEM" ColumnName="YTDRet_RELtoEM" />
-          <ScalarProperty Name="YTDRet_RELtoLOC" ColumnName="YTDRet_RELtoLOC" />
-          <ScalarProperty Name="YTDRet_Absolute" ColumnName="YTDRet_Absolute" />
-          <ScalarProperty Name="SecurityActiveWeight" ColumnName="SecurityActiveWeight" />
-          <ScalarProperty Name="SecurityBMWeight" ColumnName="SecurityBMWeight" />
-          <ScalarProperty Name="PercentEMIF" ColumnName="PercentEMIF" />
-          <ScalarProperty Name="CurrentHoldings" ColumnName="CurrentHoldings" />
-          <ScalarProperty Name="SecurityBuySellvsCrnt" ColumnName="SecurityBuySellvsCrnt" />
-          <ScalarProperty Name="FVCalc" ColumnName="FVCalc" />
-          <ScalarProperty Name="Price" ColumnName="Price" />
-          <ScalarProperty Name="Analyst" ColumnName="Analyst" />
-          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-          <ScalarProperty Name="AdminNotes" ColumnName="AdminNotes" />
-          <ScalarProperty Name="AcceptWithoutDiscussionFlag" ColumnName="AcceptWithoutDiscussionFlag" />
-          <ScalarProperty Name="CommitteeRangeEffectiveThrough" ColumnName="CommitteeRangeEffectiveThrough" />
-          <ScalarProperty Name="CommitteeRecommendation" ColumnName="CommitteeRecommendation" />
-          <ScalarProperty Name="CommitteeSellRange" ColumnName="CommitteeSellRange" />
-          <ScalarProperty Name="CommitteeBuyRange" ColumnName="CommitteeBuyRange" />
-          <ScalarProperty Name="CommitteePFVMeasure" ColumnName="CommitteePFVMeasure" />
-          <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
-          <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
-          <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
-          <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
-          <ScalarProperty Name="SecurityMarketCapitalization" ColumnName="SecurityMarketCapitalization" />
-          <ScalarProperty Name="SecurityLastClosingPrice" ColumnName="SecurityLastClosingPrice" />
-          <ScalarProperty Name="SecurityGlobalActiveWeight" ColumnName="SecurityGlobalActiveWeight" />
-          <ScalarProperty Name="SecurityMSCIIMIWeight" ColumnName="SecurityMSCIIMIWeight" />
-          <ScalarProperty Name="SecurityMSCIStdWeight" ColumnName="SecurityMSCIStdWeight" />
-          <ScalarProperty Name="SecurityPosition" ColumnName="SecurityPosition" />
-          <ScalarProperty Name="SecurityCashPosition" ColumnName="SecurityCashPosition" />
-          <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
-          <ScalarProperty Name="SecurityCountryCode" ColumnName="SecurityCountryCode" />
-          <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
-          <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
-          <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
-          <ScalarProperty Name="StatusType" ColumnName="StatusType" />
-          <ScalarProperty Name="Presenter" ColumnName="Presenter" />
-          <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="MessageInfoes">
       <EntityTypeMapping TypeName="ICPModel.MessageInfo">
         <MappingFragment StoreEntitySet="MessageInfo">
@@ -275,5 +228,150 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="SetICPMeetingPresentationStatus" FunctionName="ICPModel.Store.SetICPMeetingPresentationStatus" />
+    <EntitySetMapping Name="PresentationInfoes">
+      <EntityTypeMapping TypeName="ICPModel.PresentationInfo">
+        <MappingFragment StoreEntitySet="PresentationInfo">
+          <ScalarProperty Name="CommitteePFVMeasureValue" ColumnName="CommitteePFVMeasureValue" />
+          <ScalarProperty Name="SecurityPFVMeasureValue" ColumnName="SecurityPFVMeasureValue" />
+          <ScalarProperty Name="YTDRet_RELtoEM" ColumnName="YTDRet_RELtoEM" />
+          <ScalarProperty Name="YTDRet_RELtoLOC" ColumnName="YTDRet_RELtoLOC" />
+          <ScalarProperty Name="YTDRet_Absolute" ColumnName="YTDRet_Absolute" />
+          <ScalarProperty Name="SecurityActiveWeight" ColumnName="SecurityActiveWeight" />
+          <ScalarProperty Name="SecurityBMWeight" ColumnName="SecurityBMWeight" />
+          <ScalarProperty Name="PercentEMIF" ColumnName="PercentEMIF" />
+          <ScalarProperty Name="CurrentHoldings" ColumnName="CurrentHoldings" />
+          <ScalarProperty Name="SecurityBuySellvsCrnt" ColumnName="SecurityBuySellvsCrnt" />
+          <ScalarProperty Name="FVCalc" ColumnName="FVCalc" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Analyst" ColumnName="Analyst" />
+          <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+          <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="AdminNotes" ColumnName="AdminNotes" />
+          <ScalarProperty Name="AcceptWithoutDiscussionFlag" ColumnName="AcceptWithoutDiscussionFlag" />
+          <ScalarProperty Name="CommitteeRangeEffectiveThrough" ColumnName="CommitteeRangeEffectiveThrough" />
+          <ScalarProperty Name="CommitteeRecommendation" ColumnName="CommitteeRecommendation" />
+          <ScalarProperty Name="CommitteeSellRange" ColumnName="CommitteeSellRange" />
+          <ScalarProperty Name="CommitteeBuyRange" ColumnName="CommitteeBuyRange" />
+          <ScalarProperty Name="CommitteePFVMeasure" ColumnName="CommitteePFVMeasure" />
+          <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
+          <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
+          <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
+          <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
+          <ScalarProperty Name="SecurityMarketCapitalization" ColumnName="SecurityMarketCapitalization" />
+          <ScalarProperty Name="SecurityLastClosingPrice" ColumnName="SecurityLastClosingPrice" />
+          <ScalarProperty Name="SecurityPosition" ColumnName="SecurityPosition" />
+          <ScalarProperty Name="SecurityCashPosition" ColumnName="SecurityCashPosition" />
+          <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
+          <ScalarProperty Name="SecurityCountryCode" ColumnName="SecurityCountryCode" />
+          <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
+          <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+          <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+          <ScalarProperty Name="StatusType" ColumnName="StatusType" />
+          <ScalarProperty Name="Presenter" ColumnName="Presenter" />
+          <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="GetPresentationDeadlineNotificationDetails" FunctionName="ICPModel.Store.GetPresentationDeadlineNotificationDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ICPModel.PresentationDeadlineDetails">
+          <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
+          <ScalarProperty Name="MeetingDateTime" ColumnName="MeetingDateTime" />
+          <ScalarProperty Name="MeetingClosedDateTime" ColumnName="MeetingClosedDateTime" />
+          <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
+          <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+          <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+          <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
+          <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
+          <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
+          <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
+          <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
+          <ScalarProperty Name="VoterID" ColumnName="VoterID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="VoteType" ColumnName="VoteType" />
+          <ScalarProperty Name="VoterBuyRange" ColumnName="VoterBuyRange" />
+          <ScalarProperty Name="VoterSellRange" ColumnName="VoterSellRange" />
+          <ScalarProperty Name="DiscussionFlag" ColumnName="DiscussionFlag" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="FileID" ColumnName="FileID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetPresentationFinalizeNotificationDetails" FunctionName="ICPModel.Store.GetPresentationFinalizeNotificationDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ICPModel.PresentationFinalizeDetails">
+          <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
+          <ScalarProperty Name="MeetingDateTime" ColumnName="MeetingDateTime" />
+          <ScalarProperty Name="MeetingClosedDateTime" ColumnName="MeetingClosedDateTime" />
+          <ScalarProperty Name="MeetingDescription" ColumnName="MeetingDescription" />
+          <ScalarProperty Name="MeetingVotingClosedDateTime" ColumnName="MeetingVotingClosedDateTime" />
+          <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
+          <ScalarProperty Name="AdminNotes" ColumnName="AdminNotes" />
+          <ScalarProperty Name="CommitteeBuyRange" ColumnName="CommitteeBuyRange" />
+          <ScalarProperty Name="CommitteeSellRange" ColumnName="CommitteeSellRange" />
+          <ScalarProperty Name="CommitteePFVMeasure" ColumnName="CommitteePFVMeasure" />
+          <ScalarProperty Name="CommitteeRecommendation" ColumnName="CommitteeRecommendation" />
+          <ScalarProperty Name="Presenter" ColumnName="Presenter" />
+          <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+          <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+          <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
+          <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
+          <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
+          <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
+          <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
+          <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
+          <ScalarProperty Name="VoterID" ColumnName="VoterID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="VoteType" ColumnName="VoteType" />
+          <ScalarProperty Name="VoterPFVMeasure" ColumnName="VoterPFVMeasure" />
+          <ScalarProperty Name="VoterBuyRange" ColumnName="VoterBuyRange" />
+          <ScalarProperty Name="VoterSellRange" ColumnName="VoterSellRange" />
+          <ScalarProperty Name="DiscussionFlag" ColumnName="DiscussionFlag" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="AttendanceType" ColumnName="AttendanceType" />
+          <ScalarProperty Name="FileID" ColumnName="FileID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="GetPresentationVotingDeadlineNotificationDetails" FunctionName="ICPModel.Store.GetPresentationVotingDeadlineNotificationDetails">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ICPModel.PresentationVotingDeadlineDetails">
+          <ScalarProperty Name="MeetingID" ColumnName="MeetingID" />
+          <ScalarProperty Name="MeetingDateTime" ColumnName="MeetingDateTime" />
+          <ScalarProperty Name="MeetingClosedDateTime" ColumnName="MeetingClosedDateTime" />
+          <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
+          <ScalarProperty Name="Presenter" ColumnName="Presenter" />
+          <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+          <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+          <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
+          <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
+          <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
+          <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
+          <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
+          <ScalarProperty Name="VoterID" ColumnName="VoterID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="VoteType" ColumnName="VoteType" />
+          <ScalarProperty Name="VoterBuyRange" ColumnName="VoterBuyRange" />
+          <ScalarProperty Name="VoterSellRange" ColumnName="VoterSellRange" />
+          <ScalarProperty Name="DiscussionFlag" ColumnName="DiscussionFlag" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="FileID" ColumnName="FileID" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+          <ScalarProperty Name="Category" ColumnName="Category" />
+          <ScalarProperty Name="FileName" ColumnName="FileName" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
