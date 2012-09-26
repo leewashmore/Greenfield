@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.Objects;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 using System.ServiceModel.Activation;
-using System.Resources;
+using System.Text;
+using System.Xml.Linq;
+using GreenField.DataContracts;
+using GreenField.DataContracts.DataContracts;
+using GreenField.DAL;
 using GreenField.Web.Helpers.Service_Faults;
 using GreenField.Web.Helpers;
-using GreenField.DataContracts;
-using GreenField.DAL;
-using System.Data.Objects;
-using GreenField.Web.DimensionEntitiesService;
-using System.Configuration;
 using GreenField.Web.DataContracts;
-using System.Data;
-using GreenField.DataContracts.DataContracts;
-using System.Xml.Linq;
-using System.Reflection;
+using GreenField.Web.DimensionEntitiesService;
 
 namespace GreenField.Web.Services
 {
@@ -184,18 +184,28 @@ namespace GreenField.Web.Services
                     item.Sell = record.SELL;
                     item.Upside = record.UPSIDE;
                     if (record.DATE != null)
+                    {
                         item.Date = record.DATE.Value;
+                    }
                     item.DataId = record.DATA_ID;
                     result.Add(item);
                 }
                 if (!sourceNames.Contains("Primary Analyst"))
+                {
                     result.Add(new FairValueCompositionSummaryData { Source = "Primary Analyst" });
+                }
                 if (!sourceNames.Contains("Industry Analyst"))
+                {
                     result.Add(new FairValueCompositionSummaryData { Source = "Industry Analyst" });
+                }
                 if (!sourceNames.Contains("DCF-PE"))
+                {
                     result.Add(new FairValueCompositionSummaryData { Source = "DCF-PE" });
+                }
                 if (!sourceNames.Contains("DCF-PBV"))
+                {
                     result.Add(new FairValueCompositionSummaryData { Source = "DCF-PBV" });
+                }
                
                 return result;
             }
@@ -231,7 +241,9 @@ namespace GreenField.Web.Services
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
 
                 if (data == null)
+                {
                     return null;
+                }
 
                 string securityId = Convert.ToString(data.SECURITY_ID);
                 int? dataId = editedFairValueData.DataId;

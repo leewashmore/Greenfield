@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,17 +10,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Common;
 using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
-using GreenField.DataContracts;
-using System.Linq;
-using GreenField.DataContracts.DataContracts;
-using System.Collections.Generic;
 using Microsoft.Practices.Prism.ViewModel;
-using GreenField.Gadgets.Helpers;
 using Telerik.Windows.Controls.Charting;
+using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.DataContracts.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.ServiceCaller;
 
 
 namespace GreenField.Gadgets.ViewModels
@@ -32,32 +32,32 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Event Aggregator
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// Instance of Service Caller Class
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// Instance of LoggerFacade
         /// </summary>
-        private ILoggerFacade _logger;
+        private ILoggerFacade logger;
 
         /// <summary>
         /// Details of selected Security
         /// </summary>
-        private EntitySelectionData _securitySelectionData;
+        private EntitySelectionData securitySelectionData;
 
         /// <summary>
         /// Stores Chart data
         /// </summary>
-        private RangeObservableCollection<PRevenueData> _PBVPlottedData;
+        private RangeObservableCollection<PRevenueData> pBVPlottedData;
 
         /// <summary>
         /// Stores chart title
         /// </summary>
-        private string _chartTitle = "P/BV";
+        private string chartTitle = "P/BV";
 
         #endregion
 
@@ -68,12 +68,12 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="eventAggregator">MEF Eventaggregator instance</param>
         public ViewModelPBV(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
-            if (_eventAggregator != null)
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            if (eventAggregator != null)
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
             CallingWebMethod();
         }
         #endregion
@@ -87,11 +87,11 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                return _securitySelectionData;
+                return securitySelectionData;
             }
             set
             {
-                _securitySelectionData = value;
+                securitySelectionData = value;
                 this.RaisePropertyChanged(() => this.SelectedSecurity);
             }
         }
@@ -100,13 +100,13 @@ namespace GreenField.Gadgets.ViewModels
         {
             get
             {
-                if (_PBVPlottedData == null)
-                    _PBVPlottedData = new RangeObservableCollection<PRevenueData>();
-                return _PBVPlottedData;
+                if (pBVPlottedData == null)
+                    pBVPlottedData = new RangeObservableCollection<PRevenueData>();
+                return pBVPlottedData;
             }
             set
             {
-                _PBVPlottedData = value;
+                pBVPlottedData = value;
                 RaisePropertyChanged(() => this.PBVPlottedData);
             }
 
@@ -114,45 +114,45 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// ChartArea property bound to ChartArea of dgPRevenue 
         /// </summary>
-        private ChartArea _chartArea;
+        private ChartArea chartArea;
         public ChartArea ChartArea
         {
             get
             {
-                return this._chartArea;
+                return this.chartArea;
             }
             set
             {
-                this._chartArea = value;
+                this.chartArea = value;
             }
         }
 
         /// <summary>
         /// Busy Indicator Status
         /// </summary>
-        private bool _busyIndicatorStatus;
+        private bool busyIndicatorStatus;
         public bool BusyIndicatorStatus
         {
             get
             {
-                return _busyIndicatorStatus;
+                return busyIndicatorStatus;
             }
             set
             {
-                _busyIndicatorStatus = value;
+                busyIndicatorStatus = value;
                 this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
             }
         }/// <summary>
         /// <summary>
         /// Minimum Value for X-Axis of Chart
         /// </summary>
-        private decimal _axisXMinValue;
+        private decimal axisXMinValue;
         public decimal AxisXMinValue
         {
-            get { return _axisXMinValue; }
+            get { return axisXMinValue; }
             set
             {
-                _axisXMinValue = value;
+                axisXMinValue = value;
                 this.RaisePropertyChanged(() => this.AxisXMinValue);
             }
         }
@@ -160,13 +160,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Maximum Value for X-Axis of Chart
         /// </summary>
-        private decimal _axisXMaxValue;
+        private decimal axisXMaxValue;
         public decimal AxisXMaxValue
         {
-            get { return _axisXMaxValue; }
+            get { return axisXMaxValue; }
             set
             {
-                _axisXMaxValue = value;
+                axisXMaxValue = value;
                 this.RaisePropertyChanged(() => this.AxisXMaxValue);
             }
         }
@@ -174,13 +174,13 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Step size of XAxis of Chart
         /// </summary>
-        private int _axisXStep;
+        private int axisXStep;
         public int AxisXStep
         {
-            get { return _axisXStep; }
+            get { return axisXStep; }
             set
             {
-                _axisXStep = value;
+                axisXStep = value;
 
             }
         }
@@ -191,48 +191,48 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
             get
             {
-                return _isActive;
+                return isActive;
             }
             set
             {
-                _isActive = value;
+                isActive = value;
                 CallingWebMethod();
             }
         }
         /// <summary>
         /// Zoom-In Command Button
         /// </summary>
-        private ICommand _zoomInCommand;
+        private ICommand zoomInCommand;
         public ICommand ZoomInCommand
         {
             get
             {
-                if (_zoomInCommand == null)
+                if (zoomInCommand == null)
                 {
-                    _zoomInCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomInCommandMethod, ZoomInCommandValidation);
+                    zoomInCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomInCommandMethod, ZoomInCommandValidation);
                 }
-                return _zoomInCommand;
+                return zoomInCommand;
             }
         }
 
         /// <summary>
         /// Zoom-Out Command Button
         /// </summary>
-        private ICommand _zoomOutCommand;
+        private ICommand zoomOutCommand;
         public ICommand ZoomOutCommand
         {
             get
             {
-                if (_zoomOutCommand == null)
+                if (zoomOutCommand == null)
                 {
-                    _zoomOutCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomOutCommandMethod, ZoomOutCommandValidation);
+                    zoomOutCommand = new Telerik.Windows.Controls.DelegateCommand(ZoomOutCommandMethod, ZoomOutCommandValidation);
                 }
-                return _zoomOutCommand;
+                return zoomOutCommand;
             }
         }
 
@@ -245,8 +245,8 @@ namespace GreenField.Gadgets.ViewModels
         public void ZoomInCommandMethod(object parameter)
         {
             ZoomIn(this.ChartArea);
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         /// <summary>
@@ -270,8 +270,8 @@ namespace GreenField.Gadgets.ViewModels
         public void ZoomOutCommandMethod(object parameter)
         {
             ZoomOut(this.ChartArea);
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
 
         /// <summary>
@@ -336,26 +336,26 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
 
-                _securitySelectionData = entitySelectionData;
+                securitySelectionData = entitySelectionData;
                 if (entitySelectionData != null && IsActive)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, entitySelectionData, 1);
                     CallingWebMethod();
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
         /// <summary>
@@ -365,8 +365,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <param name="e"></param>
         public void ChartDataBound(object sender, ChartDataBoundEventArgs e)
         {
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomInCommand).InvalidateCanExecute();
-            ((Telerik.Windows.Controls.DelegateCommand)_zoomOutCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomInCommand).InvalidateCanExecute();
+            ((Telerik.Windows.Controls.DelegateCommand)zoomOutCommand).InvalidateCanExecute();
         }
         #endregion
 
@@ -378,27 +378,27 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrievePBVDataCallbackMethod(List<PRevenueData> pRevenueData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (pRevenueData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, pRevenueData, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, pRevenueData, 1);
                     PBVPlottedData.Clear();
                     PBVPlottedData.AddRange(pRevenueData.ToList());
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally { BusyIndicatorStatus = false; }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -406,9 +406,9 @@ namespace GreenField.Gadgets.ViewModels
         #region WEB SERVICE CALL
         private void CallingWebMethod()
         {
-            if (_securitySelectionData != null && IsActive)
+            if (securitySelectionData != null && IsActive)
             {
-                _dbInteractivity.RetrievePRevenueData(_securitySelectionData, _chartTitle, RetrievePBVDataCallbackMethod);
+                dbInteractivity.RetrievePRevenueData(securitySelectionData, chartTitle, RetrievePBVDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
         }
@@ -421,9 +421,9 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
 
             }
         }

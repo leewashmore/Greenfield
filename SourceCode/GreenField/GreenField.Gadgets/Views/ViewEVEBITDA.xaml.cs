@@ -9,12 +9,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
 using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {

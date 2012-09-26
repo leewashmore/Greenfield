@@ -1,21 +1,21 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.Common;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
-using System.Text;
 using System.ServiceModel.Activation;
-using GreenField.Web.DimensionEntitiesService;
-using System.Configuration;
+using System.Text;
 using System.Resources;
-using GreenField.Web.Helpers.Service_Faults;
-using GreenField.Web.Helpers;
-using System.Data;
-using System.Data.SqlClient;
 using GreenField.DAL;
-using System.Collections;
-using System.Data.Common;
 using GreenField.DataContracts;
+using GreenField.Web.DimensionEntitiesService;
+using GreenField.Web.Helpers;
+using GreenField.Web.Helpers.Service_Faults;
 
 namespace GreenField.Web.Services
 {
@@ -256,10 +256,13 @@ namespace GreenField.Web.Services
                                 {
                                     FXCommodityData data = new FXCommodityData();
 
-                                    data.CommodityId = item.AIMS_COMMODITY_ID;    // Assigning Commodity ID from above list
+                                    // Assigning Commodity ID from above list
+                                    data.CommodityId = item.AIMS_COMMODITY_ID;    
                                     data.FromDate = itemPricing.FROMDATE;
                                     data.DailyClosingPrice = itemPricing.DAILY_CLOSING_PRICE;
-                                    data.InstrumentId = item.INSTRUMENT_ID;         //Assigning Instrument Id from above list
+
+                                    //Assigning Instrument Id from above list
+                                    data.InstrumentId = item.INSTRUMENT_ID;         
 
                                     resultView.Add(data);
                                 }
@@ -291,7 +294,6 @@ namespace GreenField.Web.Services
 
                             //Columns coming from Commodity table
                             commodityData.CurrentYearEnd = Convert.ToDecimal(resultDB[_index].CURRENT_YEAR_END);
-                            //commodityData.LastUpdate = Convert.ToDateTime(resultDB[_index].LASTUPDATE);
                             commodityData.LongTerm = Convert.ToDecimal(resultDB[_index].LONG_TERM);
                             commodityData.NextYearEnd = Convert.ToDecimal(resultDB[_index].NEXT_YEAR_END);
 

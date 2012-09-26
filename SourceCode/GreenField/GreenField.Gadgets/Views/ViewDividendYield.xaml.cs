@@ -9,12 +9,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
 using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Controls;
+
 
 namespace GreenField.Gadgets.Views
 {
@@ -29,7 +31,7 @@ namespace GreenField.Gadgets.Views
         private static class ExportTypes
         {
             public const string Dividend_Yield = "Dividend Yield";
-            public const string Dividend_Yield_DATA = "Dividend Yield Data";
+            public const string Dividend_Yield_Data = "Dividend Yield Data";
         }
 
 
@@ -40,31 +42,31 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
-        private ViewModelDividendYield _dataContextDividendYield;
+        private ViewModelDividendYield dataContextDividendYield;
         public ViewModelDividendYield DataContextDividendYield
         {
             get
             {
-                return _dataContextDividendYield;
+                return dataContextDividendYield;
             }
             set
             {
-                _dataContextDividendYield = value;
+                dataContextDividendYield = value;
             }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextDividendYield != null) //DataContext instance
-                    DataContextDividendYield.IsActive = _isActive;
+                isActive = value;
+                if (DataContextDividendYield != null) 
+                    DataContextDividendYield.IsActive = isActive;
             }
         }
         #endregion
@@ -125,7 +127,7 @@ namespace GreenField.Gadgets.Views
                     RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.Dividend_Yield, Element = this.chDividendYield, ExportFilterOption = RadExportFilterOption.RADCHART_EXPORT_FILTER });
 
                 else if (dgDividendYield.Visibility == Visibility.Visible)
-                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.Dividend_Yield_DATA, Element = this.dgDividendYield, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
+                    RadExportOptionsInfo.Add(new RadExportOptions() { ElementName = ExportTypes.Dividend_Yield_Data, Element = this.dgDividendYield, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER });
 
                 ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.EXTERNAL_RESEARCH_HISTORICAL_VALUATION_CHART_DividendYield);
                 childExportOptions.Show();

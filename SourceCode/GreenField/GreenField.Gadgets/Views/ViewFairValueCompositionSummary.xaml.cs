@@ -9,12 +9,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Documents.Model;
+using GreenField.Common;
+using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
-using GreenField.Common;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Documents.Model;
-using GreenField.DataContracts;
+
 
 namespace GreenField.Gadgets.Views
 {
@@ -26,31 +28,31 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
-        private ViewModelFairValueCompositionSummary _dataContextFairValueCompositionSummary;
+        private ViewModelFairValueCompositionSummary dataContextFairValueCompositionSummary;
         public ViewModelFairValueCompositionSummary DataContextFairValueCompositionSummary
         {
             get
             {
-                return _dataContextFairValueCompositionSummary;
+                return dataContextFairValueCompositionSummary;
             }
             set
             {
-                _dataContextFairValueCompositionSummary = value;
+                dataContextFairValueCompositionSummary = value;
             }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextFairValueCompositionSummary != null) //DataContext instance
-                    DataContextFairValueCompositionSummary.IsActive = _isActive;
+                    DataContextFairValueCompositionSummary.IsActive = isActive;
             }
         }
         #endregion
@@ -85,7 +87,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextFairValueCompositionSummary._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextFairValueCompositionSummary.logger, methodNamespace);
             try
             {
                 if (this.dgFairValueCompositionSummary.Visibility == Visibility.Visible)
@@ -101,7 +103,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextFairValueCompositionSummary._logger, ex);
+                Logging.LogException(this.DataContextFairValueCompositionSummary.logger, ex);
             }
         }
 
@@ -129,7 +131,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportPDF_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextFairValueCompositionSummary._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextFairValueCompositionSummary.logger, methodNamespace);
             try
             {
                 PDFExporter.btnExportPDF_Click(this.dgFairValueCompositionSummary);
@@ -137,7 +139,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextFairValueCompositionSummary._logger, ex);
+                Logging.LogException(this.DataContextFairValueCompositionSummary.logger, ex);
             }
         }
         #endregion
@@ -152,7 +154,7 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextFairValueCompositionSummary._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextFairValueCompositionSummary.logger, methodNamespace);
             try
             {
                 Dispatcher.BeginInvoke((Action)(() =>
@@ -166,7 +168,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextFairValueCompositionSummary._logger, ex);
+                Logging.LogException(this.DataContextFairValueCompositionSummary.logger, ex);
             }
         }
 

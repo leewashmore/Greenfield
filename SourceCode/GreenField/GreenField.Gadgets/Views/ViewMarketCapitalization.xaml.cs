@@ -9,9 +9,10 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
+
 
 namespace GreenField.Gadgets.Views
 {
@@ -30,28 +31,28 @@ namespace GreenField.Gadgets.Views
 
         #region PROPERTIES
 
-        private ViewModelMarketCapitalization _dataContextSource = null;
+        private ViewModelMarketCapitalization dataContextSource = null;
         public ViewModelMarketCapitalization DataContextSource
         {
             get
             {
-                return _dataContextSource;
+                return dataContextSource;
             }
             set
             {
                 if (value != null)
-                _dataContextSource = value;
+                dataContextSource = value;
             }
         }
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextSource != null) //DataContext instance
-                    DataContextSource.IsActive = _isActive;
+                    DataContextSource.IsActive = isActive;
             }
         }
 

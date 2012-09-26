@@ -9,12 +9,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
 using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
@@ -40,31 +41,31 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
-        private ViewModelFCFYield _dataContextFCFYield;
+        private ViewModelFCFYield dataContextFCFYield;
         public ViewModelFCFYield DataContextFCFYield
         {
             get
             {
-                return _dataContextFCFYield;
+                return dataContextFCFYield;
             }
             set
             {
-                _dataContextFCFYield = value;
+                dataContextFCFYield = value;
             }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextFCFYield != null) 
-                    DataContextFCFYield.IsActive = _isActive;
+                    DataContextFCFYield.IsActive = isActive;
             }
         }
         #endregion

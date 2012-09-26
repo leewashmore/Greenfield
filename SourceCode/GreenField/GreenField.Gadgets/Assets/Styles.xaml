@@ -985,5 +985,11 @@
         <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
         <Setter Property="FontWeight" Value="Bold"/>
     </Style>
-
+    <!--GridViewCellStyleRedText-->
+    <Style TargetType="telerik:GridViewCell" x:Name="GridViewCellStyleRedText">
+        <Setter Property="Height" Value="{StaticResource DefaultGridViewCellHeight}"/>
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="Foreground" Value="Red"/>
+    </Style>
 </ResourceDictionary>

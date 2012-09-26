@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,14 +10,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Events;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Common;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.ModelFXDefinitions;
+using GreenField.Common.Helper;
 using GreenField.DataContracts;
-using Microsoft.Practices.Prism.ViewModel;
-using System.Collections.Generic;
-using System.Linq;
 using GreenField.Gadgets.Helpers;
 
 namespace GreenField.Gadgets.ViewModels
@@ -28,31 +30,31 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// private member object of the IEventAggregator for event aggregation
         /// </summary>
-        private IEventAggregator _eventAggregator;
+        private IEventAggregator eventAggregator;
 
         /// <summary>
         /// private member object of the IDBInteractivity for interaction with the Service Caller
         /// </summary>
-        private IDBInteractivity _dbInteractivity;
+        private IDBInteractivity dbInteractivity;
 
         /// <summary>
         /// private member object of ILoggerFacade for logging
         /// </summary>
-        public ILoggerFacade _logger;
+        public ILoggerFacade logger;
         
         /// <summary>
         /// Private member to store basic data
         /// </summary>
-        private RangeObservableCollection<FreeCashFlowsData> _freeCashFlowsDataInfo;       
+        private RangeObservableCollection<FreeCashFlowsData> freeCashFlowsDataInfo;       
 
         /// <summary>
         /// Private member to store basic data gadget visibilty
         /// </summary>
-        private Visibility _freeCashFlowGadgetVisibility = Visibility.Collapsed;
+        private Visibility freeCashFlowGadgetVisibility = Visibility.Collapsed;
         /// <summary>
         /// Private member to store Selected Security ID
         /// </summary>
-        private EntitySelectionData _securitySelectionData = null;
+        private EntitySelectionData securitySelectionData = null;
 
         #endregion
         
@@ -63,12 +65,12 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public RangeObservableCollection<FreeCashFlowsData> FreeCashFlowsDataInfo
         {
-            get { return _freeCashFlowsDataInfo; }
+            get { return freeCashFlowsDataInfo; }
             set
             {
-                if (_freeCashFlowsDataInfo == null)
+                if (freeCashFlowsDataInfo == null)
                 {
-                    _freeCashFlowsDataInfo = new RangeObservableCollection<FreeCashFlowsData>();                   
+                    freeCashFlowsDataInfo = new RangeObservableCollection<FreeCashFlowsData>();                   
                 }
                RaisePropertyChanged(() => this.FreeCashFlowsDataInfo);
             }
@@ -77,26 +79,26 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores fcf arranged data
         /// </summary>
-        private List<FreeCashFlowsData> _freeCashFlowsOutputData = null;
+        private List<FreeCashFlowsData> freeCashFlowsOutputData = null;
         public List<FreeCashFlowsData> FreeCashFlowsOutputData
         {
             get
             {
-                return _freeCashFlowsOutputData;
+                return freeCashFlowsOutputData;
             }
             set
             {
-                _freeCashFlowsOutputData = value;
+                freeCashFlowsOutputData = value;
                 RaisePropertyChanged(() => this.FreeCashFlowsOutputData);
             }
         }
        
         public Visibility FreeCashFlowGadgetVisibility
         {
-            get { return _freeCashFlowGadgetVisibility; }
+            get { return freeCashFlowGadgetVisibility; }
             set
             {
-                _freeCashFlowGadgetVisibility = value;
+                freeCashFlowGadgetVisibility = value;
                 RaisePropertyChanged(() => this.FreeCashFlowGadgetVisibility);
             }
         }
@@ -104,16 +106,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (_securitySelectionData != null && IsActive)
+                isActive = value;
+                if (securitySelectionData != null && IsActive)
                 {
-                    if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
+                    if (securitySelectionData.InstrumentID != null && securitySelectionData.InstrumentID != string.Empty)
                     {
                         CallingWebMethod();
                     }
@@ -123,16 +125,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Busy Indicator Status
         /// </summary>
-        private bool _busyIndicatorStatus;
+        private bool busyIndicatorStatus;
         public bool BusyIndicatorStatus
         {
             get
             {
-                return _busyIndicatorStatus;
+                return busyIndicatorStatus;
             }
             set
             {
-                _busyIndicatorStatus = value;
+                busyIndicatorStatus = value;
                 this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
             }
         }
@@ -141,18 +143,18 @@ namespace GreenField.Gadgets.ViewModels
         #region CONSTRUCTOR
         public ViewModelFreeCashFlows(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            securitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
 
-            if (_eventAggregator != null)
+            if (eventAggregator != null)
             {
-                _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
+                eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
             }
-            if (_securitySelectionData != null && IsActive)
+            if (securitySelectionData != null && IsActive)
             {
-                if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
+                if (securitySelectionData.InstrumentID != null && securitySelectionData.InstrumentID != string.Empty)
                 {
                     CallingWebMethod();
                 }
@@ -174,15 +176,15 @@ namespace GreenField.Gadgets.ViewModels
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (entitySelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    _securitySelectionData = entitySelectionData;
+                    Logging.LogMethodParameter(logger, methodNamespace, entitySelectionData, 1);
+                    securitySelectionData = entitySelectionData;
 
-                    if (_securitySelectionData.InstrumentID != null && _securitySelectionData.InstrumentID != string.Empty)
+                    if (securitySelectionData.InstrumentID != null && securitySelectionData.InstrumentID != string.Empty)
                     {
                         CallingWebMethod();
                         
@@ -190,14 +192,14 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
                 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
         }
         #endregion
@@ -210,7 +212,7 @@ namespace GreenField.Gadgets.ViewModels
         private void RetrieveFreeCashFlowsDataCallbackMethod(List<FreeCashFlowsData> freeCashFlowsData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 FreeCashFlowsDataInfo = null;
@@ -218,7 +220,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (freeCashFlowsData != null && freeCashFlowsData.Count > 0)
                 {
                     FreeCashFlowGadgetVisibility = Visibility.Visible;
-                    Logging.LogMethodParameter(_logger, methodNamespace, freeCashFlowsData, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, freeCashFlowsData, 1);
                     FreeCashFlowsDataInfo.Clear();
                     FreeCashFlowsDataInfo.AddRange(freeCashFlowsData);
                     FreeCashFlowsOutputData = ReArrangingData(FreeCashFlowsDataInfo);
@@ -228,16 +230,16 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally { BusyIndicatorStatus = false; }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
 
         #endregion
@@ -378,6 +380,18 @@ namespace GreenField.Gadgets.ViewModels
 
             }
             #endregion
+
+            //Method to apply Formatting
+            List<FreeCashFlowsData> resultAfterFormatting = ApplyingFormatting(result);            
+            return result;
+        }
+        /// <summary>
+        /// Method to format data
+        /// </summary>
+        /// <param name="result"></param>
+        /// <returns>Formatted data</returns>
+        private List<FreeCashFlowsData> ApplyingFormatting(List<FreeCashFlowsData> result)
+        {
             foreach (FreeCashFlowsData item in result)
             {
                 if (item.FieldName == "Revenue Growth" || item.FieldName == "EBITDA Margins")
@@ -412,7 +426,7 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             item.ValueY1 = "(" + Convert.ToDecimal(item.ValueY1).ToString("N0") + ")";
                             item.ValueY1 = item.ValueY1.Replace("-", "");
-                         }
+                        }
                         else
                             item.ValueY1 = Convert.ToDecimal(item.ValueY1).ToString("N0");
 
@@ -482,7 +496,7 @@ namespace GreenField.Gadgets.ViewModels
                             {
                                 item.ValueY8 = "(" + Convert.ToDecimal(item.ValueY8).ToString("N0") + ")";
                                 item.ValueY8 = item.ValueY8.Replace("-", "");
-                        }
+                            }
                             else
                                 item.ValueY8 = Convert.ToDecimal(item.ValueY8).ToString("N0");
                         }
@@ -497,12 +511,11 @@ namespace GreenField.Gadgets.ViewModels
                                 item.ValueY9 = Convert.ToDecimal(item.ValueY9).ToString("N0");
                         }
                     }
-                }
-                    #endregion
-
-                    
+                }                
+                #endregion
             }
             return result;
+
         }
         #endregion
 
@@ -512,9 +525,9 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         private void CallingWebMethod()
         {
-            if (_securitySelectionData != null && IsActive)
+            if (securitySelectionData != null && IsActive)
             {
-                _dbInteractivity.RetrieveDCFFreeCashFlowsData(_securitySelectionData, RetrieveFreeCashFlowsDataCallbackMethod);
+                dbInteractivity.RetrieveDCFFreeCashFlowsData(securitySelectionData, RetrieveFreeCashFlowsDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }            
 
@@ -526,7 +539,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public void Dispose()
         {
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
         }
         #endregion
     }

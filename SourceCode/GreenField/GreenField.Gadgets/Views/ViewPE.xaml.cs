@@ -9,12 +9,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
 using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
@@ -69,6 +70,7 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
+        #region Constructor
         public ViewPE(ViewModelPE dataContextSource)
         {
             InitializeComponent();
@@ -78,10 +80,9 @@ namespace GreenField.Gadgets.Views
             this.chPE.DataBound += dataContextSource.ChartDataBound;
             this.ApplyChartStyles();
         }
-        private void dgPE_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            
-        }
+        #endregion
+
+        #region EVENT
         private void chPE_Loaded(object sender, RoutedEventArgs e)
         {
             if (chPE.DefaultView.ChartLegend.Items.Count != 0)
@@ -90,13 +91,16 @@ namespace GreenField.Gadgets.Views
                 this.chPE.DefaultView.ChartLegend.Items.Remove(var);
             }
         }
-        
+        #endregion
+
+        #region HELPER METHOD
         private void ApplyChartStyles()
         {
             this.chPE.DefaultView.ChartArea.AxisX.TicksDistance = 50;
             this.chPE.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chPE.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
         }
+        #endregion
 
         #region Export
 

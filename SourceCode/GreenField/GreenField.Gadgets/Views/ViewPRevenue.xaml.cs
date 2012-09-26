@@ -9,12 +9,13 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Controls;
 using Telerik.Windows.Controls.Charting;
 using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Controls;
 
 namespace GreenField.Gadgets.Views
 {
@@ -40,35 +41,36 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
-        private ViewModelPRevenue _dataContextPRevenue;
+        private ViewModelPRevenue dataContextPRevenue;
         public ViewModelPRevenue DataContextPRevenue
         {
             get
             {
-                return _dataContextPRevenue;
+                return dataContextPRevenue;
             }
             set
             {
-                _dataContextPRevenue = value;
+                dataContextPRevenue = value;
             }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextPRevenue != null) //DataContext instance
-                    DataContextPRevenue.IsActive = _isActive;
+                    DataContextPRevenue.IsActive = isActive;
             }
         }
         #endregion
 
+        #region Constructor
         public ViewPRevenue(ViewModelPRevenue dataContextSource)
         {
             InitializeComponent();
@@ -76,13 +78,11 @@ namespace GreenField.Gadgets.Views
             this.DataContextPRevenue = dataContextSource;
             dataContextSource.ChartArea = this.chPRevenue.DefaultView.ChartArea;
             this.chPRevenue.DataBound += dataContextSource.ChartDataBound;
-            this.ApplyChartStyles();
-            
+            this.ApplyChartStyles();            
         }
-        private void dgPRevenue_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            
-        }
+        #endregion
+
+        #region EVENT
         private void chPRevenue_Loaded(object sender, RoutedEventArgs e)
         {
             
@@ -92,13 +92,16 @@ namespace GreenField.Gadgets.Views
                 this.chPRevenue.DefaultView.ChartLegend.Items.Remove(var);
             }
         }
+        #endregion
 
+        #region HELPER METHOD
         private void ApplyChartStyles()
         {
             this.chPRevenue.DefaultView.ChartArea.AxisX.TicksDistance = 50;
             this.chPRevenue.DefaultView.ChartArea.AxisX.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
             this.chPRevenue.DefaultView.ChartArea.AxisY.AxisStyles.ItemLabelStyle = this.Resources["ItemLabelStyle"] as Style;
         }
+        #endregion
 
         #region Export
 

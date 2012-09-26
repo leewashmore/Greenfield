@@ -9,12 +9,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Telerik.Windows.Controls;
+using Telerik.Windows.Documents.Model;
+using GreenField.Common;
+using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
-using GreenField.Common;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Documents.Model;
-using GreenField.DataContracts;
+
+
 
 namespace GreenField.Gadgets.Views
 {
@@ -26,31 +29,31 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
-        private ViewModelFreeCashFlows _dataContextFreeCashFlows;
+        private ViewModelFreeCashFlows dataContextFreeCashFlows;
         public ViewModelFreeCashFlows DataContextFreeCashFlows
         {
             get
             {
-                return _dataContextFreeCashFlows;
+                return dataContextFreeCashFlows;
             }
             set
             {
-                _dataContextFreeCashFlows = value;
+                dataContextFreeCashFlows = value;
             }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextFreeCashFlows != null) //DataContext instance
-                    DataContextFreeCashFlows.IsActive = _isActive;
+                    DataContextFreeCashFlows.IsActive = isActive;
             }
         }
         #endregion
@@ -96,6 +99,12 @@ namespace GreenField.Gadgets.Views
                 dgFreeCashFlows.Columns[8].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
                 dgFreeCashFlows.Columns[9].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
                 dgFreeCashFlows.Columns[10].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
+
+                dgFreeCashFlows.Columns[6].Background = new SolidColorBrush(Colors.LightGray);
+                dgFreeCashFlows.Columns[7].Background = new SolidColorBrush(Colors.LightGray);
+                dgFreeCashFlows.Columns[8].Background = new SolidColorBrush(Colors.LightGray);
+                dgFreeCashFlows.Columns[9].Background = new SolidColorBrush(Colors.LightGray);
+                dgFreeCashFlows.Columns[10].Background = new SolidColorBrush(Colors.LightGray);
 
             }           
 
@@ -158,14 +167,16 @@ namespace GreenField.Gadgets.Views
                        if (item.ValueY9 != null)
                        {
                            if (item.ValueY9.Contains("("))
-                               e.Row.Cells[10].Foreground = new SolidColorBrush(Colors.Red);
+                               dgFreeCashFlows.Columns[10].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
                        }
                    }
                 }
+
             }
         }
         #endregion
         #region ExcelExport
+
         /// <summary>
         /// Static class storing string types
         /// </summary>
@@ -182,7 +193,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextFreeCashFlows._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextFreeCashFlows.logger, methodNamespace);
             try
             {
                 if (this.dgFreeCashFlows.Visibility == Visibility.Visible)
@@ -198,13 +209,14 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextFreeCashFlows._logger, ex);
+                Logging.LogException(this.DataContextFreeCashFlows.logger, ex);
             }
         }
 
         #endregion
 
         #region HelperMethods
+
         /// <summary>
         /// Element Exporting Event
         /// </summary>
@@ -226,7 +238,7 @@ namespace GreenField.Gadgets.Views
         private void btnExportPDF_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextFreeCashFlows._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextFreeCashFlows.logger, methodNamespace);
             try
             {
                 PDFExporter.btnExportPDF_Click(this.dgFreeCashFlows);
@@ -234,7 +246,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextFreeCashFlows._logger, ex);
+                Logging.LogException(this.DataContextFreeCashFlows.logger, ex);
             }
         }
         #endregion
@@ -249,7 +261,7 @@ namespace GreenField.Gadgets.Views
         private void btnPrint_Click(object sender, RoutedEventArgs e)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(this.DataContextFreeCashFlows._logger, methodNamespace);
+            Logging.LogBeginMethod(this.DataContextFreeCashFlows.logger, methodNamespace);
             try
             {
                 Dispatcher.BeginInvoke((Action)(() =>
@@ -263,7 +275,7 @@ namespace GreenField.Gadgets.Views
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(this.DataContextFreeCashFlows._logger, ex);
+                Logging.LogException(this.DataContextFreeCashFlows.logger, ex);
             }
         }
 
