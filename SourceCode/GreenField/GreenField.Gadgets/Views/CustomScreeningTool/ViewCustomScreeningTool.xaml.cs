@@ -181,23 +181,15 @@ namespace GreenField.Gadgets.Views
                     foreach (var cell in cells)
                     {
                         rowData[kvp.Key] = cell.Value;
-                    }
-
-                    //SumFunction f = new SumFunction();
-                    //f.SourceField = kvp.Key;
-                    //((GridViewDataColumn)this.dgCustomSecurity.Columns[kvp.Key]).AggregateFunctions.Add(f);
-
+                    }                 
                 }
                 _data.Add(rowData);
             }
 
             this.dgCustomSecurity.ItemsSource = _data;
             this.dgCustomSecurity.IsFilteringAllowed = true;
-            //this.dgCustomSecurity.Columns[4].AggregateFunctions.Add(new SumFunction());
-            //CountFunction f = new CountFunction();
-            //((GridViewDataColumn)this.dgCustomSecurity.Columns["ID"]).AggregateFunctions.Add(f);
-            //this.dgCustomSecurity.CalculateAggregates();
-            //this.dgCustomSecurity.Rebind();
+            this.dgCustomSecurity.Columns[2].IsVisible = false;
+           this.DataContextViewModelCustomScreeningTool.BusyIndicatorIsBusy = false;
         }
 
         /// <summary>
