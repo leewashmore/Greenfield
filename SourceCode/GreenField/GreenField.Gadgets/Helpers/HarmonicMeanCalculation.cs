@@ -38,7 +38,9 @@ namespace GreenField.Gadgets.Helpers
     {
         public static double HarmonicMeanCalculationMethod<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
-            var sourceList =  source as List<MyDataRow>;
+            IEnumerable<string> values = from i in source 
+                                         select Convert.ToString(selector(i)).ToLower();
+
             return 100;
         }
     }
