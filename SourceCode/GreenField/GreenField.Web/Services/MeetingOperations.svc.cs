@@ -89,12 +89,12 @@ namespace GreenField.Web.Services
             {
                 List<MembershipUserInfo> membershipUserInfo = new List<MembershipUserInfo>();
 
-                for(int i = 0; i < userNames.Count; i++)
+                for (int i = 0; i < userNames.Count; i++)
                 {
                     MembershipUser user = Membership.GetUser(userNames[i]);
                     membershipUserInfo.Add(ConvertMembershipUser(user));
-                }                
-                    
+                }
+
                 return membershipUserInfo;
             }
             catch (Exception ex)
@@ -142,14 +142,14 @@ namespace GreenField.Web.Services
                 Int64? result = entity.SetPresentationInfo(userName, xmlScript).FirstOrDefault();
 
                 if (result < 0)
-                    return false; 
+                    return false;
                 #endregion
 
                 String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
 
                 if (!File.Exists(presentationFile))
                     throw new Exception("Missing IC Presentation Template file");
-                
+
                 String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
                 File.Copy(presentationFile, copiedFilePath, true);
 
@@ -213,7 +213,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-               
+
 
         // Get the title string of the slide.
         private void SetSlideTitle(SlidePart slidePart, ICPresentationOverviewData presentationOverviewData)
@@ -310,7 +310,7 @@ namespace GreenField.Web.Services
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
                 Int32? result = entity.SetICPPresentationStatus(userName, presentationId, status).FirstOrDefault();
-                return result == 0;                
+                return result == 0;
             }
             catch (Exception ex)
             {
@@ -371,7 +371,7 @@ namespace GreenField.Web.Services
                     presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
 
                 presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : securityData.CLOSING_PRICE.ToString())
-                    + " " + (securityData.TRADING_CURRENCY == null ? "" : securityData.TRADING_CURRENCY.ToString()); 
+                    + " " + (securityData.TRADING_CURRENCY == null ? "" : securityData.TRADING_CURRENCY.ToString());
                 #endregion
 
                 #region GF_PORTFOLIO_HOLDINGS info
@@ -380,7 +380,7 @@ namespace GreenField.Web.Services
                 if (lastBusinessRecord != null)
                     if (lastBusinessRecord.PORTFOLIO_DATE != null)
                         lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
-                
+
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> securityHoldingData = entity.GF_PORTFOLIO_HOLDINGS.Where(
                     record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID && record.PORTFOLIO_DATE == lastBusinessDate
                     && record.DIRTY_VALUE_PC > 0)
@@ -401,7 +401,7 @@ namespace GreenField.Web.Services
                 decimal? tempNAV;
 
                 List<GF_PORTFOLIO_HOLDINGS> securityInPortfolio = portfolioData
-                    .Where(a => a.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID 
+                    .Where(a => a.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
                         && a.PORTFOLIO_ID == portfolio.PortfolioId
                         && a.PORTFOLIO_DATE == lastBusinessDate).ToList();
                 decimal? sumSecurityDirtyValuePC = securityInPortfolio.Sum(record => record.DIRTY_VALUE_PC);
@@ -418,7 +418,7 @@ namespace GreenField.Web.Services
                     presentationOverviewData.CurrentHoldings = "No";
                     presentationOverviewData.PercentEMIF = "0%";
                     tempNAV = 0;
-                } 
+                }
                 #endregion
 
                 #region GF_BENCHMARK_HOLDINGS Info
@@ -439,7 +439,7 @@ namespace GreenField.Web.Services
                 {
                     presentationOverviewData.SecurityBMWeight = "0%";
                     presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
-                } 
+                }
                 #endregion
 
                 #region FAIR_VALUE Info
@@ -465,7 +465,7 @@ namespace GreenField.Web.Services
                         presentationOverviewData.SecurityBuySellvsCrnt = securityData.TRADING_CURRENCY + " " +
                             String.Format("{0:n4}", fairValueRecord.FV_BUY) +
                             "- " + securityData.TRADING_CURRENCY + " " +
-                            String.Format("{0:n4}", fairValueRecord.FV_SELL); 
+                            String.Format("{0:n4}", fairValueRecord.FV_SELL);
 
                         Decimal upperLimit = fairValueRecord.FV_BUY >= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
                         Decimal lowerLimit = fairValueRecord.FV_BUY <= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
@@ -488,9 +488,9 @@ namespace GreenField.Web.Services
                         if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
                         {
                             presentationOverviewData.FVCalc = dataMasterRecord.DATA_DESC + " " + securityData.TRADING_CURRENCY + " " +
-                                String.Format("{0:n4}",((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)) +
+                                String.Format("{0:n4}", ((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)) +
                                 "- " + securityData.TRADING_CURRENCY + " " +
-                                String.Format("{0:n4}",((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)); 
+                                String.Format("{0:n4}", ((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE));
                         }
 
                         String securityID = securityData.SECURITY_ID.ToString();
@@ -506,11 +506,11 @@ namespace GreenField.Web.Services
                             presentationOverviewData.SecurityMarketCapitalization = Convert.ToSingle(periodFinancialRecord.AMOUNT);
                         }
 
-                    }                    
-                } 
+                    }
+                }
                 #endregion
 
-                             
+
 
                 return presentationOverviewData;
             }
@@ -520,8 +520,8 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        }        
-        
+        }
+
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public Dictionary<String, Decimal?> RetrieveCurrentPFVMeasures(List<String> PFVTypeInfo, String securityTicker)
@@ -574,13 +574,11 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        }        
+        }
 
         #endregion
 
         #region UploadEdit Presentation Documents
-
-
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<FileMaster> RetrievePresentationAttachedFileDetails(Int64? presentationID)
@@ -609,7 +607,7 @@ namespace GreenField.Web.Services
                 DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
                 if (deletionFlag)
                 {
-                    documentWorkspaceOperations.DeleteDocument(fileMasterInfo.Location); 
+                    documentWorkspaceOperations.DeleteDocument(fileMasterInfo.Location);
                 }
 
                 entity.SetICPresentationAttachedFileInfo(userName, presentationId, fileMasterInfo.Name
@@ -700,12 +698,12 @@ namespace GreenField.Web.Services
                 DateTime preMeetingVotingDeadlineTime = new DateTime(meetingConfigurationSchedule.PreMeetingVotingDeadlineTime.Ticks, DateTimeKind.Utc);
                 String presentationDeadlineDay = meetingConfigurationSchedule.PresentationDeadlineDay;
                 DateTime presentationDeadlineTime = new DateTime(meetingConfigurationSchedule.PresentationDeadlineTime.Ticks, DateTimeKind.Utc);
-                
+
                 List<MeetingInfo> result = new List<MeetingInfo>();
-                
+
                 for (DateTime id = DateTime.UtcNow; id < DateTime.Now.AddMonths(months); id = id.AddDays(7))
                 {
-                    
+
                     DateTime tempPresentationDeadline = id.Date.Add(presentationDeadlineTime.TimeOfDay);
 
                     if (tempPresentationDeadline < DateTime.UtcNow)
@@ -795,8 +793,8 @@ namespace GreenField.Web.Services
                         {
                             Name = user,
                             PostMeetingFlag = true
-                        });                        
-                    }                    
+                        });
+                    }
                 }
 
                 return result;
@@ -953,7 +951,7 @@ namespace GreenField.Web.Services
                 DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
                 if (deletionFlag)
                 {
-                    documentWorkspaceOperations.DeleteDocument(fileMasterInfo.Location); 
+                    documentWorkspaceOperations.DeleteDocument(fileMasterInfo.Location);
                 }
 
                 entity.SetICPMeetingAttachedFileInfo(userName, meetingId, fileMasterInfo.Name
@@ -1017,7 +1015,9 @@ namespace GreenField.Web.Services
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
-                List<MeetingMinutesReportData> metaData = entity.GetMeetingMinutesReportDetails(meetingId).ToList();
+                List<MeetingMinutesReportData> metaData = entity.GetMeetingMinutesReportDetails(meetingId)
+                    .Where(record => record.Presenter.ToLower() != record.Name.ToLower()).ToList();
+                
                 return GeneratePostMeetingReport(metaData);
             }
             catch (Exception ex)
@@ -1026,7 +1026,6 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-
         }
 
         [OperationContract]
@@ -1053,8 +1052,16 @@ namespace GreenField.Web.Services
                     securityDescription = securityRecord.ASHEMM_ONE_LINER_DESCRIPTION;
                 }
 
+                List<PresentationVotingDeadlineDetails> records = entity.GetPreMeetingVotingReportDetails(presentationId).ToList();
+                List<PresentationVotingDeadlineDetails> metaData = new List<PresentationVotingDeadlineDetails>();
 
-                List<PresentationVotingDeadlineDetails> metaData = entity.GetPreMeetingVotingReportDetails(presentationId).ToList();
+                if (records != null && records.Count > 0)
+                {
+                    Int64? defaultFileId = records.First().FileID;
+                    metaData = records.Where(record => record.FileID == defaultFileId && record.Presenter.ToLower() != record.Name.ToLower()).ToList();
+                }
+
+
                 return GeneratePreMeetingReport(metaData, securityDescription);
             }
             catch (Exception ex)
@@ -1555,7 +1562,7 @@ namespace GreenField.Web.Services
             //cell.Rowspan = Rowspan;
             table.AddCell(cell);
         }
-        
+
         #endregion
 
         #region Presentation Vote
@@ -1709,11 +1716,11 @@ namespace GreenField.Web.Services
                         if (dataMasterRecord != null)
                         {
                             item.CurrentPFVMeasure = dataMasterRecord.DATA_DESC;
-                            item.CurrentBuySellRange = String.Format("{0:n2} - {1:n2}",fairValueRecord.FV_BUY, fairValueRecord.FV_SELL);
+                            item.CurrentBuySellRange = String.Format("{0:n2} - {1:n2}", fairValueRecord.FV_BUY, fairValueRecord.FV_SELL);
                             item.CurrentPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
-                            if(fairValueRecord.UPSIDE != null)
+                            if (fairValueRecord.UPSIDE != null)
                                 item.CurrentUpside = Convert.ToSingle(fairValueRecord.UPSIDE);
-                        }       
+                        }
                     }
                 }
 

@@ -203,7 +203,7 @@
             <!--Submit Section-->
             <Grid Grid.Row="5" Margin="0,2">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                    <telerik:RadButton x:Name="btnPreview" Content="PREVIEW" Width="100" Command="{Binding SubmitCommand}" Margin="0,0,10,0"
+                    <telerik:RadButton x:Name="btnPreview" Content="PREVIEW" Width="100" Margin="0,0,10,0"
                                Style="{StaticResource RadButtonStyle}" Click="btnPreview_Click" Visibility="{Binding PreviewReportVisibility}"/>
                     <telerik:RadButton Content="SUBMIT" Width="100" Command="{Binding SubmitCommand}"
                                Style="{StaticResource RadButtonStyle}"/>

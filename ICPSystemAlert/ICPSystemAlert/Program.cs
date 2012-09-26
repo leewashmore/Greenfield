@@ -41,6 +41,8 @@ namespace ICPSystemAlert
         private static String _documentListsServiceUrl;
 
         private static Int32 _scheduledRunMinutes;
+        private static Int64 _presentationIdentifier;
+        private static Int64 _meetingIdentifier;
 
         private static String _networkWebmasterEmail;
         private static String _networkCredentialPassword;
@@ -99,6 +101,8 @@ namespace ICPSystemAlert
             if (CommandLineParser.Default.ParseArguments(args, options))
             {
                 _scheduledRunMinutes = options.ScheduledRunMinutes;
+                _presentationIdentifier = options.PresentationIdentifier;
+                _meetingIdentifier = options.MeetingIdentifier;
                 _log.Info("Scheduled run minutes - " + _scheduledRunMinutes + " min(s)");
 
                 switch (options.ForcedRunParameter)
@@ -145,15 +149,20 @@ namespace ICPSystemAlert
         {
             try
             {
-                List<PresentationDeadlineDetails> presentationDeadlineInfo = _entity.GetPresentationDeadlineDetails(_scheduledRunMinutes).ToList();
+                List<PresentationDeadlineDetails> presentationDeadlineInfo = new List<PresentationDeadlineDetails>();
+
+                if(_presentationIdentifier != 0 || _meetingIdentifier != 0)
+                    presentationDeadlineInfo = _entity.GetPresentationDeadlineNotificationDetails(_presentationIdentifier, _meetingIdentifier).ToList();
+                else
+                    presentationDeadlineInfo = _entity.GetPresentationDeadlineDetails(_scheduledRunMinutes).ToList();
 
                 List<Int64?> distinctMeetingIds = presentationDeadlineInfo.Select(record => record.MeetingID).ToList().Distinct().ToList();
                 foreach (Int64 meetingId in distinctMeetingIds)
                 {
-                    String emailTo = String.Empty;
-                    String emailSubject = String.Empty;
-                    String emailMessageBody = String.Empty;
-                    String emailAttachments = String.Empty;
+                    String emailTo = null;
+                    String emailSubject = null;
+                    String emailMessageBody = null;
+                    String emailAttachments = null;
 
                     #region Email To population
                     List<String> voterUserNames = presentationDeadlineInfo.Where(record => record.MeetingID == meetingId)
@@ -228,7 +237,13 @@ namespace ICPSystemAlert
                 String emailMessageBody = null;
                 String emailAttachments = null;
 
-                List<PresentationVotingDeadlineDetails> presentationVotingDeadlineInfo = _entity.GetPresentationVotingDeadlineDetails(_scheduledRunMinutes).ToList();
+                List<PresentationVotingDeadlineDetails> presentationVotingDeadlineInfo = new List<PresentationVotingDeadlineDetails>();
+
+                if (_presentationIdentifier != 0 || _meetingIdentifier != 0)
+                    presentationVotingDeadlineInfo = _entity.GetPresentationVotingDeadlineNotificationDetails(_presentationIdentifier, _meetingIdentifier).ToList();
+                else
+                    presentationVotingDeadlineInfo = _entity.GetPresentationVotingDeadlineDetails(_scheduledRunMinutes).ToList();                    
+
                 List<Int64?> distinctMeetingIds = presentationVotingDeadlineInfo.Select(record => record.MeetingID).ToList().Distinct().ToList();
                 foreach (Int64 meetingId in distinctMeetingIds)
                 {
@@ -275,7 +290,8 @@ namespace ICPSystemAlert
                         Int64? fileID = distinctMeetingPresentationRecord.First().FileID;
 
                         List<PresentationVotingDeadlineDetails> distinctMeetingPresentationFileInfo = presentationVotingDeadlineInfo
-                            .Where(record => record.MeetingID == meetingId && record.PresentationID == presentationId && record.FileID == fileID).ToList();
+                            .Where(record => record.MeetingID == meetingId && record.PresentationID == presentationId && record.FileID == fileID
+                            && record.Presenter.ToLower() != record.Name.ToLower()).ToList();
 
                         String securityDescription = String.Empty;
                         String securityName = distinctMeetingPresentationRecord.First().SecurityName;
@@ -290,7 +306,6 @@ namespace ICPSystemAlert
 
                         String preMeetingReportOutFile = GeneratePreMeetingReport(distinctMeetingPresentationFileInfo, securityDescription);
 
-                        //Skips step of uploading to sharepoint server, deleting temp file
                         if (!String.IsNullOrEmpty(preMeetingReportOutFile))
                         {
                             String fileName = preMeetingReportOutFile.Substring(preMeetingReportOutFile.LastIndexOf(@"\") + 1);
@@ -330,7 +345,14 @@ namespace ICPSystemAlert
         {
             try
             {
-                List<PresentationFinalizeDetails> presentationFinalizeInfo = _entity.GetPresentationFinalizeDetails(_scheduledRunMinutes).ToList();
+                List<PresentationFinalizeDetails> presentationFinalizeInfo = new List<PresentationFinalizeDetails>();
+                
+                if (_presentationIdentifier != 0 || _meetingIdentifier != 0)
+                    presentationFinalizeInfo = _entity.GetPresentationFinalizeNotificationDetails(_presentationIdentifier, _meetingIdentifier).ToList();
+                else
+                    presentationFinalizeInfo = _entity.GetPresentationFinalizeDetails(_scheduledRunMinutes).ToList(); 
+
+
                 List<Int64?> distinctMeetingIds = presentationFinalizeInfo.Select(record => record.MeetingID).ToList().Distinct().ToList();
                 foreach (Int64 meetingId in distinctMeetingIds)
                 {
@@ -387,8 +409,7 @@ namespace ICPSystemAlert
                         {
                             emailAttachments = emailAttachments + documentUploadLocation;
                         }
-                    }
-                    //Pending implementation of uploading to sharepoint and posting that location while deleting temp file location being posted right now.
+                    }                  
 
                     #endregion
 
@@ -451,10 +472,10 @@ namespace ICPSystemAlert
                                 if (_sendFilesAsAttachment)
                                 {
                                     Byte[] downloadFile = RetrieveDocument(attachment);
-                                    String tempLocation = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp" + attachment.Substring(attachment.LastIndexOf(@"\") + 1);
+                                    String tempLocation = System.IO.Path.GetTempPath() + @"\" + attachment.Substring(attachment.LastIndexOf(@"/") + 1);
                                     tempLocations.Add(tempLocation);
                                     File.WriteAllBytes(tempLocation, downloadFile);
-                                    mm.Attachments.Add(new Attachment(attachment));
+                                    mm.Attachments.Add(new Attachment(tempLocation));
                                 }
                                 else
                                 {
@@ -580,9 +601,9 @@ namespace ICPSystemAlert
             Byte[] result = null;
             try
             {
-                String sourceUrl = _documentServerUrl + "/" + fileName;
+                //String sourceUrl = _documentServerUrl + "/" + fileName;
                 FieldInformation[] ffieldInfoArray = { new FieldInformation() };
-                UInt32 retrieveResult = _copyService.GetItem(sourceUrl, out ffieldInfoArray, out result);
+                UInt32 retrieveResult = _copyService.GetItem(fileName, out ffieldInfoArray, out result);
 
             }
             catch (Exception ex)
@@ -1034,10 +1055,16 @@ namespace ICPSystemAlert
     public class Options : CommandLineOptionsBase
     {
         [Option("r", "RunMinutes", Required = false, DefaultValue = 5, HelpText = "minutes at which run is scheduled")]
-        public int ScheduledRunMinutes { get; set; }
+        public Int32 ScheduledRunMinutes { get; set; }
 
         [Option("f", "ForcedRun", Required = false, DefaultValue = 0, HelpText = "force run of processes\n0 - All\n1 - Pre Voting Report Implementation" +
             "\n2 - Pre Meeting Report Implementation\n3 - Post Meeting Report Implementation\n4 - MessagePush")]
-        public int ForcedRunParameter { get; set; }
+        public Int32 ForcedRunParameter { get; set; }
+
+        [Option("p", "PresentationIdentifier", Required = false, DefaultValue = 0, HelpText = "Identifier - PresentationID\n0 - N/A")]
+        public Int64 PresentationIdentifier { get; set; }
+
+        [Option("m", "MeetingIdentifier", Required = false, DefaultValue = 0, HelpText = "Identifier - MeetingID\n0 - N/A")]
+        public Int64 MeetingIdentifier { get; set; }
     }
 }

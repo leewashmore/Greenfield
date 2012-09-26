@@ -191,7 +191,6 @@
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelEstimates.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelTargetPrice.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelSummaryReport.cs" />
-    <Compile Include="ViewModels\ICPresentations\ViewModelPreMeetingVoteReport.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelMeetingConfigSchedule.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentationVote.cs" />
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentationDecisionEntry.cs" />

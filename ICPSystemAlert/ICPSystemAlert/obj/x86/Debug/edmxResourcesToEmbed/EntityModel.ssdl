@@ -155,9 +155,6 @@
     <Property Name="SecurityIndustry" Type="varchar" MaxLength="50" />
     <Property Name="SecurityCashPosition" Type="real" />
     <Property Name="SecurityPosition" Type="bigint" />
-    <Property Name="SecurityMSCIStdWeight" Type="real" />
-    <Property Name="SecurityMSCIIMIWeight" Type="real" />
-    <Property Name="SecurityGlobalActiveWeight" Type="real" />
     <Property Name="SecurityLastClosingPrice" Type="real" />
     <Property Name="SecurityMarketCapitalization" Type="real" />
     <Property Name="SecurityPFVMeasure" Type="varchar" MaxLength="50" />
@@ -186,6 +183,8 @@
     <Property Name="YTDRet_Absolute" Type="varchar" MaxLength="50" />
     <Property Name="YTDRet_RELtoLOC" Type="varchar" MaxLength="50" />
     <Property Name="YTDRet_RELtoEM" Type="varchar" MaxLength="50" />
+    <Property Name="SecurityPFVMeasureValue" Type="decimal" />
+    <Property Name="CommitteePFVMeasureValue" Type="decimal" />
   </EntityType>
   <EntityType Name="VoterInfo">
     <Key>
@@ -335,11 +334,23 @@
   <Function Name="GetPresentationDeadlineDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ScheduleMinutes" Type="int" Mode="In" />
   </Function>
+  <Function Name="GetPresentationDeadlineNotificationDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PresentationId" Type="bigint" Mode="In" />
+    <Parameter Name="MeetingId" Type="bigint" Mode="In" />
+  </Function>
   <Function Name="GetPresentationFinalizeDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ScheduleMinutes" Type="int" Mode="In" />
   </Function>
+  <Function Name="GetPresentationFinalizeNotificationDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PresentationId" Type="bigint" Mode="In" />
+    <Parameter Name="MeetingId" Type="bigint" Mode="In" />
+  </Function>
   <Function Name="GetPresentationVotingDeadlineDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="ScheduleMinutes" Type="int" Mode="In" />
+  </Function>
+  <Function Name="GetPresentationVotingDeadlineNotificationDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PresentationId" Type="bigint" Mode="In" />
+    <Parameter Name="MeetingId" Type="bigint" Mode="In" />
   </Function>
   <Function Name="SetICPMeetingAttachedFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="UserName" Type="varchar" Mode="In" />

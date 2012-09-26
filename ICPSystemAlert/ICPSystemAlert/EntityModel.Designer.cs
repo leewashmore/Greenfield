@@ -193,22 +193,6 @@ namespace ICPSystemAlert
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<PresentationInfo> PresentationInfoes
-        {
-            get
-            {
-                if ((_PresentationInfoes == null))
-                {
-                    _PresentationInfoes = base.CreateObjectSet<PresentationInfo>("PresentationInfoes");
-                }
-                return _PresentationInfoes;
-            }
-        }
-        private ObjectSet<PresentationInfo> _PresentationInfoes;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<MessageInfo> MessageInfoes
         {
             get
@@ -221,6 +205,22 @@ namespace ICPSystemAlert
             }
         }
         private ObjectSet<MessageInfo> _MessageInfoes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PresentationInfo> PresentationInfoes
+        {
+            get
+            {
+                if ((_PresentationInfoes == null))
+                {
+                    _PresentationInfoes = base.CreateObjectSet<PresentationInfo>("PresentationInfoes");
+                }
+                return _PresentationInfoes;
+            }
+        }
+        private ObjectSet<PresentationInfo> _PresentationInfoes;
 
         #endregion
         #region AddTo Methods
@@ -282,19 +282,19 @@ namespace ICPSystemAlert
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the PresentationInfoes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToPresentationInfoes(PresentationInfo presentationInfo)
-        {
-            base.AddObject("PresentationInfoes", presentationInfo);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the MessageInfoes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToMessageInfoes(MessageInfo messageInfo)
         {
             base.AddObject("MessageInfoes", messageInfo);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PresentationInfoes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPresentationInfoes(PresentationInfo presentationInfo)
+        {
+            base.AddObject("PresentationInfoes", presentationInfo);
         }
 
         #endregion
@@ -769,6 +769,96 @@ namespace ICPSystemAlert
             }
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("SetICPMeetingPresentationStatus", userNameParameter, meetingIdParameter, statusParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        /// <param name="meetingId">No Metadata Documentation available.</param>
+        public ObjectResult<PresentationDeadlineDetails> GetPresentationDeadlineNotificationDetails(Nullable<global::System.Int64> presentationId, Nullable<global::System.Int64> meetingId)
+        {
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter meetingIdParameter;
+            if (meetingId.HasValue)
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", meetingId);
+            }
+            else
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<PresentationDeadlineDetails>("GetPresentationDeadlineNotificationDetails", presentationIdParameter, meetingIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        /// <param name="meetingId">No Metadata Documentation available.</param>
+        public ObjectResult<PresentationFinalizeDetails> GetPresentationFinalizeNotificationDetails(Nullable<global::System.Int64> presentationId, Nullable<global::System.Int64> meetingId)
+        {
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter meetingIdParameter;
+            if (meetingId.HasValue)
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", meetingId);
+            }
+            else
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<PresentationFinalizeDetails>("GetPresentationFinalizeNotificationDetails", presentationIdParameter, meetingIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        /// <param name="meetingId">No Metadata Documentation available.</param>
+        public ObjectResult<PresentationVotingDeadlineDetails> GetPresentationVotingDeadlineNotificationDetails(Nullable<global::System.Int64> presentationId, Nullable<global::System.Int64> meetingId)
+        {
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter meetingIdParameter;
+            if (meetingId.HasValue)
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", meetingId);
+            }
+            else
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<PresentationVotingDeadlineDetails>("GetPresentationVotingDeadlineNotificationDetails", presentationIdParameter, meetingIdParameter);
         }
 
         #endregion
@@ -3178,78 +3268,6 @@ namespace ICPSystemAlert
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityMSCIStdWeight
-        {
-            get
-            {
-                return _SecurityMSCIStdWeight;
-            }
-            set
-            {
-                OnSecurityMSCIStdWeightChanging(value);
-                ReportPropertyChanging("SecurityMSCIStdWeight");
-                _SecurityMSCIStdWeight = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityMSCIStdWeight");
-                OnSecurityMSCIStdWeightChanged();
-            }
-        }
-        private Nullable<global::System.Single> _SecurityMSCIStdWeight;
-        partial void OnSecurityMSCIStdWeightChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityMSCIStdWeightChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityMSCIIMIWeight
-        {
-            get
-            {
-                return _SecurityMSCIIMIWeight;
-            }
-            set
-            {
-                OnSecurityMSCIIMIWeightChanging(value);
-                ReportPropertyChanging("SecurityMSCIIMIWeight");
-                _SecurityMSCIIMIWeight = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityMSCIIMIWeight");
-                OnSecurityMSCIIMIWeightChanged();
-            }
-        }
-        private Nullable<global::System.Single> _SecurityMSCIIMIWeight;
-        partial void OnSecurityMSCIIMIWeightChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityMSCIIMIWeightChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
-        public Nullable<global::System.Single> SecurityGlobalActiveWeight
-        {
-            get
-            {
-                return _SecurityGlobalActiveWeight;
-            }
-            set
-            {
-                OnSecurityGlobalActiveWeightChanging(value);
-                ReportPropertyChanging("SecurityGlobalActiveWeight");
-                _SecurityGlobalActiveWeight = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SecurityGlobalActiveWeight");
-                OnSecurityGlobalActiveWeightChanged();
-            }
-        }
-        private Nullable<global::System.Single> _SecurityGlobalActiveWeight;
-        partial void OnSecurityGlobalActiveWeightChanging(Nullable<global::System.Single> value);
-        partial void OnSecurityGlobalActiveWeightChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
-        [DataMemberAttribute()]
         public Nullable<global::System.Single> SecurityLastClosingPrice
         {
             get
@@ -3916,6 +3934,54 @@ namespace ICPSystemAlert
         private global::System.String _YTDRet_RELtoEM;
         partial void OnYTDRet_RELtoEMChanging(global::System.String value);
         partial void OnYTDRet_RELtoEMChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> SecurityPFVMeasureValue
+        {
+            get
+            {
+                return _SecurityPFVMeasureValue;
+            }
+            set
+            {
+                OnSecurityPFVMeasureValueChanging(value);
+                ReportPropertyChanging("SecurityPFVMeasureValue");
+                _SecurityPFVMeasureValue = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SecurityPFVMeasureValue");
+                OnSecurityPFVMeasureValueChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _SecurityPFVMeasureValue;
+        partial void OnSecurityPFVMeasureValueChanging(Nullable<global::System.Decimal> value);
+        partial void OnSecurityPFVMeasureValueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Decimal> CommitteePFVMeasureValue
+        {
+            get
+            {
+                return _CommitteePFVMeasureValue;
+            }
+            set
+            {
+                OnCommitteePFVMeasureValueChanging(value);
+                ReportPropertyChanging("CommitteePFVMeasureValue");
+                _CommitteePFVMeasureValue = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CommitteePFVMeasureValue");
+                OnCommitteePFVMeasureValueChanged();
+            }
+        }
+        private Nullable<global::System.Decimal> _CommitteePFVMeasureValue;
+        partial void OnCommitteePFVMeasureValueChanging(Nullable<global::System.Decimal> value);
+        partial void OnCommitteePFVMeasureValueChanged();
 
         #endregion
     
