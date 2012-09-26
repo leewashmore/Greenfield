@@ -11,10 +11,11 @@ using System.Windows.Shapes;
 using Telerik.Windows.Data;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace GreenField.Gadgets.Helpers
 {
-    public class HarmonicMeanCalculation : EnumerableAggregateFunction
+    public class HarmonicMeanCalculation : EnumerableSelectorAggregateFunction
     {
         protected override string AggregateMethodName
         {
@@ -35,17 +36,9 @@ namespace GreenField.Gadgets.Helpers
 
     public class HarmonicMean
     {
-        public static double HarmonicMeanCalculationMethod<T>(IEnumerable<MyDataRow> source)
+        public static double HarmonicMeanCalculationMethod<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
-
-            //double sum1 = 0;
-            //double sum2 = 0;
-            //foreach (Item item in source)
-            //{
-            //    sum1 += item.Value1;
-            //    sum2 += item.Value2;
-            //}
-
+            var sourceList =  source as List<MyDataRow>;
             return 100;
         }
     }
