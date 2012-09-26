@@ -78,7 +78,7 @@ namespace GreenField.Gadgets.Views
             this.DataContextRelativePerformance = dataContextSource;
 
             this.AddHandler(GridViewHeaderCell.MouseLeftButtonDownEvent, new MouseButtonEventHandler(MouseDownOnHeaderCell), true);
-        } 
+        }
         #endregion
 
         #region Properties
@@ -110,7 +110,7 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Event Handlers
-       
+
         /// <summary>
         /// setting tooltip on grid cells when is getting grid loaded with data
         /// </summary>
@@ -124,7 +124,7 @@ namespace GreenField.Gadgets.Views
                 return;
 
             if (e.Row.Cells[0] is GridViewFooterCell)
-                return;                     
+                return;
 
             foreach (GridViewCell cell in e.Row.Cells)
             {
@@ -149,7 +149,7 @@ namespace GreenField.Gadgets.Views
 
                 ToolTip toolTip = new ToolTip()
                 {
-                    Content = activePosition               
+                    Content = activePosition
                 };
 
                 ToolTipService.SetToolTip(cell, toolTip);
@@ -192,7 +192,7 @@ namespace GreenField.Gadgets.Views
                     }
                 }
             }
-        } 
+        }
 
         /// <summary>
         /// identifying the cell clicked 
@@ -209,7 +209,7 @@ namespace GreenField.Gadgets.Views
 
             //when cells on Column ID column, toggled grid is displayed
             if (selectedColumnIndex == 0)
-            return;
+                return;
 
             //Ignore null cells
             if (selectedColumnIndex != this.dgRelativePerformance.Columns.Count - 1)
@@ -236,7 +236,7 @@ namespace GreenField.Gadgets.Views
         void DataContextSource_RelativePerformanceGridBuildEvent(RelativePerformanceGridBuildEventArgs e)
         {
             _relativePerformanceSectorInfo = e.RelativePerformanceSectorInfo;
-            
+
             //Clear grid of previous sector info
             for (int columnIndex = 1; columnIndex < this.dgRelativePerformance.Columns.Count - 1; )
             {
@@ -253,21 +253,28 @@ namespace GreenField.Gadgets.Views
                 dataColumn.DataMemberBinding = new System.Windows.Data.Binding("RelativePerformanceCountrySpecificInfo[" + cIndex + "]");
 
                 StringBuilder CellTemp = new StringBuilder();
-                CellTemp.Append("<DataTemplate ");
-                CellTemp.Append("xmlns='http://schemas.microsoft.com/winfx/");
-                CellTemp.Append("2006/xaml/presentation' ");
-                CellTemp.Append("xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml' ");
+                CellTemp.Append("<DataTemplate");
+                CellTemp.Append(" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'");
+                CellTemp.Append(" xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'");
 
                 //Be sure to replace "YourNamespace" and "YourAssembly" with your app's 
                 //actual namespace and assembly here
-                CellTemp.Append("xmlns:local = 'clr-namespace:GreenField.Gadgets.Views");
-                CellTemp.Append(";assembly=GreenField.Gadgets'>");
+                //      Changed the following block to use converter and publish in Basis Points - Lane - 2012-09-26
+                CellTemp.Append(" xmlns:lanes='clr-namespace:GreenField.Gadgets.Helpers;assembly=GreenField.Gadgets'");
+                CellTemp.Append(" xmlns:local='clr-namespace:GreenField.Gadgets.Views;assembly=GreenField.Gadgets'>");
                 CellTemp.Append("<StackPanel Orientation='Horizontal'>");
-                CellTemp.Append("<TextBlock ");
-                CellTemp.Append("Text = '{Binding RelativePerformanceCountrySpecificInfo[" + cIndex + "].Alpha}'/>");
+                CellTemp.Append("<TextBlock>");
+                CellTemp.Append("   <TextBlock.Text>");
+                CellTemp.Append("       <Binding Path='RelativePerformanceCountrySpecificInfo[" + cIndex + "].Alpha'>");
+                CellTemp.Append("           <Binding.Converter>");
+                CellTemp.Append("               <lanes:BasisPointsConverter/>");
+                CellTemp.Append("           </Binding.Converter>");
+                CellTemp.Append("       </Binding>");
+                CellTemp.Append("   </TextBlock.Text>");
+                CellTemp.Append("</TextBlock>");
                 CellTemp.Append("</StackPanel>");
                 CellTemp.Append("</DataTemplate>");
-
+                
                 dataColumn.CellTemplate = XamlReader.Load(CellTemp.ToString()) as DataTemplate;
 
                 decimal? aggregateSectorAlphaValue = e.RelativePerformanceInfo.Select(t => t.RelativePerformanceCountrySpecificInfo.ElementAt(cIndex)).Sum(t => t.Alpha == null ? 0 : t.Alpha);
@@ -280,31 +287,34 @@ namespace GreenField.Gadgets.Views
                     //AggregationExpression = Models => string.Format("{0} ({1}%)", aggregateSectorAlpha, aggregateSectorActiviePosition),
                     AggregationExpression = Models => aggregateSectorAlpha,
                     FunctionName = sectorData.SectorId.ToString()
-                };                
+                };
 
                 dataColumn.FooterTextAlignment = TextAlignment.Right;
                 dataColumn.Width = GridViewLength.Auto;
                 dataColumn.AggregateFunctions.Add(aggregateAlphaSumFunction);
-                
-                TextBlock spFunctions = new TextBlock() {
+
+                TextBlock spFunctions = new TextBlock()
+                {
                     Text = aggregateSectorActiviePosition.ToString(),
                     Tag = sectorData.SectorId,
                     TextAlignment = TextAlignment.Right,
                     FontSize = 9
                 };
-                TextBlock footerText = new TextBlock() { 
-                    Text = aggregateSectorAlpha.ToString(), 
-                    Tag = sectorData.SectorId, 
+
+                TextBlock footerText = new TextBlock()
+                {   
+                    Text = (Convert.ToDecimal(aggregateSectorAlpha) * 10000).ToString("n0"), //Needs to be displayed in basis points - Lane - 2012-09-25
+                    Tag = sectorData.SectorId,
                     TextAlignment = TextAlignment.Right,
                     FontSize = 9
                 };
-                
+
 
                 ToolTipService.SetToolTip(footerText, spFunctions);
                 dataColumn.Footer = footerText;
-                
+
                 dataColumn.HeaderCellStyle = this.Resources["GridViewHeaderCellClickable"] as Style;
-                dataColumn.FooterCellStyle = this.Resources["GridViewCustomFooterCellStyle"] as Style;                
+                dataColumn.FooterCellStyle = this.Resources["GridViewCustomFooterCellStyle"] as Style;
                 dataColumn.CellStyle = this.Resources["GridViewCellStyle"] as Style;
                 dgRelativePerformance.Columns.Insert(++cIndex, dataColumn);
             }
@@ -374,7 +384,7 @@ namespace GreenField.Gadgets.Views
                         TextBlock txtSecurityName = new TextBlock()
                         {
                             Text = securityName.SecurityName
-                                + " (" + securityName.SecurityAlpha + ")",
+                                + " (" + (Convert.ToDecimal(securityName.SecurityAlpha) * 10000).ToString("n0") + ")",  //Needs to be displayed in basis points - Lane - 2012-09-25
                             FontSize = 9,
                             FontWeight = FontWeights.Normal,
                             FontFamily = new FontFamily("Arial")
@@ -389,10 +399,10 @@ namespace GreenField.Gadgets.Views
 
                 svc.ScrollIntoView(grd);
                 svc.Content = grd;
-                this.dpTopActivePositionSecurity.Children.Add(svc); 
+                this.dpTopActivePositionSecurity.Children.Add(svc);
             }
 
-        }        
+        }
 
         #endregion
 
@@ -425,7 +435,7 @@ namespace GreenField.Gadgets.Views
                     {
                         return value.CountryId;
                     }
-                    else if (columnIndex == this.dgRelativePerformance.Columns.Count - 1)
+                    else if (columnIndex == this.dgRelativePerformance.Columns.Count - 1)  //Could this be why the Totals column does not export to the xls - Lane
                     {
                         string result = value.AggregateCountryAlpha.ToString();
                         return result;
@@ -445,7 +455,7 @@ namespace GreenField.Gadgets.Views
                 }
                 return e.Value;
             });
-        } 
+        }
         #endregion
 
         #region Helper Methods
@@ -460,22 +470,22 @@ namespace GreenField.Gadgets.Views
                     counter = s1.Count();
             }
             return counter;
-        }        
+        }
 
         private void FooterCellBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.OriginalSource is TextBlock)
             {
-                    string sectorID = ((e.OriginalSource as TextBlock).Tag).ToString();
-                    _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
-                    {
-                        SectorID = sectorID
-                    });           
+                string sectorID = ((e.OriginalSource as TextBlock).Tag).ToString();
+                _eventAggregator.GetEvent<RelativePerformanceGridClickEvent>().Publish(new RelativePerformanceGridCellData()
+                {
+                    SectorID = sectorID
+                });
             }
-        }       
+        }
 
         #endregion
-                
+
         #region Export to Pdf/Print
         /// <summary>
         /// Event handler when user wants to Export the Grid to PDF
@@ -499,7 +509,7 @@ namespace GreenField.Gadgets.Views
                 PdfFormatProvider provider = new PdfFormatProvider();
                 using (Stream output = dialog.OpenFile())
                 {
-                    provider.Export(document, output); 
+                    provider.Export(document, output);
                 }
             }
         }
@@ -564,7 +574,7 @@ namespace GreenField.Gadgets.Views
                 }
 
                 table.Rows.Add(headerRow);
-            }         
+            }
 
             if (grid.Items.Groups != null)
             {
@@ -572,7 +582,7 @@ namespace GreenField.Gadgets.Views
                 {
                     AddGroupRow(table, grid.Items.Groups[i] as QueryableCollectionViewGroup, columns, grid);
                 }
-            }            
+            }
             else
             {
                 AddDataRows(table, grid.Items, columns, grid);
@@ -611,7 +621,7 @@ namespace GreenField.Gadgets.Views
                 }
 
                 for (int j = 0; j < columns.Count(); j++)
-                {                    
+                {
                     TableCell cell = new TableCell();
                     object value = null;
                     if (j == 0)
@@ -678,7 +688,7 @@ namespace GreenField.Gadgets.Views
             else
             {
                 for (int i = 0; i < group.ItemCount; i++)
-               {
+                {
                     AddDataRows(table, group.Items, columns, grid);
                 }
             }
@@ -716,7 +726,7 @@ namespace GreenField.Gadgets.Views
 
         #region Printing the DataGrid
 
-       
+
 
         #endregion
 
@@ -728,7 +738,7 @@ namespace GreenField.Gadgets.Views
         {
             this.DataContextRelativePerformance.Dispose();
             this.DataContextRelativePerformance.RelativePerformanceGridBuildEvent -= new RelativePerformanceGridBuildEventHandler(DataContextSource_RelativePerformanceGridBuildEvent);
-            this.DataContextRelativePerformance= null;
+            this.DataContextRelativePerformance = null;
             this.DataContext = null;
         }
         #endregion
