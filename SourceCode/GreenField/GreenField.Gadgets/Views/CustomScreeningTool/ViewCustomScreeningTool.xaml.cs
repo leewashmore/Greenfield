@@ -126,7 +126,7 @@ namespace GreenField.Gadgets.Views
                 column.IsGroupable = true;
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
-                column.Width = new GridViewLength(1, GridViewLengthUnitType.Star);               
+                column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);               
                 this.dgCustomSecurity.Columns.Add(column);
             }
 
@@ -157,7 +157,7 @@ namespace GreenField.Gadgets.Views
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
                 column.Width = new GridViewLength(1, GridViewLengthUnitType.Star);
-                column.AggregateFunctions.Add(new HarmonicMeanCalculation { SourceField = kvp.Key });
+                //column.AggregateFunctions.Add(new HarmonicMeanCalculation { SourceField = kvp.Key });
                 //column.AggregateFunctions.Add(new HarmonicMeanCalculation ());
                 this.dgCustomSecurity.Columns.Add(column);             
             }
@@ -194,6 +194,7 @@ namespace GreenField.Gadgets.Views
             this.DataContextViewModelCustomScreeningTool.BusyIndicatorIsBusy = false;
         }
 
+        #region Excel Export
         /// <summary>
         /// Method to catch Click Event of Export to Excel
         /// </summary>
@@ -218,7 +219,8 @@ namespace GreenField.Gadgets.Views
             {
                 Prompt.ShowDialog(ex.Message);
             }
-        }
+        } 
+        #endregion
 
         #region PDFExport
         /// <summary>
@@ -254,7 +256,5 @@ namespace GreenField.Gadgets.Views
 
         #endregion
         #endregion
-
-
     }
 }

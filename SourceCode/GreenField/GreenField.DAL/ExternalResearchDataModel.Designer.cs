@@ -304,6 +304,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<MODEL_INPUTS_CTY> _MODEL_INPUTS_CTY;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<PORTFOLIO_SECURITY_TARGETS> PORTFOLIO_SECURITY_TARGETS
+        {
+            get
+            {
+                if ((_PORTFOLIO_SECURITY_TARGETS == null))
+                {
+                    _PORTFOLIO_SECURITY_TARGETS = base.CreateObjectSet<PORTFOLIO_SECURITY_TARGETS>("PORTFOLIO_SECURITY_TARGETS");
+                }
+                return _PORTFOLIO_SECURITY_TARGETS;
+            }
+        }
+        private ObjectSet<PORTFOLIO_SECURITY_TARGETS> _PORTFOLIO_SECURITY_TARGETS;
 
         #endregion
         #region AddTo Methods
@@ -426,6 +442,14 @@ namespace GreenField.DAL
         public void AddToMODEL_INPUTS_CTY(MODEL_INPUTS_CTY mODEL_INPUTS_CTY)
         {
             base.AddObject("MODEL_INPUTS_CTY", mODEL_INPUTS_CTY);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the PORTFOLIO_SECURITY_TARGETS EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToPORTFOLIO_SECURITY_TARGETS(PORTFOLIO_SECURITY_TARGETS pORTFOLIO_SECURITY_TARGETS)
+        {
+            base.AddObject("PORTFOLIO_SECURITY_TARGETS", pORTFOLIO_SECURITY_TARGETS);
         }
 
         #endregion
@@ -5218,6 +5242,148 @@ namespace GreenField.DAL
         private global::System.Decimal _MULTIPLIER;
         partial void OnMULTIPLIERChanging(global::System.Decimal value);
         partial void OnMULTIPLIERChanged();
+
+        #endregion
+    
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="ExternalResearchModel", Name="PORTFOLIO_SECURITY_TARGETS")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class PORTFOLIO_SECURITY_TARGETS : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new PORTFOLIO_SECURITY_TARGETS object.
+        /// </summary>
+        /// <param name="pORTFOLIO_ID">Initial value of the PORTFOLIO_ID property.</param>
+        /// <param name="sECURITY_ID">Initial value of the SECURITY_ID property.</param>
+        /// <param name="tARGET_PC">Initial value of the TARGET_PC property.</param>
+        /// <param name="uPDATE">Initial value of the UPDATE property.</param>
+        public static PORTFOLIO_SECURITY_TARGETS CreatePORTFOLIO_SECURITY_TARGETS(global::System.String pORTFOLIO_ID, global::System.Int32 sECURITY_ID, global::System.Decimal tARGET_PC, global::System.DateTime uPDATE)
+        {
+            PORTFOLIO_SECURITY_TARGETS pORTFOLIO_SECURITY_TARGETS = new PORTFOLIO_SECURITY_TARGETS();
+            pORTFOLIO_SECURITY_TARGETS.PORTFOLIO_ID = pORTFOLIO_ID;
+            pORTFOLIO_SECURITY_TARGETS.SECURITY_ID = sECURITY_ID;
+            pORTFOLIO_SECURITY_TARGETS.TARGET_PC = tARGET_PC;
+            pORTFOLIO_SECURITY_TARGETS.UPDATE = uPDATE;
+            return pORTFOLIO_SECURITY_TARGETS;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String PORTFOLIO_ID
+        {
+            get
+            {
+                return _PORTFOLIO_ID;
+            }
+            set
+            {
+                if (_PORTFOLIO_ID != value)
+                {
+                    OnPORTFOLIO_IDChanging(value);
+                    ReportPropertyChanging("PORTFOLIO_ID");
+                    _PORTFOLIO_ID = StructuralObject.SetValidValue(value, false);
+                    ReportPropertyChanged("PORTFOLIO_ID");
+                    OnPORTFOLIO_IDChanged();
+                }
+            }
+        }
+        private global::System.String _PORTFOLIO_ID;
+        partial void OnPORTFOLIO_IDChanging(global::System.String value);
+        partial void OnPORTFOLIO_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SECURITY_ID
+        {
+            get
+            {
+                return _SECURITY_ID;
+            }
+            set
+            {
+                if (_SECURITY_ID != value)
+                {
+                    OnSECURITY_IDChanging(value);
+                    ReportPropertyChanging("SECURITY_ID");
+                    _SECURITY_ID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SECURITY_ID");
+                    OnSECURITY_IDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SECURITY_ID;
+        partial void OnSECURITY_IDChanging(global::System.Int32 value);
+        partial void OnSECURITY_IDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Decimal TARGET_PC
+        {
+            get
+            {
+                return _TARGET_PC;
+            }
+            set
+            {
+                if (_TARGET_PC != value)
+                {
+                    OnTARGET_PCChanging(value);
+                    ReportPropertyChanging("TARGET_PC");
+                    _TARGET_PC = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TARGET_PC");
+                    OnTARGET_PCChanged();
+                }
+            }
+        }
+        private global::System.Decimal _TARGET_PC;
+        partial void OnTARGET_PCChanging(global::System.Decimal value);
+        partial void OnTARGET_PCChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime UPDATE
+        {
+            get
+            {
+                return _UPDATE;
+            }
+            set
+            {
+                if (_UPDATE != value)
+                {
+                    OnUPDATEChanging(value);
+                    ReportPropertyChanging("UPDATE");
+                    _UPDATE = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UPDATE");
+                    OnUPDATEChanged();
+                }
+            }
+        }
+        private global::System.DateTime _UPDATE;
+        partial void OnUPDATEChanging(global::System.DateTime value);
+        partial void OnUPDATEChanged();
 
         #endregion
     

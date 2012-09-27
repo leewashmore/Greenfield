@@ -177,6 +177,14 @@
       [PERIOD_FINANCIALS_DISPLAY].[MULTIPLIER] AS [MULTIPLIER]
       FROM [dbo].[PERIOD_FINANCIALS_DISPLAY] AS [PERIOD_FINANCIALS_DISPLAY]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.Store.PORTFOLIO_SECURITY_TARGETS" store:Type="Tables" store:Schema="dbo" store:Name="PORTFOLIO_SECURITY_TARGETS">
+            <DefiningQuery>SELECT 
+      [PORTFOLIO_SECURITY_TARGETS].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
+      [PORTFOLIO_SECURITY_TARGETS].[SECURITY_ID] AS [SECURITY_ID], 
+      [PORTFOLIO_SECURITY_TARGETS].[TARGET_PC] AS [TARGET_PC], 
+      [PORTFOLIO_SECURITY_TARGETS].[UPDATE] AS [UPDATE]
+      FROM [dbo].[PORTFOLIO_SECURITY_TARGETS] AS [PORTFOLIO_SECURITY_TARGETS]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="PRICES" EntityType="ExternalResearchModel.Store.PRICES" store:Type="Tables" store:Schema="dbo" store:Name="PRICES">
             <DefiningQuery>SELECT 
       [PRICES].[SECURITY_ID] AS [SECURITY_ID], 
@@ -504,6 +512,21 @@
           <Property Name="BOLD_FONT" Type="char" Nullable="false" MaxLength="1" />
           <Property Name="DECIMALS" Type="int" Nullable="false" />
           <Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.PORTFOLIO_SECURITY_TARGETS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="PORTFOLIO_SECURITY_TARGETS">
+          <Key>
+            <PropertyRef Name="PORTFOLIO_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="TARGET_PC" />
+            <PropertyRef Name="UPDATE" />
+          </Key>
+          <Property Name="PORTFOLIO_ID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="SECURITY_ID" Type="int" Nullable="false" />
+          <Property Name="TARGET_PC" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPDATE" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -927,6 +950,7 @@
             <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
           <FunctionImport Name="RetrieveDataPointsModelUpload" ReturnType="Collection(ExternalResearchModel.DataPointsModelUploadData)">
           <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
@@ -1503,11 +1527,24 @@
           <Property Type="DateTime" Name="DATE" Nullable="true" />
           <Property Type="Int32" Name="DATA_ID" Nullable="true" />
         </ComplexType>
-        <ComplexType Name="DataPointsModelUploadData">
+        <EntityType Name="PORTFOLIO_SECURITY_TARGETS">
+          <Key>
+            <PropertyRef Name="PORTFOLIO_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="TARGET_PC" />
+            <PropertyRef Name="UPDATE" />
+          </Key>
+          <Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="Int32" Name="SECURITY_ID" Nullable="false" />
+          <Property Type="Decimal" Name="TARGET_PC" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="DateTime" Name="UPDATE" Nullable="false" />
+        </EntityType>
+         <ComplexType Name="DataPointsModelUploadData">
           <Property Type="String" Name="COA" Nullable="true" MaxLength="8" />
           <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
           <Property Type="String" Name="DATA_DESCRIPTION" Nullable="false" MaxLength="100" />
         </ComplexType>
+
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -2161,6 +2198,16 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="PORTFOLIO_SECURITY_TARGETS">
+            <EntityTypeMapping TypeName="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS">
+              <MappingFragment StoreEntitySet="PORTFOLIO_SECURITY_TARGETS">
+                <ScalarProperty Name="UPDATE" ColumnName="UPDATE" />
+                <ScalarProperty Name="TARGET_PC" ColumnName="TARGET_PC" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="RetrieveDataPointsModelUpload" FunctionName="ExternalResearchModel.Store.RetrieveDataPointsModelUpload">
             <ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.DataPointsModelUploadData">
@@ -2222,6 +2269,7 @@
         <EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="4.75" Height="2.5571907552083388" />
         <EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9.375" PointY="9.75" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.5" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
 			</Diagram>
 		</Diagrams>
 	</Designer>

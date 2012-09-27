@@ -226,6 +226,7 @@ namespace GreenField.ServiceCaller
         #region Internal Research
         void RetrieveConsensusEstimatesSummaryData(EntitySelectionData entitySelectionData, Action<List<ConsensusEstimatesSummaryData>> callback);
 
+        void RetrieveCompositeFundData(EntitySelectionData entityIdentifiers, PortfolioSelectionData portfolio, Action<List<CompositeFundData>> callback);
         #endregion
 
         #region PortalEnhancements

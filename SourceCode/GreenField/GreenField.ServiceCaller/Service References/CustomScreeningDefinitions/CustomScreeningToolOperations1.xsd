@@ -143,4 +143,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveCompositeFundData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entityIdentifiers" nillable="true" type="q12:EntitySelectionData" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="portfolio" nillable="true" type="q13:PortfolioSelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveCompositeFundDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveCompositeFundDataResult" nillable="true" type="q14:ArrayOfCompositeFundData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

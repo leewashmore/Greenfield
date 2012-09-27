@@ -46,7 +46,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GreenField.DataContracts, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Practices.Prism">
       <HintPath>..\Lib\Microsoft.Practices.Prism.dll</HintPath>
       <Private>False</Private>
@@ -178,6 +177,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ChartExtensionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.COASpecificData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.CompositeFundData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateDetail.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateMedian.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimatesValuations.datasource" />

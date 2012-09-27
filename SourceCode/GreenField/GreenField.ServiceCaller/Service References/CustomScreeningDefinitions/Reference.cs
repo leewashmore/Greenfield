@@ -131,6 +131,14 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         System.IAsyncResult BeginRetrieveFairValueTabSource(System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<string> EndRetrieveFairValueTabSource(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCompositeFundData", ReplyAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveCompositeFundDataRespons" +
+            "e")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.CustomScreeningDefinitions.ServiceFault), Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCompositeFundDataService" +
+            "FaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveCompositeFundData(GreenField.DataContracts.EntitySelectionData entityIdentifiers, GreenField.DataContracts.PortfolioSelectionData portfolio, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.DataContracts.CompositeFundData> EndRetrieveCompositeFundData(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -329,6 +337,25 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveCompositeFundDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveCompositeFundDataCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.DataContracts.CompositeFundData> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.DataContracts.CompositeFundData>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class CustomScreeningToolOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations>, GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations {
         
         private BeginOperationDelegate onBeginRetrieveCustomControlsListDelegate;
@@ -390,6 +417,12 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         private EndOperationDelegate onEndRetrieveFairValueTabSourceDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveFairValueTabSourceCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveCompositeFundDataDelegate;
+        
+        private EndOperationDelegate onEndRetrieveCompositeFundDataDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveCompositeFundDataCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -463,6 +496,8 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
         public event System.EventHandler<UpdateUserDataPointsPreferenceCompletedEventArgs> UpdateUserDataPointsPreferenceCompleted;
         
         public event System.EventHandler<RetrieveFairValueTabSourceCompletedEventArgs> RetrieveFairValueTabSourceCompleted;
+        
+        public event System.EventHandler<RetrieveCompositeFundDataCompletedEventArgs> RetrieveCompositeFundDataCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -940,6 +975,54 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             base.InvokeAsync(this.onBeginRetrieveFairValueTabSourceDelegate, null, this.onEndRetrieveFairValueTabSourceDelegate, this.onRetrieveFairValueTabSourceCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.BeginRetrieveCompositeFundData(GreenField.DataContracts.EntitySelectionData entityIdentifiers, GreenField.DataContracts.PortfolioSelectionData portfolio, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveCompositeFundData(entityIdentifiers, portfolio, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.DataContracts.CompositeFundData> GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations.EndRetrieveCompositeFundData(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveCompositeFundData(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveCompositeFundData(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.EntitySelectionData entityIdentifiers = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            GreenField.DataContracts.PortfolioSelectionData portfolio = ((GreenField.DataContracts.PortfolioSelectionData)(inValues[1]));
+            return ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).BeginRetrieveCompositeFundData(entityIdentifiers, portfolio, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveCompositeFundData(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.DataContracts.CompositeFundData> retVal = ((GreenField.ServiceCaller.CustomScreeningDefinitions.CustomScreeningToolOperations)(this)).EndRetrieveCompositeFundData(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveCompositeFundDataCompleted(object state) {
+            if ((this.RetrieveCompositeFundDataCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveCompositeFundDataCompleted(this, new RetrieveCompositeFundDataCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveCompositeFundDataAsync(GreenField.DataContracts.EntitySelectionData entityIdentifiers, GreenField.DataContracts.PortfolioSelectionData portfolio) {
+            this.RetrieveCompositeFundDataAsync(entityIdentifiers, portfolio, null);
+        }
+        
+        public void RetrieveCompositeFundDataAsync(GreenField.DataContracts.EntitySelectionData entityIdentifiers, GreenField.DataContracts.PortfolioSelectionData portfolio, object userState) {
+            if ((this.onBeginRetrieveCompositeFundDataDelegate == null)) {
+                this.onBeginRetrieveCompositeFundDataDelegate = new BeginOperationDelegate(this.OnBeginRetrieveCompositeFundData);
+            }
+            if ((this.onEndRetrieveCompositeFundDataDelegate == null)) {
+                this.onEndRetrieveCompositeFundDataDelegate = new EndOperationDelegate(this.OnEndRetrieveCompositeFundData);
+            }
+            if ((this.onRetrieveCompositeFundDataCompletedDelegate == null)) {
+                this.onRetrieveCompositeFundDataCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveCompositeFundDataCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveCompositeFundDataDelegate, new object[] {
+                        entityIdentifiers,
+                        portfolio}, this.onEndRetrieveCompositeFundDataDelegate, this.onRetrieveCompositeFundDataCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -1149,6 +1232,20 @@ namespace GreenField.ServiceCaller.CustomScreeningDefinitions {
             public System.Collections.Generic.List<string> EndRetrieveFairValueTabSource(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<string> _result = ((System.Collections.Generic.List<string>)(base.EndInvoke("RetrieveFairValueTabSource", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveCompositeFundData(GreenField.DataContracts.EntitySelectionData entityIdentifiers, GreenField.DataContracts.PortfolioSelectionData portfolio, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = entityIdentifiers;
+                _args[1] = portfolio;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveCompositeFundData", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.DataContracts.CompositeFundData> EndRetrieveCompositeFundData(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.DataContracts.CompositeFundData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.CompositeFundData>)(base.EndInvoke("RetrieveCompositeFundData", _args, result)));
                 return _result;
             }
         }

@@ -72,29 +72,6 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Properties
-        //private List<PeriodColumnGroupingDetail> _dataGrouping;
-        //public List<PeriodColumnGroupingDetail> DataGrouping
-        //{
-        //    get
-        //    {
-        //        if (_dataGrouping == null)
-        //        {
-        //            _dataGrouping = new List<PeriodColumnGroupingDetail>();
-        //            _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Economic & Market Data", GroupPropertyName = "Economic & Market Data", GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
-        //            //_dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Consensus Median", GroupPropertyName = "ConsensusMedian", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-        //            //_dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "AshmoreEMM", GroupPropertyName = "AshmoreEmmAmount", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-        //            //_dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Variance%", GroupPropertyName = "Variance", GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
-        //            //_dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Actual", GroupPropertyName = "Actual", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-        //            //_dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "# Of Estimates", GroupPropertyName = "NumberOfEstimates", GroupDataType = PeriodColumnGroupingType.INT });
-        //            //_dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "High", GroupPropertyName = "High", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-        //            //_dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Low", GroupPropertyName = "Low", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-        //            //_dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Std Dev", GroupPropertyName = "StandardDeviation", GroupDataType = PeriodColumnGroupingType.DECIMAL });
-        //            //_dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Last Update", GroupPropertyName = "DataSourceDate", GroupDataType = PeriodColumnGroupingType.SHORT_DATETIME });
-        //            //_dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Reported Currency", GroupPropertyName = "SourceCurrency", GroupDataType = PeriodColumnGroupingType.STRING });
-        //        }
-        //        return _dataGrouping;
-        //    }
-        //}
        
         #region Security Information
         /// <summary>
@@ -617,6 +594,10 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
+        /// <summary>
+        /// CallBack method for service method call
+        /// </summary>
+        /// <param name="result"></param>
         public void RetrieveFinstatDetailDataCallbackMethod(List<FinstatDetailData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

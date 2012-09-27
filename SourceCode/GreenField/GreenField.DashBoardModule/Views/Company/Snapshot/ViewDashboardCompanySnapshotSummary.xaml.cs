@@ -67,24 +67,18 @@ namespace GreenField.DashboardModule.Views
                 Content = new ViewSecurityOverview(new ViewModelSecurityOverview(param))
             });
 
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-            //    Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_PRICING, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-            //    Content = null
-            //});
-
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.INTERNAL_RESEARCH_PRICING_DETAILED, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_PRICING, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 Content = null
             });
 
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-
-            //    Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_VALUATIONS, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-            //    Content = null
-            //});
+            this.rtvDashboard.Items.Add(new RadTileViewItem
+            {
+                Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.INTERNAL_RESEARCH_PRICING_DETAILED, 
+                    Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial")},
+                Content = null //new ViewCompositeFund(new ViewModelCompositeFund(param))
+            });
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
@@ -101,14 +95,6 @@ namespace GreenField.DashboardModule.Views
                 Content = new ViewSlice1ChartExtension(new ViewModelSlice1ChartExtension(param))
             });
 
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-
-            //    Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_GROWTH, 
-            //        Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-            //    Content = null
-            //});
-
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
 
@@ -116,14 +102,7 @@ namespace GreenField.DashboardModule.Views
                     Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 RestoredHeight = 200,
                 Content = new ViewRelativePerformanceUI(new ViewModelRelativePerformanceUI(param))
-            });
-
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-
-            //    Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_MARGINS, Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-            //    Content = null
-            //});
+            });           
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
@@ -131,15 +110,7 @@ namespace GreenField.DashboardModule.Views
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_BASIC_DATA,
                     Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },               
                     Content = new ViewBasicData(new ViewModelBasicData(param))
-            });
-
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-
-            //    Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_LEVERAGE_CAPITAL_FINANCIAL_STRENGTH, 
-            //        Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-            //    Content = null
-            //});
+            });           
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
@@ -147,15 +118,7 @@ namespace GreenField.DashboardModule.Views
                 Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION_SUMMARY,
                     Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 Content = new ViewFairValueCompositionSummary(new ViewModelFairValueCompositionSummary(param))
-            });
-
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-
-            //    Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_ASSET_QUALITY_CASH_FLOW,
-            //        Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-            //    Content = null
-            //});
+            });           
 
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
@@ -164,15 +127,7 @@ namespace GreenField.DashboardModule.Views
                     Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
                 Content = null
             });
-
-            //this.rtvDashboard.Items.Add(new RadTileViewItem
-            //{
-
-            //    Header = new Telerik.Windows.Controls.HeaderedContentControl { Content = GadgetNames.EXTERNAL_RESEARCH_PROFITABILITY,
-            //        Foreground = new SolidColorBrush(Colors.Black), FontSize = 12, FontFamily = new FontFamily("Arial") },
-            //    Content = null
-            //});
-
+         
             this.rtvDashboard.Items.Add(new RadTileViewItem
             {
 

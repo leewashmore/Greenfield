@@ -65,6 +65,9 @@
     <Compile Include="..\GreenField.DataContracts\DataContracts\COASpecificData.cs">
       <Link>DataContracts\COASpecificData.cs</Link>
     </Compile>
+    <Compile Include="..\GreenField.DataContracts\DataContracts\CompositeFundData.cs">
+      <Link>DataContracts\CompositeFundData.cs</Link>
+    </Compile>
     <Compile Include="..\GreenField.DataContracts\DataContracts\ConsensusEstimateDetail.cs">
       <Link>DataContracts\ConsensusEstimateDetail.cs</Link>
     </Compile>

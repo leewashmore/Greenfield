@@ -441,7 +441,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             else if (SelectedSecurityReferenceData != null )
             {
-                if(SelectedFieldsDataList != null)
+                if (SelectedFieldsDataList != null && SelectedFieldsDataList.Count > 0)
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedSecurityReferenceData.ScreeningId))
                     {
@@ -527,7 +527,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             else if (SelectedPeriodFinancialsData != null)
             {
-                if (SelectedFieldsDataList != null)
+                if (SelectedFieldsDataList != null && SelectedFieldsDataList.Count > 0)
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId))
                     {
@@ -633,7 +633,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             else if (SelectedCurrentFinancialsData != null)
             {
-                if (SelectedFieldsDataList != null)
+                if (SelectedFieldsDataList != null && SelectedFieldsDataList.Count > 0)
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedCurrentFinancialsData.ScreeningId))
                     {
@@ -729,7 +729,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             else if (SelectedFairValueData != null)
             {
-                if (SelectedFieldsDataList != null)
+                if (SelectedFieldsDataList != null && SelectedFieldsDataList.Count > 0)
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedFairValueData.ScreeningId))
                     {
@@ -836,7 +836,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    return false; ;
+                    return false; 
                 }
             }
         }
@@ -844,6 +844,11 @@ namespace GreenField.Gadgets.ViewModels
         private void RemoveCommandMethod(object param)
         {
             SelectedFieldsDataList.Remove(SelectedDataField);
+            RaisePropertyChanged(() => SelectedFieldsDataList);
+            RaisePropertyChanged(() => SelectedSecurityReferenceData);
+            RaisePropertyChanged(() => SelectedPeriodFinancialsData);
+            RaisePropertyChanged(() => SelectedCurrentFinancialsData);
+            RaisePropertyChanged(() => SelectedFairValueData);
         }
 
         private bool SubmitCommandValidationMethod(object param)
