@@ -640,8 +640,7 @@ namespace GreenField.Web.Services
                             || record.Category == "DCF Model"
                             || record.Category == "Additional Attachment")).ToList();
 
-                String[] downloadedDocumentLocations = GetICPacketSegmentFiles(presentationAttachedFileData);
-
+                List<String> downloadedDocumentLocations = GetICPacketSegmentFiles(presentationAttachedFileData);
                 Byte[] result = MergePDFFiles(downloadedDocumentLocations);
 
                 return result;                
@@ -654,60 +653,130 @@ namespace GreenField.Web.Services
             }
         }
 
-        private String[] GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo)
+        private List<String> GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo)
         {
-            return new string[] { };
-        }
+            List<String> result = new List<String>();           
 
-        private Byte[] MergePDFFiles(String[] pdfFileNames)
-        {
-            Byte[] result = new byte[] { };
-            String outFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPacket.pdf";
-            
-            int pageOffset = 0;
-            ArrayList master = new ArrayList();
-            int f = 0;
-            Document document = null;
-            PdfCopy writer = null;
-            
-            while (f < pdfFileNames.Length)
+            foreach (FileMaster file in fileMasterInfo)
             {
-                if (pdfFileNames[f].Contains(".pdf"))
+                String convertedPdf = null;
+                if (file.Category == "Power Point Presentation")
                 {
-                    PdfReader reader = new PdfReader(pdfFileNames[f]);
-                    reader.ConsolidateNamedDestinations();
-
-                    int n = reader.NumberOfPages;
-                    pageOffset += n;
-                    if (f == 0)
-                    {
-                        document = new Document(reader.GetPageSizeWithRotation(1));                
-                        writer = new PdfCopy(document, new FileStream(outFile, FileMode.Create));
-                        document.Open();
-                    }
-
-                    for (int i = 0; i < n; )
-                    {
-                        ++i;
-                        if (writer != null)
-                        {
-                            PdfImportedPage page = writer.GetImportedPage(reader, i);
-                            writer.AddPage(page);
-                        }
-                    }
-
-                    PRAcroForm form = reader.AcroForm;
-                    if (form != null && writer != null)
-                    {
-                        writer.CopyAcroForm(reader);
-                    }
-                    f++;
+                    convertedPdf = ConvertPowerpointPresentationTpPdf(file);                     
                 }
+                else
+                {
+                    convertedPdf = ConvertImagePdfFileToLocalPdf(file);
+                }
+
+                if (convertedPdf != null)
+                    result.Add(convertedPdf);
             }
 
-            if (document != null)
+            return result;
+        }
+
+        private String ConvertImagePdfFileToLocalPdf(FileMaster file)
+        {
+            String result = null;
+            try
             {
-                document.Close();
+                DocumentWorkspaceOperations documentOperations = new DocumentWorkspaceOperations();
+                Byte[] fileData = documentOperations.RetrieveDocument(file.Location);
+                if (fileData == null)
+                    return result;
+
+                if (file.Location.Contains(".pdf"))
+                {
+                    result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
+                    File.WriteAllBytes(result, fileData);
+                }
+
+                else if (file.Location.Contains(".jpeg") || file.Location.Contains(".jpg"))
+                {
+                    String localFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp" +
+                        (file.Location.Contains(".jpeg") ? ".jpeg" : ".jpg");
+                    result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
+                    File.WriteAllBytes(localFile, fileData);
+                    Document doc = new Document(PageSize.A4, 10F, 10F, 10F, 10F);
+                    PdfWriter.GetInstance(doc, new FileStream(result, FileMode.Create));
+                    doc.Open();
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(localFile);
+                    doc.Add(image);
+                    doc.Close();
+                }
+            }
+            catch (Exception)
+            {                
+                throw;
+            }
+
+            return result;
+        }
+
+        private String ConvertPowerpointPresentationTpPdf(FileMaster powerpointStreamedData)
+        {
+            return null;
+        }
+
+        private Byte[] MergePDFFiles(List<String> pdfFileNames)
+        {
+            Byte[] result = new byte[] { };
+            try
+            {
+                String outFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPacket.pdf";
+
+                int pageOffset = 0;
+                ArrayList master = new ArrayList();
+                int f = 0;
+                Document document = null;
+                PdfCopy writer = null;
+
+                while (f < pdfFileNames.Count())
+                {
+                    if (pdfFileNames[f].Contains(".pdf"))
+                    {
+                        PdfReader reader = new PdfReader(pdfFileNames[f]);
+                        reader.ConsolidateNamedDestinations();
+
+                        int n = reader.NumberOfPages;
+                        pageOffset += n;
+                        if (f == 0)
+                        {
+                            document = new Document(reader.GetPageSizeWithRotation(1));
+                            writer = new PdfCopy(document, new FileStream(outFile, FileMode.Create));
+                            document.Open();
+                        }
+
+                        for (int i = 0; i < n; )
+                        {
+                            ++i;
+                            if (writer != null)
+                            {
+                                PdfImportedPage page = writer.GetImportedPage(reader, i);
+                                writer.AddPage(page);
+                            }
+                        }
+
+                        PRAcroForm form = reader.AcroForm;
+                        if (form != null && writer != null)
+                        {
+                            writer.CopyAcroForm(reader);
+                        }
+                        f++;
+                    }
+                }
+
+                if (document != null)
+                {
+                    document.Close();
+                }
+
+                result = File.ReadAllBytes(outFile);
+            }
+            catch (Exception)
+            {                
+                throw;
             }
 
             return result;

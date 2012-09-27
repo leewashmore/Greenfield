@@ -3717,6 +3717,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         bool EndUpdatePresentationAttachedFileStreamData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/GenerateICPacketReport", ReplyAction="http://tempuri.org/MeetingOperations/GenerateICPacketReportResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/GenerateICPacketReportServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginGenerateICPacketReport(long presentationId, System.AsyncCallback callback, object asyncState);
+        
+        byte[] EndGenerateICPacketReport(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/GetMeetingConfigSchedule", ReplyAction="http://tempuri.org/MeetingOperations/GetMeetingConfigScheduleResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/GetMeetingConfigScheduleServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginGetMeetingConfigSchedule(System.AsyncCallback callback, object asyncState);
@@ -4012,6 +4018,25 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GenerateICPacketReportCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GenerateICPacketReportCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public byte[] Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((byte[])(this.results[0]));
             }
         }
     }
@@ -4467,6 +4492,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private System.Threading.SendOrPostCallback onUpdatePresentationAttachedFileStreamDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginGenerateICPacketReportDelegate;
+        
+        private EndOperationDelegate onEndGenerateICPacketReportDelegate;
+        
+        private System.Threading.SendOrPostCallback onGenerateICPacketReportCompletedDelegate;
+        
         private BeginOperationDelegate onBeginGetMeetingConfigScheduleDelegate;
         
         private EndOperationDelegate onEndGetMeetingConfigScheduleDelegate;
@@ -4661,6 +4692,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         public event System.EventHandler<RetrievePresentationAttachedFileDetailsCompletedEventArgs> RetrievePresentationAttachedFileDetailsCompleted;
         
         public event System.EventHandler<UpdatePresentationAttachedFileStreamDataCompletedEventArgs> UpdatePresentationAttachedFileStreamDataCompleted;
+        
+        public event System.EventHandler<GenerateICPacketReportCompletedEventArgs> GenerateICPacketReportCompleted;
         
         public event System.EventHandler<GetMeetingConfigScheduleCompletedEventArgs> GetMeetingConfigScheduleCompleted;
         
@@ -5090,6 +5123,52 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                         presentationId,
                         fileMasterInfo,
                         deletionFlag}, this.onEndUpdatePresentationAttachedFileStreamDataDelegate, this.onUpdatePresentationAttachedFileStreamDataCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginGenerateICPacketReport(long presentationId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGenerateICPacketReport(presentationId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        byte[] GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndGenerateICPacketReport(System.IAsyncResult result) {
+            return base.Channel.EndGenerateICPacketReport(result);
+        }
+        
+        private System.IAsyncResult OnBeginGenerateICPacketReport(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            long presentationId = ((long)(inValues[0]));
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginGenerateICPacketReport(presentationId, callback, asyncState);
+        }
+        
+        private object[] OnEndGenerateICPacketReport(System.IAsyncResult result) {
+            byte[] retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndGenerateICPacketReport(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGenerateICPacketReportCompleted(object state) {
+            if ((this.GenerateICPacketReportCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GenerateICPacketReportCompleted(this, new GenerateICPacketReportCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GenerateICPacketReportAsync(long presentationId) {
+            this.GenerateICPacketReportAsync(presentationId, null);
+        }
+        
+        public void GenerateICPacketReportAsync(long presentationId, object userState) {
+            if ((this.onBeginGenerateICPacketReportDelegate == null)) {
+                this.onBeginGenerateICPacketReportDelegate = new BeginOperationDelegate(this.OnBeginGenerateICPacketReport);
+            }
+            if ((this.onEndGenerateICPacketReportDelegate == null)) {
+                this.onEndGenerateICPacketReportDelegate = new EndOperationDelegate(this.OnEndGenerateICPacketReport);
+            }
+            if ((this.onGenerateICPacketReportCompletedDelegate == null)) {
+                this.onGenerateICPacketReportCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGenerateICPacketReportCompleted);
+            }
+            base.InvokeAsync(this.onBeginGenerateICPacketReportDelegate, new object[] {
+                        presentationId}, this.onEndGenerateICPacketReportDelegate, this.onGenerateICPacketReportCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -6283,6 +6362,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             public bool EndUpdatePresentationAttachedFileStreamData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("UpdatePresentationAttachedFileStreamData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginGenerateICPacketReport(long presentationId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = presentationId;
+                System.IAsyncResult _result = base.BeginInvoke("GenerateICPacketReport", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public byte[] EndGenerateICPacketReport(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                byte[] _result = ((byte[])(base.EndInvoke("GenerateICPacketReport", _args, result)));
                 return _result;
             }
             

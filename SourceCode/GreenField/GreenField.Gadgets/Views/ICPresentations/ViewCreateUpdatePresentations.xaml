@@ -295,8 +295,8 @@
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <telerik:RadButton Content=" Preview" Grid.Column="0" Width="75" Style="{StaticResource RadButtonStyle}"
-                                   Command="{Binding PreviewCommand}" HorizontalAlignment="Right" Margin="0,0,10,0"/>
+                    <telerik:RadButton x:Name="btnPreview" Content="Preview" Grid.Column="0" Width="75" Style="{StaticResource RadButtonStyle}"
+                                   Click="btnPreview_Click"  HorizontalAlignment="Right" Margin="0,0,10,0"/>
                     <telerik:RadButton Content="Submit" Grid.Column="1" Width="75"  Style="{StaticResource RadButtonStyle}"
                                    Command="{Binding SubmitCommand}" HorizontalAlignment="Left" Margin="10,0,0,0"/>
                 </Grid>

@@ -310,6 +310,8 @@ namespace GreenField.ServiceCaller
         void GeneratePreMeetingVotingReport(Int64 presentationId, Action<Byte[]> callback);
 
         void RetrieveSummaryReportData(DateTime startDate, DateTime endDate, Action<List<SummaryReportData>> callback);
+
+        void GenerateICPacketReport(Int64 presentationId, Action<Byte[]> callback);
         #endregion
 
         #region DCF
