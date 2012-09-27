@@ -27,8 +27,7 @@ namespace GreenField.Gadgets.Views
             get { return dataContextSource; }
             set { dataContextSource = value; }
         }
-
-
+        
 
         #region Constructor
 

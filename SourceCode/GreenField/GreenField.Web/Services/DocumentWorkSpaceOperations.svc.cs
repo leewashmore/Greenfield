@@ -457,6 +457,7 @@ namespace GreenField.Web.Services
             List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
             List<FinancialStatementData> resultReuters = new List<FinancialStatementData>();
             List<FinancialStatementData> resultStatement = new List<FinancialStatementData>();
+            List<string> commodities = new List<string>();
             ExcelModelData modelData = new ExcelModelData();
             List<DataPointsModelUploadData> dataPointsExcelUpload = new List<DataPointsModelUploadData>();
             ModelReferenceDataPoints dataPointsModelReference = new ModelReferenceDataPoints();
@@ -528,9 +529,14 @@ namespace GreenField.Web.Services
 
                 dataPointsExcelUpload = RetrieveModelUploadDataPoints(issuerID);
                 dataPointsModelReference = RetrieveExcelModelReferenceData(issuerID, securityDetails);
+                commodities = entity.RetrieveCommodityForecasts().ToList();
                 ExcelModelData excelModelData = new ExcelModelData();
                 excelModelData.ModelReferenceData = dataPointsModelReference;
                 excelModelData.ModelUploadDataPoints = dataPointsExcelUpload;
+                excelModelData.Currencies = entity.RetrieveDistinctFXRates().ToList();
+                excelModelData.Commodities = commodities;
+                ReadOpenXMLModel model = new ReadOpenXMLModel();
+                //model.ReadExcelData();
                 return GenerateOpenXMLExcelModel.GenerateExcel(resultReuters, resultConsensus, currencyReuters, currencyConsensus, excelModelData);
             }
             catch (Exception ex)

@@ -698,12 +698,66 @@
         <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="XRef" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="ModelDeleteInteralStatement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModelDeleteInternalData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="REF_NO" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModelDeleteInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModelDeleteInternalIssuerQuarterlyDistribution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModelInsertInternalData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="REF_NO" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="COA" Type="char" Mode="In" />
+          <Parameter Name="AMOUNT" Type="decimal" Mode="In" />
+        </Function>
+        <Function Name="ModelInsertInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="COA_TYPE" Type="varchar" Mode="In" />
+          <Parameter Name="LASTPRIMARYMODELLOAD" Type="datetime" Mode="In" />
+          <Parameter Name="LASTINDUSTRYMODELLOAD" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="ModelInsertInternalIssuerQuaterelyDistribution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+          <Parameter Name="PERCENTAGE" Type="decimal" Mode="In" />
+          <Parameter Name="LAST_UPDATED" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="ModelInsertInternalStatement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="REF_NO" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="ROOT_SOURCE_DATE" Type="datetime" Mode="In" />
+          <Parameter Name="PERIOD_LENGTH" Type="int" Mode="In" />
+          <Parameter Name="PERIOD_END_DATE" Type="datetime" Mode="In" />
+          <Parameter Name="CURRENCY" Type="char" Mode="In" />
+          <Parameter Name="AMOUNT_TYPE" Type="char" Mode="In" />
+        </Function>
+        <Function Name="ModelRetrieveInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="RetrieveCOACodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="COA_TYPE" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="RetrieveCOAType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="RetrieveCommodityForecasts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="RetrieveDataPointsModelUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="RetrieveDistinctFXRates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="RetrieveRatioComparisonData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityBucketXML" Type="varchar(max)" Mode="In" />
         </Function>
@@ -955,6 +1009,60 @@
           <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RetrieveCOAType" EntitySet="INTERNAL_ISSUER" ReturnType="Collection(ExternalResearchModel.INTERNAL_ISSUER)">
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveDistinctFXRates" ReturnType="Collection(String)" />
+          <FunctionImport Name="RetrieveCOACodes" ReturnType="Collection(ExternalResearchModel.DataPointsModelUploadData)">
+          <Parameter Name="COA_TYPE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveCommodityForecasts" ReturnType="Collection(String)" />
+          <FunctionImport Name="ModelDeleteInteralStatement" ReturnType="Collection(String)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModelDeleteInternalData">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="REF_NO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModelDeleteInternalIssuerQuarterlyDistribution">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModelInsertInternalData">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="REF_NO" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="COA" Mode="In" Type="String" />
+            <Parameter Name="AMOUNT" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="ModelInsertInternalIssuer">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="COA_TYPE" Mode="In" Type="String" />
+            <Parameter Name="LASTPRIMARYMODELLOAD" Mode="In" Type="DateTime" />
+            <Parameter Name="LASTINDUSTRYMODELLOAD" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ModelInsertInternalIssuerQuaterelyDistribution">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+            <Parameter Name="PERCENTAGE" Mode="In" Type="Decimal" />
+            <Parameter Name="LAST_UPDATED" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ModelInsertInternalStatement">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="REF_NO" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="ROOT_SOURCE_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="PERIOD_LENGTH" Mode="In" Type="Int32" />
+            <Parameter Name="PERIOD_END_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
+            <Parameter Name="AMOUNT_TYPE" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModelRetrieveInternalIssuer" EntitySet="INTERNAL_ISSUER" ReturnType="Collection(ExternalResearchModel.INTERNAL_ISSUER)">
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModelDeleteInternalIssuer">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
 
@@ -1544,7 +1652,9 @@
           <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
           <Property Type="String" Name="DATA_DESCRIPTION" Nullable="false" MaxLength="100" />
         </ComplexType>
-
+        <ComplexType Name="CurrenciesList">
+          <Property Type="String" Name="Currency" Nullable="false" MaxLength="3" />
+        </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -2218,6 +2328,27 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="RetrieveCOAType" FunctionName="ExternalResearchModel.Store.RetrieveCOAType" />
+          <FunctionImportMapping FunctionImportName="RetrieveDistinctFXRates" FunctionName="ExternalResearchModel.Store.RetrieveDistinctFXRates">
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveCOACodes" FunctionName="ExternalResearchModel.Store.RetrieveCOACodes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.DataPointsModelUploadData">
+                <ScalarProperty Name="COA" ColumnName="COA" />
+                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+                <ScalarProperty Name="DATA_DESCRIPTION" ColumnName="DATA_DESCRIPTION" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveCommodityForecasts" FunctionName="ExternalResearchModel.Store.RetrieveCommodityForecasts" />
+          <FunctionImportMapping FunctionImportName="ModelDeleteInteralStatement" FunctionName="ExternalResearchModel.Store.ModelDeleteInteralStatement" />
+          <FunctionImportMapping FunctionImportName="ModelDeleteInternalData" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalData" />
+          <FunctionImportMapping FunctionImportName="ModelDeleteInternalIssuerQuarterlyDistribution" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalIssuerQuarterlyDistribution" />
+          <FunctionImportMapping FunctionImportName="ModelInsertInternalData" FunctionName="ExternalResearchModel.Store.ModelInsertInternalData" />
+          <FunctionImportMapping FunctionImportName="ModelInsertInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelInsertInternalIssuer" />
+          <FunctionImportMapping FunctionImportName="ModelInsertInternalIssuerQuaterelyDistribution" FunctionName="ExternalResearchModel.Store.ModelInsertInternalIssuerQuaterelyDistribution" />
+          <FunctionImportMapping FunctionImportName="ModelInsertInternalStatement" FunctionName="ExternalResearchModel.Store.ModelInsertInternalStatement" />
+          <FunctionImportMapping FunctionImportName="ModelRetrieveInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelRetrieveInternalIssuer" />
+          <FunctionImportMapping FunctionImportName="ModelDeleteInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalIssuer" />
           <!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
