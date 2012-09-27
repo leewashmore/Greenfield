@@ -643,7 +643,7 @@ namespace GreenField.Web.Services
                 List<String> downloadedDocumentLocations = GetICPacketSegmentFiles(presentationAttachedFileData);
                 Byte[] result = MergePDFFiles(downloadedDocumentLocations);
 
-                return result;                
+                return result;
             }
             catch (Exception ex)
             {
@@ -655,14 +655,14 @@ namespace GreenField.Web.Services
 
         private List<String> GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo)
         {
-            List<String> result = new List<String>();           
+            List<String> result = new List<String>();
 
             foreach (FileMaster file in fileMasterInfo)
             {
                 String convertedPdf = null;
                 if (file.Category == "Power Point Presentation")
                 {
-                    convertedPdf = ConvertPowerpointPresentationTpPdf(file);                     
+                    convertedPdf = ConvertPowerpointPresentationTpPdf(file);
                 }
                 else
                 {
@@ -682,7 +682,7 @@ namespace GreenField.Web.Services
             try
             {
                 DocumentWorkspaceOperations documentOperations = new DocumentWorkspaceOperations();
-                Byte[] fileData = documentOperations.RetrieveDocument(file.Location);
+                Byte[] fileData = documentOperations.RetrieveDocument(file.Location.Substring(file.Location.LastIndexOf(@"/") + 1));
                 if (fileData == null)
                     return result;
 
@@ -702,12 +702,14 @@ namespace GreenField.Web.Services
                     PdfWriter.GetInstance(doc, new FileStream(result, FileMode.Create));
                     doc.Open();
                     iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(localFile);
+                    //image.SetAbsolutePosition(10F, 10F); 
+                    image.ScaleToFit(doc.PageSize.Width - (10F + 10F), doc.PageSize.Height - (10F + 10F));
                     doc.Add(image);
                     doc.Close();
                 }
             }
             catch (Exception)
-            {                
+            {
                 throw;
             }
 
@@ -775,7 +777,7 @@ namespace GreenField.Web.Services
                 result = File.ReadAllBytes(outFile);
             }
             catch (Exception)
-            {                
+            {
                 throw;
             }
 
