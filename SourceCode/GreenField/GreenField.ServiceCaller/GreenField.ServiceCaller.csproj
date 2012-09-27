@@ -178,6 +178,7 @@
     <None Include="Properties\DataSources\GreenField.DataContracts.BenchmarkSelectionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ChartExtensionData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.COASpecificData.datasource" />
+    <None Include="Properties\DataSources\GreenField.DataContracts.CompositeFundData.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateDetail.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimateMedian.datasource" />
     <None Include="Properties\DataSources\GreenField.DataContracts.ConsensusEstimatesValuations.datasource" />

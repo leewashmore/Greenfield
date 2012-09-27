@@ -1,0 +1,95 @@
+﻿<helpers:ViewBaseUserControl xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  x:Class="GreenField.Gadgets.Views.ViewCompositeFund"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+    mc:Ignorable="d"
+    d:DesignHeight="300" d:DesignWidth="400">
+
+    <helpers:ViewBaseUserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </helpers:ViewBaseUserControl.Resources>
+
+    <telerik:RadBusyIndicator x:Name="biPresentationOverview" BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+
+        <Grid x:Name="LayoutRoot" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+                <RowDefinition Height="{StaticResource DefaultGridViewRowHeightGridLength}"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="0.5*"/>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="0.25*"/>
+            </Grid.ColumnDefinitions>
+            <CheckBox VerticalContentAlignment="Top" Grid.Row="0" Grid.Column="0" Content="Issuer View" HorizontalAlignment="Left"
+                      IsChecked="{Binding DisplayIssuerIsChecked, Mode=TwoWay}" Style="{StaticResource CheckBoxStyle}"/>
+            <Border x:Name="FirstColumnBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="0" >
+                <TextBlock  Style="{StaticResource TextBlockStyle}"/>
+            </Border>
+            <Border x:Name="SecondColumnBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="1">
+                <TextBlock Style="{StaticResource TextBlockStyle}"/>
+            </Border>
+            <Border x:Name="ThirdColumnBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="2" >
+                <TextBlock  Style="{StaticResource TextBlockStyle}"/>
+            </Border>
+            <Border x:Name="FourthColumnBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="3">
+                <TextBlock Style="{StaticResource TextBlockStyle}"/>
+            </Border>
+            <Border x:Name="ActivePositionBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="4">
+                <TextBlock  Text="ActivePosition"  HorizontalAlignment="Right" VerticalAlignment="Center"
+                 Style="{StaticResource TextBlockStyle}"/>
+            </Border>
+            <!--First Row-->
+            <Border x:Name="TargetBorder"  Grid.Row="2" Grid.Column="0" >
+                <TextBlock Margin="2,0,0,0" Text="Portfolio Target"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+            <Border x:Name="TargetValueBorder" Grid.Row="2" Grid.Column="1" >
+                <TextBlock  Margin="2,0,0,0" Text="{Binding CompositeDisplayData.PortfolioTarget}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+            <Border x:Name="BenchmarkWeightBorder"  Grid.Row="2" Grid.Column="2" >
+                <TextBlock Margin="2,0,0,0" Text="Benchmark Weight (%)"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+            <Border x:Name="BenchmarkWeightValueBorder" Grid.Row="2" Grid.Column="3" >
+                <TextBlock  Margin="2,0,0,0" Text="{Binding CompositeDisplayData.BenchmarkWeight}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+            <Border x:Name="ActivePositionFirstRowBorder" Grid.Row="2" Grid.Column="4" >
+                <TextBlock  Margin="2,0,0,0" Text="{Binding CompositeDisplayData.ActivePosition}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+            <!--Second Row-->
+            <Border x:Name="TargetInCountryBorder"  Background="#f3f6fc" Grid.Row="3" Grid.Column="0">
+                <TextBlock  Margin="2,0,0,0" Text="Portfolio Target In Country"   HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+            <Border x:Name="TargetInCountryValueBorder" Background="#f3f6fc" Grid.Row="3" Grid.Column="1">
+                <TextBlock Grid.Row="2" Grid.Column="1" Margin="2,0,0,0" Text="{Binding CompositeDisplayData.PortfolioTargetInCountry}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+            <Border x:Name="BenchmarkWeightInCountryBorder" Background="#f3f6fc" Grid.Row="3" Grid.Column="2" >
+                <TextBlock Margin="2,0,0,0" Text="Benchmark Weight In Country (%)" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+            <Border x:Name="BenchmarkWeightInCountryValueBorder" Background="#f3f6fc" Grid.Row="3" Grid.Column="3" >
+                <TextBlock  Margin="2,0,0,0" Text="{Binding CompositeDisplayData.BenchmarkWeightInCountry}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+            <Border x:Name="ActivePositionSecondRowBorder" Background="#f3f6fc" Grid.Row="3" Grid.Column="4">
+                <TextBlock  Margin="2,0,0,0" Text="{Binding CompositeDisplayData.ActivePositionInCountry}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+            <!--Third Row-->
+            <StackPanel Grid.Row="4" Grid.Column="0"  Orientation="Horizontal">
+                <TextBlock Text="Holdings (mn)" Margin="2,0,0,0"   HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
+            </StackPanel>
+            <Border Grid.Row="4" Grid.Column="1">
+                <TextBlock Margin="2,0,0,0" Text="{Binding CompositeDisplayData.Holdings, Mode=TwoWay, StringFormat=\{0:n1\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+        </Grid>
+    </telerik:RadBusyIndicator>
+</helpers:ViewBaseUserControl>

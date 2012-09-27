@@ -99,6 +99,15 @@
   <wsdl:message name="CustomScreeningToolOperations_RetrieveFairValueTabSource_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveCompositeFundData_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCompositeFundData" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveCompositeFundData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCompositeFundDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="CustomScreeningToolOperations_RetrieveCompositeFundData_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="CustomScreeningToolOperations">
     <wsdl:operation name="RetrieveCustomControlsList">
       <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCustomControlsList" message="tns:CustomScreeningToolOperations_RetrieveCustomControlsList_InputMessage" />
@@ -149,6 +158,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabSource" message="tns:CustomScreeningToolOperations_RetrieveFairValueTabSource_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabSourceResponse" message="tns:CustomScreeningToolOperations_RetrieveFairValueTabSource_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabSourceServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_RetrieveFairValueTabSource_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCompositeFundData">
+      <wsdl:input wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCompositeFundData" message="tns:CustomScreeningToolOperations_RetrieveCompositeFundData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCompositeFundDataResponse" message="tns:CustomScreeningToolOperations_RetrieveCompositeFundData_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/CustomScreeningToolOperations/RetrieveCompositeFundDataServiceFaultFault" name="ServiceFaultFault" message="tns:CustomScreeningToolOperations_RetrieveCompositeFundData_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="CustomScreeningToolOperations" type="tns:CustomScreeningToolOperations">
@@ -263,6 +277,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveFairValueTabSource">
       <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveFairValueTabSource" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCompositeFundData">
+      <soap:operation soapAction="http://tempuri.org/CustomScreeningToolOperations/RetrieveCompositeFundData" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

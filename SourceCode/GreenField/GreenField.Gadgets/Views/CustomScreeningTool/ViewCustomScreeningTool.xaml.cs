@@ -194,6 +194,7 @@ namespace GreenField.Gadgets.Views
             this.DataContextViewModelCustomScreeningTool.BusyIndicatorIsBusy = false;
         }
 
+        #region Excel Export
         /// <summary>
         /// Method to catch Click Event of Export to Excel
         /// </summary>
@@ -218,7 +219,8 @@ namespace GreenField.Gadgets.Views
             {
                 Prompt.ShowDialog(ex.Message);
             }
-        }
+        } 
+        #endregion
 
         #region PDFExport
         /// <summary>
@@ -254,7 +256,5 @@ namespace GreenField.Gadgets.Views
 
         #endregion
         #endregion
-
-
     }
 }

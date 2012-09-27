@@ -53,23 +53,9 @@ namespace GreenField.Gadgets.ViewModels
         public ViewModelCustomScreeningTool(DashboardGadgetParam param)
         {
             _logger = param.LoggerFacade;
-            //param.DashboardGadgetPayload.EntitySelectionData
             _dbInteractivity = param.DBInteractivity;
             _eventAggregator = param.EventAggregator;
             _regionManager = param.RegionManager;
-
-            //BusyIndicatorNotification(true, "Retrieving Portfolio Selection Data...");
-            ////fetch PortfolioId list 
-            //_dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
-
-            //BusyIndicatorNotification(true, "Retrieving Benchmark Selection Data...");
-            ////fetch Benchmark list
-            //_dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
-
-            ////retrieve custom selection data
-            //RetrieveCustomSelectionData();
-
-            //BusyIndicatorNotification();
         }
         #endregion
 
@@ -638,17 +624,6 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
-
-        #endregion
-
-        #region EventUnSubscribe
-        /// <summary>
-        /// Method that disposes the events
-        /// </summary>
-        public void Dispose()
-        {
-
-        }
 
         #endregion
 
@@ -1341,11 +1316,11 @@ namespace GreenField.Gadgets.ViewModels
             //    SelectedBenchmark = null;
             //    SelectedCountry = null;
             //    SelectedIndustry = null;
-            //    SelectedRegion = null; 
+            //    SelectedRegion = null;
             //    SelectedSector = null;
             //    SecurityData = null;
             //    SelectedSavedDataList = new List<CSTUserPreferenceInfo>();
-            //}else 
+            //}            
 
             if (flag == "Created" || flag == "Edited")
             {
@@ -1422,6 +1397,17 @@ namespace GreenField.Gadgets.ViewModels
         /// Event for the Retrieval of Data 
         /// </summary>
         public event RetrieveCustomXmlDataCompleteEventHandler RetrieveCustomXmlDataCompletedEvent;
+
+        #endregion
+        
+        #region EventUnSubscribe
+        /// <summary>
+        /// Method that disposes the events
+        /// </summary>
+        public void Dispose()
+        {
+
+        }
 
         #endregion
 

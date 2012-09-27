@@ -202,6 +202,7 @@
     <Compile Include="ViewModels\ICPresentations\ViewModelPresentations.cs" />
     <Compile Include="ViewModels\ViewModelCOASpecific.cs" />
     <Compile Include="ViewModels\ExternalResearch\ConsensusEstimates\ViewModelValuations.cs" />
+    <Compile Include="ViewModels\ViewModelCompositeFund.cs" />
     <Compile Include="ViewModels\ViewModelConsensusEstimateSummary.cs" />
     <Compile Include="ViewModels\Market Performance\ChildViewModelInsertEntity.cs" />
     <Compile Include="ViewModels\Market Performance\ViewModelMarketPerformanceSnapshot.cs" />
@@ -341,6 +342,9 @@
     </Compile>
     <Compile Include="Views\ViewCOASpecific.xaml.cs">
       <DependentUpon>ViewCOASpecific.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewCompositeFund.xaml.cs">
+      <DependentUpon>ViewCompositeFund.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ViewConsensusEstimateSummary.xaml.cs">
       <DependentUpon>ViewConsensusEstimateSummary.xaml</DependentUpon>
@@ -624,6 +628,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ViewCOASpecific.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewCompositeFund.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

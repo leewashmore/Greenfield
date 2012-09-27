@@ -191,7 +191,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                     <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
@@ -219,7 +219,7 @@
                                              UseLayoutRounding="True" 
                                              IsReadOnly="True"
                                              RowIndicatorVisibility="Collapsed"
-                                             ScrollMode="RealTime"                                                        
+                                             ScrollMode="RealTime"                                                      
                                              AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}"
                                              AlternationCount="2" 
                                              EnableRowVirtualization="False"

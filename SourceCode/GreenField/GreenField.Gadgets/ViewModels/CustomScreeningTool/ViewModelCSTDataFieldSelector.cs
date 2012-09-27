@@ -836,7 +836,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    return false; ;
+                    return false; 
                 }
             }
         }
@@ -844,6 +844,11 @@ namespace GreenField.Gadgets.ViewModels
         private void RemoveCommandMethod(object param)
         {
             SelectedFieldsDataList.Remove(SelectedDataField);
+            RaisePropertyChanged(() => SelectedFieldsDataList);
+            RaisePropertyChanged(() => SelectedSecurityReferenceData);
+            RaisePropertyChanged(() => SelectedPeriodFinancialsData);
+            RaisePropertyChanged(() => SelectedCurrentFinancialsData);
+            RaisePropertyChanged(() => SelectedFairValueData);
         }
 
         private bool SubmitCommandValidationMethod(object param)

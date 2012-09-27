@@ -80,6 +80,7 @@
       <xs:element minOccurs="0" name="IsPercentage" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssueName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="MarketCapAmount" nillable="true" type="xs:anyType" />
       <xs:element minOccurs="0" name="Multiplier" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PeriodType" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PeriodYear" type="xs:int" />
@@ -90,4 +91,26 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="CustomScreeningSecurityData" nillable="true" type="tns:CustomScreeningSecurityData" />
+  <xs:complexType name="ArrayOfCompositeFundData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CompositeFundData" nillable="true" type="tns:CompositeFundData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCompositeFundData" nillable="true" type="tns:ArrayOfCompositeFundData" />
+  <xs:complexType name="CompositeFundData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ActivePosition" nillable="true" type="xs:anyType" />
+      <xs:element minOccurs="0" name="ActivePositionInCountry" nillable="true" type="xs:anyType" />
+      <xs:element minOccurs="0" name="BenchmarkWeight" nillable="true" type="xs:anyType" />
+      <xs:element minOccurs="0" name="BenchmarkWeightInCountry" nillable="true" type="xs:anyType" />
+      <xs:element minOccurs="0" name="CountryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Holdings" nillable="true" type="xs:anyType" />
+      <xs:element minOccurs="0" name="IssuerId" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PortfolioTarget" nillable="true" type="xs:anyType" />
+      <xs:element minOccurs="0" name="PortfolioTargetInCountry" nillable="true" type="xs:anyType" />
+      <xs:element minOccurs="0" name="SecurityId" type="xs:int" />
+      <xs:element minOccurs="0" name="Target" type="xs:decimal" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CompositeFundData" nillable="true" type="tns:CompositeFundData" />
 </xs:schema>
