@@ -525,9 +525,9 @@ namespace GreenField.Gadgets.ViewModels
                 IsAddButtonEnabled = false;
                 return false;
             }
-            else if (SelectedPeriodFinancialsData != null && SelectedFieldsDataList.Count > 0)
+            else if (SelectedPeriodFinancialsData != null)
             {
-                if (SelectedFieldsDataList != null)
+                if (SelectedFieldsDataList != null && SelectedFieldsDataList.Count > 0)
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedPeriodFinancialsData.ScreeningId))
                     {
