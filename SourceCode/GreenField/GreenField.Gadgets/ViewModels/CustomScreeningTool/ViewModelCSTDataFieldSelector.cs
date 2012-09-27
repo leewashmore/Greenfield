@@ -441,7 +441,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             else if (SelectedSecurityReferenceData != null )
             {
-                if(SelectedFieldsDataList != null)
+                if (SelectedFieldsDataList != null && SelectedFieldsDataList.Count > 0)
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedSecurityReferenceData.ScreeningId))
                     {
@@ -525,7 +525,7 @@ namespace GreenField.Gadgets.ViewModels
                 IsAddButtonEnabled = false;
                 return false;
             }
-            else if (SelectedPeriodFinancialsData != null)
+            else if (SelectedPeriodFinancialsData != null && SelectedFieldsDataList.Count > 0)
             {
                 if (SelectedFieldsDataList != null)
                 {
@@ -633,7 +633,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             else if (SelectedCurrentFinancialsData != null)
             {
-                if (SelectedFieldsDataList != null)
+                if (SelectedFieldsDataList != null && SelectedFieldsDataList.Count > 0)
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedCurrentFinancialsData.ScreeningId))
                     {
@@ -729,7 +729,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             else if (SelectedFairValueData != null)
             {
-                if (SelectedFieldsDataList != null)
+                if (SelectedFieldsDataList != null && SelectedFieldsDataList.Count > 0)
                 {
                     if (SelectedFieldsDataList.Select(a => a.ScreeningId).Contains(SelectedFairValueData.ScreeningId))
                     {
