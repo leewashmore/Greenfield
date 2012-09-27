@@ -191,16 +191,16 @@
                                             </telerik:ChartArea.AxisX>
                                             <telerik:ChartArea.AxisY>
                                                 <telerik:AxisY MinorTicksVisibility="Collapsed" MajorTicksVisibility="Visible" 
-                                                               AutoRange="True" ExtendDirection="None" >
+                                                               Title="% Return" AutoRange="True" ExtendDirection="None" >
                                                     <telerik:AxisY.AxisStyles>
-                                                        <telerik:AxisStyles TitleStyle="{StaticResource AxisTitleStyle}"                                                               
-                                                                ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
+                                                        <!--<telerik:AxisStyles TitleStyle="{StaticResource AxisTitleStyle}"                                                               
+                                                                ItemLabelStyle="{StaticResource ItemLabelStyle}"/>-->
+                                                        <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
                                                     </telerik:AxisY.AxisStyles>
                                                 </telerik:AxisY>
-
                                             </telerik:ChartArea.AxisY>
                                             <telerik:ChartArea.AdditionalYAxes>
-                                                <telerik:AxisY x:Name="Secondary" AxisName="Secondary" Title="Transaction"  
+                                                <telerik:AxisY x:Name="Secondary" AxisName="Secondary" Title="Purchases/Sales ($M)"  
                                                                AutoRange="True" >
                                                     <telerik:AxisY.AxisStyles>
                                                         <telerik:AxisStyles ItemLabelStyle="{StaticResource ItemLabelStyle}"/>
