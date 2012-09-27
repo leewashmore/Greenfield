@@ -396,6 +396,9 @@ namespace GreenField.Gadgets.ViewModels
             {
                 decimal valueY5 = 0;
                 decimal valueY6;
+                decimal valueY7;
+                decimal valueY8;
+                decimal valueY9;
                 if (!(String.IsNullOrEmpty(item.ValueY0)) || !(String.IsNullOrEmpty(item.ValueY1)) || !(String.IsNullOrEmpty(item.ValueY2)) || !(String.IsNullOrEmpty(item.ValueY3)) || !(String.IsNullOrEmpty(item.ValueY4)) || !(String.IsNullOrEmpty(item.ValueY5)))
                 {
                     valueY5 = Convert.ToDecimal(Convert.ToDouble(
@@ -410,9 +413,9 @@ namespace GreenField.Gadgets.ViewModels
                                                                     * 0.99);
                 }
                 valueY6 = Convert.ToDecimal(Convert.ToDouble(valueY5) * 0.99);
-                decimal valueY7 = Convert.ToDecimal(Convert.ToDouble(valueY6) * 0.99);
-                decimal valueY8 = Convert.ToDecimal(Convert.ToDouble(valueY7) * 0.99);
-                decimal valueY9 = Convert.ToDecimal(Convert.ToDouble(valueY8) * 0.99);
+                valueY7 = Convert.ToDecimal(Convert.ToDouble(valueY6) * 0.99);
+                valueY8 = Convert.ToDecimal(Convert.ToDouble(valueY7) * 0.99);
+                valueY9 = Convert.ToDecimal(Convert.ToDouble(valueY8) * 0.99);
 
                 if (item.FieldName == "Revenue Growth" || item.FieldName == "EBITDA Margins")
                 {
@@ -495,7 +498,7 @@ namespace GreenField.Gadgets.ViewModels
                             else
                                 item.ValueY5 = Convert.ToDecimal(item.ValueY5).ToString("N0");
                         }
-                        if (Convert.ToDecimal(valueY5) < 0)
+                        if (valueY5 < 0)
                         {
                             item.ValueY6 = (!(String.IsNullOrEmpty(item.ValueY6))) ? "(" + valueY5.ToString("N0") + ")" : String.Empty;
                             //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
@@ -506,7 +509,7 @@ namespace GreenField.Gadgets.ViewModels
                             item.ValueY6 = valueY5.ToString("N0");
                         }
 
-                        if (Convert.ToDecimal(valueY6) < 0)
+                        if (valueY6 < 0)
                         {
                             item.ValueY7 = (!(String.IsNullOrEmpty(item.ValueY7))) ? "(" + valueY6.ToString("N0") + ")" : String.Empty;
                             //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
@@ -516,7 +519,7 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             item.ValueY7 = valueY6.ToString("N0");
                         } 
-                        if (Convert.ToDecimal(valueY8) < 0)
+                        if (valueY8 < 0)
                         {
                             item.ValueY8 = (!(String.IsNullOrEmpty(item.ValueY8))) ? "(" + valueY8.ToString("N0") + ")" : String.Empty;
                             //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
@@ -526,7 +529,7 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             item.ValueY8 = valueY8.ToString("N0");
                         }
-                        if (Convert.ToDecimal(valueY9) < 0)
+                        if (valueY9 < 0)
                         {
                             item.ValueY9 = (!(String.IsNullOrEmpty(item.ValueY9))) ? "(" + valueY9.ToString("N0") + ")" : String.Empty;
                             //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
