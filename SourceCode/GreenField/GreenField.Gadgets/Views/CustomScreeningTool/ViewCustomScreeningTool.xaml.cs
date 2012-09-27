@@ -126,7 +126,7 @@ namespace GreenField.Gadgets.Views
                 column.IsGroupable = true;
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
-                column.Width = new GridViewLength(1, GridViewLengthUnitType.Star);               
+                column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);               
                 this.dgCustomSecurity.Columns.Add(column);
             }
 
