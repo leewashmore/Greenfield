@@ -1030,9 +1030,9 @@ namespace GreenField.Web.Services
         {
             try
             {
-                List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData> result = new List<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>();             
                 ExternalResearchEntities research = new ExternalResearchEntities();
+                research.CommandTimeout = 5000;
                 result = research.ExecuteStoreQuery<GreenField.DataContracts.DataContracts.ConsensusEstimatesSummaryData>("exec GetConsensusEstimatesSummaryData @Security={0}", entityIdentifier.LongName).ToList();
                 return result;
             }
@@ -1316,10 +1316,9 @@ namespace GreenField.Web.Services
                 string _dataSource = EnumUtils.ToString(cSource);
                 string _fiscalType = EnumUtils.ToString(cFiscalType);
                 List<GreenField.DAL.COASpecificData> result = new List<GreenField.DAL.COASpecificData>();
-                List<GreenField.DataContracts.COASpecificData> mainResult = new List<GreenField.DataContracts.COASpecificData>();
-
-                DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<GreenField.DataContracts.COASpecificData> mainResult = new List<GreenField.DataContracts.COASpecificData>();                
                 ExternalResearchEntities research = new ExternalResearchEntities();
+                research.CommandTimeout = 5000;
                 result = research.GetDataForPeriodGadgets(_dataSource, _fiscalType, cCurrency, issuerId, securityId.ToString()).ToList();
                 foreach (GreenField.DAL.COASpecificData item in result)
                 {
@@ -1547,6 +1546,7 @@ namespace GreenField.Web.Services
                     string _securityIDPortfolio = securityIDPortfolio == null ? null : securityIDPortfolio.ToString();
 
                     ExternalResearchEntities research = new ExternalResearchEntities();
+                    research.CommandTimeout = 5000;
                     storedProcResult = research.usp_GetDataForValuationQualityGrowth(_issuerIDPortfolio, _securityIDPortfolio, _issuerIDBenchmark, _securityIDBenchmark).ToList();
 
 
@@ -1780,6 +1780,7 @@ namespace GreenField.Web.Services
                     string _securityIDPortfolio = securityIDPortfolio == null ? null : securityIDPortfolio.ToString();
 
                     ExternalResearchEntities research = new ExternalResearchEntities();
+                    research.CommandTimeout = 5000;
                     storedProcResult = research.usp_GetDataForValuationQualityGrowth(_issuerIDPortfolio, _securityIDPortfolio, _issuerIDBenchmark, _securityIDBenchmark).ToList();
 
 
