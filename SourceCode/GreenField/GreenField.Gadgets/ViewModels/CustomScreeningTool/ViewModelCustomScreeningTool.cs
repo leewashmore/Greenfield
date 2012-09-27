@@ -1305,7 +1305,9 @@ namespace GreenField.Gadgets.ViewModels
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
+            {
                 BusyIndicatorContent = message;
+            }
             BusyIndicatorIsBusy = showBusyIndicator;
         }
 
