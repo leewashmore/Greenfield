@@ -824,7 +824,6 @@ namespace GreenField.Gadgets.ViewModels
                         CreateXML(SecurityData);
                     }
                     ResultsListVisibility = Visibility.Visible;
-                   // BusyIndicatorNotification();
                 }
                 else
                 {
@@ -841,7 +840,6 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-               // BusyIndicatorNotification();
             }
         }
 
@@ -855,7 +853,6 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CSTUserPreference = result;
-                    //SavedDataListInfo = (from res in result select new { ListName = res.ListName }).AsEnumerable().Select(t => t.ListName).Distinct().ToList();
                     SavedDataListInfo = result.Select(a => a.ListName).Distinct().ToList();
                     BusyIndicatorNotification();
                 }
@@ -1259,7 +1256,6 @@ namespace GreenField.Gadgets.ViewModels
             output.Append(sb.ToString() + Environment.NewLine);
             RetrieveCustomXmlDataCompletedEvent(new RetrieveCustomXmlDataCompleteEventArgs() { XmlInfo = output.ToString() });
         }
-
 
         #endregion
 
