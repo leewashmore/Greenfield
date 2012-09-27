@@ -85,7 +85,7 @@ namespace GreenField.Gadgets.Views
             }
             else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
             {
-                filter = "PDF (*.pdf)|*.pdf|JPEG Picture (*.jpeg)|*.ppt";
+                filter = "PDF (*.pdf)|*.pdf|JPEG Picture (*.jpeg, *.jpg)|*.jpeg;*.jpg";
             }
             else
             {
@@ -103,7 +103,7 @@ namespace GreenField.Gadgets.Views
                 }
                 else if (DataContextViewModelCreateUpdatePresentations.SelectedUploadDocumentInfo == UploadDocumentType.ADDITIONAL_ATTACHMENT)
                 {
-                    if (dialog.File.Extension != ".pdf" && dialog.File.Extension != ".jpeg")
+                    if (dialog.File.Extension != ".pdf" && dialog.File.Extension != ".jpeg" && dialog.File.Extension != ".jpg")
                         return;                    
                 }
                 else
@@ -162,6 +162,15 @@ namespace GreenField.Gadgets.Views
                     ms.Write(buffer, 0, read);
                 }
                 return ms.ToArray();
+            }
+        }
+
+        private void btnPreview_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog dialog = new SaveFileDialog() { Filter = "PDF (*.pdf) |*.pdf" };
+            if (dialog.ShowDialog() == true)
+            {
+                DataContextViewModelCreateUpdatePresentations.DownloadStream = dialog.OpenFile();
             }
         }
 

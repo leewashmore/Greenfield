@@ -615,7 +615,8 @@ namespace GreenField.Gadgets.ViewModels
                         FromDate = i,
                         ToDate = SelectedToYearInfo,
                         DataPointsOrder = tempOrder++,
-                        TableColumn = SelectedPeriodFinancialsData.DataDescription
+                        TableColumn = SelectedPeriodFinancialsData.DataDescription,
+                        DataID = SelectedPeriodFinancialsData.DataID
                     });
                 }
                 SelectedFieldsDataList = temp;
@@ -712,7 +713,9 @@ namespace GreenField.Gadgets.ViewModels
                     Accessibility = accessibility,
                     DataSource = SelectedDataSourceInfo,
                     DataPointsOrder = tempOrder++,
-                    TableColumn = SelectedCurrentFinancialsData.DataDescription
+                    TableColumn = SelectedCurrentFinancialsData.DataDescription,
+                    DataID = SelectedCurrentFinancialsData.DataID
+
                 });
                 SelectedFieldsDataList = temp;
                 flagCurAdd = 0;

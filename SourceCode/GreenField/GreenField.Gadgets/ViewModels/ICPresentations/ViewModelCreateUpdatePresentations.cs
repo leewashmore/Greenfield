@@ -136,7 +136,23 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores fileStream object for the upload file
         /// </summary>
-        public Byte[] UploadFileStreamData { get; set; }       
+        public Byte[] UploadFileStreamData { get; set; }
+
+        private Stream _downloadStream;
+        public Stream DownloadStream
+        {
+            get { return _downloadStream; }
+            set
+            {
+                _downloadStream = value;
+                if (value != null && _dbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Downloading generated IC Packet...");
+                    _dbInteractivity.GenerateICPacketReport(SelectedPresentationOverviewInfo.PresentationID, GenerateICPacketReportCallbackMethod);
+                }
+            }
+        }
+        
         
 
         /// <summary>
@@ -189,7 +205,6 @@ namespace GreenField.Gadgets.ViewModels
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
         }
-
         #endregion
 
         #region Busy Indicator Notification
@@ -319,7 +334,6 @@ namespace GreenField.Gadgets.ViewModels
 
 
         }
-
         #endregion
 
         #region Helper Methods
@@ -665,6 +679,37 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification();
                 _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
                 _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+            }
+        }
+
+        private void GenerateICPacketReportCallbackMethod(Byte[] result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    DownloadStream.Write(result, 0, result.Length);
+                    DownloadStream.Close();
+                    DownloadStream = null;
+                }
+                else
+                {
+                    Prompt.ShowDialog("An Error ocurred while downloading the preview report from server.");
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
             }
         }
         #endregion                

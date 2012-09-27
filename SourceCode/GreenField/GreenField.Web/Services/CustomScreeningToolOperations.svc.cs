@@ -358,6 +358,11 @@ namespace GreenField.Web.Services
 
                 foreach (CustomScreeningUserPreferences item in data)
                 {
+                    int dataId = 0;
+                    if (item.ScreeningId != null)
+                    {
+                        dataId = GetCustomScreeningDataId(item.ScreeningId);
+                    }
                     result.Add(new CSTUserPreferenceInfo()
                     {
                         UserName = item.UserName,
@@ -373,7 +378,8 @@ namespace GreenField.Web.Services
                         YearType = item.YearType,
                         FromDate = Convert.ToInt32(item.FromDate),
                         ToDate = Convert.ToInt32(item.ToDate),
-                        DataPointsOrder = Convert.ToInt32(item.DataPointsOrder)
+                        DataPointsOrder = Convert.ToInt32(item.DataPointsOrder),
+                        DataID = dataId
                     });
                 }
                 return result;
@@ -536,7 +542,7 @@ namespace GreenField.Web.Services
                                 foreach (CustomScreeningFINData record in temp)
                                 {
                                     CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
-                                    fillData.SecurityId = record.SecurityId;
+                                    fillData.SecurityId = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId).Select(a => a.SecurityId).FirstOrDefault(); ;
                                     fillData.IssuerId = record.IssuerId;
                                     fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId).Select(a => a.IssueName).FirstOrDefault();
                                     fillData.Type = item.DataDescription;
@@ -575,7 +581,7 @@ namespace GreenField.Web.Services
                             foreach (CustomScreeningCURData record in temp)
                             {
                                 CustomScreeningSecurityData fillData = new CustomScreeningSecurityData();
-                                fillData.SecurityId = record.SecurityId;
+                                fillData.SecurityId = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId).Select(a => a.SecurityId).FirstOrDefault();
                                 fillData.IssuerId = record.IssuerId;
                                 fillData.IssueName = securityList.Where(a => a.IssuerId == record.IssuerId || a.SecurityId == record.SecurityId).Select(a => a.IssueName).FirstOrDefault();
                                 fillData.Type = item.DataDescription;
@@ -840,6 +846,32 @@ namespace GreenField.Web.Services
         }
 
         #region Helper Methods
+
+        public int GetCustomScreeningDataId(string screeningId)
+        {
+            int dataId = 0;
+            string screeningIdStart = screeningId.Substring(0, 3);
+            CustomScreeningToolEntities entity = new CustomScreeningToolEntities();
+
+            switch (screeningIdStart)
+            {
+                case "FIN":
+                    if (screeningId != null)
+                    {
+                        dataId = entity.SCREENING_DISPLAY_PERIOD.Where(a => a.SCREENING_ID == screeningId).Select(a => a.DATA_ID).FirstOrDefault();
+                    }
+                    break;
+                case "CUR":
+                    if (screeningId != null)
+                    {
+                        dataId = entity.SCREENING_DISPLAY_CURRENT.Where(a => a.SCREENING_ID == screeningId).Select(a => a.DATA_ID).FirstOrDefault();
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return dataId;
+        }
 
         public List<CustomScreeningSecurityData> RetrieveSecurityDetailsList(PortfolioSelectionData portfolio,
             EntitySelectionData benchmark, String region, String country, String sector, String industry)

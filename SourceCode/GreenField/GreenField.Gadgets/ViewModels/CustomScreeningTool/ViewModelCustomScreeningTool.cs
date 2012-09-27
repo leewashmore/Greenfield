@@ -44,6 +44,7 @@ namespace GreenField.Gadgets.ViewModels
         private List<PortfolioSelectionData> _portfolioSelectionData;
         private IRegionManager _regionManager;
         private List<EntitySelectionData> _benchmarkSelectionData;
+        private int flagBsyInd;
 
 
 
@@ -773,7 +774,10 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
+                if(flagBsyInd != 1)
+                {
+                    BusyIndicatorNotification();
+                }
             }
         }
 
@@ -820,7 +824,6 @@ namespace GreenField.Gadgets.ViewModels
                         CreateXML(SecurityData);
                     }
                     ResultsListVisibility = Visibility.Visible;
-                   // BusyIndicatorNotification();
                 }
                 else
                 {
@@ -837,7 +840,6 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-               // BusyIndicatorNotification();
             }
         }
 
@@ -851,7 +853,6 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     CSTUserPreference = result;
-                    //SavedDataListInfo = (from res in result select new { ListName = res.ListName }).AsEnumerable().Select(t => t.ListName).Distinct().ToList();
                     SavedDataListInfo = result.Select(a => a.ListName).Distinct().ToList();
                     BusyIndicatorNotification();
                 }
@@ -1256,7 +1257,6 @@ namespace GreenField.Gadgets.ViewModels
             RetrieveCustomXmlDataCompletedEvent(new RetrieveCustomXmlDataCompleteEventArgs() { XmlInfo = output.ToString() });
         }
 
-
         #endregion
 
         #region Helpers
@@ -1301,8 +1301,9 @@ namespace GreenField.Gadgets.ViewModels
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
+            {
                 BusyIndicatorContent = message;
-
+            }
             BusyIndicatorIsBusy = showBusyIndicator;
         }
 
@@ -1334,6 +1335,7 @@ namespace GreenField.Gadgets.ViewModels
                     EntitySelectionData b = new EntitySelectionData();
                     b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
                     BusyIndicatorNotification(true, "Retrieving Data for display");
+                    flagBsyInd = 1;
                     _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
                                                             SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
                 }
@@ -1348,6 +1350,7 @@ namespace GreenField.Gadgets.ViewModels
                     EntitySelectionData b = new EntitySelectionData();
                     b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
                     BusyIndicatorNotification(true, "Retrieving Data for display");
+                    flagBsyInd = 1;
                     _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
                                                             SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
                 }
