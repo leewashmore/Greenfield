@@ -1,3 +1,5 @@
+set noexec off
+
 --declare  current and required version
 declare @RequiredDBVersion as nvarchar(100) = '00073'
 declare @CurrentScriptVersion as nvarchar(100) = '00075'
@@ -99,10 +101,7 @@ BEGIN
 			[SecurityCountryCode],
 			[SecurityIndustry],
 			[SecurityCashPosition],
-			[SecurityPosition],
-			[SecurityMSCIStdWeight],
-			[SecurityMSCIIMIWeight],
-			[SecurityGlobalActiveWeight],
+			[SecurityPosition],			
 			[SecurityLastClosingPrice],
 			[SecurityMarketCapitalization],
 			[SecurityPFVMeasure],
@@ -141,10 +140,7 @@ BEGIN
 			[SecurityCountryCode],
 			[SecurityIndustry],
 			[SecurityCashPosition],
-			[SecurityPosition],
-			[SecurityMSCIStdWeight],
-			[SecurityMSCIIMIWeight],
-			[SecurityGlobalActiveWeight],
+			[SecurityPosition],			
 			[SecurityLastClosingPrice],
 			[SecurityMarketCapitalization],
 			[SecurityPFVMeasure],

@@ -34,7 +34,7 @@
                     <!--GridViewHeaderCellStyle for dynamically created columns -->
                     <ControlTemplate x:Key="GridViewHeaderCellTemplate" TargetType="telerik:GridViewHeaderCell">
                         <!--<Border MouseLeftButtonDown="CustomHeaderCellBorder_MouseLeftButtonDown">-->
-                            <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
+                        <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" 
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" 
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         <!--</Border>-->
@@ -56,8 +56,11 @@
                         <Setter Property="HorizontalContentAlignment" Value="Right"/>
                         <Setter Property="HorizontalAlignment" Value="Right"/>
                         <Setter Property="FontSize" Value="9"/>
-                    </Style>                   
-                    
+                    </Style>
+
+                </ResourceDictionary>
+                <ResourceDictionary>
+                    <helpers:BasisPointsConverter x:Key="basisPointsConverter"/>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
@@ -85,19 +88,20 @@
                         <Image Source="../Images/PDF.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>
                     <telerik:RadButton x:Name="btnPrint" Height="20" Width="20" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                   Margin="2,0,0,0" ToolTipService.ToolTip="Print" Click="btnPrint_Click">                          
+                                   Margin="2,0,0,0" ToolTipService.ToolTip="Print" Click="btnPrint_Click">
                         <Image Source="../Images/Print.png" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </telerik:RadButton>
                 </StackPanel>
             </Grid>
+
             <!--Grid Row-->
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-               
-                    <telerik:RadGridView Name="dgRelativePerformance" 
+
+                <telerik:RadGridView Name="dgRelativePerformance" 
                                      Grid.Row="0"
                                      AutoGenerateColumns="False" 
                                      IsFilteringAllowed="True" 
@@ -125,47 +129,48 @@
                                      RowStyle="{StaticResource GridViewRowStyle}"
                                      EnableRowVirtualization="False">
 
-                        <telerik:RadGridView.Columns>
-                            <!--CountryID Column-->
-                            <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
+                    <telerik:RadGridView.Columns>
+                        <!--CountryID Column-->
+                        <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     Width="auto" HeaderTextAlignment="Left" TextAlignment="Left" UniqueName="CountryId"
                                                         FooterCellStyle="{Binding GridViewCustomFooterCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" >
-                                <telerik:GridViewDataColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <TextBlock Text="{Binding CountryId}" Foreground="Black"/>
-                                    </DataTemplate>
-                                </telerik:GridViewDataColumn.CellTemplate>
-                                <telerik:GridViewDataColumn.Footer>
-                                    <TextBlock Text="Total" FontSize="9" Height="12"/>
-                                </telerik:GridViewDataColumn.Footer>
-                            </telerik:GridViewDataColumn>
+                            <telerik:GridViewDataColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding CountryId}" Foreground="Black"/>
+                                </DataTemplate>
+                            </telerik:GridViewDataColumn.CellTemplate>
+                            <telerik:GridViewDataColumn.Footer>
+                                <TextBlock Text="Total" FontSize="9" Height="12"/>
+                            </telerik:GridViewDataColumn.Footer>
+                        </telerik:GridViewDataColumn>
 
-                            <!--Totals Column-->
-                            <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total" FooterTextAlignment="Right" HeaderTextAlignment="Right"
+
+                        <!--Totals Column-->
+                        <telerik:GridViewDataColumn x:Name="dgcCountryTotal" Header="Total" FooterTextAlignment="Right" HeaderTextAlignment="Right"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" 
                                                     UniqueName="Total" Width="*">
-                                <telerik:GridViewDataColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding AggregateCountryAlpha}" Foreground="Black">
+                            <telerik:GridViewDataColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding AggregateCountryAlpha, Converter={StaticResource basisPointsConverter}}" Foreground="Black">
                                          <ToolTipService.ToolTip> 
                                          <ToolTip Content="{Binding AggregateCountryActivePosition}"/>
                                          </ToolTipService.ToolTip>
-                                            </TextBlock>
-                                            <!--<TextBlock Text="{Binding AggregateCountryActivePosition, StringFormat=(\{0:n2\}%)}" Foreground="Black" FontWeight="Bold"/>-->
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </telerik:GridViewDataColumn.CellTemplate>
-                                <telerik:GridViewDataColumn.AggregateFunctions>
-                                    <telerik:SumFunction x:Name="AggregateCountryAlphaSumFunction" SourceField="AggregateCountryAlpha"/>
-                                    <!--<telerik:SumFunction x:Name="AggregateCountryBetSumFunction" ResultFormatString="{}({0:n2}%)" SourceField="AggregateCountryActivePosition" />-->
-                                </telerik:GridViewDataColumn.AggregateFunctions>
-                                <telerik:GridViewDataColumn.Footer>
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue}" TextAlignment="Right"/>
-                                </telerik:GridViewDataColumn.Footer>
-                            </telerik:GridViewDataColumn>
-                        </telerik:RadGridView.Columns>
-                    </telerik:RadGridView>
+                                        </TextBlock>
+                                        <!--<TextBlock Text="{Binding AggregateCountryActivePosition, StringFormat=(\{0:n2\}%)}" Foreground="Black" FontWeight="Bold"/>-->
+                                    </StackPanel>
+                                </DataTemplate>
+                            </telerik:GridViewDataColumn.CellTemplate>
+                            <telerik:GridViewDataColumn.AggregateFunctions>
+                                <telerik:SumFunction x:Name="AggregateCountryAlphaSumFunction" SourceField="AggregateCountryAlpha"/>
+                                <!--<telerik:SumFunction x:Name="AggregateCountryBetSumFunction" ResultFormatString="{}({0:n2}%)" SourceField="AggregateCountryActivePosition" />-->
+                            </telerik:GridViewDataColumn.AggregateFunctions>
+                            <telerik:GridViewDataColumn.Footer>
+                                <TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue, Converter={StaticResource basisPointsConverter}}" TextAlignment="Right"/>
+                            </telerik:GridViewDataColumn.Footer>
+                        </telerik:GridViewDataColumn>
+                    </telerik:RadGridView.Columns>
+                </telerik:RadGridView>
                 <Grid x:Name="grdTopActivePositionSecurity" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Auto">
                     <Border x:Name="brdTopActivePositionSecurity" >
                         <toolkit:DockPanel x:Name="dpTopActivePositionSecurity" telerik:StyleManager.Theme="Metro"/>

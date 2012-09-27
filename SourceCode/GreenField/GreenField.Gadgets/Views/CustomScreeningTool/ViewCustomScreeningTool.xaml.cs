@@ -157,9 +157,9 @@ namespace GreenField.Gadgets.Views
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
                 column.Width = new GridViewLength(1, GridViewLengthUnitType.Star);
-                column.AggregateFunctions.Add(new HarmonicMeanCalculation { SourceField = kvp.Key });
+                //column.AggregateFunctions.Add(new HarmonicMeanCalculation { SourceField = kvp.Key });
                 //column.AggregateFunctions.Add(new HarmonicMeanCalculation ());
-                this.dgCustomSecurity.Columns.Add(column);
+                this.dgCustomSecurity.Columns.Add(column);             
             }
 
             this.dgCustomSecurity.ShowColumnFooters = true;
@@ -188,8 +188,10 @@ namespace GreenField.Gadgets.Views
 
             this.dgCustomSecurity.ItemsSource = _data;
             this.dgCustomSecurity.IsFilteringAllowed = true;
-            this.dgCustomSecurity.Columns[2].IsVisible = false;
-           this.DataContextViewModelCustomScreeningTool.BusyIndicatorIsBusy = false;
+            this.dgCustomSecurity.GroupRowStyle = this.Resources["GridViewGroupRowStyle"] as Style;
+            this.dgCustomSecurity.ShowGroupFooters = true;
+            this.dgCustomSecurity.Columns["Market Capitalization"].IsVisible = false;
+            this.DataContextViewModelCustomScreeningTool.BusyIndicatorIsBusy = false;
         }
 
         /// <summary>

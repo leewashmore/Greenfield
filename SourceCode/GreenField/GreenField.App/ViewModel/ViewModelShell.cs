@@ -147,7 +147,7 @@ namespace GreenField.App.ViewModel
             }
         }
 
-        private Boolean _roleIsIC = true;
+        private Boolean _roleIsIC = false;
         public Boolean RoleIsIC
         {
             get { return _roleIsIC; }

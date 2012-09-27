@@ -42,6 +42,8 @@ BEGIN
    ORDER BY SORT_ORDER 
 END
 
+Go
+
 --indicate thet current script is executed
 declare @CurrentScriptVersion as nvarchar(100) = '00096'
 insert into ChangeScripts (ScriptVersion, DateExecuted ) values (@CurrentScriptVersion, GETDATE())

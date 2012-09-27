@@ -27,6 +27,7 @@ using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Presentation;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using System.Collections;
 
 namespace GreenField.Web.Services
 {
@@ -623,39 +624,94 @@ namespace GreenField.Web.Services
             }
         }
 
-        //[OperationContract]
-        //[FaultContract(typeof(ServiceFault))]
-        //public Boolean UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, String url, FileMaster presentationAttachedFileData)
-        //{
-        //    try
-        //    {
-        //        if (presentationAttachedFileData != null)
-        //        {
-        //            presentationAttachedFileData.Location = url;
-        //        }
-        //        else
-        //        {
-        //            String filePath = @"\\10.101.13.146\IC Presentation Documents\" + presentationAttachedFileData.Name;
-        //            if (File.Exists(filePath))
-        //            {
-        //                File.Delete(filePath);
-        //            }
-        //        }
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Byte[] GenerateICPacketReport(Int64 presentationId)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                List<FileMaster> presentationAttachedFileData = RetrievePresentationAttachedFileDetails(presentationId);
+                presentationAttachedFileData = presentationAttachedFileData
+                    .Where(record => record.Type == "IC Presentations"
+                        && (record.Category == "Power Point Presentation"
+                            || record.Category == "FinStat Report"
+                            || record.Category == "Investment Context Report"
+                            || record.Category == "DCF Model"
+                            || record.Category == "Additional Attachment")).ToList();
 
-        //        XDocument xmlDoc = GetEntityXml<FileMaster>(new List<FileMaster> { presentationAttachedFileData }
-        //            , strictlyInclusiveProperties: new List<string> { "FileID", "Name", "SecurityName", "SecurityTicker", "Location", "MetaTags", "Type" });
-        //        String xmlScript = xmlDoc.ToString();
-        //        ICPresentationEntities entity = new ICPresentationEntities();
-        //        entity.SetICPMeetingAttachedFileInfo(userName, presentationId, xmlScript);
-        //        return true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ExceptionTrace.LogException(ex);
-        //        string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
-        //        throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-        //    }
-        //}
+                String[] downloadedDocumentLocations = GetICPacketSegmentFiles(presentationAttachedFileData);
+
+                Byte[] result = MergePDFFiles(downloadedDocumentLocations);
+
+                return result;                
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        private String[] GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo)
+        {
+            return new string[] { };
+        }
+
+        private Byte[] MergePDFFiles(String[] pdfFileNames)
+        {
+            Byte[] result = new byte[] { };
+            String outFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPacket.pdf";
+            
+            int pageOffset = 0;
+            ArrayList master = new ArrayList();
+            int f = 0;
+            Document document = null;
+            PdfCopy writer = null;
+            
+            while (f < pdfFileNames.Length)
+            {
+                if (pdfFileNames[f].Contains(".pdf"))
+                {
+                    PdfReader reader = new PdfReader(pdfFileNames[f]);
+                    reader.ConsolidateNamedDestinations();
+
+                    int n = reader.NumberOfPages;
+                    pageOffset += n;
+                    if (f == 0)
+                    {
+                        document = new Document(reader.GetPageSizeWithRotation(1));                
+                        writer = new PdfCopy(document, new FileStream(outFile, FileMode.Create));
+                        document.Open();
+                    }
+
+                    for (int i = 0; i < n; )
+                    {
+                        ++i;
+                        if (writer != null)
+                        {
+                            PdfImportedPage page = writer.GetImportedPage(reader, i);
+                            writer.AddPage(page);
+                        }
+                    }
+
+                    PRAcroForm form = reader.AcroForm;
+                    if (form != null && writer != null)
+                    {
+                        writer.CopyAcroForm(reader);
+                    }
+                    f++;
+                }
+            }
+
+            if (document != null)
+            {
+                document.Close();
+            }
+
+            return result;
+        }
 
 
         #endregion

@@ -1404,7 +1404,7 @@ namespace GreenField.Gadgets.ViewModels
                 decimal grossDebt = SummaryData.Select(a => a.GrossDebt).FirstOrDefault();
 
                 FVMinorities = Convert.ToDecimal(MinorityInvestments);
-                
+
                 decimal equityValue = DCFCalculations.CalculateEquityValue(totalEnterpriseValue, cash, FVInvestments, grossDebt, FVMinorities);
                 decimal numberOfShares = SummaryData.Select(a => a.NumberOfShares).FirstOrDefault();
                 NumberOfShares = numberOfShares;
@@ -1496,11 +1496,11 @@ namespace GreenField.Gadgets.ViewModels
                         data.C3 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 0).Select(a => a.Value).FirstOrDefault()), 2));
                     if (VPS.ContainsKey(1))
                         data.C4 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 1).Select(a => a.Value).FirstOrDefault()), 2));
-                    if (VPS.ContainsKey(1))
+                    if (VPS.ContainsKey(2))
                         data.C5 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 2).Select(a => a.Value).FirstOrDefault()), 2));
-                    if (VPS.ContainsKey(1))
+                    if (VPS.ContainsKey(3))
                         data.C6 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 3).Select(a => a.Value).FirstOrDefault()), 2));
-                    if (VPS.ContainsKey(1))
+                    if (VPS.ContainsKey(4))
                         data.C7 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 4).Select(a => a.Value).FirstOrDefault()), 2));
                     VPS = new Dictionary<int, decimal>();
                     SensitivityDisplayData.Add(data);
@@ -1610,9 +1610,18 @@ namespace GreenField.Gadgets.ViewModels
                 MinBVPSShareVal = Convert.ToString(Math.Round(BVPS.Min(), 2));
                 AvgBVPSShareVal = Convert.ToString(Math.Round(BVPS.Average(), 2));
 
-                MaxBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
-                MinBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MinBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
-                AvgBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(AvgBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                if (CurrentMarketPrice != 0)
+                {
+                    MaxBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                    MinBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MinBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                    AvgBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(AvgBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                }
+                else
+                {
+                    MaxBVPSUpside = " ";
+                    MinBVPSUpside = " ";
+                    AvgBVPSUpside = " ";
+                }
 
             }
             catch (Exception ex)
@@ -1688,9 +1697,18 @@ namespace GreenField.Gadgets.ViewModels
                 MinEPSShareVal = Convert.ToString(Math.Round(EPS.Min(), 2));
                 AvgEPSShareVal = Convert.ToString(Math.Round(EPS.Average(), 2));
 
-                MaxEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
-                MinEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MinEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
-                AvgEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(AvgEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                if (CurrentMarketPrice != 0)
+                {
+                    MaxEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                    MinEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MinEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                    AvgEPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(AvgEPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
+                }
+                else
+                {
+                    MaxEPSUpside = " ";
+                    MinEPSUpside = " ";
+                    AvgEPSUpside = " ";
+                }
                 dataEPS.Clear();
             }
             catch (Exception ex)

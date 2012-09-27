@@ -208,16 +208,16 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         void dataContextSource_coaSpecificDataLoadedEvent(DataRetrievalProgressIndicatorEventArgs e)
         {
-            if (e.ShowBusy)
-            {
-                this.busyIndicatorChart.IsBusy = true;
-                this.busyIndicatorGrid.IsBusy = true;
-            }
-            else
-            {
-                this.busyIndicatorChart.IsBusy = false;
-                this.busyIndicatorGrid.IsBusy = false;
-            }
+            //if (e.ShowBusy)
+            //{
+            //    this.busyIndicatorChart.IsBusy = true;
+            //    this.busyIndicatorGrid.IsBusy = true;
+            //}
+            //else
+            //{
+            //    this.busyIndicatorChart.IsBusy = false;
+            //    this.busyIndicatorGrid.IsBusy = false;
+            //}
         }
 
         #region Styling
