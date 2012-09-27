@@ -122,47 +122,47 @@ namespace GreenField.Gadgets.Views
                        if (item.ValueY0 != null)
                        {
                            if (item.ValueY0.Contains("("))
-                               e.Row.Cells[1].Foreground = new SolidColorBrush(Colors.Red);
+                               dgFreeCashFlows.Columns[1].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
                        }
                        if (item.ValueY1 != null)
                        {
                            if (item.ValueY1.Contains("("))
-                               e.Row.Cells[2].Foreground = new SolidColorBrush(Colors.Red);
+                               dgFreeCashFlows.Columns[2].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
                        }
                        if (item.ValueY2 != null)
                        {
                            if (item.ValueY2.Contains("("))
-                               e.Row.Cells[3].Foreground = new SolidColorBrush(Colors.Red);
+                               dgFreeCashFlows.Columns[3].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
                        }
                        if (item.ValueY3 != null)
                        {
                            if (item.ValueY3.Contains("("))
-                               e.Row.Cells[4].Foreground = new SolidColorBrush(Colors.Red);
+                               dgFreeCashFlows.Columns[4].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
                        }
                        if (item.ValueY4 != null)
                        {
                            if (item.ValueY4.Contains("("))
-                               e.Row.Cells[5].Foreground = new SolidColorBrush(Colors.Red);
+                               dgFreeCashFlows.Columns[5].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
                        }
                        if (item.ValueY5 != null)
                        {
                            if (item.ValueY5.Contains("("))
-                               e.Row.Cells[6].Foreground = new SolidColorBrush(Colors.Red);
+                               dgFreeCashFlows.Columns[6].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
                        }
                        if (item.ValueY6 != null)
                        {
                            if (item.ValueY6.Contains("("))
-                               e.Row.Cells[7].Foreground = new SolidColorBrush(Colors.Red);
+                               dgFreeCashFlows.Columns[7].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
                        }
                        if (item.ValueY7 != null)
                        {
                            if (item.ValueY7.Contains("("))
-                               e.Row.Cells[8].Foreground = new SolidColorBrush(Colors.Red);
+                               dgFreeCashFlows.Columns[8].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
                        }
                        if (item.ValueY8 != null)
                        {
                            if (item.ValueY8.Contains("("))
-                               e.Row.Cells[9].Foreground = new SolidColorBrush(Colors.Red);
+                               dgFreeCashFlows.Columns[9].CellStyle = Resources["GridViewCellStyleRedText"] as Style;
                        }
                        if (item.ValueY9 != null)
                        {
