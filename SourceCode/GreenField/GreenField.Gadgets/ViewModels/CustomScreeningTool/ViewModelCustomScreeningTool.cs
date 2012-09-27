@@ -44,6 +44,7 @@ namespace GreenField.Gadgets.ViewModels
         private List<PortfolioSelectionData> _portfolioSelectionData;
         private IRegionManager _regionManager;
         private List<EntitySelectionData> _benchmarkSelectionData;
+        private int flagBsyInd;
 
 
 
@@ -773,7 +774,10 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
+                if(flagBsyInd != 1)
+                {
+                    BusyIndicatorNotification();
+                }
             }
         }
 
@@ -1302,7 +1306,6 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (message != null)
                 BusyIndicatorContent = message;
-
             BusyIndicatorIsBusy = showBusyIndicator;
         }
 
@@ -1334,6 +1337,7 @@ namespace GreenField.Gadgets.ViewModels
                     EntitySelectionData b = new EntitySelectionData();
                     b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
                     BusyIndicatorNotification(true, "Retrieving Data for display");
+                    flagBsyInd = 1;
                     _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
                                                             SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
                 }
@@ -1348,6 +1352,7 @@ namespace GreenField.Gadgets.ViewModels
                     EntitySelectionData b = new EntitySelectionData();
                     b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
                     BusyIndicatorNotification(true, "Retrieving Data for display");
+                    flagBsyInd = 1;
                     _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
                                                             SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
                 }

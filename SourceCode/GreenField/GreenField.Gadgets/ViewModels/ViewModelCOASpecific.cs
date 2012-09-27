@@ -576,8 +576,9 @@ namespace GreenField.Gadgets.ViewModels
             if (IssuerReferenceInfo != null)
             {
                 COASpecificInfo = new List<COASpecificData>();
-                _dbInteractivity.RetrieveCOASpecificData(IssuerReferenceInfo.IssuerId, IssuerReferenceInfo.SecurityId, SelectedDataSource, SelectedFiscalType, SelectedCurrency, RetrieveCOASpecificDataCallbackMethod);
                 BusyIndicatorNotification(true, "Retrieving Data based on selected security");
+                _dbInteractivity.RetrieveCOASpecificData(IssuerReferenceInfo.IssuerId, IssuerReferenceInfo.SecurityId, SelectedDataSource, SelectedFiscalType, SelectedCurrency, RetrieveCOASpecificDataCallbackMethod);
+               
             }
         }
 
