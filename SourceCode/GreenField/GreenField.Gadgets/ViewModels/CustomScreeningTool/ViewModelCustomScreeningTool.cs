@@ -44,7 +44,8 @@ namespace GreenField.Gadgets.ViewModels
         private List<PortfolioSelectionData> _portfolioSelectionData;
         private IRegionManager _regionManager;
         private List<EntitySelectionData> _benchmarkSelectionData;
-        private int flagBsyInd;
+        int flagBsyInd;
+       
 
 
 
@@ -517,6 +518,18 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
+
+        private int _flagBusyIndicator;
+        public int FlagBusyIndicator
+        {
+            get { return _flagBusyIndicator; }
+            set
+            {
+                _flagBusyIndicator = value;
+                RaisePropertyChanged(() => this.FlagBusyIndicator);
+            }
+        }
+
         #endregion
 
         #endregion
@@ -780,6 +793,10 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     BusyIndicatorNotification();
                 }
+                //else if (FlagBusyIndicator == 1)
+                //{
+                //    BusyIndicatorNotification();
+                //}
             }
         }
 
@@ -1265,6 +1282,7 @@ namespace GreenField.Gadgets.ViewModels
 
         public void Initialize()
         {
+            FlagBusyIndicator = 0;
             SelectionRaisePropertyChanged();
             CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, null);
             CSTNavigation.UpdateString(CSTNavigationInfo.ListName, null);
