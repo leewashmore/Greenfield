@@ -475,10 +475,10 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         VoterIsEnabled = false;
                         VoteIsEnabled = false;
-                        //NotesIsEnabled = true;
                     }                    
 
                     if (!UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_ADMIN) &&
+                        !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE) &&
                         !UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_VOTING_MEMBER))
                     {
                         VoterIsEnabled = false;
