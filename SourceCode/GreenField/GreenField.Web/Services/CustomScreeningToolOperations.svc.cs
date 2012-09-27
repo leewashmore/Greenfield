@@ -368,8 +368,6 @@ namespace GreenField.Web.Services
                         UserName = item.UserName,
                         ScreeningId = item.ScreeningId,
                         DataDescription = item.DataDescription,
-                        //LongDescription = item.LONG_DESC,
-                        //DataColumn = item.TABLE_COLUMN
                         ListName = item.ListName,
                         TableColumn = item.TableColumn,
                         Accessibility = item.Accessibilty,
@@ -434,61 +432,6 @@ namespace GreenField.Web.Services
 
                 string _securityIds = StringBuilder(distinctSecurityId);
                 string _issuerIds = StringBuilder(distinctIssuerId);
-
-                #region dummy data
-                ////dummy data
-                //userPreference = new List<CSTUserPreferenceInfo>();
-                //userPreference.Add(new CSTUserPreferenceInfo()
-                //{
-                //    ScreeningId = "FIN001",
-                //    DataSource = "REUTERS",
-                //    PeriodType = "A",
-                //    YearType = "FISCAL",
-                //    FromDate = 2009,
-                //    DataID = 3,
-                //    DataDescription = "ABC"
-                //});
-                //userPreference.Add(new CSTUserPreferenceInfo()
-                //{
-                //    ScreeningId = "FIN009",
-                //    DataSource = "REUTERS",
-                //    PeriodType = "A",
-                //    YearType = "FISCAL",
-                //    FromDate = 2005,
-                //    DataID = 11,
-                //    DataDescription = "XYZ"
-                //});
-                //userPreference.Add(new CSTUserPreferenceInfo()
-                //{
-                //    ScreeningId = "CUR001",
-                //    DataSource = "REUTERS",
-                //    DataID = 3,
-                //    DataDescription = "ABC"
-                //});
-                //userPreference.Add(new CSTUserPreferenceInfo()
-                //{
-                //    ScreeningId = "REF009",
-                //    TableColumnName = "SECURITY_VOLUME_AVG_30D"
-                //});
-                //userPreference.Add(new CSTUserPreferenceInfo()
-                //{
-                //    ScreeningId = "REF003",
-                //    TableColumnName = "ISIN"
-                //});
-                //userPreference.Add(new CSTUserPreferenceInfo()
-                //{
-                //    ScreeningId = "FVA001",
-                //    DataSource = "REUTERS",
-                //    TableColumnName = "DATA_DESC"
-                //});
-                //userPreference.Add(new CSTUserPreferenceInfo()
-                //{
-                //    ScreeningId = "FVA002",
-                //    DataSource = "REUTERS",
-                //    TableColumnName = "FV_BUY"
-                //});
-                ////**** 
-                #endregion
 
                 #region Retrieving REF Data Items
 
@@ -645,7 +588,6 @@ namespace GreenField.Web.Services
                 #endregion
 
                 return result;
-
             }
             catch (Exception ex)
             {

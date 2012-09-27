@@ -44,6 +44,8 @@ namespace GreenField.Gadgets.ViewModels
 
         string userEnteredListName;
         string userEnteredAccessibility;
+        string listNameInEditMode;
+        string accessibilityInEditMode;
         int flagRefAdd = 0;
         int flagFinAdd = 0;
         int flagCurAdd = 0;
@@ -480,11 +482,21 @@ namespace GreenField.Gadgets.ViewModels
                 int tempOrder;
                 if (Flag == "Edit")
                 {
-                    temp = this.SelectedFieldsDataList;
-                    tempOrder = temp.Count;
-
-                    listName = SelectedFieldsDataList[0].ListName;
-                    accessibility = SelectedFieldsDataList[0].Accessibility;
+                    if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                    {
+                        accessibilityInEditMode = CSTNavigation.FetchString(CSTNavigationInfo.Accessibility) as string;
+                        listNameInEditMode = CSTNavigation.FetchString(CSTNavigationInfo.ListName) as string;
+                        tempOrder = -1;
+                        listName = listNameInEditMode;
+                        accessibility = accessibilityInEditMode;
+                    }
+                    else
+                    {
+                        temp = this.SelectedFieldsDataList;
+                        tempOrder = temp.Count;
+                        listName = SelectedFieldsDataList[0].ListName;
+                        accessibility = SelectedFieldsDataList[0].Accessibility;
+                    }
                 }
                 else
                 {
@@ -579,10 +591,21 @@ namespace GreenField.Gadgets.ViewModels
                 string accessibility;
                 if (Flag == "Edit")
                 {
-                    temp = this.SelectedFieldsDataList;
-                    tempOrder = temp.Count();
-                    listName = SelectedFieldsDataList[0].ListName;
-                    accessibility = SelectedFieldsDataList[0].Accessibility;
+                    if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                    {
+                        accessibilityInEditMode = CSTNavigation.FetchString(CSTNavigationInfo.Accessibility) as string;
+                        listNameInEditMode = CSTNavigation.FetchString(CSTNavigationInfo.ListName) as string;
+                        tempOrder = -1;
+                        listName = listNameInEditMode;
+                        accessibility = accessibilityInEditMode;
+                    }
+                    else
+                    {
+                        temp = this.SelectedFieldsDataList;
+                        tempOrder = temp.Count();
+                        listName = SelectedFieldsDataList[0].ListName;
+                        accessibility = SelectedFieldsDataList[0].Accessibility;
+                    }
                 }
                 else
                 {
@@ -683,10 +706,21 @@ namespace GreenField.Gadgets.ViewModels
                 string accessibility;
                 if (Flag == "Edit")
                 {
-                    listName = SelectedFieldsDataList[0].ListName;
-                    accessibility = SelectedFieldsDataList[0].Accessibility;
-                    temp = this.SelectedFieldsDataList;
-                    tempOrder = temp.Count();
+                    if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                    {
+                        accessibilityInEditMode = CSTNavigation.FetchString(CSTNavigationInfo.Accessibility) as string;
+                        listNameInEditMode = CSTNavigation.FetchString(CSTNavigationInfo.ListName) as string;
+                        tempOrder = -1;
+                        listName = listNameInEditMode;
+                        accessibility = accessibilityInEditMode;
+                    }
+                    else
+                    {
+                        listName = SelectedFieldsDataList[0].ListName;
+                        accessibility = SelectedFieldsDataList[0].Accessibility;
+                        temp = this.SelectedFieldsDataList;
+                        tempOrder = temp.Count();
+                    }
                 }
                 else
                 {
@@ -781,10 +815,21 @@ namespace GreenField.Gadgets.ViewModels
                 string accessibility;
                 if (Flag == "Edit")
                 {
-                    temp = this.SelectedFieldsDataList;
-                    tempOrder = temp.Count();
-                    listName = SelectedFieldsDataList[0].ListName;
-                    accessibility = SelectedFieldsDataList[0].Accessibility;
+                    if (SelectedFieldsDataList == null || SelectedFieldsDataList.Count == 0)
+                    {
+                        accessibilityInEditMode = CSTNavigation.FetchString(CSTNavigationInfo.Accessibility) as string;
+                        listNameInEditMode = CSTNavigation.FetchString(CSTNavigationInfo.ListName) as string;
+                        tempOrder = -1;
+                        listName = listNameInEditMode;
+                        accessibility = accessibilityInEditMode;
+                    }
+                    else
+                    {
+                        temp = this.SelectedFieldsDataList;
+                        tempOrder = temp.Count();
+                        listName = SelectedFieldsDataList[0].ListName;
+                        accessibility = SelectedFieldsDataList[0].Accessibility;
+                    }
                 }
                 else
                 {

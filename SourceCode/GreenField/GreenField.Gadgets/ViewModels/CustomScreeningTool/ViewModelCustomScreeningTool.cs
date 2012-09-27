@@ -572,6 +572,8 @@ namespace GreenField.Gadgets.ViewModels
                     if (result == MessageBoxResult.OK)
                     {
                         CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Edit");
+                        CSTNavigation.UpdateString(CSTNavigationInfo.ListName, SelectedSavedDataList[0].ListName);
+                        CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, SelectedSavedDataList[0].Accessibility);
                         //open pre populated selected fields list
                         _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
                     }
