@@ -202,7 +202,7 @@
                                              Text="{Binding SecuritySearchText, Mode=TwoWay}"
                                              EmptyText="Search Security..." 
                                              telerik:TextSearch.TextPath="LongName"
-                                             Width="150" 
+                                             Width="150"
                                              Margin="5,0,0,0"
                                              IsEditable="True"
                                              CanAutocompleteSelectItems="True" 
@@ -212,7 +212,9 @@
                                              StaysOpenOnEdit="True"
                                              Style="{StaticResource RadComboBoxStyle}"
                                              TextOptions.TextHintingMode="Fixed"
-                                             IsTextSearchEnabled="False">
+                                             IsTextSearchEnabled="False" >
+                            
+
                             <telerik:RadComboBox.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <VirtualizingStackPanel />
@@ -220,7 +222,7 @@
                             </telerik:RadComboBox.ItemsPanel>
                             <telerik:RadComboBox.ItemTemplate>
                                 <DataTemplate>
-                                    <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal" MinWidth="460" >
                                         <TextBlock Text="{Binding LongName}" Style="{StaticResource TextBlockStyle}"/>
                                         <TextBlock Text="{Binding ShortName, StringFormat=' (\{0\}, '}" Style="{StaticResource TextBlockStyle}"/>
                                         <TextBlock Text="{Binding SecurityType, StringFormat='\{0\}:'}" Style="{StaticResource TextBlockStyle}"/>
