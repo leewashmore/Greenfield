@@ -297,9 +297,6 @@
     <Compile Include="Views\ExternalResearch\ConsensusEstimates\ViewValuations.xaml.cs">
       <DependentUpon>ViewValuations.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ICPresentations\ChildAcceptRequestPresentations.xaml.cs">
-      <DependentUpon>ChildAcceptRequestPresentations.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Documents\ViewDocuments.xaml.cs">
       <DependentUpon>ViewDocuments.xaml</DependentUpon>
     </Compile>
@@ -308,6 +305,9 @@
     </Compile>
     <Compile Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml.cs">
       <DependentUpon>ChildViewPresentationMeetingMinutesAddAttendee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ICPresentations\ChildViewReSubmitPresentation.xaml.cs">
+      <DependentUpon>ChildViewReSubmitPresentation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ICPresentations\ViewSummaryReport.xaml.cs">
       <DependentUpon>ViewSummaryReport.xaml</DependentUpon>
@@ -571,10 +571,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ICPresentations\ChildAcceptRequestPresentations.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\Documents\ViewDocuments.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -584,6 +580,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ICPresentations\ChildViewPresentationMeetingMinutesAddAttendee.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ICPresentations\ChildViewReSubmitPresentation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
