@@ -3395,6 +3395,30 @@ namespace GreenField.DAL
         private global::System.String _STATEMENT_TYPE;
         partial void OnSTATEMENT_TYPEChanging(global::System.String value);
         partial void OnSTATEMENT_TYPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CONVERT_FLAG
+        {
+            get
+            {
+                return _CONVERT_FLAG;
+            }
+            set
+            {
+                OnCONVERT_FLAGChanging(value);
+                ReportPropertyChanging("CONVERT_FLAG");
+                _CONVERT_FLAG = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CONVERT_FLAG");
+                OnCONVERT_FLAGChanged();
+            }
+        }
+        private global::System.String _CONVERT_FLAG;
+        partial void OnCONVERT_FLAGChanging(global::System.String value);
+        partial void OnCONVERT_FLAGChanged();
 
         #endregion
     
@@ -5731,7 +5755,7 @@ namespace GreenField.DAL
         /// <param name="sECURITY_ID">Initial value of the SECURITY_ID property.</param>
         /// <param name="tARGET_PC">Initial value of the TARGET_PC property.</param>
         /// <param name="uPDATE">Initial value of the UPDATE property.</param>
-        public static PORTFOLIO_SECURITY_TARGETS CreatePORTFOLIO_SECURITY_TARGETS(global::System.String pORTFOLIO_ID, global::System.Int32 sECURITY_ID, global::System.Decimal tARGET_PC, global::System.DateTime uPDATE)
+        public static PORTFOLIO_SECURITY_TARGETS CreatePORTFOLIO_SECURITY_TARGETS(global::System.String pORTFOLIO_ID, global::System.String sECURITY_ID, global::System.Decimal tARGET_PC, global::System.DateTime uPDATE)
         {
             PORTFOLIO_SECURITY_TARGETS pORTFOLIO_SECURITY_TARGETS = new PORTFOLIO_SECURITY_TARGETS();
             pORTFOLIO_SECURITY_TARGETS.PORTFOLIO_ID = pORTFOLIO_ID;
@@ -5776,7 +5800,7 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 SECURITY_ID
+        public global::System.String SECURITY_ID
         {
             get
             {
@@ -5788,14 +5812,14 @@ namespace GreenField.DAL
                 {
                     OnSECURITY_IDChanging(value);
                     ReportPropertyChanging("SECURITY_ID");
-                    _SECURITY_ID = StructuralObject.SetValidValue(value);
+                    _SECURITY_ID = StructuralObject.SetValidValue(value, false);
                     ReportPropertyChanged("SECURITY_ID");
                     OnSECURITY_IDChanged();
                 }
             }
         }
-        private global::System.Int32 _SECURITY_ID;
-        partial void OnSECURITY_IDChanging(global::System.Int32 value);
+        private global::System.String _SECURITY_ID;
+        partial void OnSECURITY_IDChanging(global::System.String value);
         partial void OnSECURITY_IDChanged();
     
         /// <summary>

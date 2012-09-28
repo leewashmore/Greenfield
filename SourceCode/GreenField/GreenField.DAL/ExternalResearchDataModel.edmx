@@ -69,7 +69,8 @@
       [DATA_MASTER].[COA_TYPE] AS [COA_TYPE], 
       [DATA_MASTER].[ANNUAL] AS [ANNUAL], 
       [DATA_MASTER].[CURRENT] AS [CURRENT], 
-      [DATA_MASTER].[STATEMENT_TYPE] AS [STATEMENT_TYPE]
+      [DATA_MASTER].[STATEMENT_TYPE] AS [STATEMENT_TYPE], 
+      [DATA_MASTER].[CONVERT_FLAG] AS [CONVERT_FLAG]
       FROM [dbo].[DATA_MASTER] AS [DATA_MASTER]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.Store.FAIR_VALUE" store:Type="Tables" store:Schema="dbo" store:Name="FAIR_VALUE">
@@ -322,6 +323,7 @@
           <Property Name="ANNUAL" Type="char" MaxLength="1" />
           <Property Name="CURRENT" Type="char" MaxLength="1" />
           <Property Name="STATEMENT_TYPE" Type="varchar" MaxLength="3" />
+          <Property Name="CONVERT_FLAG" Type="char" MaxLength="1" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -523,8 +525,8 @@
             <PropertyRef Name="TARGET_PC" />
             <PropertyRef Name="UPDATE" />
           </Key>
-          <Property Name="PORTFOLIO_ID" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="SECURITY_ID" Type="int" Nullable="false" />
+          <Property Name="PORTFOLIO_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="TARGET_PC" Type="decimal" Nullable="false" Precision="32" Scale="6" />
           <Property Name="UPDATE" Type="datetime" Nullable="false" />
         </EntityType>
@@ -806,7 +808,7 @@
 		<!-- CSDL content -->
 		<edmx:ConceptualModels>
 			<Schema Namespace="ExternalResearchModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation"
-					xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+						 xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
 				<EntityContainer Name="ExternalResearchEntities" annotation:LazyLoadingEnabled="true">
 					<EntitySet Name="CURRENT_CONSENSUS_ESTIMATES" EntityType="ExternalResearchModel.CURRENT_CONSENSUS_ESTIMATES" />
 					<EntitySet Name="DATA_MASTER" EntityType="ExternalResearchModel.DATA_MASTER" />
@@ -820,20 +822,20 @@
 					<EntitySet Name="PERIOD_FINANCIALS_DISPLAY" EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" />
 					<EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.REUTERS_XREF" />
 					<FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
-          <Parameter Name="SecurityID" Mode="In" Type="String" />
+					<Parameter Name="SecurityID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
-          <Parameter Name="XRef" Mode="In" Type="String" />
+					<Parameter Name="XRef" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetConsensusEstimatesSummaryData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimatesSummaryData)">
-          <Parameter Name="Security" Mode="In" Type="String" />
+					<Parameter Name="Security" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="usp_GetQuarterlyResults" ReturnType="Collection(ExternalResearchModel.QuarterlyResults)">
-            <Parameter Name="DataId" Mode="In" Type="Int32" />
+						<Parameter Name="DataId" Mode="In" Type="Int32" />
             <Parameter Name="PeriodYear" Mode="In" Type="Int32" />
           </FunctionImport>
 					<FunctionImport Name="GetConsensusEstimateData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateMedianData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -850,7 +852,7 @@
 					</FunctionImport>
 
 					<FunctionImport Name="GetConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -860,7 +862,7 @@
             <Parameter Name="Security_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetConsensusDetail" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateDetailData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -868,12 +870,12 @@
           </FunctionImport>
 					<EntitySet Name="PRICES" EntityType="ExternalResearchModel.PRICE" />
 					<FunctionImport Name="Get_PRevenue" ReturnType="Collection(ExternalResearchModel.GetPRevenueData_Result)">
-            <Parameter Name="securityId" Mode="In" Type="String" />
+						<Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="issuerId" Mode="In" Type="String" />
             <Parameter Name="chartTitle" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -881,175 +883,174 @@
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetDataForPeriodGadgets" ReturnType="Collection(ExternalResearchModel.COASpecificData)">
-            <Parameter Name="cSource" Mode="In" Type="String" />
+						<Parameter Name="cSource" Mode="In" Type="String" />
             <Parameter Name="cFiscalType" Mode="In" Type="String" />
             <Parameter Name="cCurrency" Mode="In" Type="String" />
             <Parameter Name="cIssuerID" Mode="In" Type="String" />
             <Parameter Name="cSecurityID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetFinstatDetail" ReturnType="Collection(ExternalResearchModel.FinstatDetail)">
-            <Parameter Name="issuerID" Mode="In" Type="String" />
+					<FunctionImport Name="GetFinstatDetail" ReturnType="Collection(ExternalResearchModel.FinstatDetail)">
+						<Parameter Name="issuerID" Mode="In" Type="String" />
             <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="dataSource" Mode="In" Type="String" />
             <Parameter Name="fiscalType" Mode="In" Type="String" />
             <Parameter Name="currency" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="Get_EV_EBITDA" ReturnType="Collection(ExternalResearchModel.GetEV_EBITDAData_Result)">
-            <Parameter Name="securityId" Mode="In" Type="String" />
+						<Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="issuerId" Mode="In" Type="String" />
             <Parameter Name="chartTitle" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetFinstatEconomicMarketData" ReturnType="Collection(ExternalResearchModel.FinstatEconomicMarketData)">
-            <Parameter Name="issuerID" Mode="In" Type="String" />
+						<Parameter Name="issuerID" Mode="In" Type="String" />
             <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="dataSource" Mode="In" Type="String" />
             <Parameter Name="fiscalType" Mode="In" Type="String" />
             <Parameter Name="currency" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetFinstatRelativeAnalysisData" ReturnType="Collection(ExternalResearchModel.FinstatRelativeAnalysisData)">
-            <Parameter Name="issuerID" Mode="In" Type="String" />
+					<FunctionImport Name="GetFinstatRelativeAnalysisData" ReturnType="Collection(ExternalResearchModel.FinstatRelativeAnalysisData)">
+						<Parameter Name="issuerID" Mode="In" Type="String" />
             <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="dataSource" Mode="In" Type="String" />
             <Parameter Name="fiscalType" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetMarketCap" ReturnType="Collection(Decimal)" />
-          <FunctionImport Name="GetBrokerDetail" ReturnType="Collection(ExternalResearchModel.BrokerDetailData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="GetMarketCap" ReturnType="Collection(Decimal)" />
+					<FunctionImport Name="GetBrokerDetail" ReturnType="Collection(ExternalResearchModel.BrokerDetailData)">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="ESTIMATE_TYPE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveDCFAnalysisSummaryData" ReturnType="Collection(ExternalResearchModel.DCFAnalysisSummaryData_Result)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="RetrieveDCFAnalysisSummaryData" ReturnType="Collection(ExternalResearchModel.DCFAnalysisSummaryData_Result)">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveSecurityPFVMeasureCurrentPrice" ReturnType="Collection(Decimal)">
-            <Parameter Name="SecurityId" Mode="In" Type="String" />
+					<FunctionImport Name="RetrieveSecurityPFVMeasureCurrentPrice" ReturnType="Collection(Decimal)">
+						<Parameter Name="SecurityId" Mode="In" Type="String" />
             <Parameter Name="PFVMeasure" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="usp_GetDataForValuationQualityGrowth" ReturnType="Collection(ExternalResearchModel.ValuationQualityGrowthData)">
-            <Parameter Name="issuerIdsForPortfolio" Mode="In" Type="String" />
+					<FunctionImport Name="usp_GetDataForValuationQualityGrowth" ReturnType="Collection(ExternalResearchModel.ValuationQualityGrowthData)">
+						<Parameter Name="issuerIdsForPortfolio" Mode="In" Type="String" />
             <Parameter Name="securityIdsForPortfolio" Mode="In" Type="String" />
             <Parameter Name="issuerIdsForBenchmark" Mode="In" Type="String" />
             <Parameter Name="securityIdsForBenchmark" Mode="In" Type="String" />
           </FunctionImport>
-          
-           <FunctionImport Name="GetNewICPresentationSecurityData" ReturnType="Collection(ExternalResearchModel.NewICPresentationSecurityData)">
-          <Parameter Name="securityID" Mode="In" Type="String" />
+
+					<FunctionImport Name="GetNewICPresentationSecurityData" ReturnType="Collection(ExternalResearchModel.NewICPresentationSecurityData)">
+					<Parameter Name="securityID" Mode="In" Type="String" />
           </FunctionImport>
 
-          
-          <FunctionImport Name="GetDCF_ROIC" ReturnType="Collection(ExternalResearchModel.DCF_ROICResult)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+
+					<FunctionImport Name="GetDCF_ROIC" ReturnType="Collection(ExternalResearchModel.DCF_ROICResult)">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="YEAR" Mode="In" Type="Int32" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetModelConsensusEstimates" ReturnType="Collection(ExternalResearchModel.ModelConsensusEstimatesData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="GetModelConsensusEstimates" ReturnType="Collection(ExternalResearchModel.ModelConsensusEstimatesData)">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="Get_Statement_Models" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="Get_Statement_Models" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
             <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="External_Country_Master" EntityType="ExternalResearchModel.External_Country_Master" />
-          <EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.FAIR_VALUE" />
-          <EntitySet Name="MODEL_INPUTS_CTY" EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" />
-          <FunctionImport Name="GetDCFRiskFreeRate" EntitySet="MODEL_INPUTS_CTY" ReturnType="Collection(ExternalResearchModel.MODEL_INPUTS_CTY)">
-          <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
+					<EntitySet Name="External_Country_Master" EntityType="ExternalResearchModel.External_Country_Master" />
+					<EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.FAIR_VALUE" />
+					<EntitySet Name="MODEL_INPUTS_CTY" EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" />
+					<FunctionImport Name="GetDCFRiskFreeRate" EntitySet="MODEL_INPUTS_CTY" ReturnType="Collection(ExternalResearchModel.MODEL_INPUTS_CTY)">
+					<Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetDCFMarketCap" ReturnType="Collection(Decimal)">
-          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+					<FunctionImport Name="GetDCFMarketCap" ReturnType="Collection(Decimal)">
+					<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetDCFCashFlow" ReturnType="Collection(ExternalResearchModel.DCFCashFlowData)">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="GetDCFCashFlow" ReturnType="Collection(ExternalResearchModel.DCFCashFlowData)">
+					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetDCFSummaryData" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="GetDCFSummaryData" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
+					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetDCF_NumberOfShares" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
-          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+					<FunctionImport Name="GetDCF_NumberOfShares" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
+					<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetDCFGDP" ReturnType="Collection(Decimal)">
-          <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
+					<FunctionImport Name="GetDCFGDP" ReturnType="Collection(Decimal)">
+					<Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetFreeCashFlows" ReturnType="Collection(ExternalResearchModel.GetFreeCashFlows_Result)">
-          <Parameter Name="IssuerId" Mode="In" Type="String" />
+					<FunctionImport Name="GetFreeCashFlows" ReturnType="Collection(ExternalResearchModel.GetFreeCashFlows_Result)">
+					<Parameter Name="IssuerId" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetFairValueCompositionSummaryData" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
-          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+					<FunctionImport Name="GetFairValueCompositionSummaryData" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
+					<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
-          <Parameter Name="securityBucketXML" Mode="In" Type="String" />
+					<FunctionImport Name="RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
+					<Parameter Name="securityBucketXML" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetAmountForUpsideCalculation" ReturnType="Collection(Decimal)">
-            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+					<FunctionImport Name="GetAmountForUpsideCalculation" ReturnType="Collection(Decimal)">
+						<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_ID" Mode="In" Type="Int32" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="SaveUpdatedFairValueMeasures" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
-            <Parameter Name="securityId" Mode="In" Type="String" />
+					<FunctionImport Name="SaveUpdatedFairValueMeasures" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
+						<Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
-          <FunctionImport Name="RetrieveDataPointsModelUpload" ReturnType="Collection(ExternalResearchModel.DataPointsModelUploadData)">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="RetrieveDataPointsModelUpload" ReturnType="Collection(ExternalResearchModel.DataPointsModelUploadData)">
+					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveCOAType" EntitySet="INTERNAL_ISSUER" ReturnType="Collection(ExternalResearchModel.INTERNAL_ISSUER)">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="RetrieveCOAType" EntitySet="INTERNAL_ISSUER" ReturnType="Collection(ExternalResearchModel.INTERNAL_ISSUER)">
+					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveDistinctFXRates" ReturnType="Collection(String)" />
-          <FunctionImport Name="RetrieveCOACodes" ReturnType="Collection(ExternalResearchModel.DataPointsModelUploadData)">
-          <Parameter Name="COA_TYPE" Mode="In" Type="String" />
+					<FunctionImport Name="RetrieveDistinctFXRates" ReturnType="Collection(String)" />
+					<FunctionImport Name="RetrieveCOACodes" ReturnType="Collection(ExternalResearchModel.DataPointsModelUploadData)">
+					<Parameter Name="COA_TYPE" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveCommodityForecasts" ReturnType="Collection(String)" />
-          <FunctionImport Name="ModelDeleteInteralStatement" ReturnType="Collection(String)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="RetrieveCommodityForecasts" ReturnType="Collection(String)" />
+					<FunctionImport Name="ModelDeleteInteralStatement" ReturnType="Collection(String)">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ModelDeleteInternalData">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="ModelDeleteInternalData">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="REF_NO" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ModelDeleteInternalIssuerQuarterlyDistribution">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="ModelDeleteInternalIssuerQuarterlyDistribution">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ModelInsertInternalData">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="ModelInsertInternalData">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="REF_NO" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="COA" Mode="In" Type="String" />
             <Parameter Name="AMOUNT" Mode="In" Type="Decimal" />
           </FunctionImport>
-          <FunctionImport Name="ModelInsertInternalIssuer">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="ModelInsertInternalIssuer">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="COA_TYPE" Mode="In" Type="String" />
             <Parameter Name="LASTPRIMARYMODELLOAD" Mode="In" Type="DateTime" />
             <Parameter Name="LASTINDUSTRYMODELLOAD" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="ModelInsertInternalIssuerQuaterelyDistribution">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="ModelInsertInternalIssuerQuaterelyDistribution">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="PERCENTAGE" Mode="In" Type="Decimal" />
             <Parameter Name="LAST_UPDATED" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="ModelInsertInternalStatement">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="ModelInsertInternalStatement">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="REF_NO" Mode="In" Type="String" />
             <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
             <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
@@ -1059,12 +1060,13 @@
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
             <Parameter Name="AMOUNT_TYPE" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ModelRetrieveInternalIssuer" EntitySet="INTERNAL_ISSUER" ReturnType="Collection(ExternalResearchModel.INTERNAL_ISSUER)">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="ModelRetrieveInternalIssuer" EntitySet="INTERNAL_ISSUER" ReturnType="Collection(ExternalResearchModel.INTERNAL_ISSUER)">
+					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ModelDeleteInternalIssuer">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					<FunctionImport Name="ModelDeleteInternalIssuer">
+					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
 
 
 				</EntityContainer>
@@ -1292,7 +1294,7 @@
 					<Property Type="String" Name="YEAR3" Nullable="true" />
 					<Property Type="String" Name="YEAR4" Nullable="true" />
 					<Property Type="String" Name="YEAR5" Nullable="true" />
-          <Property Type="String" Name="currency" Nullable="false" />
+					<Property Type="String" Name="currency" Nullable="false" />
 				</ComplexType>
 				<ComplexType Name="COASpecificData" >
 					<Property Type="Int32" Name="GridId" Nullable="false" />
@@ -1380,7 +1382,7 @@
 					<Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="10"/>
 					<Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10"/>
 					<Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23"/>
-          <Property Type="Decimal" Name="ACTUAL" Nullable="true" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="ACTUAL" Nullable="true" Precision="32" Scale="6" />
 				</ComplexType>
 
 				<EntityType Name="DATA_MASTER">
@@ -1409,6 +1411,7 @@
 					<Property Type="String" Name="ANNUAL" MaxLength="1" FixedLength="true" Unicode="false" />
 					<Property Type="String" Name="CURRENT" MaxLength="1" FixedLength="true" Unicode="false" />
 					<Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CONVERT_FLAG" MaxLength="1" FixedLength="true" Unicode="false" />
 				</EntityType>
 				<ComplexType Name="ConsensusEstimateDetailData" >
 					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20"/>
@@ -1462,179 +1465,187 @@
 					<Property Type="Decimal" Name="USDPrice" Nullable="true" />
 					<Property Type="Decimal" Name="Shares_Outstanding" Nullable="true" />
 				</ComplexType>
-        <ComplexType Name="FinstatDetail">
-          <Property Type="String" Name="DATA_SOURCE" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="ROOT_SOURCE" Nullable="true" MaxLength="10" />
-          <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="true" Precision="23" />
-          <Property Type="Int32" Name="ESTIMATE_ID" Nullable="true" />
-          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="true" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="MULTIPLIER" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Int32" Name="DECIMALS" Nullable="false" />
-          <Property Type="String" Name="PERCENTAGE" Nullable="false" MaxLength="1" />
-          <Property Type="String" Name="BOLD_FONT" Nullable="false" MaxLength="1" />
-          <Property Type="String" Name="GROUP_NAME" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
-          <Property Type="String" Name="HARMONIC" Nullable="false" MaxLength="1" />
-          <Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="FinstatEconomicMarketData" >
-          <Property Type="Decimal" Name="FX_RATE" Nullable="false" />
-          <Property Type="Decimal" Name="AVG12MonthRATE" Nullable="false" />
-          <Property Type="String" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="String" Name="FIELD" Nullable="true" />
-          <Property Type="Int32" Name="YEAR1" Nullable="true" />
-          <Property Type="Decimal" Name="VALUE" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="FinstatRelativeAnalysisData" >
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" />
-          <Property Type="Int32" Name="DECIMALS" Nullable="false" />
-          <Property Type="Decimal" Name="MULTIPLIER" Nullable="false" />
-          <Property Type="String" Name="PERCENTAGE" Nullable="false" />
-          <Property Type="String" Name="VALUE" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="BrokerDetailData">
-          <Property Type="String" Name="broker_name" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="EstimateType" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="fPeriodEnd" Nullable="true" MaxLength="6" />
-          <Property Type="Single" Name="Amount" Nullable="true" />
-          <Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="Last_Update_Date" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Reported_Currency" Nullable="true" MaxLength="3" />
-        </ComplexType>
-        <ComplexType Name="DCFAnalysisSummaryData_Result">
-          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="COA_TYPE" Nullable="false" MaxLength="3" />
-          <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
-          <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" Precision="23" />
-          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" />
-          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" Precision="23" />
-          <Property Type="String" Name="FISCAL_TYPE" Nullable="false" MaxLength="8" />
-          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="String" Name="CALCULATION_DIAGRAM" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" />
-          <Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" />
-        </ComplexType>
-        <ComplexType Name="ValuationQualityGrowthData" >
-          <Property Type="String" Name="IssuerId" Nullable="false" />
-          <Property Type="String" Name="SecurityId" Nullable="false" />
-          <Property Type="String" Name="DataSource" Nullable="false" />
-          <Property Type="String" Name="PeriodType" Nullable="false" />
-          <Property Type="String" Name="Currency" Nullable="false" />
-          <Property Type="Int32" Name="DataId" Nullable="false" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" />
-          <Property Type="String" Name="AmountType" Nullable="false" />
-        </ComplexType>
-        
-         <ComplexType Name="NewICPresentationSecurityData">
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
-        </ComplexType>
+				<ComplexType Name="FinstatDetail">
+					<Property Type="String" Name="DATA_SOURCE" Nullable="true" MaxLength="10" />
+					<Property Type="String" Name="ROOT_SOURCE" Nullable="true" MaxLength="10" />
+					<Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="true" Precision="23" />
+					<Property Type="Int32" Name="ESTIMATE_ID" Nullable="true" />
+					<Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+					<Property Type="Int32" Name="DATA_ID" Nullable="true" />
+					<Property Type="Decimal" Name="AMOUNT" Nullable="true" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="MULTIPLIER" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Int32" Name="DECIMALS" Nullable="false" />
+					<Property Type="String" Name="PERCENTAGE" Nullable="false" MaxLength="1" />
+					<Property Type="String" Name="BOLD_FONT" Nullable="false" MaxLength="1" />
+					<Property Type="String" Name="GROUP_NAME" Nullable="false" MaxLength="50" />
+					<Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
+					<Property Type="String" Name="HARMONIC" Nullable="false" MaxLength="1" />
+					<Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" />
+				</ComplexType>
+				<ComplexType Name="FinstatEconomicMarketData" >
+					<Property Type="Decimal" Name="FX_RATE" Nullable="false" />
+					<Property Type="Decimal" Name="AVG12MonthRATE" Nullable="false" />
+					<Property Type="String" Name="PERIOD_YEAR" Nullable="false" />
+					<Property Type="String" Name="FIELD" Nullable="true" />
+					<Property Type="Int32" Name="YEAR1" Nullable="true" />
+					<Property Type="Decimal" Name="VALUE" Nullable="true" />
+				</ComplexType>
+				<ComplexType Name="FinstatRelativeAnalysisData" >
+					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
+					<Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+					<Property Type="Decimal" Name="AMOUNT" Nullable="false" />
+					<Property Type="Int32" Name="DECIMALS" Nullable="false" />
+					<Property Type="Decimal" Name="MULTIPLIER" Nullable="false" />
+					<Property Type="String" Name="PERCENTAGE" Nullable="false" />
+					<Property Type="String" Name="VALUE" Nullable="false" />
+				</ComplexType>
+				<ComplexType Name="BrokerDetailData">
+					<Property Type="String" Name="broker_name" Nullable="true" MaxLength="100" />
+					<Property Type="String" Name="EstimateType" Nullable="false" MaxLength="20" />
+					<Property Type="String" Name="fPeriodEnd" Nullable="true" MaxLength="6" />
+					<Property Type="Single" Name="Amount" Nullable="true" />
+					<Property Type="DateTime" Name="StartDate" Nullable="false" Precision="23" />
+					<Property Type="DateTime" Name="Last_Update_Date" Nullable="false" Precision="23" />
+					<Property Type="String" Name="Reported_Currency" Nullable="true" MaxLength="3" />
+				</ComplexType>
+				<ComplexType Name="DCFAnalysisSummaryData_Result">
+					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
+					<Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" />
+					<Property Type="String" Name="COA_TYPE" Nullable="false" MaxLength="3" />
+					<Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
+					<Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
+					<Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" Precision="23" />
+					<Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" />
+					<Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+					<Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" Precision="23" />
+					<Property Type="String" Name="FISCAL_TYPE" Nullable="false" MaxLength="8" />
+					<Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" />
+					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
+					<Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="String" Name="CALCULATION_DIAGRAM" Nullable="true" MaxLength="255" />
+					<Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" />
+					<Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" />
+				</ComplexType>
+				<ComplexType Name="ValuationQualityGrowthData" >
+					<Property Type="String" Name="IssuerId" Nullable="false" />
+					<Property Type="String" Name="SecurityId" Nullable="false" />
+					<Property Type="String" Name="DataSource" Nullable="false" />
+					<Property Type="String" Name="PeriodType" Nullable="false" />
+					<Property Type="String" Name="Currency" Nullable="false" />
+					<Property Type="Int32" Name="DataId" Nullable="false" />
+					<Property Type="Decimal" Name="Amount" Nullable="false" />
+					<Property Type="String" Name="AmountType" Nullable="false" />
+				</ComplexType>
 
-        
-        
-        <ComplexType Name="DCF_ROICResult">
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-          <Property Type="String" Name="FISCAL" Nullable="false" MaxLength="8" />
-        </ComplexType>
-        <ComplexType Name="ModelConsensusEstimatesData">
-          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
-          <Property Type="Int32" Name="ESTIMATE_ID" Nullable="false" />
-          <Property Type="String" Name="ESTIMATE_DESC" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="Period" Nullable="true" MaxLength="7" />
-          <Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" />
-          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Int32" Name="NUMBER_OF_ESTIMATES" Nullable="false" />
-          <Property Type="Decimal" Name="HIGH" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="LOW" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="STANDARD_DEVIATION" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" />
-          <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
-          <Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="SortOrder" Nullable="false" />
-        </ComplexType>
-        <EntityType Name="External_Country_Master">
-          <Key>
-            <PropertyRef Name="COUNTRY_CODE" />
-            <PropertyRef Name="COUNTRY_NAME" />
-            <PropertyRef Name="CURRENCY_CODE" />
-            <PropertyRef Name="CURRENCY_NAME" />
-            <PropertyRef Name="MACRO_ECON_DATA_CURRENT" />
-          </Key>
-          <Property Type="String" Name="COUNTRY_CODE" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="COUNTRY_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CURRENCY_CODE" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="CURRENCY_NAME" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="MACRO_ECON_DATA_CURRENT" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_NAME" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="20" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="FAIR_VALUE">
-          <Key>
-            <PropertyRef Name="VALUE_TYPE" />
-            <PropertyRef Name="SECURITY_ID" />
-            <PropertyRef Name="FV_MEASURE" />
-            <PropertyRef Name="FV_BUY" />
-            <PropertyRef Name="FV_SELL" />
-            <PropertyRef Name="CURRENT_MEASURE_VALUE" />
-            <PropertyRef Name="UPSIDE" />
-          </Key>
-          <Property Type="String" Name="VALUE_TYPE" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="FV_MEASURE" Nullable="false" />
-          <Property Type="Decimal" Name="FV_BUY" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="FV_SELL" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="CURRENT_MEASURE_VALUE" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="UPSIDE" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="DateTime" Name="UPDATED" />
-        </EntityType>
-        <EntityType Name="MODEL_INPUTS_CTY">
-          <Key>
-            <PropertyRef Name="COUNTRY_CODE" />
-            <PropertyRef Name="RISK_PREM" />
-            <PropertyRef Name="RISK_FREE_RATE" />
-            <PropertyRef Name="LONG_TERM_GDP_GR" />
-          </Key>
-          <Property Type="String" Name="COUNTRY_CODE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Type="Decimal" Name="RISK_PREM" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="RISK_FREE_RATE" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Decimal" Name="LONG_TERM_GDP_GR" Nullable="false" Precision="32" Scale="6" />
-        </EntityType>
-        <ComplexType Name="DCFCashFlowData">
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="Decimal" Name="DISCOUNTING_FACTOR" Nullable="false" Precision="1" Scale="1" />
-          <Property Type="Decimal" Name="FREE_CASH_FLOW" Nullable="false" Precision="1" Scale="1" />
-        </ComplexType>
-        <ComplexType Name="DCFSummaryDBData">
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="GetFreeCashFlows_Result">
-          <Property Type="String" Name="FIELD_NAME" Nullable="true" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="true" />
-          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="GetFairValueComposition_Result" >
-          <Property Type="String" Name="SOURCE" Nullable="true" />
-          <Property Type="String" Name="MEASURE" Nullable="true" />
-          <Property Type="Decimal" Name="BUY" Nullable="true" />
-          <Property Type="Decimal" Name="SELL" Nullable="true" />
-          <Property Type="Decimal" Name="UPSIDE" Nullable="true" />
-          <Property Type="DateTime" Name="DATE" Nullable="true" />
-          <Property Type="Int32" Name="DATA_ID" Nullable="true" />
-        </ComplexType>
+				<ComplexType Name="NewICPresentationSecurityData">
+					<Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+				</ComplexType>
+
+
+
+				<ComplexType Name="DCF_ROICResult">
+					<Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
+					<Property Type="String" Name="FISCAL" Nullable="false" MaxLength="8" />
+				</ComplexType>
+				<ComplexType Name="ModelConsensusEstimatesData">
+					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
+					<Property Type="Int32" Name="ESTIMATE_ID" Nullable="false" />
+					<Property Type="String" Name="ESTIMATE_DESC" Nullable="false" MaxLength="100" />
+					<Property Type="String" Name="Period" Nullable="true" MaxLength="7" />
+					<Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" />
+					<Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+					<Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" />
+					<Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Int32" Name="NUMBER_OF_ESTIMATES" Nullable="false" />
+					<Property Type="Decimal" Name="HIGH" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="LOW" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="STANDARD_DEVIATION" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" />
+					<Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" />
+					<Property Type="DateTime" Name="DATA_SOURCE_DATE" Nullable="false" Precision="23" />
+					<Property Type="Int32" Name="SortOrder" Nullable="false" />
+				</ComplexType>
+				<EntityType Name="External_Country_Master">
+					<Key>
+						<PropertyRef Name="COUNTRY_CODE" />
+						<PropertyRef Name="COUNTRY_NAME" />
+						<PropertyRef Name="CURRENCY_CODE" />
+						<PropertyRef Name="CURRENCY_NAME" />
+						<PropertyRef Name="MACRO_ECON_DATA_CURRENT" />
+					</Key>
+					<Property Type="String" Name="COUNTRY_CODE" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="COUNTRY_NAME" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="CURRENCY_CODE" Nullable="false" MaxLength="4" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="CURRENCY_NAME" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="MACRO_ECON_DATA_CURRENT" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_NAME" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="ASHEMM_PROPRIETARY_REGION_CODE" MaxLength="20" FixedLength="false" Unicode="false" />
+				</EntityType>
+				<EntityType Name="FAIR_VALUE">
+					<Key>
+						<PropertyRef Name="VALUE_TYPE" />
+						<PropertyRef Name="SECURITY_ID" />
+						<PropertyRef Name="FV_MEASURE" />
+						<PropertyRef Name="FV_BUY" />
+						<PropertyRef Name="FV_SELL" />
+						<PropertyRef Name="CURRENT_MEASURE_VALUE" />
+						<PropertyRef Name="UPSIDE" />
+					</Key>
+					<Property Type="String" Name="VALUE_TYPE" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Type="Int32" Name="FV_MEASURE" Nullable="false" />
+					<Property Type="Decimal" Name="FV_BUY" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="FV_SELL" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="CURRENT_MEASURE_VALUE" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="UPSIDE" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="DateTime" Name="UPDATED" />
+				</EntityType>
+				<EntityType Name="MODEL_INPUTS_CTY">
+					<Key>
+						<PropertyRef Name="COUNTRY_CODE" />
+						<PropertyRef Name="RISK_PREM" />
+						<PropertyRef Name="RISK_FREE_RATE" />
+						<PropertyRef Name="LONG_TERM_GDP_GR" />
+					</Key>
+					<Property Type="String" Name="COUNTRY_CODE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+					<Property Type="Decimal" Name="RISK_PREM" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="RISK_FREE_RATE" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Decimal" Name="LONG_TERM_GDP_GR" Nullable="false" Precision="32" Scale="6" />
+				</EntityType>
+				<ComplexType Name="DCFCashFlowData">
+					<Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+					<Property Type="Decimal" Name="DISCOUNTING_FACTOR" Nullable="false" Precision="1" Scale="1" />
+					<Property Type="Decimal" Name="FREE_CASH_FLOW" Nullable="false" Precision="1" Scale="1" />
+				</ComplexType>
+				<ComplexType Name="DCFSummaryDBData">
+					<Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
+				</ComplexType>
+				<ComplexType Name="GetFreeCashFlows_Result">
+					<Property Type="String" Name="FIELD_NAME" Nullable="true" />
+					<Property Type="Int32" Name="DATA_ID" Nullable="false" />
+					<Property Type="Decimal" Name="AMOUNT" Nullable="true" />
+					<Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+				</ComplexType>
+				<ComplexType Name="GetFairValueComposition_Result" >
+					<Property Type="String" Name="SOURCE" Nullable="true" />
+					<Property Type="String" Name="MEASURE" Nullable="true" />
+					<Property Type="Decimal" Name="BUY" Nullable="true" />
+					<Property Type="Decimal" Name="SELL" Nullable="true" />
+					<Property Type="Decimal" Name="UPSIDE" Nullable="true" />
+					<Property Type="DateTime" Name="DATE" Nullable="true" />
+					<Property Type="Int32" Name="DATA_ID" Nullable="true" />
+				</ComplexType>
+				<ComplexType Name="DataPointsModelUploadData">
+					<Property Type="String" Name="COA" Nullable="true" MaxLength="8" />
+					<Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
+					<Property Type="String" Name="DATA_DESCRIPTION" Nullable="false" MaxLength="100" />
+				</ComplexType>
+				<ComplexType Name="CurrenciesList">
+					<Property Type="String" Name="Currency" Nullable="false" MaxLength="3" />
+				</ComplexType>
         <EntityType Name="PORTFOLIO_SECURITY_TARGETS">
           <Key>
             <PropertyRef Name="PORTFOLIO_ID" />
@@ -1642,19 +1653,11 @@
             <PropertyRef Name="TARGET_PC" />
             <PropertyRef Name="UPDATE" />
           </Key>
-          <Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="Int32" Name="SECURITY_ID" Nullable="false" />
+          <Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="Decimal" Name="TARGET_PC" Nullable="false" Precision="32" Scale="6" />
           <Property Type="DateTime" Name="UPDATE" Nullable="false" />
         </EntityType>
-         <ComplexType Name="DataPointsModelUploadData">
-          <Property Type="String" Name="COA" Nullable="true" MaxLength="8" />
-          <Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
-          <Property Type="String" Name="DATA_DESCRIPTION" Nullable="false" MaxLength="100" />
-        </ComplexType>
-        <ComplexType Name="CurrenciesList">
-          <Property Type="String" Name="Currency" Nullable="false" MaxLength="3" />
-        </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -1803,7 +1806,8 @@
 					<EntitySetMapping Name="DATA_MASTER">
 						<EntityTypeMapping TypeName="ExternalResearchModel.DATA_MASTER">
 							<MappingFragment StoreEntitySet="DATA_MASTER">
-								<ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
+								<ScalarProperty Name="CONVERT_FLAG" ColumnName="CONVERT_FLAG" />
+                <ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
 								<ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
 								<ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
 								<ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
@@ -1985,329 +1989,360 @@
 							</ComplexTypeMapping>
 						</ResultMapping>
 					</FunctionImportMapping>
-          
-           <FunctionImportMapping FunctionImportName="GetMarketCap" FunctionName="ExternalResearchModel.Store.GetMarketCap" />
+
+					<FunctionImportMapping FunctionImportName="GetMarketCap" FunctionName="ExternalResearchModel.Store.GetMarketCap" />
 
 
-          
-          <FunctionImportMapping FunctionImportName="GetFinstatDetail" FunctionName="ExternalResearchModel.Store.GetFinstatDetail">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.FinstatDetail">
-                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
-                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
-                <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
-                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
-                <ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
-                <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
-                <ScalarProperty Name="BOLD_FONT" ColumnName="BOLD_FONT" />
-                <ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
-                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
-                <ScalarProperty Name="HARMONIC" ColumnName="HARMONIC" />
-                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetFinstatEconomicMarketData" FunctionName="ExternalResearchModel.Store.GetFinstatEconomic_MarketData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.FinstatEconomicMarketData">
-                <ScalarProperty Name="FX_RATE" ColumnName="FX_RATE" />
-                <ScalarProperty Name="AVG12MonthRATE" ColumnName="AVG12MonthRATE" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-                <ScalarProperty Name="FIELD" ColumnName="FIELD" />
-                <ScalarProperty Name="YEAR1" ColumnName="YEAR1" />
-                <ScalarProperty Name="VALUE" ColumnName="VALUE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetFinstatRelativeAnalysisData" FunctionName="ExternalResearchModel.Store.GetFinstatRelativeAnalysisData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.FinstatRelativeAnalysisData">
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
-                <ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
-                <ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetBrokerDetail" FunctionName="ExternalResearchModel.Store.Broker_Detail">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetailData">
-                <ScalarProperty Name="broker_name" ColumnName="broker_name" />
-                <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
-                <ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
-                <ScalarProperty Name="Last_Update_Date" ColumnName="Last_Update_Date" />
-                <ScalarProperty Name="Reported_Currency" ColumnName="Reported_Currency" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetModelConsensusEstimates" FunctionName="ExternalResearchModel.Store.GetModelConsensusEstimates">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.ModelConsensusEstimatesData">
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
-                <ScalarProperty Name="ESTIMATE_DESC" ColumnName="ESTIMATE_DESC" />
-                <ScalarProperty Name="Period" ColumnName="Period" />
-                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
-                <ScalarProperty Name="HIGH" ColumnName="HIGH" />
-                <ScalarProperty Name="LOW" ColumnName="LOW" />
-                <ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
-                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
-                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
-                <ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Get_Statement_Models" FunctionName="ExternalResearchModel.Store.Get_Statement_Models">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementData">
-                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="AmountType" ColumnName="AmountType" />
-                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
-                <ScalarProperty Name="IsConsensus" ColumnName="IsConsensus" />
-                <ScalarProperty Name="DataId" ColumnName="DataId" />
-                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
-                <ScalarProperty Name="BoldFont" ColumnName="BoldFont" />
-                <ScalarProperty Name="Decimals" ColumnName="Decimals" />
-                <ScalarProperty Name="RootSource" ColumnName="RootSource" />
-                <ScalarProperty Name="RootSourceDate" ColumnName="RootSourceDate" />
-                <ScalarProperty Name="CalculationDiagram" ColumnName="CalculationDiagram" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="External_Country_Master">
-            <EntityTypeMapping TypeName="ExternalResearchModel.External_Country_Master">
-              <MappingFragment StoreEntitySet="Country_Master">
-                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
-                <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_NAME" ColumnName="ASHEMM_PROPRIETARY_REGION_NAME" />
-                <ScalarProperty Name="MACRO_ECON_DATA_CURRENT" ColumnName="MACRO_ECON_DATA_CURRENT" />
-                <ScalarProperty Name="CURRENCY_NAME" ColumnName="CURRENCY_NAME" />
-                <ScalarProperty Name="CURRENCY_CODE" ColumnName="CURRENCY_CODE" />
-                <ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
-                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FAIR_VALUE">
-            <EntityTypeMapping TypeName="ExternalResearchModel.FAIR_VALUE">
-              <MappingFragment StoreEntitySet="FAIR_VALUE">
-                <ScalarProperty Name="UPDATED" ColumnName="UPDATED" />
-                <ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
-                <ScalarProperty Name="CURRENT_MEASURE_VALUE" ColumnName="CURRENT_MEASURE_VALUE" />
-                <ScalarProperty Name="FV_SELL" ColumnName="FV_SELL" />
-                <ScalarProperty Name="FV_BUY" ColumnName="FV_BUY" />
-                <ScalarProperty Name="FV_MEASURE" ColumnName="FV_MEASURE" />
-                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-                <ScalarProperty Name="VALUE_TYPE" ColumnName="VALUE_TYPE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetConsensusEstimatesSummaryData" FunctionName="ExternalResearchModel.Store.GetConsensusEstimatesSummaryData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimatesSummaryData">
-                <ScalarProperty Name="NetIncome" ColumnName="NetIncome" />
-                <ScalarProperty Name="YEAR1" ColumnName="YEAR1" />
-                <ScalarProperty Name="YEAR2" ColumnName="YEAR2" />
-                <ScalarProperty Name="YEAR3" ColumnName="YEAR3" />
-                <ScalarProperty Name="YEAR4" ColumnName="YEAR4" />
-                <ScalarProperty Name="YEAR5" ColumnName="YEAR5" />
-                <ScalarProperty Name="currency" ColumnName="currency" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetBasicData" FunctionName="ExternalResearchModel.Store.GetBasicData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.GetBasicData_Result">
-                <ScalarProperty Name="MARKET_CAPITALIZATION" ColumnName="MARKET_CAPITALIZATION" />
-                <ScalarProperty Name="ENTERPRISE_VALUE" ColumnName="ENTERPRISE_VALUE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetNewICPresentationSecurityData" FunctionName="ExternalResearchModel.Store.GetNewICPresentationSecurityData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.NewICPresentationSecurityData">
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveSecurityPFVMeasureCurrentPrice" FunctionName="ExternalResearchModel.Store.RetrieveSecurityPFVMeasureCurrentPrice" />
-          <FunctionImportMapping FunctionImportName="usp_GetDataForValuationQualityGrowth" FunctionName="ExternalResearchModel.Store.usp_GetDataForValuationQualityGrowth">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.ValuationQualityGrowthData">
-                <ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
-                <ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
-                <ScalarProperty Name="DataSource" ColumnName="DataSource" />
-                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="DataId" ColumnName="DataId" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="AmountType" ColumnName="AmountType" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="usp_GetQuarterlyResults" FunctionName="ExternalResearchModel.Store.usp_GetQuarterlyResults">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.QuarterlyResults">
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
-                <ScalarProperty Name="Region" ColumnName="Region" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="Sector" ColumnName="Sector" />
-                <ScalarProperty Name="Industry" ColumnName="Industry" />
-                <ScalarProperty Name="Currency" ColumnName="Currency" />
-                <ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
-                <ScalarProperty Name="Q1" ColumnName="Q1" />
-                <ScalarProperty Name="Q2" ColumnName="Q2" />
-                <ScalarProperty Name="Q3" ColumnName="Q3" />
-                <ScalarProperty Name="Q4" ColumnName="Q4" />
-                <ScalarProperty Name="Annual" ColumnName="Annual" />
-                <ScalarProperty Name="QuarterlySum" ColumnName="QuarterlySum" />
-                <ScalarProperty Name="QuarterlySumPercentage" ColumnName="QuarterlySumPercentage" />
-                <ScalarProperty Name="Consensus" ColumnName="Consensus" />
-                <ScalarProperty Name="ConsensusPercentage" ColumnName="ConsensusPercentage" />
-                <ScalarProperty Name="High" ColumnName="High" />
-                <ScalarProperty Name="Low" ColumnName="Low" />
-                <ScalarProperty Name="Brokers" ColumnName="Brokers" />
-                <ScalarProperty Name="EstimateId" ColumnName="EstimateId" />
-                <ScalarProperty Name="ConsensusUpdate" ColumnName="ConsensusUpdate" />
-                <ScalarProperty Name="XREF" ColumnName="XREF" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveDCFAnalysisSummaryData" FunctionName="ExternalResearchModel.Store.usp_RetrieveDCFAnalysisSummaryData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.DCFAnalysisSummaryData_Result">
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
-                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
-                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
-                <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
-                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
-                <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
-                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
-                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
-                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetDCF_ROIC" FunctionName="ExternalResearchModel.Store.GetDCF_ROIC">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.DCF_ROICResult">
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-                <ScalarProperty Name="FISCAL" ColumnName="FISCAL" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="MODEL_INPUTS_CTY">
-            <EntityTypeMapping TypeName="ExternalResearchModel.MODEL_INPUTS_CTY">
-              <MappingFragment StoreEntitySet="MODEL_INPUTS_CTY">
-                <ScalarProperty Name="LONG_TERM_GDP_GR" ColumnName="LONG_TERM_GDP_GR" />
-                <ScalarProperty Name="RISK_FREE_RATE" ColumnName="RISK_FREE_RATE" />
-                <ScalarProperty Name="RISK_PREM" ColumnName="RISK_PREM" />
-                <ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetDCFRiskFreeRate" FunctionName="ExternalResearchModel.Store.GetDCFRiskFreeRate" />
-          <FunctionImportMapping FunctionImportName="GetDCFMarketCap" FunctionName="ExternalResearchModel.Store.GetDCFMarketCap" />
-          <FunctionImportMapping FunctionImportName="GetDCFCashFlow" FunctionName="ExternalResearchModel.Store.GetDCFCashFlow">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.DCFCashFlowData">
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-                <ScalarProperty Name="DISCOUNTING_FACTOR" ColumnName="DISCOUNTING_FACTOR" />
-                <ScalarProperty Name="FREE_CASH_FLOW" ColumnName="FREE_CASH_FLOW" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetDCFSummaryData" FunctionName="ExternalResearchModel.Store.GetDCFSummaryData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.DCFSummaryDBData">
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetDCF_NumberOfShares" FunctionName="ExternalResearchModel.Store.GetDCF_NumberOfShares">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.DCFSummaryDBData">
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          
-          <FunctionImportMapping FunctionImportName="GetDCFGDP" FunctionName="ExternalResearchModel.Store.GetDCFGDP" />
-          <FunctionImportMapping FunctionImportName="GetFreeCashFlows" FunctionName="ExternalResearchModel.Store.GetFreeCashFlows">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.GetFreeCashFlows_Result">
-                <ScalarProperty Name="FIELD_NAME" ColumnName="FIELD_NAME" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetFairValueCompositionSummaryData" FunctionName="ExternalResearchModel.Store.GetFairValueCompositionSummaryData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.GetFairValueComposition_Result">
-                <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
-                <ScalarProperty Name="MEASURE" ColumnName="MEASURE" />
-                <ScalarProperty Name="BUY" ColumnName="BUY" />
-                <ScalarProperty Name="SELL" ColumnName="SELL" />
-                <ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
-                <ScalarProperty Name="DATE" ColumnName="DATE" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveRatioComparisonData" FunctionName="ExternalResearchModel.Store.RetrieveRatioComparisonData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.RatioComparisonData">
-                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
-                <ScalarProperty Name="FINANCIAL" ColumnName="FINANCIAL" />
-                <ScalarProperty Name="VALUATION" ColumnName="VALUATION" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetAmountForUpsideCalculation" FunctionName="ExternalResearchModel.Store.GetAmountForUpsideCalculation" />
-          <FunctionImportMapping FunctionImportName="SaveUpdatedFairValueMeasures" FunctionName="ExternalResearchModel.Store.SaveUpdatedFairValueMeasures">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.GetFairValueComposition_Result">
-                <ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
-                <ScalarProperty Name="MEASURE" ColumnName="MEASURE" />
-                <ScalarProperty Name="BUY" ColumnName="BUY" />
-                <ScalarProperty Name="SELL" ColumnName="SELL" />
-                <ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
-                <ScalarProperty Name="DATE" ColumnName="DATE" />
-                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+
+					<FunctionImportMapping FunctionImportName="GetFinstatDetail" FunctionName="ExternalResearchModel.Store.GetFinstatDetail">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.FinstatDetail">
+								<ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+								<ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+								<ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+								<ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+								<ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
+								<ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+								<ScalarProperty Name="BOLD_FONT" ColumnName="BOLD_FONT" />
+								<ScalarProperty Name="GROUP_NAME" ColumnName="GROUP_NAME" />
+								<ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+								<ScalarProperty Name="HARMONIC" ColumnName="HARMONIC" />
+								<ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetFinstatEconomicMarketData" FunctionName="ExternalResearchModel.Store.GetFinstatEconomic_MarketData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.FinstatEconomicMarketData">
+								<ScalarProperty Name="FX_RATE" ColumnName="FX_RATE" />
+								<ScalarProperty Name="AVG12MonthRATE" ColumnName="AVG12MonthRATE" />
+								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+								<ScalarProperty Name="FIELD" ColumnName="FIELD" />
+								<ScalarProperty Name="YEAR1" ColumnName="YEAR1" />
+								<ScalarProperty Name="VALUE" ColumnName="VALUE" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetFinstatRelativeAnalysisData" FunctionName="ExternalResearchModel.Store.GetFinstatRelativeAnalysisData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.FinstatRelativeAnalysisData">
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="DECIMALS" ColumnName="DECIMALS" />
+								<ScalarProperty Name="MULTIPLIER" ColumnName="MULTIPLIER" />
+								<ScalarProperty Name="PERCENTAGE" ColumnName="PERCENTAGE" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetBrokerDetail" FunctionName="ExternalResearchModel.Store.Broker_Detail">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetailData">
+								<ScalarProperty Name="broker_name" ColumnName="broker_name" />
+								<ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
+								<ScalarProperty Name="fPeriodEnd" ColumnName="fPeriodEnd" />
+								<ScalarProperty Name="Amount" ColumnName="Amount" />
+								<ScalarProperty Name="StartDate" ColumnName="StartDate" />
+								<ScalarProperty Name="Last_Update_Date" ColumnName="Last_Update_Date" />
+								<ScalarProperty Name="Reported_Currency" ColumnName="Reported_Currency" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetModelConsensusEstimates" FunctionName="ExternalResearchModel.Store.GetModelConsensusEstimates">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.ModelConsensusEstimatesData">
+								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="ESTIMATE_ID" ColumnName="ESTIMATE_ID" />
+								<ScalarProperty Name="ESTIMATE_DESC" ColumnName="ESTIMATE_DESC" />
+								<ScalarProperty Name="Period" ColumnName="Period" />
+								<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+								<ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="NUMBER_OF_ESTIMATES" ColumnName="NUMBER_OF_ESTIMATES" />
+								<ScalarProperty Name="HIGH" ColumnName="HIGH" />
+								<ScalarProperty Name="LOW" ColumnName="LOW" />
+								<ScalarProperty Name="STANDARD_DEVIATION" ColumnName="STANDARD_DEVIATION" />
+								<ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+								<ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+								<ScalarProperty Name="DATA_SOURCE_DATE" ColumnName="DATA_SOURCE_DATE" />
+								<ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="Get_Statement_Models" FunctionName="ExternalResearchModel.Store.Get_Statement_Models">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementData">
+								<ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+								<ScalarProperty Name="Description" ColumnName="Description" />
+								<ScalarProperty Name="AmountType" ColumnName="AmountType" />
+								<ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+								<ScalarProperty Name="Amount" ColumnName="Amount" />
+								<ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+								<ScalarProperty Name="IsConsensus" ColumnName="IsConsensus" />
+								<ScalarProperty Name="DataId" ColumnName="DataId" />
+								<ScalarProperty Name="GroupName" ColumnName="GroupName" />
+								<ScalarProperty Name="BoldFont" ColumnName="BoldFont" />
+								<ScalarProperty Name="Decimals" ColumnName="Decimals" />
+								<ScalarProperty Name="RootSource" ColumnName="RootSource" />
+								<ScalarProperty Name="RootSourceDate" ColumnName="RootSourceDate" />
+								<ScalarProperty Name="CalculationDiagram" ColumnName="CalculationDiagram" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<EntitySetMapping Name="External_Country_Master">
+						<EntityTypeMapping TypeName="ExternalResearchModel.External_Country_Master">
+							<MappingFragment StoreEntitySet="Country_Master">
+								<ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
+								<ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_NAME" ColumnName="ASHEMM_PROPRIETARY_REGION_NAME" />
+								<ScalarProperty Name="MACRO_ECON_DATA_CURRENT" ColumnName="MACRO_ECON_DATA_CURRENT" />
+								<ScalarProperty Name="CURRENCY_NAME" ColumnName="CURRENCY_NAME" />
+								<ScalarProperty Name="CURRENCY_CODE" ColumnName="CURRENCY_CODE" />
+								<ScalarProperty Name="COUNTRY_NAME" ColumnName="COUNTRY_NAME" />
+								<ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="FAIR_VALUE">
+						<EntityTypeMapping TypeName="ExternalResearchModel.FAIR_VALUE">
+							<MappingFragment StoreEntitySet="FAIR_VALUE">
+								<ScalarProperty Name="UPDATED" ColumnName="UPDATED" />
+								<ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
+								<ScalarProperty Name="CURRENT_MEASURE_VALUE" ColumnName="CURRENT_MEASURE_VALUE" />
+								<ScalarProperty Name="FV_SELL" ColumnName="FV_SELL" />
+								<ScalarProperty Name="FV_BUY" ColumnName="FV_BUY" />
+								<ScalarProperty Name="FV_MEASURE" ColumnName="FV_MEASURE" />
+								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+								<ScalarProperty Name="VALUE_TYPE" ColumnName="VALUE_TYPE" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<FunctionImportMapping FunctionImportName="GetConsensusEstimatesSummaryData" FunctionName="ExternalResearchModel.Store.GetConsensusEstimatesSummaryData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.ConsensusEstimatesSummaryData">
+								<ScalarProperty Name="NetIncome" ColumnName="NetIncome" />
+								<ScalarProperty Name="YEAR1" ColumnName="YEAR1" />
+								<ScalarProperty Name="YEAR2" ColumnName="YEAR2" />
+								<ScalarProperty Name="YEAR3" ColumnName="YEAR3" />
+								<ScalarProperty Name="YEAR4" ColumnName="YEAR4" />
+								<ScalarProperty Name="YEAR5" ColumnName="YEAR5" />
+								<ScalarProperty Name="currency" ColumnName="currency" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetBasicData" FunctionName="ExternalResearchModel.Store.GetBasicData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.GetBasicData_Result">
+								<ScalarProperty Name="MARKET_CAPITALIZATION" ColumnName="MARKET_CAPITALIZATION" />
+								<ScalarProperty Name="ENTERPRISE_VALUE" ColumnName="ENTERPRISE_VALUE" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetNewICPresentationSecurityData" FunctionName="ExternalResearchModel.Store.GetNewICPresentationSecurityData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.NewICPresentationSecurityData">
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="RetrieveSecurityPFVMeasureCurrentPrice" FunctionName="ExternalResearchModel.Store.RetrieveSecurityPFVMeasureCurrentPrice" />
+					<FunctionImportMapping FunctionImportName="usp_GetDataForValuationQualityGrowth" FunctionName="ExternalResearchModel.Store.usp_GetDataForValuationQualityGrowth">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.ValuationQualityGrowthData">
+								<ScalarProperty Name="IssuerId" ColumnName="IssuerId" />
+								<ScalarProperty Name="SecurityId" ColumnName="SecurityId" />
+								<ScalarProperty Name="DataSource" ColumnName="DataSource" />
+								<ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+								<ScalarProperty Name="Currency" ColumnName="Currency" />
+								<ScalarProperty Name="DataId" ColumnName="DataId" />
+								<ScalarProperty Name="Amount" ColumnName="Amount" />
+								<ScalarProperty Name="AmountType" ColumnName="AmountType" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="usp_GetQuarterlyResults" FunctionName="ExternalResearchModel.Store.usp_GetQuarterlyResults">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.QuarterlyResults">
+								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
+								<ScalarProperty Name="Region" ColumnName="Region" />
+								<ScalarProperty Name="Country" ColumnName="Country" />
+								<ScalarProperty Name="Sector" ColumnName="Sector" />
+								<ScalarProperty Name="Industry" ColumnName="Industry" />
+								<ScalarProperty Name="Currency" ColumnName="Currency" />
+								<ScalarProperty Name="LastUpdate" ColumnName="LastUpdate" />
+								<ScalarProperty Name="Q1" ColumnName="Q1" />
+								<ScalarProperty Name="Q2" ColumnName="Q2" />
+								<ScalarProperty Name="Q3" ColumnName="Q3" />
+								<ScalarProperty Name="Q4" ColumnName="Q4" />
+								<ScalarProperty Name="Annual" ColumnName="Annual" />
+								<ScalarProperty Name="QuarterlySum" ColumnName="QuarterlySum" />
+								<ScalarProperty Name="QuarterlySumPercentage" ColumnName="QuarterlySumPercentage" />
+								<ScalarProperty Name="Consensus" ColumnName="Consensus" />
+								<ScalarProperty Name="ConsensusPercentage" ColumnName="ConsensusPercentage" />
+								<ScalarProperty Name="High" ColumnName="High" />
+								<ScalarProperty Name="Low" ColumnName="Low" />
+								<ScalarProperty Name="Brokers" ColumnName="Brokers" />
+								<ScalarProperty Name="EstimateId" ColumnName="EstimateId" />
+								<ScalarProperty Name="ConsensusUpdate" ColumnName="ConsensusUpdate" />
+								<ScalarProperty Name="XREF" ColumnName="XREF" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="RetrieveDCFAnalysisSummaryData" FunctionName="ExternalResearchModel.Store.usp_RetrieveDCFAnalysisSummaryData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.DCFAnalysisSummaryData_Result">
+								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+								<ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+								<ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+								<ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+								<ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+								<ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+								<ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+								<ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+								<ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+								<ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+								<ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetDCF_ROIC" FunctionName="ExternalResearchModel.Store.GetDCF_ROIC">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.DCF_ROICResult">
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+								<ScalarProperty Name="FISCAL" ColumnName="FISCAL" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<EntitySetMapping Name="MODEL_INPUTS_CTY">
+						<EntityTypeMapping TypeName="ExternalResearchModel.MODEL_INPUTS_CTY">
+							<MappingFragment StoreEntitySet="MODEL_INPUTS_CTY">
+								<ScalarProperty Name="LONG_TERM_GDP_GR" ColumnName="LONG_TERM_GDP_GR" />
+								<ScalarProperty Name="RISK_FREE_RATE" ColumnName="RISK_FREE_RATE" />
+								<ScalarProperty Name="RISK_PREM" ColumnName="RISK_PREM" />
+								<ScalarProperty Name="COUNTRY_CODE" ColumnName="COUNTRY_CODE" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<FunctionImportMapping FunctionImportName="GetDCFRiskFreeRate" FunctionName="ExternalResearchModel.Store.GetDCFRiskFreeRate" />
+					<FunctionImportMapping FunctionImportName="GetDCFMarketCap" FunctionName="ExternalResearchModel.Store.GetDCFMarketCap" />
+					<FunctionImportMapping FunctionImportName="GetDCFCashFlow" FunctionName="ExternalResearchModel.Store.GetDCFCashFlow">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.DCFCashFlowData">
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+								<ScalarProperty Name="DISCOUNTING_FACTOR" ColumnName="DISCOUNTING_FACTOR" />
+								<ScalarProperty Name="FREE_CASH_FLOW" ColumnName="FREE_CASH_FLOW" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetDCFSummaryData" FunctionName="ExternalResearchModel.Store.GetDCFSummaryData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.DCFSummaryDBData">
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetDCF_NumberOfShares" FunctionName="ExternalResearchModel.Store.GetDCF_NumberOfShares">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.DCFSummaryDBData">
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+
+					<FunctionImportMapping FunctionImportName="GetDCFGDP" FunctionName="ExternalResearchModel.Store.GetDCFGDP" />
+					<FunctionImportMapping FunctionImportName="GetFreeCashFlows" FunctionName="ExternalResearchModel.Store.GetFreeCashFlows">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.GetFreeCashFlows_Result">
+								<ScalarProperty Name="FIELD_NAME" ColumnName="FIELD_NAME" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetFairValueCompositionSummaryData" FunctionName="ExternalResearchModel.Store.GetFairValueCompositionSummaryData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.GetFairValueComposition_Result">
+								<ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
+								<ScalarProperty Name="MEASURE" ColumnName="MEASURE" />
+								<ScalarProperty Name="BUY" ColumnName="BUY" />
+								<ScalarProperty Name="SELL" ColumnName="SELL" />
+								<ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
+								<ScalarProperty Name="DATE" ColumnName="DATE" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="RetrieveRatioComparisonData" FunctionName="ExternalResearchModel.Store.RetrieveRatioComparisonData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.RatioComparisonData">
+								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+								<ScalarProperty Name="FINANCIAL" ColumnName="FINANCIAL" />
+								<ScalarProperty Name="VALUATION" ColumnName="VALUATION" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="GetAmountForUpsideCalculation" FunctionName="ExternalResearchModel.Store.GetAmountForUpsideCalculation" />
+					<FunctionImportMapping FunctionImportName="SaveUpdatedFairValueMeasures" FunctionName="ExternalResearchModel.Store.SaveUpdatedFairValueMeasures">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.GetFairValueComposition_Result">
+								<ScalarProperty Name="SOURCE" ColumnName="SOURCE" />
+								<ScalarProperty Name="MEASURE" ColumnName="MEASURE" />
+								<ScalarProperty Name="BUY" ColumnName="BUY" />
+								<ScalarProperty Name="SELL" ColumnName="SELL" />
+								<ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
+								<ScalarProperty Name="DATE" ColumnName="DATE" />
+								<ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="RetrieveDataPointsModelUpload" FunctionName="ExternalResearchModel.Store.RetrieveDataPointsModelUpload">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.DataPointsModelUploadData">
+								<ScalarProperty Name="COA" ColumnName="COA" />
+								<ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+								<ScalarProperty Name="DATA_DESCRIPTION" ColumnName="DATA_DESCRIPTION" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="RetrieveCOAType" FunctionName="ExternalResearchModel.Store.RetrieveCOAType" />
+					<FunctionImportMapping FunctionImportName="RetrieveDistinctFXRates" FunctionName="ExternalResearchModel.Store.RetrieveDistinctFXRates">
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="RetrieveCOACodes" FunctionName="ExternalResearchModel.Store.RetrieveCOACodes">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.DataPointsModelUploadData">
+								<ScalarProperty Name="COA" ColumnName="COA" />
+								<ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
+								<ScalarProperty Name="DATA_DESCRIPTION" ColumnName="DATA_DESCRIPTION" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="RetrieveCommodityForecasts" FunctionName="ExternalResearchModel.Store.RetrieveCommodityForecasts" />
+					<FunctionImportMapping FunctionImportName="ModelDeleteInteralStatement" FunctionName="ExternalResearchModel.Store.ModelDeleteInteralStatement" />
+					<FunctionImportMapping FunctionImportName="ModelDeleteInternalData" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalData" />
+					<FunctionImportMapping FunctionImportName="ModelDeleteInternalIssuerQuarterlyDistribution" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalIssuerQuarterlyDistribution" />
+					<FunctionImportMapping FunctionImportName="ModelInsertInternalData" FunctionName="ExternalResearchModel.Store.ModelInsertInternalData" />
+					<FunctionImportMapping FunctionImportName="ModelInsertInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelInsertInternalIssuer" />
+					<FunctionImportMapping FunctionImportName="ModelInsertInternalIssuerQuaterelyDistribution" FunctionName="ExternalResearchModel.Store.ModelInsertInternalIssuerQuaterelyDistribution" />
+					<FunctionImportMapping FunctionImportName="ModelInsertInternalStatement" FunctionName="ExternalResearchModel.Store.ModelInsertInternalStatement" />
+					<FunctionImportMapping FunctionImportName="ModelRetrieveInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelRetrieveInternalIssuer" />
+					<FunctionImportMapping FunctionImportName="ModelDeleteInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalIssuer" />
           <EntitySetMapping Name="PORTFOLIO_SECURITY_TARGETS">
             <EntityTypeMapping TypeName="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS">
               <MappingFragment StoreEntitySet="PORTFOLIO_SECURITY_TARGETS">
@@ -2318,38 +2353,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveDataPointsModelUpload" FunctionName="ExternalResearchModel.Store.RetrieveDataPointsModelUpload">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.DataPointsModelUploadData">
-                <ScalarProperty Name="COA" ColumnName="COA" />
-                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
-                <ScalarProperty Name="DATA_DESCRIPTION" ColumnName="DATA_DESCRIPTION" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveCOAType" FunctionName="ExternalResearchModel.Store.RetrieveCOAType" />
-          <FunctionImportMapping FunctionImportName="RetrieveDistinctFXRates" FunctionName="ExternalResearchModel.Store.RetrieveDistinctFXRates">
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveCOACodes" FunctionName="ExternalResearchModel.Store.RetrieveCOACodes">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.DataPointsModelUploadData">
-                <ScalarProperty Name="COA" ColumnName="COA" />
-                <ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
-                <ScalarProperty Name="DATA_DESCRIPTION" ColumnName="DATA_DESCRIPTION" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveCommodityForecasts" FunctionName="ExternalResearchModel.Store.RetrieveCommodityForecasts" />
-          <FunctionImportMapping FunctionImportName="ModelDeleteInteralStatement" FunctionName="ExternalResearchModel.Store.ModelDeleteInteralStatement" />
-          <FunctionImportMapping FunctionImportName="ModelDeleteInternalData" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalData" />
-          <FunctionImportMapping FunctionImportName="ModelDeleteInternalIssuerQuarterlyDistribution" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalIssuerQuarterlyDistribution" />
-          <FunctionImportMapping FunctionImportName="ModelInsertInternalData" FunctionName="ExternalResearchModel.Store.ModelInsertInternalData" />
-          <FunctionImportMapping FunctionImportName="ModelInsertInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelInsertInternalIssuer" />
-          <FunctionImportMapping FunctionImportName="ModelInsertInternalIssuerQuaterelyDistribution" FunctionName="ExternalResearchModel.Store.ModelInsertInternalIssuerQuaterelyDistribution" />
-          <FunctionImportMapping FunctionImportName="ModelInsertInternalStatement" FunctionName="ExternalResearchModel.Store.ModelInsertInternalStatement" />
-          <FunctionImportMapping FunctionImportName="ModelRetrieveInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelRetrieveInternalIssuer" />
-          <FunctionImportMapping FunctionImportName="ModelDeleteInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalIssuer" />
-          <!--<ResultMapping>
+					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
                 <ScalarProperty Name="EstimateType" ColumnName="EstimateType" />
@@ -2397,12 +2401,11 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.DATA_MASTER" Width="1.5" PointX="6.5" PointY="9.75" Height="3.7109993489583317" />
 				<EntityTypeShape EntityType="ExternalResearchModel.PRICE" Width="1.5" PointX="0.75" PointY="13.75" Height="1.9802864583333388" />
 				<EntityTypeShape EntityType="ExternalResearchModel.COUNTRY_MASTER" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="4.75" Height="2.5571907552083388" />
-        <EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9.375" PointY="9.75" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.5" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
+				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
+				<EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="4.75" Height="2.5571907552083388" />
+				<EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9.375" PointY="9.75" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.25" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
 			</Diagram>
 		</Diagrams>
 	</Designer>
 </edmx:Edmx>
-

@@ -688,35 +688,20 @@ namespace GreenField.Web.Services
 
                 #region Fetching and processing PORTFOLIO_SECURITY_TARGETS data
                 portfolioSecurityTargetsData = externalEntity.PORTFOLIO_SECURITY_TARGETS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).ToList();
-                //List<Int32> i = portfolioSecurityTargetsData.Select(a => a.SECURITY_ID).Distinct().ToList();
-                //List<GF_SECURITY_BASEVIEW> l = entity.GF_SECURITY_BASEVIEW.Where(a => i.Contains(a.SECURITY_ID))
-                //                                                        .ToList();
-
+               
                 foreach (PORTFOLIO_SECURITY_TARGETS item in portfolioSecurityTargetsData)
                 {
                     portfolioTargets.Add(new CompositeFundData()
                     {
                         SecurityId = item.SECURITY_ID,
                         Target = item.TARGET_PC,
-                        IssuerId = entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == item.SECURITY_ID).FirstOrDefault()!= null ?
-                                entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == item.SECURITY_ID).FirstOrDefault().ISSUER_ID : null,
-                        CountryName = entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == item.SECURITY_ID).FirstOrDefault() != null ?
-                                entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == item.SECURITY_ID).FirstOrDefault().ISO_COUNTRY_CODE : null
+                        IssuerId = entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault()!= null ?
+                                entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault().ISSUER_ID : null,
+                        CountryName = entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault() != null ?
+                                entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault().ISO_COUNTRY_CODE : null
                     });
                 } 
-                //var portfolioTargets = from p in externalEntity.PORTFOLIO_SECURITY_TARGETS
-                //                       join g in entity.GF_SECURITY_BASEVIEW
-                //                       on SqlFunctions.StringConvert(Convert.ToDecimal(p.SECURITY_ID)) equals Convert.ToDecimal(g.SECURITY_ID) into temp
-                //                       from t in temp.DefaultIfEmpty()
-                //                       select new
-                //                       {
-                //                           Designation = p.EmpDesignation,
-                //                           EmployeeName = p.EmpName,
-                //                           FirstName = t.FirstName,
-                //                           LastName = t.LastName,
-                //                           Age = t.Age
-                //                       };
-
+               
                 List<string> countryInPortfolioTargets = portfolioTargets.Select(a => a.CountryName).Distinct().ToList();
                 Dictionary<string, decimal> portfolioCountryTargets = new Dictionary<string, decimal>();
 
@@ -730,27 +715,18 @@ namespace GreenField.Web.Services
                 string issuerId = entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == entityIdentifiers.InstrumentID).FirstOrDefault() != null ?
                 entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == entityIdentifiers.InstrumentID).FirstOrDefault().ISSUER_ID : null;
 
-                #region GF_PORTFOLIO_HOLDINGS data
-                DateTime lastBusinessDatePortfolio = DateTime.Today.AddDays(-1);
-                    GF_PORTFOLIO_HOLDINGS lastBusinessRecordPortfolio = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
-                    if (lastBusinessRecordPortfolio != null)
-                        if (lastBusinessRecordPortfolio.PORTFOLIO_DATE != null)
-                            lastBusinessDatePortfolio = Convert.ToDateTime(lastBusinessRecordPortfolio.PORTFOLIO_DATE);
+                // GF_PORTFOLIO_HOLDINGS data
+                DateTime lastBusinessDatePortfolio = GetLastBusinessDate("PORTFOLIO_HOLDINGS");
                     portfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.ISSUER_ID == issuerId
                                                                                     && a.PORTFOLIO_DATE == lastBusinessDatePortfolio).ToList();
-                #endregion
 
-                #region GF_BENCHMARK_HOLDINGS data
+                 // GF_BENCHMARK_HOLDINGS data
                     string benchmarkId = entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).FirstOrDefault() != null ?
                         entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.PORTFOLIO_ID == portfolio.PortfolioId).FirstOrDefault().BENCHMARK_ID : null;
                     Dictionary<string, decimal> benchmarkCountryData = new Dictionary<string, decimal>();
                     if (benchmarkId != null)
                     {
-                        DateTime lastBusinessDateBenchmark = DateTime.Today.AddDays(-1);
-                        GF_BENCHMARK_HOLDINGS lastBusinessRecordBenchmark = entity.GF_BENCHMARK_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
-                        if (lastBusinessRecordBenchmark != null)
-                            if (lastBusinessRecordBenchmark.PORTFOLIO_DATE != null)
-                                lastBusinessDateBenchmark = Convert.ToDateTime(lastBusinessRecordBenchmark.PORTFOLIO_DATE);
+                        DateTime lastBusinessDateBenchmark = GetLastBusinessDate("BENCHMARK_HOLDINGS");
                         benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benchmarkId
                                                                                                 && record.PORTFOLIO_DATE == lastBusinessDateBenchmark).ToList();
                         List<string> countryInBenchmarkData = benchmarkData.Select(a => a.ISO_COUNTRY_CODE).Distinct().ToList();
@@ -761,22 +737,16 @@ namespace GreenField.Web.Services
                             benchmarkCountryData.Add(item, benchmarkSum);
                         }
                     }
-                #endregion
 
-                #region Issuer View is not checked 
+                // Issuer view checkbox is not checked 
                 CompositeFundData rowSecurityLevel = FillResultSetCompositeFund(entityIdentifiers.InstrumentID, issuerId, portfolioTargets, portfolioCountryTargets,
-                                                    benchmarkData, portfolioHoldingsData, benchmarkCountryData, false);
-                
+                                                    benchmarkData, portfolioHoldingsData, benchmarkCountryData, false);                
                 result.Add(rowSecurityLevel);
-                #endregion
 
-                #region Issuer View is checked
+                // Issuer view checkbox is checked
                 CompositeFundData rowIssuerLevel = FillResultSetCompositeFund(entityIdentifiers.InstrumentID, issuerId, portfolioTargets, portfolioCountryTargets,
-                                                   benchmarkData, portfolioHoldingsData, benchmarkCountryData, true);
-               
+                                                   benchmarkData, portfolioHoldingsData, benchmarkCountryData, true);               
                 result.Add(rowIssuerLevel);
-                #endregion
-
                 return result;
             }
             catch (Exception ex)
@@ -828,11 +798,7 @@ namespace GreenField.Web.Services
                 if (portfolio != null)
                 {
                     List<GF_PORTFOLIO_HOLDINGS> securitiesFromPortfolio = new List<GF_PORTFOLIO_HOLDINGS>();
-                    DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
-                    GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
-                    if (lastBusinessRecord != null)
-                        if (lastBusinessRecord.PORTFOLIO_DATE != null)
-                            lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+                    DateTime lastBusinessDate = GetLastBusinessDate("PORTFOLIO_HOLDINGS");
 
                     securitiesFromPortfolio = entity.GF_PORTFOLIO_HOLDINGS.Where(record => record.PORTFOLIO_ID == portfolio.PortfolioId
                                                                                      && record.PORTFOLIO_DATE == lastBusinessDate
@@ -858,11 +824,7 @@ namespace GreenField.Web.Services
                 else if (benchmark != null)
                 {
                     List<GF_BENCHMARK_HOLDINGS> securitiesFromBenchmark = new List<GF_BENCHMARK_HOLDINGS>();
-                    DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
-                    GF_BENCHMARK_HOLDINGS lastBusinessRecord = entity.GF_BENCHMARK_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
-                    if (lastBusinessRecord != null)
-                        if (lastBusinessRecord.PORTFOLIO_DATE != null)
-                            lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+                    DateTime lastBusinessDate = GetLastBusinessDate("BENCHMARK_HOLDINGS");
 
                     securitiesFromBenchmark = entity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benchmark.InstrumentID
                                                                                             && record.PORTFOLIO_DATE == lastBusinessDate).ToList();
@@ -871,7 +833,6 @@ namespace GreenField.Web.Services
                         return securityList;
 
                     securitiesFromBenchmark = securitiesFromBenchmark.Distinct().ToList();
-
                     foreach (GF_BENCHMARK_HOLDINGS item in securitiesFromBenchmark)
                     {
                         GF_SECURITY_BASEVIEW securityIdRow = item.ASEC_SEC_SHORT_NAME != null ? entity.GF_SECURITY_BASEVIEW.Where(a => a.ASEC_SEC_SHORT_NAME == item.ASEC_SEC_SHORT_NAME)
@@ -982,10 +943,10 @@ namespace GreenField.Web.Services
             decimal targetSumPortfolio, targetSumBenchmark, value;
             decimal? objTarget = null, objTargetInCountry = null, objBenchmarkWeight = null, objBenchmarkWeightInCountry = null;
 
-            if (portfolioTargets.Select(a => a.SecurityId).ToList().Contains(securityId))
+            if (portfolioTargets.Select(a => a.SecurityId).ToList().Contains(securityId.ToString()))
             {
                 objTarget = check ? portfolioTargets.Where(a => a.IssuerId == issuerId).Sum(a => a.Target)
-                    : portfolioTargets.Where(a => a.SecurityId == securityId).Sum(a => a.Target);
+                    : portfolioTargets.Where(a => a.SecurityId == securityId.ToString()).Sum(a => a.Target);
             }
             temp.PortfolioTarget = objTarget != null ? Math.Round(Convert.ToDecimal(objTarget), 1) + "%" : null;
 
@@ -1024,6 +985,43 @@ namespace GreenField.Web.Services
             return temp;
         }
 
+        public DateTime GetLastBusinessDate(string viewName)
+        {
+            try
+            {
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
+
+                switch (viewName)
+                {
+                    case "PORTFOLIO_HOLDINGS":
+                        {
+                            GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                            if (lastBusinessRecord != null)
+                                if (lastBusinessRecord.PORTFOLIO_DATE != null)
+                                    lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+                        }
+                        break;
+                    case "BENCHMARK_HOLDINGS":
+                        {
+                            GF_BENCHMARK_HOLDINGS lastBusinessRecord = entity.GF_BENCHMARK_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                            if (lastBusinessRecord != null)
+                                if (lastBusinessRecord.PORTFOLIO_DATE != null)
+                                    lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                return lastBusinessDate;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
         #endregion
     }
 }

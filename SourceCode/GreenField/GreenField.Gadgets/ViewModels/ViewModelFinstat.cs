@@ -253,20 +253,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Unpivoted FinstatDetail Information received from stored procedure
         /// </summary>
-        private List<FinstatDetailData> _consensusEstimateDetailInfo;
+        private List<FinstatDetailData> _finstatDetailInfo;
         public List<FinstatDetailData> FinstatDetailInfo
         {
             get
             {
-                if (_consensusEstimateDetailInfo == null)
-                    _consensusEstimateDetailInfo = new List<FinstatDetailData>();
-                return _consensusEstimateDetailInfo;
+                if (_finstatDetailInfo == null)
+                    _finstatDetailInfo = new List<FinstatDetailData>();
+                return _finstatDetailInfo;
             }
             set
             {
-                if (_consensusEstimateDetailInfo != value)
+                if (_finstatDetailInfo != value)
                 {
-                    _consensusEstimateDetailInfo = value;
+                    _finstatDetailInfo = value;
                     SetFinstatDetailDisplayInfo();
                 }
             }
@@ -606,7 +606,8 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (result != null)
                 {
-                    FinstatDetailInfo = new List<FinstatDetailData>(result);
+                   // FinstatDetailInfo = new List<FinstatDetailData>();
+                    FinstatDetailInfo = result;
                     StartYearRange = new List<Int32>(FinstatDetailInfo.OrderBy(a => a.PeriodYear).Select(a => a.PeriodYear).Distinct().ToList());
                     StartYearRange.Remove(4000);
                 }

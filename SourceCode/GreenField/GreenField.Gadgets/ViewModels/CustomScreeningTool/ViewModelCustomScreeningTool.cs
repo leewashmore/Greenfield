@@ -208,16 +208,20 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedPortfolio; }
             set
             {
-                if (value != null)
+                if (_selectedPortfolio != value)
                 {
                     _selectedPortfolio = value;
                     RaisePropertyChanged(() => this.SelectedPortfolio);
-                    // PortfolioSelectionData p = new PortfolioSelectionData();
-                    //p = _portfolioSelectionData.Where(a => a.PortfolioId == _selectedPortfolio).FirstOrDefault();
-                    //_dbInteractivity.RetrieveSecurityData(p, null, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry
-                    //                                   , null, RetrieveSecurityDataCallbackMethod);
                     ResultsListVisibility = Visibility.Collapsed;
                     RaisePropertyChanged(() => this.SubmitCommand);
+                    if (_selectedPortfolio != null)
+                    {
+                        SelectedBenchmark = null;
+                        SelectedCountry = null;
+                        SelectedIndustry = null;
+                        SelectedRegion = null;
+                        SelectedSector = null;
+                    }
                 }
             }
         }
@@ -228,9 +232,20 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedBenchmark; }
             set
             {
-                _selectedBenchmark = value;
-                RaisePropertyChanged(() => this.SelectedBenchmark);
-                RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                if (_selectedBenchmark != value)
+                {
+                    _selectedBenchmark = value;
+                    RaisePropertyChanged(() => this.SelectedBenchmark);
+                    RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                    if (_selectedBenchmark != null)
+                    {
+                        SelectedPortfolio = null;
+                        SelectedCountry = null;
+                        SelectedIndustry = null;
+                        SelectedRegion = null;
+                        SelectedSector = null;
+                    }
+                }
             }
         }
 
@@ -240,9 +255,17 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedRegion; }
             set
             {
-                _selectedRegion = value;
-                RaisePropertyChanged(() => this.SelectedRegion);
-                RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                if (_selectedRegion != value)
+                {
+                    _selectedRegion = value;
+                    RaisePropertyChanged(() => this.SelectedRegion);
+                    RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                    if (_selectedRegion != null)
+                    {
+                        SelectedPortfolio = null;
+                        SelectedBenchmark = null;
+                    }
+                }
             }
         }
 
@@ -252,9 +275,17 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedCountry; }
             set
             {
-                _selectedCountry = value;
-                RaisePropertyChanged(() => this.SelectedCountry);
-                RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                if (_selectedCountry != value)
+                {
+                    _selectedCountry = value;
+                    RaisePropertyChanged(() => this.SelectedCountry);
+                    RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                    if (_selectedCountry != null)
+                    {
+                        SelectedPortfolio = null;
+                        SelectedBenchmark = null;
+                    }
+                }
             }
         }
 
@@ -264,9 +295,17 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedSector; }
             set
             {
-                _selectedSector = value;
-                RaisePropertyChanged(() => this.SelectedSector);
-                RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                if (_selectedSector != value)
+                {
+                    _selectedSector = value;
+                    RaisePropertyChanged(() => this.SelectedSector);
+                    RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                    if (_selectedSector != null)
+                    {
+                        SelectedPortfolio = null;
+                        SelectedBenchmark = null;
+                    }
+                }
             }
         }
 
@@ -276,9 +315,17 @@ namespace GreenField.Gadgets.ViewModels
             get { return _selectedIndustry; }
             set
             {
-                _selectedIndustry = value;
-                RaisePropertyChanged(() => this.SelectedIndustry);
-                RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                if (_selectedIndustry != value)
+                {
+                    _selectedIndustry = value;
+                    RaisePropertyChanged(() => this.SelectedIndustry);
+                    RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                    if (_selectedIndustry != null)
+                    {
+                        SelectedPortfolio = null;
+                        SelectedBenchmark = null;
+                    }
+                }
             }
         }
 
