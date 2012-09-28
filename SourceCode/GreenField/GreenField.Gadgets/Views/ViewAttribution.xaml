@@ -6,7 +6,10 @@
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"         
     mc:Ignorable="d"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers" 
-    d:DesignHeight="300" d:DesignWidth="400">
+    d:DesignHeight="300" d:DesignWidth="400"
+    xmlns:telerikQuickStart="clr-namespace:Telerik.Windows.Controls.QuickStart;assembly=Telerik.Windows.Controls"
+    xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk">
+
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,10 +24,47 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="Performance Attribution" HorizontalAlignment="Center" VerticalAlignment="Top"  Height="15"/>
-        <telerik:RadButton x:Name="btnExportExcel" Grid.Row="0" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                       Margin="0,0,0,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
+
+        <!--Export Controls-->
+        <!--
+        <telerik:RadButton x:Name="btnExportExcel" Height="15" Width="15" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                       Margin="0,0,41,0" Click="btnExportExcel_Click" ToolTipService.ToolTip="Export">
             <Image Source="/GreenField.Gadgets;component/Images/ExportExcel.png"/>
         </telerik:RadButton>
+        -->
+
+        <Grid  HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button Height="15" Width="15" Grid.Column="1"
+                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center"
+                        Margin="5,0,0,0" Name="btnExportExcel" Click="btnExportExcel_Click">
+                <Image Source="../Images/ExportExcel.png" />
+            </Button>
+            <Button Height="15" Width="15" Grid.Column="2"
+                        BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to PDF"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnExportPDF"
+                        Margin="5,0,0,0" Click="btnExportPDF_Click">
+                <Image Source="../Images/PDF.png" />
+            </Button>
+            <Button Height="15" Width="15" Grid.Column="3"
+                        BorderBrush="White" Background="Black" Opacity="100" ToolTipService.ToolTip="Send Results to a Printer"
+                        HorizontalAlignment="Right" HorizontalContentAlignment="Center" Name="btnPrint"
+                        Margin="5,0,0,0" Click="btnPrint_Click">
+                <Image Source="../Images/Print.png" />
+            </Button>
+
+        </Grid>
+
+
+
         <telerik:RadBusyIndicator x:Name="busyIndicatorGrid" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" Grid.Row="1" Style="{StaticResource BusyIndicatorStyle}">
             <telerik:RadGridView  Name="dgAttribution"  AutoGenerateColumns="False"
                                   ItemsSource="{Binding PeriodAttributionInfo}"                                   
@@ -109,5 +149,13 @@
                 </telerik:RadGridView.SortDescriptors>
             </telerik:RadGridView>
         </telerik:RadBusyIndicator>
+
+        <Grid Grid.Row="3">
+            <telerik:RadRichTextBox x:Name="RichTextBox" Width="0">
+                <!--For Printing the grid-->
+            </telerik:RadRichTextBox>
+        </Grid>
+
     </Grid>
+    
 </helpers:ViewBaseUserControl>

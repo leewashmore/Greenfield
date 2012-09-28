@@ -236,7 +236,7 @@
 
                 <!--Portfolio Selector-->
                 <Grid Margin="5,0,0,0" Visibility="{Binding PortfolioSelectorVisibility}" Grid.Column="1">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" >
                         <TextBlock Text="Portfolio" HorizontalAlignment="Left" VerticalAlignment="Center" Width="Auto" Foreground="Black" 
                                    FontWeight="Bold" Style="{StaticResource TextBlockStyle}"/>
 

@@ -1,18 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
+using Telerik.Windows.Controls;
+using System.IO;
+using Telerik.Windows.Documents.Model;
+using Telerik.Windows.Documents.FormatProviders.Pdf;
+using Telerik.Windows.Data;
+using System.Collections;
+using GreenField.DataContracts;
+
+#if !SILVERLIGHT
+using Microsoft.Win32;
+#else
+using System.Windows.Controls;
+using System.Windows.Printing;
 using GreenField.Gadgets.Helpers;
+using Telerik.Windows.Controls.GridView;
+using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
+using Telerik.Windows.Documents.UI;
 using GreenField.ServiceCaller;
+#endif
+
+
 
 namespace GreenField.Gadgets.Views
 {
@@ -107,6 +120,24 @@ namespace GreenField.Gadgets.Views
            
         }
 
+
+        private void dgAttribution_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+        {
+            RadGridView_ElementExport.ElementExporting(e);
+        }
+        #endregion
+
+        #region ExportToExcel/PDF/Print
+       
+        #region ExcelExport
+        /// <summary>
+        /// Static class storing string types
+        /// </summary>
+        private static class ExportTypes
+        {
+            public const string PERFORMANCE_ATTRIBUTION_UI = "Performance Attribution";
+        }
+
         /// <summary>
         /// Method to catch Click Event of Export to Excel
         /// </summary>
@@ -134,10 +165,68 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        private void dgAttribution_ElementExporting(object sender, Telerik.Windows.Controls.GridViewElementExportingEventArgs e)
+#endregion
+
+        #region HelperMethods
+        /// <summary>
+        /// Element Exporting Event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dgPortfolioDetails_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
-            RadGridView_ElementExport.ElementExporting(e);
+            RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
         }
         #endregion
+
+        #region PDFExport
+        /// <summary>
+        /// Event handler when user wants to Export the Grid to PDF
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExportPDF_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+
+            try
+            {
+                PDFExporter.btnExportPDF_Click(this.dgAttribution);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+        #endregion
+
+        #region Printing the DataGrid
+
+        /// <summary>
+        /// Printing the DataGrid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnPrint_Click(object sender, RoutedEventArgs e)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+   
+            try
+            {
+                Dispatcher.BeginInvoke((Action)(() =>
+                {
+                    RichTextBox.Document = PDFExporter.Print(dgAttribution, 6);
+                }));
+
+                this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
+                RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog(ex.Message);
+            }
+        }
+             #endregion
+     #endregion
     }
 }
