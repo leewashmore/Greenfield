@@ -44,7 +44,7 @@ namespace GreenField.Gadgets.Helpers
 
         void AssociatedObject_LayoutUpdated(object sender, EventArgs e)
         {
-            if (AssociatedObject != null || AssociatedObject.Items.Count == 0)
+            if (AssociatedObject == null || AssociatedObject.Items.Count == 0)
                 return;
 
             GridViewHeaderRow headerRow = AssociatedObject.ChildrenOfType<GridViewHeaderRow>().FirstOrDefault();
@@ -62,6 +62,7 @@ namespace GreenField.Gadgets.Helpers
             frozenRowsContainer.SetValue(Grid.RowProperty, 1);
             frozenRowsContainer.ShowGroupPanel = false;
             frozenRowsContainer.ShowColumnHeaders = false;
+            frozenRowsContainer.RowIndicatorVisibility = AssociatedObject.RowIndicatorVisibility;
             frozenRowsContainer.SetValue(SelectiveScrollingGrid.SelectiveScrollingOrientationProperty, SelectiveScrollingOrientation.Vertical);
 
 
@@ -97,9 +98,11 @@ namespace GreenField.Gadgets.Helpers
                 GridViewDataColumn col = new GridViewDataColumn();
                 col.Width = c.ActualWidth;
                 col.Header = c.Header;
+                col.UniqueName = c.UniqueName;
                 col.DataMemberBinding = c.DataMemberBinding;
                 this.frozenRowsContainer.Columns.Add(col);
             }
+            this.frozenRowsContainer.Columns["Market Capitalization"].IsVisible = false;
         }
 
         private void SyncColumnWidths()
