@@ -164,11 +164,11 @@ namespace GreenField.Web.Services
                         {
                             item.Source = "Industry Analyst";
                         }
-                        else if(record.SOURCE.ToUpper() == "PFV_PE")
+                        else if (record.SOURCE.ToUpper() == "DCF_PE")
                         {
                             item.Source = "DCF-PE";
                         }
-                        else if(record.SOURCE.ToUpper() == "PFV_PBV")
+                        else if (record.SOURCE.ToUpper() == "DCF_PBV")
                         {
                             item.Source = "DCF-PBV";
                         }
