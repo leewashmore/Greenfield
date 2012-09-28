@@ -119,6 +119,34 @@ namespace GreenField.Web.Helpers
             set { _REF = value; }
         }
 
+        private int _numberOfYears;
+        public int NumberOfYears
+        {
+            get { return _numberOfYears; }
+            set { _numberOfYears = value; }
+        }
+
+        private string _uniqueRefNumber;
+        public string UniqueRefNumber
+        {
+            get { return _uniqueRefNumber; }
+            set { _uniqueRefNumber = value; }
+        }
+
+        private Dictionary<string, string> _recordYearRefNo;
+        public Dictionary<string, string> RecordYearRefNo
+        {
+            get
+            {
+                if (_recordYearRefNo == null)
+                {
+                    _recordYearRefNo = new Dictionary<string, string>();
+                }
+                return _recordYearRefNo;
+            }
+            set { _recordYearRefNo = value; }
+        }
+
 
         #endregion
 
@@ -172,6 +200,14 @@ namespace GreenField.Web.Helpers
             }
         }
 
+        private List<ExcelModelDataUpload> _modelUploadData;
+        public List<ExcelModelDataUpload> ModelUploadData
+        {
+            get { return _modelUploadData; }
+            set { _modelUploadData = value; }
+        }
+
+
         #region FirstSixRowsData
 
         private Dictionary<string, int?> _yearList;
@@ -188,8 +224,8 @@ namespace GreenField.Web.Helpers
             set { _yearList = value; }
         }
 
-        private Dictionary<string, DateTime> _periodEndDate;
-        public Dictionary<string, DateTime> PeriodEndDate
+        private Dictionary<string, DateTime?> _periodEndDate;
+        public Dictionary<string, DateTime?> PeriodEndDate
         {
             get { return _periodEndDate; }
             set { _periodEndDate = value; }
@@ -269,6 +305,23 @@ namespace GreenField.Web.Helpers
             set { _year6 = value; }
         }
 
+        /// <summary>
+        /// Years for Which Data is to be loaded
+        /// </summary>
+        private Dictionary<string, int?> _yearsToLoad;
+        public Dictionary<string, int?> YearsToLoad
+        {
+            get
+            {
+                if (_yearsToLoad == null)
+                {
+                    _yearsToLoad = new Dictionary<string, int?>();
+                }
+                return _yearsToLoad;
+            }
+            set { _yearsToLoad = value; }
+        }
+
         #endregion
 
         #endregion
@@ -333,30 +386,260 @@ namespace GreenField.Web.Helpers
                     string modelReferenceSheetId = SheetModelReference.First().Id.Value;
                     WorkSheetPartModelUpload = (WorksheetPart)myWorkbook.WorkbookPart.GetPartById(modelUploadSheetId);
                     WorkSheetPartModelReference = (WorksheetPart)myWorkbook.WorkbookPart.GetPartById(modelReferenceSheetId);
-                    SheetDataModelUpload = WorkSheetPartModelUpload.Worksheet.GetFirstChild<SheetData>();
-                    SheetDataModelReference = WorkSheetPartModelReference.Worksheet.GetFirstChild<SheetData>();
 
-                    ReadModelReferenceData(SheetDataModelReference, workbookPart);
-                    ReadModelUploadData(SheetDataModelUpload, workbookPart);
-                    ReadModelUploadDataFirstRow(SheetDataModelUpload, workbookPart);
-                    ReadModelUploadDataSecondRow(SheetDataModelUpload, workbookPart);
-                    ReadModelUploadDataThirdRow(SheetDataModelUpload, workbookPart);
-                    ReadModelUploadDataFourthRow(SheetDataModelUpload, workbookPart);
-                    ReadModelUploadDataFifthRow(SheetDataModelUpload, workbookPart);
-                    ReadModelUploadDataSixthRow(SheetDataModelUpload, workbookPart);
+                    ReadSheetData(WorkSheetPartModelUpload, WorkSheetPartModelReference);
+                    NumberOfYears = FindNumberOfYearsToLoad(SheetDataModelUpload, workbookPart);
 
-                    #region ValidateModelReferenceData
-
-                    bool modelReferenceDataValid = ValidateModelReferenceData(ModelReferenceData);
-                    
-
-                    #endregion
-
+                    ReadModelReferenceSheetData(workbookPart);
+                    ReadModelUploadSheetData(workbookPart);
+                    ValidateSheetData();
+                    DBDeleteOperations();
+                    DBInsertOperations();
                 }
             }
             catch (Exception ex)
             {
+                ExceptionTrace.LogException(ex);
+            }
+        }
 
+        /// <summary>
+        /// Create SheetData for both the Excel Sheets
+        /// </summary>
+        /// <param name="workSheetPartModelUpload"></param>
+        /// <param name="workSheetPartModelReference"></param>
+        private void ReadSheetData(WorksheetPart workSheetPartModelUpload, WorksheetPart workSheetPartModelReference)
+        {
+            try
+            {
+                SheetDataModelUpload = workSheetPartModelUpload.Worksheet.GetFirstChild<SheetData>();
+                SheetDataModelReference = workSheetPartModelReference.Worksheet.GetFirstChild<SheetData>();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Read Data from the ModelReferenceSheet
+        /// </summary>
+        private void ReadModelReferenceSheetData(WorkbookPart workbookPart)
+        {
+            try
+            {
+                ReadModelReferenceData(SheetDataModelReference, workbookPart);
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Read data from the ModelUploadSheet
+        /// </summary>
+        private void ReadModelUploadSheetData(WorkbookPart workbookPart)
+        {
+            try
+            {
+                ReadModelUploadData(SheetDataModelUpload, workbookPart);
+                ReadModelUploadDataFirstRow(SheetDataModelUpload, workbookPart);
+                ReadModelUploadDataSecondRow(SheetDataModelUpload, workbookPart);
+                ReadModelUploadDataThirdRow(SheetDataModelUpload, workbookPart);
+                ReadModelUploadDataFourthRow(SheetDataModelUpload, workbookPart);
+                ReadModelUploadDataFifthRow(SheetDataModelUpload, workbookPart);
+                ReadModelUploadDataSixthRow(SheetDataModelUpload, workbookPart);
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Validate the Data in both the Sheets
+        /// </summary>
+        private void ValidateSheetData()
+        {
+            try
+            {
+                bool modelReferenceDataValid = ValidateModelReferenceData(ModelReferenceData);
+                if (!modelReferenceDataValid)
+                {
+
+                }
+                ValidateModelUploadData();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Database Operations
+        /// </summary>
+        private void DBDeleteOperations()
+        {
+            try
+            {
+                if (ModelReferenceData != null)
+                {
+                    DeleteInternalStatementRecords(ModelReferenceData.IssuerId, RootSource);
+                    DeleteInternalDataRecords(ModelReferenceData.IssuerId, REF);
+                    DeleteInternalCommodityAssumptionsRecords(ModelReferenceData.IssuerId, REF);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void DBInsertOperations()
+        {
+            try
+            {
+                InsertIntoInternalStatementData();
+                InsertIntoInternalData();
+                InsertIntoInternalCommodityAssumptions();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Insert Data in Internal_Statement
+        /// </summary>
+        private void InsertIntoInternalStatementData()
+        {
+            TimeStamp = DateTime.Now;
+
+            int year = 0;
+            DateTime periodEndDate;
+            string rootSource = UserRole;
+            DateTime currentDate = DateTime.Now;
+            string overRide = "";
+            string amountType = "";
+            string currency = ModelReferenceData.Currencies.First();
+            int periodLength;
+
+            if (ModelReferenceData != null)
+            {
+                foreach (var item in YearsToLoad)
+                {
+                    UniqueRefNumber = Guid.NewGuid().ToString();
+                    periodLength = Convert.ToInt32(PeriodLength.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault());
+                    periodEndDate = Convert.ToDateTime(PeriodEndDate.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault());
+                    overRide = ActualOverride.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
+                    if (overRide.ToUpper().Trim() == "YES" && currentDate > periodEndDate)
+                    {
+                        amountType = "ACTUAL";
+                    }
+                    else
+                    {
+                        amountType = "ESTIMATE";
+                    }
+                    year = Convert.ToInt32(item.Value);
+                    InsertInternalStatementServiceMethod(ModelReferenceData.IssuerId, UniqueRefNumber, year, RootSource, TimeStamp, periodLength, periodEndDate, ModelReferenceData.Currencies.FirstOrDefault(), amountType);
+                    RecordYearRefNo.Add(item.Key, UniqueRefNumber);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Insert Data into Internal_Data
+        /// </summary>
+        private void InsertIntoInternalData()
+        {
+            try
+            {
+                string issuerId = ModelReferenceData.IssuerId;
+                string periodType = "A";
+                decimal? amount;
+                string convertFlag;
+                foreach (var item in YearsToLoad)
+                {
+                    UniqueRefNumber = RecordYearRefNo.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
+                    foreach (ExcelModelDataUpload data in ModelUploadData.Where(a => a.Year == item.Key).ToList())
+                    {
+                        decimal value;
+                        if (Decimal.TryParse(data.Amount as string, out value))
+                        {
+                            amount = value;
+                        }
+                        else
+                        {
+                            amount = null;
+                        }
+
+                        if (amount != null)
+                        {
+                            convertFlag = Convert.ToString(COACodes.Where(a => a.COA == data.COA).Select(a => a.CONVERT_FLAG).FirstOrDefault());
+                            if (convertFlag != null)
+                            {
+                                if (convertFlag.ToUpper().Trim() == "Y")
+                                {
+                                    amount = ConvertAmount(ModelReferenceData.Units.First(), Convert.ToDecimal(amount));
+                                }
+                            }
+                            InsertInternalDataRecords(issuerId, UniqueRefNumber, periodType, data.COA, amount);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        private void CheckInternalIssuer()
+        {
+            string issuerId = ModelReferenceData.IssuerId;
+            string coa = ModelReferenceData.COATypes;
+            string rootSource = UserRole;
+
+            INTERNAL_ISSUER issuerData = FetchInternalIssuerData(issuerId);
+
+            if (issuerData != null)
+            {
+                if (UserRole == "PRIMARY")
+                { 
+                
+                    }
+            }
+
+        }
+
+        /// <summary>
+        /// Insert Data into Internal_Commodity_Assumptions
+        /// </summary>
+        private void InsertIntoInternalCommodityAssumptions()
+        {
+            string issuerId = ModelReferenceData.IssuerId;
+            string commodityId = "";
+
+            foreach (var item in YearsToLoad)
+            {
+                UniqueRefNumber = RecordYearRefNo.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
+                commodityId = CommodityMeasure.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
+
+                decimal value;
+                object forecastValue = CommodityForecastUsed.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
+                if (commodityId != null && forecastValue != null)
+                {
+                    if (Decimal.TryParse(forecastValue as string, out value))
+                    {
+                        InsertInternalCommodityAssumptionsData(issuerId, UniqueRefNumber, commodityId, value);
+                    }
+                }
             }
         }
 
@@ -439,7 +722,7 @@ namespace GreenField.Web.Helpers
         #endregion
 
         #region ValiditityCheckers
-        
+
         /// <summary>
         /// Validate Data in ModelReferenceSheet
         /// </summary>
@@ -450,25 +733,26 @@ namespace GreenField.Web.Helpers
             if (ModelReferenceData.COATypes == null || ModelReferenceData.COATypes.Trim() == "" ||
            ModelReferenceData.Currencies == null || ModelReferenceData.Currencies.FirstOrDefault().Trim() == "")
             {
-                //To-Do
-                //Add code to Progress when COA or Currency is Not Present
-                //Also add check for Units
+                return false;
             }
 
             bool issuerIdValidity = CheckIssuerIdExist(ModelReferenceData.IssuerId);
             if (!issuerIdValidity)
             {
-                //To-Do
-                //Add Code to progress when Check not met
+                return false;
             }
-            bool COAValidity = CheckCOATypeValidity(ModelReferenceData.IssuerId, ModelReferenceData.COATypes);
 
+            bool COAValidity = CheckCOATypeValidity(ModelReferenceData.IssuerId, ModelReferenceData.COATypes);
             if (!COAValidity)
             {
-                //To-Do
-                //Add Code to progress when Check not met
+                return false;
             }
+
             bool checkOverride = CheckOverrideValues();
+            if (!checkOverride)
+            {
+                return false;
+            }
 
             return true;
         }
@@ -480,7 +764,23 @@ namespace GreenField.Web.Helpers
         /// <returns>Tru/False</returns>
         private bool CheckIssuerIdExist(string issuerId)
         {
-            return DimensionEntity.GF_SECURITY_BASEVIEW.Any(a => a.ISSUER_ID == issuerId);
+            try
+            {
+                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUER_ID == issuerId).FirstOrDefault();
+                if (data == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return false;
+            }
         }
 
         /// <summary>
@@ -522,7 +822,7 @@ namespace GreenField.Web.Helpers
         private bool CheckOverrideValues()
         {
             decimal value;
-            if (!Decimal.TryParse(ModelReferenceData.Q1Override as string, out  value))
+            if (Decimal.TryParse(ModelReferenceData.Q1Override as string, out  value))
             {
                 ModelReferenceData.Q1Override = value;
             }
@@ -531,7 +831,7 @@ namespace GreenField.Web.Helpers
                 return false;
             }
 
-            if (!Decimal.TryParse(ModelReferenceData.Q2Override as string, out  value))
+            if (Decimal.TryParse(ModelReferenceData.Q2Override as string, out  value))
             {
                 ModelReferenceData.Q2Override = value;
             }
@@ -540,7 +840,7 @@ namespace GreenField.Web.Helpers
                 return false;
             }
 
-            if (!Decimal.TryParse(ModelReferenceData.Q3Override as string, out  value))
+            if (Decimal.TryParse(ModelReferenceData.Q3Override as string, out  value))
             {
                 ModelReferenceData.Q3Override = value;
             }
@@ -549,7 +849,7 @@ namespace GreenField.Web.Helpers
                 return false;
             }
 
-            if (!Decimal.TryParse(ModelReferenceData.Q4Override as string, out  value))
+            if (Decimal.TryParse(ModelReferenceData.Q4Override as string, out  value))
             {
                 ModelReferenceData.Q4Override = value;
             }
@@ -582,12 +882,14 @@ namespace GreenField.Web.Helpers
         {
             int i = 0;
             int j = 0;
-            string[] rowData = new string[8];
+            string[] rowData = new string[NumberOfYears + 2];
+            string coaType = "";
+            string description = "";
 
-            List<ExcelModelUploadSheet> modelUploadDataCollection = new List<ExcelModelUploadSheet>();
-            ExcelModelUploadSheet data = new ExcelModelUploadSheet();
+            List<ExcelModelDataUpload> excelModelData = new List<ExcelModelDataUpload>();
             foreach (Row r in sheetData.Elements<Row>())
             {
+                rowData = new string[NumberOfYears + 2];
                 if (j > 5)
                 {
                     i = 0;
@@ -615,19 +917,55 @@ namespace GreenField.Web.Helpers
                         i++;
                     }
 
-                    data = new ExcelModelUploadSheet();
-                    data.COAType = rowData[0];
-                    data.DataDescription = rowData[1];
-                    data.YearOne = rowData[2];
-                    data.YearTwo = rowData[3];
-                    data.YearThree = rowData[4];
-                    data.YearFour = rowData[5];
-                    data.YearFive = rowData[6];
-                    data.YearSix = rowData[7];
-                    modelUploadDataCollection.Add(data);
+                    coaType = rowData[0];
+                    description = rowData[1];
+                    ExcelModelDataUpload modelData = new ExcelModelDataUpload();
+                    int count = rowData.Count();
+                    int k = 1;
+                    foreach (string item in rowData)
+                    {
+                        if (k > 2)
+                        {
+                            modelData = new ExcelModelDataUpload();
+                            modelData.COA = coaType;
+                            modelData.Description = description;
+                            modelData.Year = "Y" + (k - 2).ToString();
+                            modelData.Amount = item;
+                            excelModelData.Add(modelData);
+                        }
+                        k++;
+                    }
                 }
                 j++;
             }
+            ModelUploadData = excelModelData;
+        }
+
+        /// <summary>
+        /// Find Number of years to Load Data for
+        /// </summary>
+        /// <param name="sheetData"></param>
+        /// <param name="workbookPart"></param>
+        /// <returns></returns>
+        private int FindNumberOfYearsToLoad(SheetData sheetData, WorkbookPart workbookPart)
+        {
+            int count = 0;
+            int j = 1;
+            foreach (Row r in sheetData.Elements<Row>())
+            {
+                if (r.RowIndex == 1)
+                {
+                    foreach (Cell c in r.Elements<Cell>())
+                    {
+                        if (j > 2)
+                        {
+                            count++;
+                        }
+                        j++;
+                    }
+                }
+            }
+            return count;
         }
 
         /// <summary>
@@ -932,7 +1270,7 @@ namespace GreenField.Web.Helpers
                     {
                         if (Int32.TryParse(item, out value))
                         {
-                            if (value > 1950 || value < 2100)
+                            if (value > 1950 || value < 2200)
                             {
                                 result.Add("Y" + i, value);
                             }
@@ -954,6 +1292,7 @@ namespace GreenField.Web.Helpers
                 }
                 j++;
             }
+            YearsToLoad = result;
             return result;
         }
 
@@ -962,9 +1301,9 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private Dictionary<string, DateTime> SetPeriodEndDate(object[] data)
+        private Dictionary<string, DateTime?> SetPeriodEndDate(object[] data)
         {
-            Dictionary<string, DateTime> result = new Dictionary<string, DateTime>();
+            Dictionary<string, DateTime?> result = new Dictionary<string, DateTime?>();
             DateTime invalid = new DateTime(1900, 1, 31);
             int i = 1;
             int j = 1;
@@ -1090,37 +1429,25 @@ namespace GreenField.Web.Helpers
         #region HelperMethods
 
         /// <summary>
-        /// Retrieve List of all COA Codes from DB for selected COAType
+        /// Convert Amount according to Units
         /// </summary>
-        /// <param name="COA_Type"></param>
-        private void RetrieveCOACodes(string COA_Type)
-        {
-            COACodes = ExternalResearchEntity.RetrieveCOACodes(COA_Type).ToList();
-        }
-
-        /// <summary>
-        /// Check the Role of the User: Primary/Industry
-        /// </summary>
-        /// <param name="userName">UserName</param>
+        /// <param name="units"></param>
+        /// <param name="amount"></param>
         /// <returns></returns>
-        private void CheckUserRole(string userName)
+        private decimal ConvertAmount(string units, decimal amount)
         {
-            GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.
-                Where(a => a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper()).FirstOrDefault();
-            if (data != null)
+            switch (units)
             {
-                UserRole = "PRIMARY";
-                RootSource = "PRIMARY";
-            }
-            data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper() == userName.ToUpper()).FirstOrDefault();
-            if (data != null)
-            {
-                UserRole = "INDUSTRY";
-                RootSource = "INDUSTRY";
-            }
-            else
-            {
-                UserRole = "";
+                case "MILLIONS":
+                    return amount;
+                case "THOUSANDS":
+                    return amount / 1000M;
+                case "UNITS":
+                    return amount / 1000000M;
+                case "BILLIONS":
+                    return amount * 1000M;
+                default:
+                    return amount;
             }
         }
 
@@ -1134,12 +1461,12 @@ namespace GreenField.Web.Helpers
         /// <param name="modelUploadData">Model Upload Data read from Sheet</param>
         /// <param name="COAList">COA codes returned from DB</param>
         /// <returns>Result of the match</returns>
-        private bool CheckCOACodes(List<ExcelModelUploadSheet> modelUploadData, List<DataPointsModelUploadData> COAList)
+        private bool CheckCOACodes(List<ExcelModelDataUpload> modelUploadData, List<DataPointsModelUploadData> COAList)
         {
             bool result = true;
             foreach (DataPointsModelUploadData item in COAList)
             {
-                if (modelUploadData.Any(a => a.COAType != item.COA))
+                if (modelUploadData.Any(a => a.COA != item.COA))
                 {
                     result = false;
                 }
@@ -1184,6 +1511,10 @@ namespace GreenField.Web.Helpers
                             }
                         }
                     }
+                    else
+                    {
+                        RemoveBadYearData(item.Key);
+                    }
                 }
             }
         }
@@ -1220,7 +1551,11 @@ namespace GreenField.Web.Helpers
             {
                 foreach (var item in actualOverride)
                 {
-                    if (item.Value == null || item.Value.ToUpper() != "YES" || item.Value.ToUpper() != "NO")
+                    if (item.Value == null)
+                    {
+                        RemoveBadYearData(item.Key);
+                    }
+                    if (item.Value.ToUpper() != "YES" && item.Value.ToUpper() != "NO")
                     {
                         RemoveBadYearData(item.Key);
                     }
@@ -1236,29 +1571,60 @@ namespace GreenField.Web.Helpers
         {
             if (yearName != null)
             {
-                switch (yearName)
+                bool exists = YearsToLoad.Any(a => a.Key == yearName);
+                if (exists)
                 {
-                    case "Y1":
-                        Year1 = false;
-                        break;
-                    case "Y2":
-                        Year2 = false;
-                        break;
-                    case "Y3":
-                        Year3 = false;
-                        break;
-                    case "Y4":
-                        Year4 = false;
-                        break;
-                    case "Y5":
-                        Year5 = false;
-                        break;
-                    case "Y6":
-                        Year6 = false;
-                        break;
-                    default:
-                        break;
+                    YearsToLoad.Remove(yearName);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Validate the Values of Amount in the Excel
+        /// </summary>
+        private void ValidateAmountValues()
+        {
+            try
+            {
+                decimal value;
+                ModelUploadData = ModelUploadData.Where(a => Decimal.TryParse(a.Amount as string, out value)).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Validate ModelUpload Sheet Data
+        /// </summary>
+        private void ValidateModelUploadData()
+        {
+            try
+            {
+                if (ModelReferenceData != null || ModelReferenceData.IssuerId != null)
+                {
+                    RetrieveCOAList(ModelReferenceData.IssuerId);
+                }
+                if (UserName != null)
+                {
+                    FetchUserRole(UserName);
+                }
+                bool validateCOACodes = CheckCOACodes(ModelUploadData, COACodes);
+                if (!validateCOACodes)
+                {
+                    //To-Do
+                    //Add Exception Details
+                }
+                ValidatePeriodYears(YearList);
+                ValidateEndDates(PeriodEndDate);
+                ValidatePeriodLength(PeriodLength);
+                ValidateActualOverride(ActualOverride);
+                ValidateAmountValues();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
             }
         }
 
@@ -1268,7 +1634,7 @@ namespace GreenField.Web.Helpers
 
         #region DataBaseInteractivity
 
-        #region InsertData
+        #region DeleteData-Service Methods
 
         /// <summary>
         /// Delete data from Internal_Statement
@@ -1277,7 +1643,14 @@ namespace GreenField.Web.Helpers
         /// <param name="rootSource"></param>
         private void DeleteInternalStatementRecords(string issuerId, string rootSource)
         {
-            REF = ExternalResearchEntity.ModelDeleteInteralStatement(issuerId, rootSource).ToList();
+            try
+            {
+                REF = ExternalResearchEntity.ModelDeleteInteralStatement(issuerId, rootSource).ToList();
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
         }
 
         /// <summary>
@@ -1287,12 +1660,19 @@ namespace GreenField.Web.Helpers
         /// <param name="refList"></param>
         private void DeleteInternalDataRecords(string issuerId, List<string> refList)
         {
-            if (refList != null)
+            try
             {
-                foreach (string item in refList)
+                if (refList != null)
                 {
-                    ExternalResearchEntity.ModelDeleteInternalData(issuerId, item);
+                    foreach (string item in refList)
+                    {
+                        ExternalResearchEntity.ModelDeleteInternalData(issuerId, item);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
@@ -1303,12 +1683,20 @@ namespace GreenField.Web.Helpers
         /// <param name="refList"></param>
         private void DeleteInternalCommodityAssumptionsRecords(string issuerId, List<string> refList)
         {
-            if (refList != null || issuerId != null)
+            try
             {
-                foreach (string item in refList)
+                if (refList != null || issuerId != null)
                 {
-                    ExternalResearchEntity.ModelDeleteInternalData(issuerId, item);
+                    foreach (string item in refList)
+                    {
+                        ExternalResearchEntity.ModelDeleteInternalCommodityAssumptions(issuerId, item);
+
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
@@ -1321,9 +1709,16 @@ namespace GreenField.Web.Helpers
         /// <param name="lastIndustryModelLoad"></param>
         private void DeleteInternalIssuerRecords(string issuerId, string COA_Type, DateTime lastPrimaryModelLoad, DateTime lastIndustryModelLoad)
         {
-            if (issuerId != null && COA_Type != null)
+            try
             {
-                ExternalResearchEntity.ModelDeleteInternalIssuer(issuerId);
+                if (issuerId != null && COA_Type != null)
+                {
+                    ExternalResearchEntity.ModelDeleteInternalIssuer(issuerId);
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
@@ -1332,20 +1727,27 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="issuerId">Issuer_Id</param>
         /// <param name="dataSource">Data_Source</param>
-        private void DeleteInternalIssuerQuarterelyAssumptions(string issuerId, string dataSource)
+        private void DeleteInternalIssuerQuarterelyDistribution(string issuerId, string dataSource)
         {
-            if (issuerId != null && dataSource != null)
+            try
             {
-                ExternalResearchEntity.ModelDeleteInternalIssuerQuarterlyDistribution(issuerId, dataSource);
+                if (issuerId != null && dataSource != null)
+                {
+                    ExternalResearchEntity.ModelDeleteInternalIssuerQuarterlyDistribution(issuerId, dataSource);
+                }
+            }
+            catch (Exception ex)
+            {
+
             }
         }
 
         #endregion
 
-        #region InsertData
+        #region InsertData-Service Methods
 
         /// <summary>
-        /// Insert Record in Internal_Statement
+        /// Insert Record in Internal_Statement Service Methods
         /// </summary>
         /// <param name="issuerId">Issuer Id</param>
         /// <param name="refNo">REF No</param>
@@ -1356,14 +1758,22 @@ namespace GreenField.Web.Helpers
         /// <param name="periodEndDate">Period End Date</param>
         /// <param name="currency">Currency</param>
         /// <param name="amountType">Amount Type</param>
-        private void InsertInternalStatementRecords
+        private void InsertInternalStatementServiceMethod
             (string issuerId, string refNo, int periodYear, string rootSource, DateTime rootSourceDate,
                 int periodLength, DateTime periodEndDate, string currency, string amountType)
         {
-            if (issuerId != null)
+            try
             {
-                ExternalResearchEntity.ModelInsertInternalStatement(issuerId, refNo, periodYear, rootSource, rootSourceDate,
-                    periodLength, periodEndDate, currency, amountType);
+                if (issuerId != null)
+                {
+                    ExternalResearchEntity.ModelInsertInternalStatement(issuerId, refNo, periodYear, rootSource, rootSourceDate,
+                        periodLength, periodEndDate, currency, amountType);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
 
@@ -1377,18 +1787,35 @@ namespace GreenField.Web.Helpers
         /// <param name="amount"></param>
         private void InsertInternalDataRecords(string issuerId, string refNo, string periodType, string COA, decimal? amount)
         {
-            if (issuerId != null || refNo != null)
+            try
             {
-                ExternalResearchEntity.ModelInsertInternalData(issuerId, refNo, periodType, COA, amount);
+                if (issuerId != null || refNo != null)
+                {
+                    ExternalResearchEntity.ModelInsertInternalData(issuerId, refNo, periodType, COA, amount);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
             }
         }
 
         /// <summary>
         /// Insert data into Internal_Commodity_Assumptions
         /// </summary>
-        private void InsertInternalCommodityAssumptionsData()
+        private void InsertInternalCommodityAssumptionsData(string issuerId, string ref_no, string commodityId, decimal amount)
         {
-
+            try
+            {
+                if (issuerId != null && ref_no != null)
+                {
+                    ExternalResearchEntity.ModelInsertInternalCommodityAssumptions(issuerId, ref_no, commodityId, amount);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
         }
 
         /// <summary>
@@ -1400,9 +1827,17 @@ namespace GreenField.Web.Helpers
         /// <param name="lastIndustryModelLoad"></param>
         private void InsertInternalIssuerData(string issuerId, string COA_Type, DateTime lastPrimaryModelLoad, DateTime lastIndustryModelLoad)
         {
-            if (issuerId != null)
+            try
             {
-                ExternalResearchEntity.ModelInsertInternalIssuer(issuerId, COA_Type, lastPrimaryModelLoad, lastIndustryModelLoad);
+                if (issuerId != null)
+                {
+                    ExternalResearchEntity.ModelInsertInternalIssuer(issuerId, COA_Type, lastPrimaryModelLoad, lastIndustryModelLoad);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
             }
         }
 
@@ -1416,9 +1851,112 @@ namespace GreenField.Web.Helpers
         /// <param name="lastUpdated"></param>
         private void InsertInternalIssuerQuarterlyDistribution(string issuerId, string dataSource, string periodType, decimal percentage, DateTime lastUpdated)
         {
-            if (issuerId != null && dataSource != null)
+            try
             {
-                ExternalResearchEntity.ModelInsertInternalIssuerQuaterelyDistribution(issuerId, dataSource, periodType, percentage, lastUpdated);
+                if (issuerId != null && dataSource != null)
+                {
+                    ExternalResearchEntity.ModelInsertInternalIssuerQuaterelyDistribution(issuerId, dataSource, periodType, percentage, lastUpdated);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        #endregion
+
+
+        #region UpdateData
+
+        /// <summary>
+        /// Update Internal_Issuer
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="lastPrimaryUpload"></param>
+        /// <param name="lastIndustryUpload"></param>
+        private void UpdateInternalIssuer(string issuerId, DateTime lastPrimaryUpload, DateTime lastIndustryUpload)
+        {
+            try
+            {
+                if (issuerId != null)
+                {
+                    ExternalResearchEntity.ModelUpdateDataInternalIssuer(issuerId, lastPrimaryUpload, lastIndustryUpload);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+        
+        #endregion
+
+
+        #region FetchData
+
+        /// <summary>
+        /// Retrieve List of COA for selected Issuer
+        /// </summary>
+        /// <param name="issuerId"></param>
+        private void RetrieveCOAList(string issuerId)
+        {
+            try
+            {
+                List<DataPointsModelUploadData> result = new List<DataPointsModelUploadData>();
+                result = ExternalResearchEntity.RetrieveDataPointsModelUpload(issuerId).ToList();
+                COACodes = result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Check the Role of the User: Primary/Industry
+        /// </summary>
+        /// <param name="userName">UserName</param>
+        /// <returns></returns>
+        private void FetchUserRole(string userName)
+        {
+            GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.
+                Where(a => a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper()).FirstOrDefault();
+            if (data != null)
+            {
+                UserRole = "PRIMARY";
+                RootSource = "PRIMARY";
+            }
+            data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper() == userName.ToUpper()).FirstOrDefault();
+            if (data != null)
+            {
+                UserRole = "INDUSTRY";
+                RootSource = "INDUSTRY";
+            }
+            else
+            {
+                UserRole = "";
+            }
+        }
+
+        /// <summary>
+        /// Internal_Issuer: Retrieve Data
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <returns></returns>
+        private INTERNAL_ISSUER FetchInternalIssuerData(string issuerId)
+        {
+            try
+            {
+                INTERNAL_ISSUER result = new INTERNAL_ISSUER();
+                result = ExternalResearchEntity.ModelRetrieveInternalIssuer(issuerId).ToList().FirstOrDefault();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
             }
         }
 
