@@ -37,3 +37,10 @@ E:\Repository\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ResolveAssemblyReferen
 E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe.config
 E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.exe
 E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.pdb
+E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe
+E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.pdb
+E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\CommandLine.dll
+E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.dll
+E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.pdfa.dll
+E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\log4net.dll
+E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ResolveAssemblyReference.cache
