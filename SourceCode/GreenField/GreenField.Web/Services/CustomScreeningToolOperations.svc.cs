@@ -694,7 +694,7 @@ namespace GreenField.Web.Services
                     portfolioTargets.Add(new CompositeFundData()
                     {
                         SecurityId = item.SECURITY_ID,
-                        Target = item.TARGET_PC,
+                        Target = item.TARGET_PCT,
                         IssuerId = entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault()!= null ?
                                 entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault().ISSUER_ID : null,
                         CountryName = entity.GF_SECURITY_BASEVIEW.Where(a => a.SECURITY_ID == Convert.ToInt32(item.SECURITY_ID)).FirstOrDefault() != null ?

@@ -5753,15 +5753,15 @@ namespace GreenField.DAL
         /// </summary>
         /// <param name="pORTFOLIO_ID">Initial value of the PORTFOLIO_ID property.</param>
         /// <param name="sECURITY_ID">Initial value of the SECURITY_ID property.</param>
-        /// <param name="tARGET_PC">Initial value of the TARGET_PC property.</param>
-        /// <param name="uPDATE">Initial value of the UPDATE property.</param>
-        public static PORTFOLIO_SECURITY_TARGETS CreatePORTFOLIO_SECURITY_TARGETS(global::System.String pORTFOLIO_ID, global::System.String sECURITY_ID, global::System.Decimal tARGET_PC, global::System.DateTime uPDATE)
+        /// <param name="tARGET_PCT">Initial value of the TARGET_PCT property.</param>
+        /// <param name="uPDATED">Initial value of the UPDATED property.</param>
+        public static PORTFOLIO_SECURITY_TARGETS CreatePORTFOLIO_SECURITY_TARGETS(global::System.String pORTFOLIO_ID, global::System.String sECURITY_ID, global::System.Decimal tARGET_PCT, global::System.DateTime uPDATED)
         {
             PORTFOLIO_SECURITY_TARGETS pORTFOLIO_SECURITY_TARGETS = new PORTFOLIO_SECURITY_TARGETS();
             pORTFOLIO_SECURITY_TARGETS.PORTFOLIO_ID = pORTFOLIO_ID;
             pORTFOLIO_SECURITY_TARGETS.SECURITY_ID = sECURITY_ID;
-            pORTFOLIO_SECURITY_TARGETS.TARGET_PC = tARGET_PC;
-            pORTFOLIO_SECURITY_TARGETS.UPDATE = uPDATE;
+            pORTFOLIO_SECURITY_TARGETS.TARGET_PCT = tARGET_PCT;
+            pORTFOLIO_SECURITY_TARGETS.UPDATED = uPDATED;
             return pORTFOLIO_SECURITY_TARGETS;
         }
 
@@ -5827,54 +5827,54 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal TARGET_PC
+        public global::System.Decimal TARGET_PCT
         {
             get
             {
-                return _TARGET_PC;
+                return _TARGET_PCT;
             }
             set
             {
-                if (_TARGET_PC != value)
+                if (_TARGET_PCT != value)
                 {
-                    OnTARGET_PCChanging(value);
-                    ReportPropertyChanging("TARGET_PC");
-                    _TARGET_PC = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("TARGET_PC");
-                    OnTARGET_PCChanged();
+                    OnTARGET_PCTChanging(value);
+                    ReportPropertyChanging("TARGET_PCT");
+                    _TARGET_PCT = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TARGET_PCT");
+                    OnTARGET_PCTChanged();
                 }
             }
         }
-        private global::System.Decimal _TARGET_PC;
-        partial void OnTARGET_PCChanging(global::System.Decimal value);
-        partial void OnTARGET_PCChanged();
+        private global::System.Decimal _TARGET_PCT;
+        partial void OnTARGET_PCTChanging(global::System.Decimal value);
+        partial void OnTARGET_PCTChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.DateTime UPDATE
+        public global::System.DateTime UPDATED
         {
             get
             {
-                return _UPDATE;
+                return _UPDATED;
             }
             set
             {
-                if (_UPDATE != value)
+                if (_UPDATED != value)
                 {
-                    OnUPDATEChanging(value);
-                    ReportPropertyChanging("UPDATE");
-                    _UPDATE = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("UPDATE");
-                    OnUPDATEChanged();
+                    OnUPDATEDChanging(value);
+                    ReportPropertyChanging("UPDATED");
+                    _UPDATED = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UPDATED");
+                    OnUPDATEDChanged();
                 }
             }
         }
-        private global::System.DateTime _UPDATE;
-        partial void OnUPDATEChanging(global::System.DateTime value);
-        partial void OnUPDATEChanged();
+        private global::System.DateTime _UPDATED;
+        partial void OnUPDATEDChanging(global::System.DateTime value);
+        partial void OnUPDATEDChanged();
 
         #endregion
     

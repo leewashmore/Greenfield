@@ -182,8 +182,8 @@
             <DefiningQuery>SELECT 
       [PORTFOLIO_SECURITY_TARGETS].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
       [PORTFOLIO_SECURITY_TARGETS].[SECURITY_ID] AS [SECURITY_ID], 
-      [PORTFOLIO_SECURITY_TARGETS].[TARGET_PC] AS [TARGET_PC], 
-      [PORTFOLIO_SECURITY_TARGETS].[UPDATE] AS [UPDATE]
+      [PORTFOLIO_SECURITY_TARGETS].[TARGET_PCT] AS [TARGET_PCT], 
+      [PORTFOLIO_SECURITY_TARGETS].[UPDATED] AS [UPDATED]
       FROM [dbo].[PORTFOLIO_SECURITY_TARGETS] AS [PORTFOLIO_SECURITY_TARGETS]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="PRICES" EntityType="ExternalResearchModel.Store.PRICES" store:Type="Tables" store:Schema="dbo" store:Name="PRICES">
@@ -522,13 +522,13 @@
           <Key>
             <PropertyRef Name="PORTFOLIO_ID" />
             <PropertyRef Name="SECURITY_ID" />
-            <PropertyRef Name="TARGET_PC" />
-            <PropertyRef Name="UPDATE" />
+            <PropertyRef Name="TARGET_PCT" />
+            <PropertyRef Name="UPDATED" />
           </Key>
           <Property Name="PORTFOLIO_ID" Type="varchar" Nullable="false" MaxLength="20" />
           <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="TARGET_PC" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="UPDATE" Type="datetime" Nullable="false" />
+          <Property Name="TARGET_PCT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPDATED" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
@@ -822,20 +822,20 @@
 					<EntitySet Name="PERIOD_FINANCIALS_DISPLAY" EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" />
 					<EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.REUTERS_XREF" />
 					<FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
-					<Parameter Name="SecurityID" Mode="In" Type="String" />
+          <Parameter Name="SecurityID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
-					<Parameter Name="XRef" Mode="In" Type="String" />
+          <Parameter Name="XRef" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetConsensusEstimatesSummaryData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimatesSummaryData)">
-					<Parameter Name="Security" Mode="In" Type="String" />
+          <Parameter Name="Security" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="usp_GetQuarterlyResults" ReturnType="Collection(ExternalResearchModel.QuarterlyResults)">
-						<Parameter Name="DataId" Mode="In" Type="Int32" />
+            <Parameter Name="DataId" Mode="In" Type="Int32" />
             <Parameter Name="PeriodYear" Mode="In" Type="Int32" />
           </FunctionImport>
 					<FunctionImport Name="GetConsensusEstimateData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateMedianData)">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -852,7 +852,7 @@
 					</FunctionImport>
 
 					<FunctionImport Name="GetConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -862,7 +862,7 @@
             <Parameter Name="Security_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetConsensusDetail" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateDetailData)">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -870,12 +870,12 @@
           </FunctionImport>
 					<EntitySet Name="PRICES" EntityType="ExternalResearchModel.PRICE" />
 					<FunctionImport Name="Get_PRevenue" ReturnType="Collection(ExternalResearchModel.GetPRevenueData_Result)">
-						<Parameter Name="securityId" Mode="In" Type="String" />
+            <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="issuerId" Mode="In" Type="String" />
             <Parameter Name="chartTitle" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -883,69 +883,69 @@
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetDataForPeriodGadgets" ReturnType="Collection(ExternalResearchModel.COASpecificData)">
-						<Parameter Name="cSource" Mode="In" Type="String" />
+            <Parameter Name="cSource" Mode="In" Type="String" />
             <Parameter Name="cFiscalType" Mode="In" Type="String" />
             <Parameter Name="cCurrency" Mode="In" Type="String" />
             <Parameter Name="cIssuerID" Mode="In" Type="String" />
             <Parameter Name="cSecurityID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetFinstatDetail" ReturnType="Collection(ExternalResearchModel.FinstatDetail)">
-						<Parameter Name="issuerID" Mode="In" Type="String" />
+            <Parameter Name="issuerID" Mode="In" Type="String" />
             <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="dataSource" Mode="In" Type="String" />
             <Parameter Name="fiscalType" Mode="In" Type="String" />
             <Parameter Name="currency" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="Get_EV_EBITDA" ReturnType="Collection(ExternalResearchModel.GetEV_EBITDAData_Result)">
-						<Parameter Name="securityId" Mode="In" Type="String" />
+            <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="issuerId" Mode="In" Type="String" />
             <Parameter Name="chartTitle" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetFinstatEconomicMarketData" ReturnType="Collection(ExternalResearchModel.FinstatEconomicMarketData)">
-						<Parameter Name="issuerID" Mode="In" Type="String" />
+            <Parameter Name="issuerID" Mode="In" Type="String" />
             <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="dataSource" Mode="In" Type="String" />
             <Parameter Name="fiscalType" Mode="In" Type="String" />
             <Parameter Name="currency" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetFinstatRelativeAnalysisData" ReturnType="Collection(ExternalResearchModel.FinstatRelativeAnalysisData)">
-						<Parameter Name="issuerID" Mode="In" Type="String" />
+            <Parameter Name="issuerID" Mode="In" Type="String" />
             <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="dataSource" Mode="In" Type="String" />
             <Parameter Name="fiscalType" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetMarketCap" ReturnType="Collection(Decimal)" />
 					<FunctionImport Name="GetBrokerDetail" ReturnType="Collection(ExternalResearchModel.BrokerDetailData)">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="ESTIMATE_TYPE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="RetrieveDCFAnalysisSummaryData" ReturnType="Collection(ExternalResearchModel.DCFAnalysisSummaryData_Result)">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="RetrieveSecurityPFVMeasureCurrentPrice" ReturnType="Collection(Decimal)">
-						<Parameter Name="SecurityId" Mode="In" Type="String" />
+            <Parameter Name="SecurityId" Mode="In" Type="String" />
             <Parameter Name="PFVMeasure" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="usp_GetDataForValuationQualityGrowth" ReturnType="Collection(ExternalResearchModel.ValuationQualityGrowthData)">
-						<Parameter Name="issuerIdsForPortfolio" Mode="In" Type="String" />
+            <Parameter Name="issuerIdsForPortfolio" Mode="In" Type="String" />
             <Parameter Name="securityIdsForPortfolio" Mode="In" Type="String" />
             <Parameter Name="issuerIdsForBenchmark" Mode="In" Type="String" />
             <Parameter Name="securityIdsForBenchmark" Mode="In" Type="String" />
           </FunctionImport>
 
 					<FunctionImport Name="GetNewICPresentationSecurityData" ReturnType="Collection(ExternalResearchModel.NewICPresentationSecurityData)">
-					<Parameter Name="securityID" Mode="In" Type="String" />
+          <Parameter Name="securityID" Mode="In" Type="String" />
           </FunctionImport>
 
 
 					<FunctionImport Name="GetDCF_ROIC" ReturnType="Collection(ExternalResearchModel.DCF_ROICResult)">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="YEAR" Mode="In" Type="Int32" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
@@ -953,14 +953,14 @@
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetModelConsensusEstimates" ReturnType="Collection(ExternalResearchModel.ModelConsensusEstimatesData)">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="Get_Statement_Models" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
@@ -971,86 +971,86 @@
 					<EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.FAIR_VALUE" />
 					<EntitySet Name="MODEL_INPUTS_CTY" EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" />
 					<FunctionImport Name="GetDCFRiskFreeRate" EntitySet="MODEL_INPUTS_CTY" ReturnType="Collection(ExternalResearchModel.MODEL_INPUTS_CTY)">
-					<Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
+          <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetDCFMarketCap" ReturnType="Collection(Decimal)">
-					<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetDCFCashFlow" ReturnType="Collection(ExternalResearchModel.DCFCashFlowData)">
-					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetDCFSummaryData" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
-					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetDCF_NumberOfShares" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
-					<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetDCFGDP" ReturnType="Collection(Decimal)">
-					<Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
+          <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetFreeCashFlows" ReturnType="Collection(ExternalResearchModel.GetFreeCashFlows_Result)">
-					<Parameter Name="IssuerId" Mode="In" Type="String" />
+          <Parameter Name="IssuerId" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetFairValueCompositionSummaryData" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
-					<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
-					<Parameter Name="securityBucketXML" Mode="In" Type="String" />
+          <Parameter Name="securityBucketXML" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="GetAmountForUpsideCalculation" ReturnType="Collection(Decimal)">
-						<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_ID" Mode="In" Type="Int32" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="SaveUpdatedFairValueMeasures" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
-						<Parameter Name="securityId" Mode="In" Type="String" />
+            <Parameter Name="securityId" Mode="In" Type="String" />
             <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="RetrieveDataPointsModelUpload" ReturnType="Collection(ExternalResearchModel.DataPointsModelUploadData)">
-					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="RetrieveCOAType" EntitySet="INTERNAL_ISSUER" ReturnType="Collection(ExternalResearchModel.INTERNAL_ISSUER)">
-					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="RetrieveDistinctFXRates" ReturnType="Collection(String)" />
 					<FunctionImport Name="RetrieveCOACodes" ReturnType="Collection(ExternalResearchModel.DataPointsModelUploadData)">
-					<Parameter Name="COA_TYPE" Mode="In" Type="String" />
+          <Parameter Name="COA_TYPE" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="RetrieveCommodityForecasts" ReturnType="Collection(String)" />
 					<FunctionImport Name="ModelDeleteInteralStatement" ReturnType="Collection(String)">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="ModelDeleteInternalData">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="REF_NO" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="ModelDeleteInternalIssuerQuarterlyDistribution">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="ModelInsertInternalData">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="REF_NO" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="COA" Mode="In" Type="String" />
             <Parameter Name="AMOUNT" Mode="In" Type="Decimal" />
           </FunctionImport>
 					<FunctionImport Name="ModelInsertInternalIssuer">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="COA_TYPE" Mode="In" Type="String" />
             <Parameter Name="LASTPRIMARYMODELLOAD" Mode="In" Type="DateTime" />
             <Parameter Name="LASTINDUSTRYMODELLOAD" Mode="In" Type="DateTime" />
           </FunctionImport>
 					<FunctionImport Name="ModelInsertInternalIssuerQuaterelyDistribution">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
             <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
             <Parameter Name="PERCENTAGE" Mode="In" Type="Decimal" />
             <Parameter Name="LAST_UPDATED" Mode="In" Type="DateTime" />
           </FunctionImport>
 					<FunctionImport Name="ModelInsertInternalStatement">
-						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="REF_NO" Mode="In" Type="String" />
             <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
             <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
@@ -1061,10 +1061,10 @@
             <Parameter Name="AMOUNT_TYPE" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="ModelRetrieveInternalIssuer" EntitySet="INTERNAL_ISSUER" ReturnType="Collection(ExternalResearchModel.INTERNAL_ISSUER)">
-					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
 					<FunctionImport Name="ModelDeleteInternalIssuer">
-					<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
 
@@ -1650,13 +1650,13 @@
           <Key>
             <PropertyRef Name="PORTFOLIO_ID" />
             <PropertyRef Name="SECURITY_ID" />
-            <PropertyRef Name="TARGET_PC" />
-            <PropertyRef Name="UPDATE" />
+            <PropertyRef Name="TARGET_PCT" />
+            <PropertyRef Name="UPDATED" />
           </Key>
           <Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="TARGET_PC" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="DateTime" Name="UPDATE" Nullable="false" />
+          <Property Type="Decimal" Name="TARGET_PCT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="DateTime" Name="UPDATED" Nullable="false" />
         </EntityType>
 			</Schema>
 		</edmx:ConceptualModels>
@@ -2346,8 +2346,8 @@
           <EntitySetMapping Name="PORTFOLIO_SECURITY_TARGETS">
             <EntityTypeMapping TypeName="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS">
               <MappingFragment StoreEntitySet="PORTFOLIO_SECURITY_TARGETS">
-                <ScalarProperty Name="UPDATE" ColumnName="UPDATE" />
-                <ScalarProperty Name="TARGET_PC" ColumnName="TARGET_PC" />
+                <ScalarProperty Name="UPDATED" ColumnName="UPDATED" />
+                <ScalarProperty Name="TARGET_PCT" ColumnName="TARGET_PCT" />
                 <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
                 <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
               </MappingFragment>
@@ -2404,7 +2404,7 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
 				<EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="4.75" Height="2.5571907552083388" />
 				<EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9.375" PointY="9.75" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.25" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.375" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
 			</Diagram>
 		</Diagrams>
 	</Designer>
