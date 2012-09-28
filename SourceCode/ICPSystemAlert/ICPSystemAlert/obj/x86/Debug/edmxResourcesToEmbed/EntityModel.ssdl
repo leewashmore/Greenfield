@@ -352,6 +352,9 @@
     <Parameter Name="PresentationId" Type="bigint" Mode="In" />
     <Parameter Name="MeetingId" Type="bigint" Mode="In" />
   </Function>
+  <Function Name="RetrieveICPresentationAttachedFileDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PresentationId" Type="bigint" Mode="In" />
+  </Function>
   <Function Name="SetICPMeetingAttachedFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="UserName" Type="varchar" Mode="In" />
     <Parameter Name="MeetingId" Type="bigint" Mode="In" />

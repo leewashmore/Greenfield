@@ -127,7 +127,12 @@ namespace GreenField.Web.Helpers
                 ChartExtensionData data = new ChartExtensionData();
                 string securityLongName = securityExtensionData.Select(a => a.Ticker).First();
 
-                List<DateTime?> transactionDates = dimensionTransactionData.Select(a => a.TRADE_DATE).Distinct().ToList();
+                List<DateTime?> transactionDates = dimensionTransactionData.Select(a => a.TRADE_DATE).ToList();
+                if (transactionDates == null || transactionDates.Count == 0)
+                {
+                    return securityExtensionData;
+                }
+                transactionDates = transactionDates.Distinct().ToList();
 
                 foreach (DateTime tradeDate in transactionDates)
                 {
@@ -135,8 +140,10 @@ namespace GreenField.Web.Helpers
                     sumSellTransactions = (-1) * dimensionTransactionData.Where(a => a.TRADE_DATE == tradeDate && a.TRANSACTION_CODE.ToUpper() == "SELL").Sum(a => Convert.ToDecimal(a.VALUE_PC));
                     sumTotalTransaction = sumBuyTransactions + sumSellTransactions;
 
-                    if (securityExtensionData.Where(a => a.ToDate == tradeDate) != null)
+                    if (securityExtensionData.Where(a => a.ToDate == tradeDate) != null || securityExtensionData.Where(a => a.ToDate == tradeDate).ToList().Count != 0)
+                    {
                         securityExtensionData.Where(a => a.ToDate == tradeDate).First().AmountTraded = sumTotalTransaction;
+                    }
                     else
                     {
                         data = new ChartExtensionData();

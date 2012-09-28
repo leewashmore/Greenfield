@@ -105,8 +105,7 @@ namespace ICPSystemAlert
                 _presentationIdentifier = options.PresentationIdentifier;
                 _meetingIdentifier = options.MeetingIdentifier;
                 _log.Info(String.Format("Scheduled run minutes - {0} min(s)\nPresentation Identifier - {1}\nMeeting Identifier - {2}"
-                    ,_scheduledRunMinutes, _presentationIdentifier, _meetingIdentifier));
-                
+                    , _scheduledRunMinutes, _presentationIdentifier, _meetingIdentifier));
 
                 switch (options.ForcedRunParameter)
                 {
@@ -154,7 +153,7 @@ namespace ICPSystemAlert
             {
                 List<PresentationDeadlineDetails> presentationDeadlineInfo = new List<PresentationDeadlineDetails>();
 
-                if(_presentationIdentifier != 0 || _meetingIdentifier != 0)
+                if (_presentationIdentifier != 0 || _meetingIdentifier != 0)
                     presentationDeadlineInfo = _entity.GetPresentationDeadlineNotificationDetails(_presentationIdentifier, _meetingIdentifier).ToList();
                 else
                     presentationDeadlineInfo = _entity.GetPresentationDeadlineDetails(_scheduledRunMinutes).ToList();
@@ -260,7 +259,7 @@ namespace ICPSystemAlert
                 if (_presentationIdentifier != 0 || _meetingIdentifier != 0)
                     presentationVotingDeadlineInfo = _entity.GetPresentationVotingDeadlineNotificationDetails(_presentationIdentifier, _meetingIdentifier).ToList();
                 else
-                    presentationVotingDeadlineInfo = _entity.GetPresentationVotingDeadlineDetails(_scheduledRunMinutes).ToList();                    
+                    presentationVotingDeadlineInfo = _entity.GetPresentationVotingDeadlineDetails(_scheduledRunMinutes).ToList();
 
                 List<Int64?> distinctMeetingIds = presentationVotingDeadlineInfo.Select(record => record.MeetingID).ToList().Distinct().ToList();
                 foreach (Int64 meetingId in distinctMeetingIds)
@@ -364,11 +363,11 @@ namespace ICPSystemAlert
             try
             {
                 List<PresentationFinalizeDetails> presentationFinalizeInfo = new List<PresentationFinalizeDetails>();
-                
+
                 if (_presentationIdentifier != 0 || _meetingIdentifier != 0)
                     presentationFinalizeInfo = _entity.GetPresentationFinalizeNotificationDetails(_presentationIdentifier, _meetingIdentifier).ToList();
                 else
-                    presentationFinalizeInfo = _entity.GetPresentationFinalizeDetails(_scheduledRunMinutes).ToList(); 
+                    presentationFinalizeInfo = _entity.GetPresentationFinalizeDetails(_scheduledRunMinutes).ToList();
 
 
                 List<Int64?> distinctMeetingIds = presentationFinalizeInfo.Select(record => record.MeetingID).ToList().Distinct().ToList();
@@ -427,7 +426,7 @@ namespace ICPSystemAlert
                         {
                             emailAttachments = emailAttachments + documentUploadLocation;
                         }
-                    }                  
+                    }
 
                     #endregion
 
@@ -619,7 +618,6 @@ namespace ICPSystemAlert
             Byte[] result = null;
             try
             {
-                //String sourceUrl = _documentServerUrl + "/" + fileName;
                 FieldInformation[] ffieldInfoArray = { new FieldInformation() };
                 UInt32 retrieveResult = _copyService.GetItem(fileName, out ffieldInfoArray, out result);
 
@@ -638,7 +636,7 @@ namespace ICPSystemAlert
         {
             try
             {
-                List<FileMaster> presentationAttachedFileData = _entity.RetrievePresentationAttachedFileDetails(presentationId).ToList();                
+                List<FileMaster> presentationAttachedFileData = _entity.RetrievePresentationAttachedFileDetails(presentationId).ToList();
                 presentationAttachedFileData = presentationAttachedFileData
                     .Where(record => record.Type == "IC Presentations"
                         && (record.Category == "Power Point Presentation"
@@ -646,7 +644,7 @@ namespace ICPSystemAlert
                             || record.Category == "Investment Context Report"
                             || record.Category == "DCF Model"
                             || record.Category == "Additional Attachment")).ToList();
-                _log.Debug(System.Reflection.MethodBase.GetCurrentMethod() + "|PresentationAttachedFileDataIsNullOrEmpty_" 
+                _log.Debug(System.Reflection.MethodBase.GetCurrentMethod() + "|PresentationAttachedFileDataIsNullOrEmpty_"
                     + (presentationAttachedFileData == null ? "True" : (presentationAttachedFileData.Count == 0).ToString()));
                 List<String> downloadedDocumentLocations = GetICPacketSegmentFiles(presentationAttachedFileData);
                 _log.Debug(System.Reflection.MethodBase.GetCurrentMethod() + "|DownloadedDocumentLocationsIsNullOrEmpty_"
@@ -686,7 +684,7 @@ namespace ICPSystemAlert
             }
             catch (Exception ex)
             {
-                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);                
+                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
 
             return result;
@@ -697,7 +695,7 @@ namespace ICPSystemAlert
             String result = null;
             try
             {
-                Byte[] fileData = RetrieveDocument(file.Location.Substring(file.Location.LastIndexOf(@"/") + 1));
+                Byte[] fileData = RetrieveDocument(file.Location);
                 if (fileData == null)
                     return result;
 
@@ -738,7 +736,7 @@ namespace ICPSystemAlert
         private static Byte[] MergePDFFiles(List<String> pdfFileNames)
         {
             Byte[] result = new byte[] { };
-            
+
             try
             {
                 if (pdfFileNames == null || pdfFileNames.Count == 0)
@@ -790,7 +788,7 @@ namespace ICPSystemAlert
                 if (document != null)
                 {
                     document.Close();
-                }                
+                }
 
                 result = File.ReadAllBytes(outFile);
             }
