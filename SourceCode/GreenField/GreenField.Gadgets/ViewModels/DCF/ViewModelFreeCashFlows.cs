@@ -515,7 +515,7 @@ namespace GreenField.Gadgets.ViewModels
                         }
                         else
                         {
-                            item.ValueY7 = valueY6.ToString("N0");
+                            item.ValueY7 = valueY7.ToString("N0");
                         } 
                         if (valueY8 < 0)
                         {
