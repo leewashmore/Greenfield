@@ -488,7 +488,7 @@ namespace GreenField.Gadgets.ViewModels
                         }                       
                         if (valueY5 < 0)
                         {
-                            item.ValueY5 = (!(String.IsNullOrEmpty(item.ValueY5))) ? "(" + valueY5.ToString("N0") + ")" : String.Empty;
+                            item.ValueY5 = "(" + valueY5.ToString("N0") + ")" ;
                             //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
                             item.ValueY5 = item.ValueY5.Replace("-", "");
                         }
@@ -498,7 +498,7 @@ namespace GreenField.Gadgets.ViewModels
                         }
                         if (valueY6 < 0)
                         {
-                            item.ValueY6 = (!(String.IsNullOrEmpty(item.ValueY6))) ? "(" + valueY6.ToString("N0") + ")" : String.Empty;
+                            item.ValueY6 = "(" + valueY6.ToString("N0") + ")";
                             //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
                             item.ValueY6 = item.ValueY6.Replace("-", "");
                         }
@@ -509,7 +509,7 @@ namespace GreenField.Gadgets.ViewModels
 
                         if (valueY7 < 0)
                         {
-                            item.ValueY7 = (!(String.IsNullOrEmpty(item.ValueY7))) ? "(" + valueY7.ToString("N0") + ")" : String.Empty;
+                            item.ValueY7 = "(" + valueY7.ToString("N0") + ")";
                             //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
                             item.ValueY7 = item.ValueY7.Replace("-", "");
                         }
@@ -519,7 +519,7 @@ namespace GreenField.Gadgets.ViewModels
                         } 
                         if (valueY8 < 0)
                         {
-                            item.ValueY8 = (!(String.IsNullOrEmpty(item.ValueY8))) ? "(" + valueY8.ToString("N0") + ")" : String.Empty;
+                            item.ValueY8 = "(" + valueY8.ToString("N0") + ")";
                             //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
                             item.ValueY8 = item.ValueY8.Replace("-", "");
                         }
@@ -529,7 +529,7 @@ namespace GreenField.Gadgets.ViewModels
                         }
                         if (valueY9 < 0)
                         {
-                            item.ValueY9 = (!(String.IsNullOrEmpty(item.ValueY9))) ? "(" + valueY9.ToString("N0") + ")" : String.Empty;
+                            item.ValueY9 = "(" + valueY9.ToString("N0") + ")";
                             //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
                             item.ValueY9 = item.ValueY9.Replace("-", "");
                         }
