@@ -411,7 +411,7 @@ namespace GreenField.Gadgets.ViewModels
                 valueY3 = decimal.TryParse(item.ValueY3, out valueY3) ? valueY3 : 0;
                 valueY4 = decimal.TryParse(item.ValueY4, out valueY4) ? valueY4 : 0;
 
-                valueY5 = ((valueY0 + valueY1 + valueY2 + valueY3 + valueY4 + valueY5) / 5) * 0.99M;               
+                valueY5 = ((valueY0 + valueY1 + valueY2 + valueY3 + valueY4) / 5) * 0.99M;               
                
                 valueY6 = valueY5 * 0.99M;
                 valueY7 = valueY6 * 0.99M;
@@ -485,31 +485,31 @@ namespace GreenField.Gadgets.ViewModels
                             }
                             else
                                 item.ValueY4 = Convert.ToDecimal(item.ValueY4).ToString("N0");
-                        }
-                        if (!String.IsNullOrEmpty(item.ValueY5))
-                        {
-                            if (Convert.ToDecimal(item.ValueY5) < 0)
-                            {
-                                item.ValueY5 = "(" + Convert.ToDecimal(item.ValueY5).ToString("N0") + ")";
-                                item.ValueY5 = item.ValueY5.Replace("-", "");
-                            }
-                            else
-                                item.ValueY5 = Convert.ToDecimal(item.ValueY5).ToString("N0");
-                        }
+                        }                       
                         if (valueY5 < 0)
                         {
-                            item.ValueY6 = (!(String.IsNullOrEmpty(item.ValueY6))) ? "(" + valueY5.ToString("N0") + ")" : String.Empty;
+                            item.ValueY5 = (!(String.IsNullOrEmpty(item.ValueY5))) ? "(" + valueY5.ToString("N0") + ")" : String.Empty;
+                            //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
+                            item.ValueY5 = item.ValueY5.Replace("-", "");
+                        }
+                        else
+                        {
+                            item.ValueY5 = valueY5.ToString("N0");
+                        }
+                        if (valueY6 < 0)
+                        {
+                            item.ValueY6 = (!(String.IsNullOrEmpty(item.ValueY6))) ? "(" + valueY6.ToString("N0") + ")" : String.Empty;
                             //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
                             item.ValueY6 = item.ValueY6.Replace("-", "");
                         }
                         else
                         {
-                            item.ValueY6 = valueY5.ToString("N0");
+                            item.ValueY6 = valueY6.ToString("N0");
                         }
 
-                        if (valueY6 < 0)
+                        if (valueY7 < 0)
                         {
-                            item.ValueY7 = (!(String.IsNullOrEmpty(item.ValueY7))) ? "(" + valueY6.ToString("N0") + ")" : String.Empty;
+                            item.ValueY7 = (!(String.IsNullOrEmpty(item.ValueY7))) ? "(" + valueY7.ToString("N0") + ")" : String.Empty;
                             //item.ValueY6 = "(" + Convert.ToDecimal(item.ValueY6).ToString("N0") + ")";
                             item.ValueY7 = item.ValueY7.Replace("-", "");
                         }
