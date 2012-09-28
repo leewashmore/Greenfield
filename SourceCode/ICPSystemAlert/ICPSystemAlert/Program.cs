@@ -102,12 +102,11 @@ namespace ICPSystemAlert
             if (CommandLineParser.Default.ParseArguments(args, options))
             {
                 _scheduledRunMinutes = options.ScheduledRunMinutes;
-                _presentationIdentifier = 27;// options.PresentationIdentifier;
+                _presentationIdentifier = options.PresentationIdentifier;
                 _meetingIdentifier = options.MeetingIdentifier;
                 _log.Info(String.Format("Scheduled run minutes - {0} min(s)\nPresentation Identifier - {1}\nMeeting Identifier - {2}"
                     , _scheduledRunMinutes, _presentationIdentifier, _meetingIdentifier));
 
-                options.ForcedRunParameter = 1;
                 switch (options.ForcedRunParameter)
                 {
                     case 1:
