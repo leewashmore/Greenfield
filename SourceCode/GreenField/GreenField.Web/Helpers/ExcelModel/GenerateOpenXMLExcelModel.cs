@@ -84,8 +84,8 @@ namespace GreenField.Web.ExcelModel
                 ModelData = modelData;
                 ModelReferenceData = modelData.ModelReferenceData;
                 ModelUploadDataPoints = modelData.ModelUploadDataPoints;
-                Commodities = modelData.Commodities;
-                Currencies = modelData.Currencies;
+                Commodities = new List<string>();
+                Currencies = new List<string>();
                 // Create a spreadsheet document by supplying the filepath.
                 // By default, AutoSave = true, Editable = true, and Type = xlsx.
                 using (SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.
@@ -810,17 +810,17 @@ namespace GreenField.Web.ExcelModel
             //}
 
             string commodities="";
-            foreach (string item in Commodities)
-            {
-                if (Commodities[0] != item)
-                {
-                    commodities = commodities + "," + item;
-                }
-                else
-                {
-                    commodities = item;
-                }
-            }
+            //foreach (string item in Commodities)
+            //{
+            //    if (Commodities[0] != item)
+            //    {
+            //        commodities = commodities + "," + item;
+            //    }
+            //    else
+            //    {
+            //        commodities = item;
+            //    }
+            //}
               
             StringBuilder commodityList = new StringBuilder();
             commodityList.Append('"');

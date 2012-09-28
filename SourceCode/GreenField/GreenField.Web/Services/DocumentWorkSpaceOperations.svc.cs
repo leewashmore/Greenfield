@@ -529,13 +529,13 @@ namespace GreenField.Web.Services
 
                 dataPointsExcelUpload = RetrieveModelUploadDataPoints(issuerID);
                 dataPointsModelReference = RetrieveExcelModelReferenceData(issuerID, securityDetails);
-                commodities = entity.RetrieveCommodityForecasts().ToList();
+                commodities = new List<string>();
                 ExcelModelData excelModelData = new ExcelModelData();
                 excelModelData.ModelReferenceData = dataPointsModelReference;
                 excelModelData.ModelUploadDataPoints = dataPointsExcelUpload;
-                excelModelData.Currencies = entity.RetrieveDistinctFXRates().ToList();
+                excelModelData.Currencies = new List<string>();
                 excelModelData.Commodities = commodities;
-                ReadOpenXMLModel model = new ReadOpenXMLModel();
+                //ReadOpenXMLModel model = new ReadOpenXMLModel();
                 //model.ReadExcelData();
                 return GenerateOpenXMLExcelModel.GenerateExcel(resultReuters, resultConsensus, currencyReuters, currencyConsensus, excelModelData);
             }
