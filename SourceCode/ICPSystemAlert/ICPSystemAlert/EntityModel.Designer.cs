@@ -419,25 +419,6 @@ namespace ICPSystemAlert
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="scheduleMinutes">No Metadata Documentation available.</param>
-        public ObjectResult<PresentationDeadlineDetails> GetPresentationDeadlineDetails(Nullable<global::System.Int32> scheduleMinutes)
-        {
-            ObjectParameter scheduleMinutesParameter;
-            if (scheduleMinutes.HasValue)
-            {
-                scheduleMinutesParameter = new ObjectParameter("ScheduleMinutes", scheduleMinutes);
-            }
-            else
-            {
-                scheduleMinutesParameter = new ObjectParameter("ScheduleMinutes", typeof(global::System.Int32));
-            }
-    
-            return base.ExecuteFunction<PresentationDeadlineDetails>("GetPresentationDeadlineDetails", scheduleMinutesParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="scheduleMinutes">No Metadata Documentation available.</param>
         public ObjectResult<PresentationFinalizeDetails> GetPresentationFinalizeDetails(Nullable<global::System.Int32> scheduleMinutes)
         {
             ObjectParameter scheduleMinutesParameter;
@@ -776,36 +757,6 @@ namespace ICPSystemAlert
         /// </summary>
         /// <param name="presentationId">No Metadata Documentation available.</param>
         /// <param name="meetingId">No Metadata Documentation available.</param>
-        public ObjectResult<PresentationDeadlineDetails> GetPresentationDeadlineNotificationDetails(Nullable<global::System.Int64> presentationId, Nullable<global::System.Int64> meetingId)
-        {
-            ObjectParameter presentationIdParameter;
-            if (presentationId.HasValue)
-            {
-                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
-            }
-            else
-            {
-                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
-            }
-    
-            ObjectParameter meetingIdParameter;
-            if (meetingId.HasValue)
-            {
-                meetingIdParameter = new ObjectParameter("MeetingId", meetingId);
-            }
-            else
-            {
-                meetingIdParameter = new ObjectParameter("MeetingId", typeof(global::System.Int64));
-            }
-    
-            return base.ExecuteFunction<PresentationDeadlineDetails>("GetPresentationDeadlineNotificationDetails", presentationIdParameter, meetingIdParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="presentationId">No Metadata Documentation available.</param>
-        /// <param name="meetingId">No Metadata Documentation available.</param>
         public ObjectResult<PresentationFinalizeDetails> GetPresentationFinalizeNotificationDetails(Nullable<global::System.Int64> presentationId, Nullable<global::System.Int64> meetingId)
         {
             ObjectParameter presentationIdParameter;
@@ -859,6 +810,93 @@ namespace ICPSystemAlert
             }
     
             return base.ExecuteFunction<PresentationVotingDeadlineDetails>("GetPresentationVotingDeadlineNotificationDetails", presentationIdParameter, meetingIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        public ObjectResult<FileMaster> RetrievePresentationAttachedFileDetails(Nullable<global::System.Int64> presentationId)
+        {
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<FileMaster>("RetrievePresentationAttachedFileDetails", presentationIdParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        public ObjectResult<FileMaster> RetrievePresentationAttachedFileDetails(Nullable<global::System.Int64> presentationId, MergeOption mergeOption)
+        {
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<FileMaster>("RetrievePresentationAttachedFileDetails", mergeOption, presentationIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        /// <param name="meetingId">No Metadata Documentation available.</param>
+        public ObjectResult<PresentationDeadlineDetails> GetPresentationDeadlineNotificationDetails(Nullable<global::System.Int64> presentationId, Nullable<global::System.Int64> meetingId)
+        {
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter meetingIdParameter;
+            if (meetingId.HasValue)
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", meetingId);
+            }
+            else
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<PresentationDeadlineDetails>("GetPresentationDeadlineNotificationDetails", presentationIdParameter, meetingIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="scheduleMinutes">No Metadata Documentation available.</param>
+        public ObjectResult<PresentationDeadlineDetails> GetPresentationDeadlineDetails(Nullable<global::System.Int32> scheduleMinutes)
+        {
+            ObjectParameter scheduleMinutesParameter;
+            if (scheduleMinutes.HasValue)
+            {
+                scheduleMinutesParameter = new ObjectParameter("ScheduleMinutes", scheduleMinutes);
+            }
+            else
+            {
+                scheduleMinutesParameter = new ObjectParameter("ScheduleMinutes", typeof(global::System.Int32));
+            }
+    
+            return base.ExecuteFunction<PresentationDeadlineDetails>("GetPresentationDeadlineDetails", scheduleMinutesParameter);
         }
 
         #endregion
