@@ -157,7 +157,7 @@ namespace GreenField.Gadgets.Views
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
                 column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);
-                column.AggregateFunctions.Add(new HarmonicMeanCalculation { SourceField = kvp.Key });
+                //column.AggregateFunctions.Add(new HarmonicMeanCalculation { SourceField = kvp.Key });
                 //column.AggregateFunctions.Add(new HarmonicMeanCalculation ());
                 this.dgCustomSecurity.Columns.Add(column);             
             }
