@@ -11,7 +11,7 @@ namespace GreenField.DataContracts
         public string CountryName { get; set; }
 
         [DataMember]
-        public Int32 SecurityId { get; set; }
+        public string SecurityId { get; set; }
         
         [DataMember]
         public decimal Target { get; set; }

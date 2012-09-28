@@ -10,6 +10,7 @@ using DocumentFormat.OpenXml;
 using System.Drawing;
 using X14 = DocumentFormat.OpenXml.Office2010.Excel;
 using GreenField.Web.DataContracts;
+using System.Text;
 
 namespace GreenField.Web.ExcelModel
 {
@@ -45,6 +46,28 @@ namespace GreenField.Web.ExcelModel
             set { _modelReferenceData = value; }
         }
 
+        private static List<string> _currencies;
+        public static List<string> Currencies
+        {
+            get { return _currencies; }
+            set { _currencies = value; }
+        }
+
+        private static List<string> _commodities;
+        public static List<string> Commodities
+        {
+            get
+            {
+                if (_commodities == null)
+                {
+                    _commodities = new List<string>();
+                }
+                return _commodities;
+            }
+            set { _commodities = value; }
+        }
+
+
         #endregion
 
         /// <summary>
@@ -61,7 +84,8 @@ namespace GreenField.Web.ExcelModel
                 ModelData = modelData;
                 ModelReferenceData = modelData.ModelReferenceData;
                 ModelUploadDataPoints = modelData.ModelUploadDataPoints;
-
+                Commodities = modelData.Commodities;
+                Currencies = modelData.Currencies;
                 // Create a spreadsheet document by supplying the filepath.
                 // By default, AutoSave = true, Editable = true, and Type = xlsx.
                 using (SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.
@@ -82,6 +106,7 @@ namespace GreenField.Web.ExcelModel
                     wbsp.Stylesheet.Save();
 
                     #region Reuters Reported
+
                     // Add Sheets to the Workbook.
                     spreadsheetDocument.WorkbookPart.Workbook.AppendChild(new Sheets());
                     sheetId = 1;
@@ -89,11 +114,12 @@ namespace GreenField.Web.ExcelModel
                             {
                                 Id = spreadsheetDocument.WorkbookPart.GetIdOfPart(worksheetPart),
                                 SheetId = sheetId,
-                                Name = "Reuters Repoted"
+                                Name = "Reuters Reported"
                             });
                     GenerateReutersHeaders(worksheetPart, financialData, currencyReuters);
                     InsertValuesInWorksheet(worksheetPart, financialData);
                     workbookpart.Workbook.Save();
+
                     #endregion
 
                     #region ConsensusData
@@ -558,6 +584,15 @@ namespace GreenField.Web.ExcelModel
             var row = new Row { RowIndex = 5 };
             sheetData.Append(row);
 
+            string commodities = "";
+            if (Commodities != null || Commodities.Count != 0)
+            {
+                foreach (string item in Commodities)
+                {
+                    commodities = commodities + "," + item;
+                }
+            }
+            
             #region CommodityMeasure
 
             var cell = new Cell();
@@ -645,7 +680,7 @@ namespace GreenField.Web.ExcelModel
             var sheetData = worksheet.GetFirstChild<SheetData>();
 
             var row = new Row { RowIndex = 7 };
-            
+
             UInt32 rowIndex = 7;
             foreach (DataPointsModelUploadData item in ModelUploadDataPoints)
             {
@@ -745,7 +780,52 @@ namespace GreenField.Web.ExcelModel
         private static void GenerateModelReferenceData(WorksheetPart worksheetPart)
         {
             var worksheet = worksheetPart.Worksheet;
+
+            worksheet.AddNamespaceDeclaration("r", "http://schemas.openxmlformats.org/officeDocument/2006/relationships");
+            worksheet.AddNamespaceDeclaration("mc", "http://schemas.openxmlformats.org/markup-compatibility/2006");
+            worksheet.AddNamespaceDeclaration("x14ac", "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac");
+            //SheetDimension sheetDimension1 = new SheetDimension() { Reference = "A1" };
+
             SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
+
+
+            //string currencyCSV = "";
+            //if (Currencies != null || Currencies.Count != 0)
+            //{
+            //    foreach (string item in Currencies)
+            //    {
+            //        if (count < 10)
+            //        {
+            //            if (Currencies[0] != item)
+            //            {
+            //                currencyCSV = currencyCSV + "," + item;
+            //            }
+            //            else
+            //            {
+            //                currencyCSV = item;
+            //            }
+            //        }
+            //        count++;
+            //    }
+            //}
+
+            string commodities="";
+            foreach (string item in Commodities)
+            {
+                if (Commodities[0] != item)
+                {
+                    commodities = commodities + "," + item;
+                }
+                else
+                {
+                    commodities = item;
+                }
+            }
+              
+            StringBuilder commodityList = new StringBuilder();
+            commodityList.Append('"');
+            commodityList.Append(commodities);
+            commodityList.Append('"');
 
             var row = new Row { RowIndex = 1 };
             var cell = CreateTextCell("Issuer ID");
@@ -800,12 +880,46 @@ namespace GreenField.Web.ExcelModel
             row.InsertAt(cell, 0);
             sheetData.Append(row);
 
+            //SheetViews sheetViews1 = new SheetViews();
+            //SheetView sheetView1 = new SheetView() { WorkbookViewId = (UInt32Value)0U };
+            //SheetFormatProperties sheetFormatProperties1 = new SheetFormatProperties() { DefaultRowHeight = 15D, DyDescent = 0.25D };
+
+            //sheetViews1.Append(sheetView1);
+
+            
+
+            //DataValidation dataValidation1 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "B4" } };
+            //Formula1 formula11 = new Formula1();
+            //formula11.Text = currencyCSV;
+            //dataValidation1.Append(formula11);
+            //dataValidations1.Append(dataValidation1);
+
+            //worksheet.Append(sheetDimension1);
+            //worksheet.Append(sheetViews1);
+            //worksheet.Append(sheetFormatProperties1);
+            //DataValidations dataValidations1 = new DataValidations() { Count = (UInt32Value)1U };
+            //DataValidation dataValidation1 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "B4" } };
+            //Formula1 formula11 = new Formula1();
+            //formula11.Text = "\"USD,CNY,SGP,HKG\"";
+
+            //dataValidation1.Append(formula11);
+
+            //DataValidation dataValidation2 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "B5" } };
+            //Formula1 formula12 = new Formula1();
+            //formula12.Text = "\"Units,Thousands,Millions,Billions\"";
+
+            //dataValidation2.Append(formula12);
+
+            //dataValidations1.Append(dataValidation1);
+            //dataValidations1.Append(dataValidation2);
+
+
             worksheet.Append(sheetData);
+            //worksheet.Append(dataValidations1);
+
         }
 
         #endregion
-
-
 
         #region Helper Methods
         /// <summary>

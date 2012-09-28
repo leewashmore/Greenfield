@@ -33,7 +33,7 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <!--<RowDefinition Height="Auto" />-->
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Document Name:" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="1" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Overwrite :" HorizontalAlignment="Right" VerticalAlignment="Center"/>
@@ -41,7 +41,7 @@
                 <TextBlock Grid.Row="3" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Type :" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="4" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Tags :" HorizontalAlignment="Right" VerticalAlignment="Center"/>
                 <TextBlock Grid.Row="5" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Notes :" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-                <TextBlock Grid.Row="6" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Alert :" HorizontalAlignment="Right" VerticalAlignment="Center"/>
+                <!--<TextBlock Grid.Row="6" Grid.Column="0"  Style="{StaticResource TextBlockStyle}" Margin="0,2,2,0" Text="Alert :" HorizontalAlignment="Right" VerticalAlignment="Center"/>-->
 
                 <!--User File List-->
                 <telerik:RadComboBox x:Name="cbUserFile" Grid.Column="1" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
@@ -82,8 +82,8 @@
                      VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding DocumentMetags, Mode=TwoWay}"/>
                 <TextBox x:Name="tbNotes" Grid.Row="5" Grid.Column="1" Margin="0,2,0,0" Height="60" Style="{StaticResource TextBoxStyle}"
                      VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding DocumentNotes, Mode=TwoWay}"/>
-                <telerik:RadComboBox Grid.Row="6" Grid.Column="1" Margin="0,2,0,0" Style="{StaticResource RadComboBoxStyle}"
-                                 VerticalAlignment="Center" HorizontalContentAlignment="Left"/>
+                <!--<telerik:RadComboBox Grid.Row="6" Grid.Column="1" Margin="0,2,0,0" Style="{StaticResource RadComboBoxStyle}"
+                                 VerticalAlignment="Center" HorizontalContentAlignment="Left"/>-->
             </Grid>
 
 

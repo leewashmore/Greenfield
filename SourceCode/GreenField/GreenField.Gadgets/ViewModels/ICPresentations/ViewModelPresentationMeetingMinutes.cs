@@ -707,12 +707,6 @@ namespace GreenField.Gadgets.ViewModels
         {
             List<String> validUsers = UserInfo.OrderBy(record => record.UserName).Select(record => record.UserName.ToLower()).ToList();
 
-            //if (ClosedForVotingMeetingMinuteInfo != null)
-            //{
-            //    validUsers = validUsers
-            //        .Where(record => !ClosedForVotingMeetingMinuteInfo.Any(record2 => record2.Name.ToLower() == record))
-            //        .ToList();
-            //}
             ChildViewPresentationMeetingMinutesAddAttendee cVPresentationMeetingMinutesAddAttendee =
                 new ChildViewPresentationMeetingMinutesAddAttendee(validUsers);
             

@@ -18,6 +18,7 @@ using CommandLine;
 using ICPSystemAlert.DocumentCopyReference;
 using ICPSystemAlert.DocumentListsReference;
 using System.Xml;
+using System.Collections;
 
 
 namespace ICPSystemAlert
@@ -103,7 +104,9 @@ namespace ICPSystemAlert
                 _scheduledRunMinutes = options.ScheduledRunMinutes;
                 _presentationIdentifier = options.PresentationIdentifier;
                 _meetingIdentifier = options.MeetingIdentifier;
-                _log.Info("Scheduled run minutes - " + _scheduledRunMinutes + " min(s)");
+                _log.Info(String.Format("Scheduled run minutes - {0} min(s)\nPresentation Identifier - {1}\nMeeting Identifier - {2}"
+                    ,_scheduledRunMinutes, _presentationIdentifier, _meetingIdentifier));
+                
 
                 switch (options.ForcedRunParameter)
                 {
@@ -199,12 +202,27 @@ namespace ICPSystemAlert
 
                     foreach (Int64 presentationId in distinctMeetingPresentationIds)
                     {
-                        List<PresentationDeadlineDetails> distinctMeetingPresentationRecord = presentationDeadlineInfo
+                        PresentationDeadlineDetails distinctMeetingPresentationRecord = presentationDeadlineInfo
                             .Where(record => record.MeetingID == meetingId
-                                && record.PresentationID == presentationId).ToList();
+                                && record.PresentationID == presentationId).FirstOrDefault();
 
-                        if (distinctMeetingPresentationRecord == null || distinctMeetingPresentationRecord.Count == 0)
+                        if (distinctMeetingPresentationRecord == null)
                             continue;
+
+                        Byte[] generatedICPacketStream = GenerateICPacketReport(presentationId);
+                        String uploadFileName = String.Format("{0}_{1}_ICPacket.pdf"
+                            , Convert.ToDateTime(distinctMeetingPresentationRecord.MeetingDateTime).ToString("MMddyyyy")
+                            , distinctMeetingPresentationRecord.SecurityTicker);
+
+                        if (generatedICPacketStream != null)
+                        {
+                            String uploadFileLocation = UploadDocument(uploadFileName, generatedICPacketStream, String.Empty);
+
+                            if (!String.IsNullOrEmpty(uploadFileLocation))
+                            {
+                                emailAttachments += uploadFileLocation + "|";
+                            }
+                        }
 
                         //All distinct files are used to create IC Packet which is uploaded on to share point server. Locations are then
                         //taken as pipe joined emailattachment.
@@ -616,6 +634,173 @@ namespace ICPSystemAlert
         #endregion
 
         #region Helper Method
+        public static Byte[] GenerateICPacketReport(Int64 presentationId)
+        {
+            try
+            {
+                List<FileMaster> presentationAttachedFileData = _entity.RetrievePresentationAttachedFileDetails(presentationId).ToList();                
+                presentationAttachedFileData = presentationAttachedFileData
+                    .Where(record => record.Type == "IC Presentations"
+                        && (record.Category == "Power Point Presentation"
+                            || record.Category == "FinStat Report"
+                            || record.Category == "Investment Context Report"
+                            || record.Category == "DCF Model"
+                            || record.Category == "Additional Attachment")).ToList();
+                _log.Debug(System.Reflection.MethodBase.GetCurrentMethod() + "|PresentationAttachedFileDataIsNullOrEmpty_" 
+                    + (presentationAttachedFileData == null ? "True" : (presentationAttachedFileData.Count == 0).ToString()));
+                List<String> downloadedDocumentLocations = GetICPacketSegmentFiles(presentationAttachedFileData);
+                _log.Debug(System.Reflection.MethodBase.GetCurrentMethod() + "|DownloadedDocumentLocationsIsNullOrEmpty_"
+                     + (downloadedDocumentLocations == null ? "True" : (downloadedDocumentLocations.Count == 0).ToString()));
+                Byte[] result = MergePDFFiles(downloadedDocumentLocations);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                return null;
+            }
+        }
+
+        private static List<String> GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo)
+        {
+            List<String> result = new List<String>();
+
+            try
+            {
+                foreach (FileMaster file in fileMasterInfo)
+                {
+                    String convertedPdf = null;
+                    if (file.Category == "Power Point Presentation")
+                    {
+                        convertedPdf = ConvertPowerpointPresentationTpPdf(file);
+                    }
+                    else
+                    {
+                        convertedPdf = ConvertImagePdfFileToLocalPdf(file);
+                    }
+
+                    if (convertedPdf != null)
+                        result.Add(convertedPdf);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);                
+            }
+
+            return result;
+        }
+
+        private static String ConvertImagePdfFileToLocalPdf(FileMaster file)
+        {
+            String result = null;
+            try
+            {
+                Byte[] fileData = RetrieveDocument(file.Location.Substring(file.Location.LastIndexOf(@"/") + 1));
+                if (fileData == null)
+                    return result;
+
+                if (file.Location.Contains(".pdf"))
+                {
+                    result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
+                    File.WriteAllBytes(result, fileData);
+                }
+
+                else if (file.Location.Contains(".jpeg") || file.Location.Contains(".jpg"))
+                {
+                    String localFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp" +
+                        (file.Location.Contains(".jpeg") ? ".jpeg" : ".jpg");
+                    result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
+                    File.WriteAllBytes(localFile, fileData);
+                    Document doc = new Document(PageSize.A4, 10F, 10F, 10F, 10F);
+                    PdfWriter.GetInstance(doc, new FileStream(result, FileMode.Create));
+                    doc.Open();
+                    iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(localFile);
+                    image.ScaleToFit(doc.PageSize.Width - (10F + 10F), doc.PageSize.Height - (10F + 10F));
+                    doc.Add(image);
+                    doc.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+            }
+
+            return result;
+        }
+
+        private static String ConvertPowerpointPresentationTpPdf(FileMaster powerpointStreamedData)
+        {
+            return null;
+        }
+
+        private static Byte[] MergePDFFiles(List<String> pdfFileNames)
+        {
+            Byte[] result = new byte[] { };
+            
+            try
+            {
+                if (pdfFileNames == null || pdfFileNames.Count == 0)
+                    return result;
+
+                String outFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPacket.pdf";
+
+                int pageOffset = 0;
+                ArrayList master = new ArrayList();
+                int f = 0;
+                Document document = null;
+                PdfCopy writer = null;
+
+                while (f < pdfFileNames.Count())
+                {
+                    if (pdfFileNames[f].Contains(".pdf"))
+                    {
+                        PdfReader reader = new PdfReader(pdfFileNames[f]);
+                        reader.ConsolidateNamedDestinations();
+
+                        int n = reader.NumberOfPages;
+                        pageOffset += n;
+                        if (f == 0)
+                        {
+                            document = new Document(reader.GetPageSizeWithRotation(1));
+                            writer = new PdfCopy(document, new FileStream(outFile, FileMode.Create));
+                            document.Open();
+                        }
+
+                        for (int i = 0; i < n; )
+                        {
+                            ++i;
+                            if (writer != null)
+                            {
+                                PdfImportedPage page = writer.GetImportedPage(reader, i);
+                                writer.AddPage(page);
+                            }
+                        }
+
+                        PRAcroForm form = reader.AcroForm;
+                        if (form != null && writer != null)
+                        {
+                            writer.CopyAcroForm(reader);
+                        }
+                        f++;
+                    }
+                }
+
+                if (document != null)
+                {
+                    document.Close();
+                }                
+
+                result = File.ReadAllBytes(outFile);
+            }
+            catch (Exception ex)
+            {
+                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+            }
+            return result;
+        }
+
         private static String GeneratePreMeetingReport(List<PresentationVotingDeadlineDetails> presentationDeadlineInfo, String securityDesc)
         {
             try

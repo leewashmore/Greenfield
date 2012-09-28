@@ -299,7 +299,7 @@ namespace GreenField.Gadgets.ViewModels
 
         private void SubmitCommandMethod(object param)
         {
-            Prompt.ShowDialog("Please ensure that all changes have been made before finalizing meeting presentation", "", MessageBoxButton.OKCancel, (result) =>
+            Prompt.ShowDialog("Please ensure that all changes have been made before submitting meeting presentation for voting", "", MessageBoxButton.OKCancel, (result) =>
             {
                 if (result == MessageBoxResult.OK)
                 {
@@ -317,17 +317,19 @@ namespace GreenField.Gadgets.ViewModels
                     }
                     else
                     {
-                        Prompt.ShowDialog("Do wish to notify Investment Committee members of resubmission of presentation", "", MessageBoxButton.OKCancel, (sendAlert) =>
+                        ChildViewReSubmitPresentation dialog = new ChildViewReSubmitPresentation();
+                        dialog.Show();
+                        dialog.Unloaded += (se, e) =>
                         {
-                            if (sendAlert == MessageBoxResult.OK)
+                            if (dialog.DialogResult == true)
                             {
-                                if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
+                                if (dialog.AlertNotification && SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
                                 {
                                     BusyIndicatorNotification(true, "Retrieving presentation associated users...");
                                     _dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod, true);
                                 }
                             }
-                        });
+                        };
                     }                    
                 }
             });

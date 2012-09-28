@@ -1998,6 +1998,473 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<INTERNAL_ISSUER>("RetrieveCOAType", mergeOption, iSSUER_IDParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectResult<global::System.String> RetrieveDistinctFXRates()
+        {
+            return base.ExecuteFunction<global::System.String>("RetrieveDistinctFXRates");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="cOA_TYPE">No Metadata Documentation available.</param>
+        public ObjectResult<DataPointsModelUploadData> RetrieveCOACodes(global::System.String cOA_TYPE)
+        {
+            ObjectParameter cOA_TYPEParameter;
+            if (cOA_TYPE != null)
+            {
+                cOA_TYPEParameter = new ObjectParameter("COA_TYPE", cOA_TYPE);
+            }
+            else
+            {
+                cOA_TYPEParameter = new ObjectParameter("COA_TYPE", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<DataPointsModelUploadData>("RetrieveCOACodes", cOA_TYPEParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectResult<global::System.String> RetrieveCommodityForecasts()
+        {
+            return base.ExecuteFunction<global::System.String>("RetrieveCommodityForecasts");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="rOOT_SOURCE">No Metadata Documentation available.</param>
+        public ObjectResult<global::System.String> ModelDeleteInteralStatement(global::System.String iSSUER_ID, global::System.String rOOT_SOURCE)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter rOOT_SOURCEParameter;
+            if (rOOT_SOURCE != null)
+            {
+                rOOT_SOURCEParameter = new ObjectParameter("ROOT_SOURCE", rOOT_SOURCE);
+            }
+            else
+            {
+                rOOT_SOURCEParameter = new ObjectParameter("ROOT_SOURCE", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<global::System.String>("ModelDeleteInteralStatement", iSSUER_IDParameter, rOOT_SOURCEParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="rEF_NO">No Metadata Documentation available.</param>
+        public int ModelDeleteInternalData(global::System.String iSSUER_ID, global::System.String rEF_NO)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter rEF_NOParameter;
+            if (rEF_NO != null)
+            {
+                rEF_NOParameter = new ObjectParameter("REF_NO", rEF_NO);
+            }
+            else
+            {
+                rEF_NOParameter = new ObjectParameter("REF_NO", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("ModelDeleteInternalData", iSSUER_IDParameter, rEF_NOParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
+        public int ModelDeleteInternalIssuerQuarterlyDistribution(global::System.String iSSUER_ID, global::System.String dATA_SOURCE)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter dATA_SOURCEParameter;
+            if (dATA_SOURCE != null)
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
+            }
+            else
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("ModelDeleteInternalIssuerQuarterlyDistribution", iSSUER_IDParameter, dATA_SOURCEParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="rEF_NO">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
+        /// <param name="cOA">No Metadata Documentation available.</param>
+        /// <param name="aMOUNT">No Metadata Documentation available.</param>
+        public int ModelInsertInternalData(global::System.String iSSUER_ID, global::System.String rEF_NO, global::System.String pERIOD_TYPE, global::System.String cOA, Nullable<global::System.Decimal> aMOUNT)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter rEF_NOParameter;
+            if (rEF_NO != null)
+            {
+                rEF_NOParameter = new ObjectParameter("REF_NO", rEF_NO);
+            }
+            else
+            {
+                rEF_NOParameter = new ObjectParameter("REF_NO", typeof(global::System.String));
+            }
+    
+            ObjectParameter pERIOD_TYPEParameter;
+            if (pERIOD_TYPE != null)
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
+            }
+            else
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter cOAParameter;
+            if (cOA != null)
+            {
+                cOAParameter = new ObjectParameter("COA", cOA);
+            }
+            else
+            {
+                cOAParameter = new ObjectParameter("COA", typeof(global::System.String));
+            }
+    
+            ObjectParameter aMOUNTParameter;
+            if (aMOUNT.HasValue)
+            {
+                aMOUNTParameter = new ObjectParameter("AMOUNT", aMOUNT);
+            }
+            else
+            {
+                aMOUNTParameter = new ObjectParameter("AMOUNT", typeof(global::System.Decimal));
+            }
+    
+            return base.ExecuteFunction("ModelInsertInternalData", iSSUER_IDParameter, rEF_NOParameter, pERIOD_TYPEParameter, cOAParameter, aMOUNTParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="cOA_TYPE">No Metadata Documentation available.</param>
+        /// <param name="lASTPRIMARYMODELLOAD">No Metadata Documentation available.</param>
+        /// <param name="lASTINDUSTRYMODELLOAD">No Metadata Documentation available.</param>
+        public int ModelInsertInternalIssuer(global::System.String iSSUER_ID, global::System.String cOA_TYPE, Nullable<global::System.DateTime> lASTPRIMARYMODELLOAD, Nullable<global::System.DateTime> lASTINDUSTRYMODELLOAD)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter cOA_TYPEParameter;
+            if (cOA_TYPE != null)
+            {
+                cOA_TYPEParameter = new ObjectParameter("COA_TYPE", cOA_TYPE);
+            }
+            else
+            {
+                cOA_TYPEParameter = new ObjectParameter("COA_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter lASTPRIMARYMODELLOADParameter;
+            if (lASTPRIMARYMODELLOAD.HasValue)
+            {
+                lASTPRIMARYMODELLOADParameter = new ObjectParameter("LASTPRIMARYMODELLOAD", lASTPRIMARYMODELLOAD);
+            }
+            else
+            {
+                lASTPRIMARYMODELLOADParameter = new ObjectParameter("LASTPRIMARYMODELLOAD", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter lASTINDUSTRYMODELLOADParameter;
+            if (lASTINDUSTRYMODELLOAD.HasValue)
+            {
+                lASTINDUSTRYMODELLOADParameter = new ObjectParameter("LASTINDUSTRYMODELLOAD", lASTINDUSTRYMODELLOAD);
+            }
+            else
+            {
+                lASTINDUSTRYMODELLOADParameter = new ObjectParameter("LASTINDUSTRYMODELLOAD", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction("ModelInsertInternalIssuer", iSSUER_IDParameter, cOA_TYPEParameter, lASTPRIMARYMODELLOADParameter, lASTINDUSTRYMODELLOADParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_TYPE">No Metadata Documentation available.</param>
+        /// <param name="pERCENTAGE">No Metadata Documentation available.</param>
+        /// <param name="lAST_UPDATED">No Metadata Documentation available.</param>
+        public int ModelInsertInternalIssuerQuaterelyDistribution(global::System.String iSSUER_ID, global::System.String dATA_SOURCE, global::System.String pERIOD_TYPE, Nullable<global::System.Decimal> pERCENTAGE, Nullable<global::System.DateTime> lAST_UPDATED)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter dATA_SOURCEParameter;
+            if (dATA_SOURCE != null)
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
+            }
+            else
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
+            }
+    
+            ObjectParameter pERIOD_TYPEParameter;
+            if (pERIOD_TYPE != null)
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", pERIOD_TYPE);
+            }
+            else
+            {
+                pERIOD_TYPEParameter = new ObjectParameter("PERIOD_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter pERCENTAGEParameter;
+            if (pERCENTAGE.HasValue)
+            {
+                pERCENTAGEParameter = new ObjectParameter("PERCENTAGE", pERCENTAGE);
+            }
+            else
+            {
+                pERCENTAGEParameter = new ObjectParameter("PERCENTAGE", typeof(global::System.Decimal));
+            }
+    
+            ObjectParameter lAST_UPDATEDParameter;
+            if (lAST_UPDATED.HasValue)
+            {
+                lAST_UPDATEDParameter = new ObjectParameter("LAST_UPDATED", lAST_UPDATED);
+            }
+            else
+            {
+                lAST_UPDATEDParameter = new ObjectParameter("LAST_UPDATED", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction("ModelInsertInternalIssuerQuaterelyDistribution", iSSUER_IDParameter, dATA_SOURCEParameter, pERIOD_TYPEParameter, pERCENTAGEParameter, lAST_UPDATEDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="rEF_NO">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_YEAR">No Metadata Documentation available.</param>
+        /// <param name="rOOT_SOURCE">No Metadata Documentation available.</param>
+        /// <param name="rOOT_SOURCE_DATE">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_LENGTH">No Metadata Documentation available.</param>
+        /// <param name="pERIOD_END_DATE">No Metadata Documentation available.</param>
+        /// <param name="cURRENCY">No Metadata Documentation available.</param>
+        /// <param name="aMOUNT_TYPE">No Metadata Documentation available.</param>
+        public int ModelInsertInternalStatement(global::System.String iSSUER_ID, global::System.String rEF_NO, Nullable<global::System.Int32> pERIOD_YEAR, global::System.String rOOT_SOURCE, Nullable<global::System.DateTime> rOOT_SOURCE_DATE, Nullable<global::System.Int32> pERIOD_LENGTH, Nullable<global::System.DateTime> pERIOD_END_DATE, global::System.String cURRENCY, global::System.String aMOUNT_TYPE)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter rEF_NOParameter;
+            if (rEF_NO != null)
+            {
+                rEF_NOParameter = new ObjectParameter("REF_NO", rEF_NO);
+            }
+            else
+            {
+                rEF_NOParameter = new ObjectParameter("REF_NO", typeof(global::System.String));
+            }
+    
+            ObjectParameter pERIOD_YEARParameter;
+            if (pERIOD_YEAR.HasValue)
+            {
+                pERIOD_YEARParameter = new ObjectParameter("PERIOD_YEAR", pERIOD_YEAR);
+            }
+            else
+            {
+                pERIOD_YEARParameter = new ObjectParameter("PERIOD_YEAR", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter rOOT_SOURCEParameter;
+            if (rOOT_SOURCE != null)
+            {
+                rOOT_SOURCEParameter = new ObjectParameter("ROOT_SOURCE", rOOT_SOURCE);
+            }
+            else
+            {
+                rOOT_SOURCEParameter = new ObjectParameter("ROOT_SOURCE", typeof(global::System.String));
+            }
+    
+            ObjectParameter rOOT_SOURCE_DATEParameter;
+            if (rOOT_SOURCE_DATE.HasValue)
+            {
+                rOOT_SOURCE_DATEParameter = new ObjectParameter("ROOT_SOURCE_DATE", rOOT_SOURCE_DATE);
+            }
+            else
+            {
+                rOOT_SOURCE_DATEParameter = new ObjectParameter("ROOT_SOURCE_DATE", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter pERIOD_LENGTHParameter;
+            if (pERIOD_LENGTH.HasValue)
+            {
+                pERIOD_LENGTHParameter = new ObjectParameter("PERIOD_LENGTH", pERIOD_LENGTH);
+            }
+            else
+            {
+                pERIOD_LENGTHParameter = new ObjectParameter("PERIOD_LENGTH", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter pERIOD_END_DATEParameter;
+            if (pERIOD_END_DATE.HasValue)
+            {
+                pERIOD_END_DATEParameter = new ObjectParameter("PERIOD_END_DATE", pERIOD_END_DATE);
+            }
+            else
+            {
+                pERIOD_END_DATEParameter = new ObjectParameter("PERIOD_END_DATE", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter cURRENCYParameter;
+            if (cURRENCY != null)
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", cURRENCY);
+            }
+            else
+            {
+                cURRENCYParameter = new ObjectParameter("CURRENCY", typeof(global::System.String));
+            }
+    
+            ObjectParameter aMOUNT_TYPEParameter;
+            if (aMOUNT_TYPE != null)
+            {
+                aMOUNT_TYPEParameter = new ObjectParameter("AMOUNT_TYPE", aMOUNT_TYPE);
+            }
+            else
+            {
+                aMOUNT_TYPEParameter = new ObjectParameter("AMOUNT_TYPE", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("ModelInsertInternalStatement", iSSUER_IDParameter, rEF_NOParameter, pERIOD_YEARParameter, rOOT_SOURCEParameter, rOOT_SOURCE_DATEParameter, pERIOD_LENGTHParameter, pERIOD_END_DATEParameter, cURRENCYParameter, aMOUNT_TYPEParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        public ObjectResult<INTERNAL_ISSUER> ModelRetrieveInternalIssuer(global::System.String iSSUER_ID)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<INTERNAL_ISSUER>("ModelRetrieveInternalIssuer", iSSUER_IDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        public ObjectResult<INTERNAL_ISSUER> ModelRetrieveInternalIssuer(global::System.String iSSUER_ID, MergeOption mergeOption)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<INTERNAL_ISSUER>("ModelRetrieveInternalIssuer", mergeOption, iSSUER_IDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        public int ModelDeleteInternalIssuer(global::System.String iSSUER_ID)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("ModelDeleteInternalIssuer", iSSUER_IDParameter);
+        }
 
         #endregion
     }
@@ -2928,6 +3395,30 @@ namespace GreenField.DAL
         private global::System.String _STATEMENT_TYPE;
         partial void OnSTATEMENT_TYPEChanging(global::System.String value);
         partial void OnSTATEMENT_TYPEChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CONVERT_FLAG
+        {
+            get
+            {
+                return _CONVERT_FLAG;
+            }
+            set
+            {
+                OnCONVERT_FLAGChanging(value);
+                ReportPropertyChanging("CONVERT_FLAG");
+                _CONVERT_FLAG = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CONVERT_FLAG");
+                OnCONVERT_FLAGChanged();
+            }
+        }
+        private global::System.String _CONVERT_FLAG;
+        partial void OnCONVERT_FLAGChanging(global::System.String value);
+        partial void OnCONVERT_FLAGChanged();
 
         #endregion
     
@@ -5262,15 +5753,15 @@ namespace GreenField.DAL
         /// </summary>
         /// <param name="pORTFOLIO_ID">Initial value of the PORTFOLIO_ID property.</param>
         /// <param name="sECURITY_ID">Initial value of the SECURITY_ID property.</param>
-        /// <param name="tARGET_PC">Initial value of the TARGET_PC property.</param>
-        /// <param name="uPDATE">Initial value of the UPDATE property.</param>
-        public static PORTFOLIO_SECURITY_TARGETS CreatePORTFOLIO_SECURITY_TARGETS(global::System.String pORTFOLIO_ID, global::System.Int32 sECURITY_ID, global::System.Decimal tARGET_PC, global::System.DateTime uPDATE)
+        /// <param name="tARGET_PCT">Initial value of the TARGET_PCT property.</param>
+        /// <param name="uPDATED">Initial value of the UPDATED property.</param>
+        public static PORTFOLIO_SECURITY_TARGETS CreatePORTFOLIO_SECURITY_TARGETS(global::System.String pORTFOLIO_ID, global::System.String sECURITY_ID, global::System.Decimal tARGET_PCT, global::System.DateTime uPDATED)
         {
             PORTFOLIO_SECURITY_TARGETS pORTFOLIO_SECURITY_TARGETS = new PORTFOLIO_SECURITY_TARGETS();
             pORTFOLIO_SECURITY_TARGETS.PORTFOLIO_ID = pORTFOLIO_ID;
             pORTFOLIO_SECURITY_TARGETS.SECURITY_ID = sECURITY_ID;
-            pORTFOLIO_SECURITY_TARGETS.TARGET_PC = tARGET_PC;
-            pORTFOLIO_SECURITY_TARGETS.UPDATE = uPDATE;
+            pORTFOLIO_SECURITY_TARGETS.TARGET_PCT = tARGET_PCT;
+            pORTFOLIO_SECURITY_TARGETS.UPDATED = uPDATED;
             return pORTFOLIO_SECURITY_TARGETS;
         }
 
@@ -5309,7 +5800,7 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Int32 SECURITY_ID
+        public global::System.String SECURITY_ID
         {
             get
             {
@@ -5321,14 +5812,14 @@ namespace GreenField.DAL
                 {
                     OnSECURITY_IDChanging(value);
                     ReportPropertyChanging("SECURITY_ID");
-                    _SECURITY_ID = StructuralObject.SetValidValue(value);
+                    _SECURITY_ID = StructuralObject.SetValidValue(value, false);
                     ReportPropertyChanged("SECURITY_ID");
                     OnSECURITY_IDChanged();
                 }
             }
         }
-        private global::System.Int32 _SECURITY_ID;
-        partial void OnSECURITY_IDChanging(global::System.Int32 value);
+        private global::System.String _SECURITY_ID;
+        partial void OnSECURITY_IDChanging(global::System.String value);
         partial void OnSECURITY_IDChanged();
     
         /// <summary>
@@ -5336,54 +5827,54 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.Decimal TARGET_PC
+        public global::System.Decimal TARGET_PCT
         {
             get
             {
-                return _TARGET_PC;
+                return _TARGET_PCT;
             }
             set
             {
-                if (_TARGET_PC != value)
+                if (_TARGET_PCT != value)
                 {
-                    OnTARGET_PCChanging(value);
-                    ReportPropertyChanging("TARGET_PC");
-                    _TARGET_PC = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("TARGET_PC");
-                    OnTARGET_PCChanged();
+                    OnTARGET_PCTChanging(value);
+                    ReportPropertyChanging("TARGET_PCT");
+                    _TARGET_PCT = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TARGET_PCT");
+                    OnTARGET_PCTChanged();
                 }
             }
         }
-        private global::System.Decimal _TARGET_PC;
-        partial void OnTARGET_PCChanging(global::System.Decimal value);
-        partial void OnTARGET_PCChanged();
+        private global::System.Decimal _TARGET_PCT;
+        partial void OnTARGET_PCTChanging(global::System.Decimal value);
+        partial void OnTARGET_PCTChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
         [DataMemberAttribute()]
-        public global::System.DateTime UPDATE
+        public global::System.DateTime UPDATED
         {
             get
             {
-                return _UPDATE;
+                return _UPDATED;
             }
             set
             {
-                if (_UPDATE != value)
+                if (_UPDATED != value)
                 {
-                    OnUPDATEChanging(value);
-                    ReportPropertyChanging("UPDATE");
-                    _UPDATE = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("UPDATE");
-                    OnUPDATEChanged();
+                    OnUPDATEDChanging(value);
+                    ReportPropertyChanging("UPDATED");
+                    _UPDATED = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("UPDATED");
+                    OnUPDATEDChanged();
                 }
             }
         }
-        private global::System.DateTime _UPDATE;
-        partial void OnUPDATEChanging(global::System.DateTime value);
-        partial void OnUPDATEChanged();
+        private global::System.DateTime _UPDATED;
+        partial void OnUPDATEDChanging(global::System.DateTime value);
+        partial void OnUPDATEDChanged();
 
         #endregion
     
@@ -7910,6 +8401,57 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _ACTUAL;
         partial void OnACTUALChanging(Nullable<global::System.Decimal> value);
         partial void OnACTUALChanged();
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmComplexTypeAttribute(NamespaceName="ExternalResearchModel", Name="CurrenciesList")]
+    [DataContractAttribute(IsReference=true)]
+    [Serializable()]
+    public partial class CurrenciesList : ComplexObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new CurrenciesList object.
+        /// </summary>
+        /// <param name="currency">Initial value of the Currency property.</param>
+        public static CurrenciesList CreateCurrenciesList(global::System.String currency)
+        {
+            CurrenciesList currenciesList = new CurrenciesList();
+            currenciesList.Currency = currency;
+            return currenciesList;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String Currency
+        {
+            get
+            {
+                return _Currency;
+            }
+            set
+            {
+                OnCurrencyChanging(value);
+                ReportPropertyChanging("Currency");
+                _Currency = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("Currency");
+                OnCurrencyChanged();
+            }
+        }
+        private global::System.String _Currency;
+        partial void OnCurrencyChanging(global::System.String value);
+        partial void OnCurrencyChanged();
 
         #endregion
     }

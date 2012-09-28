@@ -227,7 +227,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             List<DateTime> proposedMeetingDates = MeetingInfoDates.Select(record => record.MeetingDateTime.ToLocalTime().Date).ToList();
 
-            if (! UserSession.SessionManager.SESSION.Roles.Contains("CHIEF_EXECUTIVE"))
+            if (! UserSession.SessionManager.SESSION.Roles.Contains(MemberGroups.IC_CHIEF_EXECUTIVE))
             {
                 proposedMeetingDates = proposedMeetingDates.OrderBy(record => record).ToList();
                 for (int index = 0; index < proposedMeetingDates.Count; index++)

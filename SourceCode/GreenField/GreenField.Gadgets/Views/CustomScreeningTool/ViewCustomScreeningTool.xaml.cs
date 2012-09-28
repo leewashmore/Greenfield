@@ -190,8 +190,9 @@ namespace GreenField.Gadgets.Views
             this.dgCustomSecurity.IsFilteringAllowed = true;
             this.dgCustomSecurity.GroupRowStyle = this.Resources["GridViewGroupRowStyle"] as Style;
             this.dgCustomSecurity.ShowGroupFooters = true;
-            this.dgCustomSecurity.Columns["Market Capitalization"].IsVisible = false;
+            this.dgCustomSecurity.Columns["Market Capitalization"].IsVisible = false;           
             this.DataContextViewModelCustomScreeningTool.BusyIndicatorIsBusy = false;
+            this.DataContextViewModelCustomScreeningTool.FlagBusyIndicator = 1;
         }
 
         #region Excel Export

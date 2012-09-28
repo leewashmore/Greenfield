@@ -16,9 +16,10 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
                 <ResourceDictionary>
-                    <helpers:DocumentCategoryConverter x:Key="DocumentCategoryConverter"/>                    
+                    <helpers:DocumentCategoryConverter x:Key="DocumentCategoryConverter"/>
+                    <helpers:DataContextProxy x:Key="DataContextProxy"/>
                 </ResourceDictionary>
-            </ResourceDictionary.MergedDictionaries>            
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
@@ -126,7 +127,7 @@
                                         </Grid>
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
-                                                           Command="{Binding DeleteAttachedFileCommand}" 
+                                                           Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
                                                            CommandParameter="{Binding}" IsEnabled="False"
                                                            Style="{StaticResource RadButtonStyle}"/>
                                         </Grid>
@@ -162,7 +163,7 @@
                                         </Grid>
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
-                                                           Command="{Binding DeleteAttachedFileCommand}" 
+                                                           Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
                                                            CommandParameter="{Binding}" IsEnabled="False"
                                                            Style="{StaticResource RadButtonStyle}"/>
                                         </Grid>
@@ -202,7 +203,7 @@
                                         </Grid>
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
-                                                           Command="{Binding DeleteAttachedFileCommand}" 
+                                                           Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
                                                            CommandParameter="{Binding}" IsEnabled="False"
                                                            Style="{StaticResource RadButtonStyle}"/>
                                         </Grid>
@@ -238,7 +239,7 @@
                                         </Grid>
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
-                                                           Command="{Binding DeleteAttachedFileCommand}" 
+                                                           Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
                                                            CommandParameter="{Binding}" IsEnabled="False"
                                                            Style="{StaticResource RadButtonStyle}"/>
                                         </Grid>
@@ -274,7 +275,7 @@
                                         </Grid>
                                         <Grid Background="{StaticResource DefaultGridHeaderBackground}">
                                             <telerik:RadButton Margin="2" Grid.Column="1" Content="X" Width="18" Height="18"
-                                                           Command="{Binding DeleteAttachedFileCommand}" 
+                                                           Command="{Binding Source={StaticResource DataContextProxy},Path=DataSource.DeleteAttachedFileCommand}" 
                                                            CommandParameter="{Binding}"
                                                            Style="{StaticResource RadButtonStyle}"/>
                                         </Grid>

@@ -28,6 +28,22 @@ namespace GreenField.Web.DataContracts
                 _modelUploadDataPoints = value;
             }
         }
+
+        private List<string> _currencies;
+        public List<string> Currencies
+        {
+            get { return _currencies; }
+            set { _currencies = value; }
+        }
+
+        private List<string> _commodities;
+        public List<string> Commodities
+        {
+            get { return _commodities; }
+            set { _commodities = value; }
+        }
+        
+
     }
 
     /// <summary>
@@ -75,29 +91,29 @@ namespace GreenField.Web.DataContracts
             set { _units = value; }
         }
 
-        private decimal _Q1Override;
-        public decimal Q1Override
+        private object _Q1Override;
+        public object Q1Override
         {
             get { return _Q1Override; }
             set { _Q1Override = value; }
         }
 
-        private decimal _Q2Override;
-        public decimal Q2Override
+        private object _Q2Override;
+        public object Q2Override
         {
             get { return _Q2Override; }
             set { _Q2Override = value; }
         }
 
-        private decimal _Q3Override;
-        public decimal Q3Override
+        private object _Q3Override;
+        public object Q3Override
         {
             get { return _Q3Override; }
             set { _Q3Override = value; }
         }
 
-        private decimal _Q4Override;
-        public decimal Q4Override
+        private object _Q4Override;
+        public object Q4Override
         {
             get { return _Q4Override; }
             set { _Q4Override = value; }
