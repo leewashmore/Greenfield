@@ -30,6 +30,7 @@
           <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="PercentEMIF" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PortfolioId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
           <xs:element minOccurs="0" name="Presenter" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="Price" nillable="true" type="xs:string" />
@@ -136,6 +137,7 @@
           <xs:element minOccurs="0" name="ModifiedBy" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="ModifiedOn" type="xs:dateTime" />
           <xs:element minOccurs="0" name="PercentEMIF" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PortfolioId" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="PresentationAttachedFileInfoes" nillable="true" type="tns:ArrayOfPresentationAttachedFileInfo" />
           <xs:element minOccurs="0" name="PresentationID" type="xs:long" />
           <xs:element minOccurs="0" name="Presenter" nillable="true" type="xs:string" />

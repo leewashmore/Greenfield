@@ -323,11 +323,18 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             if (dialog.DialogResult == true)
                             {
-                                if (dialog.AlertNotification && SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
+                                if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
                                 {
                                     BusyIndicatorNotification(true, "Retrieving presentation associated users...");
-                                    _dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod, true);
+                                    _dbInteractivity.ReSubmitPresentation(UserSession.SessionManager.SESSION.UserName,
+                                        SelectedPresentationOverviewInfo, dialog.AlertNotification,
+                                        ReSubmitPresentationCallbackMethod);
                                 }
+                                //if (dialog.AlertNotification && SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
+                                //{
+                                //    BusyIndicatorNotification(true, "Retrieving presentation associated users...");
+                                //    _dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod, true);
+                                //}
                             }
                         };
                     }                    
@@ -550,112 +557,112 @@ namespace GreenField.Gadgets.ViewModels
             Logging.LogEndMethod(_logger, methodNamespace);
         }
 
-        private void RetrievePresentationVoterDataCallbackMethod(List<VoterInfo> result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+        //private void RetrievePresentationVoterDataCallbackMethod(List<VoterInfo> result)
+        //{
+        //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+        //    Logging.LogBeginMethod(_logger, methodNamespace);
+        //    try
+        //    {
+        //        if (result != null)
+        //        {
+        //            Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
 
-                    List<String> userNames = result.Where(record => record.PostMeetingFlag == false).Select(record => record.Name).ToList();
-                    if (_dbInteractivity != null)
-                    {
-                        BusyIndicatorNotification(true, "Retrieving user credentials...");
-                        _dbInteractivity.GetUsersByNames(userNames, GetUsersByNamesCallbackMethod);
-                    }
-                    else
-                    {
-                        _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
-                    _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                    _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
-                _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-            }
-            finally
-            {
-                Logging.LogEndMethod(_logger, methodNamespace);
-            }
-        }
+        //            List<String> userNames = result.Where(record => record.PostMeetingFlag == false).Select(record => record.Name).ToList();
+        //            if (_dbInteractivity != null)
+        //            {
+        //                BusyIndicatorNotification(true, "Retrieving user credentials...");
+        //                _dbInteractivity.GetUsersByNames(userNames, GetUsersByNamesCallbackMethod);
+        //            }
+        //            else
+        //            {
+        //                _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
+        //                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+        //            BusyIndicatorNotification();
+        //            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
+        //            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+        //        Logging.LogException(_logger, ex);
+        //        BusyIndicatorNotification();
+        //        _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
+        //        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+        //    }
+        //    finally
+        //    {
+        //        Logging.LogEndMethod(_logger, methodNamespace);
+        //    }
+        //}
 
-        private void GetUsersByNamesCallbackMethod(List<MembershipUserInfo> result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+        //private void GetUsersByNamesCallbackMethod(List<MembershipUserInfo> result)
+        //{
+        //    string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+        //    Logging.LogBeginMethod(_logger, methodNamespace);
+        //    try
+        //    {
+        //        if (result != null)
+        //        {
+        //            Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
 
-                    MembershipUserInfo presenterCredentials = result.Where(record => record.UserName.ToLower()
-                        == SelectedPresentationOverviewInfo.Presenter.ToLower()).FirstOrDefault();
-                    if (presenterCredentials == null)
-                        throw new Exception("Presenter credentials could not be retrieved. Alert notification was not successful.");
+        //            MembershipUserInfo presenterCredentials = result.Where(record => record.UserName.ToLower()
+        //                == SelectedPresentationOverviewInfo.Presenter.ToLower()).FirstOrDefault();
+        //            if (presenterCredentials == null)
+        //                throw new Exception("Presenter credentials could not be retrieved. Alert notification was not successful.");
 
-                    String emailtTo = presenterCredentials.Email;
+        //            String emailtTo = presenterCredentials.Email;
 
-                    String emailCc = String.Join("|", result.Where(record => record.UserName.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower())
-                        .Select(record => record.Email).ToArray());
+        //            String emailCc = String.Join("|", result.Where(record => record.UserName.ToLower() != SelectedPresentationOverviewInfo.Presenter.ToLower())
+        //                .Select(record => record.Email).ToArray());
 
-                    String messageSubject = "Investment Committee Presentation Edit Notification – " + 
-                        Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingClosedDateTime).ToString("MMMM dd, yyyy");
-                    String messageBody = "The attached presentation scheduled for the Investment Committee Meeting dated "
-                        + Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingClosedDateTime).ToString("MMMM dd, yyyy")
-                        + " UTC has been edited since its original submission.  Voting members, please enter AIMS to modify your comments and pre-meeting votes, if necessary.";
+        //            String messageSubject = "Investment Committee Presentation Edit Notification – " + 
+        //                Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingClosedDateTime).ToString("MMMM dd, yyyy");
+        //            String messageBody = "The attached presentation scheduled for the Investment Committee Meeting dated "
+        //                + Convert.ToDateTime(SelectedPresentationOverviewInfo.MeetingClosedDateTime).ToString("MMMM dd, yyyy")
+        //                + " UTC has been edited since its original submission.  Voting members, please enter AIMS to modify your comments and pre-meeting votes, if necessary.";
 
-                    //message ic packet attachment pending
-                    if (_dbInteractivity != null)
-                    {
-                        BusyIndicatorNotification(true, "Processing alert notification...");
-                        _dbInteractivity.SetMessageInfo(emailtTo, emailCc, messageSubject, messageBody, null
-                            , UserSession.SessionManager.SESSION.UserName, SetMessageInfoCallbackMethod);
-                    }
-                    else
-                    {
-                        _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-                    }
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
-                    _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                    _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
-                _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
-            }
-            finally
-            {
-                Logging.LogEndMethod(_logger, methodNamespace);
-            }
-        }
+        //            //message ic packet attachment pending
+        //            if (_dbInteractivity != null)
+        //            {
+        //                BusyIndicatorNotification(true, "Processing alert notification...");
+        //                _dbInteractivity.SetMessageInfo(emailtTo, emailCc, messageSubject, messageBody, null
+        //                    , UserSession.SessionManager.SESSION.UserName, SetMessageInfoCallbackMethod);
+        //            }
+        //            else
+        //            {
+        //                _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
+        //                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+        //            BusyIndicatorNotification();
+        //            _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
+        //            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+        //        Logging.LogException(_logger, ex);
+        //        BusyIndicatorNotification();
+        //        _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
+        //        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+        //    }
+        //    finally
+        //    {
+        //        Logging.LogEndMethod(_logger, methodNamespace);
+        //    }
+        //}
 
-        private void SetMessageInfoCallbackMethod(Boolean? result)
+        private void ReSubmitPresentationCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(_logger, methodNamespace);

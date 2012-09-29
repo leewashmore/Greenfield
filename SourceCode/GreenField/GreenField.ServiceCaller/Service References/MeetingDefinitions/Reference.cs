@@ -58,6 +58,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private string PercentEMIFField;
         
+        private string PortfolioIdField;
+        
         private long PresentationIDField;
         
         private string PresenterField;
@@ -349,6 +351,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.PercentEMIFField, value) != true)) {
                     this.PercentEMIFField = value;
                     this.RaisePropertyChanged("PercentEMIF");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PortfolioId {
+            get {
+                return this.PortfolioIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioIdField, value) != true)) {
+                    this.PortfolioIdField = value;
+                    this.RaisePropertyChanged("PortfolioId");
                 }
             }
         }
@@ -1153,6 +1168,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private string PercentEMIFField;
         
+        private string PortfolioIdField;
+        
         private System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.PresentationAttachedFileInfo> PresentationAttachedFileInfoesField;
         
         private long PresentationIDField;
@@ -1435,6 +1452,19 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
                 if ((object.ReferenceEquals(this.PercentEMIFField, value) != true)) {
                     this.PercentEMIFField = value;
                     this.RaisePropertyChanged("PercentEMIF");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PortfolioId {
+            get {
+                return this.PortfolioIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PortfolioIdField, value) != true)) {
+                    this.PortfolioIdField = value;
+                    this.RaisePropertyChanged("PortfolioId");
                 }
             }
         }
@@ -3709,6 +3739,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster> EndRetrievePresentationAttachedFileDetails(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/ReSubmitPresentation", ReplyAction="http://tempuri.org/MeetingOperations/ReSubmitPresentationResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/ReSubmitPresentationServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginReSubmitPresentation(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, bool sendAlert, System.AsyncCallback callback, object asyncState);
+        
+        bool EndReSubmitPresentation(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/MeetingOperations/UpdatePresentationAttachedFileStreamData", ReplyAction="http://tempuri.org/MeetingOperations/UpdatePresentationAttachedFileStreamDataResp" +
             "onse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.MeetingDefinitions.ServiceFault), Action="http://tempuri.org/MeetingOperations/UpdatePresentationAttachedFileStreamDataServ" +
@@ -3999,6 +4035,25 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             get {
                 base.RaiseExceptionIfNecessary();
                 return ((System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class ReSubmitPresentationCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public ReSubmitPresentationCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
             }
         }
     }
@@ -4486,6 +4541,12 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrievePresentationAttachedFileDetailsCompletedDelegate;
         
+        private BeginOperationDelegate onBeginReSubmitPresentationDelegate;
+        
+        private EndOperationDelegate onEndReSubmitPresentationDelegate;
+        
+        private System.Threading.SendOrPostCallback onReSubmitPresentationCompletedDelegate;
+        
         private BeginOperationDelegate onBeginUpdatePresentationAttachedFileStreamDataDelegate;
         
         private EndOperationDelegate onEndUpdatePresentationAttachedFileStreamDataDelegate;
@@ -4690,6 +4751,8 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
         public event System.EventHandler<RetrieveCurrentPFVMeasuresCompletedEventArgs> RetrieveCurrentPFVMeasuresCompleted;
         
         public event System.EventHandler<RetrievePresentationAttachedFileDetailsCompletedEventArgs> RetrievePresentationAttachedFileDetailsCompleted;
+        
+        public event System.EventHandler<ReSubmitPresentationCompletedEventArgs> ReSubmitPresentationCompleted;
         
         public event System.EventHandler<UpdatePresentationAttachedFileStreamDataCompletedEventArgs> UpdatePresentationAttachedFileStreamDataCompleted;
         
@@ -5071,6 +5134,56 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             }
             base.InvokeAsync(this.onBeginRetrievePresentationAttachedFileDetailsDelegate, new object[] {
                         presentationID}, this.onEndRetrievePresentationAttachedFileDetailsDelegate, this.onRetrievePresentationAttachedFileDetailsCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.BeginReSubmitPresentation(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, bool sendAlert, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginReSubmitPresentation(userName, presentationOverviewData, sendAlert, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations.EndReSubmitPresentation(System.IAsyncResult result) {
+            return base.Channel.EndReSubmitPresentation(result);
+        }
+        
+        private System.IAsyncResult OnBeginReSubmitPresentation(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            string userName = ((string)(inValues[0]));
+            GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData = ((GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData)(inValues[1]));
+            bool sendAlert = ((bool)(inValues[2]));
+            return ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).BeginReSubmitPresentation(userName, presentationOverviewData, sendAlert, callback, asyncState);
+        }
+        
+        private object[] OnEndReSubmitPresentation(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.MeetingDefinitions.MeetingOperations)(this)).EndReSubmitPresentation(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnReSubmitPresentationCompleted(object state) {
+            if ((this.ReSubmitPresentationCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.ReSubmitPresentationCompleted(this, new ReSubmitPresentationCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void ReSubmitPresentationAsync(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, bool sendAlert) {
+            this.ReSubmitPresentationAsync(userName, presentationOverviewData, sendAlert, null);
+        }
+        
+        public void ReSubmitPresentationAsync(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, bool sendAlert, object userState) {
+            if ((this.onBeginReSubmitPresentationDelegate == null)) {
+                this.onBeginReSubmitPresentationDelegate = new BeginOperationDelegate(this.OnBeginReSubmitPresentation);
+            }
+            if ((this.onEndReSubmitPresentationDelegate == null)) {
+                this.onEndReSubmitPresentationDelegate = new EndOperationDelegate(this.OnEndReSubmitPresentation);
+            }
+            if ((this.onReSubmitPresentationCompletedDelegate == null)) {
+                this.onReSubmitPresentationCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnReSubmitPresentationCompleted);
+            }
+            base.InvokeAsync(this.onBeginReSubmitPresentationDelegate, new object[] {
+                        userName,
+                        presentationOverviewData,
+                        sendAlert}, this.onEndReSubmitPresentationDelegate, this.onReSubmitPresentationCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -6346,6 +6459,21 @@ namespace GreenField.ServiceCaller.MeetingDefinitions {
             public System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster> EndRetrievePresentationAttachedFileDetails(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.MeetingDefinitions.FileMaster>)(base.EndInvoke("RetrievePresentationAttachedFileDetails", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginReSubmitPresentation(string userName, GreenField.ServiceCaller.MeetingDefinitions.ICPresentationOverviewData presentationOverviewData, bool sendAlert, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[3];
+                _args[0] = userName;
+                _args[1] = presentationOverviewData;
+                _args[2] = sendAlert;
+                System.IAsyncResult _result = base.BeginInvoke("ReSubmitPresentation", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndReSubmitPresentation(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("ReSubmitPresentation", _args, result)));
                 return _result;
             }
             

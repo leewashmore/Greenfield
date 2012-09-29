@@ -215,7 +215,69 @@ namespace GreenField.Web.Services
             }
         }
 
+        private Boolean UploadPresentationFile(String userName, ICPresentationOverviewData presentationOverviewData)
+        {
+            String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
 
+            if (!File.Exists(presentationFile))
+                throw new Exception("Missing IC Presentation Template file");
+
+            String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
+            File.Copy(presentationFile, copiedFilePath, true);
+
+            try
+            {
+                using (PresentationDocument presentationDocument = PresentationDocument.Open(copiedFilePath, true))
+                {
+                    PresentationPart presentatioPart = presentationDocument.PresentationPart;
+                    OpenXmlElementList slideIds = presentatioPart.Presentation.SlideIdList.ChildElements;
+
+                    string relId = (slideIds[0] as SlideId).RelationshipId;
+
+                    // Get the slide part from the relationship ID.
+                    SlidePart slidePart = (SlidePart)presentatioPart.GetPartById(relId);
+
+                    SetSlideTitle(slidePart, presentationOverviewData);
+                    SetSlideContent(slidePart, presentationOverviewData);
+
+                    //save the Slide and Presentation
+                    slidePart.Slide.Save();
+                    presentatioPart.Presentation.Save();
+
+                }
+            }
+            catch
+            {
+                throw new Exception("Exception occurred while opening powerpoint presentation!!!");
+            }
+
+            Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
+            String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
+                ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
+
+            DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
+            String url = documentWorkspaceOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath), String.Empty);
+
+            if (url == String.Empty)
+                throw new Exception("Exception occurred while uploading template powerpoint presentation!!!");
+
+            File.Delete(copiedFilePath);
+
+            FileMaster fileMaster = new FileMaster()
+            {
+                Category = "Power Point Presentation",
+                Location = url,
+                Name = presentationOverviewData.SecurityName + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                SecurityName = presentationOverviewData.SecurityName,
+                SecurityTicker = presentationOverviewData.SecurityTicker,
+                Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),
+                CreatedBy = userName,
+                CreatedOn = DateTime.UtcNow,
+                ModifiedBy = userName,
+                ModifiedOn = DateTime.UtcNow
+            };
+            return UpdatePresentationAttachedFileStreamData(userName, presentationOverviewData.PresentationID, fileMaster, false);
+        }
         // Get the title string of the slide.
         private void SetSlideTitle(SlidePart slidePart, ICPresentationOverviewData presentationOverviewData)
         {
@@ -301,8 +363,6 @@ namespace GreenField.Web.Services
             return false;
         }
 
-
-
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public Boolean SetICPPresentationStatus(String userName, Int64 presentationId, String status)
@@ -350,6 +410,7 @@ namespace GreenField.Web.Services
                     throw new Exception("Services are not available");
 
                 //Manual inputs
+                presentationOverviewData.PortfolioId = portfolio.PortfolioId;
                 presentationOverviewData.YTDRet_Absolute = "0.0000%";
                 presentationOverviewData.YTDRet_RELtoLOC = "0.0000%";
                 presentationOverviewData.YTDRet_RELtoEM = "0.0000%";
@@ -357,9 +418,7 @@ namespace GreenField.Web.Services
                 #region GF_SECURITY_BASEVIEW info
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
                             .Where(record => record.TICKER == entitySelectionData.ShortName
-                                && record.ISSUE_NAME == entitySelectionData.LongName
-                                && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
-                                && record.SECURITY_TYPE == entitySelectionData.SecurityType)
+                                && record.ISSUE_NAME == entitySelectionData.LongName)
                             .FirstOrDefault();
 
                 presentationOverviewData.SecurityTicker = securityData.TICKER;
@@ -383,7 +442,7 @@ namespace GreenField.Web.Services
                         lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
 
                 List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> securityHoldingData = entity.GF_PORTFOLIO_HOLDINGS.Where(
-                    record => record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID && record.PORTFOLIO_DATE == lastBusinessDate
+                    record => record.TICKER == entitySelectionData.ShortName && record.PORTFOLIO_DATE == lastBusinessDate
                     && record.DIRTY_VALUE_PC > 0)
                     .ToList();
 
@@ -402,7 +461,7 @@ namespace GreenField.Web.Services
                 decimal? tempNAV;
 
                 List<GF_PORTFOLIO_HOLDINGS> securityInPortfolio = portfolioData
-                    .Where(a => a.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                    .Where(a => a.TICKER == entitySelectionData.ShortName
                         && a.PORTFOLIO_ID == portfolio.PortfolioId
                         && a.PORTFOLIO_DATE == lastBusinessDate).ToList();
                 decimal? sumSecurityDirtyValuePC = securityInPortfolio.Sum(record => record.DIRTY_VALUE_PC);
@@ -426,7 +485,7 @@ namespace GreenField.Web.Services
                 string benchmarkID = portfolioData.Select(a => a.BENCHMARK_ID).FirstOrDefault();
                 DimensionEntitiesService.GF_BENCHMARK_HOLDINGS benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(
                     record => record.BENCHMARK_ID == benchmarkID
-                        && record.ASEC_SEC_SHORT_NAME == entitySelectionData.InstrumentID
+                        && record.TICKER == entitySelectionData.ShortName
                         && record.PORTFOLIO_DATE == lastBusinessDate)
                     .FirstOrDefault();
 
@@ -597,7 +656,339 @@ namespace GreenField.Web.Services
             }
         }
 
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean ReSubmitPresentation(String userName, ICPresentationOverviewData presentationOverviewData,  Boolean sendAlert)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                DocumentWorkspaceOperations documentOperations = new DocumentWorkspaceOperations();
+                //Recalculate presentation overview data
+                presentationOverviewData = RetrieveUpdatedSecurityDetails(presentationOverviewData);
+                //Update presentation info object
+                XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverviewData });
+                string xmlScript = xmlDoc.ToString();
+                Int64? result = entity.UpdatePresentationInfo(userName, xmlScript).FirstOrDefault();
+                if (result == null)
+                    throw new Exception("Unable to update presentation info object");
 
+                #region Update power point presentation file
+                #region Retrieve presentation file or create new one if not exists
+                String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
+                List<FileMaster> presentationAttachedFiles = RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID);
+                FileMaster presentationPowerPointAttachedFile = null;
+                if (presentationAttachedFiles != null)
+                {
+                    presentationPowerPointAttachedFile = presentationAttachedFiles.Where(record => record.Category == "Power Point Presentation").FirstOrDefault();
+                    if (presentationPowerPointAttachedFile != null)
+                    {
+                        Byte[] powerPointFileStream = documentOperations.RetrieveDocument(presentationPowerPointAttachedFile.Location
+                            .Substring(presentationPowerPointAttachedFile.Location.LastIndexOf(@"/") + 1));
+
+                        if (powerPointFileStream == null)
+                            throw new Exception("Unable to download power point file from repository");
+
+                        File.WriteAllBytes(copiedFilePath, powerPointFileStream);
+                    }
+                    else
+                    {
+                        String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
+                        File.Copy(presentationFile, copiedFilePath, true);
+                    }
+                }
+                else
+                {
+                    String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
+                    File.Copy(presentationFile, copiedFilePath, true);
+                } 
+                #endregion
+
+                #region Edit presentation file
+                try
+                {
+                    using (PresentationDocument presentationDocument = PresentationDocument.Open(copiedFilePath, true))
+                    {
+                        PresentationPart presentatioPart = presentationDocument.PresentationPart;
+                        OpenXmlElementList slideIds = presentatioPart.Presentation.SlideIdList.ChildElements;
+
+                        string relId = (slideIds[0] as SlideId).RelationshipId;
+
+                        // Get the slide part from the relationship ID.
+                        SlidePart slidePart = (SlidePart)presentatioPart.GetPartById(relId);
+
+                        SetSlideTitle(slidePart, presentationOverviewData);
+                        SetSlideContent(slidePart, presentationOverviewData);
+
+                        //save the Slide and Presentation
+                        slidePart.Slide.Save();
+                        presentatioPart.Presentation.Save();
+
+                    }
+                }
+                catch
+                {
+                    throw new Exception("Exception occurred while opening powerpoint presentation!!!");
+                } 
+                #endregion
+
+                #region Upload power point to share point and modify database
+                Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
+                String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
+                    ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
+
+                String url = documentOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath), String.Empty);
+
+                if (url == String.Empty)
+                    throw new Exception("Exception occurred while uploading template powerpoint presentation!!!");
+
+                File.Delete(copiedFilePath);
+
+                FileMaster fileMaster = new FileMaster()
+                {
+                    Category = "Power Point Presentation",
+                    Location = url,
+                    Name = presentationOverviewData.SecurityName + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                    SecurityName = presentationOverviewData.SecurityName,
+                    SecurityTicker = presentationOverviewData.SecurityTicker,
+                    Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),
+                    CreatedBy = userName,
+                    CreatedOn = DateTime.UtcNow,
+                    ModifiedBy = userName,
+                    ModifiedOn = DateTime.UtcNow
+                };
+
+                Boolean insertedFileMasterRecord = UpdatePresentationAttachedFileStreamData(userName, Convert.ToInt64(result), fileMaster, false);
+                if (presentationPowerPointAttachedFile != null && insertedFileMasterRecord)
+                {
+                    documentOperations.DeleteDocument(presentationPowerPointAttachedFile.Location);
+                    entity.DeleteObject(entity.FileMasters.Where(record => record.FileID == presentationPowerPointAttachedFile.FileID).FirstOrDefault());
+                }  
+                #endregion
+                #endregion
+
+                #region IC Packet
+                if (presentationAttachedFiles != null)
+                {
+                    List<FileMaster> icPacketFiles = presentationAttachedFiles.Where(record => record.Category == "Investment Committee Packet").ToList();
+                    foreach (FileMaster record in icPacketFiles)
+                    {
+                        documentOperations.DeleteDocument(record.Location);
+                    }
+                }
+
+                Byte[] generatedICPacketStream = GenerateICPacketReport(presentationOverviewData.PresentationID);
+                String emailAttachments = null;
+                String uploadFileName = String.Format("{0}_{1}_ICPacket.pdf"
+                            , Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("MMddyyyy")
+                            , presentationOverviewData.SecurityTicker);
+                if (generatedICPacketStream != null)
+                {
+                    String uploadFileLocation = documentOperations.UploadDocument(uploadFileName, generatedICPacketStream, String.Empty);
+
+                    if (!String.IsNullOrEmpty(uploadFileLocation))
+                    {
+                        emailAttachments += uploadFileLocation;
+                    }
+                } 
+                #endregion
+
+                #region Alert
+                if (sendAlert)
+                {
+                    List<VoterInfo> voterInfo = RetrievePresentationVoterData(presentationOverviewData.PresentationID, true).ToList();
+                    List<String> userNames = voterInfo.Where(record => record.PostMeetingFlag == false).Select(record => record.Name).ToList();
+                    List<MembershipUserInfo> users = GetUsersByNames(userNames);
+
+                    String emailTo = String.Join("|", users.Select(record => record.Email).ToArray());
+
+                    String messageSubject = "Investment Committee Presentation Edit Notification – " +
+                        Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("MMMM dd, yyyy");
+                    String messageBody = "The attached presentation scheduled for the Investment Committee Meeting dated "
+                        + Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("MMMM dd, yyyy")
+                        + " UTC has been edited since its original submission.  Voting members, please enter AIMS to modify your comments and pre-meeting votes, if necessary.";
+                    SetMessageInfo(emailTo, null, messageSubject, messageBody, emailAttachments, userName);
+                } 
+                #endregion
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        private ICPresentationOverviewData RetrieveUpdatedSecurityDetails(ICPresentationOverviewData presentationOverviewData)
+        {
+            try
+            {
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                ExternalResearchEntities externalResearchEntity = new ExternalResearchEntities();
+
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
+                #region GF_SECURITY_BASEVIEW info
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW securityData = entity.GF_SECURITY_BASEVIEW
+                            .Where(record => record.TICKER == presentationOverviewData.SecurityTicker 
+                                && record.ISSUE_NAME == presentationOverviewData.SecurityName)
+                            .FirstOrDefault();
+
+                presentationOverviewData.SecurityCountry = securityData.ASEC_SEC_COUNTRY_NAME;
+                presentationOverviewData.SecurityCountryCode = securityData.ISO_COUNTRY_CODE;
+                presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
+                presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
+                if (securityData.CLOSING_PRICE != null)
+                    presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
+
+                presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : securityData.CLOSING_PRICE.ToString())
+                    + " " + (securityData.TRADING_CURRENCY == null ? "" : securityData.TRADING_CURRENCY.ToString());
+                #endregion
+
+                #region GF_PORTFOLIO_HOLDINGS info
+                DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
+                GF_PORTFOLIO_HOLDINGS lastBusinessRecord = entity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                if (lastBusinessRecord != null)
+                    if (lastBusinessRecord.PORTFOLIO_DATE != null)
+                        lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+
+                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> securityHoldingData = entity.GF_PORTFOLIO_HOLDINGS.Where(
+                    record => record.TICKER == presentationOverviewData.SecurityTicker && record.PORTFOLIO_DATE == lastBusinessDate
+                    && record.DIRTY_VALUE_PC > 0)
+                    .ToList();
+
+                decimal? sumSecDirtyValuePC = securityHoldingData.Sum(record => record.DIRTY_VALUE_PC);
+                decimal? sumSecBalanceNominal = securityHoldingData.Sum(record => record.BALANCE_NOMINAL);
+                if (sumSecDirtyValuePC != null)
+                {
+                    presentationOverviewData.SecurityCashPosition = Convert.ToSingle(sumSecDirtyValuePC);
+                    presentationOverviewData.SecurityPosition = Convert.ToInt64(sumSecBalanceNominal);
+                }
+
+                List<DimensionEntitiesService.GF_PORTFOLIO_HOLDINGS> portfolioData = entity.GF_PORTFOLIO_HOLDINGS.Where(
+                    record => record.PORTFOLIO_ID == presentationOverviewData.PortfolioId && record.PORTFOLIO_DATE == lastBusinessDate)
+                    .ToList();
+                decimal? sumDirtyValuePC = portfolioData.Sum(record => record.DIRTY_VALUE_PC);
+                decimal? tempNAV;
+
+                List<GF_PORTFOLIO_HOLDINGS> securityInPortfolio = portfolioData
+                    .Where(a => a.TICKER == presentationOverviewData.SecurityTicker
+                        && a.PORTFOLIO_ID == presentationOverviewData.PortfolioId
+                        && a.PORTFOLIO_DATE == lastBusinessDate).ToList();
+                decimal? sumSecurityDirtyValuePC = securityInPortfolio.Sum(record => record.DIRTY_VALUE_PC);
+
+                if (securityInPortfolio != null && sumSecurityDirtyValuePC > 0)
+                {
+                    presentationOverviewData.CurrentHoldings = "YES";
+                    if (sumDirtyValuePC != 0)
+                        presentationOverviewData.PercentEMIF = String.Format("{0:n4}%", ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100));
+                    tempNAV = ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100);
+                }
+                else
+                {
+                    presentationOverviewData.CurrentHoldings = "No";
+                    presentationOverviewData.PercentEMIF = "0%";
+                    tempNAV = 0;
+                }
+                #endregion
+
+                #region GF_BENCHMARK_HOLDINGS Info
+                string benchmarkID = portfolioData.Select(a => a.BENCHMARK_ID).FirstOrDefault();
+                DimensionEntitiesService.GF_BENCHMARK_HOLDINGS benchmarkData = entity.GF_BENCHMARK_HOLDINGS.Where(
+                    record => record.BENCHMARK_ID == benchmarkID
+                        && record.TICKER == presentationOverviewData.SecurityTicker
+                        && record.PORTFOLIO_DATE == lastBusinessDate)
+                    .FirstOrDefault();
+
+                if (benchmarkData != null)
+                {
+                    presentationOverviewData.SecurityBMWeight = String.Format("{0:n4}%", benchmarkData.BENCHMARK_WEIGHT);
+                    tempNAV = (tempNAV - benchmarkData.BENCHMARK_WEIGHT);
+                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
+                }
+                else
+                {
+                    presentationOverviewData.SecurityBMWeight = "0%";
+                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
+                }
+                #endregion
+
+                #region FAIR_VALUE Info
+                String securityId = securityData.SECURITY_ID == null ? null : securityData.SECURITY_ID.ToString();
+                FAIR_VALUE fairValueRecord = externalResearchEntity.FAIR_VALUE.Where(record => record.VALUE_TYPE == "PRIMARY"
+                            && record.SECURITY_ID == securityId).FirstOrDefault();
+
+                if (fairValueRecord != null)
+                {
+                    DATA_MASTER dataMasterRecord = externalResearchEntity.DATA_MASTER
+                        .Where(record => record.DATA_ID == fairValueRecord.FV_MEASURE).FirstOrDefault();
+
+                    if (dataMasterRecord != null)
+                    {
+                        presentationOverviewData.SecurityPFVMeasure = dataMasterRecord.DATA_DESC;
+                        presentationOverviewData.SecurityBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
+                        presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
+                        presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
+                        presentationOverviewData.SecurityBuySellvsCrnt = securityData.TRADING_CURRENCY + " " +
+                            String.Format("{0:n4}", fairValueRecord.FV_BUY) +
+                            "- " + securityData.TRADING_CURRENCY + " " +
+                            String.Format("{0:n4}", fairValueRecord.FV_SELL);
+
+                        Decimal upperLimit = fairValueRecord.FV_BUY >= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
+                        Decimal lowerLimit = fairValueRecord.FV_BUY <= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
+                        if (presentationOverviewData.CurrentHoldings == "YES")
+                        {
+                            presentationOverviewData.SecurityRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= upperLimit
+                                ? "Hold" : "Sell";
+                        }
+                        else
+                        {
+                            presentationOverviewData.SecurityRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= lowerLimit
+                                ? "Buy" : "Watch";
+                        }
+
+                        if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
+                        {
+                            presentationOverviewData.FVCalc = dataMasterRecord.DATA_DESC + " " + securityData.TRADING_CURRENCY + " " +
+                                String.Format("{0:n4}", ((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)) +
+                                "- " + securityData.TRADING_CURRENCY + " " +
+                                String.Format("{0:n4}", ((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE));
+                        }
+
+                        String securityID = securityData.SECURITY_ID.ToString();
+
+                        PERIOD_FINANCIALS periodFinancialRecord = externalResearchEntity.PERIOD_FINANCIALS
+                            .Where(record => record.SECURITY_ID == securityID
+                                && record.DATA_ID == 185
+                                && record.CURRENCY == "USD"
+                                && record.PERIOD_TYPE == "C").FirstOrDefault();
+
+                        if (periodFinancialRecord != null)
+                        {
+                            presentationOverviewData.SecurityMarketCapitalization = Convert.ToSingle(periodFinancialRecord.AMOUNT);
+                        }
+
+                    }
+                }
+                #endregion
+
+
+
+                return presentationOverviewData;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public Boolean UpdatePresentationAttachedFileStreamData(String userName, Int64 presentationId, FileMaster fileMasterInfo, Boolean deletionFlag)
@@ -1792,6 +2183,7 @@ namespace GreenField.Web.Services
         }
         #endregion
 
+        #region Summary Report
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<SummaryReportData> RetrieveSummaryReportData(DateTime startDate, DateTime endDate)
@@ -1860,7 +2252,8 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        }
+        } 
+        #endregion
 
     }
 }
