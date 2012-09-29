@@ -313,7 +313,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (selectedCOASpecificGadgetNameInfo != value)
                 {
                     selectedCOASpecificGadgetNameInfo = value;
-                    COASpecificFilteredInfo = new ObservableCollection<COASpecificData>(COASpecificInfo.Where(t => t.GroupDescription == value));
+                    COASpecificFilteredInfo = new ObservableCollection<COASpecificData>(COASpecificInfo.Where(t => t.GroupDescription == value && t.PeriodYear != 2300));
                     AddToComboBoxSeries.Clear();
                     RaisePropertyChanged(() => this.SelectedCOASpecificGadgetNameInfo);
                 }
@@ -635,9 +635,9 @@ namespace GreenField.Gadgets.ViewModels
             List<COASpecificData> addItem = new List<COASpecificData>();
 
             if (selectedCOASpecificGadgetNameInfo == null)
-                addItem = (COASpecificInfo.Where(t => t.GroupDescription == defaultGadgetDesc && t.Description == SelectedSeriesCB)).ToList();
+                addItem = (COASpecificInfo.Where(t => t.GroupDescription == defaultGadgetDesc && t.Description == SelectedSeriesCB && t.PeriodYear != 2300)).ToList();
             else
-                addItem = (COASpecificInfo.Where(t => t.GroupDescription == selectedCOASpecificGadgetNameInfo && t.Description == SelectedSeriesCB)).ToList();
+                addItem = (COASpecificInfo.Where(t => t.GroupDescription == selectedCOASpecificGadgetNameInfo && t.Description == SelectedSeriesCB && t.PeriodYear != 2300)).ToList();
             if (addItem != null)
                 foreach (COASpecificData r in addItem)
                 {
