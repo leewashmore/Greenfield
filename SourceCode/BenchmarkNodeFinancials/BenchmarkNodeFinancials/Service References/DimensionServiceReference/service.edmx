@@ -1,0 +1,882 @@
+﻿<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx">
+  <edmx:DataServices xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" m:DataServiceVersion="1.0">
+    <Schema Namespace="Model" xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+      <EntityContainer Name="Entities" p7:LazyLoadingEnabled="true" m:IsDefaultEntityContainer="true" xmlns:p7="http://schemas.microsoft.com/ado/2009/02/edm/annotation">
+        <EntitySet Name="GF_BENCHMARK_HOLDINGS" EntityType="Model.GF_BENCHMARK_HOLDINGS" />
+        <EntitySet Name="GF_CTY_CUR" EntityType="Model.GF_CTY_CUR" />
+        <EntitySet Name="GF_ENVIRONMENT" EntityType="Model.GF_ENVIRONMENT" />
+        <EntitySet Name="GF_EQUITYKEYS" EntityType="Model.GF_EQUITYKEYS" />
+        <EntitySet Name="GF_EXTRACT_STATS" EntityType="Model.GF_EXTRACT_STATS" />
+        <EntitySet Name="GF_FX_FORWARD_RATES_TICS" EntityType="Model.GF_FX_FORWARD_RATES_TICS" />
+        <EntitySet Name="GF_PERF_DAILY_ATTRIB_DIST_BM" EntityType="Model.GF_PERF_DAILY_ATTRIB_DIST_BM" />
+        <EntitySet Name="GF_PERF_DAILY_ATTRIBUTION" EntityType="Model.GF_PERF_DAILY_ATTRIBUTION" />
+        <EntitySet Name="GF_PERF_TOPLEVELMONTH" EntityType="Model.GF_PERF_TOPLEVELMONTH" />
+        <EntitySet Name="GF_PERF_TOPLEVELPERIOD" EntityType="Model.GF_PERF_TOPLEVELPERIOD" />
+        <EntitySet Name="GF_PERF_TOPLEVELSTATS" EntityType="Model.GF_PERF_TOPLEVELSTATS" />
+        <EntitySet Name="GF_PERF_TOPLEVELYEAR" EntityType="Model.GF_PERF_TOPLEVELYEAR" />
+        <EntitySet Name="GF_PORTFOLIO_HOLDINGS" EntityType="Model.GF_PORTFOLIO_HOLDINGS" />
+        <EntitySet Name="GF_PORTFOLIO_LTHOLDINGS" EntityType="Model.GF_PORTFOLIO_LTHOLDINGS" />
+        <EntitySet Name="GF_PORTFOLIO_SELECTION" EntityType="Model.GF_PORTFOLIO_SELECTION" />
+        <EntitySet Name="GF_PRICING_BASEVIEW" EntityType="Model.GF_PRICING_BASEVIEW" />
+        <EntitySet Name="GF_SECURITY_BASEVIEW" EntityType="Model.GF_SECURITY_BASEVIEW" />
+        <EntitySet Name="GF_SELECTION_BASEVIEW" EntityType="Model.GF_SELECTION_BASEVIEW" />
+        <EntitySet Name="GF_TRANSACTIONS" EntityType="Model.GF_TRANSACTIONS" />
+      </EntityContainer>
+      <EntityType Name="GF_BENCHMARK_HOLDINGS">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="PORTFOLIO_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BENCHMARK_ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUER_ID" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITYTHEMECODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="A_SEC_INSTR_TYPE" Type="Edm.String" Nullable="true" MaxLength="2000" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITY_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="BALANCE_NOMINAL" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="DIRTY_PRICE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="TRADING_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="DIRTY_VALUE_PC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BENCHMARK_WEIGHT" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="ASH_EMM_MODEL_WEIGHT" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="MARKET_CAP_IN_USD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="ASHEMM_PROP_REGION_CODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="ASHEMM_PROP_REGION_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="ISO_COUNTRY_CODE" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="COUNTRYNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SECTOR" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SECTOR_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_INDUSTRY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_INDUSTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SUB_INDUSTRY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SUB_INDUSTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="LOOK_THRU_FUND" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="BARRA_RISK_FACTOR_MOMENTUM" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_VOLATILITY" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_VALUE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_SIZE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_SIZE_NONLIN" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_GROWTH" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_LIQUIDITY" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_PBETEWLD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_CTY_CUR">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="CURRENCY_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="COUNTRY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="COUNTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CTY_CTYFC1" Type="Edm.String" Nullable="true" MaxLength="32" Unicode="false" FixedLength="false" />
+      </EntityType>
+      <EntityType Name="GF_ENVIRONMENT">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="ENVIRONMENT" Type="Edm.String" Nullable="true" MaxLength="14" Unicode="false" FixedLength="true" />
+      </EntityType>
+      <EntityType Name="GF_EQUITYKEYS">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="EQUITYKEYS_SECIK" Type="Edm.Int32" Nullable="true" />
+        <Property Name="EQUITYKEYS_FROMDATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="EQKEY13_PX_VOLUME" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY14_CHG_PCT_1D" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY15_D2D_TOT_RET_GROSS_DVDS" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY16_EQY_SH_OUT" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY17_CUR_MKT_CAP" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY20_MOMENTUM" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY21_VOLATILITY" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY22_VALUE" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY23_SIZE" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY24_SIZENONL" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY25_GROWTH" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY26_LIQUID" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY27_LEVERAGE" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY28_PBETEWLD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+      </EntityType>
+      <EntityType Name="GF_EXTRACT_STATS">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="EXTRACT_NAME" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="MAX_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="ROW_COUNT" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+      </EntityType>
+      <EntityType Name="GF_FX_FORWARD_RATES_TICS">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="CURRENCY_CROSS" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CROSS_INVERTED" Type="Edm.String" Nullable="true" MaxLength="5" Unicode="false" FixedLength="false" />
+        <Property Name="FXRATES_PRICE_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="FX_SPOT_RATE_INVERTED" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="FX_SPOT_RATE_NON_INVERTED" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_1W" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_1M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_2M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_3M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_6M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_9M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_12M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_2Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_3Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_4Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="INVERTED_FWD_5Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_1W" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_1M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_2M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_3M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_6M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_9M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_12M" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_2Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_3Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_4Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="NON_INVERTED_FWD_5Y" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_PERF_DAILY_ATTRIB_DIST_BM">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="BM" Type="Edm.String" Nullable="true" MaxLength="20" Unicode="false" FixedLength="false" />
+        <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+      </EntityType>
+      <EntityType Name="GF_PERF_DAILY_ATTRIBUTION">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="NODE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="TO_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="AGG_LVL_1" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="AGG_LVL_1_LONG_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUER" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="COUNTRY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="COUNTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="COUNTRY_ZONE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="COUNTRY_ZONE1" Type="Edm.String" Nullable="true" MaxLength="150" Unicode="false" FixedLength="false" />
+        <Property Name="SEC_GROUP" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="SEC_GROUP_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="SEC_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="SEC_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="SEC_TYPE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="SEC_INV_THEME" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="SEC_ISSUE_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="SEC_ISSUE_PRICE" Type="Edm.Decimal" Nullable="true" Precision="14" Scale="6" />
+        <Property Name="SEC_ISSUE_YIELD" Type="Edm.Decimal" Nullable="true" Precision="9" Scale="6" />
+        <Property Name="SEC_ISIN" Type="Edm.String" Nullable="true" MaxLength="12" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_LVL1" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="SEC_QUO_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="COUPON_RATE" Type="Edm.Decimal" Nullable="true" Precision="14" Scale="9" />
+        <Property Name="MATURITY_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="INTEREST_TYPE" Type="Edm.String" Nullable="true" MaxLength="2000" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUER_NAME" Type="Edm.String" Nullable="true" MaxLength="160" Unicode="false" FixedLength="false" />
+        <Property Name="RATINGS_SP_FROM_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="RATINGS_SP_RATING" Type="Edm.String" Nullable="true" MaxLength="8" Unicode="false" FixedLength="false" />
+        <Property Name="RATINGS_SP_RATING_AGENCY" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="RATINGS_MO_FROM_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="RATINGS_MO_RATING" Type="Edm.String" Nullable="true" MaxLength="8" Unicode="false" FixedLength="false" />
+        <Property Name="RATINGS_MO_RATING_AGENCY" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="RATINGS_FI_FROM_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="RATINGS_FI_RATING" Type="Edm.String" Nullable="true" MaxLength="8" Unicode="false" FixedLength="false" />
+        <Property Name="RATINGS_FI_RATING_AGENCY" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="POR_RC_EXPOSURE" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_MARKET_VALUE" Type="Edm.Decimal" Nullable="true" Precision="20" Scale="2" />
+        <Property Name="POR_RC_CASH_FLOW" Type="Edm.Decimal" Nullable="true" Precision="21" Scale="3" />
+        <Property Name="POR_RC_WGT_EOD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="8" />
+        <Property Name="POR_RC_WGT_SOD" Type="Edm.Decimal" Nullable="true" Precision="26" Scale="8" />
+        <Property Name="BM1_RC_WGT_EOD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="8" />
+        <Property Name="BM1_RC_WGT_SOD" Type="Edm.Decimal" Nullable="true" Precision="26" Scale="8" />
+        <Property Name="POR_RC_AVG_WGT_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_AVG_WGT_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_AVG_WGT_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_AVG_WGT_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_AVG_WGT_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_AVG_WGT_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_AVG_WGT_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_AVG_WGT_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_AVG_WGT_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_AVG_WGT_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_AVG_WGT_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_AVG_WGT_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="8" />
+        <Property Name="POR_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="8" />
+        <Property Name="BM1_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_QC_TWR_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_QC_TWR_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_QC_TWR_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_QC_TWR_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_QC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="4" />
+        <Property Name="POR_QC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_TWR_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_TWR_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_TWR_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_TWR_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_RC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_QC_TWR_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_QC_TWR_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_QC_TWR_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_QC_TWR_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_QC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_QC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_TWR_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_TWR_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_TWR_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_TWR_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_ASSET_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_ASSET_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_ASSET_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="BM1_RC_ASSET_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_ASSET_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_ASSET_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_SEC_SELEC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_SEC_SELEC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_SEC_SELEC_MTD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="BM1_RC_SEC_SELEC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_SEC_SELEC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_SEC_SELEC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_CURR_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_CURR_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_CURR_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="BM1_RC_CURR_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_CURR_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_RC_CURR_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="8" />
+        <Property Name="POR_TOP_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="8" />
+        <Property Name="BM1_TOP_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_QC_TWR_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_QC_TWR_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_QC_TWR_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_QC_TWR_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_QC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_QC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_TWR_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_TWR_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_TWR_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_TWR_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_RC_TWR_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_RC_TWR_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_RC_TWR_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_RC_TWR_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="POR_TOP_RC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_TWR_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_TWR_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_TWR_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_TWR_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_ASSET_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_ASSET_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_ASSET_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="BM1_TOP_RC_ASSET_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_ASSET_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_ASSET_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_SEC_SELEC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_SEC_SELEC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_SEC_SELEC_MTD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="BM1_TOP_RC_SEC_SELEC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_SEC_SELEC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_SEC_SELEC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_CURR_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_CURR_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_CURR_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="BM1_TOP_RC_CURR_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_CURR_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_CURR_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_QC_TWR_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_QC_TWR_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_QC_TWR_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_QC_TWR_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_QC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_QC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_RC_TWR_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_RC_TWR_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_RC_TWR_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_RC_TWR_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_RTN_POR_RC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="A_PERFREP_PORTFOLIO_GROUP" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="false" FixedLength="false" />
+        <Property Name="BM" Type="Edm.String" Nullable="true" MaxLength="20" Unicode="false" FixedLength="false" />
+        <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="POR_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="POR_SUB_THEME_GROUP" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="POR_THEME_GROUP" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="REP_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="ADJ_BM1_QC_EXRTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_QC_EXRTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_QC_EXRTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_QC_EXRTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_QC_EXRTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_QC_EXRTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_RC_EXRTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_RC_EXRTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_RC_EXRTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_RC_EXRTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_RC_EXRTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_RC_EXRTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_POR_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_POR_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_POR_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_POR_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_POR_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_POR_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_ASSET_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_ASSET_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_ASSET_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_ASSET_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_ASSET_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_ASSET_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_SEC_SELEC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_SEC_SELEC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_SEC_SELEC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_SEC_SELEC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_SEC_SELEC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_SEC_SELEC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_CURR_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_CURR_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_CURR_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_CURR_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_CURR_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_CURR_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_ASSET_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_ASSET_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_ASSET_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_ASSET_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_ASSET_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_ASSET_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_SEC_SELEC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_SEC_SELEC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_SEC_SELEC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_SEC_SELEC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_SEC_SELEC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_SEC_SELEC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_CURR_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_CURR_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_CURR_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_CURR_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_CURR_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ABS_BM1_TOP_CURR_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_POR_RC_TWR_VS_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_POR_RC_TWR_VS_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_POR_RC_TWR_VS_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_POR_RC_TWR_VS_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_POR_RC_TWR_VS_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_POR_RC_TWR_VS_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_RC_TWR_VS_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_RC_TWR_VS_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_RC_TWR_VS_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_RC_TWR_VS_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_RC_TWR_VS_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_RC_TWR_VS_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_EXCESS_RTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_EXCESS_RTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_EXCESS_RTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_EXCESS_RTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_EXCESS_RTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_QC_EXCESS_RTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_EXCESS_RTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_EXCESS_RTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_EXCESS_RTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_EXCESS_RTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_EXCESS_RTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="BM1_TOP_RC_EXCESS_RTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXQC_VS_AASS_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXQC_VS_AASS_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXQC_VS_AASS_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXQC_VS_AASS_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXQC_VS_AASS_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXQC_VS_AASS_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXRC_VS_CA_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXRC_VS_CA_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXRC_VS_CA_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXRC_VS_CA_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXRC_VS_CA_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="DIFF_BM1_EXRC_VS_CA_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_AA_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_AA_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_AA_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_AA_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_AA_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_AA_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_SS_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_SS_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_SS_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_SS_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_SS_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASH_TOP_SS_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_POR_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_POR_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_POR_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_POR_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_POR_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_POR_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASSET_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASSET_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASSET_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASSET_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASSET_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_ASSET_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_SEC_SELEC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_SEC_SELEC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_SEC_SELEC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_SEC_SELEC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_SEC_SELEC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_SEC_SELEC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_CURR_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_CURR_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_CURR_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_CURR_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_CURR_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_WGT_BM1_CURR_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_POR_ASH_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_POR_ASH_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_POR_ASH_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_POR_ASH_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_POR_ASH_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_POR_ASH_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_ASSET_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_ASSET_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_ASSET_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_ASSET_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_ASSET_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_ASSET_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_SEC_SELEC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_SEC_SELEC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_SEC_SELEC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_SEC_SELEC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_SEC_SELEC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_SEC_SELEC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_CURR_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_CURR_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_CURR_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_CURR_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_CURR_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="ADJ_BM1_ASH_CURR_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_POR_ASH_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_POR_ASH_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_POR_ASH_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_POR_ASH_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_POR_ASH_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_POR_ASH_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_RC_CTN_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_RC_CTN_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_RC_CTN_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_RC_CTN_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_RC_CTN_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_RC_CTN_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_ASSET_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_ASSET_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_ASSET_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_ASSET_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_ASSET_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_ASSET_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_SEC_SELEC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_SEC_SELEC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_SEC_SELEC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_SEC_SELEC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_SEC_SELEC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_SEC_SELEC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_CURR_ALLOC_1D" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_CURR_ALLOC_1W" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_CURR_ALLOC_MTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_CURR_ALLOC_YTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_CURR_ALLOC_1Y" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+        <Property Name="F_BM1_ASH_CURR_ALLOC_QTD" Type="Edm.Decimal" Nullable="true" Precision="18" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_PERF_TOPLEVELMONTH">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="TO_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BM1ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM1NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM1_RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="EXCESSRETURN1" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BM2ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM2NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM2_RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="EXCESSRETURN2" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BM3ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM3NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM3_RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="EXCESSRETURN3" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_PERF_TOPLEVELPERIOD">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="TO_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="PORTYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BMID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_3M" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_6M" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_1Y" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_3YA" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_5YA" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_10YA" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_SIA" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_3YC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_5YC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_10YC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TWR_SIYC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_PERF_TOPLEVELSTATS">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="TO_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="PORTYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="YEAR" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BMID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RC_VOL" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_TRACKERROR" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_INFORMATION" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_ALPHA" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_BETA" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_R2" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_CORRELATION" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="RC_SHARPE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_PERF_TOPLEVELYEAR">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="INDE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="TO_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOGROUP" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIOCODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BM1ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM1NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM1_RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="EXCESSRETURN1" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BM2ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM2NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM2_RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="EXCESSRETURN2" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BM3ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BM3NAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="BM3_RC_TWR_YTD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="EXCESSRETURN3" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_PORTFOLIO_HOLDINGS">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="PORTFOLIO_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="BENCHMARK_ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUER_ID" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITYTHEMECODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="A_SEC_INSTR_TYPE" Type="Edm.String" Nullable="true" MaxLength="2000" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITY_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="BALANCE_NOMINAL" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="DIRTY_PRICE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="TRADING_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="DIRTY_VALUE_PC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BENCHMARK_WEIGHT" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="ASH_EMM_MODEL_WEIGHT" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="MARKET_CAP_IN_USD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="ASHEMM_PROP_REGION_CODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="ASHEMM_PROP_REGION_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="ISO_COUNTRY_CODE" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="COUNTRYNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SECTOR" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SECTOR_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_INDUSTRY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_INDUSTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SUB_INDUSTRY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SUB_INDUSTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="LOOK_THRU_FUND" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="BARRA_RISK_FACTOR_MOMENTUM" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_VOLATILITY" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_VALUE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_SIZE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_SIZE_NONLIN" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_GROWTH" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_LIQUIDITY" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_PBETEWLD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_PORTFOLIO_LTHOLDINGS">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="PORTFOLIO_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="A_PFCHOLDINGS_PORLT" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="PORPATH" Type="Edm.String" Nullable="true" MaxLength="500" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="BENCHMARK_ID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUER_ID" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITYTHEMECODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="A_SEC_INSTR_TYPE" Type="Edm.String" Nullable="true" MaxLength="2000" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITY_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="BALANCE_NOMINAL" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="DIRTY_PRICE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="TRADING_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="DIRTY_VALUE_PC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BENCHMARK_WEIGHT" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="ASH_EMM_MODEL_WEIGHT" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="MARKET_CAP_IN_USD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="ASHEMM_PROP_REGION_CODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="ASHEMM_PROP_REGION_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="ISO_COUNTRY_CODE" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="COUNTRYNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SECTOR" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SECTOR_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_INDUSTRY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_INDUSTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SUB_INDUSTRY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SUB_INDUSTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="LOOK_THRU_FUND" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="BARRA_RISK_FACTOR_MOMENTUM" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_VOLATILITY" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_VALUE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_SIZE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_SIZE_NONLIN" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_GROWTH" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_LIQUIDITY" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_LEVERAGE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="BARRA_RISK_FACTOR_PBETEWLD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_PORTFOLIO_SELECTION">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_THEME_SUBGROUP_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+      </EntityType>
+      <EntityType Name="GF_PRICING_BASEVIEW">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+          <PropertyRef Name="TYPE" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+        <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="FROMDATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="DAILY_CLOSING_PRICE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="DAILY_PRICE_RETURN" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="DAILY_GROSS_RETURN" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="VOLUME" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="DAILY_SPOT_FX" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+      </EntityType>
+      <EntityType Name="GF_SECURITY_BASEVIEW">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="SECURITY_ID" Type="Edm.Int32" Nullable="true" />
+        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="ISIN" Type="Edm.String" Nullable="true" MaxLength="12" Unicode="false" FixedLength="false" />
+        <Property Name="SEDOL" Type="Edm.String" Nullable="true" MaxLength="7" Unicode="false" FixedLength="false" />
+        <Property Name="SECS_INSTYPE" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_INSTR_TYPE" Type="Edm.String" Nullable="true" MaxLength="2000" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITY_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_FC_SEC_REF" Type="Edm.Int32" Nullable="true" />
+        <Property Name="LOOK_THRU_FUND" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="FIFTYTWO_WEEK_LOW" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="FIFTYTWO_WEEK_HIGH" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="SECURITY_VOLUME_AVG_90D" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITY_VOLUME_AVG_6M" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="SECURITY_VOLUME_AVG_30D" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="GREENFIELD_FLAG" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="WACC_COST_EQUITY" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="WACC_COST_PFD" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="WACC_COST_DEBT" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="FLOAT_AMOUNT" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="CUSIP" Type="Edm.String" Nullable="true" MaxLength="9" Unicode="false" FixedLength="false" />
+        <Property Name="STOCK_EXCHANGE_ID" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_ISSUED_VOLUME" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="ISSUER_ID" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="TRADING_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="SHARES_OUTSTANDING" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="BETA" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="BARRA_BETA" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="MSCI" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="BARRA" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="ISO_COUNTRY_CODE" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_SEC_COUNTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="ASEC_SEC_COUNTRY_ZONE_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="ISSUER_NAME" Type="Edm.String" Nullable="true" MaxLength="160" Unicode="false" FixedLength="false" />
+        <Property Name="ASHEMM_ONE_LINER_DESCRIPTION" Type="Edm.String" Nullable="true" MaxLength="240" Unicode="false" FixedLength="false" />
+        <Property Name="BLOOMBERG_DESCRIPTION" Type="Edm.String" Nullable="true" MaxLength="2000" Unicode="false" FixedLength="false" />
+        <Property Name="ASHMOREEMM_INDUSTRY_ANALYST" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="ASHMOREEMM_PRIMARY_ANALYST" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="ASHMOREEMM_PORTFOLIO_MANAGER" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="WEBSITE" Type="Edm.String" Nullable="true" MaxLength="240" Unicode="false" FixedLength="false" />
+        <Property Name="FISCAL_YEAR_END" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="XREF" Type="Edm.String" Nullable="true" MaxLength="15" Unicode="false" FixedLength="false" />
+        <Property Name="REPORTNUMBER" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SECTOR" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SECTOR_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_INDUSTRY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_INDUSTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SUB_INDUSTRY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="GICS_SUB_INDUSTRY_NAME" Type="Edm.String" Nullable="true" MaxLength="60" Unicode="false" FixedLength="false" />
+        <Property Name="SHARES_PER_ADR" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+        <Property Name="ADR_UNDERLYING_TICKER" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="MARKET_CAP_IN_TRADING_CURRENCY" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="CLOSING_PRICE" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="LAST_CLOSE_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
+      </EntityType>
+      <EntityType Name="GF_SELECTION_BASEVIEW">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="LONG_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="INSTRUMENT_ID" Type="Edm.String" Nullable="true" MaxLength="40" Unicode="false" FixedLength="false" />
+        <Property Name="TYPE" Type="Edm.String" Nullable="false" MaxLength="9" Unicode="false" FixedLength="false" />
+        <Property Name="SECURITY_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="AIMS_COMMODITY_ID" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+      </EntityType>
+      <EntityType Name="GF_TRANSACTIONS">
+        <Key>
+          <PropertyRef Name="GF_ID" />
+        </Key>
+        <Property Name="GF_ID" Type="Edm.Decimal" Nullable="false" Precision="38" Scale="0" />
+        <Property Name="A_TRANSACTIONS_TRANSACTION" Type="Edm.Int64" Nullable="true" />
+        <Property Name="ASEC_SEC_SHORT_NAME" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="CUSTODIAN" Type="Edm.String" Nullable="true" MaxLength="16" Unicode="false" FixedLength="false" />
+        <Property Name="FX_RATE_QC_PC" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="FX_RATE_QC_SC" Type="Edm.Decimal" Nullable="true" Precision="16" Scale="8" />
+        <Property Name="ISIN" Type="Edm.String" Nullable="true" MaxLength="12" Unicode="false" FixedLength="false" />
+        <Property Name="LEG_NO" Type="Edm.Int16" Nullable="true" />
+        <Property Name="NOMINAL" Type="Edm.Decimal" Nullable="true" Precision="21" Scale="7" />
+        <Property Name="PAYMENT_VALUE_PC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="PAYMENT_VALUE_QC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="PAYMENT_VALUE_SC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="PORTFOLIO_ID" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PORTFOLIO_THEME_SUBGROUP_CODE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="PRICE" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="9" />
+        <Property Name="SEC_NAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="SEC_TYPE" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="SETTLEMENT_CURRENCY" Type="Edm.String" Nullable="true" MaxLength="3" Unicode="false" FixedLength="false" />
+        <Property Name="SETTLEMENT_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="TRADE_DATE" Type="Edm.DateTime" Nullable="true" />
+        <Property Name="TRANSACTION_CODE" Type="Edm.String" Nullable="true" MaxLength="30" Unicode="false" FixedLength="false" />
+        <Property Name="VALUE_PC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="VALUE_QC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+        <Property Name="VALUE_SC" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
+      </EntityType>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

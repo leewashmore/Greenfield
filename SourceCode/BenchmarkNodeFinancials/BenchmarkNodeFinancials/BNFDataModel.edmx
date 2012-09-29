@@ -1,0 +1,286 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AIMSDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="AIMSDataModelStoreContainer">
+          <EntitySet Name="BENCHMARK_NODE_FINANCIALS" EntityType="AIMSDataModel.Store.BENCHMARK_NODE_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="BENCHMARK_NODE_FINANCIALS">
+            <DefiningQuery>SELECT 
+      [BENCHMARK_NODE_FINANCIALS].[BENCHMARK_ID] AS [BENCHMARK_ID], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_NAME1] AS [NODE_NAME1], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_ID1] AS [NODE_ID1], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_NAME2] AS [NODE_NAME2], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_ID2] AS [NODE_ID2], 
+      [BENCHMARK_NODE_FINANCIALS].[DATA_ID] AS [DATA_ID], 
+      [BENCHMARK_NODE_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [BENCHMARK_NODE_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [BENCHMARK_NODE_FINANCIALS].[CURRENCY] AS [CURRENCY], 
+      [BENCHMARK_NODE_FINANCIALS].[AMOUNT] AS [AMOUNT], 
+      [BENCHMARK_NODE_FINANCIALS].[UPDATE_DATE] AS [UPDATE_DATE]
+      FROM [dbo].[BENCHMARK_NODE_FINANCIALS] AS [BENCHMARK_NODE_FINANCIALS]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PERIOD_FINANCIALS" EntityType="AIMSDataModel.Store.PERIOD_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="PERIOD_FINANCIALS">
+            <DefiningQuery>SELECT 
+      [PERIOD_FINANCIALS].[ISSUER_ID] AS [ISSUER_ID], 
+      [PERIOD_FINANCIALS].[SECURITY_ID] AS [SECURITY_ID], 
+      [PERIOD_FINANCIALS].[COA_TYPE] AS [COA_TYPE], 
+      [PERIOD_FINANCIALS].[DATA_SOURCE] AS [DATA_SOURCE], 
+      [PERIOD_FINANCIALS].[ROOT_SOURCE] AS [ROOT_SOURCE], 
+      [PERIOD_FINANCIALS].[ROOT_SOURCE_DATE] AS [ROOT_SOURCE_DATE], 
+      [PERIOD_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [PERIOD_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [PERIOD_FINANCIALS].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
+      [PERIOD_FINANCIALS].[FISCAL_TYPE] AS [FISCAL_TYPE], 
+      [PERIOD_FINANCIALS].[CURRENCY] AS [CURRENCY], 
+      [PERIOD_FINANCIALS].[DATA_ID] AS [DATA_ID], 
+      [PERIOD_FINANCIALS].[AMOUNT] AS [AMOUNT], 
+      [PERIOD_FINANCIALS].[CALCULATION_DIAGRAM] AS [CALCULATION_DIAGRAM], 
+      [PERIOD_FINANCIALS].[SOURCE_CURRENCY] AS [SOURCE_CURRENCY], 
+      [PERIOD_FINANCIALS].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
+      FROM [dbo].[PERIOD_FINANCIALS] AS [PERIOD_FINANCIALS]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.BENCHMARK_NODE_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="BENCHMARK_NODE_FINANCIALS">
+          <Key>
+            <PropertyRef Name="BENCHMARK_ID" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="UPDATE_DATE" />
+          </Key>
+          <Property Name="BENCHMARK_ID" Type="varchar" Nullable="false" MaxLength="50" />
+          <Property Name="NODE_NAME1" Type="varchar" MaxLength="50" />
+          <Property Name="NODE_ID1" Type="varchar" MaxLength="50" />
+          <Property Name="NODE_NAME2" Type="varchar" MaxLength="50" />
+          <Property Name="NODE_ID2" Type="varchar" MaxLength="50" />
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+          <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPDATE_DATE" Type="datetime" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="PERIOD_FINANCIALS">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE_DATE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="SOURCE_CURRENCY" />
+            <PropertyRef Name="AMOUNT_TYPE" />
+          </Key>
+          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
+          <Property Name="DATA_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="ROOT_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="ROOT_SOURCE_DATE" Type="datetime" Nullable="false" />
+          <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+          <Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
+          <Property Name="FISCAL_TYPE" Type="char" Nullable="false" MaxLength="8" />
+          <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="CALCULATION_DIAGRAM" Type="varchar" MaxLength="255" />
+          <Property Name="SOURCE_CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <Function Name="usp_GetDataForBenchmarkNodefinancials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="issuerIds" Type="varchar(max)" Mode="In" />
+          <Parameter Name="securityIds" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="usp_GetDataForBenchNodefinPeriodYear" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="issuerIds" Type="varchar(max)" Mode="In" />
+          <Parameter Name="securityIds" Type="varchar(max)" Mode="In" />
+        </Function>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AIMSDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="AIMSDataEntity" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BENCHMARK_NODE_FINANCIALS" EntityType="AIMSDataModel.BENCHMARK_NODE_FINANCIALS" />
+          <EntitySet Name="PERIOD_FINANCIALS" EntityType="AIMSDataModel.PERIOD_FINANCIALS" />
+          <FunctionImport Name="usp_GetDataForBenchmarkNodefinancials" ReturnType="Collection(AIMSDataModel.PeriodFinancialForwardRatios)">
+            <Parameter Name="issuerIds" Mode="In" Type="String" />
+            <Parameter Name="securityIds" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="usp_GetDataForBenchNodefinPeriodYear" ReturnType="Collection(AIMSDataModel.PeriodFinancialPeriodRatios)">
+            <Parameter Name="issuerIds" Mode="In" Type="String" />
+            <Parameter Name="securityIds" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="BENCHMARK_NODE_FINANCIALS">
+          <Key>
+            <PropertyRef Name="BENCHMARK_ID" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="UPDATE_DATE" />
+          </Key>
+          <Property Name="BENCHMARK_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="NODE_NAME1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="NODE_ID1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="NODE_NAME2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="NODE_ID2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+          <Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
+          <Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPDATE_DATE" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PERIOD_FINANCIALS">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE_DATE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="SOURCE_CURRENCY" />
+            <PropertyRef Name="AMOUNT_TYPE" />
+          </Key>
+          <Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="SECURITY_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="COA_TYPE" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="false" />
+          <Property Name="DATA_SOURCE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="ROOT_SOURCE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+          <Property Name="ROOT_SOURCE_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
+          <Property Name="PERIOD_END_DATE" Type="DateTime" Nullable="false" />
+          <Property Name="FISCAL_TYPE" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="true" />
+          <Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+          <Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="CALCULATION_DIAGRAM" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+          <Property Name="SOURCE_CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+          <Property Name="AMOUNT_TYPE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
+        </EntityType>
+        <ComplexType Name="PeriodFinancialForwardRatios" >
+          <Property Type="String" Name="IssuerID" Nullable="false" />
+          <Property Type="String" Name="SecurityID" Nullable="false" />
+          <Property Type="Int32" Name="DataID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="PeriodFinancialPeriodRatios" >
+          <Property Type="String" Name="IssuerID" Nullable="false" />
+          <Property Type="String" Name="SecurityID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" />
+          <Property Type="Int32" Name="DataID" Nullable="false" />
+          <Property Type="Int32" Name="PeriodYear" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AIMSDataModelStoreContainer" CdmEntityContainer="AIMSDataEntity">
+          <EntitySetMapping Name="BENCHMARK_NODE_FINANCIALS"><EntityTypeMapping TypeName="AIMSDataModel.BENCHMARK_NODE_FINANCIALS"><MappingFragment StoreEntitySet="BENCHMARK_NODE_FINANCIALS">
+            <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
+            <ScalarProperty Name="NODE_NAME1" ColumnName="NODE_NAME1" />
+            <ScalarProperty Name="NODE_ID1" ColumnName="NODE_ID1" />
+            <ScalarProperty Name="NODE_NAME2" ColumnName="NODE_NAME2" />
+            <ScalarProperty Name="NODE_ID2" ColumnName="NODE_ID2" />
+            <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+            <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+            <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+            <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+            <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+            <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="PERIOD_FINANCIALS"><EntityTypeMapping TypeName="AIMSDataModel.PERIOD_FINANCIALS"><MappingFragment StoreEntitySet="PERIOD_FINANCIALS">
+            <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+            <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+            <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+            <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+            <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+            <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+            <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+            <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+            <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+            <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+            <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+            <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+            <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+            <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+            <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+            <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetDataForBenchmarkNodefinancials" FunctionName="AIMSDataModel.Store.usp_GetDataForBenchmarkNodefinancials">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AIMSDataModel.PeriodFinancialForwardRatios">
+                <ScalarProperty Name="IssuerID" ColumnName="IssuerID" />
+                <ScalarProperty Name="SecurityID" ColumnName="SecurityID" />
+                <ScalarProperty Name="DataID" ColumnName="DataID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="usp_GetDataForBenchNodefinPeriodYear" FunctionName="AIMSDataModel.Store.usp_GetDataForBenchNodefinPeriodYear">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="AIMSDataModel.PeriodFinancialPeriodRatios">
+                <ScalarProperty Name="IssuerID" ColumnName="IssuerID" />
+                <ScalarProperty Name="SecurityID" ColumnName="SecurityID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DataID" ColumnName="DataID" />
+                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="BNFDataModel">
+        <EntityTypeShape EntityType="AIMSDataModel.BENCHMARK_NODE_FINANCIALS" Width="1.5" PointX="0.75" PointY="0.75" Height="3.1340950520833335" IsExpanded="true" />
+        <EntityTypeShape EntityType="AIMSDataModel.PERIOD_FINANCIALS" Width="1.5" PointX="2.75" PointY="0.75" Height="4.0956022135416656" IsExpanded="true" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

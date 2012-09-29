@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AIMS_Data2108Model" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+  <EntityContainer Name="AIMS_Data2108Entities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BENCHMARK_NODE_FINANCIALS" EntityType="AIMS_Data2108Model.BENCHMARK_NODE_FINANCIALS" />
+    <EntitySet Name="GF_SECURITY_BASEVIEW2" EntityType="AIMS_Data2108Model.GF_SECURITY_BASEVIEW2" />
+    <EntitySet Name="PERIOD_FINANCIALS" EntityType="AIMS_Data2108Model.PERIOD_FINANCIALS" />
+  </EntityContainer>
+  <EntityType Name="BENCHMARK_NODE_FINANCIALS">
+    <Key>
+      <PropertyRef Name="BENCHMARK_ID" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="UPDATE_DATE" />
+    </Key>
+    <Property Name="BENCHMARK_ID" Type="String" Nullable="false" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="NODE_NAME1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="NODE_ID1" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="NODE_NAME2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="NODE_ID2" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
+    <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+    <Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
+    <Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="UPDATE_DATE" Type="DateTime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GF_SECURITY_BASEVIEW2">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GF_ID" Type="Double" />
+    <Property Name="SECURITY_ID" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+    <Property Name="ASEC_SEC_SHORT_NAME" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ISSUE_NAME" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ISIN" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="SEDOL" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="SECS_INSTYPE" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ASEC_INSTR_TYPE" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="SECURITY_TYPE" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ASEC_FC_SEC_REF" Type="Double" />
+    <Property Name="LOOK_THRU_FUND" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="FIFTYTWO_WEEK_LOW" Type="Double" />
+    <Property Name="FIFTYTWO_WEEK_HIGH" Type="Double" />
+    <Property Name="SECURITY_VOLUME_AVG_90D" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="SECURITY_VOLUME_AVG_6M" Type="Double" />
+    <Property Name="SECURITY_VOLUME_AVG_30D" Type="Double" />
+    <Property Name="GREENFIELD_FLAG" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="FLOAT_AMOUNT" Type="Double" />
+    <Property Name="CUSIP" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="STOCK_EXCHANGE_ID" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ASEC_ISSUED_VOLUME" Type="Double" />
+    <Property Name="ISSUER_ID" Type="Double" />
+    <Property Name="TRADING_CURRENCY" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="SHARES_OUTSTANDING" Type="Double" />
+    <Property Name="BETA" Type="Double" />
+    <Property Name="BARRA_BETA" Type="Double" />
+    <Property Name="TICKER" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="MSCI" Type="Double" />
+    <Property Name="BARRA" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ISO_COUNTRY_CODE" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ASEC_SEC_COUNTRY_NAME" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ASEC_SEC_COUNTRY_ZONE_NAME" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ISSUER_NAME" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ASHEMM_ONE_LINER_DESCRIPTION" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="BLOOMBERG_DESCRIPTION" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="ASHMOREEMM_INDUSTRY_ANALYST" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ASHMOREEMM_PRIMARY_ANALYST" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="ASHMOREEMM_PORTFOLIO_MANAGER" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="WEBSITE" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="FISCAL_YEAR_END" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="XREF" Type="Double" />
+    <Property Name="REPORTNUMBER" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="GICS_SECTOR" Type="Double" />
+    <Property Name="GICS_SECTOR_NAME" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="GICS_INDUSTRY" Type="Double" />
+    <Property Name="GICS_INDUSTRY_NAME" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="GICS_SUB_INDUSTRY" Type="Double" />
+    <Property Name="GICS_SUB_INDUSTRY_NAME" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="SHARES_PER_ADR" Type="Double" />
+    <Property Name="ADR_UNDERLYING_TICKER" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
+    <Property Name="MARKET_CAP_IN_TRADING_CURRENCY" Type="Double" />
+    <Property Name="CLOSING_PRICE" Type="Double" />
+    <Property Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" Type="Double" />
+    <Property Name="LAST_CLOSE_DATE" Type="DateTime" />
+    <Property Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" Type="Double" />
+  </EntityType>
+  <EntityType Name="PERIOD_FINANCIALS">
+    <Key>
+      <PropertyRef Name="ISSUER_ID" />
+      <PropertyRef Name="SECURITY_ID" />
+      <PropertyRef Name="COA_TYPE" />
+      <PropertyRef Name="DATA_SOURCE" />
+      <PropertyRef Name="ROOT_SOURCE" />
+      <PropertyRef Name="ROOT_SOURCE_DATE" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="PERIOD_END_DATE" />
+      <PropertyRef Name="FISCAL_TYPE" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="SOURCE_CURRENCY" />
+      <PropertyRef Name="AMOUNT_TYPE" />
+    </Key>
+    <Property Name="ISSUER_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="SECURITY_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+    <Property Name="COA_TYPE" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="false" />
+    <Property Name="DATA_SOURCE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="ROOT_SOURCE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="false" />
+    <Property Name="ROOT_SOURCE_DATE" Type="DateTime" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="String" Nullable="false" MaxLength="2" Unicode="false" FixedLength="true" />
+    <Property Name="PERIOD_YEAR" Type="Int32" Nullable="false" />
+    <Property Name="PERIOD_END_DATE" Type="DateTime" Nullable="false" />
+    <Property Name="FISCAL_TYPE" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="true" />
+    <Property Name="CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="DATA_ID" Type="Int32" Nullable="false" />
+    <Property Name="AMOUNT" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="CALCULATION_DIAGRAM" Type="String" MaxLength="255" Unicode="false" FixedLength="false" />
+    <Property Name="SOURCE_CURRENCY" Type="String" Nullable="false" MaxLength="3" Unicode="false" FixedLength="true" />
+    <Property Name="AMOUNT_TYPE" Type="String" Nullable="false" MaxLength="10" Unicode="false" FixedLength="true" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,229 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AIMS_Data2108Model.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="AIMS_Data2108ModelStoreContainer">
+    <EntitySet Name="BENCHMARK_NODE_FINANCIALS" EntityType="AIMS_Data2108Model.Store.BENCHMARK_NODE_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="BENCHMARK_NODE_FINANCIALS">
+      <DefiningQuery>SELECT 
+      [BENCHMARK_NODE_FINANCIALS].[BENCHMARK_ID] AS [BENCHMARK_ID], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_NAME1] AS [NODE_NAME1], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_ID1] AS [NODE_ID1], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_NAME2] AS [NODE_NAME2], 
+      [BENCHMARK_NODE_FINANCIALS].[NODE_ID2] AS [NODE_ID2], 
+      [BENCHMARK_NODE_FINANCIALS].[DATA_ID] AS [DATA_ID], 
+      [BENCHMARK_NODE_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [BENCHMARK_NODE_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [BENCHMARK_NODE_FINANCIALS].[CURRENCY] AS [CURRENCY], 
+      [BENCHMARK_NODE_FINANCIALS].[AMOUNT] AS [AMOUNT], 
+      [BENCHMARK_NODE_FINANCIALS].[UPDATE_DATE] AS [UPDATE_DATE]
+      FROM [dbo].[BENCHMARK_NODE_FINANCIALS] AS [BENCHMARK_NODE_FINANCIALS]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="GF_SECURITY_BASEVIEW2" EntityType="AIMS_Data2108Model.Store.GF_SECURITY_BASEVIEW2" store:Type="Tables" store:Schema="dbo" store:Name="GF_SECURITY_BASEVIEW2">
+      <DefiningQuery>SELECT 
+      [GF_SECURITY_BASEVIEW2].[ID] AS [ID], 
+      [GF_SECURITY_BASEVIEW2].[GF_ID] AS [GF_ID], 
+      [GF_SECURITY_BASEVIEW2].[SECURITY_ID] AS [SECURITY_ID], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME], 
+      [GF_SECURITY_BASEVIEW2].[ISSUE_NAME] AS [ISSUE_NAME], 
+      [GF_SECURITY_BASEVIEW2].[ISIN] AS [ISIN], 
+      [GF_SECURITY_BASEVIEW2].[SEDOL] AS [SEDOL], 
+      [GF_SECURITY_BASEVIEW2].[SECS_INSTYPE] AS [SECS_INSTYPE], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_INSTR_TYPE] AS [ASEC_INSTR_TYPE], 
+      [GF_SECURITY_BASEVIEW2].[SECURITY_TYPE] AS [SECURITY_TYPE], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_FC_SEC_REF] AS [ASEC_FC_SEC_REF], 
+      [GF_SECURITY_BASEVIEW2].[LOOK_THRU_FUND] AS [LOOK_THRU_FUND], 
+      [GF_SECURITY_BASEVIEW2].[FIFTYTWO_WEEK_LOW] AS [FIFTYTWO_WEEK_LOW], 
+      [GF_SECURITY_BASEVIEW2].[FIFTYTWO_WEEK_HIGH] AS [FIFTYTWO_WEEK_HIGH], 
+      [GF_SECURITY_BASEVIEW2].[SECURITY_VOLUME_AVG_90D] AS [SECURITY_VOLUME_AVG_90D], 
+      [GF_SECURITY_BASEVIEW2].[SECURITY_VOLUME_AVG_6M] AS [SECURITY_VOLUME_AVG_6M], 
+      [GF_SECURITY_BASEVIEW2].[SECURITY_VOLUME_AVG_30D] AS [SECURITY_VOLUME_AVG_30D], 
+      [GF_SECURITY_BASEVIEW2].[GREENFIELD_FLAG] AS [GREENFIELD_FLAG], 
+      [GF_SECURITY_BASEVIEW2].[FLOAT_AMOUNT] AS [FLOAT_AMOUNT], 
+      [GF_SECURITY_BASEVIEW2].[CUSIP] AS [CUSIP], 
+      [GF_SECURITY_BASEVIEW2].[STOCK_EXCHANGE_ID] AS [STOCK_EXCHANGE_ID], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_ISSUED_VOLUME] AS [ASEC_ISSUED_VOLUME], 
+      [GF_SECURITY_BASEVIEW2].[ISSUER_ID] AS [ISSUER_ID], 
+      [GF_SECURITY_BASEVIEW2].[TRADING_CURRENCY] AS [TRADING_CURRENCY], 
+      [GF_SECURITY_BASEVIEW2].[SHARES_OUTSTANDING] AS [SHARES_OUTSTANDING], 
+      [GF_SECURITY_BASEVIEW2].[BETA] AS [BETA], 
+      [GF_SECURITY_BASEVIEW2].[BARRA_BETA] AS [BARRA_BETA], 
+      [GF_SECURITY_BASEVIEW2].[TICKER] AS [TICKER], 
+      [GF_SECURITY_BASEVIEW2].[MSCI] AS [MSCI], 
+      [GF_SECURITY_BASEVIEW2].[BARRA] AS [BARRA], 
+      [GF_SECURITY_BASEVIEW2].[ISO_COUNTRY_CODE] AS [ISO_COUNTRY_CODE], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_SEC_COUNTRY_NAME] AS [ASEC_SEC_COUNTRY_NAME], 
+      [GF_SECURITY_BASEVIEW2].[ASHEMM_PROPRIETARY_REGION_CODE] AS [ASHEMM_PROPRIETARY_REGION_CODE], 
+      [GF_SECURITY_BASEVIEW2].[ASEC_SEC_COUNTRY_ZONE_NAME] AS [ASEC_SEC_COUNTRY_ZONE_NAME], 
+      [GF_SECURITY_BASEVIEW2].[ISSUER_NAME] AS [ISSUER_NAME], 
+      [GF_SECURITY_BASEVIEW2].[ASHEMM_ONE_LINER_DESCRIPTION] AS [ASHEMM_ONE_LINER_DESCRIPTION], 
+      [GF_SECURITY_BASEVIEW2].[BLOOMBERG_DESCRIPTION] AS [BLOOMBERG_DESCRIPTION], 
+      [GF_SECURITY_BASEVIEW2].[ASHMOREEMM_INDUSTRY_ANALYST] AS [ASHMOREEMM_INDUSTRY_ANALYST], 
+      [GF_SECURITY_BASEVIEW2].[ASHMOREEMM_PRIMARY_ANALYST] AS [ASHMOREEMM_PRIMARY_ANALYST], 
+      [GF_SECURITY_BASEVIEW2].[ASHMOREEMM_PORTFOLIO_MANAGER] AS [ASHMOREEMM_PORTFOLIO_MANAGER], 
+      [GF_SECURITY_BASEVIEW2].[WEBSITE] AS [WEBSITE], 
+      [GF_SECURITY_BASEVIEW2].[FISCAL_YEAR_END] AS [FISCAL_YEAR_END], 
+      [GF_SECURITY_BASEVIEW2].[XREF] AS [XREF], 
+      [GF_SECURITY_BASEVIEW2].[REPORTNUMBER] AS [REPORTNUMBER], 
+      [GF_SECURITY_BASEVIEW2].[GICS_SECTOR] AS [GICS_SECTOR], 
+      [GF_SECURITY_BASEVIEW2].[GICS_SECTOR_NAME] AS [GICS_SECTOR_NAME], 
+      [GF_SECURITY_BASEVIEW2].[GICS_INDUSTRY] AS [GICS_INDUSTRY], 
+      [GF_SECURITY_BASEVIEW2].[GICS_INDUSTRY_NAME] AS [GICS_INDUSTRY_NAME], 
+      [GF_SECURITY_BASEVIEW2].[GICS_SUB_INDUSTRY] AS [GICS_SUB_INDUSTRY], 
+      [GF_SECURITY_BASEVIEW2].[GICS_SUB_INDUSTRY_NAME] AS [GICS_SUB_INDUSTRY_NAME], 
+      [GF_SECURITY_BASEVIEW2].[SHARES_PER_ADR] AS [SHARES_PER_ADR], 
+      [GF_SECURITY_BASEVIEW2].[ADR_UNDERLYING_TICKER] AS [ADR_UNDERLYING_TICKER], 
+      [GF_SECURITY_BASEVIEW2].[MARKET_CAP_IN_TRADING_CURRENCY] AS [MARKET_CAP_IN_TRADING_CURRENCY], 
+      [GF_SECURITY_BASEVIEW2].[CLOSING_PRICE] AS [CLOSING_PRICE], 
+      [GF_SECURITY_BASEVIEW2].[LAST_CLOSE_FX_QUO_CURR_TO_USD] AS [LAST_CLOSE_FX_QUO_CURR_TO_USD], 
+      [GF_SECURITY_BASEVIEW2].[LAST_CLOSE_DATE] AS [LAST_CLOSE_DATE], 
+      [GF_SECURITY_BASEVIEW2].[TOT_CURR_SHRS_OUTST_ALL_CLASS] AS [TOT_CURR_SHRS_OUTST_ALL_CLASS]
+      FROM [dbo].[GF_SECURITY_BASEVIEW2] AS [GF_SECURITY_BASEVIEW2]</DefiningQuery>
+    </EntitySet>
+    <EntitySet Name="PERIOD_FINANCIALS" EntityType="AIMS_Data2108Model.Store.PERIOD_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="PERIOD_FINANCIALS">
+      <DefiningQuery>SELECT 
+      [PERIOD_FINANCIALS].[ISSUER_ID] AS [ISSUER_ID], 
+      [PERIOD_FINANCIALS].[SECURITY_ID] AS [SECURITY_ID], 
+      [PERIOD_FINANCIALS].[COA_TYPE] AS [COA_TYPE], 
+      [PERIOD_FINANCIALS].[DATA_SOURCE] AS [DATA_SOURCE], 
+      [PERIOD_FINANCIALS].[ROOT_SOURCE] AS [ROOT_SOURCE], 
+      [PERIOD_FINANCIALS].[ROOT_SOURCE_DATE] AS [ROOT_SOURCE_DATE], 
+      [PERIOD_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [PERIOD_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [PERIOD_FINANCIALS].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
+      [PERIOD_FINANCIALS].[FISCAL_TYPE] AS [FISCAL_TYPE], 
+      [PERIOD_FINANCIALS].[CURRENCY] AS [CURRENCY], 
+      [PERIOD_FINANCIALS].[DATA_ID] AS [DATA_ID], 
+      [PERIOD_FINANCIALS].[AMOUNT] AS [AMOUNT], 
+      [PERIOD_FINANCIALS].[CALCULATION_DIAGRAM] AS [CALCULATION_DIAGRAM], 
+      [PERIOD_FINANCIALS].[SOURCE_CURRENCY] AS [SOURCE_CURRENCY], 
+      [PERIOD_FINANCIALS].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
+      FROM [dbo].[PERIOD_FINANCIALS] AS [PERIOD_FINANCIALS]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.BENCHMARK_NODE_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="BENCHMARK_NODE_FINANCIALS">
+    <Key>
+      <PropertyRef Name="BENCHMARK_ID" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="UPDATE_DATE" />
+    </Key>
+    <Property Name="BENCHMARK_ID" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="NODE_NAME1" Type="varchar" MaxLength="50" />
+    <Property Name="NODE_ID1" Type="varchar" MaxLength="50" />
+    <Property Name="NODE_NAME2" Type="varchar" MaxLength="50" />
+    <Property Name="NODE_ID2" Type="varchar" MaxLength="50" />
+    <Property Name="DATA_ID" Type="int" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+    <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+    <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="UPDATE_DATE" Type="datetime" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.GF_SECURITY_BASEVIEW2' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="GF_SECURITY_BASEVIEW2">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="GF_ID" Type="float" />
+    <Property Name="SECURITY_ID" Type="nvarchar" MaxLength="50" />
+    <Property Name="ASEC_SEC_SHORT_NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="ISSUE_NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="ISIN" Type="nvarchar" MaxLength="255" />
+    <Property Name="SEDOL" Type="nvarchar" MaxLength="255" />
+    <Property Name="SECS_INSTYPE" Type="nvarchar" MaxLength="255" />
+    <Property Name="ASEC_INSTR_TYPE" Type="nvarchar" MaxLength="255" />
+    <Property Name="SECURITY_TYPE" Type="nvarchar" MaxLength="255" />
+    <Property Name="ASEC_FC_SEC_REF" Type="float" />
+    <Property Name="LOOK_THRU_FUND" Type="nvarchar" MaxLength="255" />
+    <Property Name="FIFTYTWO_WEEK_LOW" Type="float" />
+    <Property Name="FIFTYTWO_WEEK_HIGH" Type="float" />
+    <Property Name="SECURITY_VOLUME_AVG_90D" Type="nvarchar" MaxLength="255" />
+    <Property Name="SECURITY_VOLUME_AVG_6M" Type="float" />
+    <Property Name="SECURITY_VOLUME_AVG_30D" Type="float" />
+    <Property Name="GREENFIELD_FLAG" Type="nvarchar" MaxLength="255" />
+    <Property Name="FLOAT_AMOUNT" Type="float" />
+    <Property Name="CUSIP" Type="nvarchar" MaxLength="255" />
+    <Property Name="STOCK_EXCHANGE_ID" Type="nvarchar" MaxLength="255" />
+    <Property Name="ASEC_ISSUED_VOLUME" Type="float" />
+    <Property Name="ISSUER_ID" Type="float" />
+    <Property Name="TRADING_CURRENCY" Type="nvarchar" MaxLength="255" />
+    <Property Name="SHARES_OUTSTANDING" Type="float" />
+    <Property Name="BETA" Type="float" />
+    <Property Name="BARRA_BETA" Type="float" />
+    <Property Name="TICKER" Type="nvarchar" MaxLength="255" />
+    <Property Name="MSCI" Type="float" />
+    <Property Name="BARRA" Type="nvarchar" MaxLength="255" />
+    <Property Name="ISO_COUNTRY_CODE" Type="nvarchar" MaxLength="255" />
+    <Property Name="ASEC_SEC_COUNTRY_NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="nvarchar" MaxLength="255" />
+    <Property Name="ASEC_SEC_COUNTRY_ZONE_NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="ISSUER_NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="ASHEMM_ONE_LINER_DESCRIPTION" Type="nvarchar" MaxLength="255" />
+    <Property Name="BLOOMBERG_DESCRIPTION" Type="ntext" />
+    <Property Name="ASHMOREEMM_INDUSTRY_ANALYST" Type="nvarchar" MaxLength="255" />
+    <Property Name="ASHMOREEMM_PRIMARY_ANALYST" Type="nvarchar" MaxLength="255" />
+    <Property Name="ASHMOREEMM_PORTFOLIO_MANAGER" Type="nvarchar" MaxLength="255" />
+    <Property Name="WEBSITE" Type="nvarchar" MaxLength="255" />
+    <Property Name="FISCAL_YEAR_END" Type="nvarchar" MaxLength="255" />
+    <Property Name="XREF" Type="float" />
+    <Property Name="REPORTNUMBER" Type="nvarchar" MaxLength="255" />
+    <Property Name="GICS_SECTOR" Type="float" />
+    <Property Name="GICS_SECTOR_NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="GICS_INDUSTRY" Type="float" />
+    <Property Name="GICS_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="GICS_SUB_INDUSTRY" Type="float" />
+    <Property Name="GICS_SUB_INDUSTRY_NAME" Type="nvarchar" MaxLength="255" />
+    <Property Name="SHARES_PER_ADR" Type="float" />
+    <Property Name="ADR_UNDERLYING_TICKER" Type="nvarchar" MaxLength="255" />
+    <Property Name="MARKET_CAP_IN_TRADING_CURRENCY" Type="float" />
+    <Property Name="CLOSING_PRICE" Type="float" />
+    <Property Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" Type="float" />
+    <Property Name="LAST_CLOSE_DATE" Type="datetime" />
+    <Property Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" Type="float" />
+  </EntityType>
+  <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+  <EntityType Name="PERIOD_FINANCIALS">
+    <Key>
+      <PropertyRef Name="ISSUER_ID" />
+      <PropertyRef Name="SECURITY_ID" />
+      <PropertyRef Name="COA_TYPE" />
+      <PropertyRef Name="DATA_SOURCE" />
+      <PropertyRef Name="ROOT_SOURCE" />
+      <PropertyRef Name="ROOT_SOURCE_DATE" />
+      <PropertyRef Name="PERIOD_TYPE" />
+      <PropertyRef Name="PERIOD_YEAR" />
+      <PropertyRef Name="PERIOD_END_DATE" />
+      <PropertyRef Name="FISCAL_TYPE" />
+      <PropertyRef Name="CURRENCY" />
+      <PropertyRef Name="DATA_ID" />
+      <PropertyRef Name="AMOUNT" />
+      <PropertyRef Name="SOURCE_CURRENCY" />
+      <PropertyRef Name="AMOUNT_TYPE" />
+    </Key>
+    <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+    <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
+    <Property Name="DATA_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="ROOT_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+    <Property Name="ROOT_SOURCE_DATE" Type="datetime" Nullable="false" />
+    <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+    <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+    <Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
+    <Property Name="FISCAL_TYPE" Type="char" Nullable="false" MaxLength="8" />
+    <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="DATA_ID" Type="int" Nullable="false" />
+    <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+    <Property Name="CALCULATION_DIAGRAM" Type="varchar" MaxLength="255" />
+    <Property Name="SOURCE_CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+    <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
+  </EntityType>
+</Schema>

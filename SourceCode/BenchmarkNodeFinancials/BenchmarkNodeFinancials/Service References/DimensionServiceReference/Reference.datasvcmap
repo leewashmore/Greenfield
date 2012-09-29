@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5692ac1c-6c1f-4091-b2cb-58ee53f832ed" xmlns="urn:schemas-microsoft-com:xml-dataservicemap">
+  <MetadataSources>
+    <MetadataSource Address="http://172.16.1.137:7000/GreenFieldOData/wcfdataservice.svc/" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.edmx" MetadataType="Edmx" ID="d11e76ec-e81e-42f2-b263-c144b0dcad3c" SourceId="1" SourceUrl="http://172.16.1.137:7000/GreenFieldOData/wcfdataservice.svc/" />
+  </Metadata>
+  <Extensions />
+  <Parameters>
+    <Parameter Name="UseDataServiceCollection" Value="true" />
+    <Parameter Name="Version" Value="2.0" />
+  </Parameters>
+</ReferenceGroup>

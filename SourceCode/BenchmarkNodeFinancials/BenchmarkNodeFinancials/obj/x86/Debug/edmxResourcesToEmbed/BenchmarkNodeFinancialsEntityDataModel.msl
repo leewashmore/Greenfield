@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="AIMS_Data2108ModelStoreContainer" CdmEntityContainer="AIMS_Data2108Entities">
+    <EntitySetMapping Name="BENCHMARK_NODE_FINANCIALS">
+      <EntityTypeMapping TypeName="AIMS_Data2108Model.BENCHMARK_NODE_FINANCIALS">
+        <MappingFragment StoreEntitySet="BENCHMARK_NODE_FINANCIALS">
+          <ScalarProperty Name="BENCHMARK_ID" ColumnName="BENCHMARK_ID" />
+          <ScalarProperty Name="NODE_NAME1" ColumnName="NODE_NAME1" />
+          <ScalarProperty Name="NODE_ID1" ColumnName="NODE_ID1" />
+          <ScalarProperty Name="NODE_NAME2" ColumnName="NODE_NAME2" />
+          <ScalarProperty Name="NODE_ID2" ColumnName="NODE_ID2" />
+          <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+          <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+          <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+          <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="UPDATE_DATE" ColumnName="UPDATE_DATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GF_SECURITY_BASEVIEW2">
+      <EntityTypeMapping TypeName="AIMS_Data2108Model.GF_SECURITY_BASEVIEW2">
+        <MappingFragment StoreEntitySet="GF_SECURITY_BASEVIEW2">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="GF_ID" ColumnName="GF_ID" />
+          <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+          <ScalarProperty Name="ASEC_SEC_SHORT_NAME" ColumnName="ASEC_SEC_SHORT_NAME" />
+          <ScalarProperty Name="ISSUE_NAME" ColumnName="ISSUE_NAME" />
+          <ScalarProperty Name="ISIN" ColumnName="ISIN" />
+          <ScalarProperty Name="SEDOL" ColumnName="SEDOL" />
+          <ScalarProperty Name="SECS_INSTYPE" ColumnName="SECS_INSTYPE" />
+          <ScalarProperty Name="ASEC_INSTR_TYPE" ColumnName="ASEC_INSTR_TYPE" />
+          <ScalarProperty Name="SECURITY_TYPE" ColumnName="SECURITY_TYPE" />
+          <ScalarProperty Name="ASEC_FC_SEC_REF" ColumnName="ASEC_FC_SEC_REF" />
+          <ScalarProperty Name="LOOK_THRU_FUND" ColumnName="LOOK_THRU_FUND" />
+          <ScalarProperty Name="FIFTYTWO_WEEK_LOW" ColumnName="FIFTYTWO_WEEK_LOW" />
+          <ScalarProperty Name="FIFTYTWO_WEEK_HIGH" ColumnName="FIFTYTWO_WEEK_HIGH" />
+          <ScalarProperty Name="SECURITY_VOLUME_AVG_90D" ColumnName="SECURITY_VOLUME_AVG_90D" />
+          <ScalarProperty Name="SECURITY_VOLUME_AVG_6M" ColumnName="SECURITY_VOLUME_AVG_6M" />
+          <ScalarProperty Name="SECURITY_VOLUME_AVG_30D" ColumnName="SECURITY_VOLUME_AVG_30D" />
+          <ScalarProperty Name="GREENFIELD_FLAG" ColumnName="GREENFIELD_FLAG" />
+          <ScalarProperty Name="FLOAT_AMOUNT" ColumnName="FLOAT_AMOUNT" />
+          <ScalarProperty Name="CUSIP" ColumnName="CUSIP" />
+          <ScalarProperty Name="STOCK_EXCHANGE_ID" ColumnName="STOCK_EXCHANGE_ID" />
+          <ScalarProperty Name="ASEC_ISSUED_VOLUME" ColumnName="ASEC_ISSUED_VOLUME" />
+          <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+          <ScalarProperty Name="TRADING_CURRENCY" ColumnName="TRADING_CURRENCY" />
+          <ScalarProperty Name="SHARES_OUTSTANDING" ColumnName="SHARES_OUTSTANDING" />
+          <ScalarProperty Name="BETA" ColumnName="BETA" />
+          <ScalarProperty Name="BARRA_BETA" ColumnName="BARRA_BETA" />
+          <ScalarProperty Name="TICKER" ColumnName="TICKER" />
+          <ScalarProperty Name="MSCI" ColumnName="MSCI" />
+          <ScalarProperty Name="BARRA" ColumnName="BARRA" />
+          <ScalarProperty Name="ISO_COUNTRY_CODE" ColumnName="ISO_COUNTRY_CODE" />
+          <ScalarProperty Name="ASEC_SEC_COUNTRY_NAME" ColumnName="ASEC_SEC_COUNTRY_NAME" />
+          <ScalarProperty Name="ASHEMM_PROPRIETARY_REGION_CODE" ColumnName="ASHEMM_PROPRIETARY_REGION_CODE" />
+          <ScalarProperty Name="ASEC_SEC_COUNTRY_ZONE_NAME" ColumnName="ASEC_SEC_COUNTRY_ZONE_NAME" />
+          <ScalarProperty Name="ISSUER_NAME" ColumnName="ISSUER_NAME" />
+          <ScalarProperty Name="ASHEMM_ONE_LINER_DESCRIPTION" ColumnName="ASHEMM_ONE_LINER_DESCRIPTION" />
+          <ScalarProperty Name="BLOOMBERG_DESCRIPTION" ColumnName="BLOOMBERG_DESCRIPTION" />
+          <ScalarProperty Name="ASHMOREEMM_INDUSTRY_ANALYST" ColumnName="ASHMOREEMM_INDUSTRY_ANALYST" />
+          <ScalarProperty Name="ASHMOREEMM_PRIMARY_ANALYST" ColumnName="ASHMOREEMM_PRIMARY_ANALYST" />
+          <ScalarProperty Name="ASHMOREEMM_PORTFOLIO_MANAGER" ColumnName="ASHMOREEMM_PORTFOLIO_MANAGER" />
+          <ScalarProperty Name="WEBSITE" ColumnName="WEBSITE" />
+          <ScalarProperty Name="FISCAL_YEAR_END" ColumnName="FISCAL_YEAR_END" />
+          <ScalarProperty Name="XREF" ColumnName="XREF" />
+          <ScalarProperty Name="REPORTNUMBER" ColumnName="REPORTNUMBER" />
+          <ScalarProperty Name="GICS_SECTOR" ColumnName="GICS_SECTOR" />
+          <ScalarProperty Name="GICS_SECTOR_NAME" ColumnName="GICS_SECTOR_NAME" />
+          <ScalarProperty Name="GICS_INDUSTRY" ColumnName="GICS_INDUSTRY" />
+          <ScalarProperty Name="GICS_INDUSTRY_NAME" ColumnName="GICS_INDUSTRY_NAME" />
+          <ScalarProperty Name="GICS_SUB_INDUSTRY" ColumnName="GICS_SUB_INDUSTRY" />
+          <ScalarProperty Name="GICS_SUB_INDUSTRY_NAME" ColumnName="GICS_SUB_INDUSTRY_NAME" />
+          <ScalarProperty Name="SHARES_PER_ADR" ColumnName="SHARES_PER_ADR" />
+          <ScalarProperty Name="ADR_UNDERLYING_TICKER" ColumnName="ADR_UNDERLYING_TICKER" />
+          <ScalarProperty Name="MARKET_CAP_IN_TRADING_CURRENCY" ColumnName="MARKET_CAP_IN_TRADING_CURRENCY" />
+          <ScalarProperty Name="CLOSING_PRICE" ColumnName="CLOSING_PRICE" />
+          <ScalarProperty Name="LAST_CLOSE_FX_QUO_CURR_TO_USD" ColumnName="LAST_CLOSE_FX_QUO_CURR_TO_USD" />
+          <ScalarProperty Name="LAST_CLOSE_DATE" ColumnName="LAST_CLOSE_DATE" />
+          <ScalarProperty Name="TOT_CURR_SHRS_OUTST_ALL_CLASS" ColumnName="TOT_CURR_SHRS_OUTST_ALL_CLASS" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PERIOD_FINANCIALS">
+      <EntityTypeMapping TypeName="AIMS_Data2108Model.PERIOD_FINANCIALS">
+        <MappingFragment StoreEntitySet="PERIOD_FINANCIALS">
+          <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+          <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+          <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+          <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+          <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+          <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+          <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+          <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+          <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+          <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+          <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+          <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+          <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+          <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+          <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+          <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
