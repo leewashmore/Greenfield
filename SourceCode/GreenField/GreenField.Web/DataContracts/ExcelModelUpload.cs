@@ -82,4 +82,37 @@ namespace GreenField.Web.DataContracts
             set { _yearSix = value; }
         }
     }
+
+    public class ExcelModelDataUpload
+    {
+        private string _COA;
+        public string COA
+        {
+            get { return _COA; }
+            set { _COA = value; }
+        }
+
+        private string _descritption;
+        public string Description
+        {
+            get { return _descritption; }
+            set { _descritption = value; }
+        }
+
+        private string year;
+        public string Year
+        {
+            get { return year; }
+            set { year = value; }
+        }
+
+        private object _amount;
+        public object Amount
+        {
+            get { return _amount; }
+            set { _amount = value; }
+        }
+        
+
+    }
 }

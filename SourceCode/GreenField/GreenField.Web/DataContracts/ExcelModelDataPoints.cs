@@ -54,8 +54,14 @@ namespace GreenField.Web.DataContracts
         private string _issuerId;
         public string IssuerId
         {
-            get { return _issuerId; }
-            set { _issuerId = value; }
+            get 
+            {
+                return _issuerId; 
+            }
+            set
+            {
+                _issuerId = value;
+            }
         }
 
         private string _issuerName;

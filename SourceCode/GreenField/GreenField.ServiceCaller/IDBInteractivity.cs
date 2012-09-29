@@ -312,6 +312,8 @@ namespace GreenField.ServiceCaller
         void RetrieveSummaryReportData(DateTime startDate, DateTime endDate, Action<List<SummaryReportData>> callback);
 
         void GenerateICPacketReport(Int64 presentationId, Action<Byte[]> callback);
+
+        void ReSubmitPresentation(String userName, ICPresentationOverviewData presentationOverviewData, Boolean sendAlert, Action<Boolean?> callback);
         #endregion
 
         #region DCF

@@ -2493,14 +2493,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectResult<ICPresentationOverviewData> RetrieveICPresentationOverviewData()
-        {
-            return base.ExecuteFunction<ICPresentationOverviewData>("RetrieveICPresentationOverviewData");
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="startDate">No Metadata Documentation available.</param>
         /// <param name="endDate">No Metadata Documentation available.</param>
         public ObjectResult<SummaryReportData> RetrieveSummaryReportDetails(Nullable<global::System.DateTime> startDate, Nullable<global::System.DateTime> endDate)
@@ -2545,6 +2537,44 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<PresentationVotingDeadlineDetails>("GetPreMeetingVotingReportDetails", presentationIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectResult<ICPresentationOverviewData> RetrieveICPresentationOverviewData()
+        {
+            return base.ExecuteFunction<ICPresentationOverviewData>("RetrieveICPresentationOverviewData");
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="userName">No Metadata Documentation available.</param>
+        /// <param name="xmlScript">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> UpdatePresentationInfo(global::System.String userName, global::System.String xmlScript)
+        {
+            ObjectParameter userNameParameter;
+            if (userName != null)
+            {
+                userNameParameter = new ObjectParameter("userName", userName);
+            }
+            else
+            {
+                userNameParameter = new ObjectParameter("userName", typeof(global::System.String));
+            }
+    
+            ObjectParameter xmlScriptParameter;
+            if (xmlScript != null)
+            {
+                xmlScriptParameter = new ObjectParameter("xmlScript", xmlScript);
+            }
+            else
+            {
+                xmlScriptParameter = new ObjectParameter("xmlScript", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdatePresentationInfo", userNameParameter, xmlScriptParameter);
         }
 
         #endregion
@@ -5751,6 +5781,30 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _CommitteePFVMeasureValue;
         partial void OnCommitteePFVMeasureValueChanging(Nullable<global::System.Decimal> value);
         partial void OnCommitteePFVMeasureValueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PortfolioId
+        {
+            get
+            {
+                return _PortfolioId;
+            }
+            set
+            {
+                OnPortfolioIdChanging(value);
+                ReportPropertyChanging("PortfolioId");
+                _PortfolioId = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PortfolioId");
+                OnPortfolioIdChanged();
+            }
+        }
+        private global::System.String _PortfolioId;
+        partial void OnPortfolioIdChanging(global::System.String value);
+        partial void OnPortfolioIdChanged();
 
         #endregion
     
@@ -7676,6 +7730,30 @@ namespace GreenField.DAL
         private Nullable<global::System.Decimal> _CommitteePFVMeasureValue;
         partial void OnCommitteePFVMeasureValueChanging(Nullable<global::System.Decimal> value);
         partial void OnCommitteePFVMeasureValueChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String PortfolioId
+        {
+            get
+            {
+                return _PortfolioId;
+            }
+            set
+            {
+                OnPortfolioIdChanging(value);
+                ReportPropertyChanging("PortfolioId");
+                _PortfolioId = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("PortfolioId");
+                OnPortfolioIdChanged();
+            }
+        }
+        private global::System.String _PortfolioId;
+        partial void OnPortfolioIdChanging(global::System.String value);
+        partial void OnPortfolioIdChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

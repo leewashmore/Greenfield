@@ -704,6 +704,10 @@
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ModelDeleteInternalCommodityAssumptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="REF_NO" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ModelDeleteInternalData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="REF_NO" Type="varchar" Mode="In" />
@@ -714,6 +718,18 @@
         <Function Name="ModelDeleteInternalIssuerQuarterlyDistribution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModelInsertDataInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="COA" Type="varchar" Mode="In" />
+          <Parameter Name="LASTPRIMARYMODELLOAD" Type="datetime" Mode="In" />
+          <Parameter Name="LASTINDUSTRYMODELLOAD" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="ModelInsertInternalCommodityAssumptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="REF_NO" Type="varchar" Mode="In" />
+          <Parameter Name="COMMODITY_ID" Type="varchar" Mode="In" />
+          <Parameter Name="AMOUNT" Type="decimal" Mode="In" />
         </Function>
         <Function Name="ModelInsertInternalData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
@@ -746,8 +762,16 @@
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
           <Parameter Name="AMOUNT_TYPE" Type="char" Mode="In" />
         </Function>
+        <Function Name="ModelRetrieveDataInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ModelRetrieveInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="ModelUpdateDataInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="LASTPRIMARYMODELLOAD" Type="datetime" Mode="In" />
+          <Parameter Name="LASTINDUSTRYMODELLOAD" Type="datetime" Mode="In" />
         </Function>
         <Function Name="RetrieveCOACodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="COA_TYPE" Type="varchar" Mode="In" />
@@ -1067,6 +1091,21 @@
           <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
+          <FunctionImport Name="ModelInsertInternalCommodityAssumptions">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="REF_NO" Mode="In" Type="String" />
+            <Parameter Name="COMMODITY_ID" Mode="In" Type="String" />
+            <Parameter Name="AMOUNT" Mode="In" Type="Decimal" />
+          </FunctionImport>
+          <FunctionImport Name="ModelDeleteInternalCommodityAssumptions">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="REF_NO" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModelUpdateDataInternalIssuer">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="LASTPRIMARYMODELLOAD" Mode="In" Type="DateTime" />
+            <Parameter Name="LASTINDUSTRYMODELLOAD" Mode="In" Type="DateTime" />
+          </FunctionImport>
 
 
 				</EntityContainer>
@@ -1642,6 +1681,7 @@
 					<Property Type="String" Name="COA" Nullable="true" MaxLength="8" />
 					<Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
 					<Property Type="String" Name="DATA_DESCRIPTION" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="CONVERT_FLAG" Nullable="true" MaxLength="1" />
 				</ComplexType>
 				<ComplexType Name="CurrenciesList">
 					<Property Type="String" Name="Currency" Nullable="false" MaxLength="3" />
@@ -2318,6 +2358,7 @@
 								<ScalarProperty Name="COA" ColumnName="COA" />
 								<ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
 								<ScalarProperty Name="DATA_DESCRIPTION" ColumnName="DATA_DESCRIPTION" />
+                <ScalarProperty Name="CONVERT_FLAG" ColumnName="CONVERT_FLAG" />
 							</ComplexTypeMapping>
 						</ResultMapping>
 					</FunctionImportMapping>
@@ -2353,6 +2394,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ModelInsertInternalCommodityAssumptions" FunctionName="ExternalResearchModel.Store.ModelInsertInternalCommodityAssumptions" />
+          <FunctionImportMapping FunctionImportName="ModelDeleteInternalCommodityAssumptions" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalCommodityAssumptions" />
+          <FunctionImportMapping FunctionImportName="ModelUpdateDataInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelUpdateDataInternalIssuer" />
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />

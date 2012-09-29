@@ -2465,6 +2465,129 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction("ModelDeleteInternalIssuer", iSSUER_IDParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="rEF_NO">No Metadata Documentation available.</param>
+        /// <param name="cOMMODITY_ID">No Metadata Documentation available.</param>
+        /// <param name="aMOUNT">No Metadata Documentation available.</param>
+        public int ModelInsertInternalCommodityAssumptions(global::System.String iSSUER_ID, global::System.String rEF_NO, global::System.String cOMMODITY_ID, Nullable<global::System.Decimal> aMOUNT)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter rEF_NOParameter;
+            if (rEF_NO != null)
+            {
+                rEF_NOParameter = new ObjectParameter("REF_NO", rEF_NO);
+            }
+            else
+            {
+                rEF_NOParameter = new ObjectParameter("REF_NO", typeof(global::System.String));
+            }
+    
+            ObjectParameter cOMMODITY_IDParameter;
+            if (cOMMODITY_ID != null)
+            {
+                cOMMODITY_IDParameter = new ObjectParameter("COMMODITY_ID", cOMMODITY_ID);
+            }
+            else
+            {
+                cOMMODITY_IDParameter = new ObjectParameter("COMMODITY_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter aMOUNTParameter;
+            if (aMOUNT.HasValue)
+            {
+                aMOUNTParameter = new ObjectParameter("AMOUNT", aMOUNT);
+            }
+            else
+            {
+                aMOUNTParameter = new ObjectParameter("AMOUNT", typeof(global::System.Decimal));
+            }
+    
+            return base.ExecuteFunction("ModelInsertInternalCommodityAssumptions", iSSUER_IDParameter, rEF_NOParameter, cOMMODITY_IDParameter, aMOUNTParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="rEF_NO">No Metadata Documentation available.</param>
+        public int ModelDeleteInternalCommodityAssumptions(global::System.String iSSUER_ID, global::System.String rEF_NO)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter rEF_NOParameter;
+            if (rEF_NO != null)
+            {
+                rEF_NOParameter = new ObjectParameter("REF_NO", rEF_NO);
+            }
+            else
+            {
+                rEF_NOParameter = new ObjectParameter("REF_NO", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("ModelDeleteInternalCommodityAssumptions", iSSUER_IDParameter, rEF_NOParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
+        /// <param name="lASTPRIMARYMODELLOAD">No Metadata Documentation available.</param>
+        /// <param name="lASTINDUSTRYMODELLOAD">No Metadata Documentation available.</param>
+        public int ModelUpdateDataInternalIssuer(global::System.String iSSUER_ID, Nullable<global::System.DateTime> lASTPRIMARYMODELLOAD, Nullable<global::System.DateTime> lASTINDUSTRYMODELLOAD)
+        {
+            ObjectParameter iSSUER_IDParameter;
+            if (iSSUER_ID != null)
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
+            }
+            else
+            {
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter lASTPRIMARYMODELLOADParameter;
+            if (lASTPRIMARYMODELLOAD.HasValue)
+            {
+                lASTPRIMARYMODELLOADParameter = new ObjectParameter("LASTPRIMARYMODELLOAD", lASTPRIMARYMODELLOAD);
+            }
+            else
+            {
+                lASTPRIMARYMODELLOADParameter = new ObjectParameter("LASTPRIMARYMODELLOAD", typeof(global::System.DateTime));
+            }
+    
+            ObjectParameter lASTINDUSTRYMODELLOADParameter;
+            if (lASTINDUSTRYMODELLOAD.HasValue)
+            {
+                lASTINDUSTRYMODELLOADParameter = new ObjectParameter("LASTINDUSTRYMODELLOAD", lASTINDUSTRYMODELLOAD);
+            }
+            else
+            {
+                lASTINDUSTRYMODELLOADParameter = new ObjectParameter("LASTINDUSTRYMODELLOAD", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction("ModelUpdateDataInternalIssuer", iSSUER_IDParameter, lASTPRIMARYMODELLOADParameter, lASTINDUSTRYMODELLOADParameter);
+        }
 
         #endregion
     }
@@ -8553,6 +8676,30 @@ namespace GreenField.DAL
         private global::System.String _DATA_DESCRIPTION;
         partial void OnDATA_DESCRIPTIONChanging(global::System.String value);
         partial void OnDATA_DESCRIPTIONChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String CONVERT_FLAG
+        {
+            get
+            {
+                return _CONVERT_FLAG;
+            }
+            set
+            {
+                OnCONVERT_FLAGChanging(value);
+                ReportPropertyChanging("CONVERT_FLAG");
+                _CONVERT_FLAG = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("CONVERT_FLAG");
+                OnCONVERT_FLAGChanged();
+            }
+        }
+        private global::System.String _CONVERT_FLAG;
+        partial void OnCONVERT_FLAGChanging(global::System.String value);
+        partial void OnCONVERT_FLAGChanged();
 
         #endregion
     }
