@@ -325,7 +325,7 @@ namespace GreenField.Gadgets.ViewModels
                             {
                                 if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
                                 {
-                                    BusyIndicatorNotification(true, "Retrieving presentation associated users...");
+                                    BusyIndicatorNotification(true, "Resubmitting presentation...");
                                     _dbInteractivity.ReSubmitPresentation(UserSession.SessionManager.SESSION.UserName,
                                         SelectedPresentationOverviewInfo, dialog.AlertNotification,
                                         ReSubmitPresentationCallbackMethod);
