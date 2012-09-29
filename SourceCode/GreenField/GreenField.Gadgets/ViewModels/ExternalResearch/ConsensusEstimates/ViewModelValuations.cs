@@ -123,6 +123,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (_dataGrouping == null)
                 {
                     _dataGrouping = new List<PeriodColumnGroupingDetail>();
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Amount", GroupPropertyName = "Amount", GroupDataType = PeriodColumnGroupingType.DECIMAL });
                     _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "YOY", GroupPropertyName = "YOYGrowth", GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
                     _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "AshmoreEMM", GroupPropertyName = "AshmoreEmmAmount", GroupDataType = PeriodColumnGroupingType.DECIMAL });
                     _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Variance%", GroupPropertyName = "Variance", GroupDataType = PeriodColumnGroupingType.DECIMAL_PERCENTAGE });
@@ -132,7 +133,7 @@ namespace GreenField.Gadgets.ViewModels
                     _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Low", GroupPropertyName = "Low", GroupDataType = PeriodColumnGroupingType.DECIMAL });
                     _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Standard Deviation", GroupPropertyName = "StandardDeviation", GroupDataType = PeriodColumnGroupingType.DECIMAL });
                     _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Last Update", GroupPropertyName = "DataSourceDate", GroupDataType = PeriodColumnGroupingType.SHORT_DATETIME });
-                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Reported Currency", GroupPropertyName = "SourceCurrency", GroupDataType = PeriodColumnGroupingType.STRING });
+                    _dataGrouping.Add(new PeriodColumnGroupingDetail() { GroupDisplayName = "Reported Currency", GroupPropertyName = "SourceCurrency", GroupDataType = PeriodColumnGroupingType.STRING });                    
                 }
                 return _dataGrouping;
             }

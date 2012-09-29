@@ -38,7 +38,7 @@ namespace GreenField.Gadgets.Helpers
 
     public class HarmonicMean
     {
-        public static Decimal HarmonicMeanCalculationMethod<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, TResult> selector)
+        public static Decimal? HarmonicMeanCalculationMethod<TSource, TResult>(IEnumerable<TSource> source, Func<TSource, TResult> selector)
         {
                        
             Decimal totalweight = 0;

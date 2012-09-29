@@ -124,6 +124,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\ConsensusValuationAmount.cs" />
     <Compile Include="Helpers\ChildExportOptions.xaml.cs">
       <DependentUpon>ChildExportOptions.xaml</DependentUpon>
     </Compile>
