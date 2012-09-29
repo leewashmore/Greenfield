@@ -23,7 +23,7 @@ namespace GreenField.DataContracts
         public String AmountType { get; set; }
 
         [DataMember]
-        public Int32 PeriodYear { get; set; }
+        public Int32? PeriodYear { get; set; }
 
         [DataMember]
         public String PeriodType { get; set; }
@@ -35,7 +35,7 @@ namespace GreenField.DataContracts
         public String DataSource { get; set; }
 
         [DataMember]
-        public Int32 Decimals { get; set; }
+        public Int32? Decimals { get; set; }
 
         [DataMember]
         public String IsPercentage { get; set; }
@@ -44,7 +44,7 @@ namespace GreenField.DataContracts
         public String RootSource { get; set; }
 
         [DataMember]
-        public Int32 SortOrder { get; set; }
+        public Int32? SortOrder { get; set; }
 
     }
 }
