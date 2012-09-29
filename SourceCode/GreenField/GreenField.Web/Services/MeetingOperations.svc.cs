@@ -658,7 +658,7 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public Boolean ReSubmitPresentation(String userName, ICPresentationOverviewData presentationOverviewData,  Boolean sendAlert)
+        public Boolean ReSubmitPresentation(String userName, ICPresentationOverviewData presentationOverviewData, Boolean sendAlert)
         {
             try
             {
@@ -701,7 +701,7 @@ namespace GreenField.Web.Services
                 {
                     String presentationFile = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\ICPresentationTemplate.pptx";
                     File.Copy(presentationFile, copiedFilePath, true);
-                } 
+                }
                 #endregion
 
                 #region Edit presentation file
@@ -729,7 +729,7 @@ namespace GreenField.Web.Services
                 catch
                 {
                     throw new Exception("Exception occurred while opening powerpoint presentation!!!");
-                } 
+                }
                 #endregion
 
                 #region Upload power point to share point and modify database
@@ -758,12 +758,12 @@ namespace GreenField.Web.Services
                     ModifiedOn = DateTime.UtcNow
                 };
 
-                Boolean insertedFileMasterRecord = UpdatePresentationAttachedFileStreamData(userName, Convert.ToInt64(result), fileMaster, false);
+                Boolean insertedFileMasterRecord = UpdatePresentationAttachedFileStreamData(userName, presentationOverviewData.PresentationID, fileMaster, false);
                 if (presentationPowerPointAttachedFile != null && insertedFileMasterRecord)
                 {
                     documentOperations.DeleteDocument(presentationPowerPointAttachedFile.Location);
-                    entity.DeleteObject(entity.FileMasters.Where(record => record.FileID == presentationPowerPointAttachedFile.FileID).FirstOrDefault());
-                }  
+                    entity.DeleteFileMaster(presentationPowerPointAttachedFile.FileID);
+                }
                 #endregion
                 #endregion
 
@@ -790,7 +790,7 @@ namespace GreenField.Web.Services
                     {
                         emailAttachments += uploadFileLocation;
                     }
-                } 
+                }
                 #endregion
 
                 #region Alert
@@ -808,7 +808,7 @@ namespace GreenField.Web.Services
                         + Convert.ToDateTime(presentationOverviewData.MeetingClosedDateTime).ToString("MMMM dd, yyyy")
                         + " UTC has been edited since its original submission.  Voting members, please enter AIMS to modify your comments and pre-meeting votes, if necessary.";
                     SetMessageInfo(emailTo, null, messageSubject, messageBody, emailAttachments, userName);
-                } 
+                }
                 #endregion
 
                 return true;

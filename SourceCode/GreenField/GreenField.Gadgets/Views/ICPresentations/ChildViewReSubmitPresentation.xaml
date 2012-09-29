@@ -23,6 +23,6 @@
         <telerik:RadButton x:Name="CancelButton" Content="Cancel" Click="CancelButton_Click" Width="75" HorizontalAlignment="Right" Margin="0,2,0,0" Grid.Row="1"
                            Style="{StaticResource RadButtonStyle}"/>
         <telerik:RadButton x:Name="OKButton" Content="OK" Click="OKButton_Click" Width="75" HorizontalAlignment="Right" Margin="0,2,79,0" Grid.Row="1"
-                           Style="{StaticResource RadButtonStyle}" IsEnabled="False"/>
+                           Style="{StaticResource RadButtonStyle}"/>
     </Grid>
 </controls:ChildWindow>

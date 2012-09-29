@@ -299,11 +299,11 @@ namespace GreenField.Gadgets.ViewModels
 
         private void SubmitCommandMethod(object param)
         {
-            Prompt.ShowDialog("Please ensure that all changes have been made before submitting meeting presentation for voting", "", MessageBoxButton.OKCancel, (result) =>
+            if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING)
             {
-                if (result == MessageBoxResult.OK)
+                Prompt.ShowDialog("Please ensure that all changes have been made before submitting meeting presentation for voting", "", MessageBoxButton.OKCancel, (result) =>
                 {
-                    if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING)
+                    if (result == MessageBoxResult.OK)
                     {
                         SelectedPresentationOverviewInfo.StatusType = StatusType.READY_FOR_VOTING;
                         //update details
@@ -314,32 +314,33 @@ namespace GreenField.Gadgets.ViewModels
                             _dbInteractivity.SetICPPresentationStatus(GreenField.UserSession.SessionManager.SESSION.UserName, SelectedPresentationOverviewInfo.PresentationID,
                                     StatusType.READY_FOR_VOTING, SetICPPresentationStatusCallbackMethod);
                         }
+
                     }
-                    else
+                });
+            }
+            else
+            {
+                ChildViewReSubmitPresentation dialog = new ChildViewReSubmitPresentation();
+                dialog.Show();
+                dialog.Unloaded += (se, e) =>
+                {
+                    if (dialog.DialogResult == true)
                     {
-                        ChildViewReSubmitPresentation dialog = new ChildViewReSubmitPresentation();
-                        dialog.Show();
-                        dialog.Unloaded += (se, e) =>
+                        if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
                         {
-                            if (dialog.DialogResult == true)
-                            {
-                                if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
-                                {
-                                    BusyIndicatorNotification(true, "Resubmitting presentation...");
-                                    _dbInteractivity.ReSubmitPresentation(UserSession.SessionManager.SESSION.UserName,
-                                        SelectedPresentationOverviewInfo, dialog.AlertNotification,
-                                        ReSubmitPresentationCallbackMethod);
-                                }
-                                //if (dialog.AlertNotification && SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
-                                //{
-                                //    BusyIndicatorNotification(true, "Retrieving presentation associated users...");
-                                //    _dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod, true);
-                                //}
-                            }
-                        };
-                    }                    
-                }
-            });
+                            BusyIndicatorNotification(true, "Resubmitting presentation...");
+                            _dbInteractivity.ReSubmitPresentation(UserSession.SessionManager.SESSION.UserName,
+                                SelectedPresentationOverviewInfo, dialog.AlertNotification,
+                                ReSubmitPresentationCallbackMethod);
+                        }
+                        //if (dialog.AlertNotification && SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
+                        //{
+                        //    BusyIndicatorNotification(true, "Retrieving presentation associated users...");
+                        //    _dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod, true);
+                        //}
+                    }
+                };
+            }
 
 
         }

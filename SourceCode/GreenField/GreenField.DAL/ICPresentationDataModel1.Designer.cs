@@ -2576,6 +2576,25 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdatePresentationInfo", userNameParameter, xmlScriptParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="fileId">No Metadata Documentation available.</param>
+        public int DeleteFileMaster(Nullable<global::System.Int64> fileId)
+        {
+            ObjectParameter fileIdParameter;
+            if (fileId.HasValue)
+            {
+                fileIdParameter = new ObjectParameter("fileId", fileId);
+            }
+            else
+            {
+                fileIdParameter = new ObjectParameter("fileId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction("DeleteFileMaster", fileIdParameter);
+        }
 
         #endregion
     }
