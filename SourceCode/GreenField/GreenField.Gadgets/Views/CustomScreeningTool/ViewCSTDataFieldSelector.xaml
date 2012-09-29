@@ -25,8 +25,8 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            
-            <Grid Grid.Row="0">
+
+                <Grid Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
@@ -585,11 +585,10 @@
                         </telerik:RadTabItem>
                     </telerik:RadTabControl>
                 </Grid>
-                <Grid Grid.Column="1">
+                <Grid Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
                     <!--Data Grid-->
                     <telerik:RadGridView x:Name="dgSelectedFieldsList"
                                  ItemsSource="{Binding SelectedFieldsDataList}"
-                                 Grid.Row="1"
                                  telerik:StyleManager.Theme="Metro"
                                  CanUserReorderColumns ="False" 
                                  CanUserSelect="True"

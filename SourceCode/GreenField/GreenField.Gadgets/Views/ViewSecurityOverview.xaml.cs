@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
 using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
@@ -22,25 +25,25 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelSecurityOverview _dataContextSecurityOverview;
+        private ViewModelSecurityOverview dataContextSecurityOverview;
         public ViewModelSecurityOverview DataContextSecurityOverview
         {
-            get { return _dataContextSecurityOverview; }
-            set { _dataContextSecurityOverview = value; }
+            get { return dataContextSecurityOverview; }
+            set { dataContextSecurityOverview = value; }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextSecurityOverview != null) //DataContext instance
-                    DataContextSecurityOverview.IsActive = _isActive;
+                    DataContextSecurityOverview.IsActive = isActive;
             }
         }
         #endregion

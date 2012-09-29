@@ -207,10 +207,13 @@
                                                 HorizontalContentAlignment="Center" Name="btnPrint" Click="btnPrint_Click">
                     <Image Source="/GreenField.Gadgets;component/Images/Print.png" />
                 </telerik:RadButton>
-                <telerik:RadGridView x:Name="dgCustomSecurity" Visibility="{Binding ResultsListVisibility}"
-                    AutoGenerateColumns="False" Grid.Row="1"  CanUserReorderColumns ="False" 
-                                             CanUserSelect="True"
-                                             CanUserSortColumns="False"
+                <telerik:RadGridView x:Name="dgCustomSecurity" 
+                                     Visibility="{Binding ResultsListVisibility}"
+                                     AutoGenerateColumns="False" 
+                                     Grid.Row="1"  
+                                     CanUserReorderColumns ="False" 
+                                     CanUserSelect="True"
+                                     CanUserSortColumns="False"
                                              IsFilteringAllowed="False"
                                              CanUserInsertRows="False"                                            
                                              CanUserDeleteRows="False"
@@ -224,10 +227,8 @@
                                              EnableRowVirtualization="False"
                                              EnableColumnVirtualization="False"                                              
                                              HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
-                                             RowStyle="{StaticResource GridViewRowStyle}" >
-                        <!--<i:Interaction.Behaviors>
-                        <helpers:FrozenRowsBehavior/>
-                    </i:Interaction.Behaviors>-->
+                                             RowStyle="{StaticResource GridViewRowStyle}"
+                                     GridLinesVisibility="None">
                     </telerik:RadGridView>
                 <Grid Grid.Row="2">
                     <telerik:RadRichTextBox x:Name="RichTextBox" Width="0" Height="0">

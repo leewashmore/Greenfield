@@ -1,59 +1,55 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
+using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.Windows.Data;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using Microsoft.Practices.Prism.ViewModel;
-using System.Collections.ObjectModel;
-using System.Linq;
 using Microsoft.Practices.Prism.Events;
-using GreenField.Common;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
-using GreenField.ServiceCaller;
 using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
+using GreenField.Common;
 using GreenField.DataContracts;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
-
     /// <summary>
-    /// view modelclass for SecurityOverview
+    /// view model class for SecurityOverview
     /// </summary>
     public class ViewModelSecurityOverview : NotificationObject
     {
         #region Fields
-        //MEF Singletons
-        private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
-        private EntitySelectionData _entitySelectionData;
+        //MEF singletons
+        private IEventAggregator eventAggregator;
+        private IDBInteractivity dbInteractivity;
+        private ILoggerFacade logger;
+        private EntitySelectionData entitySelectionParam;
 
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get
-            {
-                return _isActive;
-            }
+            get { return isActive; }
             set
             {
-                if (_isActive != value)
+                if (isActive != value)
                 {
-                    _isActive = value;
-                    if (_isActive && _entitySelectionData != null)
+                    isActive = value;
+                    if (isActive && entitySelectionParam != null)
                     {
-                        HandleSecurityReferenceSet(_entitySelectionData);
+                        HandleSecurityReferenceSet(entitySelectionParam);
                     }
                 }
             }
@@ -61,39 +57,39 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Constructor
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="eventAggregator">MEF Eventaggregator instance</param>
+       /// <summary>
+        /// constructor
+       /// </summary>
+        /// <param name="param">DashboardGadgetParam</param>
         public ViewModelSecurityOverview(DashboardGadgetParam param)
         {
-            _eventAggregator = param.EventAggregator;
-            _dbInteractivity = param.DBInteractivity;
-            _logger = param.LoggerFacade;
-            _entitySelectionData = param.DashboardGadgetPayload.EntitySelectionData;
+            eventAggregator = param.EventAggregator;
+            dbInteractivity = param.DBInteractivity;
+            logger = param.LoggerFacade;
+            entitySelectionParam = param.DashboardGadgetPayload.EntitySelectionData;
 
-            //Subscription to SecurityReferenceSet event
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
+            //subscription to SecurityReferenceSet event
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Subscribe(HandleSecurityReferenceSet);
 
             //EntitySelectionData handling
-            if (_entitySelectionData != null)
+            if (entitySelectionParam != null)
             {
-                HandleSecurityReferenceSet(_entitySelectionData);
+                HandleSecurityReferenceSet(entitySelectionParam);
             }
         }
         #endregion
 
         #region Properties
         /// <summary>
-        /// Content displayed on the busy indicator
+        /// content displayed on the busy indicator
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set 
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
@@ -101,181 +97,181 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// property to contain status value for busy indicator of the gadget
         /// </summary>
-        private bool _busyIndicatorStatus;
+        private bool busyIndicatorStatus;
         public bool BusyIndicatorStatus
         {
-            get { return _busyIndicatorStatus; }
+            get { return busyIndicatorStatus; }
             set
             {
-                if (_busyIndicatorStatus != value)
+                if (busyIndicatorStatus != value)
                 {
-                    _busyIndicatorStatus = value;
+                    busyIndicatorStatus = value;
                     RaisePropertyChanged(() => BusyIndicatorStatus);
                 }
             }
         }
 
         /// <summary>
-        /// IssueName Property
+        /// issue name property
         /// </summary>
-        private string _issueName;
+        private string issueName;
         public string IssueName
         {
-            get { return _issueName; }
+            get { return issueName; }
             set
             {
-                if (_issueName != value)
-                    _issueName = value;
+                if (issueName != value)
+                    issueName = value;
                 RaisePropertyChanged(() => this.IssueName);
             }
         }
 
         /// <summary>
-        /// Ticker Property
+        /// ticker property
         /// </summary>
-        private string _ticker;
+        private string ticker;
         public string Ticker
         {
-            get { return _ticker; }
+            get { return ticker; }
             set
             {
-                if (_ticker != value)
-                    _ticker = value;
+                if (ticker != value)
+                    ticker = value;
                 RaisePropertyChanged(() => this.Ticker);
             }
         }
 
         /// <summary>
-        /// Country Property
+        /// country property
         /// </summary>
-        private string _country;
+        private string country;
         public string Country
         {
-            get { return _country; }
+            get { return country; }
             set
             {
-                if (_country != value)
-                    _country = value;
+                if (country != value)
+                    country = value;
                 RaisePropertyChanged(() => this.Country);
             }
         }
 
         /// <summary>
-        /// Sector Property
+        /// sector property
         /// </summary>
-        private string _sector;
+        private string sector;
         public string Sector
         {
-            get { return _sector; }
+            get { return sector; }
             set
             {
-                if (_sector != value)
-                    _sector = value;
+                if (sector != value)
+                    sector = value;
                 RaisePropertyChanged(() => this.Sector);
             }
         }
 
         /// <summary>
-        /// Industry Property
+        /// industry property
         /// </summary>
-        private string _industry;
+        private string industry;
         public string Industry
         {
-            get { return _industry; }
+            get { return industry; }
             set
             {
-                if (_industry != value)
-                    _industry = value;
+                if (industry != value)
+                    industry = value;
                 RaisePropertyChanged(() => this.Industry);
             }
         }
 
         /// <summary>
-        /// SubIndustry Property
+        /// subindustry property
         /// </summary>
-        private string _subIndustry;
+        private string subIndustry;
         public string SubIndustry
         {
-            get { return _subIndustry; }
+            get { return subIndustry; }
             set
             {
-                if (_subIndustry != value)
-                    _subIndustry = value;
+                if (subIndustry != value)
+                    subIndustry = value;
                 RaisePropertyChanged(() => this.SubIndustry);
             }
         }
 
         /// <summary>
-        /// PrimaryAnalyst Property
+        /// primary analyst property
         /// </summary>
-        private string _primaryAnalyst;
+        private string primaryAnalyst;
         public string PrimaryAnalyst
         {
-            get { return _primaryAnalyst; }
+            get { return primaryAnalyst; }
             set
             {
-                if (_primaryAnalyst != value)
-                    _primaryAnalyst = value;
+                if (primaryAnalyst != value)
+                    primaryAnalyst = value;
                 RaisePropertyChanged(() => this.PrimaryAnalyst);
             }
         }
 
         /// <summary>
-        /// Currency Property
+        /// currency property
         /// </summary>
-        private string _currency;
+        private string currency;
         public string Currency
         {
-            get { return _currency; }
+            get { return currency; }
             set
             {
-                if (_currency != value)
-                    _currency = value;
+                if (currency != value)
+                    currency = value;
                 RaisePropertyChanged(() => this.Currency);
             }
         }
 
         /// <summary>
-        /// FiscalYearend Property
+        /// fiscal year end property
         /// </summary>
-        private string _fiscalYearEnd;
+        private string fiscalYearEnd;
         public string FiscalYearend
         {
-            get { return _fiscalYearEnd; }
+            get { return fiscalYearEnd; }
             set
             {
-                if (_fiscalYearEnd != value)
-                    _fiscalYearEnd = value;
+                if (fiscalYearEnd != value)
+                    fiscalYearEnd = value;
                 RaisePropertyChanged(() => this.FiscalYearend);
             }
         }
 
         /// <summary>
-        /// Website Property
+        /// website property
         /// </summary>
-        private string _website;
+        private string website;
         public string Website
         {
-            get { return _website; }
+            get { return website; }
             set
             {
-                if (_website != value)
-                    _website = value;
+                if (website != value)
+                    website = value;
                 RaisePropertyChanged(() => this.Website);
             }
         }
 
         /// <summary>
-        /// Description Property
+        /// description property
         /// </summary>
-        private string _description;
+        private string description;
         public string Description
         {
-            get { return _description; }
+            get { return description; }
             set
             {
-                if (_description != value)
-                    _description = value;
+                if (description != value)
+                    description = value;
                 RaisePropertyChanged(() => this.Description);
             }
         }
@@ -283,55 +279,55 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Event Handlers
         /// <summary>
-        /// Assigns UI Field Properties based on Entity Selection Data
+        /// assigns UI field properties based on Entity Selection Data
         /// </summary>
         /// <param name="entitySelectionData">EntitySelectionData</param>
         public void HandleSecurityReferenceSet(EntitySelectionData entitySelectionData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (entitySelectionData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
-                    _entitySelectionData = entitySelectionData;
+                    Logging.LogMethodParameter(logger, methodNamespace, entitySelectionData, 1);
+                    entitySelectionParam = entitySelectionData;
                    
-                    if (IsActive && _entitySelectionData != null)
+                    if (IsActive && entitySelectionParam != null)
                     {
-                        _dbInteractivity.RetrieveSecurityOverviewData(_entitySelectionData, RetrieveSecurityReferenceDataCallBackMethod);
+                        dbInteractivity.RetrieveSecurityOverviewData(entitySelectionParam, RetrieveSecurityReferenceDataCallBackMethod);
                         BusyIndicatorContent = "Retrieving security reference data for '" + entitySelectionData.LongName + " (" + entitySelectionData.ShortName + ")'";
                         BusyIndicatorStatus = true;
                     }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);                
+                Logging.LogException(logger, ex);                
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            Logging.LogEndMethod(logger, methodNamespace);
         }
         #endregion             
 
         #region CallBack Method
         /// <summary>
-        /// Callback method for Security Overview Service call - assigns value to UI Field Properties
+        /// callback method for Security Overview service call - assigns value to UI field properties
         /// </summary>
         /// <param name="securityOverviewData">SecurityOverviewData Collection</param>
         private void RetrieveSecurityReferenceDataCallBackMethod(SecurityOverviewData securityOverviewData)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (securityOverviewData != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, securityOverviewData, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, securityOverviewData, 1);
                     this.IssueName = securityOverviewData.IssueName;
                     this.Ticker = securityOverviewData.Ticker;
                     this.Country = securityOverviewData.Country;
@@ -346,21 +342,20 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }                
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
                 BusyIndicatorStatus = false;
             }
-            Logging.LogEndMethod(_logger, methodNamespace);            
+            Logging.LogEndMethod(logger, methodNamespace);            
         }
-
         #endregion
 
         #region Dispose Method
@@ -369,9 +364,8 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            _eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
+            eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
         }
-
         #endregion
     }
 }

@@ -29,6 +29,7 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="1"/>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.2*"/>
                 <ColumnDefinition Width="0.25*"/>
@@ -41,13 +42,16 @@
             <Border x:Name="SecondColumnBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="1">
                 <TextBlock Style="{StaticResource TextBlockStyle}"/>
             </Border>
-            <Border x:Name="ThirdColumnBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="2" >
+            <Border x:Name="ColumnBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="2" >
                 <TextBlock  Style="{StaticResource TextBlockStyle}"/>
             </Border>
-            <Border x:Name="FourthColumnBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="3">
+            <Border x:Name="ThirdColumnBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="3" >
+                <TextBlock  Style="{StaticResource TextBlockStyle}"/>
+            </Border>
+            <Border x:Name="FourthColumnBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="4">
                 <TextBlock Style="{StaticResource TextBlockStyle}"/>
             </Border>
-            <Border x:Name="ActivePositionBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="4">
+            <Border x:Name="ActivePositionBorder" Background="#e4e5e5" Grid.Row="1" Grid.Column="5">
                 <TextBlock  Text="ActivePosition"  HorizontalAlignment="Right" VerticalAlignment="Center"
                  Style="{StaticResource TextBlockStyle}"/>
             </Border>
@@ -58,13 +62,14 @@
             <Border x:Name="TargetValueBorder" Grid.Row="2" Grid.Column="1" >
                 <TextBlock  Margin="2,0,0,0" Text="{Binding CompositeDisplayData.PortfolioTarget}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
-            <Border x:Name="BenchmarkWeightBorder"  Grid.Row="2" Grid.Column="2" >
+            <TextBlock  Style="{StaticResource TextBlockStyle}" Grid.Row="2" Grid.Column="2"/>
+            <Border x:Name="BenchmarkWeightBorder"  Grid.Row="2" Grid.Column="3" >
                 <TextBlock Margin="2,0,0,0" Text="Benchmark Weight (%)"  HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
-            <Border x:Name="BenchmarkWeightValueBorder" Grid.Row="2" Grid.Column="3" >
+            <Border x:Name="BenchmarkWeightValueBorder" Grid.Row="2" Grid.Column="4" >
                 <TextBlock  Margin="2,0,0,0" Text="{Binding CompositeDisplayData.BenchmarkWeight}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
-            <Border x:Name="ActivePositionFirstRowBorder" Grid.Row="2" Grid.Column="4" >
+            <Border x:Name="ActivePositionFirstRowBorder" Grid.Row="2" Grid.Column="5" >
                 <TextBlock  Margin="2,0,0,0" Text="{Binding CompositeDisplayData.ActivePosition}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <!--Second Row-->
@@ -74,13 +79,15 @@
             <Border x:Name="TargetInCountryValueBorder" Background="#f3f6fc" Grid.Row="3" Grid.Column="1">
                 <TextBlock Grid.Row="2" Grid.Column="1" Margin="2,0,0,0" Text="{Binding CompositeDisplayData.PortfolioTargetInCountry}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
-            <Border x:Name="BenchmarkWeightInCountryBorder" Background="#f3f6fc" Grid.Row="3" Grid.Column="2" >
+            <Border x:Name="Border" Background="#f3f6fc" Grid.Row="3" Grid.Column="2">
+            </Border>
+            <Border x:Name="BenchmarkWeightInCountryBorder" Background="#f3f6fc" Grid.Row="3" Grid.Column="3" >
                 <TextBlock Margin="2,0,0,0" Text="Benchmark Weight In Country (%)" HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
-            <Border x:Name="BenchmarkWeightInCountryValueBorder" Background="#f3f6fc" Grid.Row="3" Grid.Column="3" >
+            <Border x:Name="BenchmarkWeightInCountryValueBorder" Background="#f3f6fc" Grid.Row="3" Grid.Column="4" >
                 <TextBlock  Margin="2,0,0,0" Text="{Binding CompositeDisplayData.BenchmarkWeightInCountry}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
-            <Border x:Name="ActivePositionSecondRowBorder" Background="#f3f6fc" Grid.Row="3" Grid.Column="4">
+            <Border x:Name="ActivePositionSecondRowBorder" Background="#f3f6fc" Grid.Row="3" Grid.Column="5">
                 <TextBlock  Margin="2,0,0,0" Text="{Binding CompositeDisplayData.ActivePositionInCountry}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
             </Border>
             <!--Third Row-->
@@ -88,7 +95,9 @@
                 <TextBlock Text="Holdings (mn)" Margin="2,0,0,0"   HorizontalAlignment="Left" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
             </StackPanel>
             <Border Grid.Row="4" Grid.Column="1">
-                <TextBlock Margin="2,0,0,0" Text="{Binding CompositeDisplayData.Holdings, Mode=TwoWay, StringFormat=\{0:n1\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+                <TextBlock Margin="2,0,0,0" Text="{Binding CompositeDisplayData.Holdings, Mode=TwoWay, StringFormat=\{0:c1\}}" HorizontalAlignment="Right" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"   />
+            </Border>
+            <Border Grid.Row="4" Grid.Column="2">
             </Border>
         </Grid>
     </telerik:RadBusyIndicator>

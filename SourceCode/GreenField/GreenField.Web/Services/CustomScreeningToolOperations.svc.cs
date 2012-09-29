@@ -663,7 +663,7 @@ namespace GreenField.Web.Services
         /// </summary>
         /// <param name="entityIdentifiers">EntitySelectionData</param>
         /// <param name="portfolio">PortfolioSelectionData</param>
-        /// <returns>CompositeFundData</returns>
+        /// <returns>list of CompositeFundData</returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public List<CompositeFundData> RetrieveCompositeFundData(EntitySelectionData entityIdentifiers, PortfolioSelectionData portfolio)
@@ -707,8 +707,11 @@ namespace GreenField.Web.Services
 
                 foreach (string item in countryInPortfolioTargets)
                 {
-                    decimal targetSum = portfolioTargets.Where(a => a.CountryName == item).Sum(a => a.Target);
-                    portfolioCountryTargets.Add(item, targetSum);
+                    if (item != null)
+                    {
+                        decimal targetSum = portfolioTargets.Where(a => a.CountryName == item).Sum(a => a.Target);
+                        portfolioCountryTargets.Add(item, targetSum);
+                    }
                 }
                 #endregion
 
@@ -717,7 +720,7 @@ namespace GreenField.Web.Services
 
                 // GF_PORTFOLIO_HOLDINGS data
                 DateTime lastBusinessDatePortfolio = GetLastBusinessDate("PORTFOLIO_HOLDINGS");
-                    portfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.ISSUER_ID == issuerId
+                    portfolioHoldingsData = entity.GF_PORTFOLIO_HOLDINGS.Where(a => a.ISSUER_ID == issuerId && a.PORTFOLIO_ID == portfolio.PortfolioId
                                                                                     && a.PORTFOLIO_DATE == lastBusinessDatePortfolio).ToList();
 
                  // GF_BENCHMARK_HOLDINGS data
@@ -733,8 +736,11 @@ namespace GreenField.Web.Services
 
                         foreach (string item in countryInBenchmarkData)
                         {
-                            decimal benchmarkSum = Convert.ToDecimal(benchmarkData.Where(a => a.ISO_COUNTRY_CODE == item).Sum(a => a.BENCHMARK_WEIGHT));
-                            benchmarkCountryData.Add(item, benchmarkSum);
+                            if (item != null)
+                            {
+                                decimal benchmarkSum = Convert.ToDecimal(benchmarkData.Where(a => a.ISO_COUNTRY_CODE == item).Sum(a => a.BENCHMARK_WEIGHT));
+                                benchmarkCountryData.Add(item, benchmarkSum);
+                            }
                         }
                     }
 
@@ -758,7 +764,11 @@ namespace GreenField.Web.Services
         }
 
         #region Helper Methods
-
+        /// <summary>
+        /// retrieving data id for custom screening tool on basis of screening id
+        /// </summary>
+        /// <param name="screeningId">screeningId</param>
+        /// <returns>int data id</returns>
         public int GetCustomScreeningDataId(string screeningId)
         {
             int dataId = 0;
@@ -785,6 +795,16 @@ namespace GreenField.Web.Services
             return dataId;
         }
 
+        /// <summary>
+        /// retrieving from views list of securities for selection done in cuustom screening tool
+        /// </summary>
+        /// <param name="portfolio"></param>
+        /// <param name="benchmark"></param>
+        /// <param name="region"></param>
+        /// <param name="country"></param>
+        /// <param name="sector"></param>
+        /// <param name="industry"></param>
+        /// <returns>list of securities</returns>
         public List<CustomScreeningSecurityData> RetrieveSecurityDetailsList(PortfolioSelectionData portfolio,
             EntitySelectionData benchmark, String region, String country, String sector, String industry)
         {
@@ -914,6 +934,11 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// method to create comma separated string of list passed
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns></returns>
         public string StringBuilder(List<string> param)
         {
             StringBuilder var = new StringBuilder();
@@ -929,6 +954,18 @@ namespace GreenField.Web.Services
             return result;
         }
 
+        /// <summary>
+        /// method to perform calculations for composite fund gadget
+        /// </summary>
+        /// <param name="InstrumentID"></param>
+        /// <param name="issuerId"></param>
+        /// <param name="portfolioTargets"></param>
+        /// <param name="portfolioCountryTargets"></param>
+        /// <param name="benchmarkData"></param>
+        /// <param name="portfolioHoldingsData"></param>
+        /// <param name="benchmarkCountryData"></param>
+        /// <param name="check"></param>
+        /// <returns> calculated data for composite fund gadget</returns>
         public CompositeFundData FillResultSetCompositeFund(string InstrumentID,string issuerId, List<CompositeFundData> portfolioTargets, Dictionary<string, decimal> portfolioCountryTargets,
             List<GF_BENCHMARK_HOLDINGS> benchmarkData, List<GF_PORTFOLIO_HOLDINGS> portfolioHoldingsData, Dictionary<string, decimal> benchmarkCountryData,bool check)
         {
@@ -985,6 +1022,11 @@ namespace GreenField.Web.Services
             return temp;
         }
 
+        /// <summary>
+        /// method to get last business date based on WCF view from which to fetch the last date
+        /// </summary>
+        /// <param name="viewName"></param>
+        /// <returns>last business date</returns>
         public DateTime GetLastBusinessDate(string viewName)
         {
             try
