@@ -44,3 +44,4 @@ E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.dll
 E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.pdfa.dll
 E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\log4net.dll
 E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPresentationTemplate.pptx

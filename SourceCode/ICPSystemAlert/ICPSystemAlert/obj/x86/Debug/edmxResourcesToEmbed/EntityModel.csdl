@@ -114,6 +114,14 @@
     <FunctionImport Name="GetPresentationDeadlineDetails" ReturnType="Collection(ICPModel.PresentationDeadlineDetails)">
       <Parameter Name="ScheduleMinutes" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="RetrieveICPresentationOverviewData" ReturnType="Collection(ICPModel.ICPresentationOverviewData)" />
+    <FunctionImport Name="RetrieveICPresentationOverviewDataForId" ReturnType="Collection(ICPModel.ICPresentationOverviewData)">
+      <Parameter Name="PresentationId" Mode="In" Type="Int64" />
+    </FunctionImport>
+    <FunctionImport Name="UpdatePresentationInfo" ReturnType="Collection(Int32)">
+      <Parameter Name="userName" Mode="In" Type="String" />
+      <Parameter Name="xmlScript" Mode="In" Type="String" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="CommentInfo">
     <Key>
@@ -424,6 +432,7 @@
     <NavigationProperty Name="MeetingPresentationMappingInfoes" Relationship="ICPModel.FK_MeetingPresentationMappingInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="MeetingPresentationMappingInfo" />
     <NavigationProperty Name="PresentationAttachedFileInfoes" Relationship="ICPModel.FK_AttachedFileInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="PresentationAttachedFileInfo" />
     <NavigationProperty Name="VoterInfoes" Relationship="ICPModel.FK_VoterInfo_PresentationInfo" FromRole="PresentationInfo" ToRole="VoterInfo" />
+    <Property Type="String" Name="PortfolioId" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <Association Name="FK_CommentInfo_PresentationInfo">
     <End Type="ICPModel.PresentationInfo" Role="PresentationInfo" Multiplicity="0..1" />
@@ -497,5 +506,51 @@
     <Property Type="String" Name="Category" Nullable="true" MaxLength="50" />
     <Property Type="String" Name="FileName" Nullable="true" MaxLength="255" />
     <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="ICPresentationOverviewData">
+    <Property Type="Int64" Name="PresentationID" Nullable="false" />
+    <Property Type="String" Name="Presenter" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="StatusType" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="SecurityTicker" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityName" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityCountry" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityCountryCode" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityIndustry" Nullable="true" MaxLength="50" />
+    <Property Type="Single" Name="SecurityCashPosition" Nullable="true" />
+    <Property Type="Int64" Name="SecurityPosition" Nullable="true" />
+    <Property Type="Single" Name="SecurityLastClosingPrice" Nullable="true" />
+    <Property Type="Single" Name="SecurityMarketCapitalization" Nullable="true" />
+    <Property Type="String" Name="SecurityPFVMeasure" Nullable="true" MaxLength="50" />
+    <Property Type="Single" Name="SecurityBuyRange" Nullable="true" />
+    <Property Type="Single" Name="SecuritySellRange" Nullable="true" />
+    <Property Type="String" Name="SecurityRecommendation" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CommitteePFVMeasure" Nullable="true" MaxLength="255" />
+    <Property Type="Single" Name="CommitteeBuyRange" Nullable="true" />
+    <Property Type="Single" Name="CommitteeSellRange" Nullable="true" />
+    <Property Type="String" Name="CommitteeRecommendation" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="CommitteeRangeEffectiveThrough" Nullable="true" Precision="23" />
+    <Property Type="Boolean" Name="AcceptWithoutDiscussionFlag" Nullable="true" />
+    <Property Type="String" Name="AdminNotes" Nullable="true" MaxLength="255" />
+    <Property Type="String" Name="CreatedBy" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="23" />
+    <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" />
+    <Property Type="DateTime" Name="ModifiedOn" Nullable="false" Precision="23" />
+    <Property Type="String" Name="Analyst" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="Price" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="FVCalc" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityBuySellvsCrnt" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="CurrentHoldings" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="PercentEMIF" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityBMWeight" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="SecurityActiveWeight" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="YTDRet_Absolute" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="YTDRet_RELtoLOC" Nullable="true" MaxLength="50" />
+    <Property Type="String" Name="YTDRet_RELtoEM" Nullable="true" MaxLength="50" />
+    <Property Type="Decimal" Name="SecurityPFVMeasureValue" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="Decimal" Name="CommitteePFVMeasureValue" Nullable="true" Precision="18" Scale="0" />
+    <Property Type="String" Name="PortfolioId" Nullable="true" MaxLength="50" />
+    <Property Type="DateTime" Name="MeetingDateTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="MeetingClosedDateTime" Nullable="true" Precision="23" />
+    <Property Type="DateTime" Name="MeetingVotingClosedDateTime" Nullable="true" Precision="23" />
   </ComplexType>
 </Schema>

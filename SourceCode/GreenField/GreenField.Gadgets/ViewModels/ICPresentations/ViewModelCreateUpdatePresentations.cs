@@ -299,7 +299,8 @@ namespace GreenField.Gadgets.ViewModels
 
         private void SubmitCommandMethod(object param)
         {
-            if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING)
+            if (SelectedPresentationOverviewInfo.StatusType != StatusType.READY_FOR_VOTING
+                && SelectedPresentationOverviewInfo.MeetingDateTime < DateTime.UtcNow)
             {
                 Prompt.ShowDialog("Please ensure that all changes have been made before submitting meeting presentation for voting", "", MessageBoxButton.OKCancel, (result) =>
                 {
@@ -333,11 +334,6 @@ namespace GreenField.Gadgets.ViewModels
                                 SelectedPresentationOverviewInfo, dialog.AlertNotification,
                                 ReSubmitPresentationCallbackMethod);
                         }
-                        //if (dialog.AlertNotification && SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
-                        //{
-                        //    BusyIndicatorNotification(true, "Retrieving presentation associated users...");
-                        //    _dbInteractivity.RetrievePresentationVoterData(SelectedPresentationOverviewInfo.PresentationID, RetrievePresentationVoterDataCallbackMethod, true);
-                        //}
                     }
                 };
             }
@@ -346,8 +342,7 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-        #region Helper Methods
-
+        #region Helper Methods        
         public void RetrievePresentationAttachedDetails()
         {
             if (_dbInteractivity != null)
@@ -511,8 +506,12 @@ namespace GreenField.Gadgets.ViewModels
                 if (result == true)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    _eventAggregator.GetEvent<ToolboxUpdateEvent>().Publish(DashboardCategoryType.INVESTMENT_COMMITTEE_PRESENTATIONS);
-                    _regionManager.RequestNavigate(RegionNames.MAIN_REGION, "ViewDashboardInvestmentCommitteePresentations");
+                    if (SelectedPresentationOverviewInfo != null && _dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Resubmitting presentation...");
+                        _dbInteractivity.ReSubmitPresentation(UserSession.SessionManager.SESSION.UserName,
+                            SelectedPresentationOverviewInfo, false, ReSubmitPresentationCallbackMethod);
+                    }
 
                 }
                 else

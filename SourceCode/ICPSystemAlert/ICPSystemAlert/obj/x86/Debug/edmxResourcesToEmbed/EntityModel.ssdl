@@ -185,6 +185,7 @@
     <Property Name="YTDRet_RELtoEM" Type="varchar" MaxLength="50" />
     <Property Name="SecurityPFVMeasureValue" Type="decimal" />
     <Property Name="CommitteePFVMeasureValue" Type="decimal" />
+    <Property Name="PortfolioId" Type="varchar" MaxLength="50" />
   </EntityType>
   <EntityType Name="VoterInfo">
     <Key>
@@ -355,6 +356,10 @@
   <Function Name="RetrieveICPresentationAttachedFileDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="PresentationId" Type="bigint" Mode="In" />
   </Function>
+  <Function Name="RetrieveICPresentationOverviewData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="RetrieveICPresentationOverviewDataForId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="PresentationId" Type="bigint" Mode="In" />
+  </Function>
   <Function Name="SetICPMeetingAttachedFileInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="UserName" Type="varchar" Mode="In" />
     <Parameter Name="MeetingId" Type="bigint" Mode="In" />
@@ -398,5 +403,9 @@
     <Parameter Name="EmailId" Type="bigint" Mode="In" />
     <Parameter Name="EmailSent" Type="bit" Mode="In" />
     <Parameter Name="UserName" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="UpdatePresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="userName" Type="varchar" Mode="In" />
+    <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
   </Function>
 </Schema>

@@ -19,6 +19,8 @@ using ICPSystemAlert.DocumentCopyReference;
 using ICPSystemAlert.DocumentListsReference;
 using System.Xml;
 using System.Collections;
+using System.Xml.Linq;
+using System.Reflection;
 
 
 namespace ICPSystemAlert
@@ -28,6 +30,7 @@ namespace ICPSystemAlert
         #region Fields
         private static ICPEntities _entity;
         private static UserEntities _userEntity;
+        private static ExternalEntities _externalEntities;
 
         private static DimensionServiceReference.Entities _dimensionEntity;
 
@@ -97,6 +100,7 @@ namespace ICPSystemAlert
             _sendFilesAsAttachment = Convert.ToBoolean(ConfigurationManager.AppSettings.Get("SendFileAsAttachment"));
             _entity = new ICPEntities();
             _userEntity = new UserEntities();
+            _externalEntities = new ExternalEntities();
 
             var options = new Options();
             if (CommandLineParser.Default.ParseArguments(args, options))
@@ -207,6 +211,73 @@ namespace ICPSystemAlert
 
                         if (distinctMeetingPresentationRecord == null)
                             continue;
+
+                        //ICPresentationOverviewData presentationOverviewData = _entity.RetrieveICPresentationOverviewDataForId(presentationId).FirstOrDefault();
+                        //presentationOverviewData = RetrieveUpdatedSecurityDetails(presentationOverviewData);
+
+                        //XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverviewData });
+                        //string xmlScript = xmlDoc.ToString();
+
+                        //Int64? result = _entity.UpdatePresentationInfo("System", xmlScript).FirstOrDefault();
+                        //if (result == null)
+                        //    throw new Exception("Unable to update presentation info object");
+
+                        //#region Retrieve presentation file or create new one if not exists
+                        //String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
+                        //List<FileMaster> presentationAttachedFiles = _entity.RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID).ToList();
+                        //FileMaster presentationPowerPointAttachedFile = null;
+                        //if (presentationAttachedFiles != null)
+                        //{
+                        //    presentationPowerPointAttachedFile = presentationAttachedFiles.Where(record => record.Category == "Power Point Presentation").FirstOrDefault();
+                        //    if (presentationPowerPointAttachedFile != null)
+                        //    {
+                        //        Byte[] powerPointFileStream = RetrieveDocument(presentationPowerPointAttachedFile.Location);
+
+                        //        if (powerPointFileStream == null)
+                        //            throw new Exception("Unable to download power point file from repository");
+
+                        //        File.WriteAllBytes(copiedFilePath, powerPointFileStream);
+                        //    }
+                        //    else
+                        //    {
+                        //        String presentationFile = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\ICPresentationTemplate.pptx";
+                        //        File.Copy(presentationFile, copiedFilePath, true);
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    String presentationFile = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\ICPresentationTemplate.pptx";
+                        //    File.Copy(presentationFile, copiedFilePath, true);
+                        //}
+                        //#endregion
+
+                        //#region Edit presentation file
+                        //try
+                        //{
+                        //    using (PresentationDocument presentationDocument = PresentationDocument.Open(copiedFilePath, true))
+                        //    {
+                        //        PresentationPart presentatioPart = presentationDocument.PresentationPart;
+                        //        OpenXmlElementList slideIds = presentatioPart.Presentation.SlideIdList.ChildElements;
+
+                        //        string relId = (slideIds[0] as SlideId).RelationshipId;
+
+                        //        // Get the slide part from the relationship ID.
+                        //        SlidePart slidePart = (SlidePart)presentatioPart.GetPartById(relId);
+
+                        //        SetSlideTitle(slidePart, presentationOverviewData);
+                        //        SetSlideContent(slidePart, presentationOverviewData);
+
+                        //        //save the Slide and Presentation
+                        //        slidePart.Slide.Save();
+                        //        presentatioPart.Presentation.Save();
+
+                        //    }
+                        //}
+                        //catch
+                        //{
+                        //    throw new Exception("Exception occurred while opening powerpoint presentation!!!");
+                        //}
+                        //#endregion
 
                         Byte[] generatedICPacketStream = GenerateICPacketReport(presentationId);
                         String uploadFileName = String.Format("{0}_{1}_ICPacket.pdf"
@@ -632,6 +703,211 @@ namespace ICPSystemAlert
         #endregion
 
         #region Helper Method
+        private static ICPresentationOverviewData RetrieveUpdatedSecurityDetails(ICPresentationOverviewData presentationOverviewData)
+        {
+            try
+            {
+                #region GF_SECURITY_BASEVIEW info
+                DimensionServiceReference.GF_SECURITY_BASEVIEW securityData = _dimensionEntity.GF_SECURITY_BASEVIEW
+                            .Where(record => record.TICKER == presentationOverviewData.SecurityTicker
+                                && record.ISSUE_NAME == presentationOverviewData.SecurityName)
+                            .FirstOrDefault();
+
+                presentationOverviewData.SecurityCountry = securityData.ASEC_SEC_COUNTRY_NAME;
+                presentationOverviewData.SecurityCountryCode = securityData.ISO_COUNTRY_CODE;
+                presentationOverviewData.SecurityIndustry = securityData.GICS_INDUSTRY_NAME;
+                presentationOverviewData.Analyst = securityData.ASHMOREEMM_PRIMARY_ANALYST;
+                if (securityData.CLOSING_PRICE != null)
+                    presentationOverviewData.SecurityLastClosingPrice = Convert.ToSingle(securityData.CLOSING_PRICE);
+
+                presentationOverviewData.Price = (securityData.CLOSING_PRICE == null ? "" : securityData.CLOSING_PRICE.ToString())
+                    + " " + (securityData.TRADING_CURRENCY == null ? "" : securityData.TRADING_CURRENCY.ToString());
+                #endregion
+
+                #region GF_PORTFOLIO_HOLDINGS info
+                DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
+                DimensionServiceReference.GF_PORTFOLIO_HOLDINGS lastBusinessRecord = _dimensionEntity.GF_PORTFOLIO_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
+                if (lastBusinessRecord != null)
+                    if (lastBusinessRecord.PORTFOLIO_DATE != null)
+                        lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
+
+                List<DimensionServiceReference.GF_PORTFOLIO_HOLDINGS> securityHoldingData = _dimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(
+                    record => record.TICKER == presentationOverviewData.SecurityTicker && record.PORTFOLIO_DATE == lastBusinessDate
+                    && record.DIRTY_VALUE_PC > 0)
+                    .ToList();
+
+                decimal? sumSecDirtyValuePC = securityHoldingData.Sum(record => record.DIRTY_VALUE_PC);
+                decimal? sumSecBalanceNominal = securityHoldingData.Sum(record => record.BALANCE_NOMINAL);
+                if (sumSecDirtyValuePC != null)
+                {
+                    presentationOverviewData.SecurityCashPosition = Convert.ToSingle(sumSecDirtyValuePC);
+                    presentationOverviewData.SecurityPosition = Convert.ToInt64(sumSecBalanceNominal);
+                }
+
+                List<DimensionServiceReference.GF_PORTFOLIO_HOLDINGS> portfolioData = _dimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(
+                    record => record.PORTFOLIO_ID == presentationOverviewData.PortfolioId && record.PORTFOLIO_DATE == lastBusinessDate)
+                    .ToList();
+                decimal? sumDirtyValuePC = portfolioData.Sum(record => record.DIRTY_VALUE_PC);
+                decimal? tempNAV;
+
+                List<DimensionServiceReference.GF_PORTFOLIO_HOLDINGS> securityInPortfolio = portfolioData
+                    .Where(a => a.TICKER == presentationOverviewData.SecurityTicker
+                        && a.PORTFOLIO_ID == presentationOverviewData.PortfolioId
+                        && a.PORTFOLIO_DATE == lastBusinessDate).ToList();
+                decimal? sumSecurityDirtyValuePC = securityInPortfolio.Sum(record => record.DIRTY_VALUE_PC);
+
+                if (securityInPortfolio != null && sumSecurityDirtyValuePC > 0)
+                {
+                    presentationOverviewData.CurrentHoldings = "YES";
+                    if (sumDirtyValuePC != 0)
+                        presentationOverviewData.PercentEMIF = String.Format("{0:n4}%", ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100));
+                    tempNAV = ((sumSecurityDirtyValuePC / sumDirtyValuePC) * 100);
+                }
+                else
+                {
+                    presentationOverviewData.CurrentHoldings = "No";
+                    presentationOverviewData.PercentEMIF = "0%";
+                    tempNAV = 0;
+                }
+                #endregion
+
+                #region GF_BENCHMARK_HOLDINGS Info
+                string benchmarkID = portfolioData.Select(a => a.BENCHMARK_ID).FirstOrDefault();
+                DimensionServiceReference.GF_BENCHMARK_HOLDINGS benchmarkData = _dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(
+                    record => record.BENCHMARK_ID == benchmarkID
+                        && record.TICKER == presentationOverviewData.SecurityTicker
+                        && record.PORTFOLIO_DATE == lastBusinessDate)
+                    .FirstOrDefault();
+
+                if (benchmarkData != null)
+                {
+                    presentationOverviewData.SecurityBMWeight = String.Format("{0:n4}%", benchmarkData.BENCHMARK_WEIGHT);
+                    tempNAV = (tempNAV - benchmarkData.BENCHMARK_WEIGHT);
+                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
+                }
+                else
+                {
+                    presentationOverviewData.SecurityBMWeight = "0%";
+                    presentationOverviewData.SecurityActiveWeight = String.Format("{0:n4}%", tempNAV);
+                }
+                #endregion
+
+                #region FAIR_VALUE Info
+                String securityId = securityData.SECURITY_ID == null ? null : securityData.SECURITY_ID.ToString();
+                FAIR_VALUE fairValueRecord = _externalEntities.FAIR_VALUE.Where(record => record.VALUE_TYPE == "PRIMARY"
+                            && record.SECURITY_ID == securityId).FirstOrDefault();
+
+                if (fairValueRecord != null)
+                {
+                    DATA_MASTER dataMasterRecord = _externalEntities.DATA_MASTER
+                        .Where(record => record.DATA_ID == fairValueRecord.FV_MEASURE).FirstOrDefault();
+
+                    if (dataMasterRecord != null)
+                    {
+                        presentationOverviewData.SecurityPFVMeasure = dataMasterRecord.DATA_DESC;
+                        presentationOverviewData.SecurityBuyRange = Convert.ToSingle(fairValueRecord.FV_BUY);
+                        presentationOverviewData.SecuritySellRange = Convert.ToSingle(fairValueRecord.FV_SELL);
+                        presentationOverviewData.SecurityPFVMeasureValue = fairValueRecord.CURRENT_MEASURE_VALUE;
+                        presentationOverviewData.SecurityBuySellvsCrnt = securityData.TRADING_CURRENCY + " " +
+                            String.Format("{0:n4}", fairValueRecord.FV_BUY) +
+                            "- " + securityData.TRADING_CURRENCY + " " +
+                            String.Format("{0:n4}", fairValueRecord.FV_SELL);
+
+                        Decimal upperLimit = fairValueRecord.FV_BUY >= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
+                        Decimal lowerLimit = fairValueRecord.FV_BUY <= fairValueRecord.FV_SELL ? fairValueRecord.FV_BUY : fairValueRecord.FV_SELL;
+                        if (presentationOverviewData.CurrentHoldings == "YES")
+                        {
+                            presentationOverviewData.SecurityRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= upperLimit
+                                ? "Hold" : "Sell";
+                        }
+                        else
+                        {
+                            presentationOverviewData.SecurityRecommendation = fairValueRecord.CURRENT_MEASURE_VALUE <= lowerLimit
+                                ? "Buy" : "Watch";
+                        }
+
+                        if (fairValueRecord.CURRENT_MEASURE_VALUE != 0)
+                        {
+                            presentationOverviewData.FVCalc = dataMasterRecord.DATA_DESC + " " + securityData.TRADING_CURRENCY + " " +
+                                String.Format("{0:n4}", ((fairValueRecord.FV_BUY * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE)) +
+                                "- " + securityData.TRADING_CURRENCY + " " +
+                                String.Format("{0:n4}", ((fairValueRecord.FV_SELL * securityData.CLOSING_PRICE) / fairValueRecord.CURRENT_MEASURE_VALUE));
+                        }
+
+                        String securityID = securityData.SECURITY_ID.ToString();
+
+                        PERIOD_FINANCIALS periodFinancialRecord = _externalEntities.PERIOD_FINANCIALS
+                            .Where(record => record.SECURITY_ID == securityID
+                                && record.DATA_ID == 185
+                                && record.CURRENCY == "USD"
+                                && record.PERIOD_TYPE == "C").FirstOrDefault();
+
+                        if (periodFinancialRecord != null)
+                        {
+                            presentationOverviewData.SecurityMarketCapitalization = Convert.ToSingle(periodFinancialRecord.AMOUNT);
+                        }
+
+                    }
+                }
+                #endregion
+
+
+
+                return presentationOverviewData;
+            }
+            catch (Exception ex)
+            {
+                _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
+                return null;
+            }
+        }
+
+        private static XDocument GetEntityXml<T>(List<T> parameters, XDocument xmlDoc = null, List<String> strictlyInclusiveProperties = null)
+        {
+            XElement root;
+            if (xmlDoc == null)
+            {
+                root = new XElement("Root");
+                xmlDoc = new XDocument(new XDeclaration("1.0", "utf-8", "yes"), root);
+            }
+            else
+            {
+                root = xmlDoc.Root;
+            }
+
+            try
+            {
+                foreach (T item in parameters)
+                {
+                    XElement node = new XElement(typeof(T).Name);
+                    PropertyInfo[] propertyInfo = typeof(T).GetProperties();
+                    foreach (PropertyInfo prop in propertyInfo)
+                    {
+                        if (strictlyInclusiveProperties != null)
+                        {
+                            if (!strictlyInclusiveProperties.Contains(prop.Name))
+                                continue;
+                        }
+
+                        if (prop.GetValue(item, null) != null)
+                        {
+                            node.Add(new XAttribute(prop.Name, prop.GetValue(item, null)));
+                        }
+                    }
+
+                    root.Add(node);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+            return xmlDoc;
+        }
+
         public static Byte[] GenerateICPacketReport(Int64 presentationId)
         {
             try

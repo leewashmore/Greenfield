@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ExternalModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="ExternalModelStoreContainer">
+          <EntitySet Name="DATA_MASTER" EntityType="ExternalModel.Store.DATA_MASTER" store:Type="Tables" store:Schema="dbo" store:Name="DATA_MASTER">
+            <DefiningQuery>SELECT 
+      [DATA_MASTER].[DATA_ID] AS [DATA_ID], 
+      [DATA_MASTER].[COA] AS [COA], 
+      [DATA_MASTER].[FX_CONV_TYPE] AS [FX_CONV_TYPE], 
+      [DATA_MASTER].[CALENDARIZE] AS [CALENDARIZE], 
+      [DATA_MASTER].[INDUSTRIAL] AS [INDUSTRIAL], 
+      [DATA_MASTER].[BANK] AS [BANK], 
+      [DATA_MASTER].[INSURANCE] AS [INSURANCE], 
+      [DATA_MASTER].[UTILITY] AS [UTILITY], 
+      [DATA_MASTER].[QUARTERLY] AS [QUARTERLY], 
+      [DATA_MASTER].[DATA_DESC] AS [DATA_DESC], 
+      [DATA_MASTER].[COA_TYPE] AS [COA_TYPE], 
+      [DATA_MASTER].[ANNUAL] AS [ANNUAL], 
+      [DATA_MASTER].[CURRENT] AS [CURRENT], 
+      [DATA_MASTER].[STATEMENT_TYPE] AS [STATEMENT_TYPE], 
+      [DATA_MASTER].[CONVERT_FLAG] AS [CONVERT_FLAG]
+      FROM [dbo].[DATA_MASTER] AS [DATA_MASTER]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="FAIR_VALUE" EntityType="ExternalModel.Store.FAIR_VALUE" store:Type="Tables" store:Schema="dbo" store:Name="FAIR_VALUE">
+            <DefiningQuery>SELECT 
+      [FAIR_VALUE].[VALUE_TYPE] AS [VALUE_TYPE], 
+      [FAIR_VALUE].[SECURITY_ID] AS [SECURITY_ID], 
+      [FAIR_VALUE].[FV_MEASURE] AS [FV_MEASURE], 
+      [FAIR_VALUE].[FV_BUY] AS [FV_BUY], 
+      [FAIR_VALUE].[FV_SELL] AS [FV_SELL], 
+      [FAIR_VALUE].[CURRENT_MEASURE_VALUE] AS [CURRENT_MEASURE_VALUE], 
+      [FAIR_VALUE].[UPSIDE] AS [UPSIDE], 
+      [FAIR_VALUE].[UPDATED] AS [UPDATED]
+      FROM [dbo].[FAIR_VALUE] AS [FAIR_VALUE]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="PERIOD_FINANCIALS" EntityType="ExternalModel.Store.PERIOD_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="PERIOD_FINANCIALS">
+            <DefiningQuery>SELECT 
+      [PERIOD_FINANCIALS].[ISSUER_ID] AS [ISSUER_ID], 
+      [PERIOD_FINANCIALS].[SECURITY_ID] AS [SECURITY_ID], 
+      [PERIOD_FINANCIALS].[COA_TYPE] AS [COA_TYPE], 
+      [PERIOD_FINANCIALS].[DATA_SOURCE] AS [DATA_SOURCE], 
+      [PERIOD_FINANCIALS].[ROOT_SOURCE] AS [ROOT_SOURCE], 
+      [PERIOD_FINANCIALS].[ROOT_SOURCE_DATE] AS [ROOT_SOURCE_DATE], 
+      [PERIOD_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE], 
+      [PERIOD_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR], 
+      [PERIOD_FINANCIALS].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
+      [PERIOD_FINANCIALS].[FISCAL_TYPE] AS [FISCAL_TYPE], 
+      [PERIOD_FINANCIALS].[CURRENCY] AS [CURRENCY], 
+      [PERIOD_FINANCIALS].[DATA_ID] AS [DATA_ID], 
+      [PERIOD_FINANCIALS].[AMOUNT] AS [AMOUNT], 
+      [PERIOD_FINANCIALS].[CALCULATION_DIAGRAM] AS [CALCULATION_DIAGRAM], 
+      [PERIOD_FINANCIALS].[SOURCE_CURRENCY] AS [SOURCE_CURRENCY], 
+      [PERIOD_FINANCIALS].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
+      FROM [dbo].[PERIOD_FINANCIALS] AS [PERIOD_FINANCIALS]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="DATA_MASTER">
+          <Key>
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="FX_CONV_TYPE" />
+            <PropertyRef Name="CALENDARIZE" />
+            <PropertyRef Name="INDUSTRIAL" />
+            <PropertyRef Name="BANK" />
+            <PropertyRef Name="INSURANCE" />
+            <PropertyRef Name="UTILITY" />
+            <PropertyRef Name="QUARTERLY" />
+            <PropertyRef Name="DATA_DESC" />
+          </Key>
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="COA" Type="char" MaxLength="8" />
+          <Property Name="FX_CONV_TYPE" Type="char" Nullable="false" MaxLength="6" />
+          <Property Name="CALENDARIZE" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="INDUSTRIAL" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="BANK" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="INSURANCE" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="UTILITY" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="QUARTERLY" Type="char" Nullable="false" MaxLength="1" />
+          <Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
+          <Property Name="COA_TYPE" Type="varchar" MaxLength="3" />
+          <Property Name="ANNUAL" Type="char" MaxLength="1" />
+          <Property Name="CURRENT" Type="char" MaxLength="1" />
+          <Property Name="STATEMENT_TYPE" Type="varchar" MaxLength="3" />
+          <Property Name="CONVERT_FLAG" Type="char" MaxLength="1" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="FAIR_VALUE">
+          <Key>
+            <PropertyRef Name="VALUE_TYPE" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="FV_MEASURE" />
+            <PropertyRef Name="FV_BUY" />
+            <PropertyRef Name="FV_SELL" />
+            <PropertyRef Name="CURRENT_MEASURE_VALUE" />
+            <PropertyRef Name="UPSIDE" />
+          </Key>
+          <Property Name="VALUE_TYPE" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="FV_MEASURE" Type="int" Nullable="false" />
+          <Property Name="FV_BUY" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="FV_SELL" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="CURRENT_MEASURE_VALUE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPSIDE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPDATED" Type="datetime" />
+        </EntityType>
+        <!--Errors Found During Generation:
+      warning 6002: The table/view 'AIMS_Data2108.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
+      -->
+        <EntityType Name="PERIOD_FINANCIALS">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE_DATE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="SOURCE_CURRENCY" />
+            <PropertyRef Name="AMOUNT_TYPE" />
+          </Key>
+          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+          <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
+          <Property Name="DATA_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="ROOT_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+          <Property Name="ROOT_SOURCE_DATE" Type="datetime" Nullable="false" />
+          <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+          <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+          <Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
+          <Property Name="FISCAL_TYPE" Type="char" Nullable="false" MaxLength="8" />
+          <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="DATA_ID" Type="int" Nullable="false" />
+          <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="CALCULATION_DIAGRAM" Type="varchar" MaxLength="255" />
+          <Property Name="SOURCE_CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+          <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
+        </EntityType>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ExternalModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="ExternalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FAIR_VALUE" EntityType="ExternalModel.FAIR_VALUE" />
+          <EntitySet Name="DATA_MASTER" EntityType="ExternalModel.DATA_MASTER" />
+          <EntitySet Name="PERIOD_FINANCIALS" EntityType="ExternalModel.PERIOD_FINANCIALS" />
+        </EntityContainer>
+        <EntityType Name="FAIR_VALUE">
+          <Key>
+            <PropertyRef Name="VALUE_TYPE" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="FV_MEASURE" />
+            <PropertyRef Name="FV_BUY" />
+            <PropertyRef Name="FV_SELL" />
+            <PropertyRef Name="CURRENT_MEASURE_VALUE" />
+            <PropertyRef Name="UPSIDE" />
+          </Key>
+          <Property Name="VALUE_TYPE" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="SECURITY_ID" Type="String" Nullable="false" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="FV_MEASURE" Type="Int32" Nullable="false" />
+          <Property Name="FV_BUY" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="FV_SELL" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="CURRENT_MEASURE_VALUE" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPSIDE" Type="Decimal" Nullable="false" Precision="32" Scale="6" />
+          <Property Name="UPDATED" Type="DateTime" />
+        </EntityType>
+        <EntityType Name="DATA_MASTER">
+          <Key>
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="FX_CONV_TYPE" />
+            <PropertyRef Name="CALENDARIZE" />
+            <PropertyRef Name="INDUSTRIAL" />
+            <PropertyRef Name="BANK" />
+            <PropertyRef Name="INSURANCE" />
+            <PropertyRef Name="UTILITY" />
+            <PropertyRef Name="QUARTERLY" />
+            <PropertyRef Name="DATA_DESC" />
+          </Key>
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="String" Name="COA" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="FX_CONV_TYPE" Nullable="false" MaxLength="6" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CALENDARIZE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="INDUSTRIAL" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="BANK" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="INSURANCE" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="UTILITY" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="QUARTERLY" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="DATA_DESC" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COA_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ANNUAL" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CURRENT" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CONVERT_FLAG" MaxLength="1" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="PERIOD_FINANCIALS">
+          <Key>
+            <PropertyRef Name="ISSUER_ID" />
+            <PropertyRef Name="SECURITY_ID" />
+            <PropertyRef Name="COA_TYPE" />
+            <PropertyRef Name="DATA_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE" />
+            <PropertyRef Name="ROOT_SOURCE_DATE" />
+            <PropertyRef Name="PERIOD_TYPE" />
+            <PropertyRef Name="PERIOD_YEAR" />
+            <PropertyRef Name="PERIOD_END_DATE" />
+            <PropertyRef Name="FISCAL_TYPE" />
+            <PropertyRef Name="CURRENCY" />
+            <PropertyRef Name="DATA_ID" />
+            <PropertyRef Name="AMOUNT" />
+            <PropertyRef Name="SOURCE_CURRENCY" />
+            <PropertyRef Name="AMOUNT_TYPE" />
+          </Key>
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="COA_TYPE" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="DATA_SOURCE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ROOT_SOURCE_DATE" Nullable="false" />
+          <Property Type="String" Name="PERIOD_TYPE" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+          <Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" />
+          <Property Type="String" Name="FISCAL_TYPE" Nullable="false" MaxLength="8" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="Int32" Name="DATA_ID" Nullable="false" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="CALCULATION_DIAGRAM" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SOURCE_CURRENCY" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Type="String" Name="AMOUNT_TYPE" Nullable="false" MaxLength="10" FixedLength="true" Unicode="false" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ExternalModelStoreContainer" CdmEntityContainer="ExternalEntities">
+          <EntitySetMapping Name="FAIR_VALUE"><EntityTypeMapping TypeName="ExternalModel.FAIR_VALUE"><MappingFragment StoreEntitySet="FAIR_VALUE">
+            <ScalarProperty Name="VALUE_TYPE" ColumnName="VALUE_TYPE" />
+            <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+            <ScalarProperty Name="FV_MEASURE" ColumnName="FV_MEASURE" />
+            <ScalarProperty Name="FV_BUY" ColumnName="FV_BUY" />
+            <ScalarProperty Name="FV_SELL" ColumnName="FV_SELL" />
+            <ScalarProperty Name="CURRENT_MEASURE_VALUE" ColumnName="CURRENT_MEASURE_VALUE" />
+            <ScalarProperty Name="UPSIDE" ColumnName="UPSIDE" />
+            <ScalarProperty Name="UPDATED" ColumnName="UPDATED" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="DATA_MASTER">
+            <EntityTypeMapping TypeName="ExternalModel.DATA_MASTER">
+              <MappingFragment StoreEntitySet="DATA_MASTER">
+                <ScalarProperty Name="CONVERT_FLAG" ColumnName="CONVERT_FLAG" />
+                <ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
+                <ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
+                <ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
+                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+                <ScalarProperty Name="DATA_DESC" ColumnName="DATA_DESC" />
+                <ScalarProperty Name="QUARTERLY" ColumnName="QUARTERLY" />
+                <ScalarProperty Name="UTILITY" ColumnName="UTILITY" />
+                <ScalarProperty Name="INSURANCE" ColumnName="INSURANCE" />
+                <ScalarProperty Name="BANK" ColumnName="BANK" />
+                <ScalarProperty Name="INDUSTRIAL" ColumnName="INDUSTRIAL" />
+                <ScalarProperty Name="CALENDARIZE" ColumnName="CALENDARIZE" />
+                <ScalarProperty Name="FX_CONV_TYPE" ColumnName="FX_CONV_TYPE" />
+                <ScalarProperty Name="COA" ColumnName="COA" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PERIOD_FINANCIALS">
+            <EntityTypeMapping TypeName="ExternalModel.PERIOD_FINANCIALS">
+              <MappingFragment StoreEntitySet="PERIOD_FINANCIALS">
+                <ScalarProperty Name="AMOUNT_TYPE" ColumnName="AMOUNT_TYPE" />
+                <ScalarProperty Name="SOURCE_CURRENCY" ColumnName="SOURCE_CURRENCY" />
+                <ScalarProperty Name="CALCULATION_DIAGRAM" ColumnName="CALCULATION_DIAGRAM" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="DATA_ID" ColumnName="DATA_ID" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="FISCAL_TYPE" ColumnName="FISCAL_TYPE" />
+                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="PERIOD_TYPE" ColumnName="PERIOD_TYPE" />
+                <ScalarProperty Name="ROOT_SOURCE_DATE" ColumnName="ROOT_SOURCE_DATE" />
+                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+                <ScalarProperty Name="DATA_SOURCE" ColumnName="DATA_SOURCE" />
+                <ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
+                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="ExternalEntityModel">
+        <EntityTypeShape EntityType="ExternalModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="0.75" Height="2.5571907552083335" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExternalModel.DATA_MASTER" Width="1.5" PointX="3.375" PointY="0.75" Height="3.9033007812499996" />
+        <EntityTypeShape EntityType="ExternalModel.PERIOD_FINANCIALS" Width="1.5" PointX="0.75" PointY="4.75" Height="4.0956022135416656" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
