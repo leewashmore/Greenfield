@@ -6600,29 +6600,15 @@ namespace GreenField.DAL
         /// </summary>
         /// <param name="gridId">Initial value of the GridId property.</param>
         /// <param name="gridDesc">Initial value of the GridDesc property.</param>
-        /// <param name="amount">Initial value of the Amount property.</param>
-        /// <param name="amountType">Initial value of the AmountType property.</param>
-        /// <param name="dataSource">Initial value of the DataSource property.</param>
-        /// <param name="decimals">Initial value of the Decimals property.</param>
         /// <param name="isPercentage">Initial value of the IsPercentage property.</param>
-        /// <param name="rootSource">Initial value of the RootSource property.</param>
         /// <param name="sortOrder">Initial value of the SortOrder property.</param>
-        /// <param name="period_Type">Initial value of the Period_Type property.</param>
-        /// <param name="periodYear">Initial value of the PeriodYear property.</param>
-        public static COASpecificData CreateCOASpecificData(global::System.Int32 gridId, global::System.String gridDesc, global::System.Decimal amount, global::System.String amountType, global::System.String dataSource, global::System.Int32 decimals, global::System.String isPercentage, global::System.String rootSource, global::System.Int32 sortOrder, global::System.String period_Type, global::System.Int32 periodYear)
+        public static COASpecificData CreateCOASpecificData(global::System.Int32 gridId, global::System.String gridDesc, global::System.String isPercentage, global::System.Int32 sortOrder)
         {
             COASpecificData cOASpecificData = new COASpecificData();
             cOASpecificData.GridId = gridId;
             cOASpecificData.GridDesc = gridDesc;
-            cOASpecificData.Amount = amount;
-            cOASpecificData.AmountType = amountType;
-            cOASpecificData.DataSource = dataSource;
-            cOASpecificData.Decimals = decimals;
             cOASpecificData.IsPercentage = isPercentage;
-            cOASpecificData.RootSource = rootSource;
             cOASpecificData.SortOrder = sortOrder;
-            cOASpecificData.Period_Type = period_Type;
-            cOASpecificData.PeriodYear = periodYear;
             return cOASpecificData;
         }
 
@@ -6704,9 +6690,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Decimal Amount
+        public Nullable<global::System.Decimal> Amount
         {
             get
             {
@@ -6721,14 +6707,14 @@ namespace GreenField.DAL
                 OnAmountChanged();
             }
         }
-        private global::System.Decimal _Amount;
-        partial void OnAmountChanging(global::System.Decimal value);
+        private Nullable<global::System.Decimal> _Amount;
+        partial void OnAmountChanging(Nullable<global::System.Decimal> value);
         partial void OnAmountChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String AmountType
         {
@@ -6740,7 +6726,7 @@ namespace GreenField.DAL
             {
                 OnAmountTypeChanging(value);
                 ReportPropertyChanging("AmountType");
-                _AmountType = StructuralObject.SetValidValue(value, false);
+                _AmountType = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("AmountType");
                 OnAmountTypeChanged();
             }
@@ -6776,7 +6762,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String DataSource
         {
@@ -6788,7 +6774,7 @@ namespace GreenField.DAL
             {
                 OnDataSourceChanging(value);
                 ReportPropertyChanging("DataSource");
-                _DataSource = StructuralObject.SetValidValue(value, false);
+                _DataSource = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("DataSource");
                 OnDataSourceChanged();
             }
@@ -6800,9 +6786,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 Decimals
+        public Nullable<global::System.Int32> Decimals
         {
             get
             {
@@ -6817,8 +6803,8 @@ namespace GreenField.DAL
                 OnDecimalsChanged();
             }
         }
-        private global::System.Int32 _Decimals;
-        partial void OnDecimalsChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _Decimals;
+        partial void OnDecimalsChanging(Nullable<global::System.Int32> value);
         partial void OnDecimalsChanged();
     
         /// <summary>
@@ -6848,7 +6834,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String RootSource
         {
@@ -6860,7 +6846,7 @@ namespace GreenField.DAL
             {
                 OnRootSourceChanging(value);
                 ReportPropertyChanging("RootSource");
-                _RootSource = StructuralObject.SetValidValue(value, false);
+                _RootSource = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("RootSource");
                 OnRootSourceChanged();
             }
@@ -6896,7 +6882,7 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String Period_Type
         {
@@ -6908,7 +6894,7 @@ namespace GreenField.DAL
             {
                 OnPeriod_TypeChanging(value);
                 ReportPropertyChanging("Period_Type");
-                _Period_Type = StructuralObject.SetValidValue(value, false);
+                _Period_Type = StructuralObject.SetValidValue(value, true);
                 ReportPropertyChanged("Period_Type");
                 OnPeriod_TypeChanged();
             }
@@ -6920,9 +6906,9 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
-        public global::System.Int32 PeriodYear
+        public Nullable<global::System.Int32> PeriodYear
         {
             get
             {
@@ -6937,8 +6923,8 @@ namespace GreenField.DAL
                 OnPeriodYearChanged();
             }
         }
-        private global::System.Int32 _PeriodYear;
-        partial void OnPeriodYearChanging(global::System.Int32 value);
+        private Nullable<global::System.Int32> _PeriodYear;
+        partial void OnPeriodYearChanging(Nullable<global::System.Int32> value);
         partial void OnPeriodYearChanged();
 
         #endregion

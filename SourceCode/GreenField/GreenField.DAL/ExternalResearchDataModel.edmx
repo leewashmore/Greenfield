@@ -1339,16 +1339,16 @@
 					<Property Type="Int32" Name="GridId" Nullable="false" />
 					<Property Type="String" Name="ShowGrid" Nullable="true" />
 					<Property Type="String" Name="GridDesc" Nullable="false" />
-					<Property Type="Decimal" Name="Amount" Nullable="false" />
-					<Property Type="String" Name="AmountType" Nullable="false" />
+					<Property Type="Decimal" Name="Amount" Nullable="true" />
+					<Property Type="String" Name="AmountType" Nullable="true" />
 					<Property Type="String" Name="Description" Nullable="true" />
-					<Property Type="String" Name="DataSource" Nullable="false" />
-					<Property Type="Int32" Name="Decimals" Nullable="false" />
+					<Property Type="String" Name="DataSource" Nullable="true" />
+					<Property Type="Int32" Name="Decimals" Nullable="true" />
 					<Property Type="String" Name="IsPercentage" Nullable="false" />
-					<Property Type="String" Name="RootSource" Nullable="false" />
+					<Property Type="String" Name="RootSource" Nullable="true" />
 					<Property Type="Int32" Name="SortOrder" Nullable="false" />
-					<Property Type="String" Name="Period_Type" Nullable="false" />
-					<Property Type="Int32" Name="PeriodYear" Nullable="false" />
+					<Property Type="String" Name="Period_Type" Nullable="true" />
+					<Property Type="Int32" Name="PeriodYear" Nullable="true" />
 				</ComplexType>
 				<ComplexType Name="QuarterlyResults" >
 					<Property Type="String" Name="ISSUER_ID" Nullable="true" />
