@@ -484,7 +484,6 @@ namespace GreenField.Web.Helpers
 
                     if (!checkWorkSheetExists)
                     {
-                        ExceptionMessage = "Sheets doesn't Exist, check Workbook";
                         throw new Exception("Sheets doesn't Exist, check Workbook");
                     }
 
@@ -929,19 +928,29 @@ namespace GreenField.Web.Helpers
         /// <returns></returns>
         public bool CheckSheetsExist(WorkbookPart workbookPart)
         {
-            IEnumerable<Sheet> sheetModelUpload = workbookPart.Workbook.GetFirstChild<Sheets>().Elements<Sheet>().Where(s => s.Name == "Model Upload");
-            SheetModelUpload = sheetModelUpload;
-            if (sheetModelUpload.Count() == 0)
+            try
             {
+                IEnumerable<Sheet> sheetModelUpload = workbookPart.Workbook.GetFirstChild<Sheets>().Elements<Sheet>().Where(s => s.Name == "Model Upload");
+                SheetModelUpload = sheetModelUpload;
+                if (sheetModelUpload.Count() == 0)
+                {
+                    ExceptionMessage = "Model Upload sheet is not present";
+                    return false;
+                }
+                IEnumerable<Sheet> sheetModelReference = workbookPart.Workbook.GetFirstChild<Sheets>().Elements<Sheet>().Where(s => s.Name == "Model Reference");
+                SheetModelReference = sheetModelReference;
+                if (sheetModelReference.Count() == 0)
+                {
+                    ExceptionMessage = "Model Reference sheet is not present";
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
                 return false;
             }
-            IEnumerable<Sheet> sheetModelReference = workbookPart.Workbook.GetFirstChild<Sheets>().Elements<Sheet>().Where(s => s.Name == "Model Reference");
-            SheetModelReference = sheetModelReference;
-            if (sheetModelReference.Count() == 0)
-            {
-                return false;
-            }
-            return true;
         }
 
         /// <summary>
@@ -1060,7 +1069,7 @@ namespace GreenField.Web.Helpers
                 bool COAValidity = CheckCOATypeValidity(ModelReferenceData.IssuerId, ModelReferenceData.COATypes);
                 if (!COAValidity)
                 {
-                    throw new Exception("The value COA is not Valid");
+                    throw new Exception("The value COA in ModelReference sheet is not Valid");
                 }
 
                 QuarterelyOverrideEnabled = CheckOverrideValues();
@@ -1154,6 +1163,16 @@ namespace GreenField.Web.Helpers
             try
             {
                 decimal value;
+                string q1 = Convert.ToString(ModelReferenceData.Q1Override);
+                string q2 = Convert.ToString(ModelReferenceData.Q2Override);
+                string q3 = Convert.ToString(ModelReferenceData.Q3Override);
+                string q4 = Convert.ToString(ModelReferenceData.Q4Override);
+
+                if (q1.Trim() == "" && q2.Trim() == "" && q3.Trim() == "" && q4.Trim() == "")
+                {
+                    return true;
+                }
+
                 if (Decimal.TryParse(ModelReferenceData.Q1Override as string, out  value))
                 {
                     ModelReferenceData.Q1Override = value;
@@ -1366,7 +1385,7 @@ namespace GreenField.Web.Helpers
                 YearList = SetPeriodYears(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Number of valid Period Years are 0";
+                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1422,7 +1441,7 @@ namespace GreenField.Web.Helpers
                 PeriodEndDate = SetPeriodEndDate(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Number of valid Period Years are 0";
+                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1481,7 +1500,7 @@ namespace GreenField.Web.Helpers
                 PeriodLength = SetPeriodLength(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Number of valid Period Years are 0";
+                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1540,7 +1559,7 @@ namespace GreenField.Web.Helpers
                 ActualOverride = SetOverride(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Number of valid Period Years are 0";
+                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1599,7 +1618,7 @@ namespace GreenField.Web.Helpers
                 CommodityMeasure = SetMeasure(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Number of valid Period Years are 0";
+                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1658,7 +1677,7 @@ namespace GreenField.Web.Helpers
                 CommodityForecastUsed = SetCommodityForecast(rowData);
                 if (YearsToLoad.Count == 0)
                 {
-                    ExceptionMessage = "Number of valid Period Years are 0";
+                    ExceptionMessage = "Missing Data in Model Upload Worksheet";
                     throw new Exception();
                 }
             }
@@ -1905,7 +1924,7 @@ namespace GreenField.Web.Helpers
                 bool result = true;
                 foreach (DataPointsModelUploadData item in COAList)
                 {
-                    if (modelUploadData.Any(a => a.COA != item.COA))
+                    if ((modelUploadData.Where(a => a.COA.Trim() == item.COA.Trim()).ToList().Count) == 0)
                     {
                         InvalidValue = item.COA;
                         throw new Exception();
@@ -1939,7 +1958,7 @@ namespace GreenField.Web.Helpers
 
                     if (YearsToLoad.Count == 0)
                     {
-                        ExceptionMessage = "The value of valid Period years is 0";
+                        ExceptionMessage = "Missing Data in Model Upload Worksheet";
                         throw new Exception();
                     }
                     return true;
@@ -1983,7 +2002,7 @@ namespace GreenField.Web.Helpers
                     }
                     if (YearsToLoad.Count == 0)
                     {
-                        ExceptionMessage = "The value of valid Period years is 0";
+                        ExceptionMessage = "Missing Data in Model Upload Worksheet";
                         throw new Exception();
                     }
                     return true;
@@ -2020,7 +2039,7 @@ namespace GreenField.Web.Helpers
                     }
                     if (YearsToLoad.Count == 0)
                     {
-                        ExceptionMessage = "The value of valid Period years is 0";
+                        ExceptionMessage = "Missing Data in Model Upload Worksheet";
                         throw new Exception();
                     }
                     return true;
@@ -2057,7 +2076,7 @@ namespace GreenField.Web.Helpers
                     }
                     if (YearsToLoad.Count == 0)
                     {
-                        ExceptionMessage = "The value of valid Period years is 0";
+                        ExceptionMessage = "Missing Data in Model Upload Worksheet";
                         throw new Exception();
                     }
                     return true;

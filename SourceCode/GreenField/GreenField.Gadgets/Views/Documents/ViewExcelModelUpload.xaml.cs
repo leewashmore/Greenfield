@@ -13,6 +13,7 @@ using GreenField.Gadgets.Helpers;
 using GreenField.Common;
 using GreenField.Gadgets.ViewModels;
 using System.IO;
+using GreenField.ServiceCaller;
 
 namespace GreenField.Gadgets.Views
 {
@@ -70,21 +71,29 @@ namespace GreenField.Gadgets.Views
         /// <param name="e"></param>
         private void bOpenFileDialog_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
-            openFileDialog1.Filter = "Excel Files (.xls)|*.xls|All Files (*.*)|*.*";
-            openFileDialog1.FilterIndex = 1;
-            openFileDialog1.Multiselect = true;
-            bool? userClickedOK = openFileDialog1.ShowDialog();
-            if (userClickedOK == true)
+            try
             {
-                FileStream fileStream;
-                byte[] fileByte;
-                using (fileStream = openFileDialog1.File.OpenRead())
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                openFileDialog1.Filter = "Excel Files (.xls)|*.xls|All Files (*.*)|*.*";
+                openFileDialog1.FilterIndex = 1;
+                openFileDialog1.Multiselect = true;
+                bool? userClickedOK = openFileDialog1.ShowDialog();
+                if (userClickedOK == true)
                 {
-                    fileByte = new byte[fileStream.Length];
-                    fileStream.Read(fileByte, 0, Convert.ToInt32(fileStream.Length));
+                    FileStream fileStream;
+                    byte[] fileByte;
+                    using (fileStream = openFileDialog1.File.OpenRead())
+                    {
+                        fileByte = new byte[fileStream.Length];
+                        fileStream.Read(fileByte, 0, Convert.ToInt32(fileStream.Length));
+                    }
+                    this.DataContextSource.UploadWorkbook = fileByte;
                 }
-                this.DataContextSource.UploadWorkbook = fileByte;
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message, "Exception", MessageBoxButton.OK);
+                Logging.LogException(this.DataContextSource.Logger, ex);
             }
         }
 
