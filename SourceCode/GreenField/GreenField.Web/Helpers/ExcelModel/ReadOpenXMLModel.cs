@@ -2121,7 +2121,8 @@ namespace GreenField.Web.Helpers
             try
             {
                 decimal value;
-                if (ModelUploadData.Any(a => Decimal.TryParse(a.Amount as string, out value) || (Convert.ToString(a.Amount).Trim() != "")))
+                ModelUploadData = ModelUploadData.Where(a => Convert.ToString(a.Amount).Trim() != "").ToList();
+                if (ModelUploadData.Any(a => !Decimal.TryParse(a.Amount as string, out value)))
                 {
                     ExceptionMessage = "The Data for Amount values is not valid";
                     throw new Exception();
