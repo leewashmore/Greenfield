@@ -84,8 +84,8 @@ namespace GreenField.Web.ExcelModel
                 ModelData = modelData;
                 ModelReferenceData = modelData.ModelReferenceData;
                 ModelUploadDataPoints = modelData.ModelUploadDataPoints;
-                Commodities = new List<string>();
-                Currencies = new List<string>();
+                Commodities = modelData.Commodities;
+                Currencies = modelData.Currencies;
                 // Create a spreadsheet document by supplying the filepath.
                 // By default, AutoSave = true, Editable = true, and Type = xlsx.
                 using (SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.
@@ -437,7 +437,60 @@ namespace GreenField.Web.ExcelModel
                 cell = CreateHeaderCell((firstYear + (i - 1)).ToString());
                 row.InsertAt(cell, i + 1);
             }
+
+            string commodities = "";
+            foreach (string item in Commodities)
+            {
+                if (Commodities[0] != item)
+                {
+                    commodities = commodities + "," + item;
+                }
+                else
+                {
+                    commodities = item;
+                }
+            }
+            StringBuilder commodityList = new StringBuilder();
+            commodityList.Append('"');
+            commodityList.Append(commodities);
+            commodityList.Append('"');
+
+            DataValidations dataValidations1 = new DataValidations() { Count = (UInt32Value)1U };
+            DataValidation dataValidation1 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "C5" } };
+            DataValidation dataValidation2 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "D5" } };
+            DataValidation dataValidation3 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "E5" } };
+            DataValidation dataValidation4 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "F5" } };
+            DataValidation dataValidation5 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "G5" } };
+            DataValidation dataValidation6 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "H5" } };
+            Formula1 formula11 = new Formula1();
+            formula11.Text = commodityList.ToString();
+            Formula1 formula12 = new Formula1();
+            formula12.Text = commodityList.ToString();
+            Formula1 formula13 = new Formula1();
+            formula13.Text = commodityList.ToString();
+            Formula1 formula14 = new Formula1();
+            formula14.Text = commodityList.ToString();
+            Formula1 formula15 = new Formula1();
+            formula15.Text = commodityList.ToString();
+            Formula1 formula16 = new Formula1();
+            formula16.Text = commodityList.ToString();
+            dataValidation1.Append(formula11);
+            dataValidation2.Append(formula12);
+            dataValidation3.Append(formula13);
+            dataValidation4.Append(formula14);
+            dataValidation5.Append(formula15);
+            dataValidation6.Append(formula16);
+
+
+            dataValidations1.Append(dataValidation1);
+            dataValidations1.Append(dataValidation2);
+            dataValidations1.Append(dataValidation3);
+            dataValidations1.Append(dataValidation4);
+            dataValidations1.Append(dataValidation5);
+            dataValidations1.Append(dataValidation6);
+
             worksheet.Append(sheetData);
+            worksheet.Append(dataValidations1);
             GenerateSecondRowModelUpload(worksheetPart);
             GenerateThirdRowModelUpload(worksheetPart);
             GenerateFourthRowModelUpload(worksheetPart);
@@ -583,15 +636,6 @@ namespace GreenField.Web.ExcelModel
             var sheetData = worksheet.GetFirstChild<SheetData>();
             var row = new Row { RowIndex = 5 };
             sheetData.Append(row);
-
-            string commodities = "";
-            if (Commodities != null || Commodities.Count != 0)
-            {
-                foreach (string item in Commodities)
-                {
-                    commodities = commodities + "," + item;
-                }
-            }
 
             #region CommodityMeasure
 
@@ -788,45 +832,6 @@ namespace GreenField.Web.ExcelModel
 
             SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
 
-
-            //string currencyCSV = "";
-            //if (Currencies != null || Currencies.Count != 0)
-            //{
-            //    foreach (string item in Currencies)
-            //    {
-            //        if (count < 10)
-            //        {
-            //            if (Currencies[0] != item)
-            //            {
-            //                currencyCSV = currencyCSV + "," + item;
-            //            }
-            //            else
-            //            {
-            //                currencyCSV = item;
-            //            }
-            //        }
-            //        count++;
-            //    }
-            //}
-
-            string commodities = "";
-            //foreach (string item in Commodities)
-            //{
-            //    if (Commodities[0] != item)
-            //    {
-            //        commodities = commodities + "," + item;
-            //    }
-            //    else
-            //    {
-            //        commodities = item;
-            //    }
-            //}
-
-            StringBuilder commodityList = new StringBuilder();
-            commodityList.Append('"');
-            commodityList.Append(commodities);
-            commodityList.Append('"');
-
             var row = new Row { RowIndex = 1 };
             var cell = CreateTextCell("Issuer ID");
             row.InsertAt(cell, 0);
@@ -888,42 +893,19 @@ namespace GreenField.Web.ExcelModel
             row.InsertAt(cell, 1);
             sheetData.Append(row);
 
-            //SheetViews sheetViews1 = new SheetViews();
-            //SheetView sheetView1 = new SheetView() { WorkbookViewId = (UInt32Value)0U };
-            //SheetFormatProperties sheetFormatProperties1 = new SheetFormatProperties() { DefaultRowHeight = 15D, DyDescent = 0.25D };
-
-            //sheetViews1.Append(sheetView1);
+            DataValidations dataValidations1 = new DataValidations() { Count = (UInt32Value)1U };
 
 
+            DataValidation dataValidation2 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "B5" } };
+            Formula1 formula12 = new Formula1();
+            formula12.Text = "\"Thousands,Millions,Billions\"";
 
-            //DataValidation dataValidation1 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "B4" } };
-            //Formula1 formula11 = new Formula1();
-            //formula11.Text = currencyCSV;
-            //dataValidation1.Append(formula11);
-            //dataValidations1.Append(dataValidation1);
+            dataValidation2.Append(formula12);
 
-            //worksheet.Append(sheetDimension1);
-            //worksheet.Append(sheetViews1);
-            //worksheet.Append(sheetFormatProperties1);
-            //DataValidations dataValidations1 = new DataValidations() { Count = (UInt32Value)1U };
-            //DataValidation dataValidation1 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "B4" } };
-            //Formula1 formula11 = new Formula1();
-            //formula11.Text = "\"USD,CNY,SGP,HKG\"";
-
-            //dataValidation1.Append(formula11);
-
-            //DataValidation dataValidation2 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "B5" } };
-            //Formula1 formula12 = new Formula1();
-            //formula12.Text = "\"Units,Thousands,Millions,Billions\"";
-
-            //dataValidation2.Append(formula12);
-
-            //dataValidations1.Append(dataValidation1);
-            //dataValidations1.Append(dataValidation2);
-
-
+            dataValidations1.Append(dataValidation2);
+            
             worksheet.Append(sheetData);
-            //worksheet.Append(dataValidations1);
+            worksheet.Append(dataValidations1);
 
         }
 

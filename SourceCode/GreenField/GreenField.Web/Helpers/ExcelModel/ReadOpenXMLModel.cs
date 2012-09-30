@@ -203,7 +203,19 @@ namespace GreenField.Web.Helpers
             set { _fileURI = value; }
         }
 
-
+        private List<string> _distinctCurrency;
+        public List<string> DistinctCurrency
+        {
+            get
+            {
+                if (_distinctCurrency == null)
+                {
+                    _distinctCurrency = new List<string>();
+                }
+                return _distinctCurrency;
+            }
+            set { _distinctCurrency = value; }
+        }
 
         /// <summary>
         /// The message to show in case of an Exception
@@ -498,6 +510,7 @@ namespace GreenField.Web.Helpers
                 Filepath = GetFileName();
                 CreateTempFile(fileStream);
                 UserName = userName;
+                DistinctCurrency = GetDistinctCurrency();
                 using (SpreadsheetDocument myWorkbook = SpreadsheetDocument.Open(Filepath, true))
                 {
                     WorkbookPart workbookPart = myWorkbook.WorkbookPart;
@@ -1131,7 +1144,11 @@ namespace GreenField.Web.Helpers
                 {
                     throw new Exception("Quarterely Override values are not Valid");
                 }
-
+                bool currencyValid = CheckCurrency();
+                if (!currencyValid)
+                {
+                    throw new Exception("Entered Currency is not Valid");
+                }
                 return true;
             }
             catch (Exception ex)
@@ -1274,6 +1291,28 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 return false;
+            }
+        }
+
+        /// <summary>
+        /// Validate Currency
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckCurrency()
+        {
+            try
+            {
+                if (DistinctCurrency.Where(a => a.ToUpper().Trim() == ModelReferenceData.Currencies.First().ToUpper().Trim()).ToList().Count == 0)
+                {
+                    return false;
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionMessage = "The Entered currency is not Valid";
+                ExceptionTrace.LogException(ex);
+                throw;
             }
         }
 
@@ -2264,7 +2303,7 @@ namespace GreenField.Web.Helpers
             {
                 InvalidValue = issuerId;
                 REF = ExternalResearchEntity.ModelDeleteInteralStatement(issuerId, rootSource).ToList();
-               
+
             }
             catch (Exception ex)
             {
@@ -2315,7 +2354,7 @@ namespace GreenField.Web.Helpers
                     {
                         InvalidValue = item;
                         ExternalResearchEntity.ModelDeleteInternalCommodityAssumptions(issuerId, item);
-                    } 
+                    }
                 }
             }
             catch (Exception ex)
@@ -2840,6 +2879,25 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 return null;
+            }
+        }
+
+        /// <summary>
+        /// Get Distinct Currency Values
+        /// </summary>
+        /// <returns></returns>
+        private List<string> GetDistinctCurrency()
+        {
+            try
+            {
+                List<string> result = new List<string>();
+                result = ExternalResearchEntity.RetrieveDistinctFXRates().ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                throw;
             }
         }
 
