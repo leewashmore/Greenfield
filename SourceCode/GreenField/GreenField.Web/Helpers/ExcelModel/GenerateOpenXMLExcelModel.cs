@@ -592,7 +592,7 @@ namespace GreenField.Web.ExcelModel
                     commodities = commodities + "," + item;
                 }
             }
-            
+
             #region CommodityMeasure
 
             var cell = new Cell();
@@ -809,7 +809,7 @@ namespace GreenField.Web.ExcelModel
             //    }
             //}
 
-            string commodities="";
+            string commodities = "";
             //foreach (string item in Commodities)
             //{
             //    if (Commodities[0] != item)
@@ -821,7 +821,7 @@ namespace GreenField.Web.ExcelModel
             //        commodities = item;
             //    }
             //}
-              
+
             StringBuilder commodityList = new StringBuilder();
             commodityList.Append('"');
             commodityList.Append(commodities);
@@ -863,21 +863,29 @@ namespace GreenField.Web.ExcelModel
             row = new Row { RowIndex = 6 };
             cell = CreateTextCell("Q1 OverRide %");
             row.InsertAt(cell, 0);
+            cell = CreateTextCell(string.Empty);
+            row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             row = new Row { RowIndex = 7 };
             cell = CreateTextCell("Q2 OverRide %");
             row.InsertAt(cell, 0);
+            cell = CreateTextCell(string.Empty);
+            row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             row = new Row { RowIndex = 8 };
             cell = CreateTextCell("Q3 OverRide %");
             row.InsertAt(cell, 0);
+            cell = CreateTextCell(string.Empty);
+            row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             row = new Row { RowIndex = 9 };
             cell = CreateTextCell("Q4 OverRide %");
             row.InsertAt(cell, 0);
+            cell = CreateTextCell(string.Empty);
+            row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             //SheetViews sheetViews1 = new SheetViews();
@@ -886,7 +894,7 @@ namespace GreenField.Web.ExcelModel
 
             //sheetViews1.Append(sheetView1);
 
-            
+
 
             //DataValidation dataValidation1 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "B4" } };
             //Formula1 formula11 = new Formula1();

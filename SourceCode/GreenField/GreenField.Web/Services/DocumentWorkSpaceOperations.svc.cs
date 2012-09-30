@@ -383,7 +383,7 @@ namespace GreenField.Web.Services
                 if (metaTagsInfo.Contains(null))
                 {
                     metaTagsInfo.Remove(null);
-                }   
+                }
                 metaTagsInfo = metaTagsInfo.Distinct().ToList();
                 return metaTagsInfo;
 
@@ -568,14 +568,12 @@ namespace GreenField.Web.Services
 
                 dataPointsExcelUpload = RetrieveModelUploadDataPoints(issuerID);
                 dataPointsModelReference = RetrieveExcelModelReferenceData(issuerID, securityDetails);
-                commodities = new List<string>();//entity.RetrieveCommodityForecasts().ToList();
+                commodities = entity.RetrieveCommodityForecasts().ToList();
                 ExcelModelData excelModelData = new ExcelModelData();
                 excelModelData.ModelReferenceData = dataPointsModelReference;
                 excelModelData.ModelUploadDataPoints = dataPointsExcelUpload;
-                excelModelData.Currencies = new List<string>();//entity.RetrieveDistinctFXRates().ToList();
+                excelModelData.Currencies = entity.RetrieveDistinctFXRates().ToList();
                 excelModelData.Commodities = commodities;
-                //ReadOpenXMLModel model = new ReadOpenXMLModel();
-                //model.ReadExcelData();
                 return GenerateOpenXMLExcelModel.GenerateExcel(resultReuters, resultConsensus, currencyReuters, currencyConsensus, excelModelData);
             }
             catch (Exception ex)

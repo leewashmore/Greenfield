@@ -12,6 +12,7 @@ using X14 = DocumentFormat.OpenXml.Office2010.Excel;
 using GreenField.Web.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
+using GreenField.Web.Services;
 
 namespace GreenField.Web.Helpers
 {
@@ -184,6 +185,25 @@ namespace GreenField.Web.Helpers
 
 
         #endregion
+
+        /// <summary>
+        /// The byte stream of file to be uploaded
+        /// </summary>
+        private byte[] _fileBytes;
+        public byte[] FileBytes
+        {
+            get { return _fileBytes; }
+            set { _fileBytes = value; }
+        }
+
+        private string _fileURI;
+        public string FileURI
+        {
+            get { return _fileURI; }
+            set { _fileURI = value; }
+        }
+
+
 
         /// <summary>
         /// The message to show in case of an Exception
@@ -474,6 +494,7 @@ namespace GreenField.Web.Helpers
         {
             try
             {
+                FileBytes = fileStream;
                 Filepath = GetFileName();
                 CreateTempFile(fileStream);
                 UserName = userName;
@@ -632,6 +653,7 @@ namespace GreenField.Web.Helpers
         {
             try
             {
+                bool isCompleted = true;
                 InsertIntoInternalStatementData();
                 InsertIntoInternalData();
                 InsertIntoInternalCommodityAssumptions();
@@ -641,6 +663,7 @@ namespace GreenField.Web.Helpers
                 }
                 SetInterimAmountsServiceCall(ModelReferenceData.IssuerId);
                 GetDataServiceCall(ModelReferenceData.IssuerId, "Y");
+
                 CheckInternalModelLoad();
                 CheckInternalCOAChanges();
             }
@@ -653,46 +676,55 @@ namespace GreenField.Web.Helpers
         /// <summary>
         /// Insert Data in Internal_Statement
         /// </summary>
-        private void InsertIntoInternalStatementData()
+        private bool InsertIntoInternalStatementData()
         {
-            TimeStamp = DateTime.Now;
-
-            int year = 0;
-            DateTime periodEndDate;
-            string rootSource = UserRole;
-            DateTime currentDate = DateTime.Now;
-            string overRide = "";
-            string amountType = "";
-            string currency = ModelReferenceData.Currencies.First();
-            int periodLength;
-
-            if (ModelReferenceData != null)
+            try
             {
-                foreach (var item in YearsToLoad)
+                TimeStamp = DateTime.Now;
+
+                int year = 0;
+                DateTime periodEndDate;
+                string rootSource = UserRole;
+                DateTime currentDate = DateTime.Now;
+                string overRide = "";
+                string amountType = "";
+                string currency = ModelReferenceData.Currencies.First();
+                int periodLength;
+
+                if (ModelReferenceData != null)
                 {
-                    UniqueRefNumber = Guid.NewGuid().ToString();
-                    periodLength = Convert.ToInt32(PeriodLength.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault());
-                    periodEndDate = Convert.ToDateTime(PeriodEndDate.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault());
-                    overRide = ActualOverride.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
-                    if (overRide.ToUpper().Trim() == "YES" && currentDate > periodEndDate)
+                    foreach (var item in YearsToLoad)
                     {
-                        amountType = "ACTUAL";
+                        UniqueRefNumber = Guid.NewGuid().ToString();
+                        periodLength = Convert.ToInt32(PeriodLength.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault());
+                        periodEndDate = Convert.ToDateTime(PeriodEndDate.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault());
+                        overRide = ActualOverride.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
+                        if (overRide.ToUpper().Trim() == "YES" && currentDate > periodEndDate)
+                        {
+                            amountType = "ACTUAL";
+                        }
+                        else
+                        {
+                            amountType = "ESTIMATE";
+                        }
+                        year = Convert.ToInt32(item.Value);
+                        InsertInternalStatementServiceMethod(ModelReferenceData.IssuerId, UniqueRefNumber, year, RootSource, TimeStamp, periodLength, periodEndDate, ModelReferenceData.Currencies.FirstOrDefault(), amountType);
+                        RecordYearRefNo.Add(item.Key, UniqueRefNumber);
                     }
-                    else
-                    {
-                        amountType = "ESTIMATE";
-                    }
-                    year = Convert.ToInt32(item.Value);
-                    InsertInternalStatementServiceMethod(ModelReferenceData.IssuerId, UniqueRefNumber, year, RootSource, TimeStamp, periodLength, periodEndDate, ModelReferenceData.Currencies.FirstOrDefault(), amountType);
-                    RecordYearRefNo.Add(item.Key, UniqueRefNumber);
                 }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return false;
             }
         }
 
         /// <summary>
         /// Insert Data into Internal_Data
         /// </summary>
-        private void InsertIntoInternalData()
+        private bool InsertIntoInternalData()
         {
             try
             {
@@ -729,20 +761,23 @@ namespace GreenField.Web.Helpers
                         }
                     }
                 }
+                return true;
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                return false;
             }
         }
 
         /// <summary>
         /// Check if Data exists in Internal_Issuer
         /// </summary>
-        private void CheckInternalIssuer()
+        private bool CheckInternalIssuer()
         {
             try
             {
+                bool isValid = true;
                 string issuerId = ModelReferenceData.IssuerId;
                 string coa = ModelReferenceData.COATypes;
                 string rootSource = RootSource;
@@ -769,17 +804,19 @@ namespace GreenField.Web.Helpers
                 {
                     InsertInternalIssuerData(issuerId, ModelReferenceData.COATypes, lastUpdatePrimary, lastUpdateIndustry);
                 }
+                return true;
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                return false;
             }
         }
 
         /// <summary>
         /// Insert Data into Internal_Commodity_Assumptions
         /// </summary>
-        private void InsertIntoInternalCommodityAssumptions()
+        private bool InsertIntoInternalCommodityAssumptions()
         {
             try
             {
@@ -801,17 +838,19 @@ namespace GreenField.Web.Helpers
                         }
                     }
                 }
+                return true;
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                return false;
             }
         }
 
         /// <summary>
         /// Insert Values into Internal_Issuer-Quartererly_Distribution
         /// </summary>
-        private void InsertIntoInternalIssuerQuarterelyDistribution()
+        private bool InsertIntoInternalIssuerQuarterelyDistribution()
         {
             try
             {
@@ -827,10 +866,12 @@ namespace GreenField.Web.Helpers
                         InsertInternalIssuerQuarterlyDistribution(issuerId, RootSource, periodType + (i + 1).ToString(), percentage[i] / 100M, TimeStamp);
                     }
                 }
+                return true;
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                return false;
             }
         }
 
@@ -839,27 +880,40 @@ namespace GreenField.Web.Helpers
         /// </summary>
         private void CheckInternalModelLoad()
         {
-            string issuerId = ModelReferenceData.IssuerId;
-            string rootSource = RootSource;
-            DateTime loadTime = TimeStamp;
-            long documentId = DocumentId;
-            Internal_Model_Load record = new Internal_Model_Load();
-            List<Internal_Model_Load> data = FetchInternalModelLoadData(issuerId, rootSource, DateTime.Today);
-            if (data != null)
+            try
             {
-                if (data.Any(a => a.LOAD_TIME.Date == DateTime.Today.Date))
+                string issuerId = ModelReferenceData.IssuerId;
+                string rootSource = RootSource;
+                DateTime loadTime = TimeStamp;
+                long documentId = DocumentId;
+                Internal_Model_Load record = new Internal_Model_Load();
+                List<Internal_Model_Load> data = FetchInternalModelLoadData(issuerId, rootSource, DateTime.Today);
+                if (data != null)
                 {
-                    record = data.Where(a => a.LOAD_TIME.Date == DateTime.Today.Date).FirstOrDefault();
-                    UpdateInternalModelLoad(record.LOAD_ID, issuerId, rootSource, UserName, loadTime, documentId);
+                    if (data.Any(a => a.LOAD_TIME.Date == DateTime.Today.Date))
+                    {
+                        record = data.Where(a => a.LOAD_TIME.Date == DateTime.Today.Date).FirstOrDefault();
+                        UpdateInternalModelLoad(record.LOAD_ID, issuerId, rootSource, UserName, loadTime, documentId);
+                    }
+                    else
+                    {
+                        DocumentWorkspaceOperations service = new DocumentWorkspaceOperations();
+                        FileURI = service.UploadDocument(ModelReferenceData.IssuerId + TimeStamp.ToString(), FileBytes, string.Empty);
+                        documentId = FetchFileId(FileURI).Select(a => a.FileID).FirstOrDefault();
+                        if (documentId != null)
+                        {
+                            InsertInternalModelLoadData(issuerId, rootSource, UserName, loadTime, documentId);
+                        }
+                    }
                 }
                 else
                 {
                     InsertInternalModelLoadData(issuerId, rootSource, UserName, loadTime, documentId);
                 }
             }
-            else
+            catch (Exception ex)
             {
-                InsertInternalModelLoadData(issuerId, rootSource, UserName, loadTime, documentId);
+                ExceptionTrace.LogException(ex);
             }
         }
 
@@ -2149,10 +2203,9 @@ namespace GreenField.Web.Helpers
                 {
                     RetrieveCOAList(ModelReferenceData.IssuerId);
                 }
-                if (UserName != null)
-                {
-                    FetchUserRole(UserName);
-                }
+
+                isValid = FetchUserRole(UserName);
+
                 bool validateCOACodes = CheckCOACodes(ModelUploadData, COACodes);
                 if (!validateCOACodes)
                 {
@@ -2211,11 +2264,13 @@ namespace GreenField.Web.Helpers
             {
                 InvalidValue = issuerId;
                 REF = ExternalResearchEntity.ModelDeleteInteralStatement(issuerId, rootSource).ToList();
+               
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Deleting Data from Internal_Statement for: " + InvalidValue;
+                throw;
             }
         }
 
@@ -2241,6 +2296,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Deleting Data from Internal_Data for Ref= " + InvalidValue;
+                throw;
             }
         }
 
@@ -2259,14 +2315,14 @@ namespace GreenField.Web.Helpers
                     {
                         InvalidValue = item;
                         ExternalResearchEntity.ModelDeleteInternalCommodityAssumptions(issuerId, item);
-
-                    }
+                    } 
                 }
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Deleting Data from Internal_Data for Ref= " + InvalidValue;
+                throw;
             }
         }
 
@@ -2291,6 +2347,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Deleting Data from Internal_Issuer for Issuer= " + InvalidValue;
+                throw;
             }
         }
 
@@ -2313,6 +2370,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Deleting Data from Internal_Issuer_Quarterely Distribution for Issuer= " + InvalidValue;
+                throw;
             }
         }
 
@@ -2349,6 +2407,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Inserting Data in Internal_Statement  for Issuer= " + InvalidValue;
+                throw;
             }
         }
 
@@ -2374,6 +2433,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Inserting Data in Internal_Data for " + InvalidValue;
+                throw;
             }
         }
 
@@ -2394,6 +2454,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Inserting Data in Internal_Commodity_Assumptions for " + InvalidValue;
+                throw;
             }
         }
 
@@ -2418,6 +2479,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Inserting Data in Internal_Issuer for " + InvalidValue;
+                throw;
             }
         }
 
@@ -2443,6 +2505,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Inserting Data in Internal_Issuer_Quarterely_Distribution for " + InvalidValue;
+                throw;
             }
         }
 
@@ -2465,7 +2528,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Inserting Data in Internal_Model_Load for " + InvalidValue;
-
+                throw;
             }
         }
 
@@ -2485,6 +2548,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while calling Get_Data for " + InvalidValue;
+                throw;
             }
         }
 
@@ -2503,6 +2567,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while calling Set_Interim_Amount for " + InvalidValue;
+                throw;
             }
         }
 
@@ -2531,6 +2596,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while inserting values in Internal_COA_Changes for " + InvalidValue;
+                throw;
             }
         }
 
@@ -2559,6 +2625,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Updating values in Internal_Issuer for " + InvalidValue;
+                throw;
             }
         }
 
@@ -2581,6 +2648,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Updating values in Internal_Model_Load for " + InvalidValue;
+                throw;
             }
         }
 
@@ -2604,6 +2672,7 @@ namespace GreenField.Web.Helpers
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = "Error while Updating values in Internal_COA_Changes for " + InvalidValue;
+                throw;
             }
         }
 
@@ -2626,6 +2695,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                throw;
             }
         }
 
@@ -2634,24 +2704,37 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="userName">UserName</param>
         /// <returns></returns>
-        private void FetchUserRole(string userName)
+        private bool FetchUserRole(string userName)
         {
-            GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.
-                Where(a => a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper()).FirstOrDefault();
-            if (data != null)
+            try
             {
-                UserRole = "PRIMARY";
-                RootSource = "PRIMARY";
+                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.
+                        Where(a => a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper()).FirstOrDefault();
+                if (data != null)
+                {
+                    UserRole = "PRIMARY";
+                    RootSource = "PRIMARY";
+                }
+                data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper() == userName.ToUpper()).FirstOrDefault();
+                if (data != null)
+                {
+                    UserRole = "INDUSTRY";
+                    RootSource = "INDUSTRY";
+                }
+                else
+                {
+                    UserRole = "";
+                }
+                if (UserRole == "")
+                {
+                    return false;
+                }
+                return true;
             }
-            data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper() == userName.ToUpper()).FirstOrDefault();
-            if (data != null)
+            catch (Exception ex)
             {
-                UserRole = "INDUSTRY";
-                RootSource = "INDUSTRY";
-            }
-            else
-            {
-                UserRole = "";
+                ExceptionTrace.LogException(ex);
+                return false;
             }
         }
 
@@ -2761,6 +2844,10 @@ namespace GreenField.Web.Helpers
         }
 
         #endregion
+
+        #endregion
+
+        #region DocumentUpload
 
         #endregion
 
