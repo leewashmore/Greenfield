@@ -50,7 +50,7 @@ namespace BenchmarkNodeFinancials
                     if (lastBusinessRecord != null)
                         if (lastBusinessRecord.PORTFOLIO_DATE != null)
                             lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
-                    lastBusinessDate = Convert.ToDateTime("01/10/2011");
+                   // lastBusinessDate = Convert.ToDateTime("01/10/2011");
                     dataBenchmarkHoldings = _dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
                                                                                  && record.PORTFOLIO_DATE == lastBusinessDate
                                                                                   && record.BENCHMARK_WEIGHT > 0).ToList();
@@ -75,8 +75,8 @@ namespace BenchmarkNodeFinancials
                     List<String> distinctSecurityId = securityData.Select(record => record.SecurityId).ToList();
                     List<String> distinctIssuerId = securityData.Select(record => record.IssuerId).ToList();
 
-                    String _securityIds = "'2295'"; //StringBuilder(distinctSecurityId);
-                    String _issuerIds = "'117567','223340'";//StringBuilder(distinctIssuerId);             
+                    String _securityIds = StringBuilder(distinctSecurityId); //"'2295'"; 
+                    String _issuerIds = StringBuilder(distinctIssuerId); //"'117567','223340'";            
 
                     List<PeriodFinancialForwardRatios> periodFinancialData = new List<PeriodFinancialForwardRatios>();
                     periodFinancialData = _entity.usp_GetDataForBenchmarkNodefinancials(_issuerIds, _securityIds).ToList();
