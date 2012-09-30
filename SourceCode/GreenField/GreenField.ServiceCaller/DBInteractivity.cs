@@ -4863,6 +4863,47 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
+
+        public void DeleteFileMasterRecord(Int64 fileId, Action<Boolean?> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
+            client.DeleteFileMasterRecordAsync(fileId);
+            client.DeleteFileMasterRecordCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result);
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
         #endregion
 
         #region Custom Screening Tool

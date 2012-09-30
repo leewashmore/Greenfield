@@ -231,6 +231,24 @@ namespace GreenField.Web.Services
             return fileDeleted;
         }
 
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public bool DeleteFileMasterRecord(Int64 fileId)
+        {            
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                entity.DeleteFileMaster(fileId);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }            
+        }
+
         /// <summary>
         /// Retruns the bytes of the requested file
         /// </summary>

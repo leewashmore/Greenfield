@@ -104,6 +104,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         private decimal STANDARD_DEVIATIONField;
         
+        private int SortOrderField;
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public decimal AMOUNT {
             get {
@@ -298,6 +300,19 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
                 }
             }
         }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SortOrder {
+            get {
+                return this.SortOrderField;
+            }
+            set {
+                if ((this.SortOrderField.Equals(value) != true)) {
+                    this.SortOrderField = value;
+                    this.RaisePropertyChanged("SortOrder");
+                }
+            }
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -315,6 +330,13 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         System.IAsyncResult BeginDeleteDocument(string fileName, System.AsyncCallback callback, object asyncState);
         
         bool EndDeleteDocument(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/DeleteFileMasterRecord", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/DeleteFileMasterRecordResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/DeleteFileMasterRecordServiceFault" +
+            "Fault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginDeleteFileMasterRecord(long fileId, System.AsyncCallback callback, object asyncState);
+        
+        bool EndDeleteFileMasterRecord(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocument", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
@@ -402,6 +424,25 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         private object[] results;
         
         public DeleteDocumentCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class DeleteFileMasterRecordCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public DeleteFileMasterRecordCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -582,6 +623,12 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         private System.Threading.SendOrPostCallback onDeleteDocumentCompletedDelegate;
         
+        private BeginOperationDelegate onBeginDeleteFileMasterRecordDelegate;
+        
+        private EndOperationDelegate onEndDeleteFileMasterRecordDelegate;
+        
+        private System.Threading.SendOrPostCallback onDeleteFileMasterRecordCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRetrieveDocumentDelegate;
         
         private EndOperationDelegate onEndRetrieveDocumentDelegate;
@@ -686,6 +733,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         public event System.EventHandler<UploadDocumentCompletedEventArgs> UploadDocumentCompleted;
         
         public event System.EventHandler<DeleteDocumentCompletedEventArgs> DeleteDocumentCompleted;
+        
+        public event System.EventHandler<DeleteFileMasterRecordCompletedEventArgs> DeleteFileMasterRecordCompleted;
         
         public event System.EventHandler<RetrieveDocumentCompletedEventArgs> RetrieveDocumentCompleted;
         
@@ -801,6 +850,52 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             }
             base.InvokeAsync(this.onBeginDeleteDocumentDelegate, new object[] {
                         fileName}, this.onEndDeleteDocumentDelegate, this.onDeleteDocumentCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginDeleteFileMasterRecord(long fileId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginDeleteFileMasterRecord(fileId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndDeleteFileMasterRecord(System.IAsyncResult result) {
+            return base.Channel.EndDeleteFileMasterRecord(result);
+        }
+        
+        private System.IAsyncResult OnBeginDeleteFileMasterRecord(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            long fileId = ((long)(inValues[0]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginDeleteFileMasterRecord(fileId, callback, asyncState);
+        }
+        
+        private object[] OnEndDeleteFileMasterRecord(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndDeleteFileMasterRecord(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnDeleteFileMasterRecordCompleted(object state) {
+            if ((this.DeleteFileMasterRecordCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.DeleteFileMasterRecordCompleted(this, new DeleteFileMasterRecordCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void DeleteFileMasterRecordAsync(long fileId) {
+            this.DeleteFileMasterRecordAsync(fileId, null);
+        }
+        
+        public void DeleteFileMasterRecordAsync(long fileId, object userState) {
+            if ((this.onBeginDeleteFileMasterRecordDelegate == null)) {
+                this.onBeginDeleteFileMasterRecordDelegate = new BeginOperationDelegate(this.OnBeginDeleteFileMasterRecord);
+            }
+            if ((this.onEndDeleteFileMasterRecordDelegate == null)) {
+                this.onEndDeleteFileMasterRecordDelegate = new EndOperationDelegate(this.OnEndDeleteFileMasterRecord);
+            }
+            if ((this.onDeleteFileMasterRecordCompletedDelegate == null)) {
+                this.onDeleteFileMasterRecordCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnDeleteFileMasterRecordCompleted);
+            }
+            base.InvokeAsync(this.onBeginDeleteFileMasterRecordDelegate, new object[] {
+                        fileId}, this.onEndDeleteFileMasterRecordDelegate, this.onDeleteFileMasterRecordCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1290,6 +1385,19 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             public bool EndDeleteDocument(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 bool _result = ((bool)(base.EndInvoke("DeleteDocument", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginDeleteFileMasterRecord(long fileId, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = fileId;
+                System.IAsyncResult _result = base.BeginInvoke("DeleteFileMasterRecord", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndDeleteFileMasterRecord(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("DeleteFileMasterRecord", _args, result)));
                 return _result;
             }
             

@@ -246,6 +246,8 @@ namespace GreenField.ServiceCaller
         void RetrieveDocumentsDataForUser(String userName, Action<List<DocumentCategoricalData>> callback);
 
         void SetDocumentComment(String userName, Int64 fileId, String comment, Action<Boolean?> callback);
+
+        void DeleteFileMasterRecord(Int64 fileId, Action<Boolean?> callback);
         #endregion
 
         #region Investment Committee
@@ -359,8 +361,7 @@ namespace GreenField.ServiceCaller
 
         #region Documents
 
-        void RetrieveDocumentsData(EntitySelectionData selectedSecurity, Action<byte[]> callback);
-
+        void RetrieveDocumentsData(EntitySelectionData selectedSecurity, Action<byte[]> callback);        
         #endregion
 
         #region FAIR VALUE 

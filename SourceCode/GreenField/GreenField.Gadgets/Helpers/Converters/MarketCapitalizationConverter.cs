@@ -25,7 +25,7 @@ namespace GreenField.Gadgets.Helpers
                 Decimal convValue;
                 if (Decimal.TryParse(value.ToString(), out convValue) == false)
                     return value;
-                String result = String.Format("${0:n4}mn", convValue / Decimal.Parse("1000000"));
+                String result = String.Format("${0:n2}mn", convValue);
                 return result;
             }
             return null;

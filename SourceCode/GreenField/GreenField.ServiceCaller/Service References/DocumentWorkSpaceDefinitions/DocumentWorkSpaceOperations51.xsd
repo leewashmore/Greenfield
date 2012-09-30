@@ -26,6 +26,7 @@
           <xs:element minOccurs="0" name="Period" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="SOURCE_CURRENCY" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="STANDARD_DEVIATION" type="xs:decimal" />
+          <xs:element minOccurs="0" name="SortOrder" type="xs:int" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

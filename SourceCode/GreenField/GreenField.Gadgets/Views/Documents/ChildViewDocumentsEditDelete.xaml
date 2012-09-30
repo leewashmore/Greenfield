@@ -70,17 +70,17 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBox x:Name="tboxFileName" IsEnabled="False" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource TextBoxStyle}"/>
-                    <telerik:RadButton x:Name="btnBrowse" Grid.Column="1" Margin="2,0,0,0" Content="Browse..." Style="{StaticResource RadButtonStyle}"/>
+                    <telerik:RadButton x:Name="btnBrowse" Grid.Column="1" IsEnabled="{Binding DocumentEditEnabled}" Margin="2,0,0,0" Content="Browse..." Style="{StaticResource RadButtonStyle}"/>
                 </Grid>
-                <telerik:RadComboBox x:Name="cbCompany" Style="{StaticResource RadComboBoxStyle}" Grid.Row="2" Grid.Column="1" Margin="0,2,0,0" 
+                <telerik:RadComboBox x:Name="cbCompany" IsEnabled="False" Style="{StaticResource RadComboBoxStyle}" Grid.Row="2" Grid.Column="1" Margin="0,2,0,0" 
                                  VerticalAlignment="Center" HorizontalContentAlignment="Left" ItemsSource="{Binding CompanyInfo}"
                                  SelectedValue="{Binding SelectedCompanyInfo, Mode=TwoWay}" DisplayMemberPath="Name"/>
-                <telerik:RadComboBox x:Name="cbType" Style="{StaticResource RadComboBoxStyle}" Grid.Row="3" Grid.Column="1" Margin="0,2,0,0" 
+                <telerik:RadComboBox x:Name="cbType" IsEnabled="False" Style="{StaticResource RadComboBoxStyle}" Grid.Row="3" Grid.Column="1" Margin="0,2,0,0" 
                                  VerticalAlignment="Center" HorizontalContentAlignment="Left" ItemsSource="{Binding CategoryType}"
                                  SelectedValue="{Binding SelectedCategoryType, Mode=TwoWay}"/>
-                <TextBox x:Name="tbTags" Grid.Row="4" Grid.Column="1" Margin="0,2,0,0" MaxLength="255" Style="{StaticResource TextBoxStyle}" 
+                <TextBox x:Name="tbTags" IsEnabled="False" Grid.Row="4" Grid.Column="1" Margin="0,2,0,0" MaxLength="255" Style="{StaticResource TextBoxStyle}" 
                      VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding DocumentMetags, Mode=TwoWay}"/>
-                <TextBox x:Name="tbNotes" Grid.Row="5" Grid.Column="1" Margin="0,2,0,0" Height="60" Style="{StaticResource TextBoxStyle}"
+                <TextBox x:Name="tbNotes" IsEnabled="False" Grid.Row="5" Grid.Column="1" Margin="0,2,0,0" Height="60" Style="{StaticResource TextBoxStyle}"
                      VerticalAlignment="Center" HorizontalAlignment="Stretch" Text="{Binding DocumentNotes, Mode=TwoWay}"/>
                 <!--<telerik:RadComboBox Grid.Row="6" Grid.Column="1" Margin="0,2,0,0" Style="{StaticResource RadComboBoxStyle}"
                                  VerticalAlignment="Center" HorizontalContentAlignment="Left"/>-->
@@ -88,10 +88,11 @@
 
 
             <Grid Grid.Row="1">
-                <telerik:RadButton x:Name="SaveButton" Content="Save" Style="{StaticResource RadButtonStyle}" Width="75"
+                <telerik:RadButton x:Name="SaveButton" IsEnabled="False" Content="Save" Style="{StaticResource RadButtonStyle}" Width="75"
                                HorizontalAlignment="Right" Margin="0,5,0,0"/>
-                <telerik:RadButton x:Name="DeleteButton" Content="Delete" Style="{StaticResource RadButtonStyle}" Width="75"
-                               HorizontalAlignment="Right" Margin="0,5,79,0"/>
+                <telerik:RadButton x:Name="DeleteButton" IsEnabled="{Binding DocumentEditEnabled}" Content="Delete" Style="{StaticResource RadButtonStyle}" 
+                                   Width="75" HorizontalAlignment="Right" Margin="0,5,79,0"
+                                   Command="{Binding DeleteCommand}"/>
             </Grid>
         </Grid>
     </telerik:RadBusyIndicator>

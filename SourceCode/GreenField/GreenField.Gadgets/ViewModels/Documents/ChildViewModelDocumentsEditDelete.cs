@@ -40,19 +40,19 @@ namespace GreenField.Gadgets.ViewModels
         private ILoggerFacade _logger;
 
 
-        private IDBInteractivity _dBInteractivity;
+        private IDBInteractivity _dbInteractivity;
         #endregion       
 
         #region Constructor
         public ChildViewModelDocumentsEditDelete(IDBInteractivity dBInteractivity, ILoggerFacade logger)
         {
-            _dBInteractivity = dBInteractivity;
+            _dbInteractivity = dBInteractivity;
             _logger = logger;
             
-            if (_dBInteractivity != null)
+            if (_dbInteractivity != null)
             {
                 BusyIndicatorNotification(true, "Retrieving user specific document information...");
-                _dBInteractivity.RetrieveDocumentsDataForUser(UserSession.SessionManager.SESSION.UserName, RetrieveDocumentsDataForUserCallbackMethod);
+                _dbInteractivity.RetrieveDocumentsDataForUser(UserSession.SessionManager.SESSION.UserName, RetrieveDocumentsDataForUserCallbackMethod);
             }
 
         }
@@ -125,6 +125,7 @@ namespace GreenField.Gadgets.ViewModels
                     RaisePropertyChanged(() => this.SelectedDocumentCatagoricalInfo);
                     if (value != null)
                     {
+                        DocumentEditEnabled = true;
                         SelectedCategoryType = value.DocumentCategoryType;
                         SelectedCompanyInfo = CompanyInfo.Where(record => record.Name == value.DocumentCompanyName
                             && record.Ticker == value.DocumentCompanyTicker).FirstOrDefault();
@@ -214,13 +215,101 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.DocumentNotes);
             }
         }
-        
 
+        private Boolean _documentEditEnabled = false;
+        public Boolean DocumentEditEnabled
+        {
+            get { return _documentEditEnabled; }
+            set
+            {
+                _documentEditEnabled = value;
+                RaisePropertyChanged(() => this.DocumentEditEnabled);
+            }
+        }
 
-        
+        public ICommand DeleteCommand 
+        {
+            get { return new DelegateCommand<object>(DeleteCommandMethod); }
+        }
         #endregion
 
+        #region ICommand Methods
+        private void DeleteCommandMethod(object param)
+        {
+            BusyIndicatorNotification(true, "Deleting document from repository...");
+            _dbInteractivity.DeleteDocument(SelectedDocumentCatagoricalInfo.DocumentCatalogData.FilePath, DeleteDocumentCallbackMethod);
+        }
+        #endregion
+
+
         #region Callback Method
+        private void DeleteDocumentCallbackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result == true)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Deleting document meta-data records...");
+                        _dbInteractivity.DeleteFileMasterRecord(Convert.ToInt64(SelectedDocumentCatagoricalInfo.DocumentCatalogData.FileId)
+                            , DeleteFileMasterRecordCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+            }
+        }
+
+        private void DeleteFileMasterRecordCallbackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result == true)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Updating user specific document information...");
+                        _dbInteractivity.RetrieveDocumentsDataForUser(UserSession.SessionManager.SESSION.UserName, RetrieveDocumentsDataForUserCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);                
+            }
+        }
+
         private void RetrieveDocumentsDataForUserCallbackMethod(List<DocumentCategoricalData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -230,11 +319,13 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    DocumentCatagoricalInfo = result;
-                    if (_dBInteractivity != null)
+                    DocumentCatagoricalInfo = result.Where(record => record.DocumentCategoryType != DocumentCategoryType.IC_PRESENTATIONS
+                        && record.DocumentCategoryType != DocumentCategoryType.MODELS).ToList();
+
+                    if (_dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving available company information...");
-                        _dBInteractivity.RetrieveCompanyData(RetrieveCompanyDataCallbackMethod);
+                        _dbInteractivity.RetrieveCompanyData(RetrieveCompanyDataCallbackMethod);
                     }
                 }
                 else

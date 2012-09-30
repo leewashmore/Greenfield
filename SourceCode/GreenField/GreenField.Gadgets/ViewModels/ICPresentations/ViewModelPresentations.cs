@@ -487,7 +487,8 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    MeetingInfoDates = result;                    
+                    MeetingInfoDates = result;
+                    SelectedMeetingInfoDate = result.OrderBy(record => record.MeetingDateTime).FirstOrDefault();                    
                 }
                 else
                 {
