@@ -19,14 +19,14 @@ using System.Runtime.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingPresentationMappingInfo_MeetingInfo", "MeetingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.MeetingInfo), "MeetingPresentationMappingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingPresentationMappingInfo), true)]
-[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_CommentInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(GreenField.DAL.FileMaster), "CommentInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.CommentInfo), true)]
-[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingAttachedFileInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.FileMaster), "MeetingAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingAttachedFileInfo), true)]
-[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_PresentationAttachedFileInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.FileMaster), "PresentationAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.PresentationAttachedFileInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingAttachedFileInfo_MeetingInfo", "MeetingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.MeetingInfo), "MeetingAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingAttachedFileInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(GreenField.DAL.PresentationInfo), "CommentInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.CommentInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingPresentationMappingInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "MeetingPresentationMappingInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingPresentationMappingInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_AttachedFileInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "PresentationAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.PresentationAttachedFileInfo), true)]
 [assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_VoterInfo_PresentationInfo", "PresentationInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.PresentationInfo), "VoterInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.VoterInfo), true)]
+[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_CommentInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(GreenField.DAL.FileMaster), "CommentInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.CommentInfo), true)]
+[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_MeetingAttachedFileInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.FileMaster), "MeetingAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.MeetingAttachedFileInfo), true)]
+[assembly: EdmRelationshipAttribute("ICPresentationModel", "FK_PresentationAttachedFileInfo_FileMaster", "FileMaster", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(GreenField.DAL.FileMaster), "PresentationAttachedFileInfo", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(GreenField.DAL.PresentationAttachedFileInfo), true)]
 
 #endregion
 
@@ -145,22 +145,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<FileMaster> FileMasters
-        {
-            get
-            {
-                if ((_FileMasters == null))
-                {
-                    _FileMasters = base.CreateObjectSet<FileMaster>("FileMasters");
-                }
-                return _FileMasters;
-            }
-        }
-        private ObjectSet<FileMaster> _FileMasters;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<MeetingAttachedFileInfo> MeetingAttachedFileInfoes
         {
             get
@@ -221,6 +205,22 @@ namespace GreenField.DAL
             }
         }
         private ObjectSet<PresentationInfo> _PresentationInfoes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<FileMaster> FileMasters
+        {
+            get
+            {
+                if ((_FileMasters == null))
+                {
+                    _FileMasters = base.CreateObjectSet<FileMaster>("FileMasters");
+                }
+                return _FileMasters;
+            }
+        }
+        private ObjectSet<FileMaster> _FileMasters;
 
         #endregion
         #region AddTo Methods
@@ -258,14 +258,6 @@ namespace GreenField.DAL
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the FileMasters EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToFileMasters(FileMaster fileMaster)
-        {
-            base.AddObject("FileMasters", fileMaster);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the MeetingAttachedFileInfoes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToMeetingAttachedFileInfoes(MeetingAttachedFileInfo meetingAttachedFileInfo)
@@ -295,6 +287,14 @@ namespace GreenField.DAL
         public void AddToPresentationInfoes(PresentationInfo presentationInfo)
         {
             base.AddObject("PresentationInfoes", presentationInfo);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the FileMasters EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToFileMasters(FileMaster fileMaster)
+        {
+            base.AddObject("FileMasters", fileMaster);
         }
 
         #endregion
@@ -1754,44 +1754,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="meetingId">No Metadata Documentation available.</param>
-        public ObjectResult<FileMaster> RetrieveICPMeetingAttachedFileDetails(Nullable<global::System.Int64> meetingId)
-        {
-            ObjectParameter meetingIdParameter;
-            if (meetingId.HasValue)
-            {
-                meetingIdParameter = new ObjectParameter("MeetingId", meetingId);
-            }
-            else
-            {
-                meetingIdParameter = new ObjectParameter("MeetingId", typeof(global::System.Int64));
-            }
-    
-            return base.ExecuteFunction<FileMaster>("RetrieveICPMeetingAttachedFileDetails", meetingIdParameter);
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="mergeOption"></param>
-        /// <param name="meetingId">No Metadata Documentation available.</param>
-        public ObjectResult<FileMaster> RetrieveICPMeetingAttachedFileDetails(Nullable<global::System.Int64> meetingId, MergeOption mergeOption)
-        {
-            ObjectParameter meetingIdParameter;
-            if (meetingId.HasValue)
-            {
-                meetingIdParameter = new ObjectParameter("MeetingId", meetingId);
-            }
-            else
-            {
-                meetingIdParameter = new ObjectParameter("MeetingId", typeof(global::System.Int64));
-            }
-    
-            return base.ExecuteFunction<FileMaster>("RetrieveICPMeetingAttachedFileDetails", mergeOption, meetingIdParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="userName">No Metadata Documentation available.</param>
         /// <param name="meetingId">No Metadata Documentation available.</param>
         /// <param name="name">No Metadata Documentation available.</param>
@@ -2036,63 +1998,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="presentationId">No Metadata Documentation available.</param>
-        public ObjectResult<FileMaster> RetrieveICPresentationAttachedFileDetails(Nullable<global::System.Int64> presentationId)
-        {
-            ObjectParameter presentationIdParameter;
-            if (presentationId.HasValue)
-            {
-                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
-            }
-            else
-            {
-                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
-            }
-    
-            return base.ExecuteFunction<FileMaster>("RetrieveICPresentationAttachedFileDetails", presentationIdParameter);
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="mergeOption"></param>
-        /// <param name="presentationId">No Metadata Documentation available.</param>
-        public ObjectResult<FileMaster> RetrieveICPresentationAttachedFileDetails(Nullable<global::System.Int64> presentationId, MergeOption mergeOption)
-        {
-            ObjectParameter presentationIdParameter;
-            if (presentationId.HasValue)
-            {
-                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
-            }
-            else
-            {
-                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
-            }
-    
-            return base.ExecuteFunction<FileMaster>("RetrieveICPresentationAttachedFileDetails", mergeOption, presentationIdParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="searchString">No Metadata Documentation available.</param>
-        public ObjectResult<DocumentsData> GetDocumentsData(global::System.String searchString)
-        {
-            ObjectParameter searchStringParameter;
-            if (searchString != null)
-            {
-                searchStringParameter = new ObjectParameter("searchString", searchString);
-            }
-            else
-            {
-                searchStringParameter = new ObjectParameter("searchString", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<DocumentsData>("GetDocumentsData", searchStringParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="userName">No Metadata Documentation available.</param>
         /// <param name="presentationId">No Metadata Documentation available.</param>
         /// <param name="name">No Metadata Documentation available.</param>
@@ -2225,12 +2130,13 @@ namespace GreenField.DAL
         /// <param name="userName">No Metadata Documentation available.</param>
         /// <param name="name">No Metadata Documentation available.</param>
         /// <param name="location">No Metadata Documentation available.</param>
+        /// <param name="companyName">No Metadata Documentation available.</param>
         /// <param name="securityName">No Metadata Documentation available.</param>
         /// <param name="securityTicker">No Metadata Documentation available.</param>
         /// <param name="type">No Metadata Documentation available.</param>
         /// <param name="metaTags">No Metadata Documentation available.</param>
         /// <param name="comments">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> SetUploadFileInfo(global::System.String userName, global::System.String name, global::System.String location, global::System.String securityName, global::System.String securityTicker, global::System.String type, global::System.String metaTags, global::System.String comments)
+        public ObjectResult<Nullable<global::System.Int32>> SetUploadFileInfo(global::System.String userName, global::System.String name, global::System.String location, global::System.String companyName, global::System.String securityName, global::System.String securityTicker, global::System.String type, global::System.String metaTags, global::System.String comments)
         {
             ObjectParameter userNameParameter;
             if (userName != null)
@@ -2260,6 +2166,16 @@ namespace GreenField.DAL
             else
             {
                 locationParameter = new ObjectParameter("Location", typeof(global::System.String));
+            }
+    
+            ObjectParameter companyNameParameter;
+            if (companyName != null)
+            {
+                companyNameParameter = new ObjectParameter("CompanyName", companyName);
+            }
+            else
+            {
+                companyNameParameter = new ObjectParameter("CompanyName", typeof(global::System.String));
             }
     
             ObjectParameter securityNameParameter;
@@ -2312,7 +2228,7 @@ namespace GreenField.DAL
                 commentsParameter = new ObjectParameter("Comments", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetUploadFileInfo", userNameParameter, nameParameter, locationParameter, securityNameParameter, securityTickerParameter, typeParameter, metaTagsParameter, commentsParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetUploadFileInfo", userNameParameter, nameParameter, locationParameter, companyNameParameter, securityNameParameter, securityTickerParameter, typeParameter, metaTagsParameter, commentsParameter);
         }
     
         /// <summary>
@@ -2614,24 +2530,103 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<FileMaster>("ModelRetrieveFileId", lOCATIONParameter);
         }
+
+        
+        
+        
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="searchString">No Metadata Documentation available.</param>
+        public ObjectResult<DocumentsData> GetDocumentsData(global::System.String searchString)
+        {
+            ObjectParameter searchStringParameter;
+            if (searchString != null)
+            {
+                searchStringParameter = new ObjectParameter("searchString", searchString);
+            }
+            else
+            {
+                searchStringParameter = new ObjectParameter("searchString", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<DocumentsData>("GetDocumentsData", searchStringParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        public ObjectResult<FileMaster> RetrieveICPresentationAttachedFileDetails(Nullable<global::System.Int64> presentationId)
+        {
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
+            }
+            else
+            {
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<FileMaster>("RetrieveICPresentationAttachedFileDetails", presentationIdParameter);
+        }
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="mergeOption"></param>
-        /// <param name="lOCATION">No Metadata Documentation available.</param>
-        public ObjectResult<FileMaster> ModelRetrieveFileId(global::System.String lOCATION, MergeOption mergeOption)
+        /// <param name="presentationId">No Metadata Documentation available.</param>
+        public ObjectResult<FileMaster> RetrieveICPresentationAttachedFileDetails(Nullable<global::System.Int64> presentationId, MergeOption mergeOption)
         {
-            ObjectParameter lOCATIONParameter;
-            if (lOCATION != null)
+            ObjectParameter presentationIdParameter;
+            if (presentationId.HasValue)
             {
-                lOCATIONParameter = new ObjectParameter("LOCATION", lOCATION);
+                presentationIdParameter = new ObjectParameter("PresentationId", presentationId);
             }
             else
             {
-                lOCATIONParameter = new ObjectParameter("LOCATION", typeof(global::System.String));
+                presentationIdParameter = new ObjectParameter("PresentationId", typeof(global::System.Int64));
             }
     
-            return base.ExecuteFunction<FileMaster>("ModelRetrieveFileId", mergeOption, lOCATIONParameter);
+            return base.ExecuteFunction<FileMaster>("RetrieveICPresentationAttachedFileDetails", mergeOption, presentationIdParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="meetingId">No Metadata Documentation available.</param>
+        public ObjectResult<FileMaster> RetrieveICPMeetingAttachedFileDetails(Nullable<global::System.Int64> meetingId)
+        {
+            ObjectParameter meetingIdParameter;
+            if (meetingId.HasValue)
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", meetingId);
+            }
+            else
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<FileMaster>("RetrieveICPMeetingAttachedFileDetails", meetingIdParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="meetingId">No Metadata Documentation available.</param>
+        public ObjectResult<FileMaster> RetrieveICPMeetingAttachedFileDetails(Nullable<global::System.Int64> meetingId, MergeOption mergeOption)
+        {
+            ObjectParameter meetingIdParameter;
+            if (meetingId.HasValue)
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", meetingId);
+            }
+            else
+            {
+                meetingIdParameter = new ObjectParameter("MeetingId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction<FileMaster>("RetrieveICPMeetingAttachedFileDetails", mergeOption, meetingIdParameter);
         }
 
         #endregion
@@ -2823,44 +2818,6 @@ namespace GreenField.DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_FileMaster", "FileMaster")]
-        public FileMaster FileMaster
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_CommentInfo_FileMaster", "FileMaster").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_CommentInfo_FileMaster", "FileMaster").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<FileMaster> FileMasterReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_CommentInfo_FileMaster", "FileMaster");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FileMaster>("ICPresentationModel.FK_CommentInfo_FileMaster", "FileMaster", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_PresentationInfo", "PresentationInfo")]
         public PresentationInfo PresentationInfo
         {
@@ -2889,6 +2846,44 @@ namespace GreenField.DAL
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PresentationInfo>("ICPresentationModel.FK_CommentInfo_PresentationInfo", "PresentationInfo", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_CommentInfo_FileMaster", "FileMaster")]
+        public FileMaster FileMaster
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_CommentInfo_FileMaster", "FileMaster").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_CommentInfo_FileMaster", "FileMaster").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<FileMaster> FileMasterReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_CommentInfo_FileMaster", "FileMaster");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FileMaster>("ICPresentationModel.FK_CommentInfo_FileMaster", "FileMaster", value);
                 }
             }
         }
@@ -3210,6 +3205,30 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _ModifiedOn;
         partial void OnModifiedOnChanging(Nullable<global::System.DateTime> value);
         partial void OnModifiedOnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String IssuerName
+        {
+            get
+            {
+                return _IssuerName;
+            }
+            set
+            {
+                OnIssuerNameChanging(value);
+                ReportPropertyChanging("IssuerName");
+                _IssuerName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("IssuerName");
+                OnIssuerNameChanged();
+            }
+        }
+        private global::System.String _IssuerName;
+        partial void OnIssuerNameChanging(global::System.String value);
+        partial void OnIssuerNameChanged();
 
         #endregion
     
@@ -3501,44 +3520,6 @@ namespace GreenField.DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_MeetingAttachedFileInfo_FileMaster", "FileMaster")]
-        public FileMaster FileMaster
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster", "FileMaster").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster", "FileMaster").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<FileMaster> FileMasterReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster", "FileMaster");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FileMaster>("ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster", "FileMaster", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_MeetingAttachedFileInfo_MeetingInfo", "MeetingInfo")]
         public MeetingInfo MeetingInfo
         {
@@ -3567,6 +3548,44 @@ namespace GreenField.DAL
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<MeetingInfo>("ICPresentationModel.FK_MeetingAttachedFileInfo_MeetingInfo", "MeetingInfo", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_MeetingAttachedFileInfo_FileMaster", "FileMaster")]
+        public FileMaster FileMaster
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster", "FileMaster").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster", "FileMaster").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<FileMaster> FileMasterReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster", "FileMaster");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FileMaster>("ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster", "FileMaster", value);
                 }
             }
         }
@@ -4767,44 +4786,6 @@ namespace GreenField.DAL
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_PresentationAttachedFileInfo_FileMaster", "FileMaster")]
-        public FileMaster FileMaster
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster", "FileMaster").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster", "FileMaster").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<FileMaster> FileMasterReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster", "FileMaster");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FileMaster>("ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster", "FileMaster", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_AttachedFileInfo_PresentationInfo", "PresentationInfo")]
         public PresentationInfo PresentationInfo
         {
@@ -4833,6 +4814,44 @@ namespace GreenField.DAL
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<PresentationInfo>("ICPresentationModel.FK_AttachedFileInfo_PresentationInfo", "PresentationInfo", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("ICPresentationModel", "FK_PresentationAttachedFileInfo_FileMaster", "FileMaster")]
+        public FileMaster FileMaster
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster", "FileMaster").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster", "FileMaster").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<FileMaster> FileMasterReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<FileMaster>("ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster", "FileMaster");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<FileMaster>("ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster", "FileMaster", value);
                 }
             }
         }
@@ -6626,6 +6645,30 @@ namespace GreenField.DAL
         /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
+        public global::System.String Category
+        {
+            get
+            {
+                return _Category;
+            }
+            set
+            {
+                OnCategoryChanging(value);
+                ReportPropertyChanging("Category");
+                _Category = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("Category");
+                OnCategoryChanged();
+            }
+        }
+        private global::System.String _Category;
+        partial void OnCategoryChanging(global::System.String value);
+        partial void OnCategoryChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
         public global::System.String CreatedBy
         {
             get
@@ -6716,6 +6759,30 @@ namespace GreenField.DAL
         private Nullable<global::System.DateTime> _ModifiedOn;
         partial void OnModifiedOnChanging(Nullable<global::System.DateTime> value);
         partial void OnModifiedOnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String IssuerName
+        {
+            get
+            {
+                return _IssuerName;
+            }
+            set
+            {
+                OnIssuerNameChanging(value);
+                ReportPropertyChanging("IssuerName");
+                _IssuerName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("IssuerName");
+                OnIssuerNameChanged();
+            }
+        }
+        private global::System.String _IssuerName;
+        partial void OnIssuerNameChanging(global::System.String value);
+        partial void OnIssuerNameChanged();
     
         /// <summary>
         /// No Metadata Documentation available.

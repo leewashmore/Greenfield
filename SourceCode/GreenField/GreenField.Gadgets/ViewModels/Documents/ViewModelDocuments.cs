@@ -124,13 +124,11 @@ namespace GreenField.Gadgets.ViewModels
                         _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);
                     }
 
-                    if (DbInteractivity != null && IsActive && MetaTagsInfo == null)
+                    if (DbInteractivity != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving document meta-tag information...");
                         DbInteractivity.GetDocumentsMetaTags(GetDocumentsMetaTagsCallBack);
-                    }
-
-                    
+                    }                    
                 }
             }
         }
@@ -372,7 +370,11 @@ namespace GreenField.Gadgets.ViewModels
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
             }
-            Logging.LogEndMethod(_logger, methodNamespace);
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
         }
 
         public void SetDocumentCommentCallbackMethod(Boolean? result)

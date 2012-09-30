@@ -128,7 +128,7 @@ namespace GreenField.Gadgets.ViewModels
                         DocumentEditEnabled = true;
                         SelectedCategoryType = value.DocumentCategoryType;
                         SelectedCompanyInfo = CompanyInfo.Where(record => record.Name == value.DocumentCompanyName
-                            && record.Ticker == value.DocumentCompanyTicker).FirstOrDefault();
+                            && record.Ticker == value.DocumentSecurityTicker).FirstOrDefault();
                         DocumentMetags = value.DocumentCatalogData.FileMetaTags;                        
                     }
                 }

@@ -155,6 +155,7 @@
     <Compile Include="Helpers\Grid Row Reordering Behavior\RowReorderBehavior.cs" />
     <Compile Include="Helpers\GridRowColorSelector.cs" />
     <Compile Include="Helpers\HarmonicMeanCalculation.cs" />
+    <Compile Include="Helpers\InceptionDateChecker.cs" />
     <Compile Include="Helpers\ItemStyleSelector.cs" />
     <Compile Include="Helpers\Converters\PercentageValueConverter.cs" />
     <Compile Include="Helpers\ListUtils.cs" />

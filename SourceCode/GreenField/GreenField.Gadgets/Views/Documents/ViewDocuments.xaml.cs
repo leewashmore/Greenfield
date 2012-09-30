@@ -260,7 +260,7 @@ namespace GreenField.Gadgets.Views
             #region Document Company Name
             TextBlock headerExpanderHeaderGridDocumentCompanyName = new TextBlock()
                 {
-                    Text = data.DocumentCompanyName + " (" + data.DocumentCompanyTicker + ")",
+                    Text = data.DocumentCompanyName,// + " (" + data.DocumentSecurityTicker + ")",
                     Margin = new Thickness(5, 0, 0, 0),
                     VerticalAlignment = System.Windows.VerticalAlignment.Center,
                     TextWrapping = TextWrapping.Wrap,
@@ -412,7 +412,7 @@ namespace GreenField.Gadgets.Views
 
             TextBlock headerCompanyName = new TextBlock()
             {
-                Text = data.DocumentCompanyName + " (" + data.DocumentCompanyTicker + ")",
+                Text = data.DocumentCompanyName,// + " (" + data.DocumentSecurityTicker + ")",
                 VerticalAlignment = System.Windows.VerticalAlignment.Center,
                 TextWrapping = TextWrapping.Wrap,
                 Style = (Style)(this.Resources["TextBlockStyle"])

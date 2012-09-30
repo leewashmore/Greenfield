@@ -38,7 +38,10 @@ namespace GreenField.DataContracts
         public String DocumentCompanyName { get; set; }
 
         [DataMember]
-        public String DocumentCompanyTicker { get; set; }
+        public String DocumentSecurityName { get; set; }
+
+        [DataMember]
+        public String DocumentSecurityTicker { get; set; }
 
         [DataMember]
         public DocumentCategoryType DocumentCategoryType { get; set; }
