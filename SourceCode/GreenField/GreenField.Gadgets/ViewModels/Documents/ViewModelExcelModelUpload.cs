@@ -398,7 +398,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (UploadWorkbook != null)
             {
-                _dbInteractivity.UploadModelExcelSheet(UploadWorkbook, "User", RetrieveModelWorkbookUploadCallbackMethod);
+                _dbInteractivity.UploadModelExcelSheet(UploadWorkbook, UserSession.SessionManager.SESSION.UserName, RetrieveModelWorkbookUploadCallbackMethod);
             }
         }
 

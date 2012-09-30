@@ -476,7 +476,7 @@ namespace GreenField.Web.Helpers
             {
                 Filepath = GetFileName();
                 CreateTempFile(fileStream);
-
+                UserName = userName;
                 using (SpreadsheetDocument myWorkbook = SpreadsheetDocument.Open(Filepath, true))
                 {
                     WorkbookPart workbookPart = myWorkbook.WorkbookPart;
@@ -2121,6 +2121,11 @@ namespace GreenField.Web.Helpers
             try
             {
                 decimal value;
+                if (ModelUploadData.Any(a => Decimal.TryParse(a.Amount as string, out value) || (Convert.ToString(a.Amount).Trim() != "")))
+                {
+                    ExceptionMessage = "The Data for Amount values is not valid";
+                    throw new Exception();
+                }
                 ModelUploadData = ModelUploadData.Where(a => Decimal.TryParse(a.Amount as string, out value)).ToList();
                 return true;
             }
@@ -2173,6 +2178,10 @@ namespace GreenField.Web.Helpers
                     throw new Exception();
                 }
                 isValid = ValidateAmountValues();
+                if (!isValid)
+                {
+                    throw new Exception();
+                }
                 return true;
             }
             catch (Exception ex)
