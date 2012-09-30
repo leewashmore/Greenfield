@@ -228,7 +228,6 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion  
 
-
         #region EventUnSubscribe
 
         public void Dispose()

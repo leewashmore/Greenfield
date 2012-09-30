@@ -12,15 +12,15 @@ namespace BenchmarkNodeFinancials
     class Program
     {
         #region Fields
-        private static AIMSDataEntity _entity; 
-        private static DimensionServiceReference.Entities _dimensionEntity;
+        private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
         static void Main(string[] args)
         {
+            _log.Debug("Application initiated");
             BenchmarkNodeFinancial bnf = new BenchmarkNodeFinancial();
-            bnf.RetrieveData();           
-        }
-        
+            bnf.RetrieveData();
+            _log.Debug("Application completed successfully");
+        }        
     }    
 }

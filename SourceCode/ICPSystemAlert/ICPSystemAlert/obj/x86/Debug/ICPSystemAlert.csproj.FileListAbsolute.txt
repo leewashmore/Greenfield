@@ -45,3 +45,6 @@ E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\itextsharp.pdfa
 E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\log4net.dll
 E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ResolveAssemblyReference.cache
 E:\Repository\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPresentationTemplate.pptx
+D:\Latest_Clone_17September\SourceCode\ICPSystemAlert\ICPSystemAlert\bin\Debug\ICPSystemAlert.exe.config
+D:\Latest_Clone_17September\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.exe
+D:\Latest_Clone_17September\SourceCode\ICPSystemAlert\ICPSystemAlert\obj\x86\Debug\ICPSystemAlert.pdb

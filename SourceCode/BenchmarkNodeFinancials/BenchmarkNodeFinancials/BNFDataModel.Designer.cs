@@ -178,6 +178,25 @@ namespace BenchmarkNodeFinancials
     
             return base.ExecuteFunction<PeriodFinancialPeriodRatios>("usp_GetDataForBenchNodefinPeriodYear", issuerIdsParameter, securityIdsParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="xmlScript">No Metadata Documentation available.</param>
+        public int InsertIntoBenchmarkNodeFinancials(global::System.String xmlScript)
+        {
+            ObjectParameter xmlScriptParameter;
+            if (xmlScript != null)
+            {
+                xmlScriptParameter = new ObjectParameter("xmlScript", xmlScript);
+            }
+            else
+            {
+                xmlScriptParameter = new ObjectParameter("xmlScript", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("InsertIntoBenchmarkNodeFinancials", xmlScriptParameter);
+        }
 
         #endregion
     }

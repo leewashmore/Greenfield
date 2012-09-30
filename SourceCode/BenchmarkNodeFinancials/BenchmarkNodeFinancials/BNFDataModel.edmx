@@ -105,6 +105,9 @@
           <Property Name="SOURCE_CURRENCY" Type="char" Nullable="false" MaxLength="3" />
           <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
         </EntityType>
+        <Function Name="InsertIntoBenchmarkNodeFinancials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="usp_GetDataForBenchmarkNodefinancials" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="issuerIds" Type="varchar(max)" Mode="In" />
           <Parameter Name="securityIds" Type="varchar(max)" Mode="In" />
@@ -127,6 +130,9 @@
           <FunctionImport Name="usp_GetDataForBenchNodefinPeriodYear" ReturnType="Collection(AIMSDataModel.PeriodFinancialPeriodRatios)">
             <Parameter Name="issuerIds" Mode="In" Type="String" />
             <Parameter Name="securityIds" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InsertIntoBenchmarkNodeFinancials">
+            <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="BENCHMARK_NODE_FINANCIALS">
@@ -257,6 +263,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InsertIntoBenchmarkNodeFinancials" FunctionName="AIMSDataModel.Store.InsertIntoBenchmarkNodeFinancials" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
