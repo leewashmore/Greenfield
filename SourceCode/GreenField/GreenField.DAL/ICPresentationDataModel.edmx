@@ -95,6 +95,7 @@
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="IssuerName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MeetingAttachedFileInfo">
           <Key>
@@ -486,6 +487,7 @@
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
           <Parameter Name="Location" Type="varchar" Mode="In" />
+          <Parameter Name="CompanyName" Type="varchar" Mode="In" />
           <Parameter Name="SecurityName" Type="varchar" Mode="In" />
           <Parameter Name="SecurityTicker" Type="varchar" Mode="In" />
           <Parameter Name="Type" Type="varchar" Mode="In" />
@@ -774,9 +776,6 @@
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveICPMeetingAttachedFileDetails" EntitySet="FileMasters" ReturnType="Collection(ICPresentationModel.FileMaster)">
-          <Parameter Name="MeetingId" Mode="In" Type="Int64" />
-          </FunctionImport>
           <FunctionImport Name="SetICPMeetingAttachedFileInfo" ReturnType="Collection(Int32)">
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="MeetingId" Mode="In" Type="Int64" />
@@ -803,12 +802,6 @@
             <Parameter Name="MeetingClosedDateTime" Mode="In" Type="DateTime" />
             <Parameter Name="MeetingVotingClosedDateTime" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveICPresentationAttachedFileDetails" EntitySet="FileMasters" ReturnType="Collection(ICPresentationModel.FileMaster)">
-          <Parameter Name="PresentationId" Mode="In" Type="Int64" />
-          </FunctionImport>
-           <FunctionImport Name="GetDocumentsData" ReturnType="Collection(ICPresentationModel.DocumentsData)">
-          <Parameter Name="searchString" Mode="In" Type="String" />
-          </FunctionImport>
            <FunctionImport Name="SetICPresentationAttachedFileInfo" ReturnType="Collection(Int32)">
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="PresentationId" Mode="In" Type="Int64" />
@@ -826,6 +819,7 @@
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="Name" Mode="In" Type="String" />
             <Parameter Name="Location" Mode="In" Type="String" />
+            <Parameter Name="CompanyName" Mode="In" Type="String" />
             <Parameter Name="SecurityName" Mode="In" Type="String" />
             <Parameter Name="SecurityTicker" Mode="In" Type="String" />
             <Parameter Name="Type" Mode="In" Type="String" />
@@ -837,21 +831,8 @@
             <Parameter Name="FileId" Mode="In" Type="Int64" />
             <Parameter Name="Comment" Mode="In" Type="String" />
           </FunctionImport>
-          <EntitySet Name="FileMasters" EntityType="ICPresentationModel.FileMaster" />
           <EntitySet Name="MeetingAttachedFileInfoes" EntityType="ICPresentationModel.MeetingAttachedFileInfo" />
           <EntitySet Name="PresentationAttachedFileInfoes" EntityType="ICPresentationModel.PresentationAttachedFileInfo" />
-          <AssociationSet Name="FK_CommentInfo_FileMaster" Association="ICPresentationModel.FK_CommentInfo_FileMaster">
-            <End Role="FileMaster" EntitySet="FileMasters" />
-            <End Role="CommentInfo" EntitySet="CommentInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_MeetingAttachedFileInfo_FileMaster" Association="ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster">
-            <End Role="FileMaster" EntitySet="FileMasters" />
-            <End Role="MeetingAttachedFileInfo" EntitySet="MeetingAttachedFileInfoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PresentationAttachedFileInfo_FileMaster" Association="ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster">
-            <End Role="FileMaster" EntitySet="FileMasters" />
-            <End Role="PresentationAttachedFileInfo" EntitySet="PresentationAttachedFileInfoes" />
-          </AssociationSet>
           <AssociationSet Name="FK_MeetingAttachedFileInfo_MeetingInfo" Association="ICPresentationModel.FK_MeetingAttachedFileInfo_MeetingInfo">
             <End Role="MeetingInfo" EntitySet="MeetingInfoes" />
             <End Role="MeetingAttachedFileInfo" EntitySet="MeetingAttachedFileInfoes" />
@@ -903,7 +884,29 @@
             <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteFileMaster">
-            <Parameter Name="fileId" Mode="In" Type="Int64" />
+          <Parameter Name="fileId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <EntitySet Name="FileMasters" EntityType="ICPresentationModel.FileMaster" />
+          <AssociationSet Name="FK_CommentInfo_FileMaster" Association="ICPresentationModel.FK_CommentInfo_FileMaster">
+            <End Role="FileMaster" EntitySet="FileMasters" />
+            <End Role="CommentInfo" EntitySet="CommentInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MeetingAttachedFileInfo_FileMaster" Association="ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster">
+            <End Role="FileMaster" EntitySet="FileMasters" />
+            <End Role="MeetingAttachedFileInfo" EntitySet="MeetingAttachedFileInfoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PresentationAttachedFileInfo_FileMaster" Association="ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster">
+            <End Role="FileMaster" EntitySet="FileMasters" />
+            <End Role="PresentationAttachedFileInfo" EntitySet="PresentationAttachedFileInfoes" />
+          </AssociationSet>
+          <FunctionImport Name="GetDocumentsData" ReturnType="Collection(ICPresentationModel.DocumentsData)">
+          <Parameter Name="searchString" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveICPresentationAttachedFileDetails" EntitySet="FileMasters" ReturnType="Collection(ICPresentationModel.FileMaster)">
+            <Parameter Name="PresentationId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveICPMeetingAttachedFileDetails" EntitySet="FileMasters" ReturnType="Collection(ICPresentationModel.FileMaster)">
+            <Parameter Name="MeetingId" Mode="In" Type="Int64" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
@@ -1017,44 +1020,8 @@
           <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Type="String" Name="CommentBy" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="CommentOn" />
-          <NavigationProperty Name="FileMaster" Relationship="ICPresentationModel.FK_CommentInfo_FileMaster" FromRole="CommentInfo" ToRole="FileMaster" />
           <NavigationProperty Name="PresentationInfo" Relationship="ICPresentationModel.FK_CommentInfo_PresentationInfo" FromRole="CommentInfo" ToRole="PresentationInfo" />
-        </EntityType>
-        <ComplexType Name="DocumentsData">
-          <Property Type="Int64" Name="FileID" Nullable="false" />
-          <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="SecurityName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="SecurityTicker" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="MetaTags" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="Type" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="CreatedBy" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="true" Precision="23" />
-          <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="ModifiedOn" Nullable="true" Precision="23" />
-          <Property Type="String" Name="Comment" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="CommentBy" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="CommentOn" Nullable="true" Precision="23" />
-        </ComplexType>
-        <EntityType Name="FileMaster">
-          <Key>
-            <PropertyRef Name="FileID" />
-          </Key>
-          <Property Type="Int64" Name="FileID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="Name" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SecurityName" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SecurityTicker" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Location" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="MetaTags" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Type" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="Category" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CreatedBy" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="CreatedOn" />
-          <Property Type="String" Name="ModifiedBy" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Type="DateTime" Name="ModifiedOn" />
-          <NavigationProperty Name="CommentInfoes" Relationship="ICPresentationModel.FK_CommentInfo_FileMaster" FromRole="FileMaster" ToRole="CommentInfo" />
-          <NavigationProperty Name="MeetingAttachedFileInfoes" Relationship="ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster" FromRole="FileMaster" ToRole="MeetingAttachedFileInfo" />
-          <NavigationProperty Name="PresentationAttachedFileInfoes" Relationship="ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster" FromRole="FileMaster" ToRole="PresentationAttachedFileInfo" />
+          <NavigationProperty Name="FileMaster" Relationship="ICPresentationModel.FK_CommentInfo_FileMaster" FromRole="CommentInfo" ToRole="FileMaster" />
         </EntityType>
         <EntityType Name="MeetingAttachedFileInfo">
           <Key>
@@ -1067,8 +1034,8 @@
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
           <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="FileMaster" Relationship="ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster" FromRole="MeetingAttachedFileInfo" ToRole="FileMaster" />
           <NavigationProperty Name="MeetingInfo" Relationship="ICPresentationModel.FK_MeetingAttachedFileInfo_MeetingInfo" FromRole="MeetingAttachedFileInfo" ToRole="MeetingInfo" />
+          <NavigationProperty Name="FileMaster" Relationship="ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster" FromRole="MeetingAttachedFileInfo" ToRole="FileMaster" />
         </EntityType>
         <EntityType Name="PresentationAttachedFileInfo">
           <Key>
@@ -1081,45 +1048,9 @@
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" />
           <Property Type="String" Name="ModifiedBy" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Type="DateTime" Name="ModifiedOn" Nullable="false" />
-          <NavigationProperty Name="FileMaster" Relationship="ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster" FromRole="PresentationAttachedFileInfo" ToRole="FileMaster" />
           <NavigationProperty Name="PresentationInfo" Relationship="ICPresentationModel.FK_AttachedFileInfo_PresentationInfo" FromRole="PresentationAttachedFileInfo" ToRole="PresentationInfo" />
+          <NavigationProperty Name="FileMaster" Relationship="ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster" FromRole="PresentationAttachedFileInfo" ToRole="FileMaster" />
         </EntityType>
-        <Association Name="FK_CommentInfo_FileMaster">
-          <End Type="ICPresentationModel.FileMaster" Role="FileMaster" Multiplicity="0..1" />
-          <End Type="ICPresentationModel.CommentInfo" Role="CommentInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FileMaster">
-              <PropertyRef Name="FileID" />
-            </Principal>
-            <Dependent Role="CommentInfo">
-              <PropertyRef Name="FileID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_MeetingAttachedFileInfo_FileMaster">
-          <End Type="ICPresentationModel.FileMaster" Role="FileMaster" Multiplicity="1" />
-          <End Type="ICPresentationModel.MeetingAttachedFileInfo" Role="MeetingAttachedFileInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FileMaster">
-              <PropertyRef Name="FileID" />
-            </Principal>
-            <Dependent Role="MeetingAttachedFileInfo">
-              <PropertyRef Name="FileID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PresentationAttachedFileInfo_FileMaster">
-          <End Type="ICPresentationModel.FileMaster" Role="FileMaster" Multiplicity="1" />
-          <End Type="ICPresentationModel.PresentationAttachedFileInfo" Role="PresentationAttachedFileInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="FileMaster">
-              <PropertyRef Name="FileID" />
-            </Principal>
-            <Dependent Role="PresentationAttachedFileInfo">
-              <PropertyRef Name="FileID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MeetingAttachedFileInfo_MeetingInfo">
           <End Type="ICPresentationModel.MeetingInfo" Role="MeetingInfo" Multiplicity="1" />
           <End Type="ICPresentationModel.MeetingAttachedFileInfo" Role="MeetingAttachedFileInfo" Multiplicity="*" />
@@ -1387,6 +1318,81 @@
           <Property Type="DateTime" Name="MeetingClosedDateTime" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="MeetingVotingClosedDateTime" Nullable="true" Precision="23" />
         </ComplexType>
+        <EntityType Name="FileMaster">
+          <Key>
+            <PropertyRef Name="FileID" />
+          </Key>
+          <Property Type="Int64" Name="FileID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SecurityName" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="SecurityTicker" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Location" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="MetaTags" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Type" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="Category" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="String" Name="CreatedBy" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="CreatedOn" />
+          <Property Type="String" Name="ModifiedBy" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Type="DateTime" Name="ModifiedOn" />
+          <Property Type="String" Name="IssuerName" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CommentInfoes" Relationship="ICPresentationModel.FK_CommentInfo_FileMaster" FromRole="FileMaster" ToRole="CommentInfo" />
+          <NavigationProperty Name="MeetingAttachedFileInfoes" Relationship="ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster" FromRole="FileMaster" ToRole="MeetingAttachedFileInfo" />
+          <NavigationProperty Name="PresentationAttachedFileInfoes" Relationship="ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster" FromRole="FileMaster" ToRole="PresentationAttachedFileInfo" />
+        </EntityType>
+        <Association Name="FK_CommentInfo_FileMaster">
+          <End Type="ICPresentationModel.FileMaster" Role="FileMaster" Multiplicity="0..1" />
+          <End Type="ICPresentationModel.CommentInfo" Role="CommentInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileMaster">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="CommentInfo">
+              <PropertyRef Name="FileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MeetingAttachedFileInfo_FileMaster">
+          <End Type="ICPresentationModel.FileMaster" Role="FileMaster" Multiplicity="1" />
+          <End Type="ICPresentationModel.MeetingAttachedFileInfo" Role="MeetingAttachedFileInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileMaster">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="MeetingAttachedFileInfo">
+              <PropertyRef Name="FileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PresentationAttachedFileInfo_FileMaster">
+          <End Type="ICPresentationModel.FileMaster" Role="FileMaster" Multiplicity="1" />
+          <End Type="ICPresentationModel.PresentationAttachedFileInfo" Role="PresentationAttachedFileInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FileMaster">
+              <PropertyRef Name="FileID" />
+            </Principal>
+            <Dependent Role="PresentationAttachedFileInfo">
+              <PropertyRef Name="FileID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="DocumentsData">
+          <Property Type="Int64" Name="FileID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SecurityName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SecurityTicker" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MetaTags" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Category" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreatedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IssuerName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Comment" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="CommentBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CommentOn" Nullable="true" Precision="23" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1515,52 +1521,12 @@
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="SetICPresentationComments" FunctionName="ICPresentationModel.Store.SetICPresentationComments" />
           <FunctionImportMapping FunctionImportName="SetICPresentationVoteDetails" FunctionName="ICPresentationModel.Store.SetICPresentationVoteDetails" />
-          <FunctionImportMapping FunctionImportName="RetrieveICPMeetingAttachedFileDetails" FunctionName="ICPresentationModel.Store.RetrieveICPMeetingAttachedFileDetails" />
           <FunctionImportMapping FunctionImportName="SetICPMeetingAttachedFileInfo" FunctionName="ICPresentationModel.Store.SetICPMeetingAttachedFileInfo" />
           <FunctionImportMapping FunctionImportName="SetICPMeetingPresentationStatus" FunctionName="ICPresentationModel.Store.SetICPMeetingPresentationStatus" />
           <FunctionImportMapping FunctionImportName="SetICPMeetingPresentationDate" FunctionName="ICPresentationModel.Store.SetICPMeetingPresentationDate" />
-          <FunctionImportMapping FunctionImportName="RetrieveICPresentationAttachedFileDetails" FunctionName="ICPresentationModel.Store.RetrieveICPresentationAttachedFileDetails" />
           <FunctionImportMapping FunctionImportName="SetICPresentationAttachedFileInfo" FunctionName="ICPresentationModel.Store.SetICPresentationAttachedFileInfo" />
-          <FunctionImportMapping FunctionImportName="GetDocumentsData" FunctionName="ICPresentationModel.Store.GetDocumentsData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ICPresentationModel.DocumentsData">
-                <ScalarProperty Name="FileID" ColumnName="FileID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
-                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="MetaTags" ColumnName="MetaTags" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="CommentBy" ColumnName="CommentBy" />
-                <ScalarProperty Name="CommentOn" ColumnName="CommentOn" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SetUploadFileInfo" FunctionName="ICPresentationModel.Store.SetUploadFileInfo" />
           <FunctionImportMapping FunctionImportName="SetFileCommentInfo" FunctionName="ICPresentationModel.Store.SetFileCommentInfo" />
-          <EntitySetMapping Name="FileMasters">
-            <EntityTypeMapping TypeName="ICPresentationModel.FileMaster">
-              <MappingFragment StoreEntitySet="FileMaster">
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="MetaTags" ColumnName="MetaTags" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
-                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="FileID" ColumnName="FileID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="MeetingAttachedFileInfoes">
             <EntityTypeMapping TypeName="ICPresentationModel.MeetingAttachedFileInfo">
               <MappingFragment StoreEntitySet="MeetingAttachedFileInfo">
@@ -1805,6 +1771,49 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdatePresentationInfo" FunctionName="ICPresentationModel.Store.UpdatePresentationInfo" />
           <FunctionImportMapping FunctionImportName="DeleteFileMaster" FunctionName="ICPresentationModel.Store.DeleteFileMaster" />
+          <EntitySetMapping Name="FileMasters">
+            <EntityTypeMapping TypeName="ICPresentationModel.FileMaster">
+              <MappingFragment StoreEntitySet="FileMaster">
+                <ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="MetaTags" ColumnName="MetaTags" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetDocumentsData" FunctionName="ICPresentationModel.Store.GetDocumentsData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ICPresentationModel.DocumentsData">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="MetaTags" ColumnName="MetaTags" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="CommentBy" ColumnName="CommentBy" />
+                <ScalarProperty Name="CommentOn" ColumnName="CommentOn" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveICPresentationAttachedFileDetails" FunctionName="ICPresentationModel.Store.RetrieveICPresentationAttachedFileDetails" />
+          <FunctionImportMapping FunctionImportName="RetrieveICPMeetingAttachedFileDetails" FunctionName="ICPresentationModel.Store.RetrieveICPMeetingAttachedFileDetails" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1834,30 +1843,17 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="ICPresentationModel.VoterInfo" Width="1.5" PointX="7" PointY="8.625" Height="4.2879036458333317" />
         <EntityTypeShape EntityType="ICPresentationModel.CommentInfo" Width="1.5" PointX="9.375" PointY="6.625" Height="2.5571907552083317" />
-        <EntityTypeShape EntityType="ICPresentationModel.FileMaster" Width="1.5" PointX="9.375" PointY="0.75" Height="3.9033007812500031" />
         <EntityTypeShape EntityType="ICPresentationModel.MeetingAttachedFileInfo" Width="1.5" PointX="3" PointY="0.875" Height="2.749492187499996" />
         <EntityTypeShape EntityType="ICPresentationModel.PresentationAttachedFileInfo" Width="1.5" PointX="7" PointY="4.25" Height="2.749492187499996" />
-        <AssociationConnector Association="ICPresentationModel.FK_CommentInfo_FileMaster" >
-          <ConnectorPoint PointX="10.125" PointY="4.6533007812500031" />
-          <ConnectorPoint PointX="10.125" PointY="6.625" />
-        </AssociationConnector>
-        <AssociationConnector Association="ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster" >
-          <ConnectorPoint PointX="9.375" PointY="2.249746093749998" />
-          <ConnectorPoint PointX="4.5" PointY="2.249746093749998" />
-        </AssociationConnector>
-        <AssociationConnector Association="ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster" >
-          <ConnectorPoint PointX="9.375" PointY="4.4516503906250016" />
-          <ConnectorPoint PointX="8.5" PointY="4.4516503906250016" />
-        </AssociationConnector>
         <AssociationConnector Association="ICPresentationModel.FK_MeetingAttachedFileInfo_MeetingInfo" >
           <ConnectorPoint PointX="3.75" PointY="4.25" />
-          <ConnectorPoint PointX="3.75" PointY="3.624492187499996" />
+          <ConnectorPoint PointX="3.75" PointY="3.6244921875" />
         </AssociationConnector>
         <EntityTypeShape EntityType="ICPresentationModel.MeetingConfigurationSchedule" Width="1.5" PointX="0.875" PointY="3.75" Height="3.5186979166666674" />
         <EntityTypeShape EntityType="ICPresentationModel.PresentationInfo" Width="1.5" PointX="5.125" PointY="3.75" Height="9.4800423177083317" />
         <AssociationConnector Association="ICPresentationModel.FK_CommentInfo_PresentationInfo" >
-          <ConnectorPoint PointX="6.625" PointY="7.81224609375" />
-          <ConnectorPoint PointX="9.375" PointY="7.81224609375" />
+          <ConnectorPoint PointX="6.625" PointY="8.2500025" />
+          <ConnectorPoint PointX="9.375" PointY="8.2500025" />
         </AssociationConnector>
         <AssociationConnector Association="ICPresentationModel.FK_MeetingPresentationMappingInfo_PresentationInfo" >
           <ConnectorPoint PointX="5.125" PointY="9.24974609375" />
@@ -1870,6 +1866,19 @@
         <AssociationConnector Association="ICPresentationModel.FK_VoterInfo_PresentationInfo" >
           <ConnectorPoint PointX="6.625" PointY="10.768951822916666" />
           <ConnectorPoint PointX="7" PointY="10.768951822916666" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="ICPresentationModel.FileMaster" Width="1.5" PointX="9.5" PointY="0.875" Height="4.0956022135416674" />
+        <AssociationConnector Association="ICPresentationModel.FK_CommentInfo_FileMaster" >
+          <ConnectorPoint PointX="10.1875" PointY="4.9706022135416674" />
+          <ConnectorPoint PointX="10.1875" PointY="6.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="ICPresentationModel.FK_MeetingAttachedFileInfo_FileMaster" >
+          <ConnectorPoint PointX="9.5" PointY="2.24974609375" />
+          <ConnectorPoint PointX="4.5" PointY="2.24974609375" />
+        </AssociationConnector>
+        <AssociationConnector Association="ICPresentationModel.FK_PresentationAttachedFileInfo_FileMaster" >
+          <ConnectorPoint PointX="9.5" PointY="4.6103011067708337" />
+          <ConnectorPoint PointX="8.5" PointY="4.6103011067708337" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>

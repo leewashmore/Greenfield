@@ -311,8 +311,9 @@ namespace GreenField.Web.Services
                     result.Add(new DocumentCategoricalData()
                        {
                            DocumentCategoryType = (DocumentCategoryType)EnumUtils.ToEnum(distinctInfo.Type, typeof(DocumentCategoryType)),
-                           DocumentCompanyName = distinctInfo.SecurityName,
-                           DocumentCompanyTicker = distinctInfo.SecurityTicker,
+                           DocumentCompanyName = distinctInfo.IssuerName,
+                           DocumentSecurityName = distinctInfo.SecurityName,
+                           DocumentSecurityTicker = distinctInfo.SecurityTicker,
                            DocumentCatalogData = new DocumentCatalogData()
                            {
                                FileId = distinctInfo.FileID,
@@ -337,13 +338,13 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public Boolean SetUploadFileInfo(String userName, String Name, String Location, String SecurityName
+        public Boolean SetUploadFileInfo(String userName, String Name, String Location, String CompanyName, String SecurityName
                     , String SecurityTicker, String Type, String MetaTags, String Comments)
         {
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
-                Int32? result = entity.SetUploadFileInfo(userName, Name, Location, SecurityName
+                Int32? result = entity.SetUploadFileInfo(userName, Name, Location, CompanyName, SecurityName
                     , SecurityTicker, Type, MetaTags, Comments).FirstOrDefault();
                 return result == 0;
             }
@@ -363,10 +364,27 @@ namespace GreenField.Web.Services
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
                 List<string> metaTagsInfo = entity.FileMasters.Select(a => a.MetaTags).Distinct().ToList();
+                metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.IssuerName).Distinct().ToList());
                 metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityName).Distinct().ToList());
                 metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityTicker).Distinct().ToList());
+                for (int i = 0; i < metaTagsInfo.Count; i++)
+                {
+                    if (metaTagsInfo[i] != null)
+                    {
+                        metaTagsInfo[i] = metaTagsInfo[i].ToUpper();
+                    }
+                }
 
+                if (metaTagsInfo.Contains(String.Empty))
+                {
+                    metaTagsInfo.Remove(String.Empty);
+                }
 
+                if (metaTagsInfo.Contains(null))
+                {
+                    metaTagsInfo.Remove(null);
+                }   
+                metaTagsInfo = metaTagsInfo.Distinct().ToList();
                 return metaTagsInfo;
 
             }
@@ -419,8 +437,9 @@ namespace GreenField.Web.Services
                         CommentDetails = commentDetails,
                         DocumentCatalogData = documentCatalogData,
                         DocumentCategoryType = (DocumentCategoryType)EnumUtils.ToEnum(fileMasterRecord.Type, typeof(DocumentCategoryType)),
-                        DocumentCompanyName = fileMasterRecord.SecurityName,
-                        DocumentCompanyTicker = fileMasterRecord.SecurityTicker
+                        DocumentCompanyName = fileMasterRecord.IssuerName,
+                        DocumentSecurityName = fileMasterRecord.SecurityName,
+                        DocumentSecurityTicker = fileMasterRecord.SecurityTicker
                     });
                 }
 
