@@ -20,6 +20,7 @@ using Microsoft.Practices.Prism.Commands;
 using GreenField.Gadgets.Views.Documents;
 using GreenField.Gadgets.Helpers;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
+using System.IO;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -44,10 +45,11 @@ namespace GreenField.Gadgets.ViewModels
         #endregion       
 
         #region Constructor
-        public ChildViewModelDocumentsEditDelete(IDBInteractivity dBInteractivity, ILoggerFacade logger)
+        public ChildViewModelDocumentsEditDelete(IDBInteractivity dBInteractivity, ILoggerFacade logger, List<String> companyInfo)
         {
             _dbInteractivity = dBInteractivity;
             _logger = logger;
+            CompanyInfo = companyInfo;
             
             if (_dbInteractivity != null)
             {
@@ -127,9 +129,10 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         DocumentEditEnabled = true;
                         SelectedCategoryType = value.DocumentCategoryType;
-                        SelectedCompanyInfo = CompanyInfo.Where(record => record.Name == value.DocumentCompanyName
-                            && record.Ticker == value.DocumentSecurityTicker).FirstOrDefault();
-                        DocumentMetags = value.DocumentCatalogData.FileMetaTags;                        
+                        SelectedCompanyInfo = CompanyInfo.Where(record => record == value.DocumentCompanyName).FirstOrDefault();
+                        DocumentMetags = value.DocumentCatalogData.FileMetaTags;
+                        DocumentNotes = null;
+                        UploadStream = null;
                     }
                 }
             }
@@ -156,9 +159,19 @@ namespace GreenField.Gadgets.ViewModels
         } 
         #endregion
 
+        private List<DocumentCategoryType> _categoryType;
         public List<DocumentCategoryType> CategoryType
         {
-            get { return EnumUtils.GetEnumDescriptions<DocumentCategoryType>(); }
+            get 
+            {
+                if (_categoryType == null)
+                {
+                    _categoryType = EnumUtils.GetEnumDescriptions<DocumentCategoryType>();
+                    _categoryType.Remove(DocumentCategoryType.IC_PRESENTATIONS);
+                    _categoryType.Remove(DocumentCategoryType.MODELS);
+                }
+                return _categoryType;
+            }
         }
 
         private DocumentCategoryType _selectedCategoryType;
@@ -172,8 +185,8 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         
-        private List<tblCompanyInfo> _companyInfo;
-        public List<tblCompanyInfo> CompanyInfo
+        private List<String> _companyInfo;
+        public List<String> CompanyInfo
         {
             get { return _companyInfo; }
             set
@@ -183,14 +196,25 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private tblCompanyInfo _selectedCompanyInfo;
-        public tblCompanyInfo SelectedCompanyInfo
+        private String _selectedCompanyInfo;
+        public String SelectedCompanyInfo
         {
             get { return _selectedCompanyInfo; }
             set
             {
                 _selectedCompanyInfo = value;
                 RaisePropertyChanged(() => this.SelectedCompanyInfo);
+            }
+        }
+
+        private List<String> _metaTagsInfo;
+        public List<String> MetaTagsInfo
+        {
+            get { return _metaTagsInfo; }
+            set
+            {
+                _metaTagsInfo = value;
+                RaisePropertyChanged(() => this.MetaTagsInfo);
             }
         }
 
@@ -212,7 +236,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _documentNotes = value;
-                RaisePropertyChanged(() => this.DocumentNotes);
+                RaisePropertyChanged(() => this.DocumentNotes);                
             }
         }
 
@@ -227,22 +251,92 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private Byte[] _uploadStream;
+        public Byte[] UploadStream
+        {
+            get { return _uploadStream; }
+            set { _uploadStream = value; }
+        }
+
+        
+        
+
         public ICommand DeleteCommand 
         {
             get { return new DelegateCommand<object>(DeleteCommandMethod); }
+        }        
+
+        public ICommand SaveCommand
+        {
+            get { return new DelegateCommand<object>(SaveCommandMethod); }
         }
         #endregion
 
         #region ICommand Methods
         private void DeleteCommandMethod(object param)
         {
-            BusyIndicatorNotification(true, "Deleting document from repository...");
-            _dbInteractivity.DeleteDocument(SelectedDocumentCatagoricalInfo.DocumentCatalogData.FilePath, DeleteDocumentCallbackMethod);
+            
+            if (_dbInteractivity != null)
+            {
+                BusyIndicatorNotification(true, "Deleting document from repository...");
+                _dbInteractivity.DeleteDocument(SelectedDocumentCatagoricalInfo.DocumentCatalogData.FilePath, DeleteDocumentCallbackMethod); 
+            }
+        }
+
+        private void SaveCommandMethod(object param)
+        {
+            if (_dbInteractivity != null)
+            {
+                BusyIndicatorNotification(true, "Saving document chnages to repository...");
+                _dbInteractivity.UpdateDocumentsDataForUser(Convert.ToInt64(SelectedDocumentCatagoricalInfo.DocumentCatalogData.FileId)
+                    , UserSession.SessionManager.SESSION.UserName, DocumentMetags, SelectedCompanyInfo
+                    , EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(SelectedCategoryType), DocumentNotes, UploadStream
+                    , UpdateDocumentsDataForUserCallbackMethod);
+            }
         }
         #endregion
 
-
         #region Callback Method
+        private void UpdateDocumentsDataForUserCallbackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result == true)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    if (_dbInteractivity != null)
+                    {
+                        DocumentCatagoricalInfo = null;
+                        DocumentEditEnabled = false;
+                        SelectedCompanyInfo = null;
+                        DocumentMetags = null;
+                        DocumentNotes = null;
+                        UploadStream = null;
+
+                        BusyIndicatorNotification(true, "Retrieving user specific document information...");
+                        _dbInteractivity.RetrieveDocumentsDataForUser(UserSession.SessionManager.SESSION.UserName, RetrieveDocumentsDataForUserCallbackMethod);
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);
+            }
+        }
+
         private void DeleteDocumentCallbackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -321,42 +415,10 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     DocumentCatagoricalInfo = result.Where(record => record.DocumentCategoryType != DocumentCategoryType.IC_PRESENTATIONS
                         && record.DocumentCategoryType != DocumentCategoryType.MODELS).ToList();
-
-                    if (_dbInteractivity != null)
-                    {
-                        BusyIndicatorNotification(true, "Retrieving available company information...");
-                        _dbInteractivity.RetrieveCompanyData(RetrieveCompanyDataCallbackMethod);
-                    }
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-                BusyIndicatorNotification();
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-        private void RetrieveCompanyDataCallbackMethod(List<tblCompanyInfo> result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    CompanyInfo = result;
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
                 }
             }
             catch (Exception ex)
@@ -369,7 +431,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogEndMethod(_logger, methodNamespace);
                 BusyIndicatorNotification();
             }
-        }
+        }       
         #endregion
 
         #region Helper Methods

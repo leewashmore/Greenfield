@@ -2056,12 +2056,14 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<tblCompanyInfo> RetrieveCompanyData()
+        public List<String> RetrieveCompanyData()
         {
             try
             {
-                ReutersEntities entity = new ReutersEntities();
-                return entity.tblCompanyInfoes.ToList();
+                DimensionEntitiesService.Entities entity = DimensionEntity;
+                List<String> result = entity.GF_SECURITY_BASEVIEW.OrderBy(record => record.ISSUER_NAME).ToList()
+                    .Select(record => record.ISSUER_NAME).ToList().Distinct().ToList();
+                return result;
             }
             catch (Exception ex)
             {

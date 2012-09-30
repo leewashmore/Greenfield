@@ -13,7 +13,8 @@
       <xs:element minOccurs="0" name="DocumentCatalogData" nillable="true" type="tns:DocumentCatalogData" />
       <xs:element minOccurs="0" name="DocumentCategoryType" type="tns:DocumentCategoryType" />
       <xs:element minOccurs="0" name="DocumentCompanyName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DocumentCompanyTicker" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentSecurityName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DocumentSecurityTicker" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="DocumentCategoricalData" nillable="true" type="tns:DocumentCategoricalData" />

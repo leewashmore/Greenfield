@@ -376,9 +376,6 @@
     <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.RatioComparisonData.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\ExternalResearchDefinitions\GreenField.ServiceCaller.ExternalResearchDefinitions.tblCompanyInfo1.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\FairValueDefinitions\FairValueOperations.wsdl" />
     <None Include="Service References\FairValueDefinitions\FairValueOperations.xsd">
       <SubType>Designer</SubType>

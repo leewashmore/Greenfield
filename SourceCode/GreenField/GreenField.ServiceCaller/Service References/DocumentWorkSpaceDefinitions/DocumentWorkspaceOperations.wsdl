@@ -83,6 +83,15 @@
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_UpdateDocumentsDataForUser_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateDocumentsDataForUser" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_UpdateDocumentsDataForUser_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateDocumentsDataForUserResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_UpdateDocumentsDataForUser_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_SetDocumentComment_InputMessage">
     <wsdl:part name="parameters" element="tns:SetDocumentComment" />
   </wsdl:message>
@@ -90,7 +99,7 @@
     <wsdl:part name="parameters" element="tns:SetDocumentCommentResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_SetDocumentComment_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveStatementData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveStatementData" />
@@ -99,7 +108,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveStatementDataResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveStatementData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_UploadExcelModel_InputMessage">
     <wsdl:part name="parameters" element="tns:UploadExcelModel" />
@@ -117,7 +126,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveCEDataResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveCEData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q11:ServiceFault" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="DocumentWorkspaceOperations">
     <wsdl:operation name="UploadDocument">
@@ -159,6 +168,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataForUser" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataForUserResponse" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataForUserServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_RetrieveDocumentsDataForUser_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDocumentsDataForUser">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UpdateDocumentsDataForUser" message="tns:DocumentWorkspaceOperations_UpdateDocumentsDataForUser_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UpdateDocumentsDataForUserResponse" message="tns:DocumentWorkspaceOperations_UpdateDocumentsDataForUser_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UpdateDocumentsDataForUserServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_UpdateDocumentsDataForUser_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="SetDocumentComment">
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentComment" message="tns:DocumentWorkspaceOperations_SetDocumentComment_InputMessage" />
@@ -269,6 +283,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveDocumentsDataForUser">
       <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveDocumentsDataForUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateDocumentsDataForUser">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/UpdateDocumentsDataForUser" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

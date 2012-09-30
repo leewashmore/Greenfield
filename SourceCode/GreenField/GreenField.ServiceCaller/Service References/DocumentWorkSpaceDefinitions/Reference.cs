@@ -354,14 +354,14 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/SetUploadFileInfo", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/SetUploadFileInfoResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/SetUploadFileInfoServiceFaultFault" +
             "", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginSetUploadFileInfo(string userName, string Name, string Location, string SecurityName, string SecurityTicker, string Type, string MetaTags, string Comments, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginSetUploadFileInfo(string userName, string Name, string Location, string CompanyName, string SecurityName, string SecurityTicker, string Type, string MetaTags, string Comments, System.AsyncCallback callback, object asyncState);
         
         bool EndSetUploadFileInfo(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTags", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTagsResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/GetDocumentsMetaTagsServiceFaultFa" +
             "ult", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginGetDocumentsMetaTags(System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginGetDocumentsMetaTags(bool OnlyTags, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<string> EndGetDocumentsMetaTags(System.IAsyncResult result);
         
@@ -372,6 +372,14 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         System.IAsyncResult BeginRetrieveDocumentsDataForUser(string userName, System.AsyncCallback callback, object asyncState);
         
         System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData> EndRetrieveDocumentsDataForUser(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/UpdateDocumentsDataForUser", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/UpdateDocumentsDataForUserResponse" +
+            "")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/UpdateDocumentsDataForUserServiceF" +
+            "aultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginUpdateDocumentsDataForUser(long fileId, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, System.AsyncCallback callback, object asyncState);
+        
+        bool EndUpdateDocumentsDataForUser(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentComment", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentCommentResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/SetDocumentCommentServiceFaultFaul" +
@@ -558,6 +566,25 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class UpdateDocumentsDataForUserCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public UpdateDocumentsDataForUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class SetDocumentCommentCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -684,6 +711,12 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveDocumentsDataForUserCompletedDelegate;
         
+        private BeginOperationDelegate onBeginUpdateDocumentsDataForUserDelegate;
+        
+        private EndOperationDelegate onEndUpdateDocumentsDataForUserDelegate;
+        
+        private System.Threading.SendOrPostCallback onUpdateDocumentsDataForUserCompletedDelegate;
+        
         private BeginOperationDelegate onBeginSetDocumentCommentDelegate;
         
         private EndOperationDelegate onEndSetDocumentCommentDelegate;
@@ -776,6 +809,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         public event System.EventHandler<GetDocumentsMetaTagsCompletedEventArgs> GetDocumentsMetaTagsCompleted;
         
         public event System.EventHandler<RetrieveDocumentsDataForUserCompletedEventArgs> RetrieveDocumentsDataForUserCompleted;
+        
+        public event System.EventHandler<UpdateDocumentsDataForUserCompletedEventArgs> UpdateDocumentsDataForUserCompleted;
         
         public event System.EventHandler<SetDocumentCommentCompletedEventArgs> SetDocumentCommentCompleted;
         
@@ -1024,8 +1059,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginSetUploadFileInfo(string userName, string Name, string Location, string SecurityName, string SecurityTicker, string Type, string MetaTags, string Comments, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginSetUploadFileInfo(userName, Name, Location, SecurityName, SecurityTicker, Type, MetaTags, Comments, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginSetUploadFileInfo(string userName, string Name, string Location, string CompanyName, string SecurityName, string SecurityTicker, string Type, string MetaTags, string Comments, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginSetUploadFileInfo(userName, Name, Location, CompanyName, SecurityName, SecurityTicker, Type, MetaTags, Comments, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1037,12 +1072,13 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             string userName = ((string)(inValues[0]));
             string Name = ((string)(inValues[1]));
             string Location = ((string)(inValues[2]));
-            string SecurityName = ((string)(inValues[3]));
-            string SecurityTicker = ((string)(inValues[4]));
-            string Type = ((string)(inValues[5]));
-            string MetaTags = ((string)(inValues[6]));
-            string Comments = ((string)(inValues[7]));
-            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginSetUploadFileInfo(userName, Name, Location, SecurityName, SecurityTicker, Type, MetaTags, Comments, callback, asyncState);
+            string CompanyName = ((string)(inValues[3]));
+            string SecurityName = ((string)(inValues[4]));
+            string SecurityTicker = ((string)(inValues[5]));
+            string Type = ((string)(inValues[6]));
+            string MetaTags = ((string)(inValues[7]));
+            string Comments = ((string)(inValues[8]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginSetUploadFileInfo(userName, Name, Location, CompanyName, SecurityName, SecurityTicker, Type, MetaTags, Comments, callback, asyncState);
         }
         
         private object[] OnEndSetUploadFileInfo(System.IAsyncResult result) {
@@ -1058,11 +1094,11 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             }
         }
         
-        public void SetUploadFileInfoAsync(string userName, string Name, string Location, string SecurityName, string SecurityTicker, string Type, string MetaTags, string Comments) {
-            this.SetUploadFileInfoAsync(userName, Name, Location, SecurityName, SecurityTicker, Type, MetaTags, Comments, null);
+        public void SetUploadFileInfoAsync(string userName, string Name, string Location, string CompanyName, string SecurityName, string SecurityTicker, string Type, string MetaTags, string Comments) {
+            this.SetUploadFileInfoAsync(userName, Name, Location, CompanyName, SecurityName, SecurityTicker, Type, MetaTags, Comments, null);
         }
         
-        public void SetUploadFileInfoAsync(string userName, string Name, string Location, string SecurityName, string SecurityTicker, string Type, string MetaTags, string Comments, object userState) {
+        public void SetUploadFileInfoAsync(string userName, string Name, string Location, string CompanyName, string SecurityName, string SecurityTicker, string Type, string MetaTags, string Comments, object userState) {
             if ((this.onBeginSetUploadFileInfoDelegate == null)) {
                 this.onBeginSetUploadFileInfoDelegate = new BeginOperationDelegate(this.OnBeginSetUploadFileInfo);
             }
@@ -1076,6 +1112,7 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
                         userName,
                         Name,
                         Location,
+                        CompanyName,
                         SecurityName,
                         SecurityTicker,
                         Type,
@@ -1084,8 +1121,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginGetDocumentsMetaTags(System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginGetDocumentsMetaTags(callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginGetDocumentsMetaTags(bool OnlyTags, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetDocumentsMetaTags(OnlyTags, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1094,7 +1131,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         }
         
         private System.IAsyncResult OnBeginGetDocumentsMetaTags(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginGetDocumentsMetaTags(callback, asyncState);
+            bool OnlyTags = ((bool)(inValues[0]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginGetDocumentsMetaTags(OnlyTags, callback, asyncState);
         }
         
         private object[] OnEndGetDocumentsMetaTags(System.IAsyncResult result) {
@@ -1110,11 +1148,11 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             }
         }
         
-        public void GetDocumentsMetaTagsAsync() {
-            this.GetDocumentsMetaTagsAsync(null);
+        public void GetDocumentsMetaTagsAsync(bool OnlyTags) {
+            this.GetDocumentsMetaTagsAsync(OnlyTags, null);
         }
         
-        public void GetDocumentsMetaTagsAsync(object userState) {
+        public void GetDocumentsMetaTagsAsync(bool OnlyTags, object userState) {
             if ((this.onBeginGetDocumentsMetaTagsDelegate == null)) {
                 this.onBeginGetDocumentsMetaTagsDelegate = new BeginOperationDelegate(this.OnBeginGetDocumentsMetaTags);
             }
@@ -1124,7 +1162,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             if ((this.onGetDocumentsMetaTagsCompletedDelegate == null)) {
                 this.onGetDocumentsMetaTagsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetDocumentsMetaTagsCompleted);
             }
-            base.InvokeAsync(this.onBeginGetDocumentsMetaTagsDelegate, null, this.onEndGetDocumentsMetaTagsDelegate, this.onGetDocumentsMetaTagsCompletedDelegate, userState);
+            base.InvokeAsync(this.onBeginGetDocumentsMetaTagsDelegate, new object[] {
+                        OnlyTags}, this.onEndGetDocumentsMetaTagsDelegate, this.onGetDocumentsMetaTagsCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1171,6 +1210,64 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             }
             base.InvokeAsync(this.onBeginRetrieveDocumentsDataForUserDelegate, new object[] {
                         userName}, this.onEndRetrieveDocumentsDataForUserDelegate, this.onRetrieveDocumentsDataForUserCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginUpdateDocumentsDataForUser(long fileId, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdateDocumentsDataForUser(fileId, userName, metaTags, companyInfo, categoryType, comment, overwriteStream, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndUpdateDocumentsDataForUser(System.IAsyncResult result) {
+            return base.Channel.EndUpdateDocumentsDataForUser(result);
+        }
+        
+        private System.IAsyncResult OnBeginUpdateDocumentsDataForUser(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            long fileId = ((long)(inValues[0]));
+            string userName = ((string)(inValues[1]));
+            string metaTags = ((string)(inValues[2]));
+            string companyInfo = ((string)(inValues[3]));
+            string categoryType = ((string)(inValues[4]));
+            string comment = ((string)(inValues[5]));
+            byte[] overwriteStream = ((byte[])(inValues[6]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginUpdateDocumentsDataForUser(fileId, userName, metaTags, companyInfo, categoryType, comment, overwriteStream, callback, asyncState);
+        }
+        
+        private object[] OnEndUpdateDocumentsDataForUser(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndUpdateDocumentsDataForUser(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnUpdateDocumentsDataForUserCompleted(object state) {
+            if ((this.UpdateDocumentsDataForUserCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.UpdateDocumentsDataForUserCompleted(this, new UpdateDocumentsDataForUserCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void UpdateDocumentsDataForUserAsync(long fileId, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream) {
+            this.UpdateDocumentsDataForUserAsync(fileId, userName, metaTags, companyInfo, categoryType, comment, overwriteStream, null);
+        }
+        
+        public void UpdateDocumentsDataForUserAsync(long fileId, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, object userState) {
+            if ((this.onBeginUpdateDocumentsDataForUserDelegate == null)) {
+                this.onBeginUpdateDocumentsDataForUserDelegate = new BeginOperationDelegate(this.OnBeginUpdateDocumentsDataForUser);
+            }
+            if ((this.onEndUpdateDocumentsDataForUserDelegate == null)) {
+                this.onEndUpdateDocumentsDataForUserDelegate = new EndOperationDelegate(this.OnEndUpdateDocumentsDataForUser);
+            }
+            if ((this.onUpdateDocumentsDataForUserCompletedDelegate == null)) {
+                this.onUpdateDocumentsDataForUserCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUpdateDocumentsDataForUserCompleted);
+            }
+            base.InvokeAsync(this.onBeginUpdateDocumentsDataForUserDelegate, new object[] {
+                        fileId,
+                        userName,
+                        metaTags,
+                        companyInfo,
+                        categoryType,
+                        comment,
+                        overwriteStream}, this.onEndUpdateDocumentsDataForUserDelegate, this.onUpdateDocumentsDataForUserCompletedDelegate, userState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1508,16 +1605,17 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginSetUploadFileInfo(string userName, string Name, string Location, string SecurityName, string SecurityTicker, string Type, string MetaTags, string Comments, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[8];
+            public System.IAsyncResult BeginSetUploadFileInfo(string userName, string Name, string Location, string CompanyName, string SecurityName, string SecurityTicker, string Type, string MetaTags, string Comments, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[9];
                 _args[0] = userName;
                 _args[1] = Name;
                 _args[2] = Location;
-                _args[3] = SecurityName;
-                _args[4] = SecurityTicker;
-                _args[5] = Type;
-                _args[6] = MetaTags;
-                _args[7] = Comments;
+                _args[3] = CompanyName;
+                _args[4] = SecurityName;
+                _args[5] = SecurityTicker;
+                _args[6] = Type;
+                _args[7] = MetaTags;
+                _args[8] = Comments;
                 System.IAsyncResult _result = base.BeginInvoke("SetUploadFileInfo", _args, callback, asyncState);
                 return _result;
             }
@@ -1528,8 +1626,9 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginGetDocumentsMetaTags(System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[0];
+            public System.IAsyncResult BeginGetDocumentsMetaTags(bool OnlyTags, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = OnlyTags;
                 System.IAsyncResult _result = base.BeginInvoke("GetDocumentsMetaTags", _args, callback, asyncState);
                 return _result;
             }
@@ -1550,6 +1649,25 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             public System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData> EndRetrieveDocumentsDataForUser(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData> _result = ((System.Collections.Generic.List<GreenField.DataContracts.DocumentCategoricalData>)(base.EndInvoke("RetrieveDocumentsDataForUser", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginUpdateDocumentsDataForUser(long fileId, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[7];
+                _args[0] = fileId;
+                _args[1] = userName;
+                _args[2] = metaTags;
+                _args[3] = companyInfo;
+                _args[4] = categoryType;
+                _args[5] = comment;
+                _args[6] = overwriteStream;
+                System.IAsyncResult _result = base.BeginInvoke("UpdateDocumentsDataForUser", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndUpdateDocumentsDataForUser(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("UpdateDocumentsDataForUser", _args, result)));
                 return _result;
             }
             

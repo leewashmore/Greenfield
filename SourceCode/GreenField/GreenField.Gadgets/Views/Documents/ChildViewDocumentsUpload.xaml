@@ -3,7 +3,7 @@
            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
            xmlns:controls="clr-namespace:System.Windows.Controls;assembly=System.Windows.Controls"
            xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"           
-           Width="400" Title="Upload File">
+           Width="600" Title="Upload File">
     <controls:ChildWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -48,14 +48,20 @@
                                    Click="btnBrowse_Click" />
             </Grid>
             <telerik:RadComboBox x:Name="cbCompany" Style="{StaticResource RadComboBoxStyle}" Grid.Row="1" Grid.Column="1" Margin="0,2,0,0" 
-                                 VerticalAlignment="Center" HorizontalContentAlignment="Left" SelectionChanged="cbCompany_SelectionChanged" />
+                                 VerticalAlignment="Center" HorizontalContentAlignment="Left" SelectionChanged="cbCompany_SelectionChanged">
+                <telerik:RadComboBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel />
+                    </ItemsPanelTemplate>
+                </telerik:RadComboBox.ItemsPanel>
+            </telerik:RadComboBox>
             <telerik:RadComboBox x:Name="cbType" Style="{StaticResource RadComboBoxStyle}" Grid.Row="2" Grid.Column="1" Margin="0,2,0,0" 
                                  VerticalAlignment="Center" HorizontalContentAlignment="Left" SelectionChanged="cbType_SelectionChanged"/>
             <TextBox x:Name="tbTags" Grid.Row="3" Grid.Column="1" Margin="0,2,0,0" MaxLength="255" Style="{StaticResource TextBoxStyle}" 
                      VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
             <TextBox x:Name="tbNotes" Grid.Row="4" Grid.Column="1" Margin="0,2,0,0" Height="60" Style="{StaticResource TextBoxStyle}"
                      VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
-            <telerik:RadComboBox Grid.Row="5" Grid.Column="1" Margin="0,2,0,0" Style="{StaticResource RadComboBoxStyle}"
+            <telerik:RadComboBox x:Name="cbAlert" Grid.Row="5" Grid.Column="1" Margin="0,2,0,0" Style="{StaticResource RadComboBoxStyle}"
                                  VerticalAlignment="Center" HorizontalContentAlignment="Left"/>
         </Grid>
 

@@ -369,9 +369,6 @@
         <Function Name="DeleteFileMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fileId" Type="bigint" Mode="In" />
         </Function>
-        <Function Name="GetDocumentsData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="searchString" Type="nvarchar(max)" Mode="In" />
-        </Function>
         <Function Name="GetMeetingMinutesReportDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MeetingId" Type="bigint" Mode="In" />
         </Function>
@@ -496,6 +493,14 @@
           <Parameter Name="Type" Type="varchar" Mode="In" />
           <Parameter Name="MetaTags" Type="varchar" Mode="In" />
           <Parameter Name="Comments" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateDocumentsData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fileId" Type="bigint" Mode="In" />
+          <Parameter Name="userName" Type="varchar" Mode="In" />
+          <Parameter Name="metaTags" Type="varchar" Mode="In" />
+          <Parameter Name="companyName" Type="varchar" Mode="In" />
+          <Parameter Name="categoryType" Type="varchar" Mode="In" />
+          <Parameter Name="comment" Type="varchar" Mode="In" />
         </Function>
         <Function Name="UpdatePresentationInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="userName" Type="varchar" Mode="In" />
@@ -910,10 +915,18 @@
           <Parameter Name="searchString" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="RetrieveICPresentationAttachedFileDetails" EntitySet="FileMasters" ReturnType="Collection(ICPresentationModel.FileMaster)">
-            <Parameter Name="PresentationId" Mode="In" Type="Int64" />
+          <Parameter Name="PresentationId" Mode="In" Type="Int64" />
           </FunctionImport>
           <FunctionImport Name="RetrieveICPMeetingAttachedFileDetails" EntitySet="FileMasters" ReturnType="Collection(ICPresentationModel.FileMaster)">
-            <Parameter Name="MeetingId" Mode="In" Type="Int64" />
+          <Parameter Name="MeetingId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateDocumentsData">
+            <Parameter Name="fileId" Mode="In" Type="Int64" />
+            <Parameter Name="userName" Mode="In" Type="String" />
+            <Parameter Name="metaTags" Mode="In" Type="String" />
+            <Parameter Name="companyName" Mode="In" Type="String" />
+            <Parameter Name="categoryType" Mode="In" Type="String" />
+            <Parameter Name="comment" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
@@ -1798,30 +1811,9 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetDocumentsData" FunctionName="ICPresentationModel.Store.GetDocumentsData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ICPresentationModel.DocumentsData">
-                <ScalarProperty Name="FileID" ColumnName="FileID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
-                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
-                <ScalarProperty Name="Location" ColumnName="Location" />
-                <ScalarProperty Name="MetaTags" ColumnName="MetaTags" />
-                <ScalarProperty Name="Type" ColumnName="Type" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
-                <ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="CommentBy" ColumnName="CommentBy" />
-                <ScalarProperty Name="CommentOn" ColumnName="CommentOn" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="RetrieveICPresentationAttachedFileDetails" FunctionName="ICPresentationModel.Store.RetrieveICPresentationAttachedFileDetails" />
           <FunctionImportMapping FunctionImportName="RetrieveICPMeetingAttachedFileDetails" FunctionName="ICPresentationModel.Store.RetrieveICPMeetingAttachedFileDetails" />
+          <FunctionImportMapping FunctionImportName="UpdateDocumentsData" FunctionName="ICPresentationModel.Store.UpdateDocumentsData" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

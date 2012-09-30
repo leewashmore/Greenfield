@@ -2628,6 +2628,80 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<FileMaster>("RetrieveICPMeetingAttachedFileDetails", mergeOption, meetingIdParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="fileId">No Metadata Documentation available.</param>
+        /// <param name="userName">No Metadata Documentation available.</param>
+        /// <param name="metaTags">No Metadata Documentation available.</param>
+        /// <param name="companyName">No Metadata Documentation available.</param>
+        /// <param name="categoryType">No Metadata Documentation available.</param>
+        /// <param name="comment">No Metadata Documentation available.</param>
+        public int UpdateDocumentsData(Nullable<global::System.Int64> fileId, global::System.String userName, global::System.String metaTags, global::System.String companyName, global::System.String categoryType, global::System.String comment)
+        {
+            ObjectParameter fileIdParameter;
+            if (fileId.HasValue)
+            {
+                fileIdParameter = new ObjectParameter("fileId", fileId);
+            }
+            else
+            {
+                fileIdParameter = new ObjectParameter("fileId", typeof(global::System.Int64));
+            }
+    
+            ObjectParameter userNameParameter;
+            if (userName != null)
+            {
+                userNameParameter = new ObjectParameter("userName", userName);
+            }
+            else
+            {
+                userNameParameter = new ObjectParameter("userName", typeof(global::System.String));
+            }
+    
+            ObjectParameter metaTagsParameter;
+            if (metaTags != null)
+            {
+                metaTagsParameter = new ObjectParameter("metaTags", metaTags);
+            }
+            else
+            {
+                metaTagsParameter = new ObjectParameter("metaTags", typeof(global::System.String));
+            }
+    
+            ObjectParameter companyNameParameter;
+            if (companyName != null)
+            {
+                companyNameParameter = new ObjectParameter("companyName", companyName);
+            }
+            else
+            {
+                companyNameParameter = new ObjectParameter("companyName", typeof(global::System.String));
+            }
+    
+            ObjectParameter categoryTypeParameter;
+            if (categoryType != null)
+            {
+                categoryTypeParameter = new ObjectParameter("categoryType", categoryType);
+            }
+            else
+            {
+                categoryTypeParameter = new ObjectParameter("categoryType", typeof(global::System.String));
+            }
+    
+            ObjectParameter commentParameter;
+            if (comment != null)
+            {
+                commentParameter = new ObjectParameter("comment", comment);
+            }
+            else
+            {
+                commentParameter = new ObjectParameter("comment", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("UpdateDocumentsData", fileIdParameter, userNameParameter, metaTagsParameter, companyNameParameter, categoryTypeParameter, commentParameter);
+        }
 
         #endregion
     }

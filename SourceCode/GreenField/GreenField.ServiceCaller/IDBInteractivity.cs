@@ -238,16 +238,19 @@ namespace GreenField.ServiceCaller
 
         void RetrieveDocument(String fileName, Action<Byte[]> callback);
 
-        void SetUploadFileInfo(String userName, String Name, String Location, String SecurityName
+        void SetUploadFileInfo(String userName, String Name, String Location, String CompanyName, String SecurityName
             , String SecurityTicker, String Type, String MetaTags, String Comments, Action<Boolean?> callback);
 
-        void GetDocumentsMetaTags(Action<List<string>> callback);
+        void GetDocumentsMetaTags(Action<List<string>> callback, Boolean OnlyTags = false);
 
         void RetrieveDocumentsDataForUser(String userName, Action<List<DocumentCategoricalData>> callback);
 
         void SetDocumentComment(String userName, Int64 fileId, String comment, Action<Boolean?> callback);
 
         void DeleteFileMasterRecord(Int64 fileId, Action<Boolean?> callback);
+
+        void UpdateDocumentsDataForUser(Int64 fileId, String userName, String metaTags, String companyInfo
+            , String categoryType, String comment, Byte[] overwriteStream, Action<Boolean?> callback);
         #endregion
 
         #region Investment Committee
@@ -333,7 +336,7 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-        void RetrieveCompanyData(Action<List<tblCompanyInfo>> callback);
+        void RetrieveCompanyData(Action<List<String>> callback);
 
         #region Custom Screening Tool
 

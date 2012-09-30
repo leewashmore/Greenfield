@@ -24,23 +24,25 @@ namespace GreenField.Gadgets.Views.Documents
         IDBInteractivity _dBInteractivity;
         ILoggerFacade _logger;
 
-        public ChildViewDocumentsUpload(IDBInteractivity dBInteractivity, ILoggerFacade logger)
+        public ChildViewDocumentsUpload(IDBInteractivity dBInteractivity, ILoggerFacade logger, List<string> companyInfo, List<MembershipUserInfo> userInfo)
         {
             _dBInteractivity = dBInteractivity;
             _logger = logger;
 
             InitializeComponent();
 
-            if (_dBInteractivity != null)
-            {
-                _dBInteractivity.RetrieveCompanyData(RetrieveCompanyDataCallbackMethod);
-            }
+            this.cbCompany.ItemsSource = companyInfo;
+            this.cbCompany.SelectedIndex = 0;
 
             CategoryType.Remove(DocumentCategoryType.IC_PRESENTATIONS);
             CategoryType.Remove(DocumentCategoryType.MODELS);
             this.cbType.ItemsSource = CategoryType;
             this.cbType.SelectedIndex = 0;
             this.OKButton.IsEnabled = false;
+
+            this.cbAlert.ItemsSource = userInfo;
+            this.cbAlert.DisplayMemberPath = "UserName";            
+
         }
 
         public List<DocumentCategoryType> CategoryType
@@ -52,8 +54,8 @@ namespace GreenField.Gadgets.Views.Documents
         public String UploadFileName { get; set; }
         public String UploadFileNotes { get; set; }
         public String UploadFileTags { get; set; }
-        public tblCompanyInfo UploadFileCompanyInfo { get; set; }
-        public DocumentCategoryType UploadFileType { get; set; }
+        public String UploadFileCompanyInfo { get; set; }
+        public DocumentCategoryType UploadFileType { get; set; }        
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
@@ -82,34 +84,8 @@ namespace GreenField.Gadgets.Views.Documents
 
         private void cbCompany_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
         {
-            UploadFileCompanyInfo = this.cbCompany.SelectedItem as tblCompanyInfo;
+            UploadFileCompanyInfo = this.cbCompany.SelectedItem as String;
             ValidateSubmission();
-        }
-
-        private void RetrieveCompanyDataCallbackMethod(List<tblCompanyInfo> result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    this.cbCompany.ItemsSource = result;
-                    this.cbCompany.DisplayMemberPath = "Name";
-                    this.cbCompany.SelectedIndex = 0;
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         private Byte[] FileToByteArray(String fileName, FileStream fileStream)

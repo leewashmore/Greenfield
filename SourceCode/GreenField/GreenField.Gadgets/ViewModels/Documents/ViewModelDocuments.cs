@@ -62,9 +62,7 @@ namespace GreenField.Gadgets.ViewModels
                         String.Empty, UploadDocumentCallbackMethod);
                 }
             }
-        }
-
-        
+        }        
 
         #region Properties
         #region Busy Indicator Notification
@@ -118,12 +116,6 @@ namespace GreenField.Gadgets.ViewModels
                 _isActive = value;
                 if (value)
                 {
-                    if (_uploadWindow == null)
-                    {
-                        _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger);
-                        _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);
-                    }
-
                     if (DbInteractivity != null && IsActive)
                     {
                         BusyIndicatorNotification(true, "Retrieving document meta-tag information...");
@@ -149,6 +141,10 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
         #endregion
+
+        public List<String> CompanyInfo { get; set; }
+
+        public List<MembershipUserInfo> UserInfo { get; set; }
 
         #region Auto Complete Search Box
         /// <summary>
@@ -241,7 +237,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             if (_uploadWindow == null)
             {
-                _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger);
+                _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger, CompanyInfo, UserInfo);
             }
             _uploadWindow.Initialize();
             _uploadWindow.Show();
@@ -249,8 +245,16 @@ namespace GreenField.Gadgets.ViewModels
 
         private void DocumentEditDeleteCommandMethod(object param)
         {
-            ChildViewDocumentsEditDelete editDeleteWindow = new ChildViewDocumentsEditDelete(DbInteractivity, _logger);
+            ChildViewDocumentsEditDelete editDeleteWindow = new ChildViewDocumentsEditDelete(DbInteractivity, _logger, CompanyInfo);
             editDeleteWindow.Show();
+            editDeleteWindow.Unloaded += (se, e) =>
+            {
+                if (SearchStringText != null && DbInteractivity != null)
+                {
+                    BusyIndicatorNotification(true, "Retrieving Search Results...");
+                    DbInteractivity.RetrieveDocumentsData(SearchStringText, RetrieveDocumentsDataCallbackMethod);
+                }
+            };
         } 
         #endregion
 
@@ -267,7 +271,7 @@ namespace GreenField.Gadgets.ViewModels
                     if (DbInteractivity != null)
                     {
                         DbInteractivity.SetUploadFileInfo(UserSession.SessionManager.SESSION.UserName, _uploadWindow.UploadFileName
-                            , result, _uploadWindow.UploadFileCompanyInfo.Name, _uploadWindow.UploadFileCompanyInfo.Ticker
+                            , result, _uploadWindow.UploadFileCompanyInfo, null, null
                             , EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(_uploadWindow.UploadFileType)
                             , _uploadWindow.UploadFileTags, _uploadWindow.UploadFileNotes, SetUploadFileInfoCallbackMethod);
                     }
@@ -359,6 +363,97 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     MetaTagsInfo = result;
+                    if (DbInteractivity != null && (CompanyInfo == null || UserInfo == null))
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Company Information...");
+                        DbInteractivity.RetrieveCompanyData(RetrieveCompanyDataCallbackMethod);
+                    }
+                    else
+                    {
+                        if (_uploadWindow == null)
+                        {
+                            _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger, CompanyInfo, UserInfo);
+                            _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);
+                            BusyIndicatorNotification();
+                        }
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);                
+            }
+        }
+
+        private void RetrieveCompanyDataCallbackMethod(List<String> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    CompanyInfo = result;
+                    if (DbInteractivity != null && UserInfo == null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving User Information...");
+                        DbInteractivity.GetAllUsers(GetAllUsersCallbackMethod);
+                    }
+                    else
+                    {
+                        if (_uploadWindow == null)
+                        {
+                            _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger, CompanyInfo, UserInfo);
+                            _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);
+                            BusyIndicatorNotification();
+                        }
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            finally
+            {
+                Logging.LogEndMethod(_logger, methodNamespace);                
+            }
+        }
+
+        private void GetAllUsersCallbackMethod(List<MembershipUserInfo> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    UserInfo = result;
+                    if (_uploadWindow == null)
+                    {
+                        _uploadWindow = new ChildViewDocumentsUpload(DbInteractivity, _logger, CompanyInfo, UserInfo);
+                        _uploadWindow.Unloaded += new RoutedEventHandler(_uploadWindow_Unloaded);                        
+                    }
                 }
                 else
                 {

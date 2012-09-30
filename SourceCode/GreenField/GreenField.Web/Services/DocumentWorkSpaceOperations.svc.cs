@@ -358,15 +358,36 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public List<string> GetDocumentsMetaTags()
+        public List<string> GetDocumentsMetaTags(Boolean OnlyTags)
         {
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
-                List<string> metaTagsInfo = entity.FileMasters.Select(a => a.MetaTags).Distinct().ToList();
-                metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.IssuerName).Distinct().ToList());
-                metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityName).Distinct().ToList());
-                metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityTicker).Distinct().ToList());
+                List<string> metaTagsInfo = new List<string>();
+                List<String> metaTags = entity.FileMasters.Select(a => a.MetaTags).Distinct().ToList();
+                for (int i = 0; i < metaTags.Count; i++)
+                {
+                    if (metaTags[i] != null)
+                    {
+                        if (metaTags[i].Contains(";"))
+                        {
+                            List<String> subTags = metaTags[i].Split(';').ToList();
+                            metaTagsInfo.AddRange(subTags);
+                        }
+
+                        else
+                        {
+                            metaTagsInfo.Add(metaTags[i]);
+                        }
+                    }
+                }
+
+                if (! OnlyTags)
+                {
+                    metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.IssuerName).Distinct().ToList());
+                    metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityName).Distinct().ToList());
+                    metaTagsInfo.AddRange(entity.FileMasters.Select(a => a.SecurityTicker).Distinct().ToList()); 
+                }
                 for (int i = 0; i < metaTagsInfo.Count; i++)
                 {
                     if (metaTagsInfo[i] != null)
@@ -375,15 +396,7 @@ namespace GreenField.Web.Services
                     }
                 }
 
-                if (metaTagsInfo.Contains(String.Empty))
-                {
-                    metaTagsInfo.Remove(String.Empty);
-                }
-
-                if (metaTagsInfo.Contains(null))
-                {
-                    metaTagsInfo.Remove(null);
-                }
+                metaTagsInfo = metaTagsInfo.Where(record => record != null && record != String.Empty).ToList();               
                 metaTagsInfo = metaTagsInfo.Distinct().ToList();
                 return metaTagsInfo;
 
@@ -444,6 +457,43 @@ namespace GreenField.Web.Services
                 }
 
                 return result;
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public Boolean UpdateDocumentsDataForUser(Int64 fileId, String userName, String metaTags, String companyInfo
+            , String categoryType, String comment, Byte[] overwriteStream)
+        {
+            try
+            {
+                ICPresentationEntities entity = new ICPresentationEntities();
+                if (overwriteStream == null)
+                {
+                    entity.UpdateDocumentsData(fileId, userName, metaTags, companyInfo, categoryType, comment);
+                }
+                else
+                {
+                    FileMaster fileMaster = entity.FileMasters.Where(record => record.FileID == fileId).FirstOrDefault();
+                    if (fileMaster != null)
+                    {
+                        String uploadUrl = UploadDocument(fileMaster.Name, overwriteStream, fileMaster.Location);
+                        Int32? result = entity.SetUploadFileInfo(userName, fileMaster.Name, uploadUrl, companyInfo, null, null
+                            , categoryType, metaTags, comment).FirstOrDefault();
+                        if (result == 0)
+                        {
+                            entity.DeleteFileMaster(fileMaster.FileID);
+                        }
+                    }
+                }
+                return true;
 
             }
             catch (Exception ex)

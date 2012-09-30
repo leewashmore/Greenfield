@@ -21,10 +21,54 @@ namespace GreenField.Gadgets.Views.Documents
 {
     public partial class ChildViewDocumentsEditDelete : ChildWindow
     {
-        public ChildViewDocumentsEditDelete(IDBInteractivity dBInteractivity, ILoggerFacade logger)
+        public ChildViewModelDocumentsEditDelete ChildViewDocumentsEditDeleteDataContext { get; set; }
+
+        public ChildViewDocumentsEditDelete(IDBInteractivity dBInteractivity, ILoggerFacade logger, List<String> companyInfo)
         {
-            InitializeComponent();
-            this.DataContext = new ChildViewModelDocumentsEditDelete(dBInteractivity, logger);
+            InitializeComponent();            
+            ChildViewDocumentsEditDeleteDataContext = new ChildViewModelDocumentsEditDelete(dBInteractivity, logger, companyInfo);
+            this.DataContext = ChildViewDocumentsEditDeleteDataContext;
+            
+        }
+
+        private void btnBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            if (dialog.ShowDialog() == true)
+            {
+                ChildViewDocumentsEditDeleteDataContext.UploadStream = FileToByteArray(dialog.File.Name, dialog.File.OpenRead());
+                this.tboxFileName.Text = dialog.File.Name;
+            }
+        }
+
+        private Byte[] FileToByteArray(String fileName, FileStream fileStream)
+        {
+            Byte[] buffer = null;
+            try
+            {
+                buffer = new Byte[fileStream.Length];
+                Int32 bufferReadChar = fileStream.Read(buffer, 0, Convert.ToInt32(fileStream.Length));
+                fileStream.Close();
+                fileStream.Dispose();
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return buffer;
+        }
+
+        private void btnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.tboxFileName.Text = String.Empty;
+            ChildViewDocumentsEditDeleteDataContext.UploadStream = null;
+        }
+
+        private void cbUserFile_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            this.tboxFileName.Text = String.Empty;
+            ChildViewDocumentsEditDeleteDataContext.UploadStream = null;
         }
     }
 }

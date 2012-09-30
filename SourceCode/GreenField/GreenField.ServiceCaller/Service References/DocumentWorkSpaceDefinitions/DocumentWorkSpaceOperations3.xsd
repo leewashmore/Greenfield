@@ -81,6 +81,7 @@
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="Location" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CompanyName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="SecurityName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="SecurityTicker" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="Type" nillable="true" type="xs:string" />
@@ -98,7 +99,9 @@
   </xs:element>
   <xs:element name="GetDocumentsMetaTags">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="OnlyTags" type="xs:boolean" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetDocumentsMetaTagsResponse">
@@ -119,6 +122,26 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="RetrieveDocumentsDataForUserResult" nillable="true" type="q3:ArrayOfDocumentCategoricalData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateDocumentsDataForUser">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="fileId" type="xs:long" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="metaTags" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="companyInfo" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="categoryType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="comment" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="overwriteStream" nillable="true" type="xs:base64Binary" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UpdateDocumentsDataForUserResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UpdateDocumentsDataForUserResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

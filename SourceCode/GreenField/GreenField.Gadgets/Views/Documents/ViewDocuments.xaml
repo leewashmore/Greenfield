@@ -5,6 +5,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"
+    xmlns:common="clr-namespace:GreenField.Common;assembly=GreenField.Common"
     xmlns:telerikPrimitives="clr-namespace:Telerik.Windows.Controls.Primitives;assembly=Telerik.Windows.Controls"
     mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="800">
 
@@ -12,6 +13,10 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                <ResourceDictionary>
+                    <common:EnumDisplayConverter x:Key="EnumDisplayConverter"/>
+                    <helpers:UTCToLocalDateTimeConverter x:Key="UTCToLocalDateTimeConverter"/>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
@@ -45,13 +50,19 @@
                                              Margin="2,0,0,0"
                                              IsEditable="True"
                                              CanAutocompleteSelectItems="True" 
-                                             CanKeyboardNavigationSelectItems="False" 
+                                             CanKeyboardNavigationSelectItems="True" 
                                              HorizontalAlignment="Left"
                                              OpenDropDownOnFocus="True"
                                              StaysOpenOnEdit="True"
                                              Style="{StaticResource RadComboBoxStyle}"
                                              TextOptions.TextHintingMode="Fixed"
-                                             IsTextSearchEnabled="False"/>
+                                             IsTextSearchEnabled="False">
+                    <telerik:RadComboBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </telerik:RadComboBox.ItemsPanel>
+                </telerik:RadComboBox>
                 <telerik:RadButton Grid.Column="3" Margin="2,0,0,0" Content="Search" Style="{StaticResource RadButtonStyle}"
                                    Command="{Binding DocumentSearchCommand}"/>
             </Grid>
