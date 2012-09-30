@@ -474,8 +474,8 @@ namespace GreenField.Gadgets.ViewModels
         /// callback Method for ModelWorkbook
         /// </summary>
         public void RetrieveModelWorkbookUploadCallbackMethod(string message)
-        { 
-            
+        {
+            Prompt.ShowDialog(message);
         }
 
         #endregion

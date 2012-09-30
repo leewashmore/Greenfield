@@ -234,7 +234,7 @@ namespace GreenField.Web.Services
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public bool DeleteFileMasterRecord(Int64 fileId)
-        {            
+        {
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
@@ -246,7 +246,7 @@ namespace GreenField.Web.Services
                 ExceptionTrace.LogException(ex);
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
-            }            
+            }
         }
 
         /// <summary>
@@ -565,8 +565,8 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        } 
-       
+        }
+
         #endregion
 
         #region FileUpload
@@ -585,13 +585,13 @@ namespace GreenField.Web.Services
             {
                 string result = "";
                 ReadOpenXMLModel model = new ReadOpenXMLModel();
-                model.ReadExcelData(excelFile, userName);
+                result = model.ReadExcelData(excelFile, userName);
                 return result;
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return null;
+                return ex.Message;
             }
         }
 

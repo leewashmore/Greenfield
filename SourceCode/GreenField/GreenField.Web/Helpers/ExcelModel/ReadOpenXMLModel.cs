@@ -186,6 +186,32 @@ namespace GreenField.Web.Helpers
         #endregion
 
         /// <summary>
+        /// The message to show in case of an Exception
+        /// </summary>
+        private string _exceptionMessage = "";
+        public string ExceptionMessage
+        {
+            get { return _exceptionMessage; }
+            set { _exceptionMessage = value; }
+        }
+
+        /// <summary>
+        /// The invalid Value
+        /// </summary>
+        private string _invalidValue = "";
+        public string InvalidValue
+        {
+            get
+            {
+                return _invalidValue;
+            }
+            set
+            {
+                _invalidValue = value;
+            }
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         private ExcelModelUploadSheet _uploadData;
@@ -214,7 +240,7 @@ namespace GreenField.Web.Helpers
             get { return filepath; }
             set { filepath = value; }
         }
-        
+
 
         #region ModelUpload
 
@@ -375,7 +401,10 @@ namespace GreenField.Web.Helpers
                 }
                 return _yearsToLoad;
             }
-            set { _yearsToLoad = value; }
+            set
+            {
+                _yearsToLoad = value;
+            }
         }
 
         #endregion
@@ -436,7 +465,12 @@ namespace GreenField.Web.Helpers
 
         #region PublicMethods
 
-        public void ReadExcelData(byte[] fileStream,string userName)
+        /// <summary>
+        /// Read Excel File public method
+        /// </summary>
+        /// <param name="fileStream"></param>
+        /// <param name="userName"></param>
+        public string ReadExcelData(byte[] fileStream, string userName)
         {
             try
             {
@@ -450,8 +484,8 @@ namespace GreenField.Web.Helpers
 
                     if (!checkWorkSheetExists)
                     {
-                        //To Do
-                        //Write Code to Exit when Sheets are not Present
+                        ExceptionMessage = "Sheets doesn't Exist, check Workbook";
+                        throw new Exception("Sheets doesn't Exist, check Workbook");
                     }
 
                     string modelUploadSheetId = SheetModelUpload.First().Id.Value;
@@ -464,14 +498,20 @@ namespace GreenField.Web.Helpers
 
                     ReadModelReferenceSheetData(workbookPart);
                     ReadModelUploadSheetData(workbookPart);
-                    ValidateSheetData();
+                    bool isSheetValid = ValidateSheetData();
+                    if (!isSheetValid)
+                    {
+                        throw new Exception();
+                    }
                     DBDeleteOperations();
                     DBInsertOperations();
+                    return "Sheet Uploaded Successfully";
                 }
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                return ExceptionMessage;
             }
         }
 
@@ -509,6 +549,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Reading Model Reference Sheet";
             }
         }
 
@@ -530,26 +571,37 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Reading Model Upload Sheet";
             }
         }
 
         /// <summary>
         /// Validate the Data in both the Sheets
         /// </summary>
-        private void ValidateSheetData()
+        private bool ValidateSheetData()
         {
             try
             {
                 bool modelReferenceDataValid = ValidateModelReferenceData(ModelReferenceData);
                 if (!modelReferenceDataValid)
                 {
-
+                    throw new Exception();
                 }
-                ValidateModelUploadData();
+                bool modelUploadSheetValid = ValidateModelUploadData();
+                if (!modelUploadSheetValid)
+                {
+                    throw new Exception();
+                }
+                return true;
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                if (ExceptionMessage == null || ExceptionMessage == "")
+                {
+                    ExceptionMessage = "Data in Model Reference Sheet is not Valid";
+                }
+                return false;
             }
         }
 
@@ -730,23 +782,30 @@ namespace GreenField.Web.Helpers
         /// </summary>
         private void InsertIntoInternalCommodityAssumptions()
         {
-            string issuerId = ModelReferenceData.IssuerId;
-            string commodityId = "";
-
-            foreach (var item in YearsToLoad)
+            try
             {
-                UniqueRefNumber = RecordYearRefNo.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
-                commodityId = CommodityMeasure.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
+                string issuerId = ModelReferenceData.IssuerId;
+                string commodityId = "";
 
-                decimal value;
-                object forecastValue = CommodityForecastUsed.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
-                if (commodityId != null && forecastValue != null)
+                foreach (var item in YearsToLoad)
                 {
-                    if (Decimal.TryParse(forecastValue as string, out value))
+                    UniqueRefNumber = RecordYearRefNo.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
+                    commodityId = CommodityMeasure.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
+
+                    decimal value;
+                    object forecastValue = CommodityForecastUsed.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
+                    if (commodityId != null && forecastValue != null)
                     {
-                        InsertInternalCommodityAssumptionsData(issuerId, UniqueRefNumber, commodityId, value);
+                        if (Decimal.TryParse(forecastValue as string, out value))
+                        {
+                            InsertInternalCommodityAssumptionsData(issuerId, UniqueRefNumber, commodityId, value);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
             }
         }
 
@@ -863,6 +922,11 @@ namespace GreenField.Web.Helpers
 
         #region Common Methods
 
+        /// <summary>
+        /// Check if both Sheets Exist
+        /// </summary>
+        /// <param name="workbookPart"></param>
+        /// <returns></returns>
         public bool CheckSheetsExist(WorkbookPart workbookPart)
         {
             IEnumerable<Sheet> sheetModelUpload = workbookPart.Workbook.GetFirstChild<Sheets>().Elements<Sheet>().Where(s => s.Name == "Model Upload");
@@ -899,7 +963,7 @@ namespace GreenField.Web.Helpers
             byte[] fileBytes = file;
             File.WriteAllBytes(Filepath, fileBytes);
         }
-        
+
         #endregion
 
         #region ModelReference
@@ -913,46 +977,59 @@ namespace GreenField.Web.Helpers
         /// <returns>True/False implying whether Sheets is Met or Not</returns>
         private void ReadModelReferenceData(SheetData sheetData, WorkbookPart workbookPart)
         {
-            int i = 0;
-            string[] rowData = new string[18];
-
-            foreach (Row r in sheetData.Elements<Row>())
+            try
             {
-                foreach (Cell c in r.Elements<Cell>())
+                int i = 0;
+                string[] rowData = new string[18];
+
+                foreach (Row r in sheetData.Elements<Row>())
                 {
-                    if (c != null)
+                    int cellCount = 0;
+                    while (cellCount < 2)
                     {
-                        rowData[i] = c.InnerText;
-                        if (c.DataType != null)
+                        foreach (Cell c in r.Elements<Cell>())
                         {
-                            if (c.DataType == CellValues.SharedString)
+                            if (c != null)
                             {
-                                var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                if (stringTable != null)
+                                rowData[i] = c.InnerText;
+                                if (c.DataType != null)
                                 {
-                                    rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i])).InnerText;
+                                    if (c.DataType == CellValues.SharedString)
+                                    {
+                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                        if (stringTable != null)
+                                        {
+                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i])).InnerText;
+                                        }
+                                    }
                                 }
                             }
+                            else
+                            {
+                                rowData[i] = "";
+                            }
+                            ++i;
+                            cellCount++;
                         }
-                    }
-                    else
-                    {
-                        rowData[i] = "";
-                    }
-                    ++i;
-                }
-            }
 
-            ModelReferenceData = new ModelReferenceDataPoints();
-            ModelReferenceData.IssuerId = rowData[1];
-            ModelReferenceData.IssuerName = rowData[3];
-            ModelReferenceData.COATypes = rowData[5];
-            ModelReferenceData.Currencies = new List<string>() { rowData[7] };
-            ModelReferenceData.Units = new List<string>() { rowData[9] };
-            ModelReferenceData.Q1Override = rowData[11] as string;
-            ModelReferenceData.Q2Override = rowData[13] as string;
-            ModelReferenceData.Q3Override = rowData[15] as string;
-            ModelReferenceData.Q4Override = rowData[17] as string;
+                    }
+                }
+
+                ModelReferenceData = new ModelReferenceDataPoints();
+                ModelReferenceData.IssuerId = rowData[1];
+                ModelReferenceData.IssuerName = rowData[3];
+                ModelReferenceData.COATypes = rowData[5];
+                ModelReferenceData.Currencies = new List<string>() { rowData[7] };
+                ModelReferenceData.Units = new List<string>() { rowData[9] };
+                ModelReferenceData.Q1Override = rowData[11] as string;
+                ModelReferenceData.Q2Override = rowData[13] as string;
+                ModelReferenceData.Q3Override = rowData[15] as string;
+                ModelReferenceData.Q4Override = rowData[17] as string;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
         }
 
         #endregion
@@ -966,31 +1043,40 @@ namespace GreenField.Web.Helpers
         /// <returns></returns>
         private bool ValidateModelReferenceData(ModelReferenceDataPoints ModelReferenceData)
         {
-            if (ModelReferenceData.COATypes == null || ModelReferenceData.COATypes.Trim() == "" ||
-           ModelReferenceData.Currencies == null || ModelReferenceData.Currencies.FirstOrDefault().Trim() == "")
+            try
             {
+                if (ModelReferenceData.COATypes == null || ModelReferenceData.COATypes.Trim() == "" ||
+                  ModelReferenceData.Currencies == null || ModelReferenceData.Currencies.FirstOrDefault().Trim() == "")
+                {
+                    throw new Exception("There is no value specified in currency Field");
+                }
+
+                bool issuerIdValidity = CheckIssuerIdExist(ModelReferenceData.IssuerId);
+                if (!issuerIdValidity)
+                {
+                    throw new Exception("The value specified in Issuer Field is not Valid");
+                }
+
+                bool COAValidity = CheckCOATypeValidity(ModelReferenceData.IssuerId, ModelReferenceData.COATypes);
+                if (!COAValidity)
+                {
+                    throw new Exception("The value COA is not Valid");
+                }
+
+                QuarterelyOverrideEnabled = CheckOverrideValues();
+                if (!QuarterelyOverrideEnabled)
+                {
+                    throw new Exception("Quarterely Override values are not Valid");
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                ExceptionMessage = ex.Message;
                 return false;
             }
-
-            bool issuerIdValidity = CheckIssuerIdExist(ModelReferenceData.IssuerId);
-            if (!issuerIdValidity)
-            {
-                return false;
-            }
-
-            bool COAValidity = CheckCOATypeValidity(ModelReferenceData.IssuerId, ModelReferenceData.COATypes);
-            if (!COAValidity)
-            {
-                return false;
-            }
-
-            QuarterelyOverrideEnabled = CheckOverrideValues();
-            if (!QuarterelyOverrideEnabled)
-            {
-                return false;
-            }
-
-            return true;
         }
 
         /// <summary>
@@ -1027,26 +1113,34 @@ namespace GreenField.Web.Helpers
         /// <returns></returns>
         private bool CheckCOATypeValidity(string issuerId, string COA)
         {
-            string dbCOA;
-            INTERNAL_ISSUER dbResult = new INTERNAL_ISSUER();
-            dbResult = ExternalResearchEntity.RetrieveCOAType(issuerId).FirstOrDefault();
+            try
+            {
+                string dbCOA;
+                INTERNAL_ISSUER dbResult = new INTERNAL_ISSUER();
+                dbResult = ExternalResearchEntity.RetrieveCOAType(issuerId).FirstOrDefault();
 
-            if (dbResult == null)
-            {
-                return true;
-            }
-            dbCOA = dbResult.COA_TYPE;
+                if (dbResult == null)
+                {
+                    return true;
+                }
+                dbCOA = dbResult.COA_TYPE;
 
-            if (dbCOA == null)
-            {
-                return true;
+                if (dbCOA == null)
+                {
+                    return true;
+                }
+                if (dbCOA == COA)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            if (dbCOA == COA)
+            catch (Exception ex)
             {
-                return true;
-            }
-            else
-            {
+                ExceptionTrace.LogException(ex);
                 return false;
             }
         }
@@ -1057,49 +1151,57 @@ namespace GreenField.Web.Helpers
         /// <returns></returns>
         private bool CheckOverrideValues()
         {
-            decimal value;
-            if (Decimal.TryParse(ModelReferenceData.Q1Override as string, out  value))
+            try
             {
-                ModelReferenceData.Q1Override = value;
-            }
-            else
-            {
-                return false;
-            }
+                decimal value;
+                if (Decimal.TryParse(ModelReferenceData.Q1Override as string, out  value))
+                {
+                    ModelReferenceData.Q1Override = value;
+                }
+                else
+                {
+                    return false;
+                }
 
-            if (Decimal.TryParse(ModelReferenceData.Q2Override as string, out  value))
-            {
-                ModelReferenceData.Q2Override = value;
-            }
-            else
-            {
-                return false;
-            }
+                if (Decimal.TryParse(ModelReferenceData.Q2Override as string, out  value))
+                {
+                    ModelReferenceData.Q2Override = value;
+                }
+                else
+                {
+                    return false;
+                }
 
-            if (Decimal.TryParse(ModelReferenceData.Q3Override as string, out  value))
-            {
-                ModelReferenceData.Q3Override = value;
-            }
-            else
-            {
-                return false;
-            }
+                if (Decimal.TryParse(ModelReferenceData.Q3Override as string, out  value))
+                {
+                    ModelReferenceData.Q3Override = value;
+                }
+                else
+                {
+                    return false;
+                }
 
-            if (Decimal.TryParse(ModelReferenceData.Q4Override as string, out  value))
-            {
-                ModelReferenceData.Q4Override = value;
-            }
-            else
-            {
+                if (Decimal.TryParse(ModelReferenceData.Q4Override as string, out  value))
+                {
+                    ModelReferenceData.Q4Override = value;
+                }
+                else
+                {
+                    return false;
+                }
+                decimal sumOverride = (decimal)ModelReferenceData.Q1Override + (decimal)ModelReferenceData.Q2Override +
+                    (decimal)ModelReferenceData.Q3Override + (decimal)ModelReferenceData.Q4Override;
+                if (sumOverride == 100M)
+                {
+                    return true;
+                }
                 return false;
             }
-            decimal sumOverride = (decimal)ModelReferenceData.Q1Override + (decimal)ModelReferenceData.Q2Override +
-                (decimal)ModelReferenceData.Q3Override + (decimal)ModelReferenceData.Q4Override;
-            if (sumOverride == 100M)
+            catch (Exception ex)
             {
-                return true;
+                ExceptionTrace.LogException(ex);
+                return false;
             }
-            return false;
         }
 
         #endregion
@@ -1116,65 +1218,73 @@ namespace GreenField.Web.Helpers
         /// <param name="sheetData">SheetData of the Sheet</param>
         private void ReadModelUploadData(SheetData sheetData, WorkbookPart workbookPart)
         {
-            int i = 0;
-            int j = 0;
-            string[] rowData = new string[NumberOfYears + 2];
-            string coaType = "";
-            string description = "";
-
-            List<ExcelModelDataUpload> excelModelData = new List<ExcelModelDataUpload>();
-            foreach (Row r in sheetData.Elements<Row>())
+            try
             {
-                rowData = new string[NumberOfYears + 2];
-                if (j > 5)
+                int i = 0;
+                int j = 0;
+                string[] rowData = new string[NumberOfYears + 2];
+                string coaType = "";
+                string description = "";
+
+                List<ExcelModelDataUpload> excelModelData = new List<ExcelModelDataUpload>();
+                foreach (Row r in sheetData.Elements<Row>())
                 {
-                    i = 0;
-                    foreach (Cell c in r.Elements<Cell>())
+                    rowData = new string[NumberOfYears + 2];
+                    if (j > 5)
                     {
-                        if (c != null)
+                        i = 0;
+                        foreach (Cell c in r.Elements<Cell>())
                         {
-                            rowData[i] = c.InnerText;
-                            if (c.DataType != null)
+                            if (c != null)
                             {
-                                if (c.DataType == CellValues.SharedString)
+                                rowData[i] = c.InnerText;
+                                if (c.DataType != null)
                                 {
-                                    var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                    if (stringTable != null)
+                                    if (c.DataType == CellValues.SharedString)
                                     {
-                                        rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i])).InnerText;
+                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                        if (stringTable != null)
+                                        {
+                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i])).InnerText;
+                                        }
                                     }
                                 }
                             }
+                            else
+                            {
+                                rowData[i] = "";
+                            }
+                            i++;
                         }
-                        else
-                        {
-                            rowData[i] = "";
-                        }
-                        i++;
-                    }
 
-                    coaType = rowData[0];
-                    description = rowData[1];
-                    ExcelModelDataUpload modelData = new ExcelModelDataUpload();
-                    int count = rowData.Count();
-                    int k = 1;
-                    foreach (string item in rowData)
-                    {
-                        if (k > 2)
+                        coaType = rowData[0];
+                        description = rowData[1];
+                        ExcelModelDataUpload modelData = new ExcelModelDataUpload();
+                        int count = rowData.Count();
+                        int k = 1;
+                        foreach (string item in rowData)
                         {
-                            modelData = new ExcelModelDataUpload();
-                            modelData.COA = coaType;
-                            modelData.Description = description;
-                            modelData.Year = "Y" + (k - 2).ToString();
-                            modelData.Amount = item;
-                            excelModelData.Add(modelData);
+                            if (k > 2)
+                            {
+                                modelData = new ExcelModelDataUpload();
+                                modelData.COA = coaType;
+                                modelData.Description = description;
+                                modelData.Year = "Y" + (k - 2).ToString();
+                                modelData.Amount = item;
+                                excelModelData.Add(modelData);
+                            }
+                            k++;
                         }
-                        k++;
                     }
+                    j++;
                 }
-                j++;
+                ModelUploadData = excelModelData;
             }
-            ModelUploadData = excelModelData;
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                ExceptionMessage = "The values in ModelUpload Sheet for COA types is not valid";
+            }
         }
 
         /// <summary>
@@ -1185,23 +1295,32 @@ namespace GreenField.Web.Helpers
         /// <returns></returns>
         private int FindNumberOfYearsToLoad(SheetData sheetData, WorkbookPart workbookPart)
         {
-            int count = 0;
-            int j = 1;
-            foreach (Row r in sheetData.Elements<Row>())
+            try
             {
-                if (r.RowIndex == 1)
+                int count = 0;
+                int j = 1;
+                foreach (Row r in sheetData.Elements<Row>())
                 {
-                    foreach (Cell c in r.Elements<Cell>())
+                    if (r.RowIndex == 1)
                     {
-                        if (j > 2)
+                        foreach (Cell c in r.Elements<Cell>())
                         {
-                            count++;
+                            if (j > 2)
+                            {
+                                count++;
+                            }
+                            j++;
                         }
-                        j++;
                     }
                 }
+                return count;
             }
-            return count;
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                ExceptionMessage = "The values in ModelUpload header row are not valid";
+                return 0;
+            }
         }
 
         /// <summary>
@@ -1211,42 +1330,53 @@ namespace GreenField.Web.Helpers
         /// <param name="workbookPart"></param>
         private void ReadModelUploadDataFirstRow(SheetData sheetData, WorkbookPart workbookPart)
         {
-            string[] rowData = new string[8];
-            int i = 0;
-            foreach (Row r in sheetData.Elements<Row>())
+            try
             {
-                if (r.RowIndex == 1)
+                string[] rowData = new string[8];
+                int i = 0;
+                foreach (Row r in sheetData.Elements<Row>())
                 {
-                    foreach (Cell c in r.Elements<Cell>())
+                    if (r.RowIndex == 1)
                     {
-                        if (c != null)
+                        foreach (Cell c in r.Elements<Cell>())
                         {
-                            rowData[i] = c.InnerText;
-                            if (c.DataType != null)
+                            if (c != null)
                             {
-                                if (c.DataType == CellValues.SharedString)
+                                rowData[i] = c.InnerText;
+                                if (c.DataType != null)
                                 {
-                                    var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                    if (stringTable != null)
+                                    if (c.DataType == CellValues.SharedString)
                                     {
-                                        rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i])).InnerText;
+                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                        if (stringTable != null)
+                                        {
+                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i])).InnerText;
+                                        }
                                     }
                                 }
                             }
+                            else
+                            {
+                                rowData[i] = "";
+                            }
+                            ++i;
                         }
-                        else
-                        {
-                            rowData[i] = "";
-                        }
-                        ++i;
                     }
                 }
+                YearList = SetPeriodYears(rowData);
+                if (YearsToLoad.Count == 0)
+                {
+                    ExceptionMessage = "Number of valid Period Years are 0";
+                    throw new Exception();
+                }
             }
-            YearList = SetPeriodYears(rowData);
-            if (YearList.Count == 0)
+            catch (Exception ex)
             {
-                //To-Do
-                //Add Exception Details
+                ExceptionTrace.LogException(ex);
+                if (ExceptionMessage == null || ExceptionMessage == "")
+                {
+                    ExceptionMessage = "The values in ModelUpload Period year are not valid";
+                }
             }
         }
 
@@ -1257,41 +1387,52 @@ namespace GreenField.Web.Helpers
         /// <param name="workbookPart"></param>
         private void ReadModelUploadDataSecondRow(SheetData sheetData, WorkbookPart workbookPart)
         {
-            object[] rowData = new object[8];
-            double data;
-            int i = 0;
-            int j = 0;
-            foreach (Row r in sheetData.Elements<Row>())
+            try
             {
-                if (r.RowIndex == 2)
+                object[] rowData = new object[8];
+                double data;
+                int i = 0;
+                int j = 0;
+                foreach (Row r in sheetData.Elements<Row>())
                 {
-                    foreach (Cell c in r.Elements<Cell>())
+                    if (r.RowIndex == 2)
                     {
-                        if (c != null && j > 1)
+                        foreach (Cell c in r.Elements<Cell>())
                         {
-                            if (Double.TryParse(c.InnerText, out data))
+                            if (c != null && j > 1)
                             {
-                                rowData[i] = DateTime.FromOADate(data);
+                                if (Double.TryParse(c.InnerText, out data))
+                                {
+                                    rowData[i] = DateTime.FromOADate(data);
+                                }
+                                else
+                                {
+                                    rowData[i] = new DateTime(1900, 1, 31);
+                                }
                             }
                             else
                             {
                                 rowData[i] = new DateTime(1900, 1, 31);
                             }
+                            ++i;
+                            ++j;
                         }
-                        else
-                        {
-                            rowData[i] = new DateTime(1900, 1, 31);
-                        }
-                        ++i;
-                        ++j;
                     }
                 }
+                PeriodEndDate = SetPeriodEndDate(rowData);
+                if (YearsToLoad.Count == 0)
+                {
+                    ExceptionMessage = "Number of valid Period Years are 0";
+                    throw new Exception();
+                }
             }
-            PeriodEndDate = SetPeriodEndDate(rowData);
-            if (YearList.Count == 0)
+            catch (Exception ex)
             {
-                //To-Do
-                //Add Exception Details
+                ExceptionTrace.LogException(ex);
+                if (ExceptionMessage == null || ExceptionMessage == "")
+                {
+                    ExceptionMessage = "The values in ModelUpload Period End Dates are not valid";
+                }
             }
         }
 
@@ -1302,44 +1443,55 @@ namespace GreenField.Web.Helpers
         /// <param name="workbookPart"></param>
         private void ReadModelUploadDataThirdRow(SheetData sheetData, WorkbookPart workbookPart)
         {
-            object[] rowData = new object[8];
-            int i = 0;
-            int j = 0;
-            foreach (Row r in sheetData.Elements<Row>())
+            try
             {
-                if (r.RowIndex == 3)
+                object[] rowData = new object[8];
+                int i = 0;
+                int j = 0;
+                foreach (Row r in sheetData.Elements<Row>())
                 {
-                    foreach (Cell c in r.Elements<Cell>())
+                    if (r.RowIndex == 3)
                     {
-                        if (c != null && j > 1)
+                        foreach (Cell c in r.Elements<Cell>())
                         {
-                            rowData[i] = c.InnerText;
-                            if (c.DataType != null)
+                            if (c != null && j > 1)
                             {
-                                if (c.DataType == CellValues.SharedString)
+                                rowData[i] = c.InnerText;
+                                if (c.DataType != null)
                                 {
-                                    var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                    if (stringTable != null)
+                                    if (c.DataType == CellValues.SharedString)
                                     {
-                                        rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                        if (stringTable != null)
+                                        {
+                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                        }
                                     }
                                 }
                             }
+                            else
+                            {
+                                rowData[i] = null;
+                            }
+                            ++i;
+                            ++j;
                         }
-                        else
-                        {
-                            rowData[i] = null;
-                        }
-                        ++i;
-                        ++j;
                     }
                 }
+                PeriodLength = SetPeriodLength(rowData);
+                if (YearsToLoad.Count == 0)
+                {
+                    ExceptionMessage = "Number of valid Period Years are 0";
+                    throw new Exception();
+                }
             }
-            PeriodLength = SetPeriodLength(rowData);
-            if (YearList.Count == 0)
+            catch (Exception ex)
             {
-                //To-Do
-                //Add Exception Details
+                ExceptionTrace.LogException(ex);
+                if (ExceptionMessage == null || ExceptionMessage == "")
+                {
+                    ExceptionMessage = "The values in ModelUpload Period Length are not valid";
+                }
             }
         }
 
@@ -1350,44 +1502,55 @@ namespace GreenField.Web.Helpers
         /// <param name="workbookPart"></param>
         private void ReadModelUploadDataFourthRow(SheetData sheetData, WorkbookPart workbookPart)
         {
-            object[] rowData = new object[8];
-            int i = 0;
-            int j = 0;
-            foreach (Row r in sheetData.Elements<Row>())
+            try
             {
-                if (r.RowIndex == 4)
+                object[] rowData = new object[8];
+                int i = 0;
+                int j = 0;
+                foreach (Row r in sheetData.Elements<Row>())
                 {
-                    foreach (Cell c in r.Elements<Cell>())
+                    if (r.RowIndex == 4)
                     {
-                        if (c != null && j > 1)
+                        foreach (Cell c in r.Elements<Cell>())
                         {
-                            rowData[i] = c.InnerText;
-                            if (c.DataType != null)
+                            if (c != null && j > 1)
                             {
-                                if (c.DataType == CellValues.SharedString)
+                                rowData[i] = c.InnerText;
+                                if (c.DataType != null)
                                 {
-                                    var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                    if (stringTable != null)
+                                    if (c.DataType == CellValues.SharedString)
                                     {
-                                        rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                        if (stringTable != null)
+                                        {
+                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                        }
                                     }
                                 }
                             }
+                            else
+                            {
+                                rowData[i] = null;
+                            }
+                            ++i;
+                            ++j;
                         }
-                        else
-                        {
-                            rowData[i] = null;
-                        }
-                        ++i;
-                        ++j;
                     }
                 }
+                ActualOverride = SetOverride(rowData);
+                if (YearsToLoad.Count == 0)
+                {
+                    ExceptionMessage = "Number of valid Period Years are 0";
+                    throw new Exception();
+                }
             }
-            ActualOverride = SetOverride(rowData);
-            if (YearList.Count == 0)
+            catch (Exception ex)
             {
-                //To-Do
-                //Add Exception Details
+                ExceptionTrace.LogException(ex);
+                if (ExceptionMessage == null || ExceptionMessage == "")
+                {
+                    ExceptionMessage = "The values in ModelUpload Period Length are not valid";
+                }
             }
         }
 
@@ -1398,44 +1561,55 @@ namespace GreenField.Web.Helpers
         /// <param name="workbookPart"></param>
         private void ReadModelUploadDataFifthRow(SheetData sheetData, WorkbookPart workbookPart)
         {
-            object[] rowData = new object[8];
-            int i = 0;
-            int j = 0;
-            foreach (Row r in sheetData.Elements<Row>())
+            try
             {
-                if (r.RowIndex == 5)
+                object[] rowData = new object[8];
+                int i = 0;
+                int j = 0;
+                foreach (Row r in sheetData.Elements<Row>())
                 {
-                    foreach (Cell c in r.Elements<Cell>())
+                    if (r.RowIndex == 5)
                     {
-                        if (c != null && j > 1)
+                        foreach (Cell c in r.Elements<Cell>())
                         {
-                            rowData[i] = c.InnerText;
-                            if (c.DataType != null)
+                            if (c != null && j > 1)
                             {
-                                if (c.DataType == CellValues.SharedString)
+                                rowData[i] = c.InnerText;
+                                if (c.DataType != null)
                                 {
-                                    var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                    if (stringTable != null)
+                                    if (c.DataType == CellValues.SharedString)
                                     {
-                                        rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                        if (stringTable != null)
+                                        {
+                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                        }
                                     }
                                 }
                             }
+                            else
+                            {
+                                rowData[i] = null;
+                            }
+                            ++i;
+                            ++j;
                         }
-                        else
-                        {
-                            rowData[i] = null;
-                        }
-                        ++i;
-                        ++j;
                     }
                 }
+                CommodityMeasure = SetMeasure(rowData);
+                if (YearsToLoad.Count == 0)
+                {
+                    ExceptionMessage = "Number of valid Period Years are 0";
+                    throw new Exception();
+                }
             }
-            CommodityMeasure = SetMeasure(rowData);
-            if (YearList.Count == 0)
+            catch (Exception ex)
             {
-                //To-Do
-                //Add Exception Details
+                ExceptionTrace.LogException(ex);
+                if (ExceptionMessage == null || ExceptionMessage == "")
+                {
+                    ExceptionMessage = "The values in ModelUpload Period Length are not valid";
+                }
             }
         }
 
@@ -1446,44 +1620,55 @@ namespace GreenField.Web.Helpers
         /// <param name="workbookPart"></param>
         private void ReadModelUploadDataSixthRow(SheetData sheetData, WorkbookPart workbookPart)
         {
-            object[] rowData = new object[8];
-            int i = 0;
-            int j = 0;
-            foreach (Row r in sheetData.Elements<Row>())
+            try
             {
-                if (r.RowIndex == 6)
+                object[] rowData = new object[8];
+                int i = 0;
+                int j = 0;
+                foreach (Row r in sheetData.Elements<Row>())
                 {
-                    foreach (Cell c in r.Elements<Cell>())
+                    if (r.RowIndex == 6)
                     {
-                        if (c != null && j > 1)
+                        foreach (Cell c in r.Elements<Cell>())
                         {
-                            rowData[i] = c.InnerText;
-                            if (c.DataType != null)
+                            if (c != null && j > 1)
                             {
-                                if (c.DataType == CellValues.SharedString)
+                                rowData[i] = c.InnerText;
+                                if (c.DataType != null)
                                 {
-                                    var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
-                                    if (stringTable != null)
+                                    if (c.DataType == CellValues.SharedString)
                                     {
-                                        rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                        if (stringTable != null)
+                                        {
+                                            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                        }
                                     }
                                 }
                             }
+                            else
+                            {
+                                rowData[i] = null;
+                            }
+                            ++i;
+                            ++j;
                         }
-                        else
-                        {
-                            rowData[i] = null;
-                        }
-                        ++i;
-                        ++j;
                     }
                 }
+                CommodityForecastUsed = SetCommodityForecast(rowData);
+                if (YearsToLoad.Count == 0)
+                {
+                    ExceptionMessage = "Number of valid Period Years are 0";
+                    throw new Exception();
+                }
             }
-            CommodityForecastUsed = SetCommodityForecast(rowData);
-            if (YearList.Count == 0)
+            catch (Exception ex)
             {
-                //To-Do
-                //Add Exception Details
+                ExceptionTrace.LogException(ex);
+                if (ExceptionMessage == null || ExceptionMessage == "")
+                {
+                    ExceptionMessage = "The values in ModelUpload Period Length are not valid";
+                }
             }
         }
 
@@ -1494,21 +1679,28 @@ namespace GreenField.Web.Helpers
         /// <returns></returns>
         private Dictionary<string, int?> SetPeriodYears(string[] data)
         {
-            Dictionary<string, int?> result = new Dictionary<string, int?>();
-            int i = 1;
-            int value = 0;
-            int j = 1;
-            foreach (string item in data)
+            try
             {
-                if (j > 2)
+                Dictionary<string, int?> result = new Dictionary<string, int?>();
+                int i = 1;
+                int value = 0;
+                int j = 1;
+                foreach (string item in data)
                 {
-                    if (item != null)
+                    if (j > 2)
                     {
-                        if (Int32.TryParse(item, out value))
+                        if (item != null)
                         {
-                            if (value > 1950 || value < 2200)
+                            if (Int32.TryParse(item, out value))
                             {
-                                result.Add("Y" + i, value);
+                                if (value > 1950 || value < 2200)
+                                {
+                                    result.Add("Y" + i, value);
+                                }
+                                else
+                                {
+                                    result.Add("Y" + i, null);
+                                }
                             }
                             else
                             {
@@ -1519,17 +1711,18 @@ namespace GreenField.Web.Helpers
                         {
                             result.Add("Y" + i, null);
                         }
+                        i++;
                     }
-                    else
-                    {
-                        result.Add("Y" + i, null);
-                    }
-                    i++;
+                    j++;
                 }
-                j++;
+                YearsToLoad = result;
+                return result;
             }
-            YearsToLoad = result;
-            return result;
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
         }
 
         /// <summary>
@@ -1672,18 +1865,26 @@ namespace GreenField.Web.Helpers
         /// <returns></returns>
         private decimal ConvertAmount(string units, decimal amount)
         {
-            switch (units)
+            try
             {
-                case "MILLIONS":
-                    return amount;
-                case "THOUSANDS":
-                    return amount / 1000M;
-                case "UNITS":
-                    return amount / 1000000M;
-                case "BILLIONS":
-                    return amount * 1000M;
-                default:
-                    return amount;
+                switch (units)
+                {
+                    case "MILLIONS":
+                        return amount;
+                    case "THOUSANDS":
+                        return amount / 1000M;
+                    case "UNITS":
+                        return amount / 1000000M;
+                    case "BILLIONS":
+                        return amount * 1000M;
+                    default:
+                        return amount;
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return 0;
             }
         }
 
@@ -1699,30 +1900,56 @@ namespace GreenField.Web.Helpers
         /// <returns>Result of the match</returns>
         private bool CheckCOACodes(List<ExcelModelDataUpload> modelUploadData, List<DataPointsModelUploadData> COAList)
         {
-            bool result = true;
-            foreach (DataPointsModelUploadData item in COAList)
+            try
             {
-                if (modelUploadData.Any(a => a.COA != item.COA))
+                bool result = true;
+                foreach (DataPointsModelUploadData item in COAList)
                 {
-                    result = false;
+                    if (modelUploadData.Any(a => a.COA != item.COA))
+                    {
+                        InvalidValue = item.COA;
+                        throw new Exception();
+                    }
                 }
+                return result;
             }
-            return result;
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                ExceptionMessage = "The List of COA don't match: " + InvalidValue;
+                return false;
+            }
         }
 
         /// <summary>
         /// Validate Data for Period Years
         /// </summary>
         /// <param name="periodYearData"></param>
-        private void ValidatePeriodYears(Dictionary<string, int?> periodYearData)
+        private bool ValidatePeriodYears(Dictionary<string, int?> periodYearData)
         {
-            if (periodYearData != null)
+            try
             {
-                List<string> badYears = periodYearData.Where(a => a.Value == null).Select(a => a.Key).ToList();
-                foreach (string item in badYears)
+                if (periodYearData != null)
                 {
-                    RemoveBadYearData(item);
+                    List<string> badYears = periodYearData.Where(a => a.Value == null).Select(a => a.Key).ToList();
+                    foreach (string item in badYears)
+                    {
+                        RemoveBadYearData(item);
+                    }
+
+                    if (YearsToLoad.Count == 0)
+                    {
+                        ExceptionMessage = "The value of valid Period years is 0";
+                        throw new Exception();
+                    }
+                    return true;
                 }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return false;
             }
         }
 
@@ -1730,28 +1957,43 @@ namespace GreenField.Web.Helpers
         /// ValidateEndDates
         /// </summary>
         /// <param name="periodEndDates"></param>
-        private void ValidateEndDates(Dictionary<string, DateTime?> periodEndDates)
+        private bool ValidateEndDates(Dictionary<string, DateTime?> periodEndDates)
         {
-            if (periodEndDates != null)
+            try
             {
-                foreach (var item in periodEndDates)
+                if (periodEndDates != null)
                 {
-                    if (item.Value != null)
+                    foreach (var item in periodEndDates)
                     {
-                        int? yearValue = YearList.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
-                        if (yearValue != null)
+                        if (item.Value != null)
                         {
-                            if (item.Value.Value.Year != yearValue)
+                            int? yearValue = YearList.Where(a => a.Key == item.Key).Select(a => a.Value).FirstOrDefault();
+                            if (yearValue != null)
                             {
-                                RemoveBadYearData(item.Key);
+                                if (item.Value.Value.Year != yearValue)
+                                {
+                                    RemoveBadYearData(item.Key);
+                                }
                             }
                         }
+                        else
+                        {
+                            RemoveBadYearData(item.Key);
+                        }
                     }
-                    else
+                    if (YearsToLoad.Count == 0)
                     {
-                        RemoveBadYearData(item.Key);
+                        ExceptionMessage = "The value of valid Period years is 0";
+                        throw new Exception();
                     }
+                    return true;
                 }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return false;
             }
         }
 
@@ -1759,21 +2001,36 @@ namespace GreenField.Web.Helpers
         /// Validate the PeriodLength
         /// </summary>
         /// <param name="periodLength"></param>
-        private void ValidatePeriodLength(Dictionary<string, int?> periodLength)
+        private bool ValidatePeriodLength(Dictionary<string, int?> periodLength)
         {
-            if (periodLength != null)
+            try
             {
-                foreach (var item in periodLength)
+                if (periodLength != null)
                 {
-                    if (item.Value != null)
+                    foreach (var item in periodLength)
                     {
-                        int? length = item.Value;
-                        if (!(length >= 1 && length <= 23))
+                        if (item.Value != null)
                         {
-                            RemoveBadYearData(item.Key);
+                            int? length = item.Value;
+                            if (!(length >= 1 && length <= 23))
+                            {
+                                RemoveBadYearData(item.Key);
+                            }
                         }
                     }
+                    if (YearsToLoad.Count == 0)
+                    {
+                        ExceptionMessage = "The value of valid Period years is 0";
+                        throw new Exception();
+                    }
+                    return true;
                 }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return false;
             }
         }
 
@@ -1781,21 +2038,36 @@ namespace GreenField.Web.Helpers
         /// Validate the values of Reported Override
         /// </summary>
         /// <param name="actualOverride"></param>
-        private void ValidateActualOverride(Dictionary<string, string> actualOverride)
+        private bool ValidateActualOverride(Dictionary<string, string> actualOverride)
         {
-            if (actualOverride != null)
+            try
             {
-                foreach (var item in actualOverride)
+                if (actualOverride != null)
                 {
-                    if (item.Value == null)
+                    foreach (var item in actualOverride)
                     {
-                        RemoveBadYearData(item.Key);
+                        if (item.Value == null)
+                        {
+                            RemoveBadYearData(item.Key);
+                        }
+                        if (item.Value.ToUpper() != "YES" && item.Value.ToUpper() != "NO")
+                        {
+                            RemoveBadYearData(item.Key);
+                        }
                     }
-                    if (item.Value.ToUpper() != "YES" && item.Value.ToUpper() != "NO")
+                    if (YearsToLoad.Count == 0)
                     {
-                        RemoveBadYearData(item.Key);
+                        ExceptionMessage = "The value of valid Period years is 0";
+                        throw new Exception();
                     }
+                    return true;
                 }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return false;
             }
         }
 
@@ -1805,25 +2077,16 @@ namespace GreenField.Web.Helpers
         /// <param name="yearName"></param>
         private void RemoveBadYearData(string yearName)
         {
-            if (yearName != null)
-            {
-                bool exists = YearsToLoad.Any(a => a.Key == yearName);
-                if (exists)
-                {
-                    YearsToLoad.Remove(yearName);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Validate the Values of Amount in the Excel
-        /// </summary>
-        private void ValidateAmountValues()
-        {
             try
             {
-                decimal value;
-                ModelUploadData = ModelUploadData.Where(a => Decimal.TryParse(a.Amount as string, out value)).ToList();
+                if (yearName != null)
+                {
+                    bool exists = YearsToLoad.Any(a => a.Key == yearName);
+                    if (exists)
+                    {
+                        YearsToLoad.Remove(yearName);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -1832,12 +2095,31 @@ namespace GreenField.Web.Helpers
         }
 
         /// <summary>
-        /// Validate ModelUpload Sheet Data
+        /// Validate the Values of Amount in the Excel
         /// </summary>
-        private void ValidateModelUploadData()
+        private bool ValidateAmountValues()
         {
             try
             {
+                decimal value;
+                ModelUploadData = ModelUploadData.Where(a => Decimal.TryParse(a.Amount as string, out value)).ToList();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Validate ModelUpload Sheet Data
+        /// </summary>
+        private bool ValidateModelUploadData()
+        {
+            try
+            {
+                bool isValid = true;
                 if (ModelReferenceData != null || ModelReferenceData.IssuerId != null)
                 {
                     RetrieveCOAList(ModelReferenceData.IssuerId);
@@ -1849,18 +2131,35 @@ namespace GreenField.Web.Helpers
                 bool validateCOACodes = CheckCOACodes(ModelUploadData, COACodes);
                 if (!validateCOACodes)
                 {
-                    //To-Do
-                    //Add Exception Details
+                    throw new Exception();
                 }
-                ValidatePeriodYears(YearList);
-                ValidateEndDates(PeriodEndDate);
-                ValidatePeriodLength(PeriodLength);
-                ValidateActualOverride(ActualOverride);
-                ValidateAmountValues();
+                isValid = ValidatePeriodYears(YearList);
+                if (!isValid)
+                {
+                    throw new Exception();
+                }
+                isValid = ValidateEndDates(PeriodEndDate);
+                if (!isValid)
+                {
+                    throw new Exception();
+                }
+                isValid = ValidatePeriodLength(PeriodLength);
+                if (!isValid)
+                {
+                    throw new Exception();
+                }
+                isValid = ValidateActualOverride(ActualOverride);
+                if (!isValid)
+                {
+                    throw new Exception();
+                }
+                isValid = ValidateAmountValues();
+                return true;
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                return false;
             }
         }
 
@@ -1881,11 +2180,13 @@ namespace GreenField.Web.Helpers
         {
             try
             {
+                InvalidValue = issuerId;
                 REF = ExternalResearchEntity.ModelDeleteInteralStatement(issuerId, rootSource).ToList();
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Deleting Data from Internal_Statement for: " + InvalidValue;
             }
         }
 
@@ -1902,13 +2203,15 @@ namespace GreenField.Web.Helpers
                 {
                     foreach (string item in refList)
                     {
+                        InvalidValue = item;
                         ExternalResearchEntity.ModelDeleteInternalData(issuerId, item);
                     }
                 }
             }
             catch (Exception ex)
             {
-
+                ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Deleting Data from Internal_Data for Ref= " + InvalidValue;
             }
         }
 
@@ -1925,6 +2228,7 @@ namespace GreenField.Web.Helpers
                 {
                     foreach (string item in refList)
                     {
+                        InvalidValue = item;
                         ExternalResearchEntity.ModelDeleteInternalCommodityAssumptions(issuerId, item);
 
                     }
@@ -1933,6 +2237,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Deleting Data from Internal_Data for Ref= " + InvalidValue;
             }
         }
 
@@ -1949,12 +2254,14 @@ namespace GreenField.Web.Helpers
             {
                 if (issuerId != null && COA_Type != null)
                 {
+                    InvalidValue = issuerId;
                     ExternalResearchEntity.ModelDeleteInternalIssuer(issuerId);
                 }
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Deleting Data from Internal_Issuer for Issuer= " + InvalidValue;
             }
         }
 
@@ -1969,12 +2276,14 @@ namespace GreenField.Web.Helpers
             {
                 if (issuerId != null && dataSource != null)
                 {
+                    InvalidValue = "Issuer Name= " + issuerId + ", Root Source= " + dataSource;
                     ExternalResearchEntity.ModelDeleteInternalIssuerQuarterlyDistribution(issuerId, dataSource);
                 }
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Deleting Data from Internal_Issuer_Quarterely Distribution for Issuer= " + InvalidValue;
             }
         }
 
@@ -2002,14 +2311,15 @@ namespace GreenField.Web.Helpers
             {
                 if (issuerId != null)
                 {
+                    InvalidValue = "Issuer id= " + issuerId + ", period year= " + periodYear.ToString();
                     ExternalResearchEntity.ModelInsertInternalStatement(issuerId, refNo, periodYear, rootSource, rootSourceDate,
                         periodLength, periodEndDate, currency, amountType);
                 }
             }
             catch (Exception ex)
             {
-
-                throw;
+                ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Inserting Data in Internal_Statement  for Issuer= " + InvalidValue;
             }
         }
 
@@ -2027,12 +2337,14 @@ namespace GreenField.Web.Helpers
             {
                 if (issuerId != null || refNo != null)
                 {
+                    InvalidValue = "Issuer Id= " + issuerId + " Ref Number: " + refNo;
                     ExternalResearchEntity.ModelInsertInternalData(issuerId, refNo, periodType, COA, amount);
                 }
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Inserting Data in Internal_Data for " + InvalidValue;
             }
         }
 
@@ -2045,12 +2357,14 @@ namespace GreenField.Web.Helpers
             {
                 if (issuerId != null && ref_no != null)
                 {
+                    InvalidValue = " Issuer Id= " + issuerId + ", Ref Number= " + ref_no;
                     ExternalResearchEntity.ModelInsertInternalCommodityAssumptions(issuerId, ref_no, commodityId, amount);
                 }
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Inserting Data in Internal_Commodity_Assumptions for " + InvalidValue;
             }
         }
 
@@ -2067,13 +2381,14 @@ namespace GreenField.Web.Helpers
             {
                 if (issuerId != null)
                 {
+                    InvalidValue = "Issuer Id= " + issuerId;
                     ExternalResearchEntity.ModelInsertInternalIssuer(issuerId, COA_Type, lastPrimaryModelLoad, lastIndustryModelLoad);
                 }
             }
             catch (Exception ex)
             {
-
-                throw;
+                ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Inserting Data in Internal_Issuer for " + InvalidValue;
             }
         }
 
@@ -2091,13 +2406,14 @@ namespace GreenField.Web.Helpers
             {
                 if (issuerId != null && dataSource != null)
                 {
+                    InvalidValue = "Issuer Id= " + issuerId + " Root Source= " + dataSource;
                     ExternalResearchEntity.ModelInsertInternalIssuerQuaterelyDistribution(issuerId, dataSource, periodType, percentage, lastUpdated);
                 }
             }
             catch (Exception ex)
             {
-
-                throw;
+                ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Inserting Data in Internal_Issuer_Quarterely_Distribution for " + InvalidValue;
             }
         }
 
@@ -2113,11 +2429,14 @@ namespace GreenField.Web.Helpers
         {
             try
             {
+                InvalidValue = "Issuer Id= " + issuerId + "Root Source= " + rootSource + ", Document Id= " + documentId.ToString();
                 ExternalResearchEntity.ModelInsertInternalModelLoadData(issuerId, rootSource, userName, loadTime, documentId);
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Inserting Data in Internal_Model_Load for " + InvalidValue;
+
             }
         }
 
@@ -2130,11 +2449,13 @@ namespace GreenField.Web.Helpers
         {
             try
             {
+                InvalidValue = "Issuer Id= " + issuerId;
                 ExternalResearchEntity.Get_Data(issuerId, calcLog);
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while calling Get_Data for " + InvalidValue;
             }
         }
 
@@ -2146,11 +2467,13 @@ namespace GreenField.Web.Helpers
         {
             try
             {
+                InvalidValue = "Issuer Id= " + issuerId;
                 ExternalResearchEntity.SET_INTERIM_AMOUNTS(Convert.ToInt32(issuerId));
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while calling Set_Interim_Amount for " + InvalidValue;
             }
         }
 
@@ -2172,11 +2495,13 @@ namespace GreenField.Web.Helpers
         {
             try
             {
+                InvalidValue = "Issuer Id= " + issuerId + ", Root Source= " + rootSource + " Load Id= " + loadId;
                 ExternalResearchEntity.ModelInsertInternalCOAChanges(issuerId, rootSource, loadId, currency, coa, periodYear, periodEndDate, startDate, endDate, amount, units);
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while inserting values in Internal_COA_Changes for " + InvalidValue;
             }
         }
 
@@ -2197,12 +2522,14 @@ namespace GreenField.Web.Helpers
             {
                 if (issuerId != null)
                 {
+                    InvalidValue = "Issuer Id =" + issuerId;
                     ExternalResearchEntity.ModelUpdateDataInternalIssuer(issuerId, lastPrimaryUpload, lastIndustryUpload);
                 }
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Updating values in Internal_Issuer for " + InvalidValue;
             }
         }
 
@@ -2218,11 +2545,13 @@ namespace GreenField.Web.Helpers
         {
             try
             {
+                InvalidValue = "Issuer Id= " + issuerId + ", Load Id= " + loadId;
                 ExternalResearchEntity.ModelUpdateInternalModelLoadData(loadId, issuerId, rootSource, userName, loadTime, documentId);
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Updating values in Internal_Model_Load for " + InvalidValue;
             }
         }
 
@@ -2239,11 +2568,13 @@ namespace GreenField.Web.Helpers
         {
             try
             {
+                InvalidValue = "Issuer Id= " + issuerId + ", COA= " + coa;
                 ExternalResearchEntity.ModelUpdateInternalCOAChanges(issuerId, rootSource, currency, coa, periodYear, timeStamp);
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                ExceptionMessage = "Error while Updating values in Internal_COA_Changes for " + InvalidValue;
             }
         }
 
