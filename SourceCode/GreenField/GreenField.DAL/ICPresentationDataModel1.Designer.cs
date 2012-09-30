@@ -2595,6 +2595,44 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction("DeleteFileMaster", fileIdParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="lOCATION">No Metadata Documentation available.</param>
+        public ObjectResult<FileMaster> ModelRetrieveFileId(global::System.String lOCATION)
+        {
+            ObjectParameter lOCATIONParameter;
+            if (lOCATION != null)
+            {
+                lOCATIONParameter = new ObjectParameter("LOCATION", lOCATION);
+            }
+            else
+            {
+                lOCATIONParameter = new ObjectParameter("LOCATION", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FileMaster>("ModelRetrieveFileId", lOCATIONParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="lOCATION">No Metadata Documentation available.</param>
+        public ObjectResult<FileMaster> ModelRetrieveFileId(global::System.String lOCATION, MergeOption mergeOption)
+        {
+            ObjectParameter lOCATIONParameter;
+            if (lOCATION != null)
+            {
+                lOCATIONParameter = new ObjectParameter("LOCATION", lOCATION);
+            }
+            else
+            {
+                lOCATIONParameter = new ObjectParameter("LOCATION", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<FileMaster>("ModelRetrieveFileId", mergeOption, lOCATIONParameter);
+        }
 
         #endregion
     }

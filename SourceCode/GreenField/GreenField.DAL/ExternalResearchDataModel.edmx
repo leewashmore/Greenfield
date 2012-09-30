@@ -578,7 +578,8 @@
           <Parameter Name="CURRENCY" Type="char" Mode="In" />
         </Function>
         <Function Name="Get_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="int" Mode="In" />
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="CALC_LOG" Type="char" Mode="In" />
         </Function>
         <Function Name="Get_EV_EBITDA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityId" Type="varchar" Mode="In" />
@@ -725,6 +726,19 @@
           <Parameter Name="LASTPRIMARYMODELLOAD" Type="datetime" Mode="In" />
           <Parameter Name="LASTINDUSTRYMODELLOAD" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="ModelInsertInternalCOAChanges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="LOAD_ID" Type="bigint" Mode="In" />
+          <Parameter Name="CURRENCY" Type="varchar" Mode="In" />
+          <Parameter Name="COA" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+          <Parameter Name="PERIOD_END_DATE" Type="datetime" Mode="In" />
+          <Parameter Name="START_DATE" Type="datetime" Mode="In" />
+          <Parameter Name="END_DATE" Type="datetime" Mode="In" />
+          <Parameter Name="AMOUNT" Type="decimal" Mode="In" />
+          <Parameter Name="UNITS" Type="char" Mode="In" />
+        </Function>
         <Function Name="ModelInsertInternalCommodityAssumptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="REF_NO" Type="varchar" Mode="In" />
@@ -751,6 +765,13 @@
           <Parameter Name="PERCENTAGE" Type="decimal" Mode="In" />
           <Parameter Name="LAST_UPDATED" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="ModelInsertInternalModelLoadData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="USER_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="LOAD_TIME" Type="datetime" Mode="In" />
+          <Parameter Name="DOCUMENT_ID" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="ModelInsertInternalStatement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="REF_NO" Type="varchar" Mode="In" />
@@ -765,13 +786,42 @@
         <Function Name="ModelRetrieveDataInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ModelRetrieveInternalCOAChanges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="COA" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+          <Parameter Name="CURRENCY" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="ModelRetrieveInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="ModelRetrieveinternalModelLoadData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="LOAD_TIME" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="ModelRetrieveTrackCOA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="ModelUpdateDataInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
           <Parameter Name="LASTPRIMARYMODELLOAD" Type="datetime" Mode="In" />
           <Parameter Name="LASTINDUSTRYMODELLOAD" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="ModelUpdateInternalCOAChanges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="CURRENCY" Type="varchar" Mode="In" />
+          <Parameter Name="COA" Type="varchar" Mode="In" />
+          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+          <Parameter Name="TIME_STAMP" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="ModelUpdateInternalModelLoadData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LOAD_ID" Type="int" Mode="In" />
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+          <Parameter Name="USER_NAME" Type="varchar" Mode="In" />
+          <Parameter Name="LOAD_TIME" Type="datetime" Mode="In" />
+          <Parameter Name="DOCUMENT_ID" Type="bigint" Mode="In" />
         </Function>
         <Function Name="RetrieveCOACodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="COA_TYPE" Type="varchar" Mode="In" />
@@ -794,6 +844,9 @@
         <Function Name="SaveUpdatedFairValueMeasures" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="securityId" Type="varchar" Mode="In" />
           <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+        </Function>
+        <Function Name="SET_INTERIM_AMOUNTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ISSUER_ID" Type="int" Mode="In" />
         </Function>
         <Function Name="usp_GetDataForPeriodGadgets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cSource" Type="varchar" Mode="In" />
@@ -1105,6 +1158,62 @@
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
             <Parameter Name="LASTPRIMARYMODELLOAD" Mode="In" Type="DateTime" />
             <Parameter Name="LASTINDUSTRYMODELLOAD" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="SET_INTERIM_AMOUNTS">
+          <Parameter Name="ISSUER_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Get_Data">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="CALC_LOG" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModelInsertInternalModelLoadData">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="USER_NAME" Mode="In" Type="String" />
+            <Parameter Name="LOAD_TIME" Mode="In" Type="DateTime" />
+            <Parameter Name="DOCUMENT_ID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="ModelUpdateInternalModelLoadData">
+            <Parameter Name="LOAD_ID" Mode="In" Type="Int32" />
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="USER_NAME" Mode="In" Type="String" />
+            <Parameter Name="LOAD_TIME" Mode="In" Type="DateTime" />
+            <Parameter Name="DOCUMENT_ID" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="ModelRetrieveinternalModelLoadData" ReturnType="Collection(ExternalResearchModel.Internal_Model_Load)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="LOAD_TIME" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ModelRetrieveTrackCOA" ReturnType="Collection(ExternalResearchModel.TrackedCOA)" />
+          <FunctionImport Name="ModelInsertInternalCOAChanges">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="LOAD_ID" Mode="In" Type="Int64" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
+            <Parameter Name="COA" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+            <Parameter Name="PERIOD_END_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="START_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="END_DATE" Mode="In" Type="DateTime" />
+            <Parameter Name="AMOUNT" Mode="In" Type="Decimal" />
+            <Parameter Name="UNITS" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="ModelUpdateInternalCOAChanges">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
+            <Parameter Name="COA" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+            <Parameter Name="TIME_STAMP" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="ModelRetrieveInternalCOAChanges" ReturnType="Collection(ExternalResearchModel.INTERNAL_COA_CHANGES)">
+            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+            <Parameter Name="COA" Mode="In" Type="String" />
+            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+            <Parameter Name="CURRENCY" Mode="In" Type="String" />
           </FunctionImport>
 
 
@@ -1698,6 +1807,31 @@
           <Property Type="Decimal" Name="TARGET_PCT" Nullable="false" Precision="32" Scale="6" />
           <Property Type="DateTime" Name="UPDATED" Nullable="false" />
         </EntityType>
+        <ComplexType Name="Internal_Model_Load">
+          <Property Type="Int32" Name="LOAD_ID" Nullable="false" />
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="UserName" Nullable="false" MaxLength="255" />
+          <Property Type="DateTime" Name="LOAD_TIME" Nullable="false" Precision="23" />
+          <Property Type="Int64" Name="DOCUMENT_ID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="TrackedCOA">
+          <Property Type="Int32" Name="Id" Nullable="false" />
+          <Property Type="String" Name="COA" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="INTERNAL_COA_CHANGES">
+          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
+          <Property Type="Int64" Name="LOAD_ID" Nullable="false" />
+          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" />
+          <Property Type="String" Name="COA" Nullable="false" MaxLength="8" />
+          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+          <Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="START_DATE" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="END_DATE" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+          <Property Type="String" Name="UNITS" Nullable="false" MaxLength="1" />
+        </ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -2397,6 +2531,49 @@
           <FunctionImportMapping FunctionImportName="ModelInsertInternalCommodityAssumptions" FunctionName="ExternalResearchModel.Store.ModelInsertInternalCommodityAssumptions" />
           <FunctionImportMapping FunctionImportName="ModelDeleteInternalCommodityAssumptions" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalCommodityAssumptions" />
           <FunctionImportMapping FunctionImportName="ModelUpdateDataInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelUpdateDataInternalIssuer" />
+          <FunctionImportMapping FunctionImportName="SET_INTERIM_AMOUNTS" FunctionName="ExternalResearchModel.Store.SET_INTERIM_AMOUNTS" />
+          <FunctionImportMapping FunctionImportName="Get_Data" FunctionName="ExternalResearchModel.Store.Get_Data" />
+          <FunctionImportMapping FunctionImportName="ModelInsertInternalModelLoadData" FunctionName="ExternalResearchModel.Store.ModelInsertInternalModelLoadData" />
+          <FunctionImportMapping FunctionImportName="ModelUpdateInternalModelLoadData" FunctionName="ExternalResearchModel.Store.ModelUpdateInternalModelLoadData" />
+          <FunctionImportMapping FunctionImportName="ModelRetrieveinternalModelLoadData" FunctionName="ExternalResearchModel.Store.ModelRetrieveinternalModelLoadData">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.Internal_Model_Load">
+                <ScalarProperty Name="LOAD_ID" ColumnName="LOAD_ID" />
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LOAD_TIME" ColumnName="LOAD_TIME" />
+                <ScalarProperty Name="DOCUMENT_ID" ColumnName="DOCUMENT_ID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ModelRetrieveTrackCOA" FunctionName="ExternalResearchModel.Store.ModelRetrieveTrackCOA">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.TrackedCOA">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="COA" ColumnName="COA" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="ModelInsertInternalCOAChanges" FunctionName="ExternalResearchModel.Store.ModelInsertInternalCOAChanges" />
+          <FunctionImportMapping FunctionImportName="ModelUpdateInternalCOAChanges" FunctionName="ExternalResearchModel.Store.ModelUpdateInternalCOAChanges" />
+          <FunctionImportMapping FunctionImportName="ModelRetrieveInternalCOAChanges" FunctionName="ExternalResearchModel.Store.ModelRetrieveInternalCOAChanges">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.INTERNAL_COA_CHANGES">
+                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+                <ScalarProperty Name="LOAD_ID" ColumnName="LOAD_ID" />
+                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+                <ScalarProperty Name="COA" ColumnName="COA" />
+                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+                <ScalarProperty Name="UNITS" ColumnName="UNITS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />

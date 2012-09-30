@@ -377,6 +377,9 @@
         <Function Name="GetPreMeetingVotingReportDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PresentationId" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="ModelRetrieveFileId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LOCATION" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="RetrieveICMeetingInfoByStatusType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PresentationStatus" Type="varchar" Mode="In" />
         </Function>
@@ -903,7 +906,10 @@
             <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteFileMaster">
-            <Parameter Name="fileId" Mode="In" Type="Int64" />
+          <Parameter Name="fileId" Mode="In" Type="Int64" />
+          </FunctionImport>
+          <FunctionImport Name="ModelRetrieveFileId" EntitySet="FileMasters" ReturnType="Collection(ICPresentationModel.FileMaster)">
+            <Parameter Name="LOCATION" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
@@ -1805,6 +1811,7 @@
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdatePresentationInfo" FunctionName="ICPresentationModel.Store.UpdatePresentationInfo" />
           <FunctionImportMapping FunctionImportName="DeleteFileMaster" FunctionName="ICPresentationModel.Store.DeleteFileMaster" />
+          <FunctionImportMapping FunctionImportName="ModelRetrieveFileId" FunctionName="ICPresentationModel.Store.ModelRetrieveFileId" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -376,6 +376,6 @@ namespace GreenField.ServiceCaller
 
         #endregion
 
-
+        void UploadModelExcelSheet(byte[] fileStream, string userName, Action<string> callback);
     }
 }

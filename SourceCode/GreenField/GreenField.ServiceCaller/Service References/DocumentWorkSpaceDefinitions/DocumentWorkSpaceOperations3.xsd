@@ -152,6 +152,21 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="UploadExcelModel">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="excelFile" nillable="true" type="xs:base64Binary" />
+        <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadExcelModelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="UploadExcelModelResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="RetrieveCEData">
     <xs:complexType>
       <xs:sequence>

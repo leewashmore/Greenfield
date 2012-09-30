@@ -40,6 +40,22 @@ namespace GreenField.Web.Helpers
         }
 
         /// <summary>
+        /// ICPresentation Entity
+        /// </summary>
+        private ICPresentationEntities _ICPresentationEntity;
+        public ICPresentationEntities ICPresentationEntity
+        {
+            get
+            {
+                return _ICPresentationEntity;
+            }
+            set
+            {
+                _ICPresentationEntity = value;
+            }
+        }
+
+        /// <summary>
         /// Entity of ExternalResearchDataModel
         /// </summary>
         private ExternalResearchEntities _externalResearchEntity;
@@ -119,6 +135,9 @@ namespace GreenField.Web.Helpers
             set { _REF = value; }
         }
 
+        /// <summary>
+        /// Number of Years for which Data to Load
+        /// </summary>
         private int _numberOfYears;
         public int NumberOfYears
         {
@@ -126,6 +145,9 @@ namespace GreenField.Web.Helpers
             set { _numberOfYears = value; }
         }
 
+        /// <summary>
+        /// Unique Reference Number: stored per year in Internal_Statement
+        /// </summary>
         private string _uniqueRefNumber;
         public string UniqueRefNumber
         {
@@ -133,6 +155,9 @@ namespace GreenField.Web.Helpers
             set { _uniqueRefNumber = value; }
         }
 
+        /// <summary>
+        /// Dictionary to store Year with ReferenceNumber
+        /// </summary>
         private Dictionary<string, string> _recordYearRefNo;
         public Dictionary<string, string> RecordYearRefNo
         {
@@ -147,6 +172,16 @@ namespace GreenField.Web.Helpers
             set { _recordYearRefNo = value; }
         }
 
+        /// <summary>
+        /// DocumentId
+        /// </summary>
+        private long _documentId = 0;
+        public long DocumentId
+        {
+            get { return _documentId; }
+            set { _documentId = value; }
+        }
+
 
         #endregion
 
@@ -159,6 +194,27 @@ namespace GreenField.Web.Helpers
             get { return _uploadData; }
             set { _uploadData = value; }
         }
+
+        /// <summary>
+        /// The name of the file
+        /// </summary>
+        private string _fileName;
+        public string FileName
+        {
+            get { return _fileName; }
+            set { _fileName = value; }
+        }
+
+        /// <summary>
+        /// The path where file is stored
+        /// </summary>
+        private string filepath;
+        public string Filepath
+        {
+            get { return filepath; }
+            set { filepath = value; }
+        }
+        
 
         #region ModelUpload
 
@@ -328,6 +384,9 @@ namespace GreenField.Web.Helpers
 
         #region ModelReference
 
+        /// <summary>
+        /// ModelReferenceSheet
+        /// </summary>
         private IEnumerable<Sheet> _sheetModelReference;
         public IEnumerable<Sheet> SheetModelReference
         {
@@ -360,6 +419,16 @@ namespace GreenField.Web.Helpers
 
         #endregion
 
+        /// <summary>
+        /// if user has populated QuarterelyOverride Values
+        /// </summary>
+        private bool _quarterlyOverrideEnabled;
+        public bool QuarterelyOverrideEnabled
+        {
+            get { return _quarterlyOverrideEnabled; }
+            set { _quarterlyOverrideEnabled = value; }
+        }
+
 
         #endregion
 
@@ -367,11 +436,14 @@ namespace GreenField.Web.Helpers
 
         #region PublicMethods
 
-        public void ReadExcelData()
+        public void ReadExcelData(byte[] fileStream,string userName)
         {
             try
             {
-                using (SpreadsheetDocument myWorkbook = SpreadsheetDocument.Open("D:\\TestQA.xls", true))
+                Filepath = GetFileName();
+                CreateTempFile(fileStream);
+
+                using (SpreadsheetDocument myWorkbook = SpreadsheetDocument.Open(Filepath, true))
                 {
                     WorkbookPart workbookPart = myWorkbook.WorkbookPart;
                     bool checkWorkSheetExists = CheckSheetsExist(workbookPart);
@@ -402,6 +474,10 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
             }
         }
+
+        #endregion
+
+        #region OpearationalMethods
 
         /// <summary>
         /// Create SheetData for both the Excel Sheets
@@ -489,6 +565,7 @@ namespace GreenField.Web.Helpers
                     DeleteInternalStatementRecords(ModelReferenceData.IssuerId, RootSource);
                     DeleteInternalDataRecords(ModelReferenceData.IssuerId, REF);
                     DeleteInternalCommodityAssumptionsRecords(ModelReferenceData.IssuerId, REF);
+                    DeleteInternalIssuerQuarterelyDistribution(ModelReferenceData.IssuerId, RootSource);
                 }
             }
             catch (Exception ex)
@@ -498,7 +575,7 @@ namespace GreenField.Web.Helpers
         }
 
         /// <summary>
-        /// 
+        /// Insert Operations is DB
         /// </summary>
         private void DBInsertOperations()
         {
@@ -507,6 +584,14 @@ namespace GreenField.Web.Helpers
                 InsertIntoInternalStatementData();
                 InsertIntoInternalData();
                 InsertIntoInternalCommodityAssumptions();
+                if (QuarterelyOverrideEnabled)
+                {
+                    InsertIntoInternalIssuerQuarterelyDistribution();
+                }
+                SetInterimAmountsServiceCall(ModelReferenceData.IssuerId);
+                GetDataServiceCall(ModelReferenceData.IssuerId, "Y");
+                CheckInternalModelLoad();
+                CheckInternalCOAChanges();
             }
             catch (Exception ex)
             {
@@ -600,22 +685,44 @@ namespace GreenField.Web.Helpers
             }
         }
 
+        /// <summary>
+        /// Check if Data exists in Internal_Issuer
+        /// </summary>
         private void CheckInternalIssuer()
         {
-            string issuerId = ModelReferenceData.IssuerId;
-            string coa = ModelReferenceData.COATypes;
-            string rootSource = UserRole;
-
-            INTERNAL_ISSUER issuerData = FetchInternalIssuerData(issuerId);
-
-            if (issuerData != null)
+            try
             {
-                if (UserRole == "PRIMARY")
-                { 
-                
-                    }
-            }
+                string issuerId = ModelReferenceData.IssuerId;
+                string coa = ModelReferenceData.COATypes;
+                string rootSource = RootSource;
+                DateTime? lastUpdatePrimary = DateTime.Today;
+                DateTime? lastUpdateIndustry = DateTime.Today;
 
+                INTERNAL_ISSUER issuerData = FetchInternalIssuerData(issuerId);
+                if (RootSource == "PRIMARY")
+                {
+                    lastUpdatePrimary = TimeStamp;
+                    lastUpdateIndustry = null;
+                }
+                else if (RootSource == "INDUSTRY")
+                {
+                    lastUpdateIndustry = TimeStamp;
+                    lastUpdatePrimary = null;
+                }
+
+                if (issuerData != null)
+                {
+                    UpdateInternalIssuer(issuerId, lastUpdatePrimary, lastUpdateIndustry);
+                }
+                else
+                {
+                    InsertInternalIssuerData(issuerId, ModelReferenceData.COATypes, lastUpdatePrimary, lastUpdateIndustry);
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
         }
 
         /// <summary>
@@ -643,6 +750,115 @@ namespace GreenField.Web.Helpers
             }
         }
 
+        /// <summary>
+        /// Insert Values into Internal_Issuer-Quartererly_Distribution
+        /// </summary>
+        private void InsertIntoInternalIssuerQuarterelyDistribution()
+        {
+            try
+            {
+                string issuerId = ModelReferenceData.IssuerId;
+                string data_source = RootSource;
+                string periodType = "Q";
+                List<decimal> percentage = new List<decimal>() { (decimal)ModelReferenceData.Q1Override, (decimal)ModelReferenceData.Q2Override, 
+                (decimal)ModelReferenceData.Q3Override, (decimal)ModelReferenceData.Q4Override };
+                if (QuarterelyOverrideEnabled)
+                {
+                    for (int i = 0; i < 4; i++)
+                    {
+                        InsertInternalIssuerQuarterlyDistribution(issuerId, RootSource, periodType + (i + 1).ToString(), percentage[i] / 100M, TimeStamp);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Check Internal_Model_Load
+        /// </summary>
+        private void CheckInternalModelLoad()
+        {
+            string issuerId = ModelReferenceData.IssuerId;
+            string rootSource = RootSource;
+            DateTime loadTime = TimeStamp;
+            long documentId = DocumentId;
+            Internal_Model_Load record = new Internal_Model_Load();
+            List<Internal_Model_Load> data = FetchInternalModelLoadData(issuerId, rootSource, DateTime.Today);
+            if (data != null)
+            {
+                if (data.Any(a => a.LOAD_TIME.Date == DateTime.Today.Date))
+                {
+                    record = data.Where(a => a.LOAD_TIME.Date == DateTime.Today.Date).FirstOrDefault();
+                    UpdateInternalModelLoad(record.LOAD_ID, issuerId, rootSource, UserName, loadTime, documentId);
+                }
+                else
+                {
+                    InsertInternalModelLoadData(issuerId, rootSource, UserName, loadTime, documentId);
+                }
+            }
+            else
+            {
+                InsertInternalModelLoadData(issuerId, rootSource, UserName, loadTime, documentId);
+            }
+        }
+
+        /// <summary>
+        /// Updated Data in INTERNAL_COA_CHANGES
+        /// </summary>
+        private void CheckInternalCOAChanges()
+        {
+            try
+            {
+                string issuerId = ModelReferenceData.IssuerId;
+                string rootSource = RootSource;
+                string currency = ModelReferenceData.Currencies.First();
+                List<TrackedCOA> trackedCOA = FetchTrackedCOA();
+                int periodYear = 0;
+                string convertFlag = "";
+                decimal? amount;
+                decimal? fetchedAmount;
+                List<INTERNAL_COA_CHANGES> internalCOAChangesData = new List<INTERNAL_COA_CHANGES>();
+                foreach (TrackedCOA item in trackedCOA)
+                {
+                    foreach (var year in YearsToLoad)
+                    {
+                        periodYear = Convert.ToInt32(year.Value);
+                        internalCOAChangesData = FetchInternalCOAChangesData(issuerId, rootSource, item.COA, periodYear, currency);
+                        amount = (decimal?)ModelUploadData.Where(a => a.COA == item.COA && a.Year == year.Key).Select(a => a.Amount).FirstOrDefault();
+                        DateTime? periodEndDate = PeriodEndDate.Where(a => a.Key == year.Key).Select(a => a.Value).FirstOrDefault();
+                        if (amount != null)
+                        {
+                            convertFlag = Convert.ToString(COACodes.Where(a => a.COA == item.COA).Select(a => a.CONVERT_FLAG).FirstOrDefault());
+                            if (convertFlag != null)
+                            {
+                                if (convertFlag.ToUpper().Trim() == "Y")
+                                {
+                                    amount = ConvertAmount(ModelReferenceData.Units.First(), Convert.ToDecimal(amount));
+                                }
+                            }
+                        }
+                        if (internalCOAChangesData == null || internalCOAChangesData.Count == 0)
+                        {
+                            InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA, periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
+                        }
+                        else
+                        {
+                            fetchedAmount = internalCOAChangesData.Select(a => a.AMOUNT).FirstOrDefault();
+                            UpdateInternalCOAChanges(issuerId, rootSource, currency, item.COA, periodYear, TimeStamp);
+                            InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA, periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
         #endregion
 
         #region Common Methods
@@ -664,6 +880,26 @@ namespace GreenField.Web.Helpers
             return true;
         }
 
+        /// <summary>
+        /// Get the name of the file
+        /// </summary>
+        /// <returns></returns>
+        private static string GetFileName()
+        {
+            string fileName = Path.GetTempPath() + Guid.NewGuid() + "_Model.xls";
+            return fileName;
+        }
+
+        /// <summary>
+        /// Create Excel File in Temp Folder
+        /// </summary>
+        /// <param name="file"></param>
+        private void CreateTempFile(byte[] file)
+        {
+            byte[] fileBytes = file;
+            File.WriteAllBytes(Filepath, fileBytes);
+        }
+        
         #endregion
 
         #region ModelReference
@@ -748,8 +984,8 @@ namespace GreenField.Web.Helpers
                 return false;
             }
 
-            bool checkOverride = CheckOverrideValues();
-            if (!checkOverride)
+            QuarterelyOverrideEnabled = CheckOverrideValues();
+            if (!QuarterelyOverrideEnabled)
             {
                 return false;
             }
@@ -1696,7 +1932,7 @@ namespace GreenField.Web.Helpers
             }
             catch (Exception ex)
             {
-
+                ExceptionTrace.LogException(ex);
             }
         }
 
@@ -1718,7 +1954,7 @@ namespace GreenField.Web.Helpers
             }
             catch (Exception ex)
             {
-
+                ExceptionTrace.LogException(ex);
             }
         }
 
@@ -1738,7 +1974,7 @@ namespace GreenField.Web.Helpers
             }
             catch (Exception ex)
             {
-
+                ExceptionTrace.LogException(ex);
             }
         }
 
@@ -1825,7 +2061,7 @@ namespace GreenField.Web.Helpers
         /// <param name="COA_Type"></param>
         /// <param name="lastPrimaryModelLoad"></param>
         /// <param name="lastIndustryModelLoad"></param>
-        private void InsertInternalIssuerData(string issuerId, string COA_Type, DateTime lastPrimaryModelLoad, DateTime lastIndustryModelLoad)
+        private void InsertInternalIssuerData(string issuerId, string COA_Type, DateTime? lastPrimaryModelLoad, DateTime? lastIndustryModelLoad)
         {
             try
             {
@@ -1865,10 +2101,89 @@ namespace GreenField.Web.Helpers
             }
         }
 
+        /// <summary>
+        /// Insert Data into Internal_Model_Load
+        /// </summary>
+        /// <param name="issuerId">Issuer Id</param>
+        /// <param name="rootSource">Root Source</param>
+        /// <param name="userName">Username</param>
+        /// <param name="loadTime">LoadTime</param>
+        /// <param name="documentId">Document Id</param>
+        private void InsertInternalModelLoadData(string issuerId, string rootSource, string userName, DateTime loadTime, long documentId)
+        {
+            try
+            {
+                ExternalResearchEntity.ModelInsertInternalModelLoadData(issuerId, rootSource, userName, loadTime, documentId);
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Call Get_Data
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="calcLog"></param>
+        private void GetDataServiceCall(string issuerId, string calcLog)
+        {
+            try
+            {
+                ExternalResearchEntity.Get_Data(issuerId, calcLog);
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Service Call for Set_Interim_Amounts
+        /// </summary>
+        /// <param name="issuerId">IssuerId</param>
+        private void SetInterimAmountsServiceCall(string issuerId)
+        {
+            try
+            {
+                ExternalResearchEntity.SET_INTERIM_AMOUNTS(Convert.ToInt32(issuerId));
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Insert data in InternalCOAChanges
+        /// </summary>
+        /// <param name="issuerId">IssuerId</param>
+        /// <param name="rootSource"></param>
+        /// <param name="loadId"></param>
+        /// <param name="currency"></param>
+        /// <param name="coa"></param>
+        /// <param name="periodYear"></param>
+        /// <param name="periodEndDate"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="amount"></param>
+        /// <param name="units"></param>
+        private void InsertInternalCOAChangesData(string issuerId, string rootSource, long loadId, string currency, string coa, int periodYear, DateTime? periodEndDate, DateTime? startDate, DateTime? endDate, decimal amount, string units)
+        {
+            try
+            {
+                ExternalResearchEntity.ModelInsertInternalCOAChanges(issuerId, rootSource, loadId, currency, coa, periodYear, periodEndDate, startDate, endDate, amount, units);
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+
         #endregion
 
-
-        #region UpdateData
+        #region UpdateData- Service Methods
 
         /// <summary>
         /// Update Internal_Issuer
@@ -1876,7 +2191,7 @@ namespace GreenField.Web.Helpers
         /// <param name="issuerId"></param>
         /// <param name="lastPrimaryUpload"></param>
         /// <param name="lastIndustryUpload"></param>
-        private void UpdateInternalIssuer(string issuerId, DateTime lastPrimaryUpload, DateTime lastIndustryUpload)
+        private void UpdateInternalIssuer(string issuerId, DateTime? lastPrimaryUpload, DateTime? lastIndustryUpload)
         {
             try
             {
@@ -1890,11 +2205,51 @@ namespace GreenField.Web.Helpers
                 ExceptionTrace.LogException(ex);
             }
         }
-        
+
+        /// <summary>
+        /// Internal_Model_Upload
+        /// </summary>
+        /// <param name="issuerId">IssuerId</param>
+        /// <param name="rootSource">RootSource</param>
+        /// <param name="userName">UserName</param>
+        /// <param name="loadTime">LoadTime</param>
+        /// <param name="documentId">DocumentId</param>
+        private void UpdateInternalModelLoad(int loadId, string issuerId, string rootSource, string userName, DateTime loadTime, long documentId)
+        {
+            try
+            {
+                ExternalResearchEntity.ModelUpdateInternalModelLoadData(loadId, issuerId, rootSource, userName, loadTime, documentId);
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
+        /// <summary>
+        /// Updated data into InternalCOAChanges
+        /// </summary>
+        /// <param name="issuerId"></param>
+        /// <param name="rootSource"></param>
+        /// <param name="currency"></param>
+        /// <param name="coa"></param>
+        /// <param name="periodYear"></param>
+        /// <param name="timeStamp"></param>
+        private void UpdateInternalCOAChanges(string issuerId, string rootSource, string currency, string coa, int periodYear, DateTime timeStamp)
+        {
+            try
+            {
+                ExternalResearchEntity.ModelUpdateInternalCOAChanges(issuerId, rootSource, currency, coa, periodYear, timeStamp);
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+            }
+        }
+
         #endregion
 
-
-        #region FetchData
+        #region FetchData- Service Methods
 
         /// <summary>
         /// Retrieve List of COA for selected Issuer
@@ -1951,6 +2306,91 @@ namespace GreenField.Web.Helpers
             {
                 INTERNAL_ISSUER result = new INTERNAL_ISSUER();
                 result = ExternalResearchEntity.ModelRetrieveInternalIssuer(issuerId).ToList().FirstOrDefault();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Retrieve Data from Internal_Model_Load
+        /// </summary>
+        /// <param name="issuerId">IssuerId</param>
+        /// <param name="rootSource">RootSource</param>
+        /// <param name="date">LoadTime</param>
+        /// <returns>Record of type Intenal_Model_Load</returns>
+        private List<Internal_Model_Load> FetchInternalModelLoadData(string issuerId, string rootSource, DateTime date)
+        {
+            try
+            {
+                List<Internal_Model_Load> result = new List<Internal_Model_Load>();
+                result = ExternalResearchEntity.ModelRetrieveinternalModelLoadData(issuerId, rootSource, date).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Fetch FileId from Documentation Store
+        /// </summary>
+        /// <param name="location">Location of the File</param>
+        /// <returns>Details of File Stored on the Server</returns>
+        private List<FileMaster> FetchFileId(string location)
+        {
+            try
+            {
+                List<FileMaster> result = new List<FileMaster>();
+                result = ICPresentationEntity.ModelRetrieveFileId(location).ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Fetch the List of tracked COA's
+        /// </summary>
+        /// <returns></returns>
+        private List<TrackedCOA> FetchTrackedCOA()
+        {
+            try
+            {
+                List<TrackedCOA> result = new List<TrackedCOA>();
+                result = ExternalResearchEntity.ModelRetrieveTrackCOA().ToList();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Service Method to fetch data from Internal_COA_Changes
+        /// </summary>
+        /// <param name="issuerId">Issuer Id</param>
+        /// <param name="rootSource">RootSource</param>
+        /// <param name="coa">COA</param>
+        /// <param name="periodYear">PeriodYear</param>
+        /// <param name="currency">Currency</param>
+        /// <returns>Collection of INTERNAL_COA_CHANGES</returns>
+        private List<INTERNAL_COA_CHANGES> FetchInternalCOAChangesData(string issuerId, string rootSource, string coa, int periodYear, string currency)
+        {
+            try
+            {
+                List<INTERNAL_COA_CHANGES> result = new List<INTERNAL_COA_CHANGES>();
+                result = ExternalResearchEntity.ModelRetrieveInternalCOAChanges(issuerId, rootSource, coa, periodYear, currency).ToList();
                 return result;
             }
             catch (Exception ex)

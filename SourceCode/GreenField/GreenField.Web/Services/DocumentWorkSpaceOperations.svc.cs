@@ -460,7 +460,9 @@ namespace GreenField.Web.Services
             }
         }
 
-        #region ExcelModelUpload
+        #region ExcelModel
+
+        #region FileDownload
 
         /// <summary>
         /// Get Reuters Data 
@@ -547,11 +549,11 @@ namespace GreenField.Web.Services
 
                 dataPointsExcelUpload = RetrieveModelUploadDataPoints(issuerID);
                 dataPointsModelReference = RetrieveExcelModelReferenceData(issuerID, securityDetails);
-                commodities = new List<string>();
+                commodities = new List<string>();//entity.RetrieveCommodityForecasts().ToList();
                 ExcelModelData excelModelData = new ExcelModelData();
                 excelModelData.ModelReferenceData = dataPointsModelReference;
                 excelModelData.ModelUploadDataPoints = dataPointsExcelUpload;
-                excelModelData.Currencies = new List<string>();
+                excelModelData.Currencies = new List<string>();//entity.RetrieveDistinctFXRates().ToList();
                 excelModelData.Commodities = commodities;
                 //ReadOpenXMLModel model = new ReadOpenXMLModel();
                 //model.ReadExcelData();
@@ -563,7 +565,37 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
+        } 
+       
+        #endregion
+
+        #region FileUpload
+
+        /// <summary>
+        /// Upload Excel Model
+        /// </summary>
+        /// <param name="excelFile">Byte stream of file</param>
+        /// <param name="userName">UserName</param>
+        /// <returns>Operation Status</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public string UploadExcelModel(byte[] excelFile, string userName)
+        {
+            try
+            {
+                string result = "";
+                ReadOpenXMLModel model = new ReadOpenXMLModel();
+                model.ReadExcelData(excelFile, userName);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                return null;
+            }
         }
+
+        #endregion
 
         /// <summary>
         /// Get CE Data 

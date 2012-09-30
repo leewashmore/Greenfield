@@ -27,7 +27,7 @@ namespace GreenField.Gadgets.Views
             get { return dataContextSource; }
             set { dataContextSource = value; }
         }
-        
+
 
         #region Constructor
 
@@ -62,5 +62,56 @@ namespace GreenField.Gadgets.Views
                 fs.Close();
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void bOpenFileDialog_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog1.Filter = "Excel Files (.xls)|*.xls|All Files (*.*)|*.*";
+            openFileDialog1.FilterIndex = 1;
+            openFileDialog1.Multiselect = true;
+            bool? userClickedOK = openFileDialog1.ShowDialog();
+            if (userClickedOK == true)
+            {
+                FileStream fileStream;
+                byte[] fileByte;
+                using (fileStream = openFileDialog1.File.OpenRead())
+                {
+                    fileByte = new byte[fileStream.Length];
+                    fileStream.Read(fileByte, 0, Convert.ToInt32(fileStream.Length));
+                }
+                this.DataContextSource.UploadWorkbook = fileByte;
+            }
+        }
+
+        /// <summary>
+        /// Generate byte-Array from Excel
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        private static byte[] GetBytsForFile(string filePath)
+        {
+            try
+            {
+                FileStream fileStream;
+                byte[] fileByte;
+                using (fileStream = File.OpenRead(filePath))
+                {
+                    fileByte = new byte[fileStream.Length];
+                    fileStream.Read(fileByte, 0, Convert.ToInt32(fileStream.Length));
+                }
+                return fileByte;
+            }
+            catch (Exception ex)
+            {
+                //ExceptionTrace.LogException(ex);
+                return null;
+            }
+        }
+
     }
 }

@@ -101,6 +101,15 @@
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveStatementData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_UploadExcelModel_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadExcelModel" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_UploadExcelModel_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UploadExcelModelResponse" />
+  </wsdl:message>
+  <wsdl:message name="DocumentWorkspaceOperations_UploadExcelModel_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveCEData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveCEData" />
   </wsdl:message>
@@ -160,6 +169,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveStatementData" message="tns:DocumentWorkspaceOperations_RetrieveStatementData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveStatementDataResponse" message="tns:DocumentWorkspaceOperations_RetrieveStatementData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveStatementDataServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_RetrieveStatementData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadExcelModel">
+      <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UploadExcelModel" message="tns:DocumentWorkspaceOperations_UploadExcelModel_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UploadExcelModelResponse" message="tns:DocumentWorkspaceOperations_UploadExcelModel_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/UploadExcelModelServiceFaultFault" name="ServiceFaultFault" message="tns:DocumentWorkspaceOperations_UploadExcelModel_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveCEData">
       <wsdl:input wsaw:Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEData" message="tns:DocumentWorkspaceOperations_RetrieveCEData_InputMessage" />
@@ -279,6 +293,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveStatementData">
       <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveStatementData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="UploadExcelModel">
+      <soap:operation soapAction="http://tempuri.org/DocumentWorkspaceOperations/UploadExcelModel" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

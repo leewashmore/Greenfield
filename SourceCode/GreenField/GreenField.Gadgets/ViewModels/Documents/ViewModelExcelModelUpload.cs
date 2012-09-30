@@ -343,6 +343,23 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        private byte[] _uploadWorkbook;
+        public byte[] UploadWorkbook
+        {
+            get
+            {
+                return _uploadWorkbook;
+            }
+            set
+            {
+                _uploadWorkbook = value;
+                if (value != null)
+                {
+                    HandleModelWorkbookUploadReferenceSet();
+                }
+                this.RaisePropertyChanged(() => this.UploadWorkbook);
+            }
+        }
 
 
         #endregion
@@ -360,7 +377,6 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 //ArgumentNullException
-
                 if (SelectedSecurity != null)
                 {
                     EnableDownload = false;
@@ -372,6 +388,17 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
                 Logging.LogException(_logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Handle Model Workbook Upload
+        /// </summary>
+        public void HandleModelWorkbookUploadReferenceSet()
+        {
+            if (UploadWorkbook != null)
+            {
+                _dbInteractivity.UploadModelExcelSheet(UploadWorkbook, "User", RetrieveModelWorkbookUploadCallbackMethod);
             }
         }
 
@@ -441,6 +468,14 @@ namespace GreenField.Gadgets.ViewModels
             {
                 BusyIndicatorNotification();
             }
+        }
+
+        /// <summary>
+        /// callback Method for ModelWorkbook
+        /// </summary>
+        public void RetrieveModelWorkbookUploadCallbackMethod(string message)
+        { 
+            
         }
 
         #endregion

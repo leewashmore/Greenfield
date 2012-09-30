@@ -387,6 +387,12 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         byte[] EndRetrieveStatementData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/UploadExcelModel", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/UploadExcelModelResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/UploadExcelModelServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginUploadExcelModel(byte[] excelFile, string userName, System.AsyncCallback callback, object asyncState);
+        
+        string EndUploadExcelModel(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEData", ReplyAction="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEDataResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/RetrieveCEDataServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveCEData(string issuerID, string currency, System.AsyncCallback callback, object asyncState);
@@ -590,6 +596,25 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class UploadExcelModelCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public UploadExcelModelCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveCEDataCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -671,6 +696,12 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         private System.Threading.SendOrPostCallback onRetrieveStatementDataCompletedDelegate;
         
+        private BeginOperationDelegate onBeginUploadExcelModelDelegate;
+        
+        private EndOperationDelegate onEndUploadExcelModelDelegate;
+        
+        private System.Threading.SendOrPostCallback onUploadExcelModelCompletedDelegate;
+        
         private BeginOperationDelegate onBeginRetrieveCEDataDelegate;
         
         private EndOperationDelegate onEndRetrieveCEDataDelegate;
@@ -749,6 +780,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         public event System.EventHandler<SetDocumentCommentCompletedEventArgs> SetDocumentCommentCompleted;
         
         public event System.EventHandler<RetrieveStatementDataCompletedEventArgs> RetrieveStatementDataCompleted;
+        
+        public event System.EventHandler<UploadExcelModelCompletedEventArgs> UploadExcelModelCompleted;
         
         public event System.EventHandler<RetrieveCEDataCompletedEventArgs> RetrieveCEDataCompleted;
         
@@ -1237,6 +1270,54 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginUploadExcelModel(byte[] excelFile, string userName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUploadExcelModel(excelFile, userName, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        string GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.EndUploadExcelModel(System.IAsyncResult result) {
+            return base.Channel.EndUploadExcelModel(result);
+        }
+        
+        private System.IAsyncResult OnBeginUploadExcelModel(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            byte[] excelFile = ((byte[])(inValues[0]));
+            string userName = ((string)(inValues[1]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginUploadExcelModel(excelFile, userName, callback, asyncState);
+        }
+        
+        private object[] OnEndUploadExcelModel(System.IAsyncResult result) {
+            string retVal = ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).EndUploadExcelModel(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnUploadExcelModelCompleted(object state) {
+            if ((this.UploadExcelModelCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.UploadExcelModelCompleted(this, new UploadExcelModelCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void UploadExcelModelAsync(byte[] excelFile, string userName) {
+            this.UploadExcelModelAsync(excelFile, userName, null);
+        }
+        
+        public void UploadExcelModelAsync(byte[] excelFile, string userName, object userState) {
+            if ((this.onBeginUploadExcelModelDelegate == null)) {
+                this.onBeginUploadExcelModelDelegate = new BeginOperationDelegate(this.OnBeginUploadExcelModel);
+            }
+            if ((this.onEndUploadExcelModelDelegate == null)) {
+                this.onEndUploadExcelModelDelegate = new EndOperationDelegate(this.OnEndUploadExcelModel);
+            }
+            if ((this.onUploadExcelModelCompletedDelegate == null)) {
+                this.onUploadExcelModelCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnUploadExcelModelCompleted);
+            }
+            base.InvokeAsync(this.onBeginUploadExcelModelDelegate, new object[] {
+                        excelFile,
+                        userName}, this.onEndUploadExcelModelDelegate, this.onUploadExcelModelCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginRetrieveCEData(string issuerID, string currency, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveCEData(issuerID, currency, callback, asyncState);
         }
@@ -1497,6 +1578,20 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             public byte[] EndRetrieveStatementData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 byte[] _result = ((byte[])(base.EndInvoke("RetrieveStatementData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginUploadExcelModel(byte[] excelFile, string userName, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[2];
+                _args[0] = excelFile;
+                _args[1] = userName;
+                System.IAsyncResult _result = base.BeginInvoke("UploadExcelModel", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public string EndUploadExcelModel(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                string _result = ((string)(base.EndInvoke("UploadExcelModel", _args, result)));
                 return _result;
             }
             
