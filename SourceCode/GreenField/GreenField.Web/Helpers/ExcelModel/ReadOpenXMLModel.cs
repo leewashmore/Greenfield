@@ -764,7 +764,7 @@ namespace GreenField.Web.Helpers
 
                         if (amount != null)
                         {
-                            convertFlag = Convert.ToString(COACodes.Where(a => a.COA == data.COA).Select(a => a.CONVERT_FLAG).FirstOrDefault());
+                            convertFlag = Convert.ToString(COACodes.Where(a => a.COA.ToUpper().Trim() == data.COA.ToUpper().Trim()).Select(a => a.CONVERT_FLAG).FirstOrDefault());
                             if (convertFlag != null)
                             {
                                 if (convertFlag.ToUpper().Trim() == "Y")
