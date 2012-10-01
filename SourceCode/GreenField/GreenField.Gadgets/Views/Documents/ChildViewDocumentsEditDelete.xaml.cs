@@ -37,6 +37,7 @@ namespace GreenField.Gadgets.Views.Documents
             if (dialog.ShowDialog() == true)
             {
                 ChildViewDocumentsEditDeleteDataContext.UploadStream = FileToByteArray(dialog.File.Name, dialog.File.OpenRead());
+                ChildViewDocumentsEditDeleteDataContext.UploadFileName = dialog.File.Name;
                 this.tboxFileName.Text = dialog.File.Name;
             }
         }

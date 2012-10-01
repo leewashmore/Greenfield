@@ -469,7 +469,7 @@ namespace GreenField.Web.Services
 
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
-        public Boolean UpdateDocumentsDataForUser(Int64 fileId, String userName, String metaTags, String companyInfo
+        public Boolean UpdateDocumentsDataForUser(Int64 fileId, String fileName, String userName, String metaTags, String companyInfo
             , String categoryType, String comment, Byte[] overwriteStream)
         {
             try
@@ -484,8 +484,8 @@ namespace GreenField.Web.Services
                     FileMaster fileMaster = entity.FileMasters.Where(record => record.FileID == fileId).FirstOrDefault();
                     if (fileMaster != null)
                     {
-                        String uploadUrl = UploadDocument(fileMaster.Name, overwriteStream, fileMaster.Location);
-                        Int32? result = entity.SetUploadFileInfo(userName, fileMaster.Name, uploadUrl, companyInfo, null, null
+                        String uploadUrl = UploadDocument(fileName, overwriteStream, fileMaster.Location);
+                        Int32? result = entity.SetUploadFileInfo(userName, fileName, uploadUrl, companyInfo, null, null
                             , categoryType, metaTags, comment).FirstOrDefault();
                         if (result == 0)
                         {

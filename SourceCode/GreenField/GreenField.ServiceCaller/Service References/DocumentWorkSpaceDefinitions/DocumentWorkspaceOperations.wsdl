@@ -117,7 +117,7 @@
     <wsdl:part name="parameters" element="tns:UploadExcelModelResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_UploadExcelModel_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q10:ServiceFault" />
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveCEData_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveCEData" />
@@ -126,7 +126,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveCEDataResponse" />
   </wsdl:message>
   <wsdl:message name="DocumentWorkspaceOperations_RetrieveCEData_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q12:ServiceFault" />
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q13:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="DocumentWorkspaceOperations">
     <wsdl:operation name="UploadDocument">

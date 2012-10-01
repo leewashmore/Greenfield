@@ -4864,14 +4864,14 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void UpdateDocumentsDataForUser(Int64 fileId, String userName, String metaTags, String companyInfo
+        public void UpdateDocumentsDataForUser(Int64 fileId, String fileName, String userName, String metaTags, String companyInfo
             , String categoryType, String comment, Byte[] overwriteStream, Action<Boolean?> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             DocumentWorkspaceOperationsClient client = new DocumentWorkspaceOperationsClient();
-            client.UpdateDocumentsDataForUserAsync(fileId, userName, metaTags, companyInfo, categoryType, comment, overwriteStream);
+            client.UpdateDocumentsDataForUserAsync(fileId, fileName, userName, metaTags, companyInfo, categoryType, comment, overwriteStream);
             client.UpdateDocumentsDataForUserCompleted += (se, e) =>
             {
                 if (e.Error == null)

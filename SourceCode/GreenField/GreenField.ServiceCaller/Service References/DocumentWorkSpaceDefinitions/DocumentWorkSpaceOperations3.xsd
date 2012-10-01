@@ -129,6 +129,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="fileId" type="xs:long" />
+        <xs:element minOccurs="0" name="fileName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="userName" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="metaTags" nillable="true" type="xs:string" />
         <xs:element minOccurs="0" name="companyInfo" nillable="true" type="xs:string" />

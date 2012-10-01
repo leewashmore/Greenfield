@@ -377,7 +377,7 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             "")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.ServiceFault), Action="http://tempuri.org/DocumentWorkspaceOperations/UpdateDocumentsDataForUserServiceF" +
             "aultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
-        System.IAsyncResult BeginUpdateDocumentsDataForUser(long fileId, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, System.AsyncCallback callback, object asyncState);
+        System.IAsyncResult BeginUpdateDocumentsDataForUser(long fileId, string fileName, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, System.AsyncCallback callback, object asyncState);
         
         bool EndUpdateDocumentsDataForUser(System.IAsyncResult result);
         
@@ -1213,8 +1213,8 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginUpdateDocumentsDataForUser(long fileId, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginUpdateDocumentsDataForUser(fileId, userName, metaTags, companyInfo, categoryType, comment, overwriteStream, callback, asyncState);
+        System.IAsyncResult GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations.BeginUpdateDocumentsDataForUser(long fileId, string fileName, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginUpdateDocumentsDataForUser(fileId, fileName, userName, metaTags, companyInfo, categoryType, comment, overwriteStream, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -1224,13 +1224,14 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
         
         private System.IAsyncResult OnBeginUpdateDocumentsDataForUser(object[] inValues, System.AsyncCallback callback, object asyncState) {
             long fileId = ((long)(inValues[0]));
-            string userName = ((string)(inValues[1]));
-            string metaTags = ((string)(inValues[2]));
-            string companyInfo = ((string)(inValues[3]));
-            string categoryType = ((string)(inValues[4]));
-            string comment = ((string)(inValues[5]));
-            byte[] overwriteStream = ((byte[])(inValues[6]));
-            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginUpdateDocumentsDataForUser(fileId, userName, metaTags, companyInfo, categoryType, comment, overwriteStream, callback, asyncState);
+            string fileName = ((string)(inValues[1]));
+            string userName = ((string)(inValues[2]));
+            string metaTags = ((string)(inValues[3]));
+            string companyInfo = ((string)(inValues[4]));
+            string categoryType = ((string)(inValues[5]));
+            string comment = ((string)(inValues[6]));
+            byte[] overwriteStream = ((byte[])(inValues[7]));
+            return ((GreenField.ServiceCaller.DocumentWorkSpaceDefinitions.DocumentWorkspaceOperations)(this)).BeginUpdateDocumentsDataForUser(fileId, fileName, userName, metaTags, companyInfo, categoryType, comment, overwriteStream, callback, asyncState);
         }
         
         private object[] OnEndUpdateDocumentsDataForUser(System.IAsyncResult result) {
@@ -1246,11 +1247,11 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             }
         }
         
-        public void UpdateDocumentsDataForUserAsync(long fileId, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream) {
-            this.UpdateDocumentsDataForUserAsync(fileId, userName, metaTags, companyInfo, categoryType, comment, overwriteStream, null);
+        public void UpdateDocumentsDataForUserAsync(long fileId, string fileName, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream) {
+            this.UpdateDocumentsDataForUserAsync(fileId, fileName, userName, metaTags, companyInfo, categoryType, comment, overwriteStream, null);
         }
         
-        public void UpdateDocumentsDataForUserAsync(long fileId, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, object userState) {
+        public void UpdateDocumentsDataForUserAsync(long fileId, string fileName, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, object userState) {
             if ((this.onBeginUpdateDocumentsDataForUserDelegate == null)) {
                 this.onBeginUpdateDocumentsDataForUserDelegate = new BeginOperationDelegate(this.OnBeginUpdateDocumentsDataForUser);
             }
@@ -1262,6 +1263,7 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
             }
             base.InvokeAsync(this.onBeginUpdateDocumentsDataForUserDelegate, new object[] {
                         fileId,
+                        fileName,
                         userName,
                         metaTags,
                         companyInfo,
@@ -1652,15 +1654,16 @@ namespace GreenField.ServiceCaller.DocumentWorkSpaceDefinitions {
                 return _result;
             }
             
-            public System.IAsyncResult BeginUpdateDocumentsDataForUser(long fileId, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, System.AsyncCallback callback, object asyncState) {
-                object[] _args = new object[7];
+            public System.IAsyncResult BeginUpdateDocumentsDataForUser(long fileId, string fileName, string userName, string metaTags, string companyInfo, string categoryType, string comment, byte[] overwriteStream, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[8];
                 _args[0] = fileId;
-                _args[1] = userName;
-                _args[2] = metaTags;
-                _args[3] = companyInfo;
-                _args[4] = categoryType;
-                _args[5] = comment;
-                _args[6] = overwriteStream;
+                _args[1] = fileName;
+                _args[2] = userName;
+                _args[3] = metaTags;
+                _args[4] = companyInfo;
+                _args[5] = categoryType;
+                _args[6] = comment;
+                _args[7] = overwriteStream;
                 System.IAsyncResult _result = base.BeginInvoke("UpdateDocumentsDataForUser", _args, callback, asyncState);
                 return _result;
             }

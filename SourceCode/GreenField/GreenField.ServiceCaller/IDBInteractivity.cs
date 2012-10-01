@@ -249,7 +249,7 @@ namespace GreenField.ServiceCaller
 
         void DeleteFileMasterRecord(Int64 fileId, Action<Boolean?> callback);
 
-        void UpdateDocumentsDataForUser(Int64 fileId, String userName, String metaTags, String companyInfo
+        void UpdateDocumentsDataForUser(Int64 fileId, String fileName, String userName, String metaTags, String companyInfo
             , String categoryType, String comment, Byte[] overwriteStream, Action<Boolean?> callback);
         #endregion
 

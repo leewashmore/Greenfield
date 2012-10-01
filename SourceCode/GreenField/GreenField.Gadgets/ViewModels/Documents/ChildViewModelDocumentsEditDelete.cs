@@ -259,8 +259,7 @@ namespace GreenField.Gadgets.ViewModels
             set { _uploadStream = value; }
         }
 
-
-
+        public String UploadFileName { get; set; }
 
         public ICommand DeleteCommand
         {
@@ -295,7 +294,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 BusyIndicatorNotification(true, "Saving document chnages to repository...");
                 _dbInteractivity.UpdateDocumentsDataForUser(Convert.ToInt64(SelectedDocumentCatagoricalInfo.DocumentCatalogData.FileId)
-                    , UserSession.SessionManager.SESSION.UserName, DocumentMetags, SelectedCompanyInfo
+                    , UploadFileName, UserSession.SessionManager.SESSION.UserName, DocumentMetags, SelectedCompanyInfo
                     , EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(SelectedCategoryType), DocumentNotes, UploadStream
                     , UpdateDocumentsDataForUserCallbackMethod);
             }
