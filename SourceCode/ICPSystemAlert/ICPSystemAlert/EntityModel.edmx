@@ -79,6 +79,7 @@
           <Property Name="CreatedOn" Type="datetime" />
           <Property Name="ModifiedBy" Type="varchar" MaxLength="50" />
           <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="IssuerName" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="MeetingAttachedFileInfo">
           <Key>
@@ -337,6 +338,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="DeleteFileMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="fileId" Type="bigint" Mode="In" />
+        </Function>
         <Function Name="GetPresentationDeadlineDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ScheduleMinutes" Type="int" Mode="In" />
         </Function>
@@ -539,6 +543,9 @@
             <Parameter Name="userName" Mode="In" Type="String" />
             <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="DeleteFileMaster">
+            <Parameter Name="fileId" Mode="In" Type="Int64" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="CommentInfo">
           <Key>
@@ -572,6 +579,7 @@
           <NavigationProperty Name="CommentInfoes" Relationship="ICPModel.FK_CommentInfo_FileMaster" FromRole="FileMaster" ToRole="CommentInfo" />
           <NavigationProperty Name="MeetingAttachedFileInfoes" Relationship="ICPModel.FK_MeetingAttachedFileInfo_FileMaster" FromRole="FileMaster" ToRole="MeetingAttachedFileInfo" />
           <NavigationProperty Name="PresentationAttachedFileInfoes" Relationship="ICPModel.FK_PresentationAttachedFileInfo_FileMaster" FromRole="FileMaster" ToRole="PresentationAttachedFileInfo" />
+          <Property Type="String" Name="IssuerName" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="MeetingAttachedFileInfo">
           <Key>
@@ -985,7 +993,8 @@
             <ScalarProperty Name="CommentOn" ColumnName="CommentOn" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="FileMasters"><EntityTypeMapping TypeName="ICPModel.FileMaster"><MappingFragment StoreEntitySet="FileMaster">
-            <ScalarProperty Name="FileID" ColumnName="FileID" />
+            <ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
             <ScalarProperty Name="Name" ColumnName="Name" />
             <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
             <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
@@ -1423,6 +1432,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdatePresentationInfo" FunctionName="ICPModel.Store.UpdatePresentationInfo" />
+          <FunctionImportMapping FunctionImportName="DeleteFileMaster" FunctionName="ICPModel.Store.DeleteFileMaster" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

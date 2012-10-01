@@ -16,6 +16,7 @@
     <EntitySetMapping Name="FileMasters">
       <EntityTypeMapping TypeName="ICPModel.FileMaster">
         <MappingFragment StoreEntitySet="FileMaster">
+          <ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
           <ScalarProperty Name="FileID" ColumnName="FileID" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
@@ -476,5 +477,6 @@
       </ResultMapping>
     </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="UpdatePresentationInfo" FunctionName="ICPModel.Store.UpdatePresentationInfo" />
+    <FunctionImportMapping FunctionImportName="DeleteFileMaster" FunctionName="ICPModel.Store.DeleteFileMaster" />
   </EntityContainerMapping>
 </Mapping>

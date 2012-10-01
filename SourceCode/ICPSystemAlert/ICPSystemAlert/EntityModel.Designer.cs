@@ -955,6 +955,25 @@ namespace ICPSystemAlert
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("UpdatePresentationInfo", userNameParameter, xmlScriptParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="fileId">No Metadata Documentation available.</param>
+        public int DeleteFileMaster(Nullable<global::System.Int64> fileId)
+        {
+            ObjectParameter fileIdParameter;
+            if (fileId.HasValue)
+            {
+                fileIdParameter = new ObjectParameter("fileId", fileId);
+            }
+            else
+            {
+                fileIdParameter = new ObjectParameter("fileId", typeof(global::System.Int64));
+            }
+    
+            return base.ExecuteFunction("DeleteFileMaster", fileIdParameter);
+        }
 
         #endregion
     }
@@ -1532,6 +1551,30 @@ namespace ICPSystemAlert
         private Nullable<global::System.DateTime> _ModifiedOn;
         partial void OnModifiedOnChanging(Nullable<global::System.DateTime> value);
         partial void OnModifiedOnChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String IssuerName
+        {
+            get
+            {
+                return _IssuerName;
+            }
+            set
+            {
+                OnIssuerNameChanging(value);
+                ReportPropertyChanging("IssuerName");
+                _IssuerName = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("IssuerName");
+                OnIssuerNameChanged();
+            }
+        }
+        private global::System.String _IssuerName;
+        partial void OnIssuerNameChanging(global::System.String value);
+        partial void OnIssuerNameChanged();
 
         #endregion
     

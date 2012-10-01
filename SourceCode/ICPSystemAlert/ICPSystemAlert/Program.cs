@@ -21,6 +21,9 @@ using System.Xml;
 using System.Collections;
 using System.Xml.Linq;
 using System.Reflection;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Presentation;
 
 
 namespace ICPSystemAlert
@@ -212,72 +215,119 @@ namespace ICPSystemAlert
                         if (distinctMeetingPresentationRecord == null)
                             continue;
 
-                        //ICPresentationOverviewData presentationOverviewData = _entity.RetrieveICPresentationOverviewDataForId(presentationId).FirstOrDefault();
-                        //presentationOverviewData = RetrieveUpdatedSecurityDetails(presentationOverviewData);
+                        ICPresentationOverviewData presentationOverviewData = _entity.RetrieveICPresentationOverviewDataForId(presentationId).FirstOrDefault();
+                        presentationOverviewData = RetrieveUpdatedSecurityDetails(presentationOverviewData);
 
-                        //XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverviewData });
-                        //string xmlScript = xmlDoc.ToString();
+                        XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverviewData });
+                        string xmlScript = xmlDoc.ToString();
 
-                        //Int64? result = _entity.UpdatePresentationInfo("System", xmlScript).FirstOrDefault();
-                        //if (result == null)
-                        //    throw new Exception("Unable to update presentation info object");
+                        Int64? result = _entity.UpdatePresentationInfo("System", xmlScript).FirstOrDefault();
+                        if (result == null)
+                            throw new Exception("Unable to update presentation info object");
 
-                        //#region Retrieve presentation file or create new one if not exists
-                        //String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
-                        //List<FileMaster> presentationAttachedFiles = _entity.RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID).ToList();
-                        //FileMaster presentationPowerPointAttachedFile = null;
-                        //if (presentationAttachedFiles != null)
-                        //{
-                        //    presentationPowerPointAttachedFile = presentationAttachedFiles.Where(record => record.Category == "Power Point Presentation").FirstOrDefault();
-                        //    if (presentationPowerPointAttachedFile != null)
-                        //    {
-                        //        Byte[] powerPointFileStream = RetrieveDocument(presentationPowerPointAttachedFile.Location);
+                        #region Retrieve presentation file or create new one if not exists
+                        String copiedFilePath = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_ICPresentation.pptx";
+                        List<FileMaster> presentationAttachedFiles = _entity.RetrievePresentationAttachedFileDetails(presentationOverviewData.PresentationID).ToList();
+                        FileMaster presentationPowerPointAttachedFile = null;
+                        if (presentationAttachedFiles != null)
+                        {
+                            presentationPowerPointAttachedFile = presentationAttachedFiles.Where(record => record.Category == "Power Point Presentation").FirstOrDefault();
+                            if (presentationPowerPointAttachedFile != null)
+                            {
+                                Byte[] powerPointFileStream = RetrieveDocument(presentationPowerPointAttachedFile.Location);
 
-                        //        if (powerPointFileStream == null)
-                        //            throw new Exception("Unable to download power point file from repository");
+                                if (powerPointFileStream == null)
+                                    throw new Exception("Unable to download power point file from repository");
 
-                        //        File.WriteAllBytes(copiedFilePath, powerPointFileStream);
-                        //    }
-                        //    else
-                        //    {
-                        //        String presentationFile = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\ICPresentationTemplate.pptx";
-                        //        File.Copy(presentationFile, copiedFilePath, true);
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    String presentationFile = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\ICPresentationTemplate.pptx";
-                        //    File.Copy(presentationFile, copiedFilePath, true);
-                        //}
-                        //#endregion
+                                File.WriteAllBytes(copiedFilePath, powerPointFileStream);
+                            }
+                            else
+                            {
+                                String presentationFile = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\ICPresentationTemplate.pptx";
+                                File.Copy(presentationFile, copiedFilePath, true);
+                            }
+                        }
+                        else
+                        {
+                            String presentationFile = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + @"\ICPresentationTemplate.pptx";
+                            File.Copy(presentationFile, copiedFilePath, true);
+                        }
+                        #endregion
 
-                        //#region Edit presentation file
-                        //try
-                        //{
-                        //    using (PresentationDocument presentationDocument = PresentationDocument.Open(copiedFilePath, true))
-                        //    {
-                        //        PresentationPart presentatioPart = presentationDocument.PresentationPart;
-                        //        OpenXmlElementList slideIds = presentatioPart.Presentation.SlideIdList.ChildElements;
+                        #region Edit presentation file
+                        try
+                        {
+                            using (PresentationDocument presentationDocument = PresentationDocument.Open(copiedFilePath, true))
+                            {
+                                PresentationPart presentatioPart = presentationDocument.PresentationPart;
+                                OpenXmlElementList slideIds = presentatioPart.Presentation.SlideIdList.ChildElements;
 
-                        //        string relId = (slideIds[0] as SlideId).RelationshipId;
+                                string relId = (slideIds[0] as SlideId).RelationshipId;
 
-                        //        // Get the slide part from the relationship ID.
-                        //        SlidePart slidePart = (SlidePart)presentatioPart.GetPartById(relId);
+                                // Get the slide part from the relationship ID.
+                                SlidePart slidePart = (SlidePart)presentatioPart.GetPartById(relId);
 
-                        //        SetSlideTitle(slidePart, presentationOverviewData);
-                        //        SetSlideContent(slidePart, presentationOverviewData);
+                                SetSlideTitle(slidePart, presentationOverviewData);
+                                SetSlideContent(slidePart, presentationOverviewData);
 
-                        //        //save the Slide and Presentation
-                        //        slidePart.Slide.Save();
-                        //        presentatioPart.Presentation.Save();
+                                //save the Slide and Presentation
+                                slidePart.Slide.Save();
+                                presentatioPart.Presentation.Save();
 
-                        //    }
-                        //}
-                        //catch
-                        //{
-                        //    throw new Exception("Exception occurred while opening powerpoint presentation!!!");
-                        //}
-                        //#endregion
+                            }
+                        }
+                        catch
+                        {
+                            throw new Exception("Exception occurred while opening powerpoint presentation!!!");
+                        }
+                        #endregion
+
+                        #region Upload power point to share point and modify database
+                        Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
+                        String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
+                            ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
+
+                        String url = UploadDocument(fileName, File.ReadAllBytes(copiedFilePath), String.Empty);
+
+                        if (url == String.Empty)
+                            throw new Exception("Exception occurred while uploading template powerpoint presentation!!!");
+
+                        File.Delete(copiedFilePath);
+
+                        FileMaster fileMaster = new FileMaster()
+                        {
+                            Category = "Power Point Presentation",
+                            Location = url,
+                            Name = presentationOverviewData.SecurityName + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                            SecurityName = presentationOverviewData.SecurityName,
+                            SecurityTicker = presentationOverviewData.SecurityTicker,
+                            Type = "IC Presentations",
+                            CreatedBy = "System",
+                            CreatedOn = DateTime.UtcNow,
+                            ModifiedBy = "System",
+                            ModifiedOn = DateTime.UtcNow
+                        };
+
+                        Int32? insertedFileMasterRecord = _entity.SetICPresentationAttachedFileInfo("System", presentationOverviewData.PresentationID
+                            , fileMaster.Name, fileMaster.SecurityName, fileMaster.SecurityTicker, fileMaster.Location
+                            , fileMaster.MetaTags, fileMaster.Category, fileMaster.Type, fileMaster.FileID, false).FirstOrDefault();
+
+                        if (presentationPowerPointAttachedFile != null && insertedFileMasterRecord == 0)
+                        {
+                            DeleteDocument(presentationPowerPointAttachedFile.Location);
+                            _entity.DeleteFileMaster(presentationPowerPointAttachedFile.FileID);
+                        }
+                        #endregion
+
+                        #region IC Packet
+                        if (presentationAttachedFiles != null)
+                        {
+                            List<FileMaster> icPacketFiles = presentationAttachedFiles.Where(record => record.Category == "Investment Committee Packet").ToList();
+                            foreach (FileMaster record in icPacketFiles)
+                            {
+                                DeleteDocument(record.Location);
+                            }
+                        }
 
                         Byte[] generatedICPacketStream = GenerateICPacketReport(presentationId);
                         String uploadFileName = String.Format("{0}_{1}_ICPacket.pdf"
@@ -293,9 +343,7 @@ namespace ICPSystemAlert
                                 emailAttachments += uploadFileLocation + "|";
                             }
                         }
-
-                        //All distinct files are used to create IC Packet which is uploaded on to share point server. Locations are then
-                        //taken as pipe joined emailattachment.
+                        #endregion                        
                     }
                     emailAttachments = emailAttachments != null ? emailAttachments.Substring(0, emailAttachments.Length - 1) : null;
                     #endregion
@@ -1507,6 +1555,99 @@ namespace ICPSystemAlert
             {
                 _log.Error(System.Reflection.MethodBase.GetCurrentMethod(), ex);
             }
+        }
+
+        // Get the title string of the slide.
+        private static void SetSlideTitle(SlidePart slidePart, ICPresentationOverviewData presentationOverviewData)
+        {
+            if (slidePart == null)
+            {
+                throw new ArgumentNullException("presentationDocument");
+            }
+
+            // Declare a paragraph separator.
+            string paragraphSeparator = null;
+
+            if (slidePart.Slide != null)
+            {
+                // Find all the title shapes.
+                var shapes = from shape in slidePart.Slide.Descendants<Shape>()
+                             where IsTitleShape(shape)
+                             select shape;
+
+                StringBuilder paragraphText = new StringBuilder();
+
+                foreach (var shape in shapes)
+                {
+                    // Get the text in each paragraph in this shape.
+                    foreach (var paragraph in shape.TextBody.Descendants<DocumentFormat.OpenXml.Drawing.Paragraph>())
+                    {
+                        // Add a line break.
+                        paragraphText.Append(paragraphSeparator);
+
+                        foreach (var text in paragraph.Descendants<DocumentFormat.OpenXml.Drawing.Text>())
+                        {
+                            text.Text = presentationOverviewData.SecurityName + " - " + presentationOverviewData.SecurityRecommendation;
+                        }
+
+                        paragraphSeparator = "\n";
+                    }
+                }
+            }
+        }
+
+        // Get the title string of the slide.
+        private static void SetSlideContent(SlidePart slidePart, ICPresentationOverviewData presentationOverviewData)
+        {
+            //get Security Information    
+            DocumentFormat.OpenXml.Drawing.Table tblSecurityOverview = slidePart.Slide
+                .Descendants<DocumentFormat.OpenXml.Drawing.Table>().FirstOrDefault();
+
+            SwapPlaceholderText(tblSecurityOverview, 0, 2, presentationOverviewData.Analyst);
+            SwapPlaceholderText(tblSecurityOverview, 0, 4, presentationOverviewData.CurrentHoldings);
+            SwapPlaceholderText(tblSecurityOverview, 1, 2, presentationOverviewData.SecurityCountry);
+            SwapPlaceholderText(tblSecurityOverview, 1, 4, presentationOverviewData.PercentEMIF);
+            SwapPlaceholderText(tblSecurityOverview, 2, 2, presentationOverviewData.SecurityIndustry);
+            SwapPlaceholderText(tblSecurityOverview, 2, 4, presentationOverviewData.SecurityBMWeight);
+            SwapPlaceholderText(tblSecurityOverview, 3, 2, presentationOverviewData.SecurityMarketCapitalization.ToString());
+            SwapPlaceholderText(tblSecurityOverview, 3, 4, presentationOverviewData.SecurityActiveWeight);
+            SwapPlaceholderText(tblSecurityOverview, 4, 2, presentationOverviewData.Price);
+            SwapPlaceholderText(tblSecurityOverview, 4, 4, presentationOverviewData.YTDRet_Absolute);
+            SwapPlaceholderText(tblSecurityOverview, 5, 2, presentationOverviewData.FVCalc);
+            SwapPlaceholderText(tblSecurityOverview, 5, 4, presentationOverviewData.YTDRet_RELtoLOC);
+            SwapPlaceholderText(tblSecurityOverview, 6, 2, presentationOverviewData.SecurityPFVMeasure.ToString() + " " +
+                presentationOverviewData.SecurityBuyRange.ToString() + "-" + presentationOverviewData.SecuritySellRange.ToString());
+            SwapPlaceholderText(tblSecurityOverview, 6, 4, presentationOverviewData.YTDRet_RELtoEM);
+        }
+
+        // Determines whether the shape is a title shape.
+        private static bool IsTitleShape(Shape shape)
+        {
+            var placeholderShape = shape.NonVisualShapeProperties.ApplicationNonVisualDrawingProperties.GetFirstChild<PlaceholderShape>();
+            if (placeholderShape != null && placeholderShape.Type != null && placeholderShape.Type.HasValue)
+            {
+                switch ((PlaceholderValues)placeholderShape.Type)
+                {
+                    // Any title shape.
+                    case PlaceholderValues.Title:
+
+                    // A centered title.
+                    case PlaceholderValues.CenteredTitle:
+                        return true;
+
+                    default:
+                        return false;
+                }
+            }
+            return false;
+        }
+
+        private static void SwapPlaceholderText(DocumentFormat.OpenXml.Drawing.Table tbl, int rowNum, int columnNum, string value)
+        {
+            DocumentFormat.OpenXml.Drawing.TableRow row = tbl.Descendants<DocumentFormat.OpenXml.Drawing.TableRow>().ElementAt(rowNum);
+            DocumentFormat.OpenXml.Drawing.TableCell cell = row.Descendants<DocumentFormat.OpenXml.Drawing.TableCell>().ElementAt(columnNum - 1);
+            DocumentFormat.OpenXml.Drawing.Text text = cell.Descendants<DocumentFormat.OpenXml.Drawing.Text>().FirstOrDefault();
+            text.Text = value;
         }
         #endregion
     }

@@ -2553,25 +2553,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="searchString">No Metadata Documentation available.</param>
-        public ObjectResult<DocumentsData> GetDocumentsData(global::System.String searchString)
-        {
-            ObjectParameter searchStringParameter;
-            if (searchString != null)
-            {
-                searchStringParameter = new ObjectParameter("searchString", searchString);
-            }
-            else
-            {
-                searchStringParameter = new ObjectParameter("searchString", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<DocumentsData>("GetDocumentsData", searchStringParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="presentationId">No Metadata Documentation available.</param>
         public ObjectResult<FileMaster> RetrieveICPresentationAttachedFileDetails(Nullable<global::System.Int64> presentationId)
         {
@@ -2717,6 +2698,25 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction("UpdateDocumentsData", fileIdParameter, userNameParameter, metaTagsParameter, companyNameParameter, categoryTypeParameter, commentParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="searchString">No Metadata Documentation available.</param>
+        public ObjectResult<DocumentsData> GetDocumentsData(global::System.String searchString)
+        {
+            ObjectParameter searchStringParameter;
+            if (searchString != null)
+            {
+                searchStringParameter = new ObjectParameter("searchString", searchString);
+            }
+            else
+            {
+                searchStringParameter = new ObjectParameter("searchString", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<DocumentsData>("GetDocumentsData", searchStringParameter);
         }
 
         #endregion

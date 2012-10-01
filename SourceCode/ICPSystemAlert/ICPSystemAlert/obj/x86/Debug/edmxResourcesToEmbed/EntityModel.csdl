@@ -122,6 +122,9 @@
       <Parameter Name="userName" Mode="In" Type="String" />
       <Parameter Name="xmlScript" Mode="In" Type="String" />
     </FunctionImport>
+    <FunctionImport Name="DeleteFileMaster">
+      <Parameter Name="fileId" Mode="In" Type="Int64" />
+    </FunctionImport>
   </EntityContainer>
   <EntityType Name="CommentInfo">
     <Key>
@@ -155,6 +158,7 @@
     <NavigationProperty Name="CommentInfoes" Relationship="ICPModel.FK_CommentInfo_FileMaster" FromRole="FileMaster" ToRole="CommentInfo" />
     <NavigationProperty Name="MeetingAttachedFileInfoes" Relationship="ICPModel.FK_MeetingAttachedFileInfo_FileMaster" FromRole="FileMaster" ToRole="MeetingAttachedFileInfo" />
     <NavigationProperty Name="PresentationAttachedFileInfoes" Relationship="ICPModel.FK_PresentationAttachedFileInfo_FileMaster" FromRole="FileMaster" ToRole="PresentationAttachedFileInfo" />
+    <Property Type="String" Name="IssuerName" MaxLength="50" FixedLength="false" Unicode="false" />
   </EntityType>
   <EntityType Name="MeetingAttachedFileInfo">
     <Key>
