@@ -188,7 +188,7 @@ namespace BenchmarkNodeFinancials
 
                         foreach (String s in dinstinctSecurityIds)
                         {
-                            foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings.Where(t => t.ASEC_SEC_SHORT_NAME == (securityData.Where(p => p.SecurityId == s).Select(p => p.AsecShortName).ToString())).ToList())
+                            foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings.Where(t => t.ASEC_SEC_SHORT_NAME == (securityData.Where(p => p.SecurityId == s).Select(p => p.AsecShortName).FirstOrDefault())).ToList())
                             {
                                 BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
                                 obj.BenchmarkName = benId;
@@ -262,7 +262,7 @@ namespace BenchmarkNodeFinancials
 
                             foreach (String s in dinstinctSecurityIds)
                             {
-                                foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings.Where(t => t.ASEC_SEC_SHORT_NAME == (securityData.Where(p => p.SecurityId == s).Select(p => p.AsecShortName).ToString())).ToList())
+                                foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmarkHoldings.Where(t => t.ASEC_SEC_SHORT_NAME == (securityData.Where(p => p.SecurityId == s).Select(p => p.AsecShortName).FirstOrDefault())).ToList())
                                 {
                                     BenchmarkNodeFinancialsData obj = new BenchmarkNodeFinancialsData();
                                     obj.BenchmarkName = benId;

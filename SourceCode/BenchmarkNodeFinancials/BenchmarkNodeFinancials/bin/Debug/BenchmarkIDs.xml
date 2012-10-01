@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Benchmarks>
+<BenchmarkId>MSCI EM GROSS</BenchmarkId>
+<BenchmarkId>MSCI EM LATAM NET</BenchmarkId>
+<BenchmarkId>MSCI EM NET</BenchmarkId>
+<BenchmarkId>MSCI EM IN NET</BenchmarkId>
+<BenchmarkId>S&amp;P PAN AFRICA EX SOUTH AFRICA NET</BenchmarkId>
+<BenchmarkId>S&amp;P AEMM MIDDLE EAST NET</BenchmarkId>
+<BenchmarkId>GIC CUSTOM NET</BenchmarkId>
+<BenchmarkId>MSCI EM SC NET</BenchmarkId>
+<BenchmarkId>MSCI EM IN SC NET</BenchmarkId>
+<BenchmarkId>MSCI EM LATAM SC NET</BenchmarkId>
+<BenchmarkId>MSCI EM IMI NET</BenchmarkId>
+<BenchmarkId>MSCI FRONTIER NET</BenchmarkId>
+</Benchmarks>
