@@ -3089,6 +3089,69 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<INTERNAL_COA_CHANGES>("ModelRetrieveInternalCOAChanges", iSSUER_IDParameter, rOOT_SOURCEParameter, cOAParameter, pERIOD_YEARParameter, cURRENCYParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="sECURITY_ID">No Metadata Documentation available.</param>
+        /// <param name="pFV_MEASURE">No Metadata Documentation available.</param>
+        /// <param name="pFV_MEASURE_VALUE">No Metadata Documentation available.</param>
+        /// <param name="fV_BUY">No Metadata Documentation available.</param>
+        /// <param name="fV_SELL">No Metadata Documentation available.</param>
+        public ObjectResult<Nullable<global::System.Int32>> SetFairValue(global::System.String sECURITY_ID, global::System.String pFV_MEASURE, Nullable<global::System.Decimal> pFV_MEASURE_VALUE, Nullable<global::System.Decimal> fV_BUY, Nullable<global::System.Decimal> fV_SELL)
+        {
+            ObjectParameter sECURITY_IDParameter;
+            if (sECURITY_ID != null)
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", sECURITY_ID);
+            }
+            else
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter pFV_MEASUREParameter;
+            if (pFV_MEASURE != null)
+            {
+                pFV_MEASUREParameter = new ObjectParameter("PFV_MEASURE", pFV_MEASURE);
+            }
+            else
+            {
+                pFV_MEASUREParameter = new ObjectParameter("PFV_MEASURE", typeof(global::System.String));
+            }
+    
+            ObjectParameter pFV_MEASURE_VALUEParameter;
+            if (pFV_MEASURE_VALUE.HasValue)
+            {
+                pFV_MEASURE_VALUEParameter = new ObjectParameter("PFV_MEASURE_VALUE", pFV_MEASURE_VALUE);
+            }
+            else
+            {
+                pFV_MEASURE_VALUEParameter = new ObjectParameter("PFV_MEASURE_VALUE", typeof(global::System.Decimal));
+            }
+    
+            ObjectParameter fV_BUYParameter;
+            if (fV_BUY.HasValue)
+            {
+                fV_BUYParameter = new ObjectParameter("FV_BUY", fV_BUY);
+            }
+            else
+            {
+                fV_BUYParameter = new ObjectParameter("FV_BUY", typeof(global::System.Decimal));
+            }
+    
+            ObjectParameter fV_SELLParameter;
+            if (fV_SELL.HasValue)
+            {
+                fV_SELLParameter = new ObjectParameter("FV_SELL", fV_SELL);
+            }
+            else
+            {
+                fV_SELLParameter = new ObjectParameter("FV_SELL", typeof(global::System.Decimal));
+            }
+    
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetFairValue", sECURITY_IDParameter, pFV_MEASUREParameter, pFV_MEASURE_VALUEParameter, fV_BUYParameter, fV_SELLParameter);
+        }
 
         #endregion
     }

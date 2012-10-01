@@ -848,6 +848,13 @@
         <Function Name="SET_INTERIM_AMOUNTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ISSUER_ID" Type="int" Mode="In" />
         </Function>
+        <Function Name="SetFairValue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+          <Parameter Name="PFV_MEASURE" Type="varchar" Mode="In" />
+          <Parameter Name="PFV_MEASURE_VALUE" Type="decimal" Mode="In" />
+          <Parameter Name="FV_BUY" Type="decimal" Mode="In" />
+          <Parameter Name="FV_SELL" Type="decimal" Mode="In" />
+        </Function>
         <Function Name="usp_GetDataForPeriodGadgets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="cSource" Type="varchar" Mode="In" />
           <Parameter Name="cFiscalType" Type="varchar" Mode="In" />
@@ -1214,6 +1221,13 @@
             <Parameter Name="COA" Mode="In" Type="String" />
             <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
             <Parameter Name="CURRENCY" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="SetFairValue" ReturnType="Collection(Int32)">
+            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+            <Parameter Name="PFV_MEASURE" Mode="In" Type="String" />
+            <Parameter Name="PFV_MEASURE_VALUE" Mode="In" Type="Decimal" />
+            <Parameter Name="FV_BUY" Mode="In" Type="Decimal" />
+            <Parameter Name="FV_SELL" Mode="In" Type="Decimal" />
           </FunctionImport>
 
 
@@ -2574,6 +2588,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SetFairValue" FunctionName="ExternalResearchModel.Store.SetFairValue" />
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />

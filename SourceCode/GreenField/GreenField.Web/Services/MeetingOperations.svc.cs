@@ -1366,6 +1366,12 @@ namespace GreenField.Web.Services
         {
             try
             {
+                bool isServiceUp;
+                isServiceUp = CheckServiceAvailability.ServiceAvailability();
+
+                if (!isServiceUp)
+                    throw new Exception("Services are not available");
+
                 XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverViewData }
                     , strictlyInclusiveProperties: new List<string> { "PresentationID", "AdminNotes", "CommitteePFVMeasure", "CommitteeBuyRange",
                     "CommitteeSellRange", "CommitteeRecommendation", "CommitteePFVMeasureValue" });
@@ -1374,6 +1380,19 @@ namespace GreenField.Web.Services
                 String xmlScript = xmlDoc.ToString();
                 ICPresentationEntities entity = new ICPresentationEntities();
                 Int32? result = entity.SetICPresentationDecisionEntryDetails(userName, xmlScript).FirstOrDefault();
+
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
+                    .Where(record => record.ISSUER_NAME == presentationOverViewData.SecurityName &&
+                        record.TICKER == presentationOverViewData.SecurityTicker).FirstOrDefault();
+
+                ExternalResearchEntities externalEntity = new ExternalResearchEntities();
+
+                if(securityRecord != null && securityRecord.SECURITY_ID != null)
+                {                    
+                    result = externalEntity.SetFairValue(securityRecord.SECURITY_ID.ToString(), presentationOverViewData.CommitteePFVMeasure, presentationOverViewData.CommitteePFVMeasureValue
+                        , Convert.ToDecimal(presentationOverViewData.CommitteeBuyRange), Convert.ToDecimal(presentationOverViewData.CommitteeSellRange)).FirstOrDefault();
+                }
+
                 return result == 0;
             }
             catch (Exception ex)
