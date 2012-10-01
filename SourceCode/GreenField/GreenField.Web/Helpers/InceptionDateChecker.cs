@@ -13,11 +13,11 @@ namespace GreenField.Web.Helpers
         /// Get First Day of Current Month
         /// </summary>
         /// <returns></returns>
-        private static DateTime GetFirstDayOfCurrentMonth()
+        private static DateTime GetFirstDayOfCurrentMonth(DateTime selectedDate)
         {
             DateTime firstDay;
 
-            DateTime currentDate = DateTime.Now;
+            DateTime currentDate = selectedDate;
             firstDay = currentDate.AddDays(-(currentDate.Day - 1));
 
             return firstDay;
@@ -27,10 +27,10 @@ namespace GreenField.Web.Helpers
         /// Get First Day of  Current Quarter
         /// </summary>
         /// <returns></returns>
-        private static DateTime GetFirstDayOfCurrentQuarter()
+        private static DateTime GetFirstDayOfCurrentQuarter(DateTime selectedDate)
         {
             DateTime firstDay;
-            DateTime currentDate = DateTime.Now;
+            DateTime currentDate = selectedDate;
             int quarterNumber = (currentDate.Month - 1) / 3 + 1;
             firstDay = new DateTime(currentDate.Year, (quarterNumber - 1) * 3 + 1, 1);
             return firstDay;
@@ -40,11 +40,11 @@ namespace GreenField.Web.Helpers
         /// Get Date First Day of Current Year
         /// </summary>
         /// <returns></returns>
-        private static DateTime GetFirstDayOfCurrentYear()
+        private static DateTime GetFirstDayOfCurrentYear(DateTime selectedDate)
         {
             DateTime firstDay;
 
-            DateTime currentDate = DateTime.Now;
+            DateTime currentDate = selectedDate;
             firstDay = new DateTime(currentDate.Year, 1, 1);
 
             return firstDay;
@@ -54,11 +54,11 @@ namespace GreenField.Web.Helpers
         /// Get Same Day of Last Year
         /// </summary>
         /// <returns></returns>
-        private static DateTime GetSameDayOfLastYear()
+        private static DateTime GetSameDayOfLastYear(DateTime selectedDate)
         {
             DateTime firstDay;
 
-            DateTime currentDate = DateTime.Now;
+            DateTime currentDate = selectedDate;
             firstDay = currentDate.AddYears(-1).AddDays(1);
 
             return firstDay;
@@ -68,11 +68,11 @@ namespace GreenField.Web.Helpers
         /// Get Same Day 3 years ago
         /// </summary>
         /// <returns></returns>
-        private static DateTime GetSameDayOfPreviousThirdYear()
+        private static DateTime GetSameDayOfPreviousThirdYear(DateTime selectedDate)
         {
             DateTime firstDay;
 
-            DateTime currentDate = DateTime.Now;
+            DateTime currentDate = selectedDate;
             firstDay = currentDate.AddYears(-3).AddDays(1);
 
             return firstDay;
@@ -82,11 +82,11 @@ namespace GreenField.Web.Helpers
         /// Get Same Day 5 years ago
         /// </summary>
         /// <returns></returns>
-        private static DateTime GetSameDayOfPreviousFifthYear()
+        private static DateTime GetSameDayOfPreviousFifthYear(DateTime selectedDate)
         {
             DateTime firstDay;
 
-            DateTime currentDate = DateTime.Now;
+            DateTime currentDate = selectedDate;
             firstDay = currentDate.AddYears(-5).AddDays(1);
 
             return firstDay;
@@ -96,11 +96,11 @@ namespace GreenField.Web.Helpers
         /// Get Same Day 10 years ago
         /// </summary>
         /// <returns></returns>
-        private static DateTime GetSameDayOfPreviousTenthYear()
+        private static DateTime GetSameDayOfPreviousTenthYear(DateTime selectedDate)
         {
             DateTime firstDay;
 
-            DateTime currentDate = DateTime.Now;
+            DateTime currentDate = selectedDate;
             firstDay = currentDate.AddYears(-10).AddDays(1);
 
             return firstDay;
@@ -151,8 +151,9 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="periodType">period type</param>
         /// <param name="inceptionDate">inception date</param>
+        /// <param name="selectedDate">selected date</param>
         /// <returns></returns>
-        private static bool ValidateInceptionDate(string periodType, DateTime inceptionDate)
+        private static bool ValidateInceptionDate(string periodType, DateTime inceptionDate, DateTime selectedDate)
         {
             bool isValid = false;
             DateTime startDate;
@@ -161,37 +162,37 @@ namespace GreenField.Web.Helpers
             switch (periodType.ToUpper())
             {
                 case "MTD":
-                    startDate = GetFirstDayOfCurrentMonth();
+                    startDate = GetFirstDayOfCurrentMonth(selectedDate);
                     perfDataBegDate = GetPerfDatabegDate(inceptionDate);
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
                 case "QTD":
-                    startDate = GetFirstDayOfCurrentQuarter();
+                    startDate = GetFirstDayOfCurrentQuarter(selectedDate);
                     perfDataBegDate = GetPerfDatabegDate(inceptionDate);
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
                 case "YTD":
-                    startDate = GetFirstDayOfCurrentYear();
+                    startDate = GetFirstDayOfCurrentYear(selectedDate);
                     perfDataBegDate = GetPerfDatabegDate(inceptionDate);
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
                 case "1Y":
-                    startDate = GetFirstDayOfCurrentYear();
+                    startDate = GetFirstDayOfCurrentYear(selectedDate);
                     perfDataBegDate = GetPerfDatabegDate(inceptionDate);
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
                 case "3Y":
-                    startDate = GetFirstDayOfCurrentYear();
+                    startDate = GetFirstDayOfCurrentYear(selectedDate);
                     perfDataBegDate = GetPerfDatabegDate(inceptionDate);
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
                 case "5Y":
-                    startDate = GetFirstDayOfCurrentYear();
+                    startDate = GetFirstDayOfCurrentYear(selectedDate);
                     perfDataBegDate = GetPerfDatabegDate(inceptionDate);
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
                 case "10Y":
-                    startDate = GetFirstDayOfCurrentYear();
+                    startDate = GetFirstDayOfCurrentYear(selectedDate);
                     perfDataBegDate = GetPerfDatabegDate(inceptionDate);
                     isValid = CheckIfPerDataBegDateIsGreaterThanStartDate(startDate, perfDataBegDate);
                     break;
