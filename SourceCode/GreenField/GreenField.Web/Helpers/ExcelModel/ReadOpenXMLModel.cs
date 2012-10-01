@@ -677,6 +677,7 @@ namespace GreenField.Web.Helpers
                 InsertIntoInternalStatementData();
                 InsertIntoInternalData();
                 InsertIntoInternalCommodityAssumptions();
+                CheckInternalIssuer();
                 if (QuarterelyOverrideEnabled)
                 {
                     InsertIntoInternalIssuerQuarterelyDistribution();
