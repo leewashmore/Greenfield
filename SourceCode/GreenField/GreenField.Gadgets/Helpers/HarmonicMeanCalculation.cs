@@ -49,7 +49,7 @@ namespace GreenField.Gadgets.Helpers
 
             for (int i = 0; i < sourceData.Count; i++)
             {                
-                string marketCap = sourceData[0]["Market Capitalization"].ToString();
+                string marketCap = sourceData[i]["Market Capitalization"].ToString();
                 marketCapList.Add(marketCap);
             }
 
@@ -86,7 +86,7 @@ namespace GreenField.Gadgets.Helpers
 
             if (totalharmonic != 0)
             {
-                return (1 / totalharmonic);
+                return Math.Round((1 / totalharmonic),2);
             }
             else
             {
