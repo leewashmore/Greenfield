@@ -1,6 +1,11 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using System.Linq;
+using System.Net;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -9,174 +14,92 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.ViewModel;
-using GreenField.ServiceCaller.MeetingDefinitions;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.Commands;
-using GreenField.Gadgets.Models;
-using Microsoft.Practices.Prism.Regions;
-using GreenField.Common;
-using GreenField.Gadgets.Views;
-using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.ServiceLocation;
-using GreenField.Gadgets.Helpers;
-using GreenField.DataContracts;
-using System.Text;
 using System.Xml;
 using System.Xml.Linq;
-using System.Text.RegularExpressions;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.ViewModel;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.ServiceLocation;
+using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.Models;
+using GreenField.Gadgets.Views;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.MeetingDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View model for ViewModelCustomScreeningTool class
+    /// </summary>
     public class ViewModelCustomScreeningTool : NotificationObject
     {
         #region Fields
         /// <summary>
         /// MEF Singletons
         /// </summary>
-        private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
-        private List<PortfolioSelectionData> _portfolioSelectionData;
-        private IRegionManager _regionManager;
-        private List<EntitySelectionData> _benchmarkSelectionData;
-        int flagBsyInd;   
-
-
-
+        private IEventAggregator eventAggregator;
+        private IDBInteractivity dbInteractivity;
+        private ILoggerFacade logger;
+        private List<PortfolioSelectionData> portfolioSelectionData;
+        private IRegionManager regionManager;
+        private List<EntitySelectionData> benchmarkSelectionData;
+        /// <summary>
+        /// Counter to check for busy indicator 
+        /// </summary>
+        private int flagBsyInd;
         #endregion
 
         #region Constructor
         /// <summary>
-        /// constructor
+        /// Constructor
         /// </summary>
         /// <param name="param"></param>
         public ViewModelCustomScreeningTool(DashboardGadgetParam param)
         {
-            _logger = param.LoggerFacade;
-            _dbInteractivity = param.DBInteractivity;
-            _eventAggregator = param.EventAggregator;
-            _regionManager = param.RegionManager;
+            logger = param.LoggerFacade;
+            dbInteractivity = param.DBInteractivity;
+            eventAggregator = param.EventAggregator;
+            regionManager = param.RegionManager;
         }
         #endregion
 
         #region Properties
 
+        #region Security Selction Grid
+
+        #region Security Selection Criteria
         /// <summary>
-        /// 
+        /// Property to select security criteria
         /// </summary>
-        public List<String> _securitySelectionCriteria;
+        private List<String> securitySelectionCriteria;
         public List<String> SecuritySelectionCriteria
         {
             get
             {
-                { return _securitySelectionCriteria = new List<String> { "Portfolio", "Benchmark", "Custom" }; }
+                { return securitySelectionCriteria = new List<String> { "Portfolio", "Benchmark", "Custom" }; }
             }
             set
             {
-                _securitySelectionCriteria = value;
+                securitySelectionCriteria = value;
                 RaisePropertyChanged(() => this.SecuritySelectionCriteria);
             }
         }
 
-
-        public List<String> _portfolioSelectionInfo;
-        public List<String> PortfolioSelectionInfo
-        {
-            get
-            {
-                return _portfolioSelectionInfo;
-            }
-            set
-            {
-                _portfolioSelectionInfo = value;
-                RaisePropertyChanged(() => this.PortfolioSelectionInfo);
-            }
-        }
-
-        public List<String> _benchmarkSelectionInfo;
-        public List<String> BenchmarkSelectionInfo
-        {
-            get
-            {
-                return _benchmarkSelectionInfo;
-            }
-            set
-            {
-                _benchmarkSelectionInfo = value;
-                RaisePropertyChanged(() => this.BenchmarkSelectionInfo);
-            }
-        }
-
-        public List<String> _customSelectionRegionInfo;
-        public List<String> CustomSelectionRegionInfo
-        {
-            get
-            {
-                return _customSelectionRegionInfo;
-            }
-            set
-            {
-                _customSelectionRegionInfo = value;
-                RaisePropertyChanged(() => this.CustomSelectionRegionInfo);
-            }
-        }
-
-
-        public List<String> _customSelectionSectorInfo;
-        public List<String> CustomSelectionSectorInfo
-        {
-            get
-            {
-                return _customSelectionSectorInfo;
-            }
-            set
-            {
-                _customSelectionSectorInfo = value;
-                RaisePropertyChanged(() => this.CustomSelectionSectorInfo);
-            }
-        }
-
-        public List<String> _customSelectionCountryInfo;
-        public List<String> CustomSelectionCountryInfo
-        {
-            get
-            {
-                return _customSelectionCountryInfo;
-            }
-            set
-            {
-                _customSelectionCountryInfo = value;
-                RaisePropertyChanged(() => this.CustomSelectionCountryInfo);
-            }
-        }
-
-        public List<String> _customSelectionIndustryInfo;
-        public List<String> CustomSelectionIndustryInfo
-        {
-            get
-            {
-                return _customSelectionIndustryInfo;
-            }
-            set
-            {
-                _customSelectionIndustryInfo = value;
-                RaisePropertyChanged(() => this.CustomSelectionIndustryInfo);
-            }
-        }
-
-        public String _selectedCriteria;
+        /// <summary>
+        /// SelectedCriteria
+        /// </summary>
+        private String selectedCriteria;
         public String SelectedCriteria
         {
 
-            get { return _selectedCriteria; }
+            get { return selectedCriteria; }
             set
             {
-                _selectedCriteria = value;
+                selectedCriteria = value;
                 RaisePropertyChanged(() => this.SelectedCriteria);
                 if (SelectedCriteria == SecuritySelectionType.PORTFOLIO)
                 {
@@ -207,20 +130,42 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+        #endregion
 
-        public String _selectedPortfolio;
-        public String SelectedPortfolio
+        #region Portfolio Selection
+        /// <summary>
+        /// Property to select protfolio
+        /// </summary>
+        private List<String> portfolioSelectionInfo;
+        public List<String> PortfolioSelectionInfo
         {
-            get { return _selectedPortfolio; }
+            get
+            {
+                return portfolioSelectionInfo;
+            }
             set
             {
-                if (_selectedPortfolio != value)
+                portfolioSelectionInfo = value;
+                RaisePropertyChanged(() => this.PortfolioSelectionInfo);
+            }
+        }
+
+        /// <summary>
+        /// SelectedPortfolio
+        /// </summary>
+        private String selectedPortfolio;
+        public String SelectedPortfolio
+        {
+            get { return selectedPortfolio; }
+            set
+            {
+                if (selectedPortfolio != value)
                 {
-                    _selectedPortfolio = value;
+                    selectedPortfolio = value;
                     RaisePropertyChanged(() => this.SelectedPortfolio);
                     ResultsListVisibility = Visibility.Collapsed;
                     RaisePropertyChanged(() => this.SubmitCommand);
-                    if (_selectedPortfolio != null)
+                    if (selectedPortfolio != null)
                     {
                         SelectedBenchmark = null;
                         SelectedCountry = null;
@@ -231,19 +176,41 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+        #endregion
 
-        public String _selectedBenchmark;
+        #region Benchmark Selection
+        /// <summary>
+        /// Property to select benchmark
+        /// </summary>
+        private List<String> benchmarkSelectionInfo;
+        public List<String> BenchmarkSelectionInfo
+        {
+            get
+            {
+                return benchmarkSelectionInfo;
+            }
+            set
+            {
+                benchmarkSelectionInfo = value;
+                RaisePropertyChanged(() => this.BenchmarkSelectionInfo);
+            }
+        }
+
+        /// <summary>
+        /// SelectedBenchmark
+        /// </summary>
+        private String selectedBenchmark;
         public String SelectedBenchmark
         {
-            get { return _selectedBenchmark; }
+            get { return selectedBenchmark; }
             set
             {
-                if (_selectedBenchmark != value)
+                if (selectedBenchmark != value)
                 {
-                    _selectedBenchmark = value;
+                    selectedBenchmark = value;
                     RaisePropertyChanged(() => this.SelectedBenchmark);
                     RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
-                    if (_selectedBenchmark != null)
+                    if (selectedBenchmark != null)
                     {
                         SelectedPortfolio = null;
                         SelectedCountry = null;
@@ -254,19 +221,41 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }
         }
+        #endregion
 
-        public String _selectedRegion;
+        #region Custom Selection
+        /// <summary>
+        /// Property to select custom region
+        /// </summary>
+        private List<String> customSelectionRegionInfo;
+        public List<String> CustomSelectionRegionInfo
+        {
+            get
+            {
+                return customSelectionRegionInfo;
+            }
+            set
+            {
+                customSelectionRegionInfo = value;
+                RaisePropertyChanged(() => this.CustomSelectionRegionInfo);
+            }
+        }
+
+        /// <summary>
+        /// SelectedRegion
+        /// </summary>
+        private String selectedRegion;
         public String SelectedRegion
         {
-            get { return _selectedRegion; }
+            get { return selectedRegion; }
             set
             {
-                if (_selectedRegion != value)
+                if (selectedRegion != value)
                 {
-                    _selectedRegion = value;
+                    selectedRegion = value;
                     RaisePropertyChanged(() => this.SelectedRegion);
                     RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
-                    if (_selectedRegion != null)
+                    if (selectedRegion != null)
                     {
                         SelectedPortfolio = null;
                         SelectedBenchmark = null;
@@ -275,38 +264,38 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public String _selectedCountry;
-        public String SelectedCountry
+        /// <summary>
+        /// Property to select custom sector
+        /// </summary>
+        private List<String> customSelectionSectorInfo;
+        public List<String> CustomSelectionSectorInfo
         {
-            get { return _selectedCountry; }
+            get
+            {
+                return customSelectionSectorInfo;
+            }
             set
             {
-                if (_selectedCountry != value)
-                {
-                    _selectedCountry = value;
-                    RaisePropertyChanged(() => this.SelectedCountry);
-                    RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
-                    if (_selectedCountry != null)
-                    {
-                        SelectedPortfolio = null;
-                        SelectedBenchmark = null;
-                    }
-                }
+                customSelectionSectorInfo = value;
+                RaisePropertyChanged(() => this.CustomSelectionSectorInfo);
             }
         }
 
-        public String _selectedSector;
+        /// <summary>
+        /// SelectedSector
+        /// </summary>
+        private String selectedSector;
         public String SelectedSector
         {
-            get { return _selectedSector; }
+            get { return selectedSector; }
             set
             {
-                if (_selectedSector != value)
+                if (selectedSector != value)
                 {
-                    _selectedSector = value;
+                    selectedSector = value;
                     RaisePropertyChanged(() => this.SelectedSector);
                     RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
-                    if (_selectedSector != null)
+                    if (selectedSector != null)
                     {
                         SelectedPortfolio = null;
                         SelectedBenchmark = null;
@@ -315,18 +304,38 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public String _selectedIndustry;
-        public String SelectedIndustry
+        /// <summary>
+        /// Property to select custom country
+        /// </summary>
+        private List<String> customSelectionCountryInfo;
+        public List<String> CustomSelectionCountryInfo
         {
-            get { return _selectedIndustry; }
+            get
+            {
+                return customSelectionCountryInfo;
+            }
             set
             {
-                if (_selectedIndustry != value)
+                customSelectionCountryInfo = value;
+                RaisePropertyChanged(() => this.CustomSelectionCountryInfo);
+            }
+        }
+
+        /// <summary>
+        /// SelectedCountry
+        /// </summary>
+        private String selectedCountry;
+        public String SelectedCountry
+        {
+            get { return selectedCountry; }
+            set
+            {
+                if (selectedCountry != value)
                 {
-                    _selectedIndustry = value;
-                    RaisePropertyChanged(() => this.SelectedIndustry);
+                    selectedCountry = value;
+                    RaisePropertyChanged(() => this.SelectedCountry);
                     RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
-                    if (_selectedIndustry != null)
+                    if (selectedCountry != null)
                     {
                         SelectedPortfolio = null;
                         SelectedBenchmark = null;
@@ -335,192 +344,352 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public Visibility _portfolioSelectionVisibility = Visibility.Collapsed;
+        /// <summary>
+        /// Property to select custom industry
+        /// </summary>
+        private List<String> customSelectionIndustryInfo;
+        public List<String> CustomSelectionIndustryInfo
+        {
+            get
+            {
+                return customSelectionIndustryInfo;
+            }
+            set
+            {
+                customSelectionIndustryInfo = value;
+                RaisePropertyChanged(() => this.CustomSelectionIndustryInfo);
+            }
+        }
+
+        /// <summary>
+        /// SelectedIndustry
+        /// </summary>
+        private String selectedIndustry;
+        public String SelectedIndustry
+        {
+            get { return selectedIndustry; }
+            set
+            {
+                if (selectedIndustry != value)
+                {
+                    selectedIndustry = value;
+                    RaisePropertyChanged(() => this.SelectedIndustry);
+                    RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
+                    if (selectedIndustry != null)
+                    {
+                        SelectedPortfolio = null;
+                        SelectedBenchmark = null;
+                    }
+                }
+            }
+        }
+        #endregion
+
+        #region Controls Visibility
+
+        /// <summary>
+        /// PortfolioSelectionVisibility
+        /// </summary>
+        private Visibility portfolioSelectionVisibility = Visibility.Collapsed;
         public Visibility PortfolioSelectionVisibility
         {
             get
             {
-                return _portfolioSelectionVisibility;
+                return portfolioSelectionVisibility;
             }
             set
             {
-                _portfolioSelectionVisibility = value;
+                portfolioSelectionVisibility = value;
                 RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
             }
         }
 
-        public Visibility _benchmarkSelectionVisibility = Visibility.Collapsed;
+        /// <summary>
+        /// BenchmarkSelectionVisibility
+        /// </summary>
+        private Visibility benchmarkSelectionVisibility = Visibility.Collapsed;
         public Visibility BenchmarkSelectionVisibility
         {
             get
             {
-                return _benchmarkSelectionVisibility;
+                return benchmarkSelectionVisibility;
             }
             set
             {
-                _benchmarkSelectionVisibility = value;
+                benchmarkSelectionVisibility = value;
                 RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
             }
         }
 
-        public Visibility _customSelectionVisibility = Visibility.Collapsed;
+        /// <summary>
+        /// CustomSelectionVisibility
+        /// </summary>
+        private Visibility customSelectionVisibility = Visibility.Collapsed;
         public Visibility CustomSelectionVisibility
         {
             get
             {
-                return _customSelectionVisibility;
+                return customSelectionVisibility;
             }
             set
             {
-                _customSelectionVisibility = value;
+                customSelectionVisibility = value;
                 RaisePropertyChanged(() => this.CustomSelectionVisibility);
             }
         }
 
-
-        public Visibility _securitySelectionGridViewVisibility = Visibility.Visible;
+        /// <summary>
+        /// Porperty to enable or disable visibility of the security selection grid
+        /// </summary>
+        private Visibility securitySelectionGridViewVisibility = Visibility.Visible;
         public Visibility SecuritySelectionGridViewVisibility
         {
             get
             {
-                return _securitySelectionGridViewVisibility;
+                return securitySelectionGridViewVisibility;
             }
             set
             {
-                _securitySelectionGridViewVisibility = value;
+                securitySelectionGridViewVisibility = value;
                 RaisePropertyChanged(() => this.SecuritySelectionGridViewVisibility);
             }
         }
+        #endregion
 
         #region ICommand Properties
 
+        /// <summary>
+        /// SubmitCommand
+        /// </summary>
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
         }
 
         #endregion
+        #endregion
 
         #region Data List Selector
 
-        public List<CSTUserPreferenceInfo> _cstUserPreferenceInfo;
+        /// <summary>
+        /// Proerty that contains user preference for custom screening tool
+        /// </summary>
+        private List<CSTUserPreferenceInfo> cstUserPreferenceInfo;
         public List<CSTUserPreferenceInfo> CSTUserPreference
         {
-            get { return _cstUserPreferenceInfo; }
+            get { return cstUserPreferenceInfo; }
             set
             {
-                _cstUserPreferenceInfo = value;
+                cstUserPreferenceInfo = value;
                 RaisePropertyChanged(() => this.CSTUserPreference);
                 CSTNavigation.Update(CSTNavigationInfo.CSTUserPreference, CSTUserPreference);
             }
         }
 
-        public List<String> _savedDataListInfo;
+        /// <summary>
+        /// Proerty that contains disctinct saved data list information of users
+        /// </summary>
+        private List<String> savedDataListInfo;
         public List<String> SavedDataListInfo
         {
             get
             {
-                return _savedDataListInfo;
+                return savedDataListInfo;
             }
             set
             {
-                _savedDataListInfo = value;
+                savedDataListInfo = value;
                 RaisePropertyChanged(() => this.SavedDataListInfo);
             }
         }
 
-        public String _selectedDataListInfo;
+        /// <summary>
+        /// SelectedDataListInfo
+        /// </summary>
+        private String selectedDataListInfo;
         public String SelectedDataListInfo
         {
             get
             {
-                return _selectedDataListInfo;
+                return selectedDataListInfo;
             }
             set
             {
-                _selectedDataListInfo = value;
+                selectedDataListInfo = value;
                 RaisePropertyChanged(() => this.SelectedDataListInfo);
-                SelectedSavedDataList = CSTUserPreference.Where(a => a.ListName == _selectedDataListInfo).ToList();
+                SelectedSavedDataList = CSTUserPreference.Where(a => a.ListName == selectedDataListInfo).ToList();
                 ResultsListVisibility = Visibility.Collapsed;
                 RaisePropertyChanged(() => this.OkCommand);
             }
         }
 
-        public List<CSTUserPreferenceInfo> _selectedSavedDataList;
+        /// <summary>
+        /// Property that contains user preference information for all records of the selected data list
+        /// </summary>
+        private List<CSTUserPreferenceInfo> selectedSavedDataList;
         public List<CSTUserPreferenceInfo> SelectedSavedDataList
         {
-            get { return _selectedSavedDataList; }
+            get { return selectedSavedDataList; }
             set
             {
-                _selectedSavedDataList = value;
+                selectedSavedDataList = value;
                 RaisePropertyChanged(() => this.SelectedSavedDataList);
                 CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, SelectedSavedDataList);
             }
         }
 
-        public Visibility _dataListSelectionGridViewVisibility = Visibility.Collapsed;
+        /// <summary>
+        /// Porperty to enable or disable visibility of the DataList Selection GridView
+        /// </summary>
+        private Visibility dataListSelectionGridViewVisibility = Visibility.Collapsed;
         public Visibility DataListSelectionGridViewVisibility
         {
             get
             {
-                return _dataListSelectionGridViewVisibility;
+                return dataListSelectionGridViewVisibility;
             }
             set
             {
-                _dataListSelectionGridViewVisibility = value;
+                dataListSelectionGridViewVisibility = value;
                 RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
 
             }
         }
 
-        public Visibility _resultsListVisibility = Visibility.Collapsed;
-        public Visibility ResultsListVisibility
-        {
-            get
-            {
-                return _resultsListVisibility;
-            }
-            set
-            {
-                _resultsListVisibility = value;
-                RaisePropertyChanged(() => this.ResultsListVisibility);
-
-            }
-        }
-
-        public bool _isOkButtonEnabled = false;
+        /// <summary>
+        /// Porperty to enable or disable Ok button
+        /// </summary>
+        private bool isOkButtonEnabled = false;
         public bool IsOkButtonEnabled
         {
-            get { return _isOkButtonEnabled; }
+            get { return isOkButtonEnabled; }
             set
             {
-                _isOkButtonEnabled = value;
+                isOkButtonEnabled = value;
                 RaisePropertyChanged(() => this.IsOkButtonEnabled);
             }
         }
 
+        #region ICommand Properties
+        /// <summary>
+        /// OkCommand
+        /// </summary>
         public ICommand OkCommand
         {
             get { return new DelegateCommand<object>(OkCommandMethod, OkCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// CreateDataListCommand
+        /// </summary>
         public ICommand CreateDataListCommand
         {
             get { return new DelegateCommand<object>(CreateDataListCommandMethod, CreateDataListCommandValidationMethod); }
         }
+        #endregion
 
+        #endregion
+
+        #region Result Grid
+        /// <summary>
+        /// IsActive is true when parent control is displayed on UI
+        /// </summary>
+        private List<CustomScreeningSecurityData> securityData;
+        public List<CustomScreeningSecurityData> SecurityData
+        {
+            get { return securityData; }
+            set
+            {
+                if (securityData != value)
+                {
+                    securityData = value;
+                    RaisePropertyChanged(() => SecurityData);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Porperty to enable or disable visibility of the Results Grid
+        /// </summary>
+        private Visibility resultsListVisibility = Visibility.Collapsed;
+        public Visibility ResultsListVisibility
+        {
+            get
+            {
+                return resultsListVisibility;
+            }
+            set
+            {
+                resultsListVisibility = value;
+                RaisePropertyChanged(() => this.ResultsListVisibility);
+
+            }
+        }
+
+        #region Events
+        /// <summary>
+        /// Event for the Retrieval of Data 
+        /// </summary>
+        public event RetrieveCustomXmlDataCompleteEventHandler RetrieveCustomXmlDataCompletedEvent;
+        #endregion
+
+        #endregion
+
+        #region Busy Indicator Notification
+
+        /// <summary>
+        /// Displays/Hides busy indicator to notify user of the on going process
+        /// </summary>
+        private bool isBusyIndicatorBusy = false;
+        public bool IsBusyIndicatorBusy
+        {
+            get { return isBusyIndicatorBusy; }
+            set
+            {
+                isBusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
+            }
+        }
+
+        /// <summary>
+        /// Stores the message displayed over the busy indicator to notify user of the on going process
+        /// </summary>
+        private string busyIndicatorContent;
+        public string BusyIndicatorContent
+        {
+            get { return busyIndicatorContent; }
+            set
+            {
+                busyIndicatorContent = value;
+                RaisePropertyChanged(() => this.BusyIndicatorContent);
+            }
+        }
+
+        /// <summary>
+        /// FlagBusyIndicator
+        /// </summary>
+        private int flagBusyIndicator;
+        public int FlagBusyIndicator
+        {
+            get { return flagBusyIndicator; }
+            set
+            {
+                flagBusyIndicator = value;
+                RaisePropertyChanged(() => this.FlagBusyIndicator);
+            }
+        }
         #endregion
 
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (value)
                 {
                     Initialize();
@@ -528,88 +697,42 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private List<CustomScreeningSecurityData> _securityData;
-        public List<CustomScreeningSecurityData> SecurityData
-        {
-            get { return _securityData; }
-            set
-            {
-                if (_securityData != value)
-                {
-                    _securityData = value;
-                    RaisePropertyChanged(() => SecurityData);
-                }
-            }
-        }
-
-        #region Busy Indicator Notification
-        /// <summary>
-        /// Displays/Hides busy indicator to notify user of the on going process
-        /// </summary>
-        private bool _busyIndicatorIsBusy = false;
-        public bool BusyIndicatorIsBusy
-        {
-            get { return _busyIndicatorIsBusy; }
-            set
-            {
-                _busyIndicatorIsBusy = value;
-                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
-            }
-        }
-
-        /// <summary>
-        /// Stores the message displayed over the busy indicator to notify user of the on going process
-        /// </summary>
-        private string _busyIndicatorContent;
-        public string BusyIndicatorContent
-        {
-            get { return _busyIndicatorContent; }
-            set
-            {
-                _busyIndicatorContent = value;
-                RaisePropertyChanged(() => this.BusyIndicatorContent);
-            }
-        }
-
-        private int _flagBusyIndicator;
-        public int FlagBusyIndicator
-        {
-            get { return _flagBusyIndicator; }
-            set
-            {
-                _flagBusyIndicator = value;
-                RaisePropertyChanged(() => this.FlagBusyIndicator);
-            }
-        }
-
-        #endregion
-
         #endregion
 
         #region ICommand Methods
-
+        /// <summary>
+        /// SubmitCommandValidationMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private bool SubmitCommandValidationMethod(object param)
         {
             return true;
         }
 
+        /// <summary>
+        /// SubmitCommandMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private void SubmitCommandMethod(object param)
         {
             //create list of selected options and save in the user class and fetch the securities based on filter selctions
             DataListSelectionGridViewVisibility = Visibility.Visible;
             RaisePropertyChanged(() => this.DataListSelectionGridViewVisibility);
 
-            if (_dbInteractivity == null || (UserSession.SessionManager.SESSION == null))
+            if (dbInteractivity == null || (UserSession.SessionManager.SESSION == null))
                 return;
             else
             {
                 BusyIndicatorNotification(true, "Retrieving User Preference Data...");
-                _dbInteractivity.GetCustomScreeningUserPreferences(UserSession.SessionManager.SESSION.UserName, CustomScreeningUserPreferencesCallbackMethod);
+                dbInteractivity.GetCustomScreeningUserPreferences(UserSession.SessionManager.SESSION.UserName, CustomScreeningUserPreferencesCallbackMethod);
             }
         }
 
         #region Data List Selector
-
+        /// <summary>
+        /// OkCommandValidationMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private bool OkCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null || SelectedDataListInfo == null)
@@ -624,38 +747,42 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// OkCommandMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private void OkCommandMethod(object param)
         {
-            //prompt for either view or edit the data fileds
-            //if user says 'yes', data fileds selector screen appears with all data fields pre populated in selected fields list.
-            //if user says'no' open resluts screen            
-
+            // if signed in user is creater of selected data list, prompt to Edit 
             if (UserSession.SessionManager.SESSION.UserName.ToLower().Equals(SelectedSavedDataList[0].UserName.ToLower()))
             {
                 Prompt.ShowDialog("Do you wish to edit the data fields?", "Confirmation", MessageBoxButton.OKCancel, (result) =>
                 {
+                    // if user clicks 'Ok', data fileds selector screen appears with all data fields pre populated in selected fields list.
                     if (result == MessageBoxResult.OK)
                     {
                         CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Edit");
                         CSTNavigation.UpdateString(CSTNavigationInfo.ListName, SelectedSavedDataList[0].ListName);
                         CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, SelectedSavedDataList[0].Accessibility);
-                        //open pre populated selected fields list
-                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
+                        // open pre populated selected fields list
+                        regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
                     }
+                    // if user clicks'Cancel' redirect to results screen           
                     else if (result == MessageBoxResult.Cancel)
                     {
-                        //redirect to results views
                         PortfolioSelectionData p = new PortfolioSelectionData();
-                        p = _portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
+                        p = portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
 
                         EntitySelectionData b = new EntitySelectionData();
-                        b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
+                        b = benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
                         BusyIndicatorNotification(true, "Retrieving Data for display");
-                        _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
+
+                        dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
                                                                 SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
                     }
                 });
             }
+            // if signed in user is not creater of selected data list, prompt to View selected data list
             else
             {
                 CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
@@ -663,19 +790,23 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     if (result == MessageBoxResult.OK)
                     {
-                        //open pre populated selected fields list
-                        _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
+                        // open pre populated selected fields list
+                        regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
                     }
                     else if (result == MessageBoxResult.Cancel)
                     {
                         CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "View");
-                        //redirect to results views
+                        // redirect to results views
                         RetrieveResultsList();
                     }
                 });
             }
         }
 
+        /// <summary>
+        /// CreateDataListCommandValidationMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private bool CreateDataListCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null)
@@ -684,221 +815,284 @@ namespace GreenField.Gadgets.ViewModels
                 return true;
         }
 
+        /// <summary>
+        /// CreateDataListCommandMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private void CreateDataListCommandMethod(object param)
         {
             CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, null);
             CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Create");
-            _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
+            // navigate to data list selector view
+            regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningToolNewDataList", UriKind.Relative));
         }
-
         #endregion
 
         #endregion
 
         #region Callback Methods
+
+        /// <summary>
+        /// Callback method for portfolio selection data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result">PortfolioSelectionData List</param>
         private void PortfolioSelectionDataCallbackMethod(List<PortfolioSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-                    _portfolioSelectionData = result;
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
+                    portfolioSelectionData = result;
+                    // fetch portfolio id of all records
                     PortfolioSelectionInfo = result.Select(o => o.PortfolioId).ToList();
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
-                //BusyIndicatorNotification();
+                Logging.LogEndMethod(logger, methodNamespace);
             }
         }
 
+        /// <summary>
+        /// Callback method for benchmark data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result">EntitySelectionData List</param>
         private void EntitySelectionDataCallbackMethod(List<EntitySelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
 
-                    _benchmarkSelectionData = result;
+                    benchmarkSelectionData = result;
+                    //fetch benchmarks
                     BenchmarkSelectionInfo = result.Where(a => a.Type.Equals("BENCHMARK")).Select(a => a.LongName).ToList();
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
 
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
-               // BusyIndicatorNotification();
+                Logging.LogEndMethod(logger, methodNamespace);
             }
         }
 
+        /// <summary>
+        /// Callback method for custom selection region data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result"> string List</param>
         private void CustomControlsListRegionCallbackMethod(List<string> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     CustomSelectionRegionInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
-               // BusyIndicatorNotification();
+                Logging.LogEndMethod(logger, methodNamespace);
             }
         }
 
+        /// <summary>
+        /// Callback method for custom selection country data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result"> string List</param>
         private void CustomControlsListCountryCallbackMethod(List<string> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     CustomSelectionCountryInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
-               // BusyIndicatorNotification();
+                Logging.LogEndMethod(logger, methodNamespace);
             }
         }
 
+        /// <summary>
+        /// Callback method for custom selection sector data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result"> string List</param>
         private void CustomControlsListSectorCallbackMethod(List<string> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     CustomSelectionSectorInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 if(flagBsyInd != 1)
                 {
                     BusyIndicatorNotification();
                 }
-                //else if (FlagBusyIndicator == 1)
-                //{
-                //    BusyIndicatorNotification();
-                //}
             }
         }
 
+        /// <summary>
+        /// Callback method for custom selection industry data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result"> string List</param>
         private void CustomControlsListIndustryCallbackMethod(List<string> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     CustomSelectionIndustryInfo = result;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
-               // BusyIndicatorNotification();
+                Logging.LogEndMethod(logger, methodNamespace);
             }
         }
 
-        private void RetrieveSecurityDataCallbackMethod(List<CustomScreeningSecurityData> result)
+        /// <summary>
+        /// Callback method for custom screening user preference data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result"> string List</param>
+        private void CustomScreeningUserPreferencesCallbackMethod(List<CSTUserPreferenceInfo> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
+                    CSTUserPreference = result;
+                    // fetch disctinct saved data list names
+                    SavedDataListInfo = result.Select(a => a.ListName).Distinct().ToList();
+                    BusyIndicatorNotification();
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                BusyIndicatorNotification();
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+            }
+        }
+
+        /// <summary>
+        /// Callback method for security data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result"> string List</param>
+        private void RetrieveSecurityDataCallbackMethod(List<CustomScreeningSecurityData> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(logger, methodNamespace, result, 1);
                     SecurityData = result;
                     if (SelectedSavedDataList != null && SelectedSavedDataList.Count > 0 && SelectedSavedDataList[0].ScreeningId != null)
                     {
+                        // create an xml format security data for selected securities and data list fields to be displayed in results grid
                         CreateXML(SecurityData);
                     }
                     ResultsListVisibility = Visibility.Visible;
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     BusyIndicatorNotification();
                 }
             }
@@ -906,45 +1100,166 @@ namespace GreenField.Gadgets.ViewModels
             {
                 BusyIndicatorNotification();
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
             }
-        }
+        }        
 
-        private void CustomScreeningUserPreferencesCallbackMethod(List<CSTUserPreferenceInfo> result)
+        #endregion
+
+        #region Helpers
+
+        /// <summary>
+        /// Method that will be called when the view is active
+        /// </summary>
+        public void Initialize()
         {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
+            FlagBusyIndicator = 0;
+            SelectionRaisePropertyChanged();
+
+            // update fields to be accessed from navigated views
+            CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, null);
+            CSTNavigation.UpdateString(CSTNavigationInfo.ListName, null);
+
+            if (dbInteractivity != null && IsActive)
             {
-                if (result != null)
+                SecuritySelectionGridViewVisibility = Visibility.Visible;
+                DataListSelectionGridViewVisibility = Visibility.Collapsed;
+
+                // fetch portfolioid list 
+                FetchSelectionCriteriaData();
+
+                // fetch final list of securities
+                RetrieveResultsList();
+            }
+            CSTNavigation.UpdateString(CSTNavigationInfo.Flag, null);
+        }
+
+        /// <summary>
+        /// Method that notifies controls
+        /// </summary>
+        private void SelectionRaisePropertyChanged()
+        {
+            RaisePropertyChanged(() => this.SelectedCriteria);
+            RaisePropertyChanged(() => this.SelectedPortfolio);
+            RaisePropertyChanged(() => this.SelectedBenchmark);
+            RaisePropertyChanged(() => this.SelectedCountry);
+            RaisePropertyChanged(() => this.SelectedIndustry);
+            RaisePropertyChanged(() => this.SelectedRegion);
+            RaisePropertyChanged(() => this.SelectedSector);
+            RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
+            RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
+            RaisePropertyChanged(() => this.CustomSelectionVisibility);
+            RaisePropertyChanged(() => this.SecuritySelectionGridViewVisibility);
+            RaisePropertyChanged(() => this.SavedDataListInfo);
+            RaisePropertyChanged(() => this.SelectedDataListInfo);
+        }
+
+        /// <summary>
+        /// BusyIndicatorNotification
+        /// </summary>
+        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
+        {
+            if (message != null)
+            {
+                BusyIndicatorContent = message;
+            }
+            IsBusyIndicatorBusy = showBusyIndicator;
+        }
+
+        /// <summary>
+        /// Method to fetch data for populating recults grid
+        /// </summary>
+        public void RetrieveResultsList()
+        {
+            string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+
+            if (flag == "Created" || flag == "Edited")
+            {
+                SelectedSavedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
+
+                if (SelectedSavedDataList != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    CSTUserPreference = result;
-                    SavedDataListInfo = result.Select(a => a.ListName).Distinct().ToList();
-                    BusyIndicatorNotification();
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                    BusyIndicatorNotification();
+                    PortfolioSelectionData p = new PortfolioSelectionData();
+                    p = portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
+
+                    EntitySelectionData b = new EntitySelectionData();
+                    b = benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
+                    BusyIndicatorNotification(true, "Retrieving Data for display");
+                    flagBsyInd = 1;
+                    dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
+                                                            SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
                 }
             }
-            catch (Exception ex)
+            else if (flag == "View")
             {
-                BusyIndicatorNotification();
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            finally
-            {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                if (SelectedSavedDataList != null)
+                {
+                    PortfolioSelectionData p = new PortfolioSelectionData();
+                    p = portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
+
+                    EntitySelectionData b = new EntitySelectionData();
+                    b = benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
+                    BusyIndicatorNotification(true, "Retrieving Data for display");
+                    flagBsyInd = 1;
+                    dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
+                                                            SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
+                }
             }
         }
 
+        /// <summary>
+        /// ReplaceSpecialCharacters
+        /// </summary>
+        public static string ReplaceSpecialCharacters(string raw)
+        {
+            string replacedString = Regex.Replace(raw, "[^0-9a-zA-Z]+", "_");
+            replacedString = replacedString.Replace("___", "__");
+            replacedString = replacedString.Replace("__", "_");
+
+            if (replacedString.StartsWith("_"))
+            {
+                replacedString = replacedString.Substring(1);
+            }
+
+            if (replacedString.EndsWith("_"))
+            {
+                replacedString = replacedString.Substring(0, replacedString.Length - 1);
+            }
+            return replacedString;
+        }
+
+        /// <summary>
+        /// Method to call web service methods for different selection criteria
+        /// </summary>
+        public void FetchSelectionCriteriaData()
+        {
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
+
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
+
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            dbInteractivity.RetrieveCustomControlsList("Region", CustomControlsListRegionCallbackMethod);
+
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            dbInteractivity.RetrieveCustomControlsList("Country", CustomControlsListCountryCallbackMethod);
+
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            dbInteractivity.RetrieveCustomControlsList("Sector", CustomControlsListSectorCallbackMethod);
+
+            BusyIndicatorNotification(true, "Retrieving Data...");
+            dbInteractivity.RetrieveCustomControlsList("Industry", CustomControlsListIndustryCallbackMethod);
+        }
+
+        /// <summary>
+        /// Method for generating xml for results grid
+        /// </summary>
+        /// <param name="result"> string List</param>
         private void CreateXML(List<CustomScreeningSecurityData> securityData)
         {
             Dictionary<String, String> changedColumnNames = new Dictionary<String, String>();
@@ -964,15 +1279,12 @@ namespace GreenField.Gadgets.ViewModels
             xws.OmitXmlDeclaration = true;
             xws.Indent = true;
 
-
             using (XmlWriter xw = XmlWriter.Create(sb, xws))
             {
                 xw.WriteStartDocument();
 
                 xw.WriteStartElement("data");
-
                 xw.WriteStartElement("columns");
-
                 xw.WriteStartElement("column");
 
                 xw.WriteAttributeString("name", "Security Ticker");
@@ -994,7 +1306,6 @@ namespace GreenField.Gadgets.ViewModels
                 xw.WriteAttributeString("isaggregate", "false");
                 xw.WriteAttributeString("isdisplay", "false");
                 xw.WriteEndElement();
-
 
                 foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
                 {
@@ -1037,9 +1348,9 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteAttributeString("isaggregate", "true");
                         xw.WriteAttributeString("isdisplay", "true");
                         xw.WriteEndElement();
-
                     }
                 }
+
                 xw.WriteEndElement();
                 xw.WriteStartElement("row");
                 foreach (CSTUserPreferenceInfo info in SelectedSavedDataList)
@@ -1069,7 +1380,6 @@ namespace GreenField.Gadgets.ViewModels
                         xw.WriteString(Convert.ToString(info.FromDate));
                         xw.WriteEndElement();
                     }
-
                 }
                 xw.WriteStartElement("Element");
                 xw.WriteAttributeString("name", "Security Ticker");
@@ -1233,7 +1543,7 @@ namespace GreenField.Gadgets.ViewModels
                 xw.WriteString(String.Empty);
                 xw.WriteEndElement();
 
-                xw.WriteEndElement();            
+                xw.WriteEndElement();
 
                 if (securityData != null)
                 {
@@ -1248,9 +1558,10 @@ namespace GreenField.Gadgets.ViewModels
                                 xw.WriteStartElement("Element");
                                 xw.WriteAttributeString("name", changedColumnNames[info.TableColumn]);
                                 xw.WriteAttributeString("displayname", info.TableColumn);
+
                                 CustomScreeningSecurityData selectedSec = (from p in securityData
-                                                                           where p.Type == info.TableColumn                                                                       
-                                                                           && p.IssueName == issueName                                                                          
+                                                                           where p.Type == info.TableColumn
+                                                                           && p.IssueName == issueName
                                                                            select p).FirstOrDefault();
 
                                 string attributeValue = (selectedSec == null || selectedSec.Value == null) ?
@@ -1263,10 +1574,11 @@ namespace GreenField.Gadgets.ViewModels
                                 xw.WriteStartElement("Element");
                                 xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.DataSource);
                                 xw.WriteAttributeString("displayname", info.TableColumn);
+
                                 CustomScreeningSecurityData selectedSec = (from p in securityData
                                                                            where p.Type == info.TableColumn
-                                                                              && p.IssueName == issueName     
-                                                                           && p.DataSource == info.DataSource                                                                          
+                                                                              && p.IssueName == issueName
+                                                                           && p.DataSource == info.DataSource
                                                                            select p).FirstOrDefault();
 
                                 string attributeValue = (selectedSec == null || selectedSec.Value == null) ?
@@ -1280,6 +1592,7 @@ namespace GreenField.Gadgets.ViewModels
                                 xw.WriteAttributeString("name", changedColumnNames[info.TableColumn] + info.FromDate + info.DataSource.Substring(0, 3)
                                + info.PeriodType + info.YearType.Substring(0, 1));
                                 xw.WriteAttributeString("displayname", info.TableColumn);
+
                                 CustomScreeningSecurityData selectedSec = (from p in securityData
                                                                            where p.Type == info.TableColumn
                                                                            && p.PeriodYear == info.FromDate
@@ -1315,9 +1628,8 @@ namespace GreenField.Gadgets.ViewModels
                         Object marketCapitalization = securityData.Where(a => a.IssueName == issueName).Select(a => a.MarketCapAmount).FirstOrDefault();
                         xw.WriteString(Convert.ToString(marketCapitalization));
                         xw.WriteEndElement();
-
                         xw.WriteEndElement();
-                    }              
+                    }
                 }
                 xw.WriteEndElement();
                 xw.WriteEndDocument();
@@ -1327,151 +1639,6 @@ namespace GreenField.Gadgets.ViewModels
         }
 
         #endregion
-
-        #region Helpers
-
-        public void Initialize()
-        {
-            FlagBusyIndicator = 0;
-            SelectionRaisePropertyChanged();
-            CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, null);
-            CSTNavigation.UpdateString(CSTNavigationInfo.ListName, null);
-
-            if (_dbInteractivity != null && IsActive)
-            {
-                SecuritySelectionGridViewVisibility = Visibility.Visible;
-                DataListSelectionGridViewVisibility = Visibility.Collapsed;
-
-                //fetch PortfolioId list 
-                FetchSelectionCriteriaData();
-
-                //fetch final list of securities
-                RetrieveResultsList();
-            }
-            CSTNavigation.UpdateString(CSTNavigationInfo.Flag, null);
-        }
-
-        private void SelectionRaisePropertyChanged()
-        {
-            RaisePropertyChanged(() => this.SelectedCriteria);
-            RaisePropertyChanged(() => this.SelectedPortfolio);
-            RaisePropertyChanged(() => this.SelectedBenchmark);
-            RaisePropertyChanged(() => this.SelectedCountry);
-            RaisePropertyChanged(() => this.SelectedIndustry);
-            RaisePropertyChanged(() => this.SelectedRegion);
-            RaisePropertyChanged(() => this.SelectedSector);
-            RaisePropertyChanged(() => this.PortfolioSelectionVisibility);
-            RaisePropertyChanged(() => this.BenchmarkSelectionVisibility);
-            RaisePropertyChanged(() => this.CustomSelectionVisibility);
-            RaisePropertyChanged(() => this.SecuritySelectionGridViewVisibility);
-            RaisePropertyChanged(() => this.SavedDataListInfo);
-            RaisePropertyChanged(() => this.SelectedDataListInfo);
-        }
-
-        public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
-        {
-            if (message != null)
-            {
-                BusyIndicatorContent = message;
-            }
-            BusyIndicatorIsBusy = showBusyIndicator;
-        }
-
-        public void RetrieveResultsList()
-        {
-            string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
-
-            //if (flag == null)
-            //{
-            //    SelectedPortfolio = null;
-            //    SelectedBenchmark = null;
-            //    SelectedCountry = null;
-            //    SelectedIndustry = null;
-            //    SelectedRegion = null;
-            //    SelectedSector = null;
-            //    SecurityData = null;
-            //    SelectedSavedDataList = new List<CSTUserPreferenceInfo>();
-            //}            
-
-            if (flag == "Created" || flag == "Edited")
-            {
-                SelectedSavedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
-
-                if (SelectedSavedDataList != null)
-                {
-                    PortfolioSelectionData p = new PortfolioSelectionData();
-                    p = _portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
-
-                    EntitySelectionData b = new EntitySelectionData();
-                    b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
-                    BusyIndicatorNotification(true, "Retrieving Data for display");
-                    flagBsyInd = 1;
-                    _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
-                                                            SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
-                }
-            }
-            else if (flag == "View")
-            {
-                if (SelectedSavedDataList != null)
-                {
-                    PortfolioSelectionData p = new PortfolioSelectionData();
-                    p = _portfolioSelectionData.Where(a => a.PortfolioId == SelectedPortfolio).FirstOrDefault();
-
-                    EntitySelectionData b = new EntitySelectionData();
-                    b = _benchmarkSelectionData.Where(a => a.LongName == SelectedBenchmark).FirstOrDefault();
-                    BusyIndicatorNotification(true, "Retrieving Data for display");
-                    flagBsyInd = 1;
-                    _dbInteractivity.RetrieveSecurityData(p, b, SelectedRegion, SelectedCountry, SelectedSector, SelectedIndustry,
-                                                            SelectedSavedDataList, RetrieveSecurityDataCallbackMethod);
-                }
-            }
-        }
-
-        public static string ReplaceSpecialCharacters(string raw)
-        {
-            string replacedStr = Regex.Replace(raw, "[^0-9a-zA-Z]+", "_");
-            replacedStr = replacedStr.Replace("___", "__");
-            replacedStr = replacedStr.Replace("__", "_");
-
-            if (replacedStr.StartsWith("_"))
-            {
-                replacedStr = replacedStr.Substring(1);
-            }
-
-            if (replacedStr.EndsWith("_"))
-            {
-                replacedStr = replacedStr.Substring(0, replacedStr.Length - 1);
-            }
-
-            return replacedStr;
-        }
-
-        public void FetchSelectionCriteriaData()
-        {
-            BusyIndicatorNotification(true, "Retrieving Data...");
-            _dbInteractivity.RetrievePortfolioSelectionData(PortfolioSelectionDataCallbackMethod);
-            BusyIndicatorNotification(true, "Retrieving Data...");
-            _dbInteractivity.RetrieveEntitySelectionData(EntitySelectionDataCallbackMethod);
-            BusyIndicatorNotification(true, "Retrieving Data...");
-            _dbInteractivity.RetrieveCustomControlsList("Region", CustomControlsListRegionCallbackMethod);
-            BusyIndicatorNotification(true, "Retrieving Data...");
-            _dbInteractivity.RetrieveCustomControlsList("Country", CustomControlsListCountryCallbackMethod);
-            BusyIndicatorNotification(true, "Retrieving Data...");
-            _dbInteractivity.RetrieveCustomControlsList("Sector", CustomControlsListSectorCallbackMethod);
-            BusyIndicatorNotification(true, "Retrieving Data...");
-            _dbInteractivity.RetrieveCustomControlsList("Industry", CustomControlsListIndustryCallbackMethod);
-        }
-
-        #endregion
-
-        #region Events
-
-        /// <summary>
-        /// Event for the Retrieval of Data 
-        /// </summary>
-        public event RetrieveCustomXmlDataCompleteEventHandler RetrieveCustomXmlDataCompletedEvent;
-
-        #endregion
         
         #region EventUnSubscribe
         /// <summary>
@@ -1479,11 +1646,10 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-
+            // unsubscribe event here
         }
 
         #endregion
-
     }
 }
 

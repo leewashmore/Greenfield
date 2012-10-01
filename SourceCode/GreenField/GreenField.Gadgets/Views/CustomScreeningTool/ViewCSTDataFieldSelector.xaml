@@ -31,6 +31,7 @@
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                    
                 <Grid Grid.Column="0">
                     <telerik:RadTabControl x:Name="tabControl" 
                            IsContentPreserved="True"
@@ -49,7 +50,7 @@
                                     </Grid.ColumnDefinitions>
                                 
                                     <Grid Grid.Column="0" Margin="5,5,5,5">
-                                            <!--Data Grid-->
+                                            <!--data grid-->
                                             <telerik:RadGridView x:Name="dgSecurityReferenceList"
                                              Margin="2,2,0,2"
                                              ItemsSource="{Binding SecurityReferenceData}"
@@ -152,7 +153,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Grid Grid.Column="0" Margin="5,5,5,5">
-                                        <!--Data Grid-->
+                                        <!--data grid-->
                                         <telerik:RadGridView x:Name="dgPeriodFinancialsList"
                                              Margin="2,2,0,2"
                                              ItemsSource="{Binding PeriodFinancialsData}"
@@ -355,7 +356,7 @@
                                     </Grid.ColumnDefinitions>
                               
                                     <Grid Grid.Column="0" Margin="5,5,5,5">
-                                        <!--Data Grid-->
+                                        <!--data grid-->
                                         <telerik:RadGridView x:Name="dgCurrentFinancialsList"
                                              Margin="2,2,0,2"
                                              ItemsSource="{Binding CurrentFinancialsData}"
@@ -477,7 +478,7 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Grid Grid.Column="0" Margin="5,5,5,5">
-                                        <!--Data Grid-->
+                                        <!--data grid-->
                                         <telerik:RadGridView x:Name="dgFairValueList"
                                              Margin="2,2,0,2"
                                              ItemsSource="{Binding FairValueData}"
@@ -585,8 +586,10 @@
                         </telerik:RadTabItem>
                     </telerik:RadTabControl>
                 </Grid>
+                    
+                 <!--selected data fields list-->   
                 <Grid Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto">
-                    <!--Data Grid-->
+                    <!--data grid-->
                     <telerik:RadGridView x:Name="dgSelectedFieldsList"
                                  ItemsSource="{Binding SelectedFieldsDataList}"
                                  telerik:StyleManager.Theme="Metro"
@@ -611,6 +614,7 @@
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  SelectedItem="{Binding SelectedDataField, Mode=TwoWay}"
                                  RowStyle="{StaticResource GridViewRowStyle}">
+                        
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItem"                                            
                                                 Width="Auto"
@@ -662,6 +666,7 @@
                 </Grid>
             </Grid>
             
+            <!--submit button-->
             <Grid Grid.Row="1">
                 <telerik:RadButton x:Name="btnCustomControlSubmit"
                                    Command="{Binding SubmitCommand}"
@@ -673,7 +678,6 @@
                                Style="{StaticResource RadButtonStyle}"/>
             </Grid>
         </Grid>
-    </Grid>
-        
+    </Grid>        
     </telerik:RadBusyIndicator>
 </helpers:ViewBaseUserControl>

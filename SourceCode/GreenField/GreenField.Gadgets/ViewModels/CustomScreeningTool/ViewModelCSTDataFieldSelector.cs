@@ -1,6 +1,9 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using System.Linq;
+using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -9,276 +12,338 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.ComponentModel.Composition;
-using GreenField.ServiceCaller;
-using Microsoft.Practices.Prism.ViewModel;
-using GreenField.ServiceCaller.MeetingDefinitions;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.Commands;
-using GreenField.Gadgets.Models;
-using Microsoft.Practices.Prism.Regions;
-using GreenField.Common;
-using GreenField.Gadgets.Views;
-using Microsoft.Practices.Prism.Events;
-using Microsoft.Practices.ServiceLocation;
-using GreenField.Gadgets.Helpers;
-using GreenField.DataContracts;
-using GreenField.UserSession;
 using System.Xml.Linq;
+using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Events;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.Prism.ViewModel;
+using Microsoft.Practices.ServiceLocation;
+using GreenField.Common;
+using GreenField.DataContracts;
+using GreenField.Gadgets.Models;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.Views;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.MeetingDefinitions;
+using GreenField.UserSession;
 
 namespace GreenField.Gadgets.ViewModels
 {
+    /// <summary>
+    /// View model for ViewModelCustomScreeningTool class
+    /// </summary>
     public class ViewModelCSTDataFieldSelector : NotificationObject
     {
         #region Fields
         /// <summary>
         /// MEF Singletons
         /// </summary>
-        private IEventAggregator _eventAggregator;
-        private IDBInteractivity _dbInteractivity;
-        private ILoggerFacade _logger;
-        private IManageSessions _manageSessions;
-        private IRegionManager _regionManager;
-
-        string userEnteredListName;
-        string userEnteredAccessibility;
-        string listNameInEditMode;
-        string accessibilityInEditMode;
-        int flagRefAdd = 0;
-        int flagFinAdd = 0;
-        int flagCurAdd = 0;
-        int flagFvaAdd = 0;
+        private IEventAggregator eventAggregator;
+        private IDBInteractivity dbInteractivity;
+        private ILoggerFacade logger;
+        private IManageSessions manageSessions;
+        private IRegionManager regionManager;
+        /// <summary>
+        /// Non-public instance fields
+        /// </summary>
+        private string userEnteredListName;
+        private string userEnteredAccessibility;
+        private string listNameInEditMode;
+        private string accessibilityInEditMode;
+        private int flagRefAdd = 0;
+        private int flagFinAdd = 0;
+        private int flagCurAdd = 0;
+        private int flagFvaAdd = 0;
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ViewModelCSTDataFieldSelector(DashboardGadgetParam param)
         {
-            _logger = param.LoggerFacade;
-            _dbInteractivity = param.DBInteractivity;
-            _eventAggregator = param.EventAggregator;
-            _manageSessions = param.ManageSessions;
-            _regionManager = param.RegionManager;
+            logger = param.LoggerFacade;
+            dbInteractivity = param.DBInteractivity;
+            eventAggregator = param.EventAggregator;
+            manageSessions = param.ManageSessions;
+            regionManager = param.RegionManager;
         }
 
         #endregion
 
         #region Properties
 
-        public ObservableCollection<CSTUserPreferenceInfo> _selectedFieldsDataList;
+        /// <summary>
+        /// SelectedFieldsDataList
+        /// </summary>
+        private ObservableCollection<CSTUserPreferenceInfo> selectedFieldsDataList;
         public ObservableCollection<CSTUserPreferenceInfo> SelectedFieldsDataList
         {
             get
             {
-                if (_selectedFieldsDataList == null)
-                    _selectedFieldsDataList = new ObservableCollection<CSTUserPreferenceInfo>();
-                return _selectedFieldsDataList;
+                if (selectedFieldsDataList == null)
+                    selectedFieldsDataList = new ObservableCollection<CSTUserPreferenceInfo>();
+                return selectedFieldsDataList;
             }
             set
             {
-                _selectedFieldsDataList = value;
+                selectedFieldsDataList = value;
                 RaisePropertyChanged(() => this.SelectedFieldsDataList);
             }
         }
 
-        public CSTUserPreferenceInfo _selectedDataField;
+        /// <summary>
+        /// SelectedDataField
+        /// </summary>
+        private CSTUserPreferenceInfo selectedDataField;
         public CSTUserPreferenceInfo SelectedDataField
         {
-            get { return _selectedDataField; }
+            get { return selectedDataField; }
             set
             {
-                _selectedDataField = value;
+                selectedDataField = value;
                 RaisePropertyChanged(() => this.SelectedDataField);
                 RaisePropertyChanged(() => this.RemoveCommand);
             }
         }
 
+        /// <summary>
+        /// Flag - to check edit or view
+        /// </summary>
         public string Flag { get; set; }
 
-        public List<CustomSelectionData> _securityReferenceData;
+        /// <summary>
+        /// Property to select protfolio
+        /// </summary>
+        private List<CustomSelectionData> securityReferenceData;
         public List<CustomSelectionData> SecurityReferenceData
         {
-            get { return _securityReferenceData; }
+            get { return securityReferenceData; }
             set
             {
-                _securityReferenceData = value;
+                securityReferenceData = value;
                 RaisePropertyChanged(() => this.SecurityReferenceData);
             }
         }
 
-        public CustomSelectionData _selectedSecurityReferenceData;
+        /// <summary>
+        /// SelectedSecurityReferenceData
+        /// </summary>
+        private CustomSelectionData selectedSecurityReferenceData;
         public CustomSelectionData SelectedSecurityReferenceData
         {
-            get { return _selectedSecurityReferenceData; }
+            get { return selectedSecurityReferenceData; }
             set
             {
-                _selectedSecurityReferenceData = value;
+                selectedSecurityReferenceData = value;
                 RaisePropertyChanged(() => this.SelectedSecurityReferenceData);
                 RaisePropertyChanged(() => this.AddSecurityRefCommand);
                 RaisePropertyChanged(() => this.RemoveCommand);
             }
         }
 
-        public List<CustomSelectionData> _periodFinancialsData;
+        /// <summary>
+        /// PeriodFinancialsData
+        /// </summary>
+        private List<CustomSelectionData> periodFinancialsData;
         public List<CustomSelectionData> PeriodFinancialsData
         {
-            get { return _periodFinancialsData; }
+            get { return periodFinancialsData; }
             set
             {
-                _periodFinancialsData = value;
+                periodFinancialsData = value;
                 RaisePropertyChanged(() => this.PeriodFinancialsData);
             }
         }
 
-        public CustomSelectionData _selectedPeriodFinancialsData;
+        /// <summary>
+        /// SelectedPeriodFinancialsData
+        /// </summary>
+        private CustomSelectionData selectedPeriodFinancialsData;
         public CustomSelectionData SelectedPeriodFinancialsData
         {
-            get { return _selectedPeriodFinancialsData; }
+            get { return selectedPeriodFinancialsData; }
             set
             {
-                _selectedPeriodFinancialsData = value;
+                selectedPeriodFinancialsData = value;
                 RaisePropertyChanged(() => this.SelectedPeriodFinancialsData);
                 RaisePropertyChanged(() => this.AddPeriodFinCommand);
                 RaisePropertyChanged(() => this.RemoveCommand);
             }
         }
 
-        public List<CustomSelectionData> _currentFinancialsData;
+        /// <summary>
+        /// CurrentFinancialsData
+        /// </summary>
+        private List<CustomSelectionData> currentFinancialsData;
         public List<CustomSelectionData> CurrentFinancialsData
         {
-            get { return _currentFinancialsData; }
+            get { return currentFinancialsData; }
             set
             {
-                _currentFinancialsData = value;
+                currentFinancialsData = value;
                 RaisePropertyChanged(() => this.CurrentFinancialsData);
             }
         }
 
-        public CustomSelectionData _selectedCurrentFinancialsData;
+        /// <summary>
+        /// SelectedCurrentFinancialsData
+        /// </summary>
+        private CustomSelectionData selectedCurrentFinancialsData;
         public CustomSelectionData SelectedCurrentFinancialsData
         {
-            get { return _selectedCurrentFinancialsData; }
+            get { return selectedCurrentFinancialsData; }
             set
             {
-                _selectedCurrentFinancialsData = value;
+                selectedCurrentFinancialsData = value;
                 RaisePropertyChanged(() => this.SelectedCurrentFinancialsData);
                 RaisePropertyChanged(() => this.AddCurrentFinCommand);
                 RaisePropertyChanged(() => this.RemoveCommand);
             }
         }
 
-        public List<CustomSelectionData> _fairValueData;
+        /// <summary>
+        /// FairValueData
+        /// </summary>
+        private List<CustomSelectionData> fairValueData;
         public List<CustomSelectionData> FairValueData
         {
-            get { return _fairValueData; }
+            get { return fairValueData; }
             set
             {
-                _fairValueData = value;
+                fairValueData = value;
                 RaisePropertyChanged(() => this.FairValueData);
             }
         }
 
-        public CustomSelectionData _selectedFairValueData;
+        /// <summary>
+        /// SelectedFairValueData
+        /// </summary>
+        private CustomSelectionData selectedFairValueData;
         public CustomSelectionData SelectedFairValueData
         {
-            get { return _selectedFairValueData; }
+            get { return selectedFairValueData; }
             set
             {
-                _selectedFairValueData = value;
+                selectedFairValueData = value;
                 RaisePropertyChanged(() => this.SelectedFairValueData);
                 RaisePropertyChanged(() => this.AddFairValueCommand);
                 RaisePropertyChanged(() => this.RemoveCommand);
             }
         }
 
+        /// <summary>
+        /// DataSourceInfo
+        /// </summary>
         public List<String> DataSourceInfo
         {
             get { return new List<String> { "PRIMARY", "INDUSTRY", "REUTERS" }; }
-
         }
 
-        public String _selectedDataSourceInfo = "PRIMARY";
+        /// <summary>
+        /// SelectedDataSourceInfo
+        /// </summary>
+        private String selectedDataSourceInfo = "PRIMARY";
         public String SelectedDataSourceInfo
         {
-            get { return _selectedDataSourceInfo; }
+            get { return selectedDataSourceInfo; }
             set
             {
-                _selectedDataSourceInfo = value;
+                selectedDataSourceInfo = value;
                 RaisePropertyChanged(() => this.SelectedDataSourceInfo);
                 RaisePropertyChanged(() => this.AddPeriodFinCommand);
                 RaisePropertyChanged(() => this.AddCurrentFinCommand);
             }
         }
 
-        private List<string> _fairvalueDataSourceInfo;
+        /// <summary>
+        /// FairvalueDataSourceInfo
+        /// </summary>
+        private List<string> fairvalueDataSourceInfo;
         public List<string> FairvalueDataSourceInfo
         {
-            get { return _fairvalueDataSourceInfo; }
+            get { return fairvalueDataSourceInfo; }
             set
             {
-                if (_fairvalueDataSourceInfo != value)
+                if (fairvalueDataSourceInfo != value)
                 {
-                    _fairvalueDataSourceInfo = value;
+                    fairvalueDataSourceInfo = value;
                     RaisePropertyChanged(() => FairvalueDataSourceInfo);
                 }
             }
         }
 
-        public String _fairvalueSelectedDataSourceInfo = "PRIMARY";
+        /// <summary>
+        /// FairvalueSelectedDataSourceInfo
+        /// </summary>
+        private String fairvalueSelectedDataSourceInfo = "PRIMARY";
         public String FairvalueSelectedDataSourceInfo
         {
-            get { return _fairvalueSelectedDataSourceInfo; }
+            get { return fairvalueSelectedDataSourceInfo; }
             set
             {
-                _fairvalueSelectedDataSourceInfo = value;
+                fairvalueSelectedDataSourceInfo = value;
                 RaisePropertyChanged(() => this.FairvalueSelectedDataSourceInfo);
                 RaisePropertyChanged(() => this.AddFairValueCommand);
             }
         }
 
+        /// <summary>
+        /// YearTypeInfo
+        /// </summary>
         public List<String> YearTypeInfo
         {
             get { return new List<String> { "CALENDAR", "FISCAL" }; }
-
         }
 
-        public String _selectedYearTypeInfo = "CALENDAR";
+        /// <summary>
+        /// SelectedYearTypeInfo
+        /// </summary>
+        private String selectedYearTypeInfo = "CALENDAR";
         public String SelectedYearTypeInfo
         {
-            get { return _selectedYearTypeInfo; }
+            get { return selectedYearTypeInfo; }
             set
             {
-                if (_selectedYearTypeInfo != value)
+                if (selectedYearTypeInfo != value)
                 {
-                    _selectedYearTypeInfo = value;
+                    selectedYearTypeInfo = value;
                     RaisePropertyChanged(() => this.SelectedYearTypeInfo);
                     RaisePropertyChanged(() => this.AddPeriodFinCommand);
                 }
             }
         }
 
+        /// <summary>
+        /// PeriodTypeInfo
+        /// </summary>
         public List<String> PeriodTypeInfo
         {
             get { return new List<String> { "ANNUAL", "Q1", "Q2", "Q3", "Q4" }; }
-
         }
 
-        public String _selectedPeriodTypeInfo = "ANNUAL";
+        /// <summary>
+        /// SelectedPeriodTypeInfo
+        /// </summary>
+        private String selectedPeriodTypeInfo = "ANNUAL";
         public String SelectedPeriodTypeInfo
         {
-            get { return _selectedPeriodTypeInfo; }
+            get { return selectedPeriodTypeInfo; }
             set
             {
-                if (_selectedPeriodTypeInfo != value)
+                if (selectedPeriodTypeInfo != value)
                 {
-                    _selectedPeriodTypeInfo = value;
+                    selectedPeriodTypeInfo = value;
                     RaisePropertyChanged(() => this.SelectedPeriodTypeInfo);
                     RaisePropertyChanged(() => this.AddPeriodFinCommand);
                 }
             }
         }
 
+        /// <summary>
+        /// FromYearInfo
+        /// </summary>
         public List<int> FromYearInfo
         {
             get
@@ -288,20 +353,25 @@ namespace GreenField.Gadgets.ViewModels
                                        currentYear - 4, currentYear - 3, currentYear - 2, currentYear - 1, currentYear, currentYear + 1, currentYear + 2,
                                        currentYear + 3, currentYear + 4, currentYear + 5 };
             }
-
         }
 
-        public int _selectedFromYearInfo = DateTime.Now.Year;
+        /// <summary>
+        /// SelectedFromYearInfo
+        /// </summary>
+        private int selectedFromYearInfo = DateTime.Now.Year;
         public int SelectedFromYearInfo
         {
-            get { return _selectedFromYearInfo; }
+            get { return selectedFromYearInfo; }
             set
             {
-                _selectedFromYearInfo = value;
+                selectedFromYearInfo = value;
                 RaisePropertyChanged(() => this.SelectedFromYearInfo);
             }
         }
 
+        /// <summary>
+        /// ToYearInfo
+        /// </summary>
         public List<int> ToYearInfo
         {
             get
@@ -313,47 +383,56 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        public int _selectedToYearInfo = DateTime.Now.Year;
+        /// <summary>
+        /// SelectedToYearInfo
+        /// </summary>
+        private int selectedToYearInfo = DateTime.Now.Year;
         public int SelectedToYearInfo
         {
-            get { return _selectedToYearInfo; }
+            get { return selectedToYearInfo; }
             set
             {
-                _selectedToYearInfo = value;
+                selectedToYearInfo = value;
                 RaisePropertyChanged(() => this.SelectedToYearInfo);
             }
         }
 
-        public bool _isAddButtonEnabled = false;
+        /// <summary>
+        /// IsAddButtonEnabled
+        /// </summary>
+        private bool isAddButtonEnabled = false;
         public bool IsAddButtonEnabled
         {
-            get { return _isAddButtonEnabled; }
+            get { return isAddButtonEnabled; }
             set
             {
-                _isAddButtonEnabled = value;
+                isAddButtonEnabled = value;
             }
         }
 
-        public bool _isRemoveButtonEnabled = false;
+        /// <summary>
+        /// IsRemoveButtonEnabled
+        /// </summary>
+        public bool isRemoveButtonEnabled = false;
         public bool IsRemoveButtonEnabled
         {
-            get { return _isRemoveButtonEnabled; }
+            get { return isRemoveButtonEnabled; }
             set
             {
-                _isRemoveButtonEnabled = value;
+                isRemoveButtonEnabled = value;
             }
         }
 
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (value)
                 {
                     Initialize();
@@ -365,27 +444,27 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Displays/Hides busy indicator to notify user of the on going process
         /// </summary>
-        private bool _busyIndicatorIsBusy = false;
-        public bool BusyIndicatorIsBusy
+        private bool isBusyIndicatorBusy = false;
+        public bool IsBusyIndicatorBusy
         {
-            get { return _busyIndicatorIsBusy; }
+            get { return isBusyIndicatorBusy; }
             set
             {
-                _busyIndicatorIsBusy = value;
-                RaisePropertyChanged(() => this.BusyIndicatorIsBusy);
+                isBusyIndicatorBusy = value;
+                RaisePropertyChanged(() => this.IsBusyIndicatorBusy);
             }
         }
 
         /// <summary>
         /// Stores the message displayed over the busy indicator to notify user of the on going process
         /// </summary>
-        private string _busyIndicatorContent;
+        private string busyIndicatorContent;
         public string BusyIndicatorContent
         {
-            get { return _busyIndicatorContent; }
+            get { return busyIndicatorContent; }
             set
             {
-                _busyIndicatorContent = value;
+                busyIndicatorContent = value;
                 RaisePropertyChanged(() => this.BusyIndicatorContent);
             }
         }
@@ -393,45 +472,67 @@ namespace GreenField.Gadgets.ViewModels
 
         #region ICommand Properties
 
+        /// <summary>
+        /// AddSecurityRefCommand
+        /// </summary>
         public ICommand AddSecurityRefCommand
         {
             get { return new DelegateCommand<object>(AddSecurityRefCommandMethod, AddSecurityRefCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// AddPeriodFinCommand
+        /// </summary>
         public ICommand AddPeriodFinCommand
         {
             get { return new DelegateCommand<object>(AddPeriodFinCommandMethod, AddPeriodFinCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// AddCurrentFinCommand
+        /// </summary>
         public ICommand AddCurrentFinCommand
         {
             get { return new DelegateCommand<object>(AddCurrentFinCommandMethod, AddCurrentFinCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// AddFairValueCommand
+        /// </summary>
         public ICommand AddFairValueCommand
         {
             get { return new DelegateCommand<object>(AddFairValueCommandMethod, AddFairValueCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// SubmitCommand
+        /// </summary>
         public ICommand SubmitCommand
         {
             get { return new DelegateCommand<object>(SubmitCommandMethod, SubmitCommandValidationMethod); }
         }
 
+        /// <summary>
+        /// RemoveCommand
+        /// </summary>
         public ICommand RemoveCommand
         {
             get { return new DelegateCommand<object>(RemoveCommandMethod, RemoveCommandValidationMethod); }
         }
-
         #endregion
 
         #endregion
 
         #region ICommand Methods
 
+        /// <summary>
+        /// AddSecurityRefCommandValidationMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private bool AddSecurityRefCommandValidationMethod(object param)
         {
             string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+
             if (flag == "View")
             {
                 IsAddButtonEnabled = false;
@@ -464,10 +565,13 @@ namespace GreenField.Gadgets.ViewModels
             {
                 IsAddButtonEnabled = false;
                 return false;
-            }
-           
+            }           
         }
 
+        /// <summary>
+        /// AddSecurityRefCommandMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private void AddSecurityRefCommandMethod(object param)
         {
             if (flagRefAdd == 1)
@@ -525,9 +629,14 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// AddPeriodFinCommandValidationMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private bool AddPeriodFinCommandValidationMethod(object param)
         {
             string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+
             if (flag == "View")
             {
                 IsAddButtonEnabled = false;
@@ -577,6 +686,10 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// AddPeriodFinCommandMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private void AddPeriodFinCommandMethod(object param)
         {
             if (flagFinAdd == 1)
@@ -643,6 +756,10 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// AddCurrentFinCommandValidationMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private bool AddCurrentFinCommandValidationMethod(object param)
         {
             string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
@@ -692,6 +809,10 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// AddCurrentFinCommandMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private void AddCurrentFinCommandMethod(object param)
         {
             if (flagCurAdd == 1)
@@ -745,13 +866,16 @@ namespace GreenField.Gadgets.ViewModels
                     DataPointsOrder = tempOrder++,
                     TableColumn = SelectedCurrentFinancialsData.DataDescription,
                     DataID = SelectedCurrentFinancialsData.DataID
-
                 });
                 SelectedFieldsDataList = temp;
                 flagCurAdd = 0;
             }
         }
 
+        /// <summary>
+        /// AddFairValueCommandValidationMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private bool AddFairValueCommandValidationMethod(object param)
         {
             string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
@@ -768,6 +892,7 @@ namespace GreenField.Gadgets.ViewModels
                     {
                         List<CSTUserPreferenceInfo> existingRow = new List<CSTUserPreferenceInfo>();
                         existingRow = SelectedFieldsDataList.Where(a => a.ScreeningId == SelectedFairValueData.ScreeningId).ToList();
+
                         if (existingRow.Select(a => a.DataSource).Contains(FairvalueSelectedDataSourceInfo))
                         {
                             IsAddButtonEnabled = false;
@@ -801,6 +926,10 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// AddFairValueCommandMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private void AddFairValueCommandMethod(object param)
         {
             if (flagFvaAdd == 1)
@@ -860,9 +989,14 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// RemoveCommandValidationMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private bool RemoveCommandValidationMethod(object param)
         {
             string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+
             if (flag == "View")
             {
                 return false;
@@ -885,6 +1019,10 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// RemoveCommandMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private void RemoveCommandMethod(object param)
         {
             SelectedFieldsDataList.Remove(SelectedDataField);
@@ -895,6 +1033,10 @@ namespace GreenField.Gadgets.ViewModels
             RaisePropertyChanged(() => SelectedFairValueData);
         }
 
+        /// <summary>
+        /// SubmitCommandValidationMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private bool SubmitCommandValidationMethod(object param)
         {
             if (UserSession.SessionManager.SESSION == null)
@@ -903,17 +1045,18 @@ namespace GreenField.Gadgets.ViewModels
                 return true;
         }
 
+        /// <summary>
+        /// SubmitCommandMethod
+        /// </summary>
+        /// <param name="param">object</param>
         private void SubmitCommandMethod(object param)
         {            
             string flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
+
             if (flag == "View")
             {
-                _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
             }
-            //prompt to ask if user wants to save list
-            //if yes open child window
-            //also need to send the user data selection list to the child view so that it can be updated when save clicked in child window
-
             else
             {
                 if (SelectedFieldsDataList != null)
@@ -921,11 +1064,16 @@ namespace GreenField.Gadgets.ViewModels
                     CSTNavigation.UpdateString(CSTNavigationInfo.ListName, SelectedFieldsDataList[0].ListName);
                     CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, SelectedFieldsDataList[0].Accessibility);
                 }
+
+                // show child window that will take user input for list name and its accessibility and prompt to save
+                
+                //also need to send the user data selection list to the child view so that it can be updated when save clicked in child window
                 ChildViewCSTDataListSave childViewCSTDataListSave = new ChildViewCSTDataListSave();
                 childViewCSTDataListSave.Show();
 
                 childViewCSTDataListSave.Unloaded += (se, e) =>
                 {
+                    // if user chooses to save new or edited list, update changes to the database.
                     if (childViewCSTDataListSave.DialogResult == true)
                     {
                         Prompt.ShowDialog("Confirm to save the list", "Save", MessageBoxButton.OKCancel, (result) =>
@@ -936,24 +1084,30 @@ namespace GreenField.Gadgets.ViewModels
                                     userEnteredAccessibility = childViewCSTDataListSave.SelectedAccessibility;
                                     if (Flag != "Edit")
                                     {
-                                        if (_dbInteractivity != null)
+                                        if (dbInteractivity != null)
                                         {
-                                            string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList.ToList(), userEnteredListName, userEnteredAccessibility);
+                                            string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList.ToList(), 
+                                                                    userEnteredListName, userEnteredAccessibility);
+
                                             if (xmlData != null)
                                             {
-                                                _dbInteractivity.SaveUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName, SaveUserDataPointsPreferenceCallBackMethod);
+                                                dbInteractivity.SaveUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName, 
+                                                                    SaveUserDataPointsPreferenceCallBackMethod);
                                             }
                                         }
                                     }
                                     else if (Flag == "Edit")
                                     {
-                                        if (_dbInteractivity != null && SelectedFieldsDataList[0].ListName != null && SelectedFieldsDataList[0].Accessibility != null)
+                                        if (dbInteractivity != null && SelectedFieldsDataList[0].ListName != null && SelectedFieldsDataList[0].Accessibility != null)
                                         {
-                                            string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList.ToList(), SelectedFieldsDataList[0].ListName, SelectedFieldsDataList[0].Accessibility);
+                                            string xmlData = SaveAsXmlBuilder(SessionManager.SESSION.UserName, SelectedFieldsDataList.ToList(), 
+                                                                        SelectedFieldsDataList[0].ListName, SelectedFieldsDataList[0].Accessibility);
+
                                             if (xmlData != null)
                                             {
-                                                _dbInteractivity.UpdateUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName,
-                                                    SelectedFieldsDataList[0].ListName, userEnteredListName, userEnteredAccessibility, UpdateUserDataPointsPreferenceCallBackMethod);
+                                                dbInteractivity.UpdateUserDataPointsPreference(xmlData, SessionManager.SESSION.UserName,
+                                                    SelectedFieldsDataList[0].ListName, userEnteredListName, userEnteredAccessibility, 
+                                                    UpdateUserDataPointsPreferenceCallBackMethod);
                                             }
                                         }
                                     }
@@ -963,171 +1117,229 @@ namespace GreenField.Gadgets.ViewModels
                 };
             }
         }
-
         #endregion
 
         #region CallBack Methods
 
+        /// <summary>
+        /// Callback method for Security ReferenceTab DataPoints data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result">CustomSelectionData List</param>
         private void SecurityReferenceTabDataPointsCallbackMethod(List<CustomSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     SecurityReferenceData = result;
                     CheckIfColumnInListExist(result.Select(a => a.ScreeningId).ToList(),"REF");
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
+        /// <summary>
+        /// Callback method for Period FinancialsTab DataPoints data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result">CustomSelectionData List</param>
         private void PeriodFinancialsTabDataPointsCallbackMethod(List<CustomSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     PeriodFinancialsData = result;
                     CheckIfColumnInListExist(result.Select(a => a.ScreeningId).ToList(),"FIN");
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
+        /// <summary>
+        /// Callback method for Current FinancialsTab DataPoints data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result">CustomSelectionData List</param>
         private void CurrentFinancialsTabDataPointsCallbackMethod(List<CustomSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     CurrentFinancialsData = result;
                     CheckIfColumnInListExist(result.Select(a => a.ScreeningId).ToList(),"CUR");
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
+        /// <summary>
+        /// Callback method for FairValueTab DataPoints data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result">CustomSelectionData List</param>
         private void FairValueTabDataPointsCallbackMethod(List<CustomSelectionData> result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
                 if (result != null)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                     FairValueData = result;
                     CheckIfColumnInListExist(result.Select(a => a.ScreeningId).ToList(),"FVA");
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);
+                Logging.LogEndMethod(logger, methodNamespace);
                 BusyIndicatorNotification();
             }
         }
 
+        /// <summary>
+        /// Callback method for Retrieving FairValueTab Source data service call - assigns value to UI Field Properties
+        /// </summary>
+        /// <param name="result">PortfolioSelectionData List</param>
+        private void RetrieveFairValueTabSourceCallbackMethod(List<string> result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(logger, methodNamespace);
+
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
+                    FairvalueDataSourceInfo = result;
+                }
+                else
+                {
+                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(logger, ex);
+            }
+            finally
+            {
+                Logging.LogEndMethod(logger, methodNamespace);
+                BusyIndicatorNotification();
+            }
+        }
+
+        /// <summary>
+        /// Callback method for saving User DataPoints preference service call
+        /// </summary>
+        /// <param name="result">Boolean? List</param>
         private void SaveUserDataPointsPreferenceCallBackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
                 if (result == true)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
+                    // update fields for navigation data
                     CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Created");
                     CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, SelectedFieldsDataList.ToList());
-                    _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
+                    // navigate to the main view to display results grid for the selected data list.
+                    regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
                 }
                 else if (result == false)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
+                Logging.LogException(logger, ex);
             }
-
         }
 
+        /// <summary>
+        /// Callback method for updating User DataPoints preference service call
+        /// </summary>
+        /// <param name="result">Boolean? List</param>
         private void UpdateUserDataPointsPreferenceCallBackMethod(Boolean? result)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
+            Logging.LogBeginMethod(logger, methodNamespace);
 
             try
             {
@@ -1138,111 +1350,72 @@ namespace GreenField.Gadgets.ViewModels
                         item.ListName = userEnteredListName;
                         item.Accessibility = userEnteredAccessibility;
                     }
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
+                    // update fields for navigation data
                     CSTNavigation.UpdateString(CSTNavigationInfo.Flag, "Edited");
                     CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, SelectedFieldsDataList.ToList());
-                    _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
+                    // navigate to the main view to display results grid for the selected data list.
+                    regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardCustomScreeningTool", UriKind.Relative));
                 }
                 else if (result == false)
                 {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
+                    Logging.LogMethodParameter(logger, methodNamespace, result.ToString(), 1);
                 }
                 else
                 {
                     Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
             {
                 Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-
-        }
-
-        private void RetrieveFairValueTabSourceCallbackMethod(List<string> result)
-        {
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-
-            try
-            {
-                if (result != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
-                    FairvalueDataSourceInfo = result;
-                }
-                else
-                {
-                    Prompt.ShowDialog("Message: Argument Null\nStackTrace: " + methodNamespace + ":result", "ArgumentNullDebug", MessageBoxButton.OK);
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            finally
-            {
-                Logging.LogEndMethod(_logger, methodNamespace);
-                BusyIndicatorNotification();
+                Logging.LogException(logger, ex);
             }
         }
-
-        #endregion
-
-        #region EventUnSubscribe
-        /// <summary>
-        /// Method that disposes the events
-        /// </summary>
-        public void Dispose()
-        {
-            CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, null);
-            CSTNavigation.UpdateString(CSTNavigationInfo.Flag, null);
-            CSTNavigation.UpdateString(CSTNavigationInfo.ListName, null);
-            CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, null);
-        }
-
-        #endregion
+        #endregion        
 
         #region Helpers
         /// <summary>
-        /// fetching data points list to be dispalyed in selectors
+        ///  Method to call web service methods to fetche the tabs data
         /// </summary>
         public void FetchTabsData()
         {
-            if (_dbInteractivity != null)
+            if (dbInteractivity != null)
             {
                 BusyIndicatorNotification(true, "Retrieving Security Reference Data...");
-                _dbInteractivity.RetrieveSecurityReferenceTabDataPoints(SecurityReferenceTabDataPointsCallbackMethod);
+                dbInteractivity.RetrieveSecurityReferenceTabDataPoints(SecurityReferenceTabDataPointsCallbackMethod);
+
                 BusyIndicatorNotification(true, "Retrieving Period Financials Data...");
-                _dbInteractivity.RetrievePeriodFinancialsTabDataPoints(PeriodFinancialsTabDataPointsCallbackMethod);
+                dbInteractivity.RetrievePeriodFinancialsTabDataPoints(PeriodFinancialsTabDataPointsCallbackMethod);
+
                 BusyIndicatorNotification(true, "Retrieving Current Financials Data...");
-                _dbInteractivity.RetrieveCurrentFinancialsTabDataPoints(CurrentFinancialsTabDataPointsCallbackMethod);
+                dbInteractivity.RetrieveCurrentFinancialsTabDataPoints(CurrentFinancialsTabDataPointsCallbackMethod);
+
                 BusyIndicatorNotification(true, "Retrieving Fair Value Data...");
-                _dbInteractivity.RetrieveFairValueTabDataPoints(FairValueTabDataPointsCallbackMethod);
+                dbInteractivity.RetrieveFairValueTabDataPoints(FairValueTabDataPointsCallbackMethod);
+
                 BusyIndicatorNotification(true, "Retrieving Fair Value DataSource...");
-                _dbInteractivity.RetrieveFairValueTabSource(RetrieveFairValueTabSourceCallbackMethod);
+                dbInteractivity.RetrieveFairValueTabSource(RetrieveFairValueTabSourceCallbackMethod);
             }
         }
 
         /// <summary>
-        /// method to prepare view model with fields required on initialization of the view
+        /// Method that will be called when the view is active
         /// </summary>
         public void Initialize()
         {
+            // fetch tabs data
             FetchTabsData();
-            List<CSTUserPreferenceInfo> temp = new List<CSTUserPreferenceInfo>();
+            List<CSTUserPreferenceInfo> tempUserPref = new List<CSTUserPreferenceInfo>();
 
             Flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
             if (Flag != null)
             {
                 if (Flag == "Edit" || Flag == "View")
                 {
-                    temp = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
-                    foreach (CSTUserPreferenceInfo item in temp)
+                    tempUserPref = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
+                    foreach (CSTUserPreferenceInfo item in tempUserPref)
                     {
                             SelectedFieldsDataList.Add(item);
                     }
@@ -1250,14 +1423,16 @@ namespace GreenField.Gadgets.ViewModels
             }          
         }
 
+        /// <summary>
+        /// BusyIndicatorNotification
+        /// </summary>
         public void BusyIndicatorNotification(bool showBusyIndicator = false, String message = null)
         {
             if (message != null)
             {
                 BusyIndicatorContent = message;
             }
-
-            BusyIndicatorIsBusy = showBusyIndicator;
+            IsBusyIndicatorBusy = showBusyIndicator;
         }
 
         /// <summary>
@@ -1337,10 +1512,8 @@ namespace GreenField.Gadgets.ViewModels
             {
                 Prompt.ShowDialog(ex.Message);
             }
-
             return saveAsXml;
         }
-
         /// <summary>
         /// method to check if existing user preference contains non existing data points
         /// </summary>
@@ -1371,6 +1544,20 @@ namespace GreenField.Gadgets.ViewModels
                 }
             }         
         }     
+        #endregion
+        
+        #region EventUnSubscribe
+        /// <summary>
+        /// Method that disposes the events
+        /// </summary>
+        public void Dispose()
+        {
+            // update null for navigation fields
+            CSTNavigation.UpdateString(CSTNavigationInfo.Accessibility, null);
+            CSTNavigation.UpdateString(CSTNavigationInfo.Flag, null);
+            CSTNavigation.UpdateString(CSTNavigationInfo.ListName, null);
+            CSTNavigation.Update(CSTNavigationInfo.SelectedDataList, null);
+        }
         #endregion
     }
 }
