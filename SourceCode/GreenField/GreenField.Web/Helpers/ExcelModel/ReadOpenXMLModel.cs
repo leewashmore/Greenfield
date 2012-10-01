@@ -1143,8 +1143,8 @@ namespace GreenField.Web.Helpers
                     throw new Exception("The value COA in ModelReference sheet is not Valid");
                 }
 
-                QuarterelyOverrideEnabled = CheckOverrideValues();
-                if (!QuarterelyOverrideEnabled)
+                bool quarterelyValid = CheckOverrideValues();
+                if (!quarterelyValid)
                 {
                     throw new Exception("Quarterely Override values are not Valid");
                 }
@@ -1250,6 +1250,7 @@ namespace GreenField.Web.Helpers
 
                 if (q1.Trim() == "" && q2.Trim() == "" && q3.Trim() == "" && q4.Trim() == "")
                 {
+                    QuarterelyOverrideEnabled = false;
                     return true;
                 }
 
@@ -2802,7 +2803,6 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                userName = "maderc";
                 GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.
                         Where(a => a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper() && a.ISSUER_ID == ModelReferenceData.IssuerId).FirstOrDefault();
                 if (data != null)
