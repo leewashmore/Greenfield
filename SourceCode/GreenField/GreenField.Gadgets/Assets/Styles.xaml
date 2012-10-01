@@ -250,11 +250,11 @@
                         <RowDefinition/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <telerik:GridViewGroupFooterRow x:Name="Footer" Foreground="Black" FontFamily="{StaticResource DefaultControlFontFamily}" FontSize="{StaticResource DefaultControlFontSize}" FontWeight="Bold" telerik:StyleManager.Theme="{StaticResource Theme}" Background="{x:Null}" BorderThickness="0,0,0,0"/>
+                    <telerik:GridViewGroupFooterRow x:Name="Footer" telerik:StyleManager.BasedOn ="{StaticResource Theme}" Background="{x:Null}" BorderThickness="0,0,0,0"/>
                     <telerik:GridViewVirtualizingPanel x:Name="PART_GridViewVirtualizingPanel" Background="White" Visibility="Collapsed" VerticalAlignment="Bottom" Grid.Row="1"/>
                 </Grid>
             </Border>
-            <Border x:Name="BottomBorder" BorderBrush="{StaticResource ControlOuterBorder}" BorderThickness="0,0,0,1" Grid.Column="2" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Bottom"/>
+            <Border x:Name="BottomBorder" BorderBrush="{StaticResource ControlOuterBorder}" BorderThickness="0,0,0,0" Grid.Column="2" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Bottom"/>
         </Grid>
     </ControlTemplate>
 
@@ -295,6 +295,13 @@
     
     <!--groupfooter style-->
     <Style TargetType="telerik:GridViewGroupFooterCell">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+    </Style>
+
+    <!--footer style-->
+    <Style TargetType="telerik:GridViewFooterCell">
         <Setter Property="Padding" Value="0"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
@@ -876,103 +883,65 @@
 
     <!--##############################-->
     <!--BorderLess GridHeaderRowStyle-->
-   
-    <!--<ControlTemplate x:Key="GridViewHeaderRowTemplate" TargetType="telerik:GridViewHeaderRow">
-        <Grid x:Name="PART_HeaderRowGrid">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+
+    <SolidColorBrush x:Key="GridViewCommonHeader_BorderBrush" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="GridViewCommonHeader_Background" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="GridView_HeaderRowInnerBorder" Color="#e4e5e5"/>
+    <DataTemplate x:Key="GridViewHeaderIndentCellDataTemplate">
+        <telerik:GridViewHeaderIndentCell telerik:StyleManager.Theme="{StaticResource Theme}"/>
+    </DataTemplate>
+    <ControlTemplate x:Key="GridViewHeaderRowTemplate" TargetType="telerik:GridViewHeaderRow">
+        <telerik:SelectiveScrollingGrid>
+            <telerik:SelectiveScrollingGrid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup x:Name="CommonStates">
-                    <VisualStateGroup.Transitions>
-                        <VisualTransition GeneratedDuration="00:00:00.2000000" To="Normal"/>
-                        <VisualTransition GeneratedDuration="00:00:00.2000000" To="MouseOver"/>
-                    </VisualStateGroup.Transitions>
-                    <VisualState x:Name="Normal"/>
-                    <VisualState x:Name="MouseOver">
-                        <Storyboard>
-                            <DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Opacity" Storyboard.TargetName="GridViewHeaderCell_Over">
-                                <EasingDoubleKeyFrame KeyTime="0:0:0" Value="1"/>
-                            </DoubleAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource GridView_HeaderForeground_Selected}"/>
-                            </ObjectAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </VisualState>
-                    <VisualState x:Name="Ascending">
-                        <Storyboard>
-                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource GridView_HeaderForeground_Selected}"/>
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PART_SortIndicator">
-                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="GridViewHeaderCell_Selected">
-                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
-                            </ObjectAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </VisualState>
-                    <VisualState x:Name="Descending">
-                        <Storyboard>
-                            <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Duration="00:00:00.0010000" Storyboard.TargetProperty="Foreground" Storyboard.TargetName="ContentPresenter">
-                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="{StaticResource GridView_HeaderForeground_Selected}"/>
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="PART_SortIndicator">
-                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="RenderTransform" Storyboard.TargetName="PART_SortIndicator">
-                                <DiscreteObjectKeyFrame KeyTime="0:0:0">
-                                    <DiscreteObjectKeyFrame.Value>
-                                        <ScaleTransform ScaleY="1" ScaleX="1"/>
-                                    </DiscreteObjectKeyFrame.Value>
-                                </DiscreteObjectKeyFrame>
-                            </ObjectAnimationUsingKeyFrames>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Opacity" Storyboard.TargetName="GridViewHeaderCell_Selected">
-                                <DiscreteObjectKeyFrame KeyTime="0:0:0" Value="1"/>
-                            </ObjectAnimationUsingKeyFrames>
-                        </Storyboard>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>
-            <Border x:Name="GridViewHeaderRow" BorderBrush="{TemplateBinding BorderBrush}" Grid.ColumnSpan="2">
-                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder}" BorderThickness="1" Background="{TemplateBinding Background}"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </telerik:SelectiveScrollingGrid.ColumnDefinitions>
+            <telerik:SelectiveScrollingGrid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </telerik:SelectiveScrollingGrid.RowDefinitions>
+            <telerik:CommonHeaderPresenter x:Name="PART_CommonHeaderPresenter" Grid.Column="3" telerik:StyleManager.Theme="{StaticResource Theme}"/>
+            <Border x:Name="CommonHeaderIndent" BorderBrush="{StaticResource GridViewCommonHeader_BorderBrush}" BorderThickness="0,0,1,1" Background="{StaticResource GridViewCommonHeader_Background}" Grid.ColumnSpan="2" telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Visibility="{Binding Visibility, ElementName=PART_CommonHeaderPresenter}"/>
+            <Grid Grid.ColumnSpan="4" Grid.Row="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Border x:Name="PART_GridViewHeaderRowBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                    <Border BorderBrush="{StaticResource GridView_HeaderRowInnerBorder}" BorderThickness="1" Background="{TemplateBinding Background}"/>
+                </Border>
+                <Border x:Name="PART_FieldFilterPlaceholder" BorderBrush="{StaticResource ControlOuterBorder}" BorderThickness="0,0,1,1" Background="{StaticResource GridViewCommonHeader_Background}" MinHeight="26" Grid.Row="1" Visibility="{TemplateBinding FieldFilterPlaceholderVisibility}"/>
+            </Grid>
+            <telerik:DataCellsPresenter x:Name="PART_DataCellsPresenter" Grid.Column="3" Grid.Row="1" telerik:StyleManager.Theme="{StaticResource Theme}"/>
+            <Border x:Name="PART_IndicatorPresenter" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0,0,1,1" Grid.Row="1" telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Visibility="{TemplateBinding RowIndicatorVisibility}" Width="25">
+                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder}" BorderThickness="1" Background="{StaticResource GridView_HeaderBackground}"/>
             </Border>
-            <Border x:Name="GridViewHeaderRow_Over" BorderBrush="{StaticResource GridView_HeaderOuterBorder_Over}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2" Opacity="0">
-                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder_Over}" BorderThickness="1" Background="#FF848484"/>
+            <telerik:IndentPresenter x:Name="PART_IndentPresenter" Grid.Column="1" ItemTemplate="{StaticResource GridViewHeaderIndentCellDataTemplate}" IndentLevel="{TemplateBinding IndentLevel}" MinHeight="{TemplateBinding MinHeight}" Grid.Row="1" telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" telerik:StyleManager.Theme="{StaticResource Theme}"/>
+            <Border x:Name="PART_HierarchyIndentPresenter" BorderBrush="{TemplateBinding BorderBrush}" 
+                    BorderThickness="0,0,1,1" Grid.Column="2" Grid.Row="1" telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"
+                    Visibility="{Binding HasHierarchy, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource TemplatedParent}}" 
+                    Width="25">
+                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder}" BorderThickness="1" Background="{StaticResource GridView_HeaderBackground}"/>
             </Border>
-            <Border x:Name="GridViewHeaderRow_Selected" BorderBrush="{StaticResource GridView_HeaderOuterBorder_Selected}" BorderThickness="{TemplateBinding BorderThickness}" Grid.ColumnSpan="2" Opacity="0">
-                <Border BorderBrush="{StaticResource GridView_HeaderInnerBorder_Selected}" BorderThickness="1" Background="{StaticResource GridView_HeaderBackground_Selected}"/>
-            </Border>
-            <ContentControl x:Name="ContentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" IsTabStop="{TemplateBinding IsTabStop}" Margin="{TemplateBinding Padding}" Style="{StaticResource StretchedContentControl}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-            <Path x:Name="PART_SortIndicator" Grid.ColumnSpan="2" Data="M0,0 L1,0 2,0 3,0 4,0 5,0 5,1 4,1 4,2 3,2 3,3 2,3 2,2 1,2 1,1 0,1 0,0 z" Fill="{StaticResource GridView_SortIndicatorColor}" HorizontalAlignment="Center" Height="3" Margin="0,3,0,0" Opacity="0" RenderTransformOrigin=".5,.5" Stretch="Fill" VerticalAlignment="Top" Width="5">
-                <Path.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform ScaleY="-1" ScaleX="1"/>
-                        <SkewTransform AngleY="0" AngleX="0"/>
-                        <RotateTransform Angle="0"/>
-                        <TranslateTransform X="0" Y="0"/>
-                    </TransformGroup>
-                </Path.RenderTransform>
-            </Path>
-            <telerik:FilteringDropDown x:Name="PART_DistinctFilterControl" Grid.Column="1" Margin="0,0,8,0" 
-                                       telerik:StyleManager.Theme="Metro" Visibility="{TemplateBinding FilteringUIVisibility}"
-                                       Style="{StaticResource FilteringDropDownStyle1}"/>
-            <Thumb x:Name="PART_LeftHeaderGripper" Grid.ColumnSpan="2" HorizontalAlignment="Left" IsTabStop="{TemplateBinding IsTabStop}" Style="{StaticResource ColumnHeaderGripperStyle}"/>
-            <Thumb x:Name="PART_RightHeaderGripper" Grid.ColumnSpan="2" HorizontalAlignment="Right" IsTabStop="{TemplateBinding IsTabStop}" Style="{StaticResource ColumnHeaderGripperStyle}"/>
-        </Grid>
-    </ControlTemplate>-->    
+        </telerik:SelectiveScrollingGrid>
+    </ControlTemplate>
+    <SolidColorBrush x:Key="GridView_HeaderRowBackground" Color="#e4e5e5"/>
+    <SolidColorBrush x:Key="GridView_HeaderRowOuterBorder" Color="#e4e5e5"/>
 
     <!--###########################-->
 
     <!--GridViewHeaderRowStyle-->
     <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
-        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderOuterBorder}"/>
-        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Template" Value="{StaticResource GridViewHeaderRowTemplate}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource GridView_HeaderRowOuterBorder}"/>
+        <Setter Property="BorderThickness" Value="1,0,0,1"/>
         <Setter Property="Height" Value="{StaticResource DefaultGridViewHeaderRowHeight}"/>
-        <Setter Property="Background" Value="{StaticResource DefaultGridHeaderBackground}"/>
+        <Setter Property="Background" Value="{StaticResource GridView_HeaderRowBackground}"/>
         <Setter Property="MaxHeight" Value="{StaticResource DefaultGridViewHeaderRowMaxHeight}"/>
         <Setter Property="IndentLevel" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
     </Style>
 
     <!--#####################################################################################################################-->

@@ -24,7 +24,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+            <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
             <!--button to flip the gadget-->
             <telerik:RadButton x:Name="btnFlip" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Center"
@@ -39,12 +39,12 @@
                     </Button.Content>
                 </Button>
             </StackPanel>
-        </Grid>
+            </Grid>
 
 
-        <Grid Grid.Row="1">
+            <Grid Grid.Row="1">
             <!--doughnut chart-->
-            <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" BorderBrush="#e4e5e5">
                 <telerik:RadChart x:Name="crtRegionBreakdown" ItemsSource="{Binding RegionSpecificInfo}" 
                                   telerik:StyleManager.Theme="Metro" 
                                       Visibility="Collapsed">
@@ -81,7 +81,7 @@
             </Border>
             
             <!--grid containing data for the gadget-->
-            <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True">
+                <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" BorderBrush="#e4e5e5">
                     <telerik:RadGridView Name="dgRegionBreakdown" 
                                          Background="White"
                                          AutoGenerateColumns="False" 
