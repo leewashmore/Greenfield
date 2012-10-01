@@ -2803,13 +2803,13 @@ namespace GreenField.Web.Helpers
             try
             {
                 GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.
-                        Where(a => a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper()).FirstOrDefault();
+                        Where(a => a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper() && a.ISSUER_ID == ModelReferenceData.IssuerId).FirstOrDefault();
                 if (data != null)
                 {
                     UserRole = "PRIMARY";
                     RootSource = "PRIMARY";
                 }
-                data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper() == userName.ToUpper()).FirstOrDefault();
+                data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ASHMOREEMM_INDUSTRY_ANALYST.ToUpper() == userName.ToUpper() && a.ISSUER_ID == ModelReferenceData.IssuerId).FirstOrDefault();
                 if (data != null)
                 {
                     UserRole = "INDUSTRY";
