@@ -61,7 +61,7 @@ namespace GreenField.Gadgets.Helpers
                 numericvalues.Add(strValue);
             }
 
-            for (int i = 4; i < numericvalues.Count(); i++) 
+            for (int i = 0; i < numericvalues.Count(); i++) 
             {
                 if (marketCapList[i] != null && numericvalues[i] != null && marketCapList[i] != String.Empty && numericvalues[i] != String.Empty)
                 {
@@ -69,7 +69,7 @@ namespace GreenField.Gadgets.Helpers
                 }
             }       
 
-            for (int i = 4; i < numericvalues.Count(); i++)
+            for (int i = 0; i < numericvalues.Count(); i++)
             {
                 if (marketCapList[i] != null && numericvalues[i] != null)
                 {
