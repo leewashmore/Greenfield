@@ -511,6 +511,7 @@ namespace GreenField.Web.Helpers
                 CreateTempFile(fileStream);
                 UserName = userName;
                 DistinctCurrency = GetDistinctCurrency();
+                ExternalResearchEntity.CommandTimeout = 300;
                 using (SpreadsheetDocument myWorkbook = SpreadsheetDocument.Open(Filepath, true))
                 {
                     WorkbookPart workbookPart = myWorkbook.WorkbookPart;
