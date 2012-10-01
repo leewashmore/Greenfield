@@ -681,6 +681,10 @@ namespace GreenField.Web.Helpers
                 {
                     InsertIntoInternalIssuerQuarterelyDistribution();
                 }
+                else
+                {
+                    DeleteInternalIssuerQuarterelyDistribution(ModelReferenceData.IssuerId, RootSource);
+                }
                 SetInterimAmountsServiceCall(ModelReferenceData.IssuerId);
                 GetDataServiceCall(ModelReferenceData.IssuerId, "Y");
 
