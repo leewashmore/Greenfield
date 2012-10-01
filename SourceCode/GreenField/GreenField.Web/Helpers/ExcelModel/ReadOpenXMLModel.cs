@@ -769,7 +769,7 @@ namespace GreenField.Web.Helpers
                             {
                                 if (convertFlag.ToUpper().Trim() == "Y")
                                 {
-                                    amount = ConvertAmount(ModelReferenceData.Units.First(), Convert.ToDecimal(amount));
+                                    amount = ConvertAmount(ModelReferenceData.Units.First().ToUpper().Trim(), Convert.ToDecimal(amount));
                                 }
                             }
                             InsertInternalDataRecords(issuerId, UniqueRefNumber, periodType, data.COA, amount);
@@ -964,7 +964,7 @@ namespace GreenField.Web.Helpers
                             {
                                 if (convertFlag.ToUpper().Trim() == "Y")
                                 {
-                                    amount = ConvertAmount(ModelReferenceData.Units.First(), Convert.ToDecimal(amount));
+                                    amount = ConvertAmount(ModelReferenceData.Units.First().ToUpper().Trim(), Convert.ToDecimal(amount));
                                 }
                             }
                         }
