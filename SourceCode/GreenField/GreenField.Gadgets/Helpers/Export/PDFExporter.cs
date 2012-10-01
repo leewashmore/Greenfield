@@ -375,6 +375,28 @@ namespace GreenField.Gadgets.Helpers
             return level;
         }
 
+        /// <summary>
+        /// Converts the UI element into Table
+        /// </summary>
+        /// <param name="element">UI element</param>
+        /// <returns>Table</returns>
+        public static Table GenerateTable(UIElement element)
+        {
+            Table contentTbl = new Table();
+            TableRow contentRow = new TableRow();
+            TableCell contentCell = new TableCell();
+            WriteableBitmap wb = new WriteableBitmap(element, null);
+            ImageInline image = new ImageInline(wb);
+            Telerik.Windows.Documents.Model.Paragraph p = new Telerik.Windows.Documents.Model.Paragraph();
+            p.Inlines.Add(image);
+            contentCell.Blocks.Add(p);
+            contentRow.Cells.Add(contentCell);
+            contentTbl.Rows.Add(contentRow);
+            return contentTbl;
+        }
+
+
+
         #endregion
 
         #endregion
