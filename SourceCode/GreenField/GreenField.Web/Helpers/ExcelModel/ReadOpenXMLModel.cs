@@ -920,6 +920,21 @@ namespace GreenField.Web.Helpers
                     if (data.Any(a => a.LOAD_TIME.Date == DateTime.Today.Date))
                     {
                         record = data.Where(a => a.LOAD_TIME.Date == DateTime.Today.Date).FirstOrDefault();
+                        documentId = record.DOCUMENT_ID;
+                        DocumentWorkspaceOperations service = new DocumentWorkspaceOperations();
+                        FileURI = service.UploadDocument(ModelReferenceData.IssuerId + ".xls", FileBytes, string.Empty);
+                        bool fileRecordCreated = service.SetUploadFileInfo(UserName, "Model_" + issuerId + TimeStamp.ToString("ddMMyyyy") + ".xls", FileURI, ModelReferenceData.IssuerName, null, null
+                            , "Models", null, null);
+                        if (fileRecordCreated)
+                        {
+                            FILE_MASTER fileRecord = new FILE_MASTER();
+                            fileRecord = FetchFileId(FileURI).FirstOrDefault();
+                            if (fileRecord != null)
+                            {
+                                documentId = fileRecord.FileID;
+                                DocumentId = documentId;
+                            }
+                        }
                         UpdateInternalModelLoad(record.LOAD_ID, issuerId, rootSource, UserName, loadTime, documentId);
                     }
                     else
@@ -935,6 +950,7 @@ namespace GreenField.Web.Helpers
                             if (fileRecord != null)
                             {
                                 documentId = fileRecord.FileID;
+                                DocumentId = documentId;
                             }
                         }
                         if (documentId != null)
@@ -945,7 +961,24 @@ namespace GreenField.Web.Helpers
                 }
                 else
                 {
-                    InsertInternalModelLoadData(issuerId, rootSource, UserName, loadTime, documentId);
+                    DocumentWorkspaceOperations service = new DocumentWorkspaceOperations();
+                    FileURI = service.UploadDocument(ModelReferenceData.IssuerId + ".xls", FileBytes, string.Empty);
+                    bool fileRecordCreated = service.SetUploadFileInfo(UserName, "Model_" + issuerId + TimeStamp.ToString("ddMMyyyy") + ".xls", FileURI, ModelReferenceData.IssuerName, null, null
+                        , "Models", null, null);
+                    if (fileRecordCreated)
+                    {
+                        FILE_MASTER fileRecord = new FILE_MASTER();
+                        fileRecord = FetchFileId(FileURI).FirstOrDefault();
+                        if (fileRecord != null)
+                        {
+                            documentId = fileRecord.FileID;
+                            DocumentId = documentId;
+                        }
+                    }
+                    if (documentId != null)
+                    {
+                        InsertInternalModelLoadData(issuerId, rootSource, UserName, loadTime, documentId);
+                    }
                 }
             }
             catch (Exception ex)
@@ -989,16 +1022,17 @@ namespace GreenField.Web.Helpers
                                     amount = ConvertAmount(ModelReferenceData.Units.First().ToUpper().Trim(), Convert.ToDecimal(amount));
                                 }
                             }
-                        }
-                        if (internalCOAChangesData == null || internalCOAChangesData.Count == 0)
-                        {
-                            InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA, periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
-                        }
-                        else
-                        {
-                            fetchedAmount = internalCOAChangesData.Select(a => a.AMOUNT).FirstOrDefault();
-                            UpdateInternalCOAChanges(issuerId, rootSource, currency, item.COA, periodYear, TimeStamp);
-                            InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA, periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
+
+                            if (internalCOAChangesData == null || internalCOAChangesData.Count == 0)
+                            {
+                                InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA, periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
+                            }
+                            else
+                            {
+                                fetchedAmount = internalCOAChangesData.Select(a => a.AMOUNT).FirstOrDefault();
+                                UpdateInternalCOAChanges(issuerId, rootSource, currency, item.COA, periodYear, TimeStamp);
+                                InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA, periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
+                            }
                         }
                     }
                 }
@@ -1129,15 +1163,15 @@ namespace GreenField.Web.Helpers
                             {
                                 rowData[i] = "";
                             }
-                            
+
                             cellCount++;
                             ++i;
                         }
-                       
+
                     }
-                   
+
                 }
-                
+
                 ModelReferenceData = new ModelReferenceDataPoints();
                 ModelReferenceData.IssuerId = rowData[1];
                 ModelReferenceData.IssuerName = rowData[3];
