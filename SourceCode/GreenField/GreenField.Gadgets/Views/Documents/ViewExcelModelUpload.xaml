@@ -124,9 +124,9 @@
             <Button x:Name="btnDownload" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"  Content="Download Model" HorizontalContentAlignment="Center"
                 VerticalAlignment="Top" Click="btnDownload_Click" IsEnabled="{Binding EnableDownload}"/>
 
-            <Button x:Name="bOpenFileDialog" Content="Open File" Grid.Row="1" Grid.Column="2"
-                 Height="30" Width="60" Margin="10"
-                 HorizontalAlignment="Left" VerticalAlignment="Top" 
+            <Button x:Name="bOpenFileDialog" Content="Upload Model" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Center"
+                VerticalAlignment="Top"
+                 HorizontalAlignment="Left" 
                  Click="bOpenFileDialog_Click" />
 
 

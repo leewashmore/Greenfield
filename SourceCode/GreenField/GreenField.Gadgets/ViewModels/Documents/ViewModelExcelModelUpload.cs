@@ -396,9 +396,18 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void HandleModelWorkbookUploadReferenceSet()
         {
-            if (UploadWorkbook != null)
+            try
             {
-                _dbInteractivity.UploadModelExcelSheet(UploadWorkbook, UserSession.SessionManager.SESSION.UserName, RetrieveModelWorkbookUploadCallbackMethod);
+                if (UploadWorkbook != null)
+                {
+                    _dbInteractivity.UploadModelExcelSheet(UploadWorkbook, UserSession.SessionManager.SESSION.UserName, RetrieveModelWorkbookUploadCallbackMethod);
+                    BusyIndicatorNotification(true, "Reading the Excel Sheet");
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
             }
         }
 
@@ -475,7 +484,19 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void RetrieveModelWorkbookUploadCallbackMethod(string message)
         {
-            Prompt.ShowDialog(message);
+            try
+            {
+                Prompt.ShowDialog(message);
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            finally
+            {
+                BusyIndicatorNotification();
+            }
         }
 
         #endregion
