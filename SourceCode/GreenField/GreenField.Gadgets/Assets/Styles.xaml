@@ -124,7 +124,7 @@
 
     <!--GridViewGroupRowTemplate-->
     <ControlTemplate x:Key="GridViewGroupRowTemplate" TargetType="telerik:GridViewGroupRow">
-        <Grid x:Name="PART_GroupExpanderGrid" Background="{StaticResource GridView_GroupExpanderGridBackground}">
+        <Grid x:Name="PART_GroupExpanderGrid" Background="{TemplateBinding Background}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
@@ -137,6 +137,7 @@
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup x:Name="ExpandStateGroup">
                     <VisualState x:Name="Expanded">
+
                         <Storyboard>
                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="aggregateResultsList">
                                 <DiscreteObjectKeyFrame KeyTime="0">
@@ -160,10 +161,10 @@
                                 </DiscreteObjectKeyFrame>
                             </ObjectAnimationUsingKeyFrames>
                             <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="Footer">
-                                <DiscreteObjectKeyFrame KeyTime="0" Value="{Binding AggregateResults, Converter={StaticResource GroupAggregationToVisibilityConverter}, RelativeSource={RelativeSource TemplatedParent}}">
-                                    <!--<DiscreteObjectKeyFrame.Value>
+                                <DiscreteObjectKeyFrame KeyTime="0">
+                                    <DiscreteObjectKeyFrame.Value>
                                         <Visibility>Visible</Visibility>
-                                    </DiscreteObjectKeyFrame.Value>-->
+                                    </DiscreteObjectKeyFrame.Value>
                                 </DiscreteObjectKeyFrame>
                             </ObjectAnimationUsingKeyFrames>
                             <DoubleAnimation Duration="0" To="-1" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.ScaleY)" Storyboard.TargetName="ExpanderButton" d:IsOptimized="True"/>
@@ -194,9 +195,7 @@
                     <VisualState x:Name="Collapsed" />
                 </VisualStateGroup>
             </VisualStateManager.VisualStateGroups>
-            <Border x:Name="ToggleButtonBorder" Grid.ColumnSpan="2" Grid.Column="2" 
-                        MinHeight="{TemplateBinding MinHeight}"
-                        BorderBrush="{StaticResource ControlOuterBorder}" BorderThickness="0,0,0,1" Background="{TemplateBinding Background}">
+            <Border x:Name="ToggleButtonBorder" BorderBrush="{StaticResource ControlOuterBorder}" BorderThickness="0,0,0,1" Background="{TemplateBinding Background}" Grid.ColumnSpan="2" Grid.Column="2">
                 <Border x:Name="ToggleButtonInnerBorder" BorderBrush="{StaticResource ControlInnerBorder}" BorderThickness="1">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -204,17 +203,8 @@
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="2" 
-                                  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                  Visibility="{Binding ShowHeaderAggregates, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource TemplatedParent}}">
-                            <telerik:AggregateResultsList x:Name="aggregateResultsList"
-                                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                              Foreground="Black"
-                                                              ItemsSource="{TemplateBinding AggregateResults}"
-                                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
-                                                              Margin="5,0" FontFamily="{StaticResource DefaultControlFontFamily}" FontSize="{StaticResource DefaultControlFontSize}" FontWeight="Bold"
-                                                              Visibility="Collapsed">
+                        <Grid Grid.Column="2" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <telerik:AggregateResultsList x:Name="aggregateResultsList" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" ItemsSource="{TemplateBinding AggregateResults}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="5,0" Visibility="Collapsed">
                                 <telerik:AggregateResultsList.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <StackPanel Orientation="Horizontal"/>
@@ -222,12 +212,12 @@
                                 </telerik:AggregateResultsList.ItemsPanel>
                                 <telerik:AggregateResultsList.ItemTemplate>
                                     <DataTemplate>
-                                        <telerik:GridViewAggregateResultCell AggregateResult="{Binding}" telerik:StyleManager.Theme ="{StaticResource Theme}"/>
+                                        <telerik:GridViewAggregateResultCell AggregateResult="{Binding}" telerik:StyleManager.Theme="{StaticResource Theme}"/>
                                     </DataTemplate>
                                 </telerik:AggregateResultsList.ItemTemplate>
                             </telerik:AggregateResultsList>
                         </Grid>
-                        <Path x:Name="ExpanderButton" Margin="5,0,0,0" Grid.Column="0" Data="M0,0L1,0 2,0 2,0.99999991 3,0.99999991 3,2 4,2 4,0.99999991 5,0.99999991 5,0 5.9999999,0 7,0 7,0.99999991 5.9999999,0.99999991 5.9999999,2 5,2 5,3 4,3 4,4 3,4 3,3 2,3 2,2 1,2 1,0.99999991 0,0.99999991z" Fill="{StaticResource GridView_GroupRowIndicator}" HorizontalAlignment="Center" Height="5" RenderTransformOrigin="0.5,0.5" Width="7" VerticalAlignment="Center" UseLayoutRounding="False">
+                        <Path x:Name="ExpanderButton" Grid.Column="0" Data="M0,0L1,0 2,0 2,0.99999991 3,0.99999991 3,2 4,2 4,0.99999991 5,0.99999991 5,0 5.9999999,0 7,0 7,0.99999991 5.9999999,0.99999991 5.9999999,2 5,2 5,3 4,3 4,4 3,4 3,3 2,3 2,2 1,2 1,0.99999991 0,0.99999991z" Fill="{StaticResource GridView_GroupRowIndicator}" HorizontalAlignment="Center" Height="5" RenderTransformOrigin="0.5,0.5" Width="7" VerticalAlignment="Center" UseLayoutRounding="False">
                             <Path.RenderTransform>
                                 <CompositeTransform/>
                             </Path.RenderTransform>
@@ -242,19 +232,18 @@
             <Border x:Name="PART_IndicatorPresenter" BorderBrush="{StaticResource ControlOuterBorder}" BorderThickness="0,0,1,1" Grid.Column="0" telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" Visibility="{TemplateBinding RowIndicatorVisibility}" VerticalAlignment="Stretch" Width="25">
                 <Border BorderBrush="{StaticResource ControlInnerBorder}" BorderThickness="1" Background="{StaticResource GridView_RowIndicatorCellBackground}"/>
             </Border>
-            <telerik:IndentPresenter Background="{TemplateBinding Background}" Grid.Column="1" IndentLevel="{TemplateBinding Level}"
-                                         telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical"/>
+            <telerik:IndentPresenter Background="{TemplateBinding Background}" Grid.Column="1" IndentLevel="{TemplateBinding Level}" telerik:SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" telerik:StyleManager.Theme="{StaticResource Theme}"/>
             <Border x:Name="Content" Grid.ColumnSpan="5" Grid.Column="0" Grid.Row="1">
                 <Grid x:Name="stackPanel" Margin="0,-25,0,0" VerticalAlignment="Top">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <telerik:GridViewGroupFooterRow x:Name="Footer" telerik:StyleManager.BasedOn ="{StaticResource Theme}" Background="{x:Null}" BorderThickness="0,0,0,0"/>
-                    <telerik:GridViewVirtualizingPanel x:Name="PART_GridViewVirtualizingPanel" Background="White" Visibility="Collapsed" VerticalAlignment="Bottom" Grid.Row="1"/>
+                    <telerik:GridViewGroupFooterRow x:Name="Footer" telerik:StyleManager.Theme="{StaticResource Theme}" Background="{x:Null}" BorderThickness="0,0,0,0"/>
+                    <telerik:GridViewVirtualizingPanel x:Name="PART_GridViewVirtualizingPanel" Visibility="Collapsed" VerticalAlignment="Bottom" Grid.Row="1"/>
                 </Grid>
             </Border>
-            <Border x:Name="BottomBorder" BorderBrush="{StaticResource ControlOuterBorder}" BorderThickness="0,0,0,0" Grid.Column="2" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Bottom"/>
+            <Border x:Name="BottomBorder" BorderBrush="{StaticResource ControlOuterBorder}" BorderThickness="0,0,0,1" Grid.Column="2" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Bottom"/>
         </Grid>
     </ControlTemplate>
 
