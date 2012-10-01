@@ -700,7 +700,7 @@
                               Fill="Black" Margin="1" Stretch="Fill">
                             <Path.RenderTransform>
                                 <TransformGroup>
-                                    <ScaleTransform ScaleX="0.8" ScaleY="0.8"/>
+                                    <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
                                     <SkewTransform/>
                                     <RotateTransform/>
                                     <TranslateTransform/>
@@ -708,14 +708,23 @@
                             </Path.RenderTransform>
                         </Path>
                         <Path Data="F1M511.667,467.272C509.658,468.299 507.19,467.509 506.164,465.5C505.133,463.491 505.927,461.033 507.935,460C509.944,458.974 512.409,459.77 513.438,461.775C514.469,463.783 513.677,466.241 511.667,467.272M518.56,462.857L517.883,460.016L515.393,460.283C515.141,459.858 514.851,459.473 514.523,459.128L515.443,456.897L512.951,455.365L511.397,457.293C510.858,457.151 510.302,457.082 509.741,457.078L508.767,454.914L505.938,455.672L506.271,458.066C505.879,458.307 505.522,458.583 505.203,458.884L503.053,458L501.517,460.487L503.366,461.979C503.232,462.487 503.151,463.013 503.142,463.543L501.034,464.418L501.712,467.26L504.064,467.009C504.336,467.479 504.655,467.906 505.023,468.281L504.158,470.376L506.647,471.909L508.142,470.06C508.65,470.185 509.165,470.255 509.693,470.262L510.578,472.391L513.425,471.714L513.167,469.297C513.607,469.029 514.015,468.721 514.364,468.376L516.545,469.275L518.081,466.785L516.149,465.23C516.266,464.757 516.331,464.271 516.339,463.78z" 
-                              Fill="Black" Margin="1" Stretch="Fill" Visibility="{TemplateBinding FunnelFillVisibility}"/>
+                              Fill="Black" Margin="1" Stretch="Fill" Visibility="{TemplateBinding FunnelFillVisibility}">
+                            <Path.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform ScaleX="0.6" ScaleY="0.6"/>
+                                    <SkewTransform/>
+                                    <RotateTransform/>
+                                    <TranslateTransform/>
+                                </TransformGroup>
+                            </Path.RenderTransform>
+                        </Path>
                     </Grid>
                 </Border>
             </Button>
             <Popup x:Name="PART_DropDownPopup"/>
         </Grid>
     </ControlTemplate>
-    <Style TargetType="telerik:FilteringDropDown" x:Key="FilteringDropDownStyle1">
+    <Style TargetType="telerik:FilteringDropDown" x:Key="FilteringDropDownStyle">
         <Setter Property="Template" Value="{StaticResource DistinctFilterControlTemplate}"/>
         <Setter Property="Foreground" Value="Black"/>
     </Style>
@@ -850,7 +859,7 @@
             </Path>
             <telerik:FilteringDropDown x:Name="PART_DistinctFilterControl" Grid.Column="1" Margin="0,0,8,0" 
                                        telerik:StyleManager.Theme="Metro" Visibility="{TemplateBinding FilteringUIVisibility}"
-                                       Style="{StaticResource FilteringDropDownStyle1}"/>
+                                       Style="{StaticResource FilteringDropDownStyle}"/>
             <Thumb x:Name="PART_LeftHeaderGripper" Grid.ColumnSpan="2" HorizontalAlignment="Left" IsTabStop="{TemplateBinding IsTabStop}" Style="{StaticResource ColumnHeaderGripperStyle}"/>
             <Thumb x:Name="PART_RightHeaderGripper" Grid.ColumnSpan="2" HorizontalAlignment="Right" IsTabStop="{TemplateBinding IsTabStop}" Style="{StaticResource ColumnHeaderGripperStyle}"/>
         </Grid>
@@ -880,10 +889,7 @@
         <Setter Property="Foreground" Value="{StaticResource GridView_HeaderForeground}"/>
     </Style>
 
-
-    <!--##############################-->
-    <!--BorderLess GridHeaderRowStyle-->
-
+    <!--template for GridHeaderRowStyle-->
     <SolidColorBrush x:Key="GridViewCommonHeader_BorderBrush" Color="#e4e5e5"/>
     <SolidColorBrush x:Key="GridViewCommonHeader_Background" Color="#e4e5e5"/>
     <SolidColorBrush x:Key="GridView_HeaderRowInnerBorder" Color="#e4e5e5"/>
@@ -930,8 +936,6 @@
     <SolidColorBrush x:Key="GridView_HeaderRowBackground" Color="#e4e5e5"/>
     <SolidColorBrush x:Key="GridView_HeaderRowOuterBorder" Color="#e4e5e5"/>
 
-    <!--###########################-->
-
     <!--GridViewHeaderRowStyle-->
     <Style TargetType="telerik:GridViewHeaderRow" x:Name="GridViewHeaderRowStyle">
         <Setter Property="Template" Value="{StaticResource GridViewHeaderRowTemplate}"/>
@@ -946,8 +950,7 @@
 
     <!--#####################################################################################################################-->
     <!--#####################################################################################################################-->
-    <!--#####################################################################################################################-->
-    
+    <!--#####################################################################################################################--> 
     
     
     <!--TextBlock Style-->
