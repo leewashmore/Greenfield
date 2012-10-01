@@ -15,6 +15,9 @@ using GreenField.ServiceCaller;
 using GreenField.ServiceCaller.ExternalResearchDefinitions;
 using Microsoft.Practices.Prism.Logging;
 using System.IO;
+using System.Text;
+using System.Linq;
+using System.Windows.Markup;
 
 namespace GreenField.Gadgets.Views.Documents
 {
@@ -34,20 +37,43 @@ namespace GreenField.Gadgets.Views.Documents
             this.cbCompany.ItemsSource = companyInfo;
             this.cbCompany.SelectedIndex = 0;
 
-            CategoryType.Remove(DocumentCategoryType.IC_PRESENTATIONS);
-            CategoryType.Remove(DocumentCategoryType.MODELS);
             this.cbType.ItemsSource = CategoryType;
             this.cbType.SelectedIndex = 0;
             this.OKButton.IsEnabled = false;
 
             this.cbAlert.ItemsSource = userInfo;
-            this.cbAlert.DisplayMemberPath = "UserName";            
+            //StringBuilder itemTemplate = new StringBuilder();
+            //itemTemplate.Append("<DataTemplate");
+            //itemTemplate.Append(" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'");
+            //itemTemplate.Append(" xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'");
+            //itemTemplate.Append(" xmlns:lanes='clr-namespace:GreenField.Gadgets.Helpers;assembly=GreenField.Gadgets'");
+            //itemTemplate.Append(" xmlns:local='clr-namespace:GreenField.Gadgets.Views;assembly=GreenField.Gadgets'>");
+            //itemTemplate.Append("<CheckBox>");
+            //itemTemplate.Append("   <CheckBox.Content>");
+            //itemTemplate.Append("       <Binding Path='UserName'/>");
+            //itemTemplate.Append("   </CheckBox.Content>");
+            //itemTemplate.Append("</CheckBox>");            
+            //itemTemplate.Append("</DataTemplate>");
+            //this.cbAlert.ItemTemplate = XamlReader.Load(itemTemplate.ToString()) as DataTemplate;
+
+            this.cbAlert.DisplayMemberPath = "UserName";
 
         }
 
+        private List<DocumentCategoryType> _categoryType;
         public List<DocumentCategoryType> CategoryType
         {
-            get { return EnumUtils.GetEnumDescriptions<DocumentCategoryType>(); }
+            get
+            {
+                if (_categoryType == null)
+                {
+                    _categoryType = EnumUtils.GetEnumDescriptions<DocumentCategoryType>();
+                    _categoryType.Remove(DocumentCategoryType.IC_PRESENTATIONS);
+                    _categoryType.Remove(DocumentCategoryType.MODELS);
+                    _categoryType.Remove(DocumentCategoryType.BLOG);
+                }
+                return _categoryType;
+            }
         }
 
         public Byte[] UploadFileByteStream { get; set; }
@@ -55,13 +81,14 @@ namespace GreenField.Gadgets.Views.Documents
         public String UploadFileNotes { get; set; }
         public String UploadFileTags { get; set; }
         public String UploadFileCompanyInfo { get; set; }
-        public DocumentCategoryType UploadFileType { get; set; }        
+        public DocumentCategoryType UploadFileType { get; set; }
+        public List<String> UserAlertEmails { get; set; }
 
         private void OKButton_Click(object sender, RoutedEventArgs e)
         {
             UploadFileTags = this.tbTags.Text;
             UploadFileNotes = this.tbNotes.Text;
-            
+
             this.DialogResult = true;
         }
 
@@ -124,6 +151,18 @@ namespace GreenField.Gadgets.Views.Documents
         {
             UploadFileType = (DocumentCategoryType)this.cbType.SelectedItem;
             ValidateSubmission();
+        }
+
+        private void cbAlert_SelectionChanged(object sender, Telerik.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            List<String> userArray = new List<String>();
+            UserAlertEmails = new List<String>();
+            foreach (MembershipUserInfo item in this.cbAlert.SelectedItems)
+            {
+                userArray.Add(item.UserName);
+                UserAlertEmails.Add(item.Email);
+            }
+            this.txtAlertUsers.Text = String.Join(", ", userArray.ToArray());
         }
     }
 }

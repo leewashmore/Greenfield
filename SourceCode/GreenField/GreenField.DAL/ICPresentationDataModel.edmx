@@ -369,6 +369,9 @@
         <Function Name="DeleteFileMaster" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fileId" Type="bigint" Mode="In" />
         </Function>
+        <Function Name="GetDocumentsData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="searchString" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="GetMeetingMinutesReportDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="MeetingId" Type="bigint" Mode="In" />
         </Function>
@@ -892,7 +895,7 @@
             <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="ModelRetrieveFileId" EntitySet="FileMasters" ReturnType="Collection(ICPresentationModel.FileMaster)">
-            <Parameter Name="LOCATION" Mode="In" Type="String" />
+          <Parameter Name="LOCATION" Mode="In" Type="String" />
           </FunctionImport>
 
           <FunctionImport Name="DeleteFileMaster">

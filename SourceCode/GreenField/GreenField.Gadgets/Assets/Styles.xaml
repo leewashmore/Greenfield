@@ -1012,6 +1012,16 @@
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
     </Style>
 
+    <!--RadComboBox Style-->
+    <Style TargetType="telerik:RadListBox" x:Name="RadListBoxStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+    </Style>
+
     <!--CheckBox Style-->
     <Style TargetType="CheckBox" x:Name="CheckBoxStyle">
         <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>

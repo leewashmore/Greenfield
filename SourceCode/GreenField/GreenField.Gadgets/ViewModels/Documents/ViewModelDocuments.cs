@@ -300,6 +300,55 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    if (_uploadWindow.UserAlertEmails != null && _uploadWindow.UserAlertEmails.Count != 0)
+                    {
+                        BusyIndicatorNotification(true, "Updation messaging queue...");
+                        String emailTo = String.Join("|", _uploadWindow.UserAlertEmails.ToArray());
+                        String emailSubject = "Document Upload Alert";
+                        String emailMessageBody = "Document upload notification. Please find the details below:\n"
+                            + "Name -    " + _uploadWindow.UploadFileName + "\n"
+                            + "Company - " + _uploadWindow.UploadFileCompanyInfo + "\n"
+                            + "Type -    " + _uploadWindow.UploadFileType + "\n"
+                            + "Tags -    " + _uploadWindow.UploadFileTags + "\n"
+                            + "Notes -   " + _uploadWindow.UploadFileNotes;
+
+                        DbInteractivity.SetMessageInfo(emailTo, null, emailSubject, emailMessageBody, null
+                            , UserSession.SessionManager.SESSION.UserName, SetMessageInfoCallbackMethod);
+                    }
+                    else if (SearchStringText != null && DbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Retrieving Search Results...");
+                        DbInteractivity.RetrieveDocumentsData(SearchStringText, RetrieveDocumentsDataCallbackMethod);
+                    }
+                    else
+                    {
+                        BusyIndicatorNotification();
+                    }
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                    BusyIndicatorNotification();
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+                BusyIndicatorNotification();
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        private void SetMessageInfoCallbackMethod(Boolean? result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     if (SearchStringText != null && DbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving Search Results...");

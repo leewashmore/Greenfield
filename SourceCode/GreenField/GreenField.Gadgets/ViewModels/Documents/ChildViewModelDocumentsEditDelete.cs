@@ -42,7 +42,7 @@ namespace GreenField.Gadgets.ViewModels
 
 
         private IDBInteractivity _dbInteractivity;
-        #endregion       
+        #endregion
 
         #region Constructor
         public ChildViewModelDocumentsEditDelete(IDBInteractivity dBInteractivity, ILoggerFacade logger, List<String> companyInfo)
@@ -50,7 +50,7 @@ namespace GreenField.Gadgets.ViewModels
             _dbInteractivity = dBInteractivity;
             _logger = logger;
             CompanyInfo = companyInfo;
-            
+
             if (_dbInteractivity != null)
             {
                 BusyIndicatorNotification(true, "Retrieving user specific document information...");
@@ -156,19 +156,20 @@ namespace GreenField.Gadgets.ViewModels
                         DocumentBindedCatagoricalInfo = DocumentCatagoricalInfo;
                 }
             }
-        } 
+        }
         #endregion
 
         private List<DocumentCategoryType> _categoryType;
         public List<DocumentCategoryType> CategoryType
         {
-            get 
+            get
             {
                 if (_categoryType == null)
                 {
                     _categoryType = EnumUtils.GetEnumDescriptions<DocumentCategoryType>();
                     _categoryType.Remove(DocumentCategoryType.IC_PRESENTATIONS);
                     _categoryType.Remove(DocumentCategoryType.MODELS);
+                    _categoryType.Remove(DocumentCategoryType.BLOG);
                 }
                 return _categoryType;
             }
@@ -184,7 +185,7 @@ namespace GreenField.Gadgets.ViewModels
                 RaisePropertyChanged(() => this.SelectedCategoryType);
             }
         }
-        
+
         private List<String> _companyInfo;
         public List<String> CompanyInfo
         {
@@ -236,7 +237,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _documentNotes = value;
-                RaisePropertyChanged(() => this.DocumentNotes);                
+                RaisePropertyChanged(() => this.DocumentNotes);
             }
         }
 
@@ -258,13 +259,13 @@ namespace GreenField.Gadgets.ViewModels
             set { _uploadStream = value; }
         }
 
-        
-        
 
-        public ICommand DeleteCommand 
+
+
+        public ICommand DeleteCommand
         {
             get { return new DelegateCommand<object>(DeleteCommandMethod); }
-        }        
+        }
 
         public ICommand SaveCommand
         {
@@ -275,12 +276,17 @@ namespace GreenField.Gadgets.ViewModels
         #region ICommand Methods
         private void DeleteCommandMethod(object param)
         {
-            
-            if (_dbInteractivity != null)
+            Prompt.ShowDialog("Document will be permanently deleted from repository. Please confirm.", "Document Delete", MessageBoxButton.OKCancel, (result) =>
             {
-                BusyIndicatorNotification(true, "Deleting document from repository...");
-                _dbInteractivity.DeleteDocument(SelectedDocumentCatagoricalInfo.DocumentCatalogData.FilePath, DeleteDocumentCallbackMethod); 
-            }
+                if (result == MessageBoxResult.OK)
+                {
+                    if (_dbInteractivity != null)
+                    {
+                        BusyIndicatorNotification(true, "Deleting document from repository...");
+                        _dbInteractivity.DeleteDocument(SelectedDocumentCatagoricalInfo.DocumentCatalogData.FilePath, DeleteDocumentCallbackMethod);
+                    }
+                }
+            });
         }
 
         private void SaveCommandMethod(object param)
@@ -382,6 +388,13 @@ namespace GreenField.Gadgets.ViewModels
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     if (_dbInteractivity != null)
                     {
+                        DocumentCatagoricalInfo = null;
+                        DocumentEditEnabled = false;
+                        SelectedCompanyInfo = null;
+                        DocumentMetags = null;
+                        DocumentNotes = null;
+                        UploadStream = null;
+
                         BusyIndicatorNotification(true, "Updating user specific document information...");
                         _dbInteractivity.RetrieveDocumentsDataForUser(UserSession.SessionManager.SESSION.UserName, RetrieveDocumentsDataForUserCallbackMethod);
                     }
@@ -400,7 +413,7 @@ namespace GreenField.Gadgets.ViewModels
             }
             finally
             {
-                Logging.LogEndMethod(_logger, methodNamespace);                
+                Logging.LogEndMethod(_logger, methodNamespace);
             }
         }
 
@@ -414,11 +427,11 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
                     DocumentCatagoricalInfo = result.Where(record => record.DocumentCategoryType != DocumentCategoryType.IC_PRESENTATIONS
-                        && record.DocumentCategoryType != DocumentCategoryType.MODELS).ToList();
+                        && record.DocumentCategoryType != DocumentCategoryType.MODELS && record.DocumentCategoryType != DocumentCategoryType.BLOG).ToList();
                 }
                 else
                 {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);                    
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                 }
             }
             catch (Exception ex)
@@ -431,7 +444,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogEndMethod(_logger, methodNamespace);
                 BusyIndicatorNotification();
             }
-        }       
+        }
         #endregion
 
         #region Helper Methods
@@ -441,7 +454,7 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorContent = message;
 
             BusyIndicatorIsBusy = showBusyIndicator;
-        } 
+        }
         #endregion
 
         #region EventUnSubscribe
@@ -450,9 +463,9 @@ namespace GreenField.Gadgets.ViewModels
         /// </summary>
         public void Dispose()
         {
-            
+
         }
 
-        #endregion   
+        #endregion
     }
 }
