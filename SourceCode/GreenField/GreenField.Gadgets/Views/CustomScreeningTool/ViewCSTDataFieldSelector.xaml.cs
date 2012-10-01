@@ -14,33 +14,35 @@ using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// XAML.cs class for CSTDataFieldSelector
+    /// </summary>
     public partial class ViewCSTDataFieldSelector : ViewBaseUserControl
     {   
         #region Properties
         /// <summary>
-        /// property to set data context
+        /// Property to set data context
         /// </summary>
-        private ViewModelCSTDataFieldSelector _dataContextViewModelCSTDataFieldSelector;
+        private ViewModelCSTDataFieldSelector dataContextViewModelCSTDataFieldSelector;
         public ViewModelCSTDataFieldSelector DataContextViewModelCSTDataFieldSelector
         {
-            get { return _dataContextViewModelCSTDataFieldSelector; }
-            set { _dataContextViewModelCSTDataFieldSelector = value; }
+            get { return dataContextViewModelCSTDataFieldSelector; }
+            set { dataContextViewModelCSTDataFieldSelector = value; }
         }
 
-
-
         /// <summary>
-        /// property to set IsActive variable of View Model
+        /// Property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextViewModelCSTDataFieldSelector != null) //DataContext instance
-                    DataContextViewModelCSTDataFieldSelector.IsActive = _isActive;
+                isActive = value;
+                // dataContext instance
+                if (DataContextViewModelCSTDataFieldSelector != null) 
+                    DataContextViewModelCSTDataFieldSelector.IsActive = isActive;
             }
         }
         #endregion
@@ -55,14 +57,12 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextViewModelCSTDataFieldSelector = dataContextSource;
-        }
-
-     
+        }     
         #endregion
 
         #region Dispose Method
         /// <summary>
-        /// method to dispose all running events
+        /// Method to dispose all running events
         /// </summary>
         public override void Dispose()
         {
@@ -71,6 +71,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
     }
 }

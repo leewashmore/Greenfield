@@ -9,25 +9,26 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using GreenField.Gadgets.Helpers;
-using GreenField.Gadgets.ViewModels;
-using Telerik.Windows.Controls;
 using System.Xml.Linq;
+using Telerik.Windows.Controls;
 using Telerik.Windows.Data;
-using System.Collections.ObjectModel;
-using GreenField.ServiceCaller;
-using GreenField.Common;
 using Telerik.Windows.Documents.Model;
+using System.Collections.ObjectModel;
+using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.ServiceCaller;
+using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
+    /// <summary>
+    /// XAML.cs class for CustomScreeningTool
+    /// </summary>
     public partial class ViewCustomScreeningTool : ViewBaseUserControl
     {
-
-
         #region Properties
         /// <summary>
-        /// property to set data context
+        /// Property to set data context
         /// </summary>
         private ViewModelCustomScreeningTool _dataContextViewModelCustomScreeningTool;
         public ViewModelCustomScreeningTool DataContextViewModelCustomScreeningTool
@@ -36,10 +37,8 @@ namespace GreenField.Gadgets.Views
             set { _dataContextViewModelCustomScreeningTool = value; }
         }
 
-
-
         /// <summary>
-        /// property to set IsActive variable of View Model
+        /// Property to set IsActive variable of View Model
         /// </summary>
         private bool _isActive;
         public override bool IsActive
@@ -48,7 +47,8 @@ namespace GreenField.Gadgets.Views
             set
             {
                 _isActive = value;
-                if (DataContextViewModelCustomScreeningTool != null) //DataContext instance
+                // dataContext instance
+                if (DataContextViewModelCustomScreeningTool != null) 
                     DataContextViewModelCustomScreeningTool.IsActive = _isActive;
             }
         }
@@ -64,24 +64,12 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextViewModelCustomScreeningTool = dataContextSource;
-            dataContextSource.RetrieveCustomXmlDataCompletedEvent += new Common.RetrieveCustomXmlDataCompleteEventHandler(dataContextSource_RetrieveCustomXmlDataCompletedEvent);
-        }
-
-
-        #endregion
-
-        #region Dispose Method
-        /// <summary>
-        /// method to dispose all running events
-        /// </summary>
-        public override void Dispose()
-        {
-            this.DataContextViewModelCustomScreeningTool.Dispose();
-            this.DataContextViewModelCustomScreeningTool = null;
-            this.DataContext = null;
+            dataContextSource.RetrieveCustomXmlDataCompletedEvent += 
+                            new Common.RetrieveCustomXmlDataCompleteEventHandler(dataContextSource_RetrieveCustomXmlDataCompletedEvent);
         }
         #endregion
 
+        #region Event Handler
         /// <summary>
         /// Data Retrieval Indicator
         /// </summary>
@@ -158,7 +146,6 @@ namespace GreenField.Gadgets.Views
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
                 column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);
                 column.AggregateFunctions.Add(new HarmonicMeanCalculation { SourceField = kvp.Key });
-                //column.AggregateFunctions.Add(new HarmonicMeanCalculation ());
                 this.dgCustomSecurity.Columns.Add(column);             
             }
 
@@ -191,9 +178,10 @@ namespace GreenField.Gadgets.Views
             this.dgCustomSecurity.GroupRowStyle = this.Resources["GridViewGroupRowStyle"] as Style;
             this.dgCustomSecurity.ShowGroupFooters = true;
             this.dgCustomSecurity.Columns["Market Capitalization"].IsVisible = false;           
-            this.DataContextViewModelCustomScreeningTool.BusyIndicatorIsBusy = false;
+            this.DataContextViewModelCustomScreeningTool.IsBusyIndicatorBusy = false;
             this.DataContextViewModelCustomScreeningTool.FlagBusyIndicator = 1;
         }
+        #endregion
 
         #region Excel Export
         /// <summary>
@@ -207,14 +195,14 @@ namespace GreenField.Gadgets.Views
             {
                 if (this.dgCustomSecurity.Visibility == Visibility.Visible)
                 {
-                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                     {                  
-                        new RadExportOptions() { ElementName = "Custom Screening Tool", Element = this.dgCustomSecurity, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                        new RadExportOptions() { ElementName = "Custom Screening Tool", Element = this.dgCustomSecurity, 
+                                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
                     };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + GadgetNames.CUSTOM_SCREENING_TOOL);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + GadgetNames.CUSTOM_SCREENING_TOOL);
                     childExportOptions.Show();
                 }
-
             }
             catch (Exception ex)
             {
@@ -235,10 +223,7 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region Print grid
-
         #region Printing the DataGrid
-
         /// <summary>
         /// Printing the DataGrid
         /// </summary>
@@ -254,8 +239,18 @@ namespace GreenField.Gadgets.Views
             this.RichTextBox.Document.SectionDefaultPageOrientation = PageOrientation.Landscape;
             RichTextBox.Print("MyDocument", Telerik.Windows.Documents.UI.PrintMode.Native);
         }
-
         #endregion
+
+        #region Dispose Method
+        /// <summary>
+        /// method to dispose all running events
+        /// </summary>
+        public override void Dispose()
+        {
+            this.DataContextViewModelCustomScreeningTool.Dispose();
+            this.DataContextViewModelCustomScreeningTool = null;
+            this.DataContext = null;
+        }
         #endregion
     }
 }
