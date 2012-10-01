@@ -44,14 +44,17 @@ namespace GreenField.Gadgets.ViewModels
         private List<PortfolioSelectionData> _portfolioSelectionData;
         private IRegionManager _regionManager;
         private List<EntitySelectionData> _benchmarkSelectionData;
-        int flagBsyInd;
-       
+        int flagBsyInd;   
 
 
 
         #endregion
 
         #region Constructor
+        /// <summary>
+        /// constructor
+        /// </summary>
+        /// <param name="param"></param>
         public ViewModelCustomScreeningTool(DashboardGadgetParam param)
         {
             _logger = param.LoggerFacade;
@@ -63,6 +66,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Properties
 
+        /// <summary>
+        /// 
+        /// </summary>
         public List<String> _securitySelectionCriteria;
         public List<String> SecuritySelectionCriteria
         {
@@ -415,7 +421,6 @@ namespace GreenField.Gadgets.ViewModels
             get
             {
                 return _savedDataListInfo;
-                //{ return new List<String> { "DataList1", "DataList2", "DataList3" }; }
             }
             set
             {
@@ -937,7 +942,6 @@ namespace GreenField.Gadgets.ViewModels
             finally
             {
                 Logging.LogEndMethod(_logger, methodNamespace);
-               // BusyIndicatorNotification();
             }
         }
 
@@ -1023,7 +1027,6 @@ namespace GreenField.Gadgets.ViewModels
                             xw.WriteAttributeString("isdisplay", "true");
                             xw.WriteEndElement();
                         }
-                        //+ info.DataSource + info.PeriodType + info.YearType
                     }
                     else if (info.ScreeningId.StartsWith("FIN"))
                     {

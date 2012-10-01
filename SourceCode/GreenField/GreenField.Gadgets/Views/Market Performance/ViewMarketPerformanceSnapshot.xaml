@@ -71,7 +71,7 @@
                                          GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" 
                                          RowStyle="{StaticResource GridViewRowStyle}"
                                          GroupRowStyle="{StaticResource GridViewGroupRowStyle}" EnableRowVirtualization="False"
-                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}">
+                                     AlternateRowStyle="{StaticResource GridViewAlternateRowStyle}" GridLinesVisibility="None">
                     <!--context menu on the grid-->
                     <telerik:RadContextMenu.ContextMenu>
                         <telerik:RadContextMenu x:Name="cmSnapshot" telerik:StyleManager.Theme="Metro" Opened="RadContextMenu_Opened" FontSize="7" FontFamily="Arial">

@@ -60,15 +60,6 @@ namespace GreenField.Gadgets.ViewModels
             _eventAggregator = param.EventAggregator;
             _manageSessions = param.ManageSessions;
             _regionManager = param.RegionManager;
-
-            //fetch tabs data
-            //FetchTabsData();
-
-            //Flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
-            //if (Flag == "Edit")
-            //{
-            //    SelectedDataList = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
-            //}
         }
 
         #endregion
@@ -78,7 +69,12 @@ namespace GreenField.Gadgets.ViewModels
         public ObservableCollection<CSTUserPreferenceInfo> _selectedFieldsDataList;
         public ObservableCollection<CSTUserPreferenceInfo> SelectedFieldsDataList
         {
-            get { return _selectedFieldsDataList; }
+            get
+            {
+                if (_selectedFieldsDataList == null)
+                    _selectedFieldsDataList = new ObservableCollection<CSTUserPreferenceInfo>();
+                return _selectedFieldsDataList;
+            }
             set
             {
                 _selectedFieldsDataList = value;
@@ -983,6 +979,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                     SecurityReferenceData = result;
+                    CheckIfColumnInListExist(result.Select(a => a.ScreeningId).ToList(),"REF");
                 }
                 else
                 {
@@ -1013,6 +1010,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                     PeriodFinancialsData = result;
+                    CheckIfColumnInListExist(result.Select(a => a.ScreeningId).ToList(),"FIN");
                 }
                 else
                 {
@@ -1043,6 +1041,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                     CurrentFinancialsData = result;
+                    CheckIfColumnInListExist(result.Select(a => a.ScreeningId).ToList(),"CUR");
                 }
                 else
                 {
@@ -1073,6 +1072,7 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result.ToString(), 1);
                     FairValueData = result;
+                    CheckIfColumnInListExist(result.Select(a => a.ScreeningId).ToList(),"FVA");
                 }
                 else
                 {
@@ -1208,7 +1208,9 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Helpers
-
+        /// <summary>
+        /// fetching data points list to be dispalyed in selectors
+        /// </summary>
         public void FetchTabsData()
         {
             if (_dbInteractivity != null)
@@ -1226,12 +1228,13 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// method to prepare view model with fields required on initialization of the view
+        /// </summary>
         public void Initialize()
         {
-            //fetch tabs data
             FetchTabsData();
             List<CSTUserPreferenceInfo> temp = new List<CSTUserPreferenceInfo>();
-            ObservableCollection<CSTUserPreferenceInfo> userPref = new ObservableCollection<CSTUserPreferenceInfo>();
 
             Flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
             if (Flag != null)
@@ -1241,14 +1244,9 @@ namespace GreenField.Gadgets.ViewModels
                     temp = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
                     foreach (CSTUserPreferenceInfo item in temp)
                     {
-                        userPref.Add(item);
+                            SelectedFieldsDataList.Add(item);
                     }
-                    SelectedFieldsDataList = userPref;
-                }
-                else
-                {
-                    SelectedFieldsDataList = null;
-                }
+                }               
             }          
         }
 
@@ -1343,7 +1341,36 @@ namespace GreenField.Gadgets.ViewModels
             return saveAsXml;
         }
 
-        #endregion
+        /// <summary>
+        /// method to check if existing user preference contains non existing data points
+        /// </summary>
+        /// <param name="availableScreeningIds"></param>
+        /// <param name="screeningIdentifier"></param>
+        public void CheckIfColumnInListExist(List<string> availableScreeningIds,string screeningIdentifier)
+        {
+            List<string> screeningId = new List<string>();
 
+            if(SelectedFieldsDataList.Count > 0)
+            {
+                screeningId = SelectedFieldsDataList.Select(a => a.ScreeningId).ToList();
+            }
+            if (availableScreeningIds.Count > 0)
+            {
+                foreach (string item in screeningId)
+                {
+                    if (item.StartsWith(screeningIdentifier))
+                    {
+                        if (!(availableScreeningIds.Contains(item)))
+                        {
+                            CSTUserPreferenceInfo temp = new CSTUserPreferenceInfo();
+                            temp = SelectedFieldsDataList.Where(a => a.ScreeningId == item).FirstOrDefault();
+                            SelectedFieldsDataList.Remove(temp);
+                            RaisePropertyChanged(() => SelectedFieldsDataList);
+                        }
+                    }
+                }
+            }         
+        }     
+        #endregion
     }
 }
