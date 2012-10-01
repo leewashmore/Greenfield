@@ -59,13 +59,15 @@ namespace GreenField.Gadgets.Helpers
             foreach (String strValue in values)
             {
                 numericvalues.Add(strValue);
-            }
+            }                        
 
             for (int i = 0; i < numericvalues.Count(); i++) 
             {
                 if (marketCapList[i] != null && numericvalues[i] != null && marketCapList[i] != String.Empty && numericvalues[i] != String.Empty)
                 {
-                    totalweight = totalweight + Convert.ToDecimal(marketCapList[i]);
+                    decimal marketCap = 0;
+                    marketCap = decimal.TryParse(marketCapList[i],out marketCap) ? marketCap : 0;
+                    totalweight = totalweight + Convert.ToDecimal(marketCap);
                 }
             }       
 
@@ -74,10 +76,15 @@ namespace GreenField.Gadgets.Helpers
                 if (marketCapList[i] != null && numericvalues[i] != null)
                 {
                     if (totalweight != 0 && numericvalues[i] != String.Empty && marketCapList[i] != String.Empty)
-                    {                       
-                        
-                        Decimal weight = Convert.ToDecimal(marketCapList[i])/ totalweight;
-                        Decimal amount = 1/Convert.ToDecimal(numericvalues[i]);
+                    {
+                        decimal marketCap = 0;
+                        decimal.TryParse(marketCapList[i], out marketCap);
+                        Decimal weight = Convert.ToDecimal(marketCap) / totalweight;
+
+                        Decimal measureValue = 0;
+                        measureValue = decimal.TryParse(numericvalues[i], out measureValue) ? measureValue : 1;
+
+                        Decimal amount = 1 / Convert.ToDecimal(measureValue);
                         Decimal inverseAmount = weight * amount;
                         totalharmonic = totalharmonic + inverseAmount;
                     }

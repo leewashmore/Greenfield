@@ -142,6 +142,7 @@ namespace GreenField.Gadgets.Views
                 column.DataMemberBinding = new System.Windows.Data.Binding(kvp.Key);
                 column.IsFilterable = true;
                 column.IsGroupable = true;
+                column.TextAlignment = TextAlignment.Right;
                 column.HeaderCellStyle = this.Resources["GridViewHeaderCellStyle"] as Style;
                 column.CellStyle = this.Resources["GridViewCellStyle"] as Style;
                 column.Width = new GridViewLength(1, GridViewLengthUnitType.Auto);
