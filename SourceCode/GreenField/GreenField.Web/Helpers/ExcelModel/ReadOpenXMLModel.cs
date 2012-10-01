@@ -1087,7 +1087,26 @@ namespace GreenField.Web.Helpers
                 foreach (Row r in sheetData.Elements<Row>())
                 {
                     int cellCount = 0;
-                    while (cellCount < 2)
+                    List<Cell> cellList = r.Elements<Cell>().ToList();
+
+                    if (cellList.Count == 1)
+                    {
+                        rowData[i] = cellList[0].InnerText;
+                        if (cellList[0].DataType != null)
+                        {
+                            if (cellList[0].DataType == CellValues.SharedString)
+                            {
+                                var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                if (stringTable != null)
+                                {
+                                    rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i])).InnerText;
+                                }
+                            }
+                        }
+                        rowData[++i] = string.Empty;
+                        ++i;
+                    }
+                    else
                     {
                         foreach (Cell c in r.Elements<Cell>())
                         {
@@ -1110,13 +1129,15 @@ namespace GreenField.Web.Helpers
                             {
                                 rowData[i] = "";
                             }
-                            ++i;
+                            
                             cellCount++;
+                            ++i;
                         }
-
+                       
                     }
+                   
                 }
-
+                
                 ModelReferenceData = new ModelReferenceDataPoints();
                 ModelReferenceData.IssuerId = rowData[1];
                 ModelReferenceData.IssuerName = rowData[3];
@@ -2826,7 +2847,6 @@ namespace GreenField.Web.Helpers
         {
             try
             {
-                userName = "maderc";
                 GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.
                         Where(a => a.ASHMOREEMM_PRIMARY_ANALYST.ToUpper() == userName.ToUpper() && a.ISSUER_ID == ModelReferenceData.IssuerId).FirstOrDefault();
                 if (data != null)
