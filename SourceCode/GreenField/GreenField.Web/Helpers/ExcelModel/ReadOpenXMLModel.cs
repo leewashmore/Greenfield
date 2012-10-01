@@ -1309,6 +1309,7 @@ namespace GreenField.Web.Helpers
                     (decimal)ModelReferenceData.Q3Override + (decimal)ModelReferenceData.Q4Override;
                 if (sumOverride == 100M)
                 {
+                    QuarterelyOverrideEnabled = true;
                     return true;
                 }
                 return false;
