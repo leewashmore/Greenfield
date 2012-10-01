@@ -1337,11 +1337,14 @@ namespace GreenField.Web.Helpers
                 {
                     throw new Exception();
                 }
-                if (ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() != "UNITS" || ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() != "MILLIONS" || ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() != "THOUSANDS" || ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() != "BILLIONS")
+                if (ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() == "UNITS" || ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() == "MILLIONS" || ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() == "THOUSANDS" || ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() == "BILLIONS")
                 {
-                    throw new Exception();
+                    return true;
                 }
-                return true;
+                else
+                {
+                    throw new Exception("The value of Units is not valid");
+                }
             }
             catch (Exception ex)
             {
