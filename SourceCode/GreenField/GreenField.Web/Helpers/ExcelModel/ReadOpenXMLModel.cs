@@ -634,7 +634,7 @@ namespace GreenField.Web.Helpers
                 {
                     ExceptionMessage = "Data in Model Reference Sheet is not Valid";
                 }
-                return false;
+                throw;
             }
         }
 
@@ -656,6 +656,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                throw;
             }
         }
 
@@ -683,6 +684,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                throw;
             }
         }
 
@@ -730,7 +732,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return false;
+                throw;
             }
         }
 
@@ -779,7 +781,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return false;
+                throw;
             }
         }
 
@@ -822,7 +824,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return false;
+                throw;
             }
         }
 
@@ -856,7 +858,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return false;
+                throw;
             }
         }
 
@@ -884,7 +886,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return false;
+                throw;
             }
         }
 
@@ -927,6 +929,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                throw;
             }
         }
 
@@ -981,6 +984,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
+                throw;
             }
         }
 
@@ -1149,13 +1153,18 @@ namespace GreenField.Web.Helpers
                 {
                     throw new Exception("Entered Currency is not Valid");
                 }
+                bool unitsValid = CheckUnits();
+                if (!unitsValid)
+                {
+                    throw new Exception("Entered Value of Units in Model Reference sheet is not Valid");
+                }
                 return true;
             }
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
                 ExceptionMessage = ex.Message;
-                return false;
+                throw;
             }
         }
 
@@ -1311,6 +1320,32 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionMessage = "The Entered currency is not Valid";
+                ExceptionTrace.LogException(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// check the value in Units field of ModelReferenceSheet
+        /// </summary>
+        /// <returns></returns>
+        private bool CheckUnits()
+        {
+            try
+            {
+                if (ModelReferenceData.Units.FirstOrDefault() == null)
+                {
+                    throw new Exception();
+                }
+                if (ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() != "UNITS" || ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() != "MILLIONS" || ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() != "THOUSANDS" || ModelReferenceData.Units.FirstOrDefault().ToUpper().Trim() != "BILLIONS")
+                {
+                    throw new Exception();
+                }
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionMessage = "The specified Units is not Valid";
                 ExceptionTrace.LogException(ex);
                 throw;
             }
@@ -2280,7 +2315,7 @@ namespace GreenField.Web.Helpers
             catch (Exception ex)
             {
                 ExceptionTrace.LogException(ex);
-                return false;
+                throw;
             }
         }
 

@@ -437,58 +437,9 @@ namespace GreenField.Web.ExcelModel
                 cell = CreateHeaderCell((firstYear + (i - 1)).ToString());
                 row.InsertAt(cell, i + 1);
             }
-
-            string commodities = "";
-            foreach (string item in Commodities)
-            {
-                if (Commodities[0] != item)
-                {
-                    commodities = commodities + "," + item;
-                }
-                else
-                {
-                    commodities = item;
-                }
-            }
-            StringBuilder commodityList = new StringBuilder();
-            commodityList.Append('"');
-            commodityList.Append(commodities);
-            commodityList.Append('"');
-
             DataValidations dataValidations1 = new DataValidations() { Count = (UInt32Value)1U };
-            DataValidation dataValidation1 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "C5" } };
-            DataValidation dataValidation2 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "D5" } };
-            DataValidation dataValidation3 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "E5" } };
-            DataValidation dataValidation4 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "F5" } };
-            DataValidation dataValidation5 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "G5" } };
-            DataValidation dataValidation6 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "H5" } };
-            Formula1 formula11 = new Formula1();
-            formula11.Text = commodityList.ToString();
-            Formula1 formula12 = new Formula1();
-            formula12.Text = commodityList.ToString();
-            Formula1 formula13 = new Formula1();
-            formula13.Text = commodityList.ToString();
-            Formula1 formula14 = new Formula1();
-            formula14.Text = commodityList.ToString();
-            Formula1 formula15 = new Formula1();
-            formula15.Text = commodityList.ToString();
-            Formula1 formula16 = new Formula1();
-            formula16.Text = commodityList.ToString();
-            dataValidation1.Append(formula11);
-            dataValidation2.Append(formula12);
-            dataValidation3.Append(formula13);
-            dataValidation4.Append(formula14);
-            dataValidation5.Append(formula15);
-            dataValidation6.Append(formula16);
-
-
-            dataValidations1.Append(dataValidation1);
-            dataValidations1.Append(dataValidation2);
-            dataValidations1.Append(dataValidation3);
-            dataValidations1.Append(dataValidation4);
-            dataValidations1.Append(dataValidation5);
-            dataValidations1.Append(dataValidation6);
-
+            dataValidations1 = ValidationsCommodityMeasure(dataValidations1);
+            
             worksheet.Append(sheetData);
             worksheet.Append(dataValidations1);
             GenerateSecondRowModelUpload(worksheetPart);
@@ -498,6 +449,10 @@ namespace GreenField.Web.ExcelModel
             GenerateSixthRowModelUpload(worksheetPart);
         }
 
+        /// <summary>
+        /// generate Row for PeriodEndDate
+        /// </summary>
+        /// <param name="worksheetPart">Worksheetpart</param>
         private static void GenerateSecondRowModelUpload(WorksheetPart worksheetPart)
         {
             var worksheet = worksheetPart.Worksheet;
@@ -542,6 +497,10 @@ namespace GreenField.Web.ExcelModel
             #endregion
         }
 
+        /// <summary>
+        /// Generate Row for Periodlenght
+        /// </summary>
+        /// <param name="worksheetPart">Worksheetpart</param>
         private static void GenerateThirdRowModelUpload(WorksheetPart worksheetPart)
         {
             var worksheet = worksheetPart.Worksheet;
@@ -586,6 +545,10 @@ namespace GreenField.Web.ExcelModel
             #endregion
         }
 
+        /// <summary>
+        /// Generate Row for Acutal Override
+        /// </summary>
+        /// <param name="worksheetPart">Worksheetpart</param>
         private static void GenerateFourthRowModelUpload(WorksheetPart worksheetPart)
         {
             var worksheet = worksheetPart.Worksheet;
@@ -593,7 +556,7 @@ namespace GreenField.Web.ExcelModel
             var row = new Row { RowIndex = 4 };
             sheetData.Append(row);
 
-            #region PeriodLength
+            #region ActualOverride
 
             var cell = new Cell();
             cell = CreateHeaderCell(" ");
@@ -630,6 +593,10 @@ namespace GreenField.Web.ExcelModel
             #endregion
         }
 
+        /// <summary>
+        /// Generate Row for CommodityMeasure
+        /// </summary>
+        /// <param name="worksheetPart">Worksheet part</param>
         private static void GenerateFifthRowModelUpload(WorksheetPart worksheetPart)
         {
             var worksheet = worksheetPart.Worksheet;
@@ -674,6 +641,10 @@ namespace GreenField.Web.ExcelModel
             #endregion
         }
 
+        /// <summary>
+        /// Generate Row for CommodityForecastUsed
+        /// </summary>
+        /// <param name="worksheetPart">WorkSheetpart</param>
         private static void GenerateSixthRowModelUpload(WorksheetPart worksheetPart)
         {
             var worksheet = worksheetPart.Worksheet;
@@ -718,6 +689,10 @@ namespace GreenField.Web.ExcelModel
             #endregion
         }
 
+        /// <summary>
+        /// Generate modelUpload sheet from Row7
+        /// </summary>
+        /// <param name="worksheetPart">Worksheetpart</param>
         private static void GenerateDataModelUpload(WorksheetPart worksheetPart)
         {
             var worksheet = worksheetPart.Worksheet;
@@ -737,6 +712,119 @@ namespace GreenField.Web.ExcelModel
                 ++rowIndex;
                 row = new Row { RowIndex = rowIndex };
             }
+        }
+
+        /// <summary>
+        /// Apply validations Commodity Measure
+        /// </summary>
+        /// <param name="validations">DataValidations applied in Sheet</param>
+        /// <returns>DataValidations</returns>
+        private static DataValidations ValidationsCommodityMeasure(DataValidations validations)
+        {
+            string commodities = "";
+            foreach (string item in Commodities)
+            {
+                if (Commodities[0] != item)
+                {
+                    commodities = commodities + "," + item;
+                }
+                else
+                {
+                    commodities = item;
+                }
+            }
+            StringBuilder commodityList = new StringBuilder();
+            commodityList.Append('"');
+            commodityList.Append(commodities);
+            commodityList.Append('"');
+
+            #region DataValidations
+            
+            DataValidation dataValidation1 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "C5" } };
+            DataValidation dataValidation2 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "D5" } };
+            DataValidation dataValidation3 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "E5" } };
+            DataValidation dataValidation4 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "F5" } };
+            DataValidation dataValidation5 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "G5" } };
+            DataValidation dataValidation6 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "H5" } };
+            Formula1 formula11 = new Formula1();
+            formula11.Text = commodityList.ToString();
+            Formula1 formula12 = new Formula1();
+            formula12.Text = commodityList.ToString();
+            Formula1 formula13 = new Formula1();
+            formula13.Text = commodityList.ToString();
+            Formula1 formula14 = new Formula1();
+            formula14.Text = commodityList.ToString();
+            Formula1 formula15 = new Formula1();
+            formula15.Text = commodityList.ToString();
+            Formula1 formula16 = new Formula1();
+            formula16.Text = commodityList.ToString();
+            dataValidation1.Append(formula11);
+            dataValidation2.Append(formula12);
+            dataValidation3.Append(formula13);
+            dataValidation4.Append(formula14);
+            dataValidation5.Append(formula15);
+            dataValidation6.Append(formula16);
+
+            validations.Append(dataValidation1);
+            validations.Append(dataValidation2);
+            validations.Append(dataValidation3);
+            validations.Append(dataValidation4);
+            validations.Append(dataValidation5);
+            validations.Append(dataValidation6);
+
+            validations = ValidationOverride(validations);
+            return validations;
+            #endregion
+        }
+
+        /// <summary>
+        /// Add Data validation for OverrideValue
+        /// </summary>
+        /// <param name="validations">DataValidations added to sheet</param>
+        /// <returns>DataValidations</returns>
+        private static DataValidations ValidationOverride(DataValidations validations)
+        {
+            string formulaText = "Yes,No";
+            StringBuilder overideValues = new StringBuilder();
+            overideValues.Append('"');
+            overideValues.Append(formulaText);
+            overideValues.Append('"');
+
+            DataValidation dataValidation7 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "C4" } };
+            DataValidation dataValidation8 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "D4" } };
+            DataValidation dataValidation9 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "E4" } };
+            DataValidation dataValidation10 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "F4" } };
+            DataValidation dataValidation11 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "G4" } };
+            DataValidation dataValidation12 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "H4" } };
+
+            Formula1 formula11 = new Formula1();
+            formula11.Text = overideValues.ToString();
+            Formula1 formula12 = new Formula1();
+            formula12.Text = overideValues.ToString();
+            Formula1 formula13 = new Formula1();
+            formula13.Text = overideValues.ToString();
+            Formula1 formula14 = new Formula1();
+            formula14.Text = overideValues.ToString();
+            Formula1 formula15 = new Formula1();
+            formula15.Text = overideValues.ToString();
+            Formula1 formula16 = new Formula1();
+            formula16.Text = overideValues.ToString();
+
+            dataValidation7.Append(formula11);
+            dataValidation8.Append(formula12);
+            dataValidation9.Append(formula13);
+            dataValidation10.Append(formula14);
+            dataValidation11.Append(formula15);
+            dataValidation12.Append(formula16);
+
+            validations.Append(dataValidation7);
+            validations.Append(dataValidation8);
+            validations.Append(dataValidation9);
+            validations.Append(dataValidation10);
+            validations.Append(dataValidation11);
+            validations.Append(dataValidation12);
+
+            return validations;
         }
 
         #endregion
@@ -898,7 +986,7 @@ namespace GreenField.Web.ExcelModel
 
             DataValidation dataValidation2 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "B5" } };
             Formula1 formula12 = new Formula1();
-            formula12.Text = "\"Thousands,Millions,Billions\"";
+            formula12.Text = "\"Units,Thousands,Millions,Billions\"";
 
             dataValidation2.Append(formula12);
 
