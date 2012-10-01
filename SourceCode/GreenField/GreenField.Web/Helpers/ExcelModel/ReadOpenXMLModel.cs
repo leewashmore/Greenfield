@@ -1551,7 +1551,20 @@ namespace GreenField.Web.Helpers
                         {
                             if (c != null && j > 1)
                             {
-                                if (Double.TryParse(c.InnerText, out data))
+                                rowData[i] = c.InnerText;
+                                //if (c.DataType != null)
+                                //{
+                                //    if (c.DataType == CellValues.SharedString)
+                                //    {
+                                //        var stringTable = workbookPart.GetPartsOfType<SharedStringTablePart>().FirstOrDefault();
+                                //        if (stringTable != null)
+                                //        {
+                                //            rowData[i] = stringTable.SharedStringTable.ElementAt(int.Parse(rowData[i] as string)).InnerText;
+                                //        }
+                                //    }
+                                //}
+
+                                if (Double.TryParse((string)rowData[i], out data))
                                 {
                                     rowData[i] = DateTime.FromOADate(data);
                                 }
@@ -2282,6 +2295,10 @@ namespace GreenField.Web.Helpers
                 }
 
                 isValid = FetchUserRole(UserName);
+                if (!isValid)
+                {
+                    throw new Exception();
+                }
 
                 bool validateCOACodes = CheckCOACodes(ModelUploadData, COACodes);
                 if (!validateCOACodes)
@@ -2804,14 +2821,15 @@ namespace GreenField.Web.Helpers
                 }
                 if (UserRole == "")
                 {
-                    return false;
+                    throw new Exception();
                 }
                 return true;
             }
             catch (Exception ex)
             {
+                ExceptionMessage = "The user is not a Valid User";
                 ExceptionTrace.LogException(ex);
-                return false;
+                throw;
             }
         }
 
