@@ -894,7 +894,7 @@
             <Parameter Name="userName" Mode="In" Type="String" />
             <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="ModelRetrieveFileId" EntitySet="FileMasters" ReturnType="Collection(ICPresentationModel.FileMaster)">
+          <FunctionImport Name="ModelRetrieveFileId" ReturnType="Collection(ICPresentationModel.FILE_MASTER)">
           <Parameter Name="LOCATION" Mode="In" Type="String" />
           </FunctionImport>
 
@@ -1416,6 +1416,21 @@
           <Property Type="String" Name="CommentBy" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="CommentOn" Nullable="true" Precision="23" />
         </ComplexType>
+        <ComplexType Name="FILE_MASTER">
+          <Property Type="Int64" Name="FileID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SecurityName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="SecurityTicker" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Location" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MetaTags" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Type" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Category" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CreatedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="true" Precision="23" />
+          <Property Type="String" Name="ModifiedBy" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ModifiedOn" Nullable="true" Precision="23" />
+          <Property Type="String" Name="IssuerName" Nullable="true" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1792,7 +1807,25 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-           <FunctionImportMapping FunctionImportName="ModelRetrieveFileId" FunctionName="ICPresentationModel.Store.ModelRetrieveFileId" />
+           <FunctionImportMapping FunctionImportName="ModelRetrieveFileId" FunctionName="ICPresentationModel.Store.ModelRetrieveFileId" >
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ICPresentationModel.FILE_MASTER">
+                <ScalarProperty Name="FileID" ColumnName="FileID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="MetaTags" ColumnName="MetaTags" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="IssuerName" ColumnName="IssuerName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdatePresentationInfo" FunctionName="ICPresentationModel.Store.UpdatePresentationInfo" />
           <FunctionImportMapping FunctionImportName="DeleteFileMaster" FunctionName="ICPresentationModel.Store.DeleteFileMaster" />
           <EntitySetMapping Name="FileMasters">

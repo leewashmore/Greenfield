@@ -13,6 +13,7 @@ using GreenField.Web.DataContracts;
 using GreenField.Web.DimensionEntitiesService;
 using System.Configuration;
 using GreenField.Web.Services;
+using GreenField.DataContracts;
 
 namespace GreenField.Web.Helpers
 {
@@ -48,6 +49,10 @@ namespace GreenField.Web.Helpers
         {
             get
             {
+                if (_ICPresentationEntity == null)
+                {
+                    _ICPresentationEntity = new ICPresentationEntities();
+                }
                 return _ICPresentationEntity;
             }
             set
@@ -914,8 +919,18 @@ namespace GreenField.Web.Helpers
                     else
                     {
                         DocumentWorkspaceOperations service = new DocumentWorkspaceOperations();
-                        FileURI = service.UploadDocument(ModelReferenceData.IssuerId + TimeStamp.ToString(), FileBytes, string.Empty);
-                        documentId = FetchFileId(FileURI).Select(a => a.FileID).FirstOrDefault();
+                        FileURI = service.UploadDocument(ModelReferenceData.IssuerId + ".xls", FileBytes, string.Empty);
+                        bool fileRecordCreated = service.SetUploadFileInfo(UserName, "Model_" + issuerId + TimeStamp.ToString("ddMMyyyy") + ".xls", FileURI, ModelReferenceData.IssuerName, null, null
+                            , "Models", null, null);
+                        if (fileRecordCreated)
+                        {
+                            FILE_MASTER fileRecord = new FILE_MASTER();
+                            fileRecord = FetchFileId(FileURI).FirstOrDefault();
+                            if (fileRecord != null)
+                            {
+                                documentId = fileRecord.FileID;
+                            }
+                        }
                         if (documentId != null)
                         {
                             InsertInternalModelLoadData(issuerId, rootSource, UserName, loadTime, documentId);
@@ -2884,11 +2899,11 @@ namespace GreenField.Web.Helpers
         /// </summary>
         /// <param name="location">Location of the File</param>
         /// <returns>Details of File Stored on the Server</returns>
-        private List<FileMaster> FetchFileId(string location)
+        private List<FILE_MASTER> FetchFileId(string location)
         {
             try
             {
-                List<FileMaster> result = new List<FileMaster>();
+                List<FILE_MASTER> result = new List<FILE_MASTER>();
                 result = ICPresentationEntity.ModelRetrieveFileId(location).ToList();
                 return result;
             }
