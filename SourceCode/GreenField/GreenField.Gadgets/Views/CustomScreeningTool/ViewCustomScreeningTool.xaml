@@ -18,7 +18,7 @@
     </helpers:ViewBaseUserControl.Resources>
 
     <telerik:RadBusyIndicator x:Name="biPresentationOverview" BusyContent="{Binding BusyIndicatorContent}" Style="{StaticResource BusyIndicatorStyle}"
-                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorIsBusy}">
+                              IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding IsBusyIndicatorBusy}">
 
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
