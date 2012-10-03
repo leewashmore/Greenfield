@@ -19,7 +19,7 @@ namespace BenchmarkNodeFinancials
         {
             _log.Debug("Application initiated");
             BenchmarkNodeFinancial bnf = new BenchmarkNodeFinancial();
-            bnf.RetrieveData();
+            bnf.RetrieveData(args);
             _log.Debug("Application completed successfully");
         }        
     }    
