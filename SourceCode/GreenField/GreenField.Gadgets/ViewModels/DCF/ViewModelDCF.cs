@@ -541,6 +541,24 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// True when WACC is less then TGR
+        /// </summary>
+        private bool _WACCLessTGR;
+        public bool WACCLessTGR
+        {
+            get
+            {
+                return _WACCLessTGR;
+            }
+            set
+            {
+                _WACCLessTGR = value;
+                this.RaisePropertyChanged(() => this.WACCLessTGR);
+            }
+        }
+
+
         #region Sensitivity
 
         private DCFCalculationParameters _calculationParameters;
@@ -1217,20 +1235,32 @@ namespace GreenField.Gadgets.ViewModels
                 decimal sustainableDPR = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.SustainableDividendPayoutRatio).FirstOrDefault());
                 decimal longTermNominalGDPGrowth = Convert.ToDecimal(TerminalValueCalculationsData.Select(a => a.LongTermNominalGDPGrowth).FirstOrDefault());
                 decimal TGR;
-
+                decimal terminalValueNominal = 0;
+                decimal terminalValuePresent = 0;
                 decimal discountingFactorY10 = Convert.ToDecimal(YearlyCalculatedData.Where(a => a.PERIOD_YEAR == (DateTime.Today.AddYears(9).Year)).
                     Select(a => a.DISCOUNTING_FACTOR).FirstOrDefault());
                 TGR = (Math.Min(sustainableROIC * (Convert.ToDecimal(Convert.ToDecimal(1.0) - sustainableDPR)), longTermNominalGDPGrowth));
-                decimal terminalValueNominal = Convert.ToDecimal(DCFCalculations.CalculateNominalTerminalValue(WACC, TGR, cashFlow2020));
-                decimal terminalValuePresent = Convert.ToDecimal(DCFCalculations.CalculatePresentTerminalValue(terminalValueNominal, discountingFactorY10));
 
                 result.Add(new DCFDisplayData() { PropertyName = "Cash Flow in 2020", Value = Math.Round(cashFlow2020, 1).ToString() });
                 result.Add(new DCFDisplayData() { PropertyName = "Sustainable ROIC", Value = Math.Round(Convert.ToDecimal(sustainableROIC * Convert.ToDecimal(100)), 1).ToString() + " %" });
                 result.Add(new DCFDisplayData() { PropertyName = "Sustainable Dividend Payout Ratio", Value = Math.Round(Convert.ToDecimal(sustainableDPR * Convert.ToDecimal(100)), 1).ToString() + " %" });
                 result.Add(new DCFDisplayData() { PropertyName = "Long-term Nominal GDP Growth", Value = Math.Round(Convert.ToDecimal(longTermNominalGDPGrowth * Convert.ToDecimal(100)), 1).ToString() + " %" });
                 result.Add(new DCFDisplayData() { PropertyName = "Terminal Growth Rate", Value = Math.Round(Convert.ToDecimal(TGR * Convert.ToDecimal(100)), 1).ToString() + " %" });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = Math.Round(terminalValueNominal, 1).ToString() });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (present)", Value = Math.Round(terminalValuePresent, 1).ToString() });
+
+                if (WACC < TGR)
+                {
+                    WACCLessTGR = true;
+                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = "WACC<TGR" });
+                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (present)", Value = "WACC<TGR" });
+                }
+                else
+                {
+                    WACCLessTGR = false;
+                    terminalValueNominal = Convert.ToDecimal(DCFCalculations.CalculateNominalTerminalValue(WACC, TGR, cashFlow2020));
+                    terminalValuePresent = Convert.ToDecimal(DCFCalculations.CalculatePresentTerminalValue(terminalValueNominal, discountingFactorY10));
+                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = Math.Round(terminalValueNominal, 1).ToString() });
+                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (present)", Value = Math.Round(terminalValuePresent, 1).ToString() });
+                }
 
                 TerminalValueCalculationsDisplayData.Clear();
                 TerminalValueCalculationsDisplayData.AddRange(result);
@@ -1402,9 +1432,7 @@ namespace GreenField.Gadgets.ViewModels
                 decimal cash = SummaryData.Select(a => a.Cash).FirstOrDefault();
                 decimal FVInvestments = SummaryData.Select(a => a.FVInvestments).FirstOrDefault();
                 decimal grossDebt = SummaryData.Select(a => a.GrossDebt).FirstOrDefault();
-
                 FVMinorities = Convert.ToDecimal(MinorityInvestments);
-
                 decimal equityValue = DCFCalculations.CalculateEquityValue(totalEnterpriseValue, cash, FVInvestments, grossDebt, FVMinorities);
                 decimal numberOfShares = SummaryData.Select(a => a.NumberOfShares).FirstOrDefault();
                 NumberOfShares = numberOfShares;
@@ -1419,16 +1447,39 @@ namespace GreenField.Gadgets.ViewModels
                 decimal upsideDownside = DCFCalculations.CalculateUpsideValue(DCFValuePerShare, Convert.ToDecimal(CurrentMarketPrice));
 
                 result.Add(new DCFDisplayData() { PropertyName = "Present Value of Explicit Forecast", Value = Convert.ToString(Math.Round(Convert.ToDecimal(PresentValueExplicitForecast), 1)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Terminal Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(TerminalValuePresent), 1)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Total Enterprise Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(totalEnterpriseValue), 1)) });
+                if (!WACCLessTGR)
+                {
+                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(TerminalValuePresent), 1)) });
+                    result.Add(new DCFDisplayData() { PropertyName = "Total Enterprise Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(totalEnterpriseValue), 1)) });
+                }
+                else
+                {
+                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value", Value = "WACC<TGR" });
+                    result.Add(new DCFDisplayData() { PropertyName = "Total Enterprise Value", Value = "WACC<TGR" });
+                }
                 result.Add(new DCFDisplayData() { PropertyName = "(+) Cash", Value = Convert.ToString(Math.Round(Convert.ToDecimal(cash), 1)) });
                 result.Add(new DCFDisplayData() { PropertyName = "(+) FV of Investments & Associates", Value = Convert.ToString(Math.Round(Convert.ToDecimal(FVInvestments), 1)) });
                 result.Add(new DCFDisplayData() { PropertyName = "(-) Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(grossDebt), 1)) });
                 result.Add(new DCFDisplayData() { PropertyName = "(-) FV of Minorities", Value = Convert.ToString(Math.Round(Convert.ToDecimal(FVMinorities), 1)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Equity Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(equityValue), 1)) });
+                if (!WACCLessTGR)
+                {
+                    result.Add(new DCFDisplayData() { PropertyName = "Equity Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(equityValue), 1)) });
+                }
+                else
+                {
+                    result.Add(new DCFDisplayData() { PropertyName = "Equity Value", Value = "WACC<TGR" });
+                }
                 result.Add(new DCFDisplayData() { PropertyName = "Number of Shares", Value = Convert.ToString(Math.Round(Convert.ToDecimal(numberOfShares), 2)) });
-                result.Add(new DCFDisplayData() { PropertyName = "DCF Value Per Share", Value = Convert.ToString(Math.Round(Convert.ToDecimal(DCFValuePerShare), 2)) });
-                result.Add(new DCFDisplayData() { PropertyName = "Upside/Downside", Value = Convert.ToString(Math.Round(Convert.ToDecimal(upsideDownside * 100), 1)) + "%" });
+                if (!WACCLessTGR)
+                {
+                    result.Add(new DCFDisplayData() { PropertyName = "DCF Value Per Share", Value = Convert.ToString(Math.Round(Convert.ToDecimal(DCFValuePerShare), 2)) });
+                    result.Add(new DCFDisplayData() { PropertyName = "Upside/Downside", Value = Convert.ToString(Math.Round(Convert.ToDecimal(upsideDownside * 100), 1)) + "%" });
+                }
+                else
+                {
+                    result.Add(new DCFDisplayData() { PropertyName = "DCF Value Per Share", Value = "WACC<TGR" });
+                    result.Add(new DCFDisplayData() { PropertyName = "Upside/Downside", Value = "WACC<TGR" });
+                }
                 SummaryDisplayData.Clear();
                 SummaryDisplayData.AddRange(result);
                 this.RaisePropertyChanged(() => this.SummaryData);
@@ -1439,8 +1490,14 @@ namespace GreenField.Gadgets.ViewModels
                 CalculationParameters.NumberOfShares = numberOfShares;
                 CalculationParameters.PresentValueOfForecast = PresentValueExplicitForecast;
                 CalculationParameters.GrossDebt = grossDebt;
-                GenerateSensitivityDisplayData();
-
+                if (!WACCLessTGR)
+                {
+                    GenerateSensitivityDisplayData();
+                }
+                else
+                {
+                    ClearSensitivityGrids();
+                }
             }
             catch (Exception ex)
             {
@@ -1461,9 +1518,6 @@ namespace GreenField.Gadgets.ViewModels
                 List<decimal> upSideValues = new List<decimal>();
                 List<decimal> TGR = new List<decimal>();
                 SensitivityDisplayData = new RangeObservableCollection<SensitivityData>();
-
-                //SensitivityDisplayData.Add(new SensitivityData() { C1 = "T.G.R", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
-
                 SensitivityData costOfEquityValues = SetFirstRow(CalculationParameters.CostOfEquity);
                 if (costOfEquityValues != null)
                 {
@@ -1471,9 +1525,7 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 Dictionary<int, decimal> VPS = new Dictionary<int, decimal>();
                 DCFValue result = new DCFValue();
-
                 CalculationParameters.TerminalGrowthRate = Convert.ToDecimal((CalculationParameters.TerminalGrowthRate)) - Convert.ToDecimal(5.0 / 1000.0);
-
                 for (int i = 0; i < 5; i++)
                 {
                     CalculationParameters.CostOfEquity = Convert.ToDecimal((CalculationParameters.CostOfEquity)) - Convert.ToDecimal(5.0 / 1000.0);
@@ -1488,10 +1540,7 @@ namespace GreenField.Gadgets.ViewModels
                         CalculationParameters.CostOfEquity = CalculationParameters.CostOfEquity + Convert.ToDecimal(25.0 / 10000.0);
                     }
                     data.C1 = (i + 1).ToString();
-
-                    //data.C2 = ((-5.0 + (i * 2.5)) / 10.0).ToString() + "%";
                     data.C2 = Math.Round((CalculationParameters.TerminalGrowthRate * 100), 2).ToString() + "%";
-
                     if (VPS.ContainsKey(0))
                         data.C3 = Convert.ToString(Math.Round(Convert.ToDecimal(VPS.Where(a => a.Key == 0).Select(a => a.Value).FirstOrDefault()), 2));
                     if (VPS.ContainsKey(1))
@@ -1514,15 +1563,11 @@ namespace GreenField.Gadgets.ViewModels
                 MaxUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Max() * 100, 2))) + " %";
                 MinUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Min() * 100, 2))) + " %";
                 AvgUpside = Convert.ToString((Math.Round(upSideValues.Select(a => a).Average() * 100, 2))) + " %";
-
                 CalculationParameters.TerminalGrowthRate = terminalValueGrowth;
-
                 SensitivityValues = SensitivityDisplayData;
                 RangeObservableCollection<SensitivityData> dataL = new RangeObservableCollection<SensitivityData>();
                 dataL.AddRange(SensitivityDisplayData.ToList());
-
                 List<SensitivityData> dataEPS = ListUtils.GetDeepCopy<SensitivityData>(SensitivityValues.ToList());
-
                 if (FWDEPS != 0)
                 {
                     GenerateSensitivityEPSData(dataEPS);
@@ -1547,41 +1592,30 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 RangeObservableCollection<SensitivityData> dataBVPS = new RangeObservableCollection<SensitivityData>();
-
                 foreach (SensitivityData item in sensitivityData)
                 {
                     dataBVPS.Add(item);
                 }
-
-                //dataBVPS.AddRange(sensitivityData.ToList());
                 dataBVPS.RemoveAt(0);
                 char[] redundantData = new char[] { '%' };
-
                 List<decimal> BVPS = new List<decimal>();
-
                 if (FWDBVPS == 0)
                     throw new Exception("FWD BVPS cannot be 0");
-
                 foreach (SensitivityData item in dataBVPS)
                 {
                     item.C1 = "";
                     item.C2 = "";
-
                     item.C3 = item.C3.Trim(redundantData);
                     item.C4 = item.C4.Trim(redundantData);
                     item.C5 = item.C5.Trim(redundantData);
                     item.C6 = item.C6.Trim(redundantData);
                     item.C7 = item.C7.Trim(redundantData);
                 }
-
                 int i = 1;
                 foreach (SensitivityData item in dataBVPS)
                 {
                     item.C1 = i.ToString();
-
-                    //item.C2 = (-0.50 + (i - 1) * 0.25).ToString();
                     item.C2 = Math.Round(((CalculationParameters.TerminalGrowthRate - (0.005M - (i - 1) * (0.0025M))) * 100), 2).ToString() + "%";
-
                     item.C3 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C3) / FWDBVPS)), 2));
                     item.C4 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C4) / FWDBVPS)), 2));
                     item.C5 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C5) / FWDBVPS)), 2));
@@ -1595,21 +1629,16 @@ namespace GreenField.Gadgets.ViewModels
                     i++;
                 }
                 SensitivityBVPS.Clear();
-
-                //SensitivityBVPS.Add(new SensitivityData() { C1 = "T.G.R", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
-
                 SensitivityData costOfEquityValues = SetFirstRow(CalculationParameters.CostOfEquity);
                 if (costOfEquityValues != null)
                 {
                     SensitivityBVPS.Add(costOfEquityValues);
                 }
-
                 SensitivityBVPS.AddRange(dataBVPS.ToList());
 
                 MaxBVPSShareVal = Convert.ToString(Math.Round(BVPS.Max(), 2));
                 MinBVPSShareVal = Convert.ToString(Math.Round(BVPS.Min(), 2));
                 AvgBVPSShareVal = Convert.ToString(Math.Round(BVPS.Average(), 2));
-
                 if (CurrentMarketPrice != 0)
                 {
                     MaxBVPSUpside = Convert.ToString(Math.Round(Convert.ToDecimal(Convert.ToDecimal(MaxBVPSShareVal) / CurrentMarketPrice - Convert.ToDecimal(1)) * 100, 2)) + "%";
@@ -1622,7 +1651,6 @@ namespace GreenField.Gadgets.ViewModels
                     MinBVPSUpside = " ";
                     AvgBVPSUpside = " ";
                 }
-
             }
             catch (Exception ex)
             {
@@ -1639,18 +1667,16 @@ namespace GreenField.Gadgets.ViewModels
             try
             {
                 RangeObservableCollection<SensitivityData> dataEPS = new RangeObservableCollection<SensitivityData>();
-
                 foreach (SensitivityData item in sensitivityData)
                 {
                     dataEPS.Add(item);
                 }
-                //dataEPS.AddRange(sensitivityData.ToList());
                 dataEPS.RemoveAt(0);
                 char[] redundantData = new char[] { '%' };
-
                 if (FWDEPS == 0)
+                {
                     throw new Exception("FWD EPS cannot be 0");
-                List<decimal> EPS = new List<decimal>();
+                } List<decimal> EPS = new List<decimal>();
                 foreach (SensitivityData item in dataEPS)
                 {
                     item.C1 = "";
@@ -1662,15 +1688,11 @@ namespace GreenField.Gadgets.ViewModels
                     item.C6 = item.C6.Trim(redundantData);
                     item.C7 = item.C7.Trim(redundantData);
                 }
-
                 int i = 1;
                 foreach (SensitivityData item in dataEPS)
                 {
                     item.C1 = i.ToString();
-
-                    //item.C2 = (-0.50 + (i - 1) * 0.25).ToString() + "%";
                     item.C2 = Math.Round(((CalculationParameters.TerminalGrowthRate - (0.005M - (i - 1) * (0.0025M))) * 100), 2).ToString() + "%";
-
                     item.C3 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C3) / FWDEPS)), 2));
                     item.C4 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C4) / FWDEPS)), 2));
                     item.C5 = Convert.ToString(Math.Round(Convert.ToDecimal((Convert.ToDecimal(item.C5) / FWDEPS)), 2));
@@ -1684,7 +1706,6 @@ namespace GreenField.Gadgets.ViewModels
                     i++;
                 }
                 SensitivityBPS.Clear();
-                //SensitivityBPS.Add(new SensitivityData() { C1 = "T.G.R", C2 = "", C3 = "-0.50%", C4 = "-0.25%", C5 = "0%", C6 = "0.25%", C7 = "0.50%" });
                 SensitivityData costOfEquityValues = SetFirstRow(CalculationParameters.CostOfEquity);
                 if (costOfEquityValues != null)
                 {
@@ -1692,7 +1713,6 @@ namespace GreenField.Gadgets.ViewModels
                 }
 
                 SensitivityBPS.AddRange(dataEPS.ToList());
-
                 MaxEPSShareVal = Convert.ToString(Math.Round(EPS.Max(), 2));
                 MinEPSShareVal = Convert.ToString(Math.Round(EPS.Min(), 2));
                 AvgEPSShareVal = Convert.ToString(Math.Round(EPS.Average(), 2));
@@ -1746,6 +1766,34 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Clear Sensitivity Grids when WACC is less then TGR
+        /// </summary>
+        private void ClearSensitivityGrids()
+        {
+            SensitivityValues = new RangeObservableCollection<SensitivityData>();
+            SensitivityBVPS = new RangeObservableCollection<SensitivityData>();
+            SensitivityBPS = new RangeObservableCollection<SensitivityData>();
+            MaxShareVal = string.Empty;
+            MinShareVal = string.Empty;
+            AvgShareVal = string.Empty;
+            MaxUpside = string.Empty;
+            MinUpside = string.Empty;
+            AvgUpside = string.Empty;
+            MaxBVPSShareVal = string.Empty;
+            MinBVPSShareVal = string.Empty;
+            AvgBVPSShareVal = string.Empty;
+            MaxBVPSUpside = string.Empty;
+            MinBVPSUpside = string.Empty;
+            AvgBVPSUpside = string.Empty;
+            MaxEPSShareVal = string.Empty;
+            MinEPSShareVal = string.Empty;
+            AvgEPSShareVal = string.Empty;
+            MaxEPSUpside = string.Empty;
+            MinEPSUpside = string.Empty;
+            AvgEPSUpside = string.Empty;
         }
 
         #endregion

@@ -680,7 +680,7 @@ namespace GreenField.Web.Helpers
                 CheckInternalIssuer();
                 if (QuarterelyOverrideEnabled)
                 {
-                    DeleteInternalIssuerQuarterelyDistribution(ModelReferenceData.IssuerId, RootSource);                    
+                    DeleteInternalIssuerQuarterelyDistribution(ModelReferenceData.IssuerId, RootSource);
                     InsertIntoInternalIssuerQuarterelyDistribution();
                 }
                 else
@@ -1012,11 +1012,18 @@ namespace GreenField.Web.Helpers
                     {
                         periodYear = Convert.ToInt32(year.Value);
                         internalCOAChangesData = FetchInternalCOAChangesData(issuerId, rootSource, item.COA, periodYear, currency);
-                        amount = (decimal?)ModelUploadData.Where(a => a.COA == item.COA && a.Year == year.Key).Select(a => a.Amount).FirstOrDefault();
+                        if (ModelUploadData.Any(a => a.COA == item.COA && a.Year == year.Key))
+                        {
+                            amount = Decimal.Parse(ModelUploadData.Where(a => a.COA == item.COA && a.Year == year.Key).Select(a => a.Amount).FirstOrDefault() as string);
+                        }
+                        else
+                        {
+                            amount = null;
+                        }
                         DateTime? periodEndDate = PeriodEndDate.Where(a => a.Key == year.Key).Select(a => a.Value).FirstOrDefault();
                         if (amount != null)
                         {
-                            convertFlag = Convert.ToString(COACodes.Where(a => a.COA == item.COA).Select(a => a.CONVERT_FLAG).FirstOrDefault());
+                            convertFlag = Convert.ToString(COACodes.Where(a => a.COA.ToUpper().Trim() == item.COA.ToUpper().Trim()).Select(a => a.CONVERT_FLAG).FirstOrDefault());
                             if (convertFlag != null)
                             {
                                 if (convertFlag.ToUpper().Trim() == "Y")
