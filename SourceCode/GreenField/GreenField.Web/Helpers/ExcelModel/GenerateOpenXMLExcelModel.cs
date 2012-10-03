@@ -67,6 +67,13 @@ namespace GreenField.Web.ExcelModel
             set { _commodities = value; }
         }
 
+        private static DoubleValue _maxWidth;
+        public static DoubleValue MaxWidth
+        {
+            get { return _maxWidth; }
+            set { _maxWidth = value; }
+        }
+        
 
         #endregion
 
@@ -356,7 +363,7 @@ namespace GreenField.Web.ExcelModel
             }
 
             DoubleValue maxWidth = GetColumnWidth(maxLengthStr);
-
+            MaxWidth = maxWidth;
             Column firstColumn = new Column() { Min = 2U, Max = 2U, Width = maxWidth };
 
             Columns sheetColumns = new Columns();
@@ -421,6 +428,10 @@ namespace GreenField.Web.ExcelModel
             var row = new Row { RowIndex = 1 };
             sheetData.Append(row);
             int firstYear = DateTime.Today.Year;
+            SheetFormatProperties sheetFormatProperties1;
+            Columns sheetColumns = new Columns();
+            Column firstColumn = new Column() { Min = 2U, Max = 2U, Width = MaxWidth };
+            sheetColumns.Append(firstColumn);
 
             var cell = new Cell();
 
@@ -440,6 +451,9 @@ namespace GreenField.Web.ExcelModel
             DataValidations dataValidations1 = new DataValidations() { Count = (UInt32Value)1U };
             dataValidations1 = ValidationsCommodityMeasure(dataValidations1);
 
+            sheetFormatProperties1 = new SheetFormatProperties() { DefaultRowHeight = 15D, OutlineLevelColumn = 1, DyDescent = 0.25D };
+            worksheet.Append(sheetFormatProperties1);
+            worksheet.Append(sheetColumns);
             worksheet.Append(sheetData);
             worksheet.Append(dataValidations1);
             GenerateSecondRowModelUpload(worksheetPart);
@@ -467,31 +481,31 @@ namespace GreenField.Web.ExcelModel
             row.InsertAt(cell, 0);
 
             cell = new Cell();
-            cell = CreateTextCell("Period EndDate");
+            cell = CreateHeaderCell("Period EndDate");
             row.InsertAt(cell, 1);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 2);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 3);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 4);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 5);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 6);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 7);
 
             #endregion
@@ -515,31 +529,31 @@ namespace GreenField.Web.ExcelModel
             row.InsertAt(cell, 0);
 
             cell = new Cell();
-            cell = CreateTextCell("Period Length (In Months) ");
+            cell = CreateHeaderCell("Period Length (In Months) ");
             row.InsertAt(cell, 1);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 2);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 3);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 4);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 5);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 6);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 7);
 
             #endregion
@@ -563,31 +577,31 @@ namespace GreenField.Web.ExcelModel
             row.InsertAt(cell, 0);
 
             cell = new Cell();
-            cell = CreateTextCell("Actual(Reported) Override");
+            cell = CreateHeaderCell("Actual(Reported) Override");
             row.InsertAt(cell, 1);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 2);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 3);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 4);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 5);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 6);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 7);
 
             #endregion
@@ -611,31 +625,31 @@ namespace GreenField.Web.ExcelModel
             row.InsertAt(cell, 0);
 
             cell = new Cell();
-            cell = CreateTextCell("Commodity Measure");
+            cell = CreateHeaderCell("Commodity Measure");
             row.InsertAt(cell, 1);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 2);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 3);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 4);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 5);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 6);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 7);
 
             #endregion
@@ -659,31 +673,31 @@ namespace GreenField.Web.ExcelModel
             row.InsertAt(cell, 0);
 
             cell = new Cell();
-            cell = CreateTextCell("Commodity Forecast Used");
+            cell = CreateHeaderCell("Commodity Forecast Used");
             row.InsertAt(cell, 1);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 2);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 3);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 4);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 5);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 6);
 
             cell = new Cell();
-            cell = CreateTextCell(" ");
+            cell = CreateHeaderCell(" ");
             row.InsertAt(cell, 7);
 
             #endregion

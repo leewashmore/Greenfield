@@ -22,14 +22,16 @@ namespace GreenField.Gadgets.Views
     /// </summary>
     public partial class ViewExcelModelUpload : ViewBaseUserControl
     {
+        /// <summary>
+        /// Instance of View-Model
+        /// </summary>
         private ViewModelExcelModelUpload dataContextSource;
         public ViewModelExcelModelUpload DataContextSource
         {
             get { return dataContextSource; }
             set { dataContextSource = value; }
         }
-
-
+        
         #region Constructor
 
         /// <summary>
