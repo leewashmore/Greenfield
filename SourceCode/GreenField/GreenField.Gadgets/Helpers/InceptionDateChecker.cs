@@ -153,7 +153,7 @@ namespace GreenField.Web.Helpers
         /// <param name="inceptionDate">inception date</param>
         /// <param name="selectedDate">selected date</param>
         /// <returns></returns>
-        private static bool ValidateInceptionDate(string periodType, DateTime inceptionDate, DateTime selectedDate)
+        public static bool ValidateInceptionDate(string periodType, DateTime inceptionDate, DateTime selectedDate)
         {
             bool isValid = false;
             DateTime startDate;
