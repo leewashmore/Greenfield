@@ -983,6 +983,7 @@ namespace GreenField.Web.Helpers
             }
             catch (Exception ex)
             {
+                ExceptionMessage = ex.Message;
                 ExceptionTrace.LogException(ex);
                 throw;
             }
