@@ -535,7 +535,7 @@ namespace BenchmarkNodeFinancials
             {                
                 XDocument doc = GetEntityXml<GroupedBenchmarkNodeData>(groupedFinalData);
                 _entity.InsertIntoBenchmarkNodeFinancials(doc.ToString());
-                _log.Debug("Insertion Completed for Benchmark : " + benId);
+                _log.Debug(String.Format("Insertion Completed for Benchmark {0}. Number of rows: {1}", benId,groupedFinalData.Count));
             }
             catch (Exception ex)
             {
