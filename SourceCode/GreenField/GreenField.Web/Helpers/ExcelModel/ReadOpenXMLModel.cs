@@ -687,7 +687,7 @@ namespace GreenField.Web.Helpers
                     DeleteInternalIssuerQuarterelyDistribution(ModelReferenceData.IssuerId, RootSource);
                 }
                 CheckInternalIssuer();
-                SetInterimAmountsServiceCall(ModelReferenceData.IssuerId);
+                SetInterimAmountsServiceCall(ModelReferenceData.IssuerId, RootSource);
                 GetDataServiceCall(ModelReferenceData.IssuerId, "Y");
 
                 CheckInternalModelLoad();
@@ -2730,12 +2730,12 @@ namespace GreenField.Web.Helpers
         /// Service Call for Set_Interim_Amounts
         /// </summary>
         /// <param name="issuerId">IssuerId</param>
-        private void SetInterimAmountsServiceCall(string issuerId)
+        private void SetInterimAmountsServiceCall(string issuerId, string root_Source)
         {
             try
             {
                 InvalidValue = "Issuer Id= " + issuerId;
-                ExternalResearchEntity.SET_INTERIM_AMOUNTS(Convert.ToInt32(issuerId));
+                ExternalResearchEntity.SET_INTERIM_AMOUNTS(issuerId, root_Source);
             }
             catch (Exception ex)
             {

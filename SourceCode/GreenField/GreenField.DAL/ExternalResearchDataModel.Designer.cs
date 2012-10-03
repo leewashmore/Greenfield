@@ -2593,19 +2593,30 @@ namespace GreenField.DAL
         /// No Metadata Documentation available.
         /// </summary>
         /// <param name="iSSUER_ID">No Metadata Documentation available.</param>
-        public int SET_INTERIM_AMOUNTS(Nullable<global::System.Int32> iSSUER_ID)
+        /// <param name="dATA_SOURCE">No Metadata Documentation available.</param>
+        public int SET_INTERIM_AMOUNTS(global::System.String iSSUER_ID, global::System.String dATA_SOURCE)
         {
             ObjectParameter iSSUER_IDParameter;
-            if (iSSUER_ID.HasValue)
+            if (iSSUER_ID != null)
             {
                 iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", iSSUER_ID);
             }
             else
             {
-                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.Int32));
+                iSSUER_IDParameter = new ObjectParameter("ISSUER_ID", typeof(global::System.String));
             }
     
-            return base.ExecuteFunction("SET_INTERIM_AMOUNTS", iSSUER_IDParameter);
+            ObjectParameter dATA_SOURCEParameter;
+            if (dATA_SOURCE != null)
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", dATA_SOURCE);
+            }
+            else
+            {
+                dATA_SOURCEParameter = new ObjectParameter("DATA_SOURCE", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction("SET_INTERIM_AMOUNTS", iSSUER_IDParameter, dATA_SOURCEParameter);
         }
     
         /// <summary>

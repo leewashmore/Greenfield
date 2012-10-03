@@ -846,7 +846,8 @@
           <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="SET_INTERIM_AMOUNTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="int" Mode="In" />
+          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
         </Function>
         <Function Name="SetFairValue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
@@ -1167,7 +1168,8 @@
             <Parameter Name="LASTINDUSTRYMODELLOAD" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="SET_INTERIM_AMOUNTS">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="Int32" />
+          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="Get_Data">
             <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
