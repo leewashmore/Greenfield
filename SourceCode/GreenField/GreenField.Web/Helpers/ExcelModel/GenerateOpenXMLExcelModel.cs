@@ -76,7 +76,7 @@ namespace GreenField.Web.ExcelModel
         /// <param name="financialData"></param>
         /// <param name="consensusData"></param>
         /// <returns></returns>
-        public static byte[] GenerateExcel(List<FinancialStatementData> financialData, List<ModelConsensusEstimatesData> consensusData, string currencyReuters, string currencyConsensus, ExcelModelData modelData)
+        public static byte[] GenerateExcel(List<FinancialStatementDataModels> financialData, List<ModelConsensusEstimatesData> consensusData, string currencyReuters, string currencyConsensus, ExcelModelData modelData)
         {
             try
             {
@@ -267,7 +267,7 @@ namespace GreenField.Web.ExcelModel
         /// </summary>
         /// <param name="worksheetPart"></param>
         /// <param name="financialData"></param>
-        private static void InsertValuesInWorksheet(WorksheetPart worksheetPart, List<FinancialStatementData> financialData)
+        private static void InsertValuesInWorksheet(WorksheetPart worksheetPart, List<FinancialStatementDataModels> financialData)
         {
             var worksheet = worksheetPart.Worksheet;
             var sheetData = worksheet.GetFirstChild<SheetData>();
@@ -277,17 +277,17 @@ namespace GreenField.Web.ExcelModel
             List<int> dataIds = financialData.Select(a => Convert.ToInt32((a.DataId))).Distinct().ToList();
             var maxRowCount = dataIds.Count + 2;
             int rowIndex = 2;
-            List<int> financialPeriodYears = financialData.Select(a => a.PeriodYear).OrderBy(a => a).Distinct().ToList();
+            List<int?> financialPeriodYears = financialData.Select(a => a.PeriodYear).OrderBy(a => a).Distinct().ToList();
 
-            int firstYear = financialData.Select(a => a.PeriodYear).OrderBy(a => a).FirstOrDefault();
-            int lastYear = financialData.Select(a => a.PeriodYear).OrderByDescending(a => a).FirstOrDefault();
+            int? firstYear = financialData.Where(a => a.PeriodYear != null).Select(a => a.PeriodYear).OrderBy(a => a).FirstOrDefault();
+            int? lastYear = financialData.Where(a => a.PeriodYear != null).Select(a => a.PeriodYear).OrderByDescending(a => a).FirstOrDefault();
 
-            int numberOfYears = lastYear - firstYear;
+            int? numberOfYears = lastYear - firstYear;
             while (row.RowIndex < maxRowCount)
             {
                 foreach (int item in dataIds)
                 {
-                    firstYear = financialData.Select(a => a.PeriodYear).OrderBy(a => a).FirstOrDefault();
+                    firstYear = financialData.Where(a => a.PeriodYear != null).Select(a => a.PeriodYear).OrderBy(a => a).FirstOrDefault();
                     var cell = CreateNumberCell(Convert.ToDecimal(financialData.Where(a => a.DataId == item).Select(a => a.DataId).FirstOrDefault()));
                     row.InsertAt(cell, 0);
                     cell = new Cell();
@@ -334,16 +334,16 @@ namespace GreenField.Web.ExcelModel
         /// </summary>
         /// <param name="worksheetPart"></param>
         /// <param name="financialData"></param>
-        private static void GenerateReutersHeaders(WorksheetPart worksheetPart, List<FinancialStatementData> financialData, string currency)
+        private static void GenerateReutersHeaders(WorksheetPart worksheetPart, List<FinancialStatementDataModels> financialData, string currency)
         {
             var worksheet = worksheetPart.Worksheet;
             SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
             SheetFormatProperties sheetFormatProperties1;
             var row = new Row { RowIndex = 1 };
             sheetData.Append(row);
-            int firstYear = financialData.Select(a => a.PeriodYear).OrderBy(a => a).FirstOrDefault();
-            int lastYear = financialData.Select(a => a.PeriodYear).OrderByDescending(a => a).FirstOrDefault();
-            int numberOfYears = lastYear - firstYear;
+            int? firstYear = financialData.Where(a => a.PeriodYear != null).Select(a => a.PeriodYear).OrderBy(a => a).FirstOrDefault();
+            int? lastYear = financialData.Where(a => a.PeriodYear != null).Select(a => a.PeriodYear).OrderByDescending(a => a).FirstOrDefault();
+            int? numberOfYears = lastYear - firstYear;
             string maxLengthStr;
             if (financialData.Count != 0)
             {
@@ -439,7 +439,7 @@ namespace GreenField.Web.ExcelModel
             }
             DataValidations dataValidations1 = new DataValidations() { Count = (UInt32Value)1U };
             dataValidations1 = ValidationsCommodityMeasure(dataValidations1);
-            
+
             worksheet.Append(sheetData);
             worksheet.Append(dataValidations1);
             GenerateSecondRowModelUpload(worksheetPart);
@@ -739,7 +739,7 @@ namespace GreenField.Web.ExcelModel
             commodityList.Append('"');
 
             #region DataValidations
-            
+
             DataValidation dataValidation1 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "C5" } };
             DataValidation dataValidation2 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "D5" } };
             DataValidation dataValidation3 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "E5" } };
@@ -991,7 +991,7 @@ namespace GreenField.Web.ExcelModel
             dataValidation2.Append(formula12);
 
             dataValidations1.Append(dataValidation2);
-            
+
             worksheet.Append(sheetData);
             worksheet.Append(dataValidations1);
 

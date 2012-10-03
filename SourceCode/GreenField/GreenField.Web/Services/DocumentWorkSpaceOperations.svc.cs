@@ -544,7 +544,7 @@ namespace GreenField.Web.Services
         public byte[] RetrieveStatementData(EntitySelectionData selectedSecurity)
         {
             List<ModelConsensusEstimatesData> resultConsensus = new List<ModelConsensusEstimatesData>();
-            List<FinancialStatementData> resultReuters = new List<FinancialStatementData>();
+            List<FinancialStatementDataModels> resultReuters = new List<FinancialStatementDataModels>();
             List<FinancialStatementData> resultStatement = new List<FinancialStatementData>();
             List<string> commodities = new List<string>();
             ExcelModelData modelData = new ExcelModelData();
@@ -598,7 +598,7 @@ namespace GreenField.Web.Services
                     }
                     else
                     {
-                        resultReuters = new List<FinancialStatementData>();
+                        resultReuters = new List<FinancialStatementDataModels>();
                     }
                 }
                 resultReuters = resultReuters.Where(a => a.PeriodYear != 2300).ToList();
@@ -699,15 +699,15 @@ namespace GreenField.Web.Services
         /// <param name="issuerId"></param>
         /// <param name="currency"></param>
         /// <returns></returns>
-        private List<FinancialStatementData> RetrieveFinancialData(string issuerId, string currency)
+        private List<FinancialStatementDataModels> RetrieveFinancialData(string issuerId, string currency)
         {
             try
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-                List<FinancialStatementData> resultReuters = new List<FinancialStatementData>();
+                List<FinancialStatementDataModels> resultReuters = new List<FinancialStatementDataModels>();
                 List<FinancialStatementType> statementType = new List<FinancialStatementType>() { FinancialStatementType.INCOME_STATEMENT, FinancialStatementType.BALANCE_SHEET, FinancialStatementType.CASH_FLOW_STATEMENT };
                 List<FinancialStatementPeriodType> periodType = new List<FinancialStatementPeriodType>() { FinancialStatementPeriodType.ANNUAL, FinancialStatementPeriodType.QUARTERLY };
-                List<FinancialStatementData> resultStatement = new List<FinancialStatementData>();
+                List<FinancialStatementDataModels> resultStatement = new List<FinancialStatementDataModels>();
 
                 foreach (FinancialStatementType item in statementType)
                 {

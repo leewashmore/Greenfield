@@ -4,891 +4,926 @@
 	<edmx:Runtime>
 		<!-- SSDL content -->
 		<edmx:StorageModels>
-		<Schema Namespace="ExternalResearchModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
-        <EntityContainer Name="ExternalResearchModelStoreContainer">
-          <EntitySet Name="CONSENSUS_MASTER" EntityType="ExternalResearchModel.Store.CONSENSUS_MASTER" store:Type="Tables" store:Schema="dbo" store:Name="CONSENSUS_MASTER">
-            <DefiningQuery>SELECT 
-      [CONSENSUS_MASTER].[ESTIMATE_ID] AS [ESTIMATE_ID], 
-      [CONSENSUS_MASTER].[ESTIMATE_TYPE] AS [ESTIMATE_TYPE], 
-      [CONSENSUS_MASTER].[FX_CONV_TYPE] AS [FX_CONV_TYPE], 
-      [CONSENSUS_MASTER].[CALENDARIZE] AS [CALENDARIZE], 
-      [CONSENSUS_MASTER].[INDUSTRIAL] AS [INDUSTRIAL], 
-      [CONSENSUS_MASTER].[BANK] AS [BANK], 
-      [CONSENSUS_MASTER].[INSURANCE] AS [INSURANCE], 
-      [CONSENSUS_MASTER].[UTILITY] AS [UTILITY], 
-      [CONSENSUS_MASTER].[ESTIMATE_DESC] AS [ESTIMATE_DESC], 
-      [CONSENSUS_MASTER].[ANNUAL] AS [ANNUAL], 
-      [CONSENSUS_MASTER].[QUARTERLY] AS [QUARTERLY], 
-      [CONSENSUS_MASTER].[CURRENT] AS [CURRENT]
-      FROM [dbo].[CONSENSUS_MASTER] AS [CONSENSUS_MASTER]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Country_Master" EntityType="ExternalResearchModel.Store.Country_Master" store:Type="Tables" store:Schema="dbo" store:Name="Country_Master">
-            <DefiningQuery>SELECT 
-      [Country_Master].[COUNTRY_CODE] AS [COUNTRY_CODE], 
-      [Country_Master].[COUNTRY_NAME] AS [COUNTRY_NAME], 
-      [Country_Master].[CURRENCY_CODE] AS [CURRENCY_CODE], 
-      [Country_Master].[CURRENCY_NAME] AS [CURRENCY_NAME], 
-      [Country_Master].[MACRO_ECON_DATA_CURRENT] AS [MACRO_ECON_DATA_CURRENT], 
-      [Country_Master].[ASHEMM_PROPRIETARY_REGION_NAME] AS [ASHEMM_PROPRIETARY_REGION_NAME], 
-      [Country_Master].[ASHEMM_PROPRIETARY_REGION_CODE] AS [ASHEMM_PROPRIETARY_REGION_CODE]
-      FROM [dbo].[Country_Master] AS [Country_Master]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="CURRENT_CONSENSUS_ESTIMATES" EntityType="ExternalResearchModel.Store.CURRENT_CONSENSUS_ESTIMATES" store:Type="Tables" store:Schema="dbo" store:Name="CURRENT_CONSENSUS_ESTIMATES">
-            <DefiningQuery>SELECT 
-      [CURRENT_CONSENSUS_ESTIMATES].[ISSUER_ID] AS [ISSUER_ID], 
-      [CURRENT_CONSENSUS_ESTIMATES].[SECURITY_ID] AS [SECURITY_ID], 
-      [CURRENT_CONSENSUS_ESTIMATES].[DATA_SOURCE] AS [DATA_SOURCE], 
-      [CURRENT_CONSENSUS_ESTIMATES].[DATA_SOURCE_DATE] AS [DATA_SOURCE_DATE], 
-      [CURRENT_CONSENSUS_ESTIMATES].[PERIOD_TYPE] AS [PERIOD_TYPE], 
-      [CURRENT_CONSENSUS_ESTIMATES].[PERIOD_YEAR] AS [PERIOD_YEAR], 
-      [CURRENT_CONSENSUS_ESTIMATES].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
-      [CURRENT_CONSENSUS_ESTIMATES].[FISCAL_TYPE] AS [FISCAL_TYPE], 
-      [CURRENT_CONSENSUS_ESTIMATES].[ESTIMATE_ID] AS [ESTIMATE_ID], 
-      [CURRENT_CONSENSUS_ESTIMATES].[CURRENCY] AS [CURRENCY], 
-      [CURRENT_CONSENSUS_ESTIMATES].[AMOUNT] AS [AMOUNT], 
-      [CURRENT_CONSENSUS_ESTIMATES].[NUMBER_OF_ESTIMATES] AS [NUMBER_OF_ESTIMATES], 
-      [CURRENT_CONSENSUS_ESTIMATES].[HIGH] AS [HIGH], 
-      [CURRENT_CONSENSUS_ESTIMATES].[LOW] AS [LOW], 
-      [CURRENT_CONSENSUS_ESTIMATES].[SOURCE_CURRENCY] AS [SOURCE_CURRENCY], 
-      [CURRENT_CONSENSUS_ESTIMATES].[STANDARD_DEVIATION] AS [STANDARD_DEVIATION], 
-      [CURRENT_CONSENSUS_ESTIMATES].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
-      FROM [dbo].[CURRENT_CONSENSUS_ESTIMATES] AS [CURRENT_CONSENSUS_ESTIMATES]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="DATA_MASTER" EntityType="ExternalResearchModel.Store.DATA_MASTER" store:Type="Tables" store:Schema="dbo" store:Name="DATA_MASTER">
-            <DefiningQuery>SELECT 
-      [DATA_MASTER].[DATA_ID] AS [DATA_ID], 
-      [DATA_MASTER].[COA] AS [COA], 
-      [DATA_MASTER].[FX_CONV_TYPE] AS [FX_CONV_TYPE], 
-      [DATA_MASTER].[CALENDARIZE] AS [CALENDARIZE], 
-      [DATA_MASTER].[INDUSTRIAL] AS [INDUSTRIAL], 
-      [DATA_MASTER].[BANK] AS [BANK], 
-      [DATA_MASTER].[INSURANCE] AS [INSURANCE], 
-      [DATA_MASTER].[UTILITY] AS [UTILITY], 
-      [DATA_MASTER].[QUARTERLY] AS [QUARTERLY], 
-      [DATA_MASTER].[DATA_DESC] AS [DATA_DESC], 
-      [DATA_MASTER].[COA_TYPE] AS [COA_TYPE], 
-      [DATA_MASTER].[ANNUAL] AS [ANNUAL], 
-      [DATA_MASTER].[CURRENT] AS [CURRENT], 
-      [DATA_MASTER].[STATEMENT_TYPE] AS [STATEMENT_TYPE], 
-      [DATA_MASTER].[CONVERT_FLAG] AS [CONVERT_FLAG]
-      FROM [dbo].[DATA_MASTER] AS [DATA_MASTER]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.Store.FAIR_VALUE" store:Type="Tables" store:Schema="dbo" store:Name="FAIR_VALUE">
-            <DefiningQuery>SELECT 
-      [FAIR_VALUE].[VALUE_TYPE] AS [VALUE_TYPE], 
-      [FAIR_VALUE].[SECURITY_ID] AS [SECURITY_ID], 
-      [FAIR_VALUE].[FV_MEASURE] AS [FV_MEASURE], 
-      [FAIR_VALUE].[FV_BUY] AS [FV_BUY], 
-      [FAIR_VALUE].[FV_SELL] AS [FV_SELL], 
-      [FAIR_VALUE].[CURRENT_MEASURE_VALUE] AS [CURRENT_MEASURE_VALUE], 
-      [FAIR_VALUE].[UPSIDE] AS [UPSIDE], 
-      [FAIR_VALUE].[UPDATED] AS [UPDATED]
-      FROM [dbo].[FAIR_VALUE] AS [FAIR_VALUE]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="FX_RATES" EntityType="ExternalResearchModel.Store.FX_RATES" store:Type="Tables" store:Schema="dbo" store:Name="FX_RATES">
-            <DefiningQuery>SELECT 
-      [FX_RATES].[CURRENCY] AS [CURRENCY], 
-      [FX_RATES].[FX_DATE] AS [FX_DATE], 
-      [FX_RATES].[FX_RATE] AS [FX_RATE], 
-      [FX_RATES].[AVG90DAYRATE] AS [AVG90DAYRATE], 
-      [FX_RATES].[AVG12MonthRATE] AS [AVG12MonthRATE]
-      FROM [dbo].[FX_RATES] AS [FX_RATES]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="INTERNAL_ISSUER" EntityType="ExternalResearchModel.Store.INTERNAL_ISSUER" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_ISSUER">
-            <DefiningQuery>SELECT 
-      [INTERNAL_ISSUER].[ISSUER_ID] AS [ISSUER_ID], 
-      [INTERNAL_ISSUER].[COA_TYPE] AS [COA_TYPE], 
-      [INTERNAL_ISSUER].[LastPrimaryModelLoad] AS [LastPrimaryModelLoad], 
-      [INTERNAL_ISSUER].[LastIndustryModelLoad] AS [LastIndustryModelLoad]
-      FROM [dbo].[INTERNAL_ISSUER] AS [INTERNAL_ISSUER]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ISSUER_SHARES" EntityType="ExternalResearchModel.Store.ISSUER_SHARES" store:Type="Tables" store:Schema="dbo" store:Name="ISSUER_SHARES">
-            <DefiningQuery>SELECT 
-      [ISSUER_SHARES].[ISSUER_ID] AS [ISSUER_ID], 
-      [ISSUER_SHARES].[SHARES_DATE] AS [SHARES_DATE], 
-      [ISSUER_SHARES].[SHARES_OUTSTANDING] AS [SHARES_OUTSTANDING]
-      FROM [dbo].[ISSUER_SHARES] AS [ISSUER_SHARES]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="ISSUER_SHARES_COMPOSITION" EntityType="ExternalResearchModel.Store.ISSUER_SHARES_COMPOSITION" store:Type="Tables" store:Schema="dbo" store:Name="ISSUER_SHARES_COMPOSITION">
-            <DefiningQuery>SELECT 
-      [ISSUER_SHARES_COMPOSITION].[ISSUER_ID] AS [ISSUER_ID], 
-      [ISSUER_SHARES_COMPOSITION].[SECURITY_ID] AS [SECURITY_ID]
-      FROM [dbo].[ISSUER_SHARES_COMPOSITION] AS [ISSUER_SHARES_COMPOSITION]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Macroeconomic_Data" EntityType="ExternalResearchModel.Store.Macroeconomic_Data" store:Type="Tables" store:Schema="dbo" store:Name="Macroeconomic_Data">
-            <DefiningQuery>SELECT 
-      [Macroeconomic_Data].[COUNTRY_CODE] AS [COUNTRY_CODE], 
-      [Macroeconomic_Data].[FIELD] AS [FIELD], 
-      [Macroeconomic_Data].[YEAR1] AS [YEAR1], 
-      [Macroeconomic_Data].[VALUE] AS [VALUE], 
-      [Macroeconomic_Data].[UPDATE_DATE] AS [UPDATE_DATE], 
-      [Macroeconomic_Data].[UPDATE_SOURCE] AS [UPDATE_SOURCE]
-      FROM [dbo].[Macroeconomic_Data] AS [Macroeconomic_Data]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="Macroeconomic_Display" EntityType="ExternalResearchModel.Store.Macroeconomic_Display" store:Type="Tables" store:Schema="dbo" store:Name="Macroeconomic_Display">
-            <DefiningQuery>SELECT 
-      [Macroeconomic_Display].[DISPLAY_TYPE] AS [DISPLAY_TYPE], 
-      [Macroeconomic_Display].[FIELD] AS [FIELD], 
-      [Macroeconomic_Display].[CATEGORY_NAME] AS [CATEGORY_NAME], 
-      [Macroeconomic_Display].[FIELD_DESC] AS [FIELD_DESC], 
-      [Macroeconomic_Display].[DATATYPE] AS [DATATYPE], 
-      [Macroeconomic_Display].[DECIMALS] AS [DECIMALS], 
-      [Macroeconomic_Display].[SORT_ORDER] AS [SORT_ORDER], 
-      [Macroeconomic_Display].[HELP_TEXT] AS [HELP_TEXT]
-      FROM [dbo].[Macroeconomic_Display] AS [Macroeconomic_Display]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="MODEL_INPUTS_CTY" EntityType="ExternalResearchModel.Store.MODEL_INPUTS_CTY" store:Type="Tables" store:Schema="dbo" store:Name="MODEL_INPUTS_CTY">
-            <DefiningQuery>SELECT 
-      [MODEL_INPUTS_CTY].[COUNTRY_CODE] AS [COUNTRY_CODE], 
-      [MODEL_INPUTS_CTY].[RISK_PREM] AS [RISK_PREM], 
-      [MODEL_INPUTS_CTY].[RISK_FREE_RATE] AS [RISK_FREE_RATE], 
-      [MODEL_INPUTS_CTY].[LONG_TERM_GDP_GR] AS [LONG_TERM_GDP_GR]
-      FROM [dbo].[MODEL_INPUTS_CTY] AS [MODEL_INPUTS_CTY]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="PERIOD_FINANCIALS" EntityType="ExternalResearchModel.Store.PERIOD_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="PERIOD_FINANCIALS">
-            <DefiningQuery>SELECT 
-      [PERIOD_FINANCIALS].[ISSUER_ID] AS [ISSUER_ID], 
-      [PERIOD_FINANCIALS].[SECURITY_ID] AS [SECURITY_ID], 
-      [PERIOD_FINANCIALS].[COA_TYPE] AS [COA_TYPE], 
-      [PERIOD_FINANCIALS].[DATA_SOURCE] AS [DATA_SOURCE], 
-      [PERIOD_FINANCIALS].[ROOT_SOURCE] AS [ROOT_SOURCE], 
-      [PERIOD_FINANCIALS].[ROOT_SOURCE_DATE] AS [ROOT_SOURCE_DATE], 
-      [PERIOD_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE], 
-      [PERIOD_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR], 
-      [PERIOD_FINANCIALS].[PERIOD_END_DATE] AS [PERIOD_END_DATE], 
-      [PERIOD_FINANCIALS].[FISCAL_TYPE] AS [FISCAL_TYPE], 
-      [PERIOD_FINANCIALS].[CURRENCY] AS [CURRENCY], 
-      [PERIOD_FINANCIALS].[DATA_ID] AS [DATA_ID], 
-      [PERIOD_FINANCIALS].[AMOUNT] AS [AMOUNT], 
-      [PERIOD_FINANCIALS].[CALCULATION_DIAGRAM] AS [CALCULATION_DIAGRAM], 
-      [PERIOD_FINANCIALS].[SOURCE_CURRENCY] AS [SOURCE_CURRENCY], 
-      [PERIOD_FINANCIALS].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
-      FROM [dbo].[PERIOD_FINANCIALS] AS [PERIOD_FINANCIALS]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="PERIOD_FINANCIALS_DISPLAY" EntityType="ExternalResearchModel.Store.PERIOD_FINANCIALS_DISPLAY" store:Type="Tables" store:Schema="dbo" store:Name="PERIOD_FINANCIALS_DISPLAY">
-            <DefiningQuery>SELECT 
-      [PERIOD_FINANCIALS_DISPLAY].[DATA_ID] AS [DATA_ID], 
-      [PERIOD_FINANCIALS_DISPLAY].[DATA_DESC] AS [DATA_DESC], 
-      [PERIOD_FINANCIALS_DISPLAY].[STATEMENT_TYPE] AS [STATEMENT_TYPE], 
-      [PERIOD_FINANCIALS_DISPLAY].[COA_TYPE] AS [COA_TYPE], 
-      [PERIOD_FINANCIALS_DISPLAY].[SORT_ORDER] AS [SORT_ORDER], 
-      [PERIOD_FINANCIALS_DISPLAY].[GROUP_NAME] AS [GROUP_NAME], 
-      [PERIOD_FINANCIALS_DISPLAY].[BOLD_FONT] AS [BOLD_FONT], 
-      [PERIOD_FINANCIALS_DISPLAY].[DECIMALS] AS [DECIMALS], 
-      [PERIOD_FINANCIALS_DISPLAY].[MULTIPLIER] AS [MULTIPLIER]
-      FROM [dbo].[PERIOD_FINANCIALS_DISPLAY] AS [PERIOD_FINANCIALS_DISPLAY]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.Store.PORTFOLIO_SECURITY_TARGETS" store:Type="Tables" store:Schema="dbo" store:Name="PORTFOLIO_SECURITY_TARGETS">
-            <DefiningQuery>SELECT 
-      [PORTFOLIO_SECURITY_TARGETS].[PORTFOLIO_ID] AS [PORTFOLIO_ID], 
-      [PORTFOLIO_SECURITY_TARGETS].[SECURITY_ID] AS [SECURITY_ID], 
-      [PORTFOLIO_SECURITY_TARGETS].[TARGET_PCT] AS [TARGET_PCT], 
-      [PORTFOLIO_SECURITY_TARGETS].[UPDATED] AS [UPDATED]
-      FROM [dbo].[PORTFOLIO_SECURITY_TARGETS] AS [PORTFOLIO_SECURITY_TARGETS]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="PRICES" EntityType="ExternalResearchModel.Store.PRICES" store:Type="Tables" store:Schema="dbo" store:Name="PRICES">
-            <DefiningQuery>SELECT 
-      [PRICES].[SECURITY_ID] AS [SECURITY_ID], 
-      [PRICES].[PRICE_DATE] AS [PRICE_DATE], 
-      [PRICES].[PRICE] AS [PRICE], 
-      [PRICES].[FX_RATE] AS [FX_RATE], 
-      [PRICES].[ADR_CONV] AS [ADR_CONV]
-      FROM [dbo].[PRICES] AS [PRICES]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.Store.REUTERS_XREF" store:Type="Tables" store:Schema="dbo" store:Name="REUTERS_XREF">
-            <DefiningQuery>SELECT 
-      [REUTERS_XREF].[ReportNumber] AS [ReportNumber], 
-      [REUTERS_XREF].[Xref] AS [Xref], 
-      [REUTERS_XREF].[ISSUER_ID] AS [ISSUER_ID], 
-      [REUTERS_XREF].[SECURITY_ID] AS [SECURITY_ID], 
-      [REUTERS_XREF].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME], 
-      [REUTERS_XREF].[NAME] AS [NAME], 
-      [REUTERS_XREF].[PROVIDER] AS [PROVIDER]
-      FROM [dbo].[REUTERS_XREF] AS [REUTERS_XREF]</DefiningQuery>
-          </EntitySet>
-        </EntityContainer>
-        <!--Errors Found During Generation:
+			<Schema Namespace="ExternalResearchModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+				<EntityContainer Name="ExternalResearchModelStoreContainer">
+					<EntitySet Name="CONSENSUS_MASTER" EntityType="ExternalResearchModel.Store.CONSENSUS_MASTER" store:Type="Tables" store:Schema="dbo" store:Name="CONSENSUS_MASTER">
+						<DefiningQuery>
+							SELECT
+							[CONSENSUS_MASTER].[ESTIMATE_ID] AS [ESTIMATE_ID],
+							[CONSENSUS_MASTER].[ESTIMATE_TYPE] AS [ESTIMATE_TYPE],
+							[CONSENSUS_MASTER].[FX_CONV_TYPE] AS [FX_CONV_TYPE],
+							[CONSENSUS_MASTER].[CALENDARIZE] AS [CALENDARIZE],
+							[CONSENSUS_MASTER].[INDUSTRIAL] AS [INDUSTRIAL],
+							[CONSENSUS_MASTER].[BANK] AS [BANK],
+							[CONSENSUS_MASTER].[INSURANCE] AS [INSURANCE],
+							[CONSENSUS_MASTER].[UTILITY] AS [UTILITY],
+							[CONSENSUS_MASTER].[ESTIMATE_DESC] AS [ESTIMATE_DESC],
+							[CONSENSUS_MASTER].[ANNUAL] AS [ANNUAL],
+							[CONSENSUS_MASTER].[QUARTERLY] AS [QUARTERLY],
+							[CONSENSUS_MASTER].[CURRENT] AS [CURRENT]
+							FROM [dbo].[CONSENSUS_MASTER] AS [CONSENSUS_MASTER]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="Country_Master" EntityType="ExternalResearchModel.Store.Country_Master" store:Type="Tables" store:Schema="dbo" store:Name="Country_Master">
+						<DefiningQuery>
+							SELECT
+							[Country_Master].[COUNTRY_CODE] AS [COUNTRY_CODE],
+							[Country_Master].[COUNTRY_NAME] AS [COUNTRY_NAME],
+							[Country_Master].[CURRENCY_CODE] AS [CURRENCY_CODE],
+							[Country_Master].[CURRENCY_NAME] AS [CURRENCY_NAME],
+							[Country_Master].[MACRO_ECON_DATA_CURRENT] AS [MACRO_ECON_DATA_CURRENT],
+							[Country_Master].[ASHEMM_PROPRIETARY_REGION_NAME] AS [ASHEMM_PROPRIETARY_REGION_NAME],
+							[Country_Master].[ASHEMM_PROPRIETARY_REGION_CODE] AS [ASHEMM_PROPRIETARY_REGION_CODE]
+							FROM [dbo].[Country_Master] AS [Country_Master]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="CURRENT_CONSENSUS_ESTIMATES" EntityType="ExternalResearchModel.Store.CURRENT_CONSENSUS_ESTIMATES" store:Type="Tables" store:Schema="dbo" store:Name="CURRENT_CONSENSUS_ESTIMATES">
+						<DefiningQuery>
+							SELECT
+							[CURRENT_CONSENSUS_ESTIMATES].[ISSUER_ID] AS [ISSUER_ID],
+							[CURRENT_CONSENSUS_ESTIMATES].[SECURITY_ID] AS [SECURITY_ID],
+							[CURRENT_CONSENSUS_ESTIMATES].[DATA_SOURCE] AS [DATA_SOURCE],
+							[CURRENT_CONSENSUS_ESTIMATES].[DATA_SOURCE_DATE] AS [DATA_SOURCE_DATE],
+							[CURRENT_CONSENSUS_ESTIMATES].[PERIOD_TYPE] AS [PERIOD_TYPE],
+							[CURRENT_CONSENSUS_ESTIMATES].[PERIOD_YEAR] AS [PERIOD_YEAR],
+							[CURRENT_CONSENSUS_ESTIMATES].[PERIOD_END_DATE] AS [PERIOD_END_DATE],
+							[CURRENT_CONSENSUS_ESTIMATES].[FISCAL_TYPE] AS [FISCAL_TYPE],
+							[CURRENT_CONSENSUS_ESTIMATES].[ESTIMATE_ID] AS [ESTIMATE_ID],
+							[CURRENT_CONSENSUS_ESTIMATES].[CURRENCY] AS [CURRENCY],
+							[CURRENT_CONSENSUS_ESTIMATES].[AMOUNT] AS [AMOUNT],
+							[CURRENT_CONSENSUS_ESTIMATES].[NUMBER_OF_ESTIMATES] AS [NUMBER_OF_ESTIMATES],
+							[CURRENT_CONSENSUS_ESTIMATES].[HIGH] AS [HIGH],
+							[CURRENT_CONSENSUS_ESTIMATES].[LOW] AS [LOW],
+							[CURRENT_CONSENSUS_ESTIMATES].[SOURCE_CURRENCY] AS [SOURCE_CURRENCY],
+							[CURRENT_CONSENSUS_ESTIMATES].[STANDARD_DEVIATION] AS [STANDARD_DEVIATION],
+							[CURRENT_CONSENSUS_ESTIMATES].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
+							FROM [dbo].[CURRENT_CONSENSUS_ESTIMATES] AS [CURRENT_CONSENSUS_ESTIMATES]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="DATA_MASTER" EntityType="ExternalResearchModel.Store.DATA_MASTER" store:Type="Tables" store:Schema="dbo" store:Name="DATA_MASTER">
+						<DefiningQuery>
+							SELECT
+							[DATA_MASTER].[DATA_ID] AS [DATA_ID],
+							[DATA_MASTER].[COA] AS [COA],
+							[DATA_MASTER].[FX_CONV_TYPE] AS [FX_CONV_TYPE],
+							[DATA_MASTER].[CALENDARIZE] AS [CALENDARIZE],
+							[DATA_MASTER].[INDUSTRIAL] AS [INDUSTRIAL],
+							[DATA_MASTER].[BANK] AS [BANK],
+							[DATA_MASTER].[INSURANCE] AS [INSURANCE],
+							[DATA_MASTER].[UTILITY] AS [UTILITY],
+							[DATA_MASTER].[QUARTERLY] AS [QUARTERLY],
+							[DATA_MASTER].[DATA_DESC] AS [DATA_DESC],
+							[DATA_MASTER].[COA_TYPE] AS [COA_TYPE],
+							[DATA_MASTER].[ANNUAL] AS [ANNUAL],
+							[DATA_MASTER].[CURRENT] AS [CURRENT],
+							[DATA_MASTER].[STATEMENT_TYPE] AS [STATEMENT_TYPE],
+							[DATA_MASTER].[CONVERT_FLAG] AS [CONVERT_FLAG]
+							FROM [dbo].[DATA_MASTER] AS [DATA_MASTER]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.Store.FAIR_VALUE" store:Type="Tables" store:Schema="dbo" store:Name="FAIR_VALUE">
+						<DefiningQuery>
+							SELECT
+							[FAIR_VALUE].[VALUE_TYPE] AS [VALUE_TYPE],
+							[FAIR_VALUE].[SECURITY_ID] AS [SECURITY_ID],
+							[FAIR_VALUE].[FV_MEASURE] AS [FV_MEASURE],
+							[FAIR_VALUE].[FV_BUY] AS [FV_BUY],
+							[FAIR_VALUE].[FV_SELL] AS [FV_SELL],
+							[FAIR_VALUE].[CURRENT_MEASURE_VALUE] AS [CURRENT_MEASURE_VALUE],
+							[FAIR_VALUE].[UPSIDE] AS [UPSIDE],
+							[FAIR_VALUE].[UPDATED] AS [UPDATED]
+							FROM [dbo].[FAIR_VALUE] AS [FAIR_VALUE]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="FX_RATES" EntityType="ExternalResearchModel.Store.FX_RATES" store:Type="Tables" store:Schema="dbo" store:Name="FX_RATES">
+						<DefiningQuery>
+							SELECT
+							[FX_RATES].[CURRENCY] AS [CURRENCY],
+							[FX_RATES].[FX_DATE] AS [FX_DATE],
+							[FX_RATES].[FX_RATE] AS [FX_RATE],
+							[FX_RATES].[AVG90DAYRATE] AS [AVG90DAYRATE],
+							[FX_RATES].[AVG12MonthRATE] AS [AVG12MonthRATE]
+							FROM [dbo].[FX_RATES] AS [FX_RATES]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="INTERNAL_ISSUER" EntityType="ExternalResearchModel.Store.INTERNAL_ISSUER" store:Type="Tables" store:Schema="dbo" store:Name="INTERNAL_ISSUER">
+						<DefiningQuery>
+							SELECT
+							[INTERNAL_ISSUER].[ISSUER_ID] AS [ISSUER_ID],
+							[INTERNAL_ISSUER].[COA_TYPE] AS [COA_TYPE],
+							[INTERNAL_ISSUER].[LastPrimaryModelLoad] AS [LastPrimaryModelLoad],
+							[INTERNAL_ISSUER].[LastIndustryModelLoad] AS [LastIndustryModelLoad]
+							FROM [dbo].[INTERNAL_ISSUER] AS [INTERNAL_ISSUER]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="ISSUER_SHARES" EntityType="ExternalResearchModel.Store.ISSUER_SHARES" store:Type="Tables" store:Schema="dbo" store:Name="ISSUER_SHARES">
+						<DefiningQuery>
+							SELECT
+							[ISSUER_SHARES].[ISSUER_ID] AS [ISSUER_ID],
+							[ISSUER_SHARES].[SHARES_DATE] AS [SHARES_DATE],
+							[ISSUER_SHARES].[SHARES_OUTSTANDING] AS [SHARES_OUTSTANDING]
+							FROM [dbo].[ISSUER_SHARES] AS [ISSUER_SHARES]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="ISSUER_SHARES_COMPOSITION" EntityType="ExternalResearchModel.Store.ISSUER_SHARES_COMPOSITION" store:Type="Tables" store:Schema="dbo" store:Name="ISSUER_SHARES_COMPOSITION">
+						<DefiningQuery>
+							SELECT
+							[ISSUER_SHARES_COMPOSITION].[ISSUER_ID] AS [ISSUER_ID],
+							[ISSUER_SHARES_COMPOSITION].[SECURITY_ID] AS [SECURITY_ID]
+							FROM [dbo].[ISSUER_SHARES_COMPOSITION] AS [ISSUER_SHARES_COMPOSITION]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="Macroeconomic_Data" EntityType="ExternalResearchModel.Store.Macroeconomic_Data" store:Type="Tables" store:Schema="dbo" store:Name="Macroeconomic_Data">
+						<DefiningQuery>
+							SELECT
+							[Macroeconomic_Data].[COUNTRY_CODE] AS [COUNTRY_CODE],
+							[Macroeconomic_Data].[FIELD] AS [FIELD],
+							[Macroeconomic_Data].[YEAR1] AS [YEAR1],
+							[Macroeconomic_Data].[VALUE] AS [VALUE],
+							[Macroeconomic_Data].[UPDATE_DATE] AS [UPDATE_DATE],
+							[Macroeconomic_Data].[UPDATE_SOURCE] AS [UPDATE_SOURCE]
+							FROM [dbo].[Macroeconomic_Data] AS [Macroeconomic_Data]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="Macroeconomic_Display" EntityType="ExternalResearchModel.Store.Macroeconomic_Display" store:Type="Tables" store:Schema="dbo" store:Name="Macroeconomic_Display">
+						<DefiningQuery>
+							SELECT
+							[Macroeconomic_Display].[DISPLAY_TYPE] AS [DISPLAY_TYPE],
+							[Macroeconomic_Display].[FIELD] AS [FIELD],
+							[Macroeconomic_Display].[CATEGORY_NAME] AS [CATEGORY_NAME],
+							[Macroeconomic_Display].[FIELD_DESC] AS [FIELD_DESC],
+							[Macroeconomic_Display].[DATATYPE] AS [DATATYPE],
+							[Macroeconomic_Display].[DECIMALS] AS [DECIMALS],
+							[Macroeconomic_Display].[SORT_ORDER] AS [SORT_ORDER],
+							[Macroeconomic_Display].[HELP_TEXT] AS [HELP_TEXT]
+							FROM [dbo].[Macroeconomic_Display] AS [Macroeconomic_Display]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="MODEL_INPUTS_CTY" EntityType="ExternalResearchModel.Store.MODEL_INPUTS_CTY" store:Type="Tables" store:Schema="dbo" store:Name="MODEL_INPUTS_CTY">
+						<DefiningQuery>
+							SELECT
+							[MODEL_INPUTS_CTY].[COUNTRY_CODE] AS [COUNTRY_CODE],
+							[MODEL_INPUTS_CTY].[RISK_PREM] AS [RISK_PREM],
+							[MODEL_INPUTS_CTY].[RISK_FREE_RATE] AS [RISK_FREE_RATE],
+							[MODEL_INPUTS_CTY].[LONG_TERM_GDP_GR] AS [LONG_TERM_GDP_GR]
+							FROM [dbo].[MODEL_INPUTS_CTY] AS [MODEL_INPUTS_CTY]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="PERIOD_FINANCIALS" EntityType="ExternalResearchModel.Store.PERIOD_FINANCIALS" store:Type="Tables" store:Schema="dbo" store:Name="PERIOD_FINANCIALS">
+						<DefiningQuery>
+							SELECT
+							[PERIOD_FINANCIALS].[ISSUER_ID] AS [ISSUER_ID],
+							[PERIOD_FINANCIALS].[SECURITY_ID] AS [SECURITY_ID],
+							[PERIOD_FINANCIALS].[COA_TYPE] AS [COA_TYPE],
+							[PERIOD_FINANCIALS].[DATA_SOURCE] AS [DATA_SOURCE],
+							[PERIOD_FINANCIALS].[ROOT_SOURCE] AS [ROOT_SOURCE],
+							[PERIOD_FINANCIALS].[ROOT_SOURCE_DATE] AS [ROOT_SOURCE_DATE],
+							[PERIOD_FINANCIALS].[PERIOD_TYPE] AS [PERIOD_TYPE],
+							[PERIOD_FINANCIALS].[PERIOD_YEAR] AS [PERIOD_YEAR],
+							[PERIOD_FINANCIALS].[PERIOD_END_DATE] AS [PERIOD_END_DATE],
+							[PERIOD_FINANCIALS].[FISCAL_TYPE] AS [FISCAL_TYPE],
+							[PERIOD_FINANCIALS].[CURRENCY] AS [CURRENCY],
+							[PERIOD_FINANCIALS].[DATA_ID] AS [DATA_ID],
+							[PERIOD_FINANCIALS].[AMOUNT] AS [AMOUNT],
+							[PERIOD_FINANCIALS].[CALCULATION_DIAGRAM] AS [CALCULATION_DIAGRAM],
+							[PERIOD_FINANCIALS].[SOURCE_CURRENCY] AS [SOURCE_CURRENCY],
+							[PERIOD_FINANCIALS].[AMOUNT_TYPE] AS [AMOUNT_TYPE]
+							FROM [dbo].[PERIOD_FINANCIALS] AS [PERIOD_FINANCIALS]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="PERIOD_FINANCIALS_DISPLAY" EntityType="ExternalResearchModel.Store.PERIOD_FINANCIALS_DISPLAY" store:Type="Tables" store:Schema="dbo" store:Name="PERIOD_FINANCIALS_DISPLAY">
+						<DefiningQuery>
+							SELECT
+							[PERIOD_FINANCIALS_DISPLAY].[DATA_ID] AS [DATA_ID],
+							[PERIOD_FINANCIALS_DISPLAY].[DATA_DESC] AS [DATA_DESC],
+							[PERIOD_FINANCIALS_DISPLAY].[STATEMENT_TYPE] AS [STATEMENT_TYPE],
+							[PERIOD_FINANCIALS_DISPLAY].[COA_TYPE] AS [COA_TYPE],
+							[PERIOD_FINANCIALS_DISPLAY].[SORT_ORDER] AS [SORT_ORDER],
+							[PERIOD_FINANCIALS_DISPLAY].[GROUP_NAME] AS [GROUP_NAME],
+							[PERIOD_FINANCIALS_DISPLAY].[BOLD_FONT] AS [BOLD_FONT],
+							[PERIOD_FINANCIALS_DISPLAY].[DECIMALS] AS [DECIMALS],
+							[PERIOD_FINANCIALS_DISPLAY].[MULTIPLIER] AS [MULTIPLIER]
+							FROM [dbo].[PERIOD_FINANCIALS_DISPLAY] AS [PERIOD_FINANCIALS_DISPLAY]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.Store.PORTFOLIO_SECURITY_TARGETS" store:Type="Tables" store:Schema="dbo" store:Name="PORTFOLIO_SECURITY_TARGETS">
+						<DefiningQuery>
+							SELECT
+							[PORTFOLIO_SECURITY_TARGETS].[PORTFOLIO_ID] AS [PORTFOLIO_ID],
+							[PORTFOLIO_SECURITY_TARGETS].[SECURITY_ID] AS [SECURITY_ID],
+							[PORTFOLIO_SECURITY_TARGETS].[TARGET_PCT] AS [TARGET_PCT],
+							[PORTFOLIO_SECURITY_TARGETS].[UPDATED] AS [UPDATED]
+							FROM [dbo].[PORTFOLIO_SECURITY_TARGETS] AS [PORTFOLIO_SECURITY_TARGETS]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="PRICES" EntityType="ExternalResearchModel.Store.PRICES" store:Type="Tables" store:Schema="dbo" store:Name="PRICES">
+						<DefiningQuery>
+							SELECT
+							[PRICES].[SECURITY_ID] AS [SECURITY_ID],
+							[PRICES].[PRICE_DATE] AS [PRICE_DATE],
+							[PRICES].[PRICE] AS [PRICE],
+							[PRICES].[FX_RATE] AS [FX_RATE],
+							[PRICES].[ADR_CONV] AS [ADR_CONV]
+							FROM [dbo].[PRICES] AS [PRICES]
+						</DefiningQuery>
+					</EntitySet>
+					<EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.Store.REUTERS_XREF" store:Type="Tables" store:Schema="dbo" store:Name="REUTERS_XREF">
+						<DefiningQuery>
+							SELECT
+							[REUTERS_XREF].[ReportNumber] AS [ReportNumber],
+							[REUTERS_XREF].[Xref] AS [Xref],
+							[REUTERS_XREF].[ISSUER_ID] AS [ISSUER_ID],
+							[REUTERS_XREF].[SECURITY_ID] AS [SECURITY_ID],
+							[REUTERS_XREF].[ASEC_SEC_SHORT_NAME] AS [ASEC_SEC_SHORT_NAME],
+							[REUTERS_XREF].[NAME] AS [NAME],
+							[REUTERS_XREF].[PROVIDER] AS [PROVIDER]
+							FROM [dbo].[REUTERS_XREF] AS [REUTERS_XREF]
+						</DefiningQuery>
+					</EntitySet>
+				</EntityContainer>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.CONSENSUS_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="CONSENSUS_MASTER">
-          <Key>
-            <PropertyRef Name="ESTIMATE_ID" />
-            <PropertyRef Name="ESTIMATE_TYPE" />
-            <PropertyRef Name="FX_CONV_TYPE" />
-            <PropertyRef Name="INDUSTRIAL" />
-            <PropertyRef Name="BANK" />
-            <PropertyRef Name="INSURANCE" />
-            <PropertyRef Name="UTILITY" />
-            <PropertyRef Name="ESTIMATE_DESC" />
-          </Key>
-          <Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
-          <Property Name="ESTIMATE_TYPE" Type="char" Nullable="false" MaxLength="8" />
-          <Property Name="FX_CONV_TYPE" Type="char" Nullable="false" MaxLength="4" />
-          <Property Name="CALENDARIZE" Type="char" MaxLength="1" />
-          <Property Name="INDUSTRIAL" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="BANK" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="INSURANCE" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="UTILITY" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="ESTIMATE_DESC" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="ANNUAL" Type="char" MaxLength="1" />
-          <Property Name="QUARTERLY" Type="char" MaxLength="1" />
-          <Property Name="CURRENT" Type="char" MaxLength="1" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="CONSENSUS_MASTER">
+					<Key>
+						<PropertyRef Name="ESTIMATE_ID" />
+						<PropertyRef Name="ESTIMATE_TYPE" />
+						<PropertyRef Name="FX_CONV_TYPE" />
+						<PropertyRef Name="INDUSTRIAL" />
+						<PropertyRef Name="BANK" />
+						<PropertyRef Name="INSURANCE" />
+						<PropertyRef Name="UTILITY" />
+						<PropertyRef Name="ESTIMATE_DESC" />
+					</Key>
+					<Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
+					<Property Name="ESTIMATE_TYPE" Type="char" Nullable="false" MaxLength="8" />
+					<Property Name="FX_CONV_TYPE" Type="char" Nullable="false" MaxLength="4" />
+					<Property Name="CALENDARIZE" Type="char" MaxLength="1" />
+					<Property Name="INDUSTRIAL" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="BANK" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="INSURANCE" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="UTILITY" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="ESTIMATE_DESC" Type="varchar" Nullable="false" MaxLength="100" />
+					<Property Name="ANNUAL" Type="char" MaxLength="1" />
+					<Property Name="QUARTERLY" Type="char" MaxLength="1" />
+					<Property Name="CURRENT" Type="char" MaxLength="1" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.Country_Master' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="Country_Master">
-          <Key>
-            <PropertyRef Name="COUNTRY_CODE" />
-            <PropertyRef Name="COUNTRY_NAME" />
-            <PropertyRef Name="CURRENCY_CODE" />
-            <PropertyRef Name="CURRENCY_NAME" />
-            <PropertyRef Name="MACRO_ECON_DATA_CURRENT" />
-          </Key>
-          <Property Name="COUNTRY_CODE" Type="char" Nullable="false" MaxLength="4" />
-          <Property Name="COUNTRY_NAME" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="CURRENCY_CODE" Type="char" Nullable="false" MaxLength="4" />
-          <Property Name="CURRENCY_NAME" Type="varchar" Nullable="false" MaxLength="30" />
-          <Property Name="MACRO_ECON_DATA_CURRENT" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="ASHEMM_PROPRIETARY_REGION_NAME" Type="varchar" MaxLength="20" />
-          <Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="20" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="Country_Master">
+					<Key>
+						<PropertyRef Name="COUNTRY_CODE" />
+						<PropertyRef Name="COUNTRY_NAME" />
+						<PropertyRef Name="CURRENCY_CODE" />
+						<PropertyRef Name="CURRENCY_NAME" />
+						<PropertyRef Name="MACRO_ECON_DATA_CURRENT" />
+					</Key>
+					<Property Name="COUNTRY_CODE" Type="char" Nullable="false" MaxLength="4" />
+					<Property Name="COUNTRY_NAME" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="CURRENCY_CODE" Type="char" Nullable="false" MaxLength="4" />
+					<Property Name="CURRENCY_NAME" Type="varchar" Nullable="false" MaxLength="30" />
+					<Property Name="MACRO_ECON_DATA_CURRENT" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="ASHEMM_PROPRIETARY_REGION_NAME" Type="varchar" MaxLength="20" />
+					<Property Name="ASHEMM_PROPRIETARY_REGION_CODE" Type="varchar" MaxLength="20" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.CURRENT_CONSENSUS_ESTIMATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="CURRENT_CONSENSUS_ESTIMATES">
-          <Key>
-            <PropertyRef Name="ISSUER_ID" />
-            <PropertyRef Name="SECURITY_ID" />
-            <PropertyRef Name="DATA_SOURCE" />
-            <PropertyRef Name="DATA_SOURCE_DATE" />
-            <PropertyRef Name="PERIOD_TYPE" />
-            <PropertyRef Name="PERIOD_YEAR" />
-            <PropertyRef Name="PERIOD_END_DATE" />
-            <PropertyRef Name="FISCAL_TYPE" />
-            <PropertyRef Name="ESTIMATE_ID" />
-            <PropertyRef Name="CURRENCY" />
-            <PropertyRef Name="AMOUNT" />
-            <PropertyRef Name="NUMBER_OF_ESTIMATES" />
-            <PropertyRef Name="HIGH" />
-            <PropertyRef Name="LOW" />
-            <PropertyRef Name="SOURCE_CURRENCY" />
-            <PropertyRef Name="STANDARD_DEVIATION" />
-            <PropertyRef Name="AMOUNT_TYPE" />
-          </Key>
-          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="DATA_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="DATA_SOURCE_DATE" Type="datetime" Nullable="false" />
-          <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
-          <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
-          <Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
-          <Property Name="FISCAL_TYPE" Type="char" Nullable="false" MaxLength="8" />
-          <Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
-          <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
-          <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="NUMBER_OF_ESTIMATES" Type="int" Nullable="false" />
-          <Property Name="HIGH" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="LOW" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="SOURCE_CURRENCY" Type="char" Nullable="false" MaxLength="3" />
-          <Property Name="STANDARD_DEVIATION" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="CURRENT_CONSENSUS_ESTIMATES">
+					<Key>
+						<PropertyRef Name="ISSUER_ID" />
+						<PropertyRef Name="SECURITY_ID" />
+						<PropertyRef Name="DATA_SOURCE" />
+						<PropertyRef Name="DATA_SOURCE_DATE" />
+						<PropertyRef Name="PERIOD_TYPE" />
+						<PropertyRef Name="PERIOD_YEAR" />
+						<PropertyRef Name="PERIOD_END_DATE" />
+						<PropertyRef Name="FISCAL_TYPE" />
+						<PropertyRef Name="ESTIMATE_ID" />
+						<PropertyRef Name="CURRENCY" />
+						<PropertyRef Name="AMOUNT" />
+						<PropertyRef Name="NUMBER_OF_ESTIMATES" />
+						<PropertyRef Name="HIGH" />
+						<PropertyRef Name="LOW" />
+						<PropertyRef Name="SOURCE_CURRENCY" />
+						<PropertyRef Name="STANDARD_DEVIATION" />
+						<PropertyRef Name="AMOUNT_TYPE" />
+					</Key>
+					<Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="DATA_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+					<Property Name="DATA_SOURCE_DATE" Type="datetime" Nullable="false" />
+					<Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+					<Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+					<Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
+					<Property Name="FISCAL_TYPE" Type="char" Nullable="false" MaxLength="8" />
+					<Property Name="ESTIMATE_ID" Type="int" Nullable="false" />
+					<Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+					<Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="NUMBER_OF_ESTIMATES" Type="int" Nullable="false" />
+					<Property Name="HIGH" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="LOW" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="SOURCE_CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+					<Property Name="STANDARD_DEVIATION" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.DATA_MASTER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="DATA_MASTER">
-          <Key>
-            <PropertyRef Name="DATA_ID" />
-            <PropertyRef Name="FX_CONV_TYPE" />
-            <PropertyRef Name="CALENDARIZE" />
-            <PropertyRef Name="INDUSTRIAL" />
-            <PropertyRef Name="BANK" />
-            <PropertyRef Name="INSURANCE" />
-            <PropertyRef Name="UTILITY" />
-            <PropertyRef Name="QUARTERLY" />
-            <PropertyRef Name="DATA_DESC" />
-          </Key>
-          <Property Name="DATA_ID" Type="int" Nullable="false" />
-          <Property Name="COA" Type="char" MaxLength="8" />
-          <Property Name="FX_CONV_TYPE" Type="char" Nullable="false" MaxLength="6" />
-          <Property Name="CALENDARIZE" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="INDUSTRIAL" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="BANK" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="INSURANCE" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="UTILITY" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="QUARTERLY" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="COA_TYPE" Type="varchar" MaxLength="3" />
-          <Property Name="ANNUAL" Type="char" MaxLength="1" />
-          <Property Name="CURRENT" Type="char" MaxLength="1" />
-          <Property Name="STATEMENT_TYPE" Type="varchar" MaxLength="3" />
-          <Property Name="CONVERT_FLAG" Type="char" MaxLength="1" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="DATA_MASTER">
+					<Key>
+						<PropertyRef Name="DATA_ID" />
+						<PropertyRef Name="FX_CONV_TYPE" />
+						<PropertyRef Name="CALENDARIZE" />
+						<PropertyRef Name="INDUSTRIAL" />
+						<PropertyRef Name="BANK" />
+						<PropertyRef Name="INSURANCE" />
+						<PropertyRef Name="UTILITY" />
+						<PropertyRef Name="QUARTERLY" />
+						<PropertyRef Name="DATA_DESC" />
+					</Key>
+					<Property Name="DATA_ID" Type="int" Nullable="false" />
+					<Property Name="COA" Type="char" MaxLength="8" />
+					<Property Name="FX_CONV_TYPE" Type="char" Nullable="false" MaxLength="6" />
+					<Property Name="CALENDARIZE" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="INDUSTRIAL" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="BANK" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="INSURANCE" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="UTILITY" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="QUARTERLY" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
+					<Property Name="COA_TYPE" Type="varchar" MaxLength="3" />
+					<Property Name="ANNUAL" Type="char" MaxLength="1" />
+					<Property Name="CURRENT" Type="char" MaxLength="1" />
+					<Property Name="STATEMENT_TYPE" Type="varchar" MaxLength="3" />
+					<Property Name="CONVERT_FLAG" Type="char" MaxLength="1" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.FAIR_VALUE' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="FAIR_VALUE">
-          <Key>
-            <PropertyRef Name="VALUE_TYPE" />
-            <PropertyRef Name="SECURITY_ID" />
-            <PropertyRef Name="FV_MEASURE" />
-            <PropertyRef Name="FV_BUY" />
-            <PropertyRef Name="FV_SELL" />
-            <PropertyRef Name="CURRENT_MEASURE_VALUE" />
-            <PropertyRef Name="UPSIDE" />
-          </Key>
-          <Property Name="VALUE_TYPE" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="FV_MEASURE" Type="int" Nullable="false" />
-          <Property Name="FV_BUY" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="FV_SELL" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="CURRENT_MEASURE_VALUE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="UPSIDE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="UPDATED" Type="datetime" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="FAIR_VALUE">
+					<Key>
+						<PropertyRef Name="VALUE_TYPE" />
+						<PropertyRef Name="SECURITY_ID" />
+						<PropertyRef Name="FV_MEASURE" />
+						<PropertyRef Name="FV_BUY" />
+						<PropertyRef Name="FV_SELL" />
+						<PropertyRef Name="CURRENT_MEASURE_VALUE" />
+						<PropertyRef Name="UPSIDE" />
+					</Key>
+					<Property Name="VALUE_TYPE" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="FV_MEASURE" Type="int" Nullable="false" />
+					<Property Name="FV_BUY" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="FV_SELL" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="CURRENT_MEASURE_VALUE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="UPSIDE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="UPDATED" Type="datetime" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.FX_RATES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="FX_RATES">
-          <Key>
-            <PropertyRef Name="CURRENCY" />
-            <PropertyRef Name="FX_DATE" />
-            <PropertyRef Name="FX_RATE" />
-          </Key>
-          <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
-          <Property Name="FX_DATE" Type="datetime" Nullable="false" />
-          <Property Name="FX_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="AVG90DAYRATE" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="AVG12MonthRATE" Type="decimal" Precision="32" Scale="6" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="FX_RATES">
+					<Key>
+						<PropertyRef Name="CURRENCY" />
+						<PropertyRef Name="FX_DATE" />
+						<PropertyRef Name="FX_RATE" />
+					</Key>
+					<Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+					<Property Name="FX_DATE" Type="datetime" Nullable="false" />
+					<Property Name="FX_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="AVG90DAYRATE" Type="decimal" Precision="32" Scale="6" />
+					<Property Name="AVG12MonthRATE" Type="decimal" Precision="32" Scale="6" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.INTERNAL_ISSUER' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="INTERNAL_ISSUER">
-          <Key>
-            <PropertyRef Name="ISSUER_ID" />
-            <PropertyRef Name="COA_TYPE" />
-          </Key>
-          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
-          <Property Name="LastPrimaryModelLoad" Type="datetime" />
-          <Property Name="LastIndustryModelLoad" Type="datetime" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="INTERNAL_ISSUER">
+					<Key>
+						<PropertyRef Name="ISSUER_ID" />
+						<PropertyRef Name="COA_TYPE" />
+					</Key>
+					<Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
+					<Property Name="LastPrimaryModelLoad" Type="datetime" />
+					<Property Name="LastIndustryModelLoad" Type="datetime" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.ISSUER_SHARES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="ISSUER_SHARES">
-          <Key>
-            <PropertyRef Name="ISSUER_ID" />
-            <PropertyRef Name="SHARES_DATE" />
-            <PropertyRef Name="SHARES_OUTSTANDING" />
-          </Key>
-          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="SHARES_DATE" Type="datetime" Nullable="false" />
-          <Property Name="SHARES_OUTSTANDING" Type="decimal" Nullable="false" Precision="32" Scale="2" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="ISSUER_SHARES">
+					<Key>
+						<PropertyRef Name="ISSUER_ID" />
+						<PropertyRef Name="SHARES_DATE" />
+						<PropertyRef Name="SHARES_OUTSTANDING" />
+					</Key>
+					<Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="SHARES_DATE" Type="datetime" Nullable="false" />
+					<Property Name="SHARES_OUTSTANDING" Type="decimal" Nullable="false" Precision="32" Scale="2" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.ISSUER_SHARES_COMPOSITION' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="ISSUER_SHARES_COMPOSITION">
-          <Key>
-            <PropertyRef Name="ISSUER_ID" />
-            <PropertyRef Name="SECURITY_ID" />
-          </Key>
-          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="ISSUER_SHARES_COMPOSITION">
+					<Key>
+						<PropertyRef Name="ISSUER_ID" />
+						<PropertyRef Name="SECURITY_ID" />
+					</Key>
+					<Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.Macroeconomic_Data' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="Macroeconomic_Data">
-          <Key>
-            <PropertyRef Name="COUNTRY_CODE" />
-            <PropertyRef Name="FIELD" />
-            <PropertyRef Name="YEAR1" />
-            <PropertyRef Name="UPDATE_DATE" />
-            <PropertyRef Name="UPDATE_SOURCE" />
-          </Key>
-          <Property Name="COUNTRY_CODE" Type="char" Nullable="false" MaxLength="4" />
-          <Property Name="FIELD" Type="varchar" Nullable="false" MaxLength="30" />
-          <Property Name="YEAR1" Type="int" Nullable="false" />
-          <Property Name="VALUE" Type="decimal" Precision="32" Scale="6" />
-          <Property Name="UPDATE_DATE" Type="datetime" Nullable="false" />
-          <Property Name="UPDATE_SOURCE" Type="varchar" Nullable="false" MaxLength="20" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="Macroeconomic_Data">
+					<Key>
+						<PropertyRef Name="COUNTRY_CODE" />
+						<PropertyRef Name="FIELD" />
+						<PropertyRef Name="YEAR1" />
+						<PropertyRef Name="UPDATE_DATE" />
+						<PropertyRef Name="UPDATE_SOURCE" />
+					</Key>
+					<Property Name="COUNTRY_CODE" Type="char" Nullable="false" MaxLength="4" />
+					<Property Name="FIELD" Type="varchar" Nullable="false" MaxLength="30" />
+					<Property Name="YEAR1" Type="int" Nullable="false" />
+					<Property Name="VALUE" Type="decimal" Precision="32" Scale="6" />
+					<Property Name="UPDATE_DATE" Type="datetime" Nullable="false" />
+					<Property Name="UPDATE_SOURCE" Type="varchar" Nullable="false" MaxLength="20" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.Macroeconomic_Display' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="Macroeconomic_Display">
-          <Key>
-            <PropertyRef Name="DISPLAY_TYPE" />
-            <PropertyRef Name="FIELD" />
-            <PropertyRef Name="CATEGORY_NAME" />
-            <PropertyRef Name="FIELD_DESC" />
-            <PropertyRef Name="DATATYPE" />
-            <PropertyRef Name="SORT_ORDER" />
-          </Key>
-          <Property Name="DISPLAY_TYPE" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="FIELD" Type="varchar" Nullable="false" MaxLength="30" />
-          <Property Name="CATEGORY_NAME" Type="varchar" Nullable="false" MaxLength="30" />
-          <Property Name="FIELD_DESC" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="DATATYPE" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="DECIMALS" Type="int" />
-          <Property Name="SORT_ORDER" Type="int" Nullable="false" />
-          <Property Name="HELP_TEXT" Type="varchar" MaxLength="255" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="Macroeconomic_Display">
+					<Key>
+						<PropertyRef Name="DISPLAY_TYPE" />
+						<PropertyRef Name="FIELD" />
+						<PropertyRef Name="CATEGORY_NAME" />
+						<PropertyRef Name="FIELD_DESC" />
+						<PropertyRef Name="DATATYPE" />
+						<PropertyRef Name="SORT_ORDER" />
+					</Key>
+					<Property Name="DISPLAY_TYPE" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="FIELD" Type="varchar" Nullable="false" MaxLength="30" />
+					<Property Name="CATEGORY_NAME" Type="varchar" Nullable="false" MaxLength="30" />
+					<Property Name="FIELD_DESC" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="DATATYPE" Type="varchar" Nullable="false" MaxLength="10" />
+					<Property Name="DECIMALS" Type="int" />
+					<Property Name="SORT_ORDER" Type="int" Nullable="false" />
+					<Property Name="HELP_TEXT" Type="varchar" MaxLength="255" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.MODEL_INPUTS_CTY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="MODEL_INPUTS_CTY">
-          <Key>
-            <PropertyRef Name="COUNTRY_CODE" />
-            <PropertyRef Name="RISK_PREM" />
-            <PropertyRef Name="RISK_FREE_RATE" />
-            <PropertyRef Name="LONG_TERM_GDP_GR" />
-          </Key>
-          <Property Name="COUNTRY_CODE" Type="char" Nullable="false" MaxLength="2" />
-          <Property Name="RISK_PREM" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="RISK_FREE_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="LONG_TERM_GDP_GR" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="MODEL_INPUTS_CTY">
+					<Key>
+						<PropertyRef Name="COUNTRY_CODE" />
+						<PropertyRef Name="RISK_PREM" />
+						<PropertyRef Name="RISK_FREE_RATE" />
+						<PropertyRef Name="LONG_TERM_GDP_GR" />
+					</Key>
+					<Property Name="COUNTRY_CODE" Type="char" Nullable="false" MaxLength="2" />
+					<Property Name="RISK_PREM" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="RISK_FREE_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="LONG_TERM_GDP_GR" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.PERIOD_FINANCIALS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="PERIOD_FINANCIALS">
-          <Key>
-            <PropertyRef Name="ISSUER_ID" />
-            <PropertyRef Name="SECURITY_ID" />
-            <PropertyRef Name="COA_TYPE" />
-            <PropertyRef Name="DATA_SOURCE" />
-            <PropertyRef Name="ROOT_SOURCE" />
-            <PropertyRef Name="ROOT_SOURCE_DATE" />
-            <PropertyRef Name="PERIOD_TYPE" />
-            <PropertyRef Name="PERIOD_YEAR" />
-            <PropertyRef Name="PERIOD_END_DATE" />
-            <PropertyRef Name="FISCAL_TYPE" />
-            <PropertyRef Name="CURRENCY" />
-            <PropertyRef Name="DATA_ID" />
-            <PropertyRef Name="AMOUNT" />
-            <PropertyRef Name="SOURCE_CURRENCY" />
-            <PropertyRef Name="AMOUNT_TYPE" />
-          </Key>
-          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
-          <Property Name="DATA_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="ROOT_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
-          <Property Name="ROOT_SOURCE_DATE" Type="datetime" Nullable="false" />
-          <Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
-          <Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
-          <Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
-          <Property Name="FISCAL_TYPE" Type="char" Nullable="false" MaxLength="8" />
-          <Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
-          <Property Name="DATA_ID" Type="int" Nullable="false" />
-          <Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="CALCULATION_DIAGRAM" Type="varchar" MaxLength="255" />
-          <Property Name="SOURCE_CURRENCY" Type="char" Nullable="false" MaxLength="3" />
-          <Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="PERIOD_FINANCIALS">
+					<Key>
+						<PropertyRef Name="ISSUER_ID" />
+						<PropertyRef Name="SECURITY_ID" />
+						<PropertyRef Name="COA_TYPE" />
+						<PropertyRef Name="DATA_SOURCE" />
+						<PropertyRef Name="ROOT_SOURCE" />
+						<PropertyRef Name="ROOT_SOURCE_DATE" />
+						<PropertyRef Name="PERIOD_TYPE" />
+						<PropertyRef Name="PERIOD_YEAR" />
+						<PropertyRef Name="PERIOD_END_DATE" />
+						<PropertyRef Name="FISCAL_TYPE" />
+						<PropertyRef Name="CURRENCY" />
+						<PropertyRef Name="DATA_ID" />
+						<PropertyRef Name="AMOUNT" />
+						<PropertyRef Name="SOURCE_CURRENCY" />
+						<PropertyRef Name="AMOUNT_TYPE" />
+					</Key>
+					<Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="3" />
+					<Property Name="DATA_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+					<Property Name="ROOT_SOURCE" Type="varchar" Nullable="false" MaxLength="10" />
+					<Property Name="ROOT_SOURCE_DATE" Type="datetime" Nullable="false" />
+					<Property Name="PERIOD_TYPE" Type="char" Nullable="false" MaxLength="2" />
+					<Property Name="PERIOD_YEAR" Type="int" Nullable="false" />
+					<Property Name="PERIOD_END_DATE" Type="datetime" Nullable="false" />
+					<Property Name="FISCAL_TYPE" Type="char" Nullable="false" MaxLength="8" />
+					<Property Name="CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+					<Property Name="DATA_ID" Type="int" Nullable="false" />
+					<Property Name="AMOUNT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="CALCULATION_DIAGRAM" Type="varchar" MaxLength="255" />
+					<Property Name="SOURCE_CURRENCY" Type="char" Nullable="false" MaxLength="3" />
+					<Property Name="AMOUNT_TYPE" Type="char" Nullable="false" MaxLength="10" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.PERIOD_FINANCIALS_DISPLAY' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="PERIOD_FINANCIALS_DISPLAY">
-          <Key>
-            <PropertyRef Name="DATA_ID" />
-            <PropertyRef Name="DATA_DESC" />
-            <PropertyRef Name="COA_TYPE" />
-            <PropertyRef Name="SORT_ORDER" />
-            <PropertyRef Name="GROUP_NAME" />
-            <PropertyRef Name="BOLD_FONT" />
-            <PropertyRef Name="DECIMALS" />
-            <PropertyRef Name="MULTIPLIER" />
-          </Key>
-          <Property Name="DATA_ID" Type="int" Nullable="false" />
-          <Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
-          <Property Name="STATEMENT_TYPE" Type="char" MaxLength="10" />
-          <Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="SORT_ORDER" Type="int" Nullable="false" />
-          <Property Name="GROUP_NAME" Type="varchar" Nullable="false" MaxLength="50" />
-          <Property Name="BOLD_FONT" Type="char" Nullable="false" MaxLength="1" />
-          <Property Name="DECIMALS" Type="int" Nullable="false" />
-          <Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="PERIOD_FINANCIALS_DISPLAY">
+					<Key>
+						<PropertyRef Name="DATA_ID" />
+						<PropertyRef Name="DATA_DESC" />
+						<PropertyRef Name="COA_TYPE" />
+						<PropertyRef Name="SORT_ORDER" />
+						<PropertyRef Name="GROUP_NAME" />
+						<PropertyRef Name="BOLD_FONT" />
+						<PropertyRef Name="DECIMALS" />
+						<PropertyRef Name="MULTIPLIER" />
+					</Key>
+					<Property Name="DATA_ID" Type="int" Nullable="false" />
+					<Property Name="DATA_DESC" Type="varchar" Nullable="false" MaxLength="100" />
+					<Property Name="STATEMENT_TYPE" Type="char" MaxLength="10" />
+					<Property Name="COA_TYPE" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="SORT_ORDER" Type="int" Nullable="false" />
+					<Property Name="GROUP_NAME" Type="varchar" Nullable="false" MaxLength="50" />
+					<Property Name="BOLD_FONT" Type="char" Nullable="false" MaxLength="1" />
+					<Property Name="DECIMALS" Type="int" Nullable="false" />
+					<Property Name="MULTIPLIER" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.PORTFOLIO_SECURITY_TARGETS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="PORTFOLIO_SECURITY_TARGETS">
-          <Key>
-            <PropertyRef Name="PORTFOLIO_ID" />
-            <PropertyRef Name="SECURITY_ID" />
-            <PropertyRef Name="TARGET_PCT" />
-            <PropertyRef Name="UPDATED" />
-          </Key>
-          <Property Name="PORTFOLIO_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="TARGET_PCT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="UPDATED" Type="datetime" Nullable="false" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="PORTFOLIO_SECURITY_TARGETS">
+					<Key>
+						<PropertyRef Name="PORTFOLIO_ID" />
+						<PropertyRef Name="SECURITY_ID" />
+						<PropertyRef Name="TARGET_PCT" />
+						<PropertyRef Name="UPDATED" />
+					</Key>
+					<Property Name="PORTFOLIO_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="TARGET_PCT" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="UPDATED" Type="datetime" Nullable="false" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.PRICES' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="PRICES">
-          <Key>
-            <PropertyRef Name="SECURITY_ID" />
-            <PropertyRef Name="PRICE_DATE" />
-            <PropertyRef Name="PRICE" />
-            <PropertyRef Name="FX_RATE" />
-            <PropertyRef Name="ADR_CONV" />
-          </Key>
-          <Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="PRICE_DATE" Type="datetime" Nullable="false" />
-          <Property Name="PRICE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="FX_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-          <Property Name="ADR_CONV" Type="decimal" Nullable="false" Precision="32" Scale="6" />
-        </EntityType>
-        <!--Errors Found During Generation:
+				<EntityType Name="PRICES">
+					<Key>
+						<PropertyRef Name="SECURITY_ID" />
+						<PropertyRef Name="PRICE_DATE" />
+						<PropertyRef Name="PRICE" />
+						<PropertyRef Name="FX_RATE" />
+						<PropertyRef Name="ADR_CONV" />
+					</Key>
+					<Property Name="SECURITY_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="PRICE_DATE" Type="datetime" Nullable="false" />
+					<Property Name="PRICE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="FX_RATE" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+					<Property Name="ADR_CONV" Type="decimal" Nullable="false" Precision="32" Scale="6" />
+				</EntityType>
+				<!--Errors Found During Generation:
       warning 6002: The table/view 'AIMS_Data2108.dbo.REUTERS_XREF' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
       -->
-        <EntityType Name="REUTERS_XREF">
-          <Key>
-            <PropertyRef Name="ReportNumber" />
-            <PropertyRef Name="ISSUER_ID" />
-            <PropertyRef Name="PROVIDER" />
-          </Key>
-          <Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
-          <Property Name="Xref" Type="varchar" MaxLength="9" />
-          <Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
-          <Property Name="SECURITY_ID" Type="varchar" MaxLength="20" />
-          <Property Name="ASEC_SEC_SHORT_NAME" Type="varchar" MaxLength="20" />
-          <Property Name="NAME" Type="varchar" MaxLength="100" />
-          <Property Name="PROVIDER" Type="char" Nullable="false" MaxLength="1" />
-        </EntityType>
-        <Function Name="Broker_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="ESTIMATE_TYPE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
-        </Function>
-        <Function Name="Get_Consensus_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
-        </Function>
-        <Function Name="Get_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="CALC_LOG" Type="char" Mode="In" />
-        </Function>
-        <Function Name="Get_EV_EBITDA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="securityId" Type="varchar" Mode="In" />
-          <Parameter Name="issuerId" Type="varchar" Mode="In" />
-          <Parameter Name="chartTitle" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="Get_PRevenue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="securityId" Type="varchar" Mode="In" />
-          <Parameter Name="issuerId" Type="varchar" Mode="In" />
-          <Parameter Name="chartTitle" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="Get_Statement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
-          <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
-        </Function>
-        <Function Name="Get_Statement_Models" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
-          <Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
-        </Function>
-        <Function Name="GetAmountForUpsideCalculation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
-          <Parameter Name="DATA_ID" Type="int" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetBasicData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SecurityID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetConsensusEstimatesMedian" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
-        </Function>
-        <Function Name="GetConsensusEstimatesSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="Security" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetConsensusEstimatesValuation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
-          <Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
-          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
-          <Parameter Name="Security_ID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetDCF_NumberOfShares" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetDCF_ROIC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="YEAR" Type="int" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
-        </Function>
-        <Function Name="GetDCFCashFlow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetDCFGDP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="COUNTRY_CODE" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetDCFMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetDCFRiskFreeRate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="COUNTRY_CODE" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetDCFSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetFairValueCompositionSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetFinstatDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="issuerID" Type="varchar" Mode="In" />
-          <Parameter Name="securityId" Type="varchar" Mode="In" />
-          <Parameter Name="dataSource" Type="varchar" Mode="In" />
-          <Parameter Name="fiscalType" Type="char" Mode="In" />
-          <Parameter Name="currency" Type="char" Mode="In" />
-        </Function>
-        <Function Name="GetFinstatEconomic_MarketData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="issuerID" Type="varchar" Mode="In" />
-          <Parameter Name="securityId" Type="varchar" Mode="In" />
-          <Parameter Name="dataSource" Type="varchar" Mode="In" />
-          <Parameter Name="fiscalType" Type="char" Mode="In" />
-          <Parameter Name="currency" Type="char" Mode="In" />
-        </Function>
-        <Function Name="GetFinstatRelativeAnalysisData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="issuerID" Type="varchar" Mode="In" />
-          <Parameter Name="securityId" Type="varchar" Mode="In" />
-          <Parameter Name="dataSource" Type="varchar" Mode="In" />
-          <Parameter Name="fiscalType" Type="char" Mode="In" />
-        </Function>
-        <Function Name="GetFreeCashFlows" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="IssuerId" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="GetModelConsensusEstimates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
-        </Function>
-        <Function Name="GetNewICPresentationSecurityData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="securityID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="XRef" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="ModelDeleteInteralStatement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="ModelDeleteInternalCommodityAssumptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="REF_NO" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="ModelDeleteInternalData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="REF_NO" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="ModelDeleteInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="ModelDeleteInternalIssuerQuarterlyDistribution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="ModelInsertDataInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="COA" Type="varchar" Mode="In" />
-          <Parameter Name="LASTPRIMARYMODELLOAD" Type="datetime" Mode="In" />
-          <Parameter Name="LASTINDUSTRYMODELLOAD" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="ModelInsertInternalCOAChanges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="LOAD_ID" Type="bigint" Mode="In" />
-          <Parameter Name="CURRENCY" Type="varchar" Mode="In" />
-          <Parameter Name="COA" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
-          <Parameter Name="PERIOD_END_DATE" Type="datetime" Mode="In" />
-          <Parameter Name="START_DATE" Type="datetime" Mode="In" />
-          <Parameter Name="END_DATE" Type="datetime" Mode="In" />
-          <Parameter Name="AMOUNT" Type="decimal" Mode="In" />
-          <Parameter Name="UNITS" Type="char" Mode="In" />
-        </Function>
-        <Function Name="ModelInsertInternalCommodityAssumptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="REF_NO" Type="varchar" Mode="In" />
-          <Parameter Name="COMMODITY_ID" Type="varchar" Mode="In" />
-          <Parameter Name="AMOUNT" Type="decimal" Mode="In" />
-        </Function>
-        <Function Name="ModelInsertInternalData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="REF_NO" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="COA" Type="char" Mode="In" />
-          <Parameter Name="AMOUNT" Type="decimal" Mode="In" />
-        </Function>
-        <Function Name="ModelInsertInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="COA_TYPE" Type="varchar" Mode="In" />
-          <Parameter Name="LASTPRIMARYMODELLOAD" Type="datetime" Mode="In" />
-          <Parameter Name="LASTINDUSTRYMODELLOAD" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="ModelInsertInternalIssuerQuaterelyDistribution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="PERCENTAGE" Type="decimal" Mode="In" />
-          <Parameter Name="LAST_UPDATED" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="ModelInsertInternalModelLoadData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="USER_NAME" Type="varchar" Mode="In" />
-          <Parameter Name="LOAD_TIME" Type="datetime" Mode="In" />
-          <Parameter Name="DOCUMENT_ID" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="ModelInsertInternalStatement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="REF_NO" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
-          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="ROOT_SOURCE_DATE" Type="datetime" Mode="In" />
-          <Parameter Name="PERIOD_LENGTH" Type="int" Mode="In" />
-          <Parameter Name="PERIOD_END_DATE" Type="datetime" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
-          <Parameter Name="AMOUNT_TYPE" Type="char" Mode="In" />
-        </Function>
-        <Function Name="ModelRetrieveDataInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="ModelRetrieveInternalCOAChanges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="COA" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
-          <Parameter Name="CURRENCY" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="ModelRetrieveInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="ModelRetrieveinternalModelLoadData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="LOAD_TIME" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="ModelRetrieveTrackCOA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="ModelUpdateDataInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="LASTPRIMARYMODELLOAD" Type="datetime" Mode="In" />
-          <Parameter Name="LASTINDUSTRYMODELLOAD" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="ModelUpdateInternalCOAChanges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="CURRENCY" Type="varchar" Mode="In" />
-          <Parameter Name="COA" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
-          <Parameter Name="TIME_STAMP" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="ModelUpdateInternalModelLoadData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="LOAD_ID" Type="int" Mode="In" />
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="USER_NAME" Type="varchar" Mode="In" />
-          <Parameter Name="LOAD_TIME" Type="datetime" Mode="In" />
-          <Parameter Name="DOCUMENT_ID" Type="bigint" Mode="In" />
-        </Function>
-        <Function Name="RetrieveCOACodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="COA_TYPE" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="RetrieveCOAType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="RetrieveCommodityForecasts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="RetrieveDataPointsModelUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="RetrieveDistinctFXRates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="RetrieveRatioComparisonData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="securityBucketXML" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="RetrieveSecurityPFVMeasureCurrentPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SecurityId" Type="varchar" Mode="In" />
-          <Parameter Name="PFVMeasure" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="SaveUpdatedFairValueMeasures" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="securityId" Type="varchar" Mode="In" />
-          <Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
-        </Function>
-        <Function Name="SET_INTERIM_AMOUNTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="SetFairValue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
-          <Parameter Name="PFV_MEASURE" Type="varchar" Mode="In" />
-          <Parameter Name="PFV_MEASURE_VALUE" Type="decimal" Mode="In" />
-          <Parameter Name="FV_BUY" Type="decimal" Mode="In" />
-          <Parameter Name="FV_SELL" Type="decimal" Mode="In" />
-        </Function>
-        <Function Name="usp_GetDataForPeriodGadgets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="cSource" Type="varchar" Mode="In" />
-          <Parameter Name="cFiscalType" Type="varchar" Mode="In" />
-          <Parameter Name="cCurrency" Type="varchar" Mode="In" />
-          <Parameter Name="cIssuerID" Type="varchar" Mode="In" />
-          <Parameter Name="cSecurityID" Type="varchar" Mode="In" />
-        </Function>
-        <Function Name="usp_GetDataForValuationQualityGrowth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="issuerIdsForPortfolio" Type="varchar(max)" Mode="In" />
-          <Parameter Name="securityIdsForPortfolio" Type="varchar(max)" Mode="In" />
-          <Parameter Name="issuerIdsForBenchmark" Type="varchar(max)" Mode="In" />
-          <Parameter Name="securityIdsForBenchmark" Type="varchar(max)" Mode="In" />
-        </Function>
-        <Function Name="usp_GetDCF_ROIC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="YEAR" Type="int" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
-        </Function>
-        <Function Name="usp_GetQuarterlyResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="DataId" Type="int" Mode="In" />
-          <Parameter Name="PeriodYear" Type="int" Mode="In" />
-        </Function>
-        <Function Name="usp_RetrieveDCFAnalysisSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
-          <Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
-          <Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
-          <Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
-          <Parameter Name="CURRENCY" Type="char" Mode="In" />
-        </Function>
-      </Schema></edmx:StorageModels>
+				<EntityType Name="REUTERS_XREF">
+					<Key>
+						<PropertyRef Name="ReportNumber" />
+						<PropertyRef Name="ISSUER_ID" />
+						<PropertyRef Name="PROVIDER" />
+					</Key>
+					<Property Name="ReportNumber" Type="varchar" Nullable="false" MaxLength="5" />
+					<Property Name="Xref" Type="varchar" MaxLength="9" />
+					<Property Name="ISSUER_ID" Type="varchar" Nullable="false" MaxLength="20" />
+					<Property Name="SECURITY_ID" Type="varchar" MaxLength="20" />
+					<Property Name="ASEC_SEC_SHORT_NAME" Type="varchar" MaxLength="20" />
+					<Property Name="NAME" Type="varchar" MaxLength="100" />
+					<Property Name="PROVIDER" Type="char" Nullable="false" MaxLength="1" />
+				</EntityType>
+				<Function Name="Broker_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="ESTIMATE_TYPE" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="CURRENCY" Type="char" Mode="In" />
+				</Function>
+				<Function Name="Get_Consensus_Detail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+					<Parameter Name="CURRENCY" Type="char" Mode="In" />
+				</Function>
+				<Function Name="Get_Data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="CALC_LOG" Type="char" Mode="In" />
+				</Function>
+				<Function Name="Get_EV_EBITDA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="securityId" Type="varchar" Mode="In" />
+					<Parameter Name="issuerId" Type="varchar" Mode="In" />
+					<Parameter Name="chartTitle" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="Get_PRevenue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="securityId" Type="varchar" Mode="In" />
+					<Parameter Name="issuerId" Type="varchar" Mode="In" />
+					<Parameter Name="chartTitle" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="Get_Statement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+					<Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
+					<Parameter Name="CURRENCY" Type="char" Mode="In" />
+				</Function>
+				<Function Name="Get_Statement_Models" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+					<Parameter Name="STATEMENT_TYPE" Type="char" Mode="In" />
+					<Parameter Name="CURRENCY" Type="char" Mode="In" />
+				</Function>
+				<Function Name="GetAmountForUpsideCalculation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+					<Parameter Name="DATA_ID" Type="int" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetBasicData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="SecurityID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetConsensusEstimatesMedian" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+					<Parameter Name="CURRENCY" Type="char" Mode="In" />
+				</Function>
+				<Function Name="GetConsensusEstimatesSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="Security" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetConsensusEstimatesValuation" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+					<Parameter Name="CURRENCY" Type="char" Mode="In" />
+					<Parameter Name="ESTIMATE_ID" Type="int" Mode="In" />
+					<Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+					<Parameter Name="Security_ID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetDCF_NumberOfShares" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetDCF_ROIC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="YEAR" Type="int" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+					<Parameter Name="CURRENCY" Type="char" Mode="In" />
+				</Function>
+				<Function Name="GetDCFCashFlow" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetDCFGDP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="COUNTRY_CODE" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetDCFMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetDCFRiskFreeRate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="COUNTRY_CODE" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetDCFSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetFairValueCompositionSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetFinstatDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="issuerID" Type="varchar" Mode="In" />
+					<Parameter Name="securityId" Type="varchar" Mode="In" />
+					<Parameter Name="dataSource" Type="varchar" Mode="In" />
+					<Parameter Name="fiscalType" Type="char" Mode="In" />
+					<Parameter Name="currency" Type="char" Mode="In" />
+				</Function>
+				<Function Name="GetFinstatEconomic_MarketData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="issuerID" Type="varchar" Mode="In" />
+					<Parameter Name="securityId" Type="varchar" Mode="In" />
+					<Parameter Name="dataSource" Type="varchar" Mode="In" />
+					<Parameter Name="fiscalType" Type="char" Mode="In" />
+					<Parameter Name="currency" Type="char" Mode="In" />
+				</Function>
+				<Function Name="GetFinstatRelativeAnalysisData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="issuerID" Type="varchar" Mode="In" />
+					<Parameter Name="securityId" Type="varchar" Mode="In" />
+					<Parameter Name="dataSource" Type="varchar" Mode="In" />
+					<Parameter Name="fiscalType" Type="char" Mode="In" />
+				</Function>
+				<Function Name="GetFreeCashFlows" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="IssuerId" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetMarketCap" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+				<Function Name="GetModelConsensusEstimates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+					<Parameter Name="CURRENCY" Type="char" Mode="In" />
+				</Function>
+				<Function Name="GetNewICPresentationSecurityData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="securityID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="GetTargetPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="XRef" Type="nvarchar" Mode="In" />
+				</Function>
+				<Function Name="ModelDeleteInteralStatement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="ModelDeleteInternalCommodityAssumptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="REF_NO" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="ModelDeleteInternalData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="REF_NO" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="ModelDeleteInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="ModelDeleteInternalIssuerQuarterlyDistribution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="ModelInsertDataInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="COA" Type="varchar" Mode="In" />
+					<Parameter Name="LASTPRIMARYMODELLOAD" Type="datetime" Mode="In" />
+					<Parameter Name="LASTINDUSTRYMODELLOAD" Type="datetime" Mode="In" />
+				</Function>
+				<Function Name="ModelInsertInternalCOAChanges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="LOAD_ID" Type="bigint" Mode="In" />
+					<Parameter Name="CURRENCY" Type="varchar" Mode="In" />
+					<Parameter Name="COA" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+					<Parameter Name="PERIOD_END_DATE" Type="datetime" Mode="In" />
+					<Parameter Name="START_DATE" Type="datetime" Mode="In" />
+					<Parameter Name="END_DATE" Type="datetime" Mode="In" />
+					<Parameter Name="AMOUNT" Type="decimal" Mode="In" />
+					<Parameter Name="UNITS" Type="char" Mode="In" />
+				</Function>
+				<Function Name="ModelInsertInternalCommodityAssumptions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="REF_NO" Type="varchar" Mode="In" />
+					<Parameter Name="COMMODITY_ID" Type="varchar" Mode="In" />
+					<Parameter Name="AMOUNT" Type="decimal" Mode="In" />
+				</Function>
+				<Function Name="ModelInsertInternalData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="REF_NO" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="COA" Type="char" Mode="In" />
+					<Parameter Name="AMOUNT" Type="decimal" Mode="In" />
+				</Function>
+				<Function Name="ModelInsertInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="COA_TYPE" Type="varchar" Mode="In" />
+					<Parameter Name="LASTPRIMARYMODELLOAD" Type="datetime" Mode="In" />
+					<Parameter Name="LASTINDUSTRYMODELLOAD" Type="datetime" Mode="In" />
+				</Function>
+				<Function Name="ModelInsertInternalIssuerQuaterelyDistribution" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="PERCENTAGE" Type="decimal" Mode="In" />
+					<Parameter Name="LAST_UPDATED" Type="datetime" Mode="In" />
+				</Function>
+				<Function Name="ModelInsertInternalModelLoadData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="USER_NAME" Type="varchar" Mode="In" />
+					<Parameter Name="LOAD_TIME" Type="datetime" Mode="In" />
+					<Parameter Name="DOCUMENT_ID" Type="bigint" Mode="In" />
+				</Function>
+				<Function Name="ModelInsertInternalStatement" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="REF_NO" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+					<Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="ROOT_SOURCE_DATE" Type="datetime" Mode="In" />
+					<Parameter Name="PERIOD_LENGTH" Type="int" Mode="In" />
+					<Parameter Name="PERIOD_END_DATE" Type="datetime" Mode="In" />
+					<Parameter Name="CURRENCY" Type="char" Mode="In" />
+					<Parameter Name="AMOUNT_TYPE" Type="char" Mode="In" />
+				</Function>
+				<Function Name="ModelRetrieveDataInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="ModelRetrieveInternalCOAChanges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="COA" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+					<Parameter Name="CURRENCY" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="ModelRetrieveInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="ModelRetrieveinternalModelLoadData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="LOAD_TIME" Type="datetime" Mode="In" />
+				</Function>
+				<Function Name="ModelRetrieveTrackCOA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+				<Function Name="ModelUpdateDataInternalIssuer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="LASTPRIMARYMODELLOAD" Type="datetime" Mode="In" />
+					<Parameter Name="LASTINDUSTRYMODELLOAD" Type="datetime" Mode="In" />
+				</Function>
+				<Function Name="ModelUpdateInternalCOAChanges" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="CURRENCY" Type="varchar" Mode="In" />
+					<Parameter Name="COA" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_YEAR" Type="int" Mode="In" />
+					<Parameter Name="TIME_STAMP" Type="datetime" Mode="In" />
+				</Function>
+				<Function Name="ModelUpdateInternalModelLoadData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="LOAD_ID" Type="int" Mode="In" />
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="ROOT_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="USER_NAME" Type="varchar" Mode="In" />
+					<Parameter Name="LOAD_TIME" Type="datetime" Mode="In" />
+					<Parameter Name="DOCUMENT_ID" Type="bigint" Mode="In" />
+				</Function>
+				<Function Name="RetrieveCOACodes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="COA_TYPE" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="RetrieveCOAType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="RetrieveCommodityForecasts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+				<Function Name="RetrieveDataPointsModelUpload" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="RetrieveDistinctFXRates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+				<Function Name="RetrieveRatioComparisonData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="securityBucketXML" Type="varchar(max)" Mode="In" />
+				</Function>
+				<Function Name="RetrieveSecurityPFVMeasureCurrentPrice" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="SecurityId" Type="varchar" Mode="In" />
+					<Parameter Name="PFVMeasure" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="SaveUpdatedFairValueMeasures" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="securityId" Type="varchar" Mode="In" />
+					<Parameter Name="xmlScript" Type="nvarchar(max)" Mode="In" />
+				</Function>
+				<Function Name="SET_INTERIM_AMOUNTS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="SetFairValue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="SECURITY_ID" Type="varchar" Mode="In" />
+					<Parameter Name="PFV_MEASURE" Type="varchar" Mode="In" />
+					<Parameter Name="PFV_MEASURE_VALUE" Type="decimal" Mode="In" />
+					<Parameter Name="FV_BUY" Type="decimal" Mode="In" />
+					<Parameter Name="FV_SELL" Type="decimal" Mode="In" />
+				</Function>
+				<Function Name="usp_GetDataForPeriodGadgets" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="cSource" Type="varchar" Mode="In" />
+					<Parameter Name="cFiscalType" Type="varchar" Mode="In" />
+					<Parameter Name="cCurrency" Type="varchar" Mode="In" />
+					<Parameter Name="cIssuerID" Type="varchar" Mode="In" />
+					<Parameter Name="cSecurityID" Type="varchar" Mode="In" />
+				</Function>
+				<Function Name="usp_GetDataForValuationQualityGrowth" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="issuerIdsForPortfolio" Type="varchar(max)" Mode="In" />
+					<Parameter Name="securityIdsForPortfolio" Type="varchar(max)" Mode="In" />
+					<Parameter Name="issuerIdsForBenchmark" Type="varchar(max)" Mode="In" />
+					<Parameter Name="securityIdsForBenchmark" Type="varchar(max)" Mode="In" />
+				</Function>
+				<Function Name="usp_GetDCF_ROIC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="YEAR" Type="int" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+					<Parameter Name="CURRENCY" Type="char" Mode="In" />
+				</Function>
+				<Function Name="usp_GetQuarterlyResults" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="DataId" Type="int" Mode="In" />
+					<Parameter Name="PeriodYear" Type="int" Mode="In" />
+				</Function>
+				<Function Name="usp_RetrieveDCFAnalysisSummaryData" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="ISSUER_ID" Type="varchar" Mode="In" />
+					<Parameter Name="DATA_SOURCE" Type="varchar" Mode="In" />
+					<Parameter Name="PERIOD_TYPE" Type="char" Mode="In" />
+					<Parameter Name="FISCAL_TYPE" Type="char" Mode="In" />
+					<Parameter Name="CURRENCY" Type="char" Mode="In" />
+				</Function>
+			</Schema>
+		</edmx:StorageModels>
 
 		<!-- CSDL content -->
 		<edmx:ConceptualModels>
@@ -907,25 +942,25 @@
 					<EntitySet Name="PERIOD_FINANCIALS_DISPLAY" EntityType="ExternalResearchModel.PERIOD_FINANCIALS_DISPLAY" />
 					<EntitySet Name="REUTERS_XREF" EntityType="ExternalResearchModel.REUTERS_XREF" />
 					<FunctionImport Name="GetBasicData" ReturnType="Collection(ExternalResearchModel.GetBasicData_Result)">
-          <Parameter Name="SecurityID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="SecurityID" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetTargetPrice" ReturnType="Collection(ExternalResearchModel.GetTargetPrice_Result)">
-          <Parameter Name="XRef" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="XRef" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetConsensusEstimatesSummaryData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimatesSummaryData)">
-          <Parameter Name="Security" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="Security" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="usp_GetQuarterlyResults" ReturnType="Collection(ExternalResearchModel.QuarterlyResults)">
-            <Parameter Name="DataId" Mode="In" Type="Int32" />
-            <Parameter Name="PeriodYear" Mode="In" Type="Int32" />
-          </FunctionImport>
+						<Parameter Name="DataId" Mode="In" Type="Int32" />
+						<Parameter Name="PeriodYear" Mode="In" Type="Int32" />
+					</FunctionImport>
 					<FunctionImport Name="GetConsensusEstimateData" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateMedianData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="Get_ConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
 						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
 						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
@@ -937,300 +972,300 @@
 					</FunctionImport>
 
 					<FunctionImport Name="GetConsensusEstimatesValuation" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateValuation)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-            <Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
-            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
-            <Parameter Name="Security_ID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+						<Parameter Name="ESTIMATE_ID" Mode="In" Type="Int32" />
+						<Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+						<Parameter Name="Security_ID" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetConsensusDetail" ReturnType="Collection(ExternalResearchModel.ConsensusEstimateDetailData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+					</FunctionImport>
 					<EntitySet Name="PRICES" EntityType="ExternalResearchModel.PRICE" />
 					<FunctionImport Name="Get_PRevenue" ReturnType="Collection(ExternalResearchModel.GetPRevenueData_Result)">
-            <Parameter Name="securityId" Mode="In" Type="String" />
-            <Parameter Name="issuerId" Mode="In" Type="String" />
-            <Parameter Name="chartTitle" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="securityId" Mode="In" Type="String" />
+						<Parameter Name="issuerId" Mode="In" Type="String" />
+						<Parameter Name="chartTitle" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="Get_Statement" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-            <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+						<Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetDataForPeriodGadgets" ReturnType="Collection(ExternalResearchModel.COASpecificData)">
-            <Parameter Name="cSource" Mode="In" Type="String" />
-            <Parameter Name="cFiscalType" Mode="In" Type="String" />
-            <Parameter Name="cCurrency" Mode="In" Type="String" />
-            <Parameter Name="cIssuerID" Mode="In" Type="String" />
-            <Parameter Name="cSecurityID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="cSource" Mode="In" Type="String" />
+						<Parameter Name="cFiscalType" Mode="In" Type="String" />
+						<Parameter Name="cCurrency" Mode="In" Type="String" />
+						<Parameter Name="cIssuerID" Mode="In" Type="String" />
+						<Parameter Name="cSecurityID" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetFinstatDetail" ReturnType="Collection(ExternalResearchModel.FinstatDetail)">
-            <Parameter Name="issuerID" Mode="In" Type="String" />
-            <Parameter Name="securityId" Mode="In" Type="String" />
-            <Parameter Name="dataSource" Mode="In" Type="String" />
-            <Parameter Name="fiscalType" Mode="In" Type="String" />
-            <Parameter Name="currency" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="issuerID" Mode="In" Type="String" />
+						<Parameter Name="securityId" Mode="In" Type="String" />
+						<Parameter Name="dataSource" Mode="In" Type="String" />
+						<Parameter Name="fiscalType" Mode="In" Type="String" />
+						<Parameter Name="currency" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="Get_EV_EBITDA" ReturnType="Collection(ExternalResearchModel.GetEV_EBITDAData_Result)">
-            <Parameter Name="securityId" Mode="In" Type="String" />
-            <Parameter Name="issuerId" Mode="In" Type="String" />
-            <Parameter Name="chartTitle" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="securityId" Mode="In" Type="String" />
+						<Parameter Name="issuerId" Mode="In" Type="String" />
+						<Parameter Name="chartTitle" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetFinstatEconomicMarketData" ReturnType="Collection(ExternalResearchModel.FinstatEconomicMarketData)">
-            <Parameter Name="issuerID" Mode="In" Type="String" />
-            <Parameter Name="securityId" Mode="In" Type="String" />
-            <Parameter Name="dataSource" Mode="In" Type="String" />
-            <Parameter Name="fiscalType" Mode="In" Type="String" />
-            <Parameter Name="currency" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="issuerID" Mode="In" Type="String" />
+						<Parameter Name="securityId" Mode="In" Type="String" />
+						<Parameter Name="dataSource" Mode="In" Type="String" />
+						<Parameter Name="fiscalType" Mode="In" Type="String" />
+						<Parameter Name="currency" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetFinstatRelativeAnalysisData" ReturnType="Collection(ExternalResearchModel.FinstatRelativeAnalysisData)">
-            <Parameter Name="issuerID" Mode="In" Type="String" />
-            <Parameter Name="securityId" Mode="In" Type="String" />
-            <Parameter Name="dataSource" Mode="In" Type="String" />
-            <Parameter Name="fiscalType" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="issuerID" Mode="In" Type="String" />
+						<Parameter Name="securityId" Mode="In" Type="String" />
+						<Parameter Name="dataSource" Mode="In" Type="String" />
+						<Parameter Name="fiscalType" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetMarketCap" ReturnType="Collection(Decimal)" />
 					<FunctionImport Name="GetBrokerDetail" ReturnType="Collection(ExternalResearchModel.BrokerDetailData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="ESTIMATE_TYPE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ESTIMATE_TYPE" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="RetrieveDCFAnalysisSummaryData" ReturnType="Collection(ExternalResearchModel.DCFAnalysisSummaryData_Result)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="RetrieveSecurityPFVMeasureCurrentPrice" ReturnType="Collection(Decimal)">
-            <Parameter Name="SecurityId" Mode="In" Type="String" />
-            <Parameter Name="PFVMeasure" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="SecurityId" Mode="In" Type="String" />
+						<Parameter Name="PFVMeasure" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="usp_GetDataForValuationQualityGrowth" ReturnType="Collection(ExternalResearchModel.ValuationQualityGrowthData)">
-            <Parameter Name="issuerIdsForPortfolio" Mode="In" Type="String" />
-            <Parameter Name="securityIdsForPortfolio" Mode="In" Type="String" />
-            <Parameter Name="issuerIdsForBenchmark" Mode="In" Type="String" />
-            <Parameter Name="securityIdsForBenchmark" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="issuerIdsForPortfolio" Mode="In" Type="String" />
+						<Parameter Name="securityIdsForPortfolio" Mode="In" Type="String" />
+						<Parameter Name="issuerIdsForBenchmark" Mode="In" Type="String" />
+						<Parameter Name="securityIdsForBenchmark" Mode="In" Type="String" />
+					</FunctionImport>
 
 					<FunctionImport Name="GetNewICPresentationSecurityData" ReturnType="Collection(ExternalResearchModel.NewICPresentationSecurityData)">
-          <Parameter Name="securityID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="securityID" Mode="In" Type="String" />
+					</FunctionImport>
 
 
 					<FunctionImport Name="GetDCF_ROIC" ReturnType="Collection(ExternalResearchModel.DCF_ROICResult)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="YEAR" Mode="In" Type="Int32" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="YEAR" Mode="In" Type="Int32" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetModelConsensusEstimates" ReturnType="Collection(ExternalResearchModel.ModelConsensusEstimatesData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
-					<FunctionImport Name="Get_Statement_Models" ReturnType="Collection(ExternalResearchModel.FinancialStatementData)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
-            <Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+					</FunctionImport>
+					<FunctionImport Name="Get_Statement_Models" ReturnType="Collection(ExternalResearchModel.FinancialStatementDataModels)">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="FISCAL_TYPE" Mode="In" Type="String" />
+						<Parameter Name="STATEMENT_TYPE" Mode="In" Type="String" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+					</FunctionImport>
 					<EntitySet Name="External_Country_Master" EntityType="ExternalResearchModel.External_Country_Master" />
 					<EntitySet Name="FAIR_VALUE" EntityType="ExternalResearchModel.FAIR_VALUE" />
 					<EntitySet Name="MODEL_INPUTS_CTY" EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" />
 					<FunctionImport Name="GetDCFRiskFreeRate" EntitySet="MODEL_INPUTS_CTY" ReturnType="Collection(ExternalResearchModel.MODEL_INPUTS_CTY)">
-          <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetDCFMarketCap" ReturnType="Collection(Decimal)">
-          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetDCFCashFlow" ReturnType="Collection(ExternalResearchModel.DCFCashFlowData)">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetDCFSummaryData" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetDCF_NumberOfShares" ReturnType="Collection(ExternalResearchModel.DCFSummaryDBData)">
-          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetDCFGDP" ReturnType="Collection(Decimal)">
-          <Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="COUNTRY_CODE" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetFreeCashFlows" ReturnType="Collection(ExternalResearchModel.GetFreeCashFlows_Result)">
-          <Parameter Name="IssuerId" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="IssuerId" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetFairValueCompositionSummaryData" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
-          <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="RetrieveRatioComparisonData" ReturnType="Collection(ExternalResearchModel.RatioComparisonData)">
-          <Parameter Name="securityBucketXML" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="securityBucketXML" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="GetAmountForUpsideCalculation" ReturnType="Collection(Decimal)">
-            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_ID" Mode="In" Type="Int32" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_ID" Mode="In" Type="Int32" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="SaveUpdatedFairValueMeasures" ReturnType="Collection(ExternalResearchModel.GetFairValueComposition_Result)">
-            <Parameter Name="securityId" Mode="In" Type="String" />
-            <Parameter Name="xmlScript" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="securityId" Mode="In" Type="String" />
+						<Parameter Name="xmlScript" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="RetrieveDataPointsModelUpload" ReturnType="Collection(ExternalResearchModel.DataPointsModelUploadData)">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="RetrieveCOAType" EntitySet="INTERNAL_ISSUER" ReturnType="Collection(ExternalResearchModel.INTERNAL_ISSUER)">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="RetrieveDistinctFXRates" ReturnType="Collection(String)" />
 					<FunctionImport Name="RetrieveCOACodes" ReturnType="Collection(ExternalResearchModel.DataPointsModelUploadData)">
-          <Parameter Name="COA_TYPE" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="COA_TYPE" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="RetrieveCommodityForecasts" ReturnType="Collection(String)" />
 					<FunctionImport Name="ModelDeleteInteralStatement" ReturnType="Collection(String)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="ModelDeleteInternalData">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="REF_NO" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="REF_NO" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="ModelDeleteInternalIssuerQuarterlyDistribution">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="ModelInsertInternalData">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="REF_NO" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="COA" Mode="In" Type="String" />
-            <Parameter Name="AMOUNT" Mode="In" Type="Decimal" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="REF_NO" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="COA" Mode="In" Type="String" />
+						<Parameter Name="AMOUNT" Mode="In" Type="Decimal" />
+					</FunctionImport>
 					<FunctionImport Name="ModelInsertInternalIssuer">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="COA_TYPE" Mode="In" Type="String" />
-            <Parameter Name="LASTPRIMARYMODELLOAD" Mode="In" Type="DateTime" />
-            <Parameter Name="LASTINDUSTRYMODELLOAD" Mode="In" Type="DateTime" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="COA_TYPE" Mode="In" Type="String" />
+						<Parameter Name="LASTPRIMARYMODELLOAD" Mode="In" Type="DateTime" />
+						<Parameter Name="LASTINDUSTRYMODELLOAD" Mode="In" Type="DateTime" />
+					</FunctionImport>
 					<FunctionImport Name="ModelInsertInternalIssuerQuaterelyDistribution">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
-            <Parameter Name="PERCENTAGE" Mode="In" Type="Decimal" />
-            <Parameter Name="LAST_UPDATED" Mode="In" Type="DateTime" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_TYPE" Mode="In" Type="String" />
+						<Parameter Name="PERCENTAGE" Mode="In" Type="Decimal" />
+						<Parameter Name="LAST_UPDATED" Mode="In" Type="DateTime" />
+					</FunctionImport>
 					<FunctionImport Name="ModelInsertInternalStatement">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="REF_NO" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
-            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="ROOT_SOURCE_DATE" Mode="In" Type="DateTime" />
-            <Parameter Name="PERIOD_LENGTH" Mode="In" Type="Int32" />
-            <Parameter Name="PERIOD_END_DATE" Mode="In" Type="DateTime" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-            <Parameter Name="AMOUNT_TYPE" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="REF_NO" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+						<Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="ROOT_SOURCE_DATE" Mode="In" Type="DateTime" />
+						<Parameter Name="PERIOD_LENGTH" Mode="In" Type="Int32" />
+						<Parameter Name="PERIOD_END_DATE" Mode="In" Type="DateTime" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+						<Parameter Name="AMOUNT_TYPE" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="ModelRetrieveInternalIssuer" EntitySet="INTERNAL_ISSUER" ReturnType="Collection(ExternalResearchModel.INTERNAL_ISSUER)">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					</FunctionImport>
 					<FunctionImport Name="ModelDeleteInternalIssuer">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
-          <FunctionImport Name="ModelInsertInternalCommodityAssumptions">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="REF_NO" Mode="In" Type="String" />
-            <Parameter Name="COMMODITY_ID" Mode="In" Type="String" />
-            <Parameter Name="AMOUNT" Mode="In" Type="Decimal" />
-          </FunctionImport>
-          <FunctionImport Name="ModelDeleteInternalCommodityAssumptions">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="REF_NO" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="ModelUpdateDataInternalIssuer">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="LASTPRIMARYMODELLOAD" Mode="In" Type="DateTime" />
-            <Parameter Name="LASTINDUSTRYMODELLOAD" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="SET_INTERIM_AMOUNTS">
-          <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="Get_Data">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="CALC_LOG" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="ModelInsertInternalModelLoadData">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="USER_NAME" Mode="In" Type="String" />
-            <Parameter Name="LOAD_TIME" Mode="In" Type="DateTime" />
-            <Parameter Name="DOCUMENT_ID" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="ModelUpdateInternalModelLoadData">
-            <Parameter Name="LOAD_ID" Mode="In" Type="Int32" />
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="USER_NAME" Mode="In" Type="String" />
-            <Parameter Name="LOAD_TIME" Mode="In" Type="DateTime" />
-            <Parameter Name="DOCUMENT_ID" Mode="In" Type="Int64" />
-          </FunctionImport>
-          <FunctionImport Name="ModelRetrieveinternalModelLoadData" ReturnType="Collection(ExternalResearchModel.Internal_Model_Load)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="LOAD_TIME" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="ModelRetrieveTrackCOA" ReturnType="Collection(ExternalResearchModel.TrackedCOA)" />
-          <FunctionImport Name="ModelInsertInternalCOAChanges">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="LOAD_ID" Mode="In" Type="Int64" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-            <Parameter Name="COA" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
-            <Parameter Name="PERIOD_END_DATE" Mode="In" Type="DateTime" />
-            <Parameter Name="START_DATE" Mode="In" Type="DateTime" />
-            <Parameter Name="END_DATE" Mode="In" Type="DateTime" />
-            <Parameter Name="AMOUNT" Mode="In" Type="Decimal" />
-            <Parameter Name="UNITS" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="ModelUpdateInternalCOAChanges">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-            <Parameter Name="COA" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
-            <Parameter Name="TIME_STAMP" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="ModelRetrieveInternalCOAChanges" ReturnType="Collection(ExternalResearchModel.INTERNAL_COA_CHANGES)">
-            <Parameter Name="ISSUER_ID" Mode="In" Type="String" />
-            <Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
-            <Parameter Name="COA" Mode="In" Type="String" />
-            <Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
-            <Parameter Name="CURRENCY" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="SetFairValue" ReturnType="Collection(Int32)">
-            <Parameter Name="SECURITY_ID" Mode="In" Type="String" />
-            <Parameter Name="PFV_MEASURE" Mode="In" Type="String" />
-            <Parameter Name="PFV_MEASURE_VALUE" Mode="In" Type="Decimal" />
-            <Parameter Name="FV_BUY" Mode="In" Type="Decimal" />
-            <Parameter Name="FV_SELL" Mode="In" Type="Decimal" />
-          </FunctionImport>
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+					</FunctionImport>
+					<EntitySet Name="PORTFOLIO_SECURITY_TARGETS" EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" />
+					<FunctionImport Name="ModelInsertInternalCommodityAssumptions">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="REF_NO" Mode="In" Type="String" />
+						<Parameter Name="COMMODITY_ID" Mode="In" Type="String" />
+						<Parameter Name="AMOUNT" Mode="In" Type="Decimal" />
+					</FunctionImport>
+					<FunctionImport Name="ModelDeleteInternalCommodityAssumptions">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="REF_NO" Mode="In" Type="String" />
+					</FunctionImport>
+					<FunctionImport Name="ModelUpdateDataInternalIssuer">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="LASTPRIMARYMODELLOAD" Mode="In" Type="DateTime" />
+						<Parameter Name="LASTINDUSTRYMODELLOAD" Mode="In" Type="DateTime" />
+					</FunctionImport>
+					<FunctionImport Name="SET_INTERIM_AMOUNTS">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="DATA_SOURCE" Mode="In" Type="String" />
+					</FunctionImport>
+					<FunctionImport Name="Get_Data">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="CALC_LOG" Mode="In" Type="String" />
+					</FunctionImport>
+					<FunctionImport Name="ModelInsertInternalModelLoadData">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="USER_NAME" Mode="In" Type="String" />
+						<Parameter Name="LOAD_TIME" Mode="In" Type="DateTime" />
+						<Parameter Name="DOCUMENT_ID" Mode="In" Type="Int64" />
+					</FunctionImport>
+					<FunctionImport Name="ModelUpdateInternalModelLoadData">
+						<Parameter Name="LOAD_ID" Mode="In" Type="Int32" />
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="USER_NAME" Mode="In" Type="String" />
+						<Parameter Name="LOAD_TIME" Mode="In" Type="DateTime" />
+						<Parameter Name="DOCUMENT_ID" Mode="In" Type="Int64" />
+					</FunctionImport>
+					<FunctionImport Name="ModelRetrieveinternalModelLoadData" ReturnType="Collection(ExternalResearchModel.Internal_Model_Load)">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="LOAD_TIME" Mode="In" Type="DateTime" />
+					</FunctionImport>
+					<FunctionImport Name="ModelRetrieveTrackCOA" ReturnType="Collection(ExternalResearchModel.TrackedCOA)" />
+					<FunctionImport Name="ModelInsertInternalCOAChanges">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="LOAD_ID" Mode="In" Type="Int64" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+						<Parameter Name="COA" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+						<Parameter Name="PERIOD_END_DATE" Mode="In" Type="DateTime" />
+						<Parameter Name="START_DATE" Mode="In" Type="DateTime" />
+						<Parameter Name="END_DATE" Mode="In" Type="DateTime" />
+						<Parameter Name="AMOUNT" Mode="In" Type="Decimal" />
+						<Parameter Name="UNITS" Mode="In" Type="String" />
+					</FunctionImport>
+					<FunctionImport Name="ModelUpdateInternalCOAChanges">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+						<Parameter Name="COA" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+						<Parameter Name="TIME_STAMP" Mode="In" Type="DateTime" />
+					</FunctionImport>
+					<FunctionImport Name="ModelRetrieveInternalCOAChanges" ReturnType="Collection(ExternalResearchModel.INTERNAL_COA_CHANGES)">
+						<Parameter Name="ISSUER_ID" Mode="In" Type="String" />
+						<Parameter Name="ROOT_SOURCE" Mode="In" Type="String" />
+						<Parameter Name="COA" Mode="In" Type="String" />
+						<Parameter Name="PERIOD_YEAR" Mode="In" Type="Int32" />
+						<Parameter Name="CURRENCY" Mode="In" Type="String" />
+					</FunctionImport>
+					<FunctionImport Name="SetFairValue" ReturnType="Collection(Int32)">
+						<Parameter Name="SECURITY_ID" Mode="In" Type="String" />
+						<Parameter Name="PFV_MEASURE" Mode="In" Type="String" />
+						<Parameter Name="PFV_MEASURE_VALUE" Mode="In" Type="Decimal" />
+						<Parameter Name="FV_BUY" Mode="In" Type="Decimal" />
+						<Parameter Name="FV_SELL" Mode="In" Type="Decimal" />
+					</FunctionImport>
 
 
 				</EntityContainer>
@@ -1575,7 +1610,7 @@
 					<Property Type="String" Name="ANNUAL" MaxLength="1" FixedLength="true" Unicode="false" />
 					<Property Type="String" Name="CURRENT" MaxLength="1" FixedLength="true" Unicode="false" />
 					<Property Type="String" Name="STATEMENT_TYPE" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="CONVERT_FLAG" MaxLength="1" FixedLength="true" Unicode="false" />
+					<Property Type="String" Name="CONVERT_FLAG" MaxLength="1" FixedLength="true" Unicode="false" />
 				</EntityType>
 				<ComplexType Name="ConsensusEstimateDetailData" >
 					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20"/>
@@ -1806,48 +1841,64 @@
 					<Property Type="String" Name="COA" Nullable="true" MaxLength="8" />
 					<Property Type="Int32" Name="SORT_ORDER" Nullable="false" />
 					<Property Type="String" Name="DATA_DESCRIPTION" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="CONVERT_FLAG" Nullable="true" MaxLength="1" />
+					<Property Type="String" Name="CONVERT_FLAG" Nullable="true" MaxLength="1" />
 				</ComplexType>
 				<ComplexType Name="CurrenciesList">
 					<Property Type="String" Name="Currency" Nullable="false" MaxLength="3" />
 				</ComplexType>
-        <EntityType Name="PORTFOLIO_SECURITY_TARGETS">
-          <Key>
-            <PropertyRef Name="PORTFOLIO_ID" />
-            <PropertyRef Name="SECURITY_ID" />
-            <PropertyRef Name="TARGET_PCT" />
-            <PropertyRef Name="UPDATED" />
-          </Key>
-          <Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Type="Decimal" Name="TARGET_PCT" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="DateTime" Name="UPDATED" Nullable="false" />
-        </EntityType>
-        <ComplexType Name="Internal_Model_Load">
-          <Property Type="Int32" Name="LOAD_ID" Nullable="false" />
-          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="UserName" Nullable="false" MaxLength="255" />
-          <Property Type="DateTime" Name="LOAD_TIME" Nullable="false" Precision="23" />
-          <Property Type="Int64" Name="DOCUMENT_ID" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="TrackedCOA">
-          <Property Type="Int32" Name="Id" Nullable="false" />
-          <Property Type="String" Name="COA" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="INTERNAL_COA_CHANGES">
-          <Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
-          <Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
-          <Property Type="Int64" Name="LOAD_ID" Nullable="false" />
-          <Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" />
-          <Property Type="String" Name="COA" Nullable="false" MaxLength="8" />
-          <Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
-          <Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="START_DATE" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="END_DATE" Nullable="true" Precision="23" />
-          <Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
-          <Property Type="String" Name="UNITS" Nullable="false" MaxLength="1" />
-        </ComplexType>
+				<EntityType Name="PORTFOLIO_SECURITY_TARGETS">
+					<Key>
+						<PropertyRef Name="PORTFOLIO_ID" />
+						<PropertyRef Name="SECURITY_ID" />
+						<PropertyRef Name="TARGET_PCT" />
+						<PropertyRef Name="UPDATED" />
+					</Key>
+					<Property Type="String" Name="PORTFOLIO_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Type="String" Name="SECURITY_ID" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Type="Decimal" Name="TARGET_PCT" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="DateTime" Name="UPDATED" Nullable="false" />
+				</EntityType>
+				<ComplexType Name="Internal_Model_Load">
+					<Property Type="Int32" Name="LOAD_ID" Nullable="false" />
+					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
+					<Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
+					<Property Type="String" Name="UserName" Nullable="false" MaxLength="255" />
+					<Property Type="DateTime" Name="LOAD_TIME" Nullable="false" Precision="23" />
+					<Property Type="Int64" Name="DOCUMENT_ID" Nullable="false" />
+				</ComplexType>
+				<ComplexType Name="TrackedCOA">
+					<Property Type="Int32" Name="Id" Nullable="false" />
+					<Property Type="String" Name="COA" Nullable="false" MaxLength="50" />
+				</ComplexType>
+				<ComplexType Name="INTERNAL_COA_CHANGES">
+					<Property Type="String" Name="ISSUER_ID" Nullable="false" MaxLength="20" />
+					<Property Type="String" Name="ROOT_SOURCE" Nullable="false" MaxLength="10" />
+					<Property Type="Int64" Name="LOAD_ID" Nullable="false" />
+					<Property Type="String" Name="CURRENCY" Nullable="false" MaxLength="3" />
+					<Property Type="String" Name="COA" Nullable="false" MaxLength="8" />
+					<Property Type="Int32" Name="PERIOD_YEAR" Nullable="false" />
+					<Property Type="DateTime" Name="PERIOD_END_DATE" Nullable="false" Precision="23" />
+					<Property Type="DateTime" Name="START_DATE" Nullable="false" Precision="23" />
+					<Property Type="DateTime" Name="END_DATE" Nullable="true" Precision="23" />
+					<Property Type="Decimal" Name="AMOUNT" Nullable="false" Precision="32" Scale="6" />
+					<Property Type="String" Name="UNITS" Nullable="false" MaxLength="1" />
+				</ComplexType>
+				<ComplexType Name="FinancialStatementDataModels" >
+					<Property Type="Int32" Name="SortOrder" Nullable="false" />
+					<Property Type="String" Name="Description" Nullable="false" MaxLength="100" />
+					<Property Type="String" Name="AmountType" Nullable="true" MaxLength="1" />
+					<Property Type="String" Name="PeriodType" Nullable="false" MaxLength="2" />
+					<Property Type="Decimal" Name="Amount" Nullable="true" Precision="38" Scale="6" />
+					<Property Type="Int32" Name="PeriodYear" Nullable="true" />
+					<Property Type="String" Name="IsConsensus" Nullable="false" />
+					<Property Type="Int32" Name="DataId" Nullable="true" />
+					<Property Type="String" Name="GroupName" Nullable="true" />
+					<Property Type="String" Name="BoldFont" Nullable="true" />
+					<Property Type="Int32" Name="Decimals" Nullable="true" />
+					<Property Type="String" Name="RootSource" Nullable="true" />
+					<Property Type="DateTime" Name="RootSourceDate" Nullable="true" />
+					<Property Type="String" Name="CalculationDiagram" Nullable="true" />
+				</ComplexType>
 			</Schema>
 		</edmx:ConceptualModels>
 		<!-- C-S mapping content -->
@@ -1997,7 +2048,7 @@
 						<EntityTypeMapping TypeName="ExternalResearchModel.DATA_MASTER">
 							<MappingFragment StoreEntitySet="DATA_MASTER">
 								<ScalarProperty Name="CONVERT_FLAG" ColumnName="CONVERT_FLAG" />
-                <ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
+								<ScalarProperty Name="STATEMENT_TYPE" ColumnName="STATEMENT_TYPE" />
 								<ScalarProperty Name="CURRENT" ColumnName="CURRENT" />
 								<ScalarProperty Name="ANNUAL" ColumnName="ANNUAL" />
 								<ScalarProperty Name="COA_TYPE" ColumnName="COA_TYPE" />
@@ -2265,25 +2316,25 @@
 						</ResultMapping>
 					</FunctionImportMapping>
 					<FunctionImportMapping FunctionImportName="Get_Statement_Models" FunctionName="ExternalResearchModel.Store.Get_Statement_Models">
-						<ResultMapping>
-							<ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementData">
-								<ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
-								<ScalarProperty Name="Description" ColumnName="Description" />
-								<ScalarProperty Name="AmountType" ColumnName="AmountType" />
-								<ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
-								<ScalarProperty Name="Amount" ColumnName="Amount" />
-								<ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
-								<ScalarProperty Name="IsConsensus" ColumnName="IsConsensus" />
-								<ScalarProperty Name="DataId" ColumnName="DataId" />
-								<ScalarProperty Name="GroupName" ColumnName="GroupName" />
-								<ScalarProperty Name="BoldFont" ColumnName="BoldFont" />
-								<ScalarProperty Name="Decimals" ColumnName="Decimals" />
-								<ScalarProperty Name="RootSource" ColumnName="RootSource" />
-								<ScalarProperty Name="RootSourceDate" ColumnName="RootSourceDate" />
-								<ScalarProperty Name="CalculationDiagram" ColumnName="CalculationDiagram" />
-							</ComplexTypeMapping>
-						</ResultMapping>
-					</FunctionImportMapping>
+					<ResultMapping>
+              <ComplexTypeMapping TypeName="ExternalResearchModel.FinancialStatementDataModels">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="AmountType" ColumnName="AmountType" />
+                <ScalarProperty Name="PeriodType" ColumnName="PeriodType" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PeriodYear" ColumnName="PeriodYear" />
+                <ScalarProperty Name="IsConsensus" ColumnName="IsConsensus" />
+                <ScalarProperty Name="DataId" ColumnName="DataId" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="BoldFont" ColumnName="BoldFont" />
+                <ScalarProperty Name="Decimals" ColumnName="Decimals" />
+                <ScalarProperty Name="RootSource" ColumnName="RootSource" />
+                <ScalarProperty Name="RootSourceDate" ColumnName="RootSourceDate" />
+                <ScalarProperty Name="CalculationDiagram" ColumnName="CalculationDiagram" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
 					<EntitySetMapping Name="External_Country_Master">
 						<EntityTypeMapping TypeName="ExternalResearchModel.External_Country_Master">
 							<MappingFragment StoreEntitySet="Country_Master">
@@ -2508,7 +2559,7 @@
 								<ScalarProperty Name="COA" ColumnName="COA" />
 								<ScalarProperty Name="SORT_ORDER" ColumnName="SORT_ORDER" />
 								<ScalarProperty Name="DATA_DESCRIPTION" ColumnName="DATA_DESCRIPTION" />
-                <ScalarProperty Name="CONVERT_FLAG" ColumnName="CONVERT_FLAG" />
+								<ScalarProperty Name="CONVERT_FLAG" ColumnName="CONVERT_FLAG" />
 							</ComplexTypeMapping>
 						</ResultMapping>
 					</FunctionImportMapping>
@@ -2534,63 +2585,63 @@
 					<FunctionImportMapping FunctionImportName="ModelInsertInternalStatement" FunctionName="ExternalResearchModel.Store.ModelInsertInternalStatement" />
 					<FunctionImportMapping FunctionImportName="ModelRetrieveInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelRetrieveInternalIssuer" />
 					<FunctionImportMapping FunctionImportName="ModelDeleteInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalIssuer" />
-          <EntitySetMapping Name="PORTFOLIO_SECURITY_TARGETS">
-            <EntityTypeMapping TypeName="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS">
-              <MappingFragment StoreEntitySet="PORTFOLIO_SECURITY_TARGETS">
-                <ScalarProperty Name="UPDATED" ColumnName="UPDATED" />
-                <ScalarProperty Name="TARGET_PCT" ColumnName="TARGET_PCT" />
-                <ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
-                <ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="ModelInsertInternalCommodityAssumptions" FunctionName="ExternalResearchModel.Store.ModelInsertInternalCommodityAssumptions" />
-          <FunctionImportMapping FunctionImportName="ModelDeleteInternalCommodityAssumptions" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalCommodityAssumptions" />
-          <FunctionImportMapping FunctionImportName="ModelUpdateDataInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelUpdateDataInternalIssuer" />
-          <FunctionImportMapping FunctionImportName="SET_INTERIM_AMOUNTS" FunctionName="ExternalResearchModel.Store.SET_INTERIM_AMOUNTS" />
-          <FunctionImportMapping FunctionImportName="Get_Data" FunctionName="ExternalResearchModel.Store.Get_Data" />
-          <FunctionImportMapping FunctionImportName="ModelInsertInternalModelLoadData" FunctionName="ExternalResearchModel.Store.ModelInsertInternalModelLoadData" />
-          <FunctionImportMapping FunctionImportName="ModelUpdateInternalModelLoadData" FunctionName="ExternalResearchModel.Store.ModelUpdateInternalModelLoadData" />
-          <FunctionImportMapping FunctionImportName="ModelRetrieveinternalModelLoadData" FunctionName="ExternalResearchModel.Store.ModelRetrieveinternalModelLoadData">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.Internal_Model_Load">
-                <ScalarProperty Name="LOAD_ID" ColumnName="LOAD_ID" />
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="LOAD_TIME" ColumnName="LOAD_TIME" />
-                <ScalarProperty Name="DOCUMENT_ID" ColumnName="DOCUMENT_ID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ModelRetrieveTrackCOA" FunctionName="ExternalResearchModel.Store.ModelRetrieveTrackCOA">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.TrackedCOA">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="COA" ColumnName="COA" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="ModelInsertInternalCOAChanges" FunctionName="ExternalResearchModel.Store.ModelInsertInternalCOAChanges" />
-          <FunctionImportMapping FunctionImportName="ModelUpdateInternalCOAChanges" FunctionName="ExternalResearchModel.Store.ModelUpdateInternalCOAChanges" />
-          <FunctionImportMapping FunctionImportName="ModelRetrieveInternalCOAChanges" FunctionName="ExternalResearchModel.Store.ModelRetrieveInternalCOAChanges">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="ExternalResearchModel.INTERNAL_COA_CHANGES">
-                <ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
-                <ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
-                <ScalarProperty Name="LOAD_ID" ColumnName="LOAD_ID" />
-                <ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
-                <ScalarProperty Name="COA" ColumnName="COA" />
-                <ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
-                <ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
-                <ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
-                <ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
-                <ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
-                <ScalarProperty Name="UNITS" ColumnName="UNITS" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SetFairValue" FunctionName="ExternalResearchModel.Store.SetFairValue" />
+					<EntitySetMapping Name="PORTFOLIO_SECURITY_TARGETS">
+						<EntityTypeMapping TypeName="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS">
+							<MappingFragment StoreEntitySet="PORTFOLIO_SECURITY_TARGETS">
+								<ScalarProperty Name="UPDATED" ColumnName="UPDATED" />
+								<ScalarProperty Name="TARGET_PCT" ColumnName="TARGET_PCT" />
+								<ScalarProperty Name="SECURITY_ID" ColumnName="SECURITY_ID" />
+								<ScalarProperty Name="PORTFOLIO_ID" ColumnName="PORTFOLIO_ID" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<FunctionImportMapping FunctionImportName="ModelInsertInternalCommodityAssumptions" FunctionName="ExternalResearchModel.Store.ModelInsertInternalCommodityAssumptions" />
+					<FunctionImportMapping FunctionImportName="ModelDeleteInternalCommodityAssumptions" FunctionName="ExternalResearchModel.Store.ModelDeleteInternalCommodityAssumptions" />
+					<FunctionImportMapping FunctionImportName="ModelUpdateDataInternalIssuer" FunctionName="ExternalResearchModel.Store.ModelUpdateDataInternalIssuer" />
+					<FunctionImportMapping FunctionImportName="SET_INTERIM_AMOUNTS" FunctionName="ExternalResearchModel.Store.SET_INTERIM_AMOUNTS" />
+					<FunctionImportMapping FunctionImportName="Get_Data" FunctionName="ExternalResearchModel.Store.Get_Data" />
+					<FunctionImportMapping FunctionImportName="ModelInsertInternalModelLoadData" FunctionName="ExternalResearchModel.Store.ModelInsertInternalModelLoadData" />
+					<FunctionImportMapping FunctionImportName="ModelUpdateInternalModelLoadData" FunctionName="ExternalResearchModel.Store.ModelUpdateInternalModelLoadData" />
+					<FunctionImportMapping FunctionImportName="ModelRetrieveinternalModelLoadData" FunctionName="ExternalResearchModel.Store.ModelRetrieveinternalModelLoadData">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.Internal_Model_Load">
+								<ScalarProperty Name="LOAD_ID" ColumnName="LOAD_ID" />
+								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+								<ScalarProperty Name="UserName" ColumnName="UserName" />
+								<ScalarProperty Name="LOAD_TIME" ColumnName="LOAD_TIME" />
+								<ScalarProperty Name="DOCUMENT_ID" ColumnName="DOCUMENT_ID" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="ModelRetrieveTrackCOA" FunctionName="ExternalResearchModel.Store.ModelRetrieveTrackCOA">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.TrackedCOA">
+								<ScalarProperty Name="Id" ColumnName="Id" />
+								<ScalarProperty Name="COA" ColumnName="COA" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="ModelInsertInternalCOAChanges" FunctionName="ExternalResearchModel.Store.ModelInsertInternalCOAChanges" />
+					<FunctionImportMapping FunctionImportName="ModelUpdateInternalCOAChanges" FunctionName="ExternalResearchModel.Store.ModelUpdateInternalCOAChanges" />
+					<FunctionImportMapping FunctionImportName="ModelRetrieveInternalCOAChanges" FunctionName="ExternalResearchModel.Store.ModelRetrieveInternalCOAChanges">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="ExternalResearchModel.INTERNAL_COA_CHANGES">
+								<ScalarProperty Name="ISSUER_ID" ColumnName="ISSUER_ID" />
+								<ScalarProperty Name="ROOT_SOURCE" ColumnName="ROOT_SOURCE" />
+								<ScalarProperty Name="LOAD_ID" ColumnName="LOAD_ID" />
+								<ScalarProperty Name="CURRENCY" ColumnName="CURRENCY" />
+								<ScalarProperty Name="COA" ColumnName="COA" />
+								<ScalarProperty Name="PERIOD_YEAR" ColumnName="PERIOD_YEAR" />
+								<ScalarProperty Name="PERIOD_END_DATE" ColumnName="PERIOD_END_DATE" />
+								<ScalarProperty Name="START_DATE" ColumnName="START_DATE" />
+								<ScalarProperty Name="END_DATE" ColumnName="END_DATE" />
+								<ScalarProperty Name="AMOUNT" ColumnName="AMOUNT" />
+								<ScalarProperty Name="UNITS" ColumnName="UNITS" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="SetFairValue" FunctionName="ExternalResearchModel.Store.SetFairValue" />
 					<!--<ResultMapping>
               <ComplexTypeMapping TypeName="ExternalResearchModel.BrokerDetail">
                 <ScalarProperty Name="broker_name" ColumnName="broker_name" />
@@ -2642,7 +2693,7 @@
 				<EntityTypeShape EntityType="ExternalResearchModel.External_Country_Master" Width="1.5" PointX="0.75" PointY="0.75" Height="2.3648893229166674" />
 				<EntityTypeShape EntityType="ExternalResearchModel.FAIR_VALUE" Width="1.5" PointX="0.75" PointY="4.75" Height="2.5571907552083388" />
 				<EntityTypeShape EntityType="ExternalResearchModel.MODEL_INPUTS_CTY" Width="1.5" PointX="9.375" PointY="9.75" Height="1.7879850260416674" />
-        <EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.375" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
+				<EntityTypeShape EntityType="ExternalResearchModel.PORTFOLIO_SECURITY_TARGETS" Width="2.375" PointX="11.375" PointY="5.75" Height="1.7879850260416674" />
 			</Diagram>
 		</Diagrams>
 	</Designer>

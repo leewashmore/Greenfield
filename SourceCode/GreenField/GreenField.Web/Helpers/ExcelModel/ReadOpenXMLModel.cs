@@ -1039,8 +1039,11 @@ namespace GreenField.Web.Helpers
                             else
                             {
                                 fetchedAmount = internalCOAChangesData.Select(a => a.AMOUNT).FirstOrDefault();
-                                UpdateInternalCOAChanges(issuerId, rootSource, currency, item.COA, periodYear, TimeStamp);
-                                InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA, periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
+                                if (fetchedAmount != amount)
+                                {
+                                    UpdateInternalCOAChanges(issuerId, rootSource, currency, item.COA, periodYear, TimeStamp);
+                                    InsertInternalCOAChangesData(issuerId, rootSource, DocumentId, currency, item.COA, periodYear, periodEndDate, TimeStamp, null, (decimal)amount, "M");
+                                }
                             }
                         }
                     }
