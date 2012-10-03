@@ -680,6 +680,7 @@ namespace GreenField.Web.Helpers
                 CheckInternalIssuer();
                 if (QuarterelyOverrideEnabled)
                 {
+                    DeleteInternalIssuerQuarterelyDistribution(ModelReferenceData.IssuerId, RootSource);                    
                     InsertIntoInternalIssuerQuarterelyDistribution();
                 }
                 else
