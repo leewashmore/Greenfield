@@ -1757,6 +1757,7 @@ namespace GreenField.DAL
         /// <param name="userName">No Metadata Documentation available.</param>
         /// <param name="meetingId">No Metadata Documentation available.</param>
         /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="issuerName">No Metadata Documentation available.</param>
         /// <param name="securityName">No Metadata Documentation available.</param>
         /// <param name="securityTicker">No Metadata Documentation available.</param>
         /// <param name="location">No Metadata Documentation available.</param>
@@ -1765,7 +1766,7 @@ namespace GreenField.DAL
         /// <param name="type">No Metadata Documentation available.</param>
         /// <param name="fileId">No Metadata Documentation available.</param>
         /// <param name="deletionFlag">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> SetICPMeetingAttachedFileInfo(global::System.String userName, Nullable<global::System.Int64> meetingId, global::System.String name, global::System.String securityName, global::System.String securityTicker, global::System.String location, global::System.String metaTags, global::System.String category, global::System.String type, Nullable<global::System.Int64> fileId, Nullable<global::System.Boolean> deletionFlag)
+        public ObjectResult<Nullable<global::System.Int32>> SetICPMeetingAttachedFileInfo(global::System.String userName, Nullable<global::System.Int64> meetingId, global::System.String name, global::System.String issuerName, global::System.String securityName, global::System.String securityTicker, global::System.String location, global::System.String metaTags, global::System.String category, global::System.String type, Nullable<global::System.Int64> fileId, Nullable<global::System.Boolean> deletionFlag)
         {
             ObjectParameter userNameParameter;
             if (userName != null)
@@ -1795,6 +1796,16 @@ namespace GreenField.DAL
             else
             {
                 nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter issuerNameParameter;
+            if (issuerName != null)
+            {
+                issuerNameParameter = new ObjectParameter("IssuerName", issuerName);
+            }
+            else
+            {
+                issuerNameParameter = new ObjectParameter("IssuerName", typeof(global::System.String));
             }
     
             ObjectParameter securityNameParameter;
@@ -1877,7 +1888,7 @@ namespace GreenField.DAL
                 deletionFlagParameter = new ObjectParameter("DeletionFlag", typeof(global::System.Boolean));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetICPMeetingAttachedFileInfo", userNameParameter, meetingIdParameter, nameParameter, securityNameParameter, securityTickerParameter, locationParameter, metaTagsParameter, categoryParameter, typeParameter, fileIdParameter, deletionFlagParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetICPMeetingAttachedFileInfo", userNameParameter, meetingIdParameter, nameParameter, issuerNameParameter, securityNameParameter, securityTickerParameter, locationParameter, metaTagsParameter, categoryParameter, typeParameter, fileIdParameter, deletionFlagParameter);
         }
     
         /// <summary>
@@ -2001,6 +2012,7 @@ namespace GreenField.DAL
         /// <param name="userName">No Metadata Documentation available.</param>
         /// <param name="presentationId">No Metadata Documentation available.</param>
         /// <param name="name">No Metadata Documentation available.</param>
+        /// <param name="issuerName">No Metadata Documentation available.</param>
         /// <param name="securityName">No Metadata Documentation available.</param>
         /// <param name="securityTicker">No Metadata Documentation available.</param>
         /// <param name="location">No Metadata Documentation available.</param>
@@ -2009,7 +2021,7 @@ namespace GreenField.DAL
         /// <param name="type">No Metadata Documentation available.</param>
         /// <param name="fileId">No Metadata Documentation available.</param>
         /// <param name="deletionFlag">No Metadata Documentation available.</param>
-        public ObjectResult<Nullable<global::System.Int32>> SetICPresentationAttachedFileInfo(global::System.String userName, Nullable<global::System.Int64> presentationId, global::System.String name, global::System.String securityName, global::System.String securityTicker, global::System.String location, global::System.String metaTags, global::System.String category, global::System.String type, Nullable<global::System.Int64> fileId, Nullable<global::System.Boolean> deletionFlag)
+        public ObjectResult<Nullable<global::System.Int32>> SetICPresentationAttachedFileInfo(global::System.String userName, Nullable<global::System.Int64> presentationId, global::System.String name, global::System.String issuerName, global::System.String securityName, global::System.String securityTicker, global::System.String location, global::System.String metaTags, global::System.String category, global::System.String type, Nullable<global::System.Int64> fileId, Nullable<global::System.Boolean> deletionFlag)
         {
             ObjectParameter userNameParameter;
             if (userName != null)
@@ -2039,6 +2051,16 @@ namespace GreenField.DAL
             else
             {
                 nameParameter = new ObjectParameter("Name", typeof(global::System.String));
+            }
+    
+            ObjectParameter issuerNameParameter;
+            if (issuerName != null)
+            {
+                issuerNameParameter = new ObjectParameter("IssuerName", issuerName);
+            }
+            else
+            {
+                issuerNameParameter = new ObjectParameter("IssuerName", typeof(global::System.String));
             }
     
             ObjectParameter securityNameParameter;
@@ -2121,7 +2143,7 @@ namespace GreenField.DAL
                 deletionFlagParameter = new ObjectParameter("DeletionFlag", typeof(global::System.Boolean));
             }
     
-            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetICPresentationAttachedFileInfo", userNameParameter, presentationIdParameter, nameParameter, securityNameParameter, securityTickerParameter, locationParameter, metaTagsParameter, categoryParameter, typeParameter, fileIdParameter, deletionFlagParameter);
+            return base.ExecuteFunction<Nullable<global::System.Int32>>("SetICPresentationAttachedFileInfo", userNameParameter, presentationIdParameter, nameParameter, issuerNameParameter, securityNameParameter, securityTickerParameter, locationParameter, metaTagsParameter, categoryParameter, typeParameter, fileIdParameter, deletionFlagParameter);
         }
     
         /// <summary>

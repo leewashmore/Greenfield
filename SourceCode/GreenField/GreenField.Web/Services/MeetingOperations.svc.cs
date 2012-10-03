@@ -255,19 +255,25 @@ namespace GreenField.Web.Services
             String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
                 ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
 
+            DimensionEntitiesService.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
+                .Where(record => record.ISSUE_NAME == presentationOverviewData.SecurityName
+                    && record.TICKER == presentationOverviewData.SecurityTicker).FirstOrDefault();
+            String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
+
             DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
             String url = documentWorkspaceOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath), String.Empty);
 
             if (url == String.Empty)
                 throw new Exception("Exception occurred while uploading template powerpoint presentation!!!");
 
-            File.Delete(copiedFilePath);
+            File.Delete(copiedFilePath);            
 
             FileMaster fileMaster = new FileMaster()
             {
                 Category = "Power Point Presentation",
                 Location = url,
                 Name = presentationOverviewData.SecurityName + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                IssuerName = issuerName,
                 SecurityName = presentationOverviewData.SecurityName,
                 SecurityTicker = presentationOverviewData.SecurityTicker,
                 Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),
@@ -733,6 +739,11 @@ namespace GreenField.Web.Services
                 #endregion
 
                 #region Upload power point to share point and modify database
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
+                .Where(record => record.ISSUE_NAME == presentationOverviewData.SecurityName
+                    && record.TICKER == presentationOverviewData.SecurityTicker).FirstOrDefault();
+                String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
+
                 Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
                 String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
                     ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
@@ -749,6 +760,7 @@ namespace GreenField.Web.Services
                     Category = "Power Point Presentation",
                     Location = url,
                     Name = presentationOverviewData.SecurityName + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                    IssuerName = issuerName,
                     SecurityName = presentationOverviewData.SecurityName,
                     SecurityTicker = presentationOverviewData.SecurityTicker,
                     Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),
@@ -785,6 +797,23 @@ namespace GreenField.Web.Services
                 if (generatedICPacketStream != null)
                 {
                     String uploadFileLocation = documentOperations.UploadDocument(uploadFileName, generatedICPacketStream, String.Empty);
+
+                    FileMaster fileMaster_ICPacket = new FileMaster()
+                    {
+                        Category = "Investment Committee Packet",
+                        Location = uploadFileLocation,
+                        Name = uploadFileName,
+                        IssuerName = issuerName,
+                        SecurityName = presentationOverviewData.SecurityName,
+                        SecurityTicker = presentationOverviewData.SecurityTicker,
+                        Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),
+                        CreatedBy = userName,
+                        CreatedOn = DateTime.UtcNow,
+                        ModifiedBy = userName,
+                        ModifiedOn = DateTime.UtcNow
+                    };
+
+                    UpdatePresentationAttachedFileStreamData(userName, presentationOverviewData.PresentationID, fileMaster_ICPacket, false);
 
                     if (!String.IsNullOrEmpty(uploadFileLocation))
                     {
@@ -1002,7 +1031,7 @@ namespace GreenField.Web.Services
                     documentWorkspaceOperations.DeleteDocument(fileMasterInfo.Location);
                 }
 
-                entity.SetICPresentationAttachedFileInfo(userName, presentationId, fileMasterInfo.Name
+                entity.SetICPresentationAttachedFileInfo(userName, presentationId, fileMasterInfo.Name, fileMasterInfo.IssuerName
                     , fileMasterInfo.SecurityName, fileMasterInfo.SecurityTicker, fileMasterInfo.Location
                     , fileMasterInfo.MetaTags, fileMasterInfo.Category, fileMasterInfo.Type, fileMasterInfo.FileID, deletionFlag);
                 return true;
@@ -1491,7 +1520,16 @@ namespace GreenField.Web.Services
                     documentWorkspaceOperations.DeleteDocument(fileMasterInfo.Location);
                 }
 
-                entity.SetICPMeetingAttachedFileInfo(userName, meetingId, fileMasterInfo.Name
+
+                if (fileMasterInfo.IssuerName == null)
+                {
+                    DimensionEntitiesService.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
+                        .Where(record => record.ISSUE_NAME == fileMasterInfo.SecurityName
+                            && record.TICKER == fileMasterInfo.SecurityTicker).FirstOrDefault();
+                    fileMasterInfo.IssuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
+                }
+
+                entity.SetICPMeetingAttachedFileInfo(userName, meetingId, fileMasterInfo.Name, fileMasterInfo.IssuerName 
                     , fileMasterInfo.SecurityName, fileMasterInfo.SecurityTicker, fileMasterInfo.Location
                     , fileMasterInfo.MetaTags, fileMasterInfo.Category, fileMasterInfo.Type, fileMasterInfo.FileID, deletionFlag);
                 return true;

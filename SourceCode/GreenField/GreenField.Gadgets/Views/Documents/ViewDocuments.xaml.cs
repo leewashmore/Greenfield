@@ -30,7 +30,7 @@ namespace GreenField.Gadgets.Views
         public Object CommentUpdationInfo { get; set; }
         public TextBox CommentUpdationInput { get; set; }
         public Grid CommentInsertionGrid { get; set; }
-        public RadComboBox CommentAlertInput { get; set; }
+        public RadSplitButton CommentAlertInput { get; set; }
     }
 
     public enum UpdationTags
@@ -51,7 +51,7 @@ namespace GreenField.Gadgets.Views
             get { return _dataContextViewModelDocuments; }
             set { _dataContextViewModelDocuments = value; }
         }
-        
+
 
         /// <summary>
         /// property to set IsActive variable of View Model
@@ -67,7 +67,7 @@ namespace GreenField.Gadgets.Views
                     DataContextViewModelDocuments.IsActive = _isActive;
             }
         }
-        
+
 
         #region Constructor
         public ViewDocuments(ViewModelDocuments dataContextSource)
@@ -75,21 +75,21 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             DataContextViewModelDocuments = dataContextSource;
             this.DataContext = dataContextSource;
-            dataContextSource.ConstructDocumentSearchResultEvent += new ConstructDocumentSearchResultEventHandler(ConstructDocumentSearchResult);            
+            dataContextSource.ConstructDocumentSearchResultEvent += new ConstructDocumentSearchResultEventHandler(ConstructDocumentSearchResult);
         }
 
         void DocumentsTreeView_Selected(object sender, Telerik.Windows.RadRoutedEventArgs e)
         {
             this.DocumentsTreeView.SelectedItem = null;
         }
-        
+
         #endregion
 
         private void ConstructDocumentSearchResult(List<DocumentCategoricalData> data)
         {
             if (data == null)
                 return;
-                        
+
             documentCategoricalInfo = data;
             updateInfo = new List<UpdationData>();
 
@@ -101,11 +101,11 @@ namespace GreenField.Gadgets.Views
             foreach (DocumentCategoryType documentCategoryType in distinctDocumentCategoryTypes)
             {
                 RadTreeViewItem categoryTreeViewItem = InsertTreeViewItem_Category(documentCategoryType);
-                
+
                 List<DocumentCategoricalData> categoryTypeFilteredData = data.Where(record =>
                     record.DocumentCategoryType == documentCategoryType)
                     .OrderByDescending(record => record.DocumentCatalogData.FileUploadedOn).ToList();
-                
+
                 foreach (DocumentCategoricalData record in categoryTypeFilteredData)
                 {
                     switch (record.DocumentCategoryType)
@@ -156,7 +156,7 @@ namespace GreenField.Gadgets.Views
                     Style = (Style)(this.Resources["TextBlockStyle"])
                 };
 
-            headerCategoryName.SetValue(Grid.ColumnProperty, 0); 
+            headerCategoryName.SetValue(Grid.ColumnProperty, 0);
             #endregion
 
             #region Category Updation Notification
@@ -170,7 +170,7 @@ namespace GreenField.Gadgets.Views
                     Visibility = Visibility.Collapsed,
                     FontWeight = FontWeights.Bold,
                     Style = (Style)(this.Resources["TextBlockStyle"])
-                }; 
+                };
             #endregion
 
             updateInfo.Add(new UpdationData()
@@ -212,10 +212,9 @@ namespace GreenField.Gadgets.Views
             Grid headerExpanderHeaderGrid = new Grid() { FlowDirection = System.Windows.FlowDirection.LeftToRight };
 
             headerExpanderHeaderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            headerExpanderHeaderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            headerExpanderHeaderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            headerExpanderHeaderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-
+            headerExpanderHeaderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(200) });
+            headerExpanderHeaderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(50) });
+            headerExpanderHeaderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(150) });
 
             #region Document Name Grid
             Grid headerExpanderHeaderGridDocumentNameGrid = new Grid() { Margin = new Thickness(-8, 0, 0, 0) };
@@ -231,6 +230,7 @@ namespace GreenField.Gadgets.Views
                 Foreground = new SolidColorBrush(Colors.Black),
                 Style = (Style)(this.Resources["HyperlinkButtonStyle"])
             };
+
             fileNameHyperlink.SetValue(Grid.ColumnProperty, 0);
 
             TextBlock fileNameUpdateNotification = new TextBlock()
@@ -302,7 +302,7 @@ namespace GreenField.Gadgets.Views
             #endregion
 
             #region Expander Content
-            Border headerExpanderContentBorder = new Border() { BorderThickness = new Thickness(0,1,0,1), BorderBrush = new SolidColorBrush(Colors.Black) };
+            Border headerExpanderContentBorder = new Border() { BorderThickness = new Thickness(0, 1, 0, 1), BorderBrush = new SolidColorBrush(Colors.Black) };
             Grid headerExpanderContentGrid = new Grid() { FlowDirection = System.Windows.FlowDirection.LeftToRight };
             headerExpanderContentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             headerExpanderContentGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
@@ -316,7 +316,7 @@ namespace GreenField.Gadgets.Views
 
             foreach (CommentDetails comment in data.CommentDetails.OrderByDescending(record => record.CommentOn))
             {
-                InsertComment_Documents(comment, headerExpanderContentGridCommentGrid);                
+                InsertComment_Documents(comment, headerExpanderContentGridCommentGrid);
             }
 
             headerExpanderContentGrid.Children.Add(headerExpanderContentGridCommentGrid);
@@ -326,7 +326,7 @@ namespace GreenField.Gadgets.Views
             Grid headerExpanderContentGridUpdationGrid = new Grid();
             headerExpanderContentGridUpdationGrid.SetValue(Grid.RowProperty, 1);
             headerExpanderContentGridUpdationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
-            headerExpanderContentGridUpdationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
+            //headerExpanderContentGridUpdationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             headerExpanderContentGridUpdationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
             headerExpanderContentGridUpdationGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto });
 
@@ -337,7 +337,7 @@ namespace GreenField.Gadgets.Views
                     MaxLength = 255,
                     Style = (Style)(this.Resources["TextBoxStyle"])
                 };
-            documentCommentUpdation.SetValue(Grid.ColumnProperty, 0); 
+            documentCommentUpdation.SetValue(Grid.ColumnProperty, 0);
             #endregion
 
             #region Alert Label
@@ -349,22 +349,41 @@ namespace GreenField.Gadgets.Views
                     FontWeight = FontWeights.Bold,
                     Style = (Style)(this.Resources["TextBlockStyle"])
                 };
-            alertLabel.SetValue(Grid.ColumnProperty, 1); 
+            alertLabel.SetValue(Grid.ColumnProperty, 1);
             #endregion
 
             #region Alert User Listing
-            RadComboBox userListingComboBox = new RadComboBox()
+            RadSplitButton userListingDropDownButton = new RadSplitButton()
             {
-                Margin = new Thickness(5, 0, 0, 0),
+                Content = "Alert",
+                DropDownHeight = 200,
                 Height = (Double)(this.Resources["DefaultControlMinHeight"]),
-                Style = (Style)(this.Resources["RadComboBoxStyle"])
+                Style = (Style)(this.Resources["RadSplitButtonStyle"])
             };
-            userListingComboBox.SetValue(Grid.ColumnProperty, 2); 
+
+            RadListBox listBox = new RadListBox()
+            {
+                SelectionMode = Telerik.Windows.Controls.SelectionMode.Multiple,
+                ItemsSource = DataContextViewModelDocuments.UserInfo,
+                DisplayMemberPath = "UserName",
+                Style = (Style)(this.Resources["RadListBoxStyle"])
+            };
+
+            userListingDropDownButton.DropDownContent = listBox;
+            userListingDropDownButton.SetValue(Grid.ColumnProperty, 1);
+
+            //RadComboBox userListingComboBox = new RadComboBox()
+            //{
+            //    Margin = new Thickness(5, 0, 0, 0),
+            //    Height = (Double)(this.Resources["DefaultControlMinHeight"]),
+            //    Style = (Style)(this.Resources["RadComboBoxStyle"])
+            //};
+            //userListingComboBox.SetValue(Grid.ColumnProperty, 2); 
             #endregion
 
             CommentUpdationData commentUpdationTagInfo = new CommentUpdationData()
             {
-                CommentAlertInput = userListingComboBox,
+                CommentAlertInput = userListingDropDownButton,
                 CommentUpdationInput = documentCommentUpdation,
                 CommentInsertionGrid = headerExpanderContentGridCommentGrid,
                 CommentUpdationInfo = data
@@ -380,13 +399,14 @@ namespace GreenField.Gadgets.Views
                 Style = (Style)(this.Resources["RadButtonStyle"])
             };
 
-            commentUpdationButton.SetValue(Grid.ColumnProperty, 3);
+            commentUpdationButton.SetValue(Grid.ColumnProperty, 2);
             commentUpdationButton.Click += new RoutedEventHandler(DocumentCommentUpdation);
 
             headerExpanderContentGridUpdationGrid.Children.Add(documentCommentUpdation);
-            headerExpanderContentGridUpdationGrid.Children.Add(alertLabel);
-            headerExpanderContentGridUpdationGrid.Children.Add(userListingComboBox);
-            headerExpanderContentGridUpdationGrid.Children.Add(commentUpdationButton);            
+            //headerExpanderContentGridUpdationGrid.Children.Add(alertLabel);
+            //headerExpanderContentGridUpdationGrid.Children.Add(userListingComboBox);
+            headerExpanderContentGridUpdationGrid.Children.Add(userListingDropDownButton);
+            headerExpanderContentGridUpdationGrid.Children.Add(commentUpdationButton);
             #endregion
 
             headerExpanderContentGrid.Children.Add(headerExpanderContentGridUpdationGrid);
@@ -452,7 +472,7 @@ namespace GreenField.Gadgets.Views
             #region Header
             Border blogSubTreeViewItemHeaderBorder = new Border()
             {
-                BorderThickness = new Thickness(0,1,0,1),
+                BorderThickness = new Thickness(0, 1, 0, 1),
                 BorderBrush = new SolidColorBrush(Colors.Black),
                 HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
                 Margin = new Thickness(-18, 0, 0, 0)
@@ -583,7 +603,7 @@ namespace GreenField.Gadgets.Views
                         DocumentCategoricalData selectedDocument = documentCategoricalInfo.Where(record => record == data).FirstOrDefault();
                         if (selectedDocument != null)
                         {
-                            
+
                             //CommentDetails InsertionCommentDetails = new CommentDetails()
                             //{
                             //    Comment = commentUpdationData.CommentUpdationInput.Text,
@@ -598,7 +618,29 @@ namespace GreenField.Gadgets.Views
                                 DataContextViewModelDocuments.DbInteractivity.SetDocumentComment(UserSession.SessionManager.SESSION.UserName
                                     , (Int64)selectedDocument.DocumentCatalogData.FileId, commentUpdationData.CommentUpdationInput.Text
                                     , DataContextViewModelDocuments.SetDocumentCommentCallbackMethod);
+
+                                if ((commentUpdationData.CommentAlertInput.DropDownContent as RadListBox).SelectedItems.Count > 0)
+                                {
+                                    List<String> emailUsers = new List<string>();
+                                    foreach (MembershipUserInfo alertUser in (commentUpdationData.CommentAlertInput.DropDownContent as RadListBox).SelectedItems)
+                                    {
+                                        emailUsers.Add(alertUser.Email);
+                                    }
+
+                                    String emailTo = String.Join("|", emailUsers.ToArray());
+                                    String emailSubject = "Document Comment Updation Alert";
+                                    String emailMessageBody = "Document comment updation notification. Please find the details below:\n"
+                                        + "Document Name - " + selectedDocument.DocumentCatalogData.FileName + "\n"
+                                        + "Company - " + selectedDocument.DocumentCompanyName + "\n"
+                                        + "Type - " + EnumUtils.GetDescriptionFromEnumValue<DocumentCategoryType>(selectedDocument.DocumentCategoryType) + "\n"
+                                        + "Comment - " + commentUpdationData.CommentUpdationInput.Text + "\n"
+                                        + "Comment By - " + UserSession.SessionManager.SESSION.UserName;
+                                    DataContextViewModelDocuments.DbInteractivity.SetMessageInfo(emailTo, null, emailSubject, emailMessageBody, null
+                                        , UserSession.SessionManager.SESSION.UserName, DataContextViewModelDocuments.SetMessageInfoCallbackMethod_Comment);
+                                }
                             }
+
+
                             //ConstructDocumentSearchResult(documentCategoricalInfo);
 
                             //InsertComment_Documents(InsertionCommentDetails, commentUpdationData.CommentInsertionGrid);                            
@@ -620,7 +662,7 @@ namespace GreenField.Gadgets.Views
                             DocumentCategoryType documentCategoryType = (DocumentCategoryType)item.UpdationInfo;
                             Boolean categoryRequiresNotification = false;
 
-                            foreach (DocumentCategoricalData categoricalData in 
+                            foreach (DocumentCategoricalData categoricalData in
                                 documentCategoricalInfo.Where(record => record.DocumentCategoryType == documentCategoryType))
                             {
                                 if (documentCategoryType == DocumentCategoryType.BLOG)
@@ -632,18 +674,18 @@ namespace GreenField.Gadgets.Views
                                     }
                                 }
 
-                                if (categoricalData.DocumentCatalogData!= null)
+                                if (categoricalData.DocumentCatalogData != null)
                                 {
                                     if (categoricalData.DocumentCatalogData.FileUploadedOn >= DateTime.Now.AddHours(-72))
                                     {
                                         categoryRequiresNotification = true;
                                         break;
-                                    } 
-                                }                                
+                                    }
+                                }
                             }
 
                             item.UpdationElement.Visibility = categoryRequiresNotification ? Visibility.Visible : Visibility.Collapsed;
-                        }                        
+                        }
                         break;
                     case UpdationTags.DOCUMENT_NAME:
                         if (item.UpdationInfo is DocumentCategoricalData)
@@ -733,6 +775,6 @@ namespace GreenField.Gadgets.Views
             }
         }
 
-        
+
     }
 }

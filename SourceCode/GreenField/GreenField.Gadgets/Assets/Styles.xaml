@@ -1001,7 +1001,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
     </Style>
 
-    <!--RadComboBox Style-->
+    <!--RadListBoxStyle Style-->
     <Style TargetType="telerik:RadListBox" x:Name="RadListBoxStyle">
         <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
         <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
@@ -1031,6 +1031,16 @@
 
     <!--RadButtonStyle-->
     <Style TargetType="telerik:RadButton" x:Name="RadButtonStyle">
+        <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
+        <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
+        <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>
+        <Setter Property="MinHeight" Value="{StaticResource DefaultControlMinHeight}"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!--RadButtonStyle-->
+    <Style TargetType="telerik:RadSplitButton" x:Name="RadSplitButtonStyle">
         <Setter Property="FontFamily" Value="{StaticResource DefaultControlFontFamily}"/>
         <Setter Property="FontSize" Value="{StaticResource DefaultControlFontSize}"/>
         <Setter Property="FontWeight" Value="{StaticResource DefaultControlFontWeight}"/>

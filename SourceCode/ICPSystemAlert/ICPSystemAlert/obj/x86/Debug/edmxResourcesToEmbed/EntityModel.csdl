@@ -49,6 +49,7 @@
       <Parameter Name="UserName" Mode="In" Type="String" />
       <Parameter Name="PresentationId" Mode="In" Type="Int64" />
       <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="IssuerName" Mode="In" Type="String" />
       <Parameter Name="SecurityName" Mode="In" Type="String" />
       <Parameter Name="SecurityTicker" Mode="In" Type="String" />
       <Parameter Name="Location" Mode="In" Type="String" />
@@ -62,6 +63,7 @@
       <Parameter Name="UserName" Mode="In" Type="String" />
       <Parameter Name="MeetingId" Mode="In" Type="Int64" />
       <Parameter Name="Name" Mode="In" Type="String" />
+      <Parameter Name="IssuerName" Mode="In" Type="String" />
       <Parameter Name="SecurityName" Mode="In" Type="String" />
       <Parameter Name="SecurityTicker" Mode="In" Type="String" />
       <Parameter Name="Location" Mode="In" Type="String" />

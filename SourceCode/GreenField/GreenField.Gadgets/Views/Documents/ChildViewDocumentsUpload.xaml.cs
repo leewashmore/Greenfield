@@ -42,20 +42,6 @@ namespace GreenField.Gadgets.Views.Documents
             this.OKButton.IsEnabled = false;
 
             this.cbAlert.ItemsSource = userInfo;
-            //StringBuilder itemTemplate = new StringBuilder();
-            //itemTemplate.Append("<DataTemplate");
-            //itemTemplate.Append(" xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'");
-            //itemTemplate.Append(" xmlns:x='http://schemas.microsoft.com/winfx/2006/xaml'");
-            //itemTemplate.Append(" xmlns:lanes='clr-namespace:GreenField.Gadgets.Helpers;assembly=GreenField.Gadgets'");
-            //itemTemplate.Append(" xmlns:local='clr-namespace:GreenField.Gadgets.Views;assembly=GreenField.Gadgets'>");
-            //itemTemplate.Append("<CheckBox>");
-            //itemTemplate.Append("   <CheckBox.Content>");
-            //itemTemplate.Append("       <Binding Path='UserName'/>");
-            //itemTemplate.Append("   </CheckBox.Content>");
-            //itemTemplate.Append("</CheckBox>");            
-            //itemTemplate.Append("</DataTemplate>");
-            //this.cbAlert.ItemTemplate = XamlReader.Load(itemTemplate.ToString()) as DataTemplate;
-
             this.cbAlert.DisplayMemberPath = "UserName";
 
         }

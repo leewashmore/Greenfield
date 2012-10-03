@@ -368,6 +368,7 @@
     <Parameter Name="UserName" Type="varchar" Mode="In" />
     <Parameter Name="MeetingId" Type="bigint" Mode="In" />
     <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="IssuerName" Type="varchar" Mode="In" />
     <Parameter Name="SecurityName" Type="varchar" Mode="In" />
     <Parameter Name="SecurityTicker" Type="varchar" Mode="In" />
     <Parameter Name="Location" Type="varchar" Mode="In" />
@@ -386,6 +387,7 @@
     <Parameter Name="UserName" Type="varchar" Mode="In" />
     <Parameter Name="PresentationId" Type="bigint" Mode="In" />
     <Parameter Name="Name" Type="varchar" Mode="In" />
+    <Parameter Name="IssuerName" Type="varchar" Mode="In" />
     <Parameter Name="SecurityName" Type="varchar" Mode="In" />
     <Parameter Name="SecurityTicker" Type="varchar" Mode="In" />
     <Parameter Name="Location" Type="varchar" Mode="In" />

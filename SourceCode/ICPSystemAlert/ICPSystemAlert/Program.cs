@@ -283,6 +283,11 @@ namespace ICPSystemAlert
                         #endregion
 
                         #region Upload power point to share point and modify database
+                        DimensionServiceReference.GF_SECURITY_BASEVIEW securityRecord = _dimensionEntity.GF_SECURITY_BASEVIEW
+                            .Where(record => record.ISSUE_NAME == presentationOverviewData.SecurityName
+                                && record.TICKER == presentationOverviewData.SecurityTicker).FirstOrDefault();
+                        String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
+
                         Byte[] fileStream = File.ReadAllBytes(copiedFilePath);
                         String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
                             ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
@@ -299,6 +304,7 @@ namespace ICPSystemAlert
                             Category = "Power Point Presentation",
                             Location = url,
                             Name = presentationOverviewData.SecurityName + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                            IssuerName = issuerName,
                             SecurityName = presentationOverviewData.SecurityName,
                             SecurityTicker = presentationOverviewData.SecurityTicker,
                             Type = "IC Presentations",
@@ -309,7 +315,7 @@ namespace ICPSystemAlert
                         };
 
                         Int32? insertedFileMasterRecord = _entity.SetICPresentationAttachedFileInfo("System", presentationOverviewData.PresentationID
-                            , fileMaster.Name, fileMaster.SecurityName, fileMaster.SecurityTicker, fileMaster.Location
+                            , fileMaster.Name, fileMaster.IssuerName, fileMaster.SecurityName, fileMaster.SecurityTicker, fileMaster.Location
                             , fileMaster.MetaTags, fileMaster.Category, fileMaster.Type, fileMaster.FileID, false).FirstOrDefault();
 
                         if (presentationPowerPointAttachedFile != null && insertedFileMasterRecord == 0)
@@ -338,12 +344,31 @@ namespace ICPSystemAlert
                         {
                             String uploadFileLocation = UploadDocument(uploadFileName, generatedICPacketStream, String.Empty);
 
+                            FileMaster fileMaster_ICPacket = new FileMaster()
+                            {
+                                Category = "Investment Committee Packet",
+                                Location = uploadFileLocation,
+                                Name = uploadFileName,
+                                IssuerName = issuerName,
+                                SecurityName = presentationOverviewData.SecurityName,
+                                SecurityTicker = presentationOverviewData.SecurityTicker,
+                                Type = "IC Presentations",
+                                CreatedBy = "System",
+                                CreatedOn = DateTime.UtcNow,
+                                ModifiedBy = "System",
+                                ModifiedOn = DateTime.UtcNow
+                            };
+
+                            _entity.SetICPresentationAttachedFileInfo("System", presentationOverviewData.PresentationID
+                            , fileMaster_ICPacket.Name, fileMaster_ICPacket.IssuerName, fileMaster_ICPacket.SecurityName, fileMaster_ICPacket.SecurityTicker, fileMaster_ICPacket.Location
+                            , fileMaster_ICPacket.MetaTags, fileMaster_ICPacket.Category, fileMaster_ICPacket.Type, fileMaster_ICPacket.FileID, false);
+
                             if (!String.IsNullOrEmpty(uploadFileLocation))
                             {
                                 emailAttachments += uploadFileLocation + "|";
                             }
                         }
-                        #endregion                        
+                        #endregion
                     }
                     emailAttachments = emailAttachments != null ? emailAttachments.Substring(0, emailAttachments.Length - 1) : null;
                     #endregion
@@ -444,10 +469,18 @@ namespace ICPSystemAlert
 
                         if (!String.IsNullOrEmpty(preMeetingReportOutFile))
                         {
+                            DimensionServiceReference.GF_SECURITY_BASEVIEW securityRecord = _dimensionEntity.GF_SECURITY_BASEVIEW
+                                .Where(record => record.ISSUE_NAME == distinctMeetingPresentationFileInfo.First().SecurityName
+                                    && record.TICKER == distinctMeetingPresentationFileInfo.First().SecurityTicker).FirstOrDefault();
+
+                            String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
+
                             String fileName = preMeetingReportOutFile.Substring(preMeetingReportOutFile.LastIndexOf(@"\") + 1);
                             String documentUploadLocation = UploadDocument(fileName, File.ReadAllBytes(preMeetingReportOutFile), String.Empty);
                             File.Delete(preMeetingReportOutFile);
-                            Int32? updateFileMasterResult = _entity.SetICPresentationAttachedFileInfo("System", presentationId, fileName, distinctMeetingPresentationFileInfo.First().SecurityName
+                            Int32? updateFileMasterResult = _entity.SetICPresentationAttachedFileInfo("System", presentationId, fileName
+                                , issuerName
+                                , distinctMeetingPresentationFileInfo.First().SecurityName
                                 , distinctMeetingPresentationFileInfo.First().SecurityTicker, preMeetingReportOutFile
                                 , distinctMeetingPresentationFileInfo.First().Presenter + "|" + Convert.ToDateTime(distinctMeetingPresentationFileInfo.First().MeetingDateTime).ToString("MM-dd-yyyy")
                                 , "Investment Committee Pre-Meeting Voting Report", "IC Presentations", 0, false).FirstOrDefault();
@@ -532,10 +565,25 @@ namespace ICPSystemAlert
                         String fileName = postMeetingReportOutFile.Substring(postMeetingReportOutFile.LastIndexOf(@"\") + 1);
                         String documentUploadLocation = UploadDocument(fileName, File.ReadAllBytes(postMeetingReportOutFile), String.Empty);
                         File.Delete(postMeetingReportOutFile);
-                        String securityNames = String.Join("|", presentationFinalizeInfo.Select(record => record.SecurityName).ToList().Distinct().ToArray());
-                        String securityTickers = String.Join("|", presentationFinalizeInfo.Select(record => record.SecurityTicker).ToList().Distinct().ToArray());
 
+                        List<String> issuerNamesCollection = new List<string>();
+                        foreach (PresentationFinalizeDetails item in presentationFinalizeInfo)
+                        {
+                            DimensionServiceReference.GF_SECURITY_BASEVIEW securityRecord = _dimensionEntity.GF_SECURITY_BASEVIEW
+                                .Where(record => record.ISSUE_NAME == item.SecurityName
+                                    && record.TICKER == item.SecurityTicker).FirstOrDefault();
+                            if (securityRecord != null)
+                            {
+                                issuerNamesCollection.Add(securityRecord.ISSUER_NAME);
+                            }
+                        }
+
+                        String issuerNames = String.Join(";", issuerNamesCollection.ToArray());
+                        String securityNames = String.Join(";", presentationFinalizeInfo.Select(record => record.SecurityName).ToList().Distinct().ToArray());
+                        String securityTickers = String.Join(";", presentationFinalizeInfo.Select(record => record.SecurityTicker).ToList().Distinct().ToArray());
+                        
                         Int32? updateFileMasterResult = _entity.SetICPMeetingAttachedFileInfo("System", meetingId, fileName
+                            , issuerNames
                             , securityNames
                             , securityTickers
                             , documentUploadLocation

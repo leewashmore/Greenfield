@@ -373,6 +373,7 @@
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="MeetingId" Type="bigint" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="IssuerName" Type="varchar" Mode="In" />
           <Parameter Name="SecurityName" Type="varchar" Mode="In" />
           <Parameter Name="SecurityTicker" Type="varchar" Mode="In" />
           <Parameter Name="Location" Type="varchar" Mode="In" />
@@ -391,6 +392,7 @@
           <Parameter Name="UserName" Type="varchar" Mode="In" />
           <Parameter Name="PresentationId" Type="bigint" Mode="In" />
           <Parameter Name="Name" Type="varchar" Mode="In" />
+          <Parameter Name="IssuerName" Type="varchar" Mode="In" />
           <Parameter Name="SecurityName" Type="varchar" Mode="In" />
           <Parameter Name="SecurityTicker" Type="varchar" Mode="In" />
           <Parameter Name="Location" Type="varchar" Mode="In" />
@@ -470,6 +472,7 @@
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="PresentationId" Mode="In" Type="Int64" />
             <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="IssuerName" Mode="In" Type="String" />
             <Parameter Name="SecurityName" Mode="In" Type="String" />
             <Parameter Name="SecurityTicker" Mode="In" Type="String" />
             <Parameter Name="Location" Mode="In" Type="String" />
@@ -483,6 +486,7 @@
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="MeetingId" Mode="In" Type="Int64" />
             <Parameter Name="Name" Mode="In" Type="String" />
+            <Parameter Name="IssuerName" Mode="In" Type="String" />
             <Parameter Name="SecurityName" Mode="In" Type="String" />
             <Parameter Name="SecurityTicker" Mode="In" Type="String" />
             <Parameter Name="Location" Mode="In" Type="String" />
@@ -544,7 +548,7 @@
             <Parameter Name="xmlScript" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="DeleteFileMaster">
-            <Parameter Name="fileId" Mode="In" Type="Int64" />
+          <Parameter Name="fileId" Mode="In" Type="Int64" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="CommentInfo">
