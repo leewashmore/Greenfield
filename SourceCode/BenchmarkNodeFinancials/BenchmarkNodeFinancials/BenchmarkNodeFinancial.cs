@@ -19,7 +19,7 @@ namespace BenchmarkNodeFinancials
         private static log4net.ILog _log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
-        public void RetrieveData(string[] args)
+        public void RetrieveData(DateTime lastBusinessDate)
         {
             try
             {
@@ -47,17 +47,7 @@ namespace BenchmarkNodeFinancials
                 {
                      //  _log.Debug(args[0]);
                     List<GF_BENCHMARK_HOLDINGS> dataBenchmarkHoldings = new List<GF_BENCHMARK_HOLDINGS>();
-                    DateTime lastBusinessDate = DateTime.Today.AddDays(-1);
-                    GF_BENCHMARK_HOLDINGS lastBusinessRecord = _dimensionEntity.GF_BENCHMARK_HOLDINGS.OrderByDescending(record => record.PORTFOLIO_DATE).FirstOrDefault();
-                    if (lastBusinessRecord != null)
-                        if (lastBusinessRecord.PORTFOLIO_DATE != null)
-                            lastBusinessDate = Convert.ToDateTime(lastBusinessRecord.PORTFOLIO_DATE);
-                    if (args.Length > 0)
-                    {
-                        lastBusinessDate = Convert.ToDateTime(args[0]);
-                        _log.Debug(args[0]);
-                    }
-                    dataBenchmarkHoldings = _dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
+                                        dataBenchmarkHoldings = _dimensionEntity.GF_BENCHMARK_HOLDINGS.Where(record => record.BENCHMARK_ID == benId
                                                                                  && record.PORTFOLIO_DATE == lastBusinessDate
                                                                                   && record.BENCHMARK_WEIGHT > 0).ToList();
 
