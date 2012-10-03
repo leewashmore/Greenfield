@@ -106,6 +106,7 @@
         <Property Name="EQKEY26_LIQUID" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
         <Property Name="EQKEY27_LEVERAGE" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
         <Property Name="EQKEY28_PBETEWLD" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
+        <Property Name="EQKEY29_PBETALOC" Type="Edm.Decimal" Nullable="true" Precision="17" Scale="6" />
       </EntityType>
       <EntityType Name="GF_EXTRACT_STATS">
         <Key>
@@ -584,7 +585,7 @@
         <Property Name="RETURN_TYPE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="BMID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
         <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="RC_TWR_1M" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="RC_TWR_3M" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
@@ -615,7 +616,7 @@
         <Property Name="CURRENCY" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="YEAR" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="BMID" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
-        <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
+        <Property Name="BMNAME" Type="Edm.String" Nullable="true" MaxLength="250" Unicode="false" FixedLength="false" />
         <Property Name="POR_INCEPTION_DATE" Type="Edm.String" Nullable="true" MaxLength="50" Unicode="false" FixedLength="false" />
         <Property Name="RC_VOL" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
         <Property Name="RC_TRACKERROR" Type="Edm.Decimal" Nullable="true" Precision="22" Scale="8" />
@@ -792,9 +793,13 @@
         <Property Name="SECURITY_VOLUME_AVG_6M" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="SECURITY_VOLUME_AVG_30D" Type="Edm.Decimal" Nullable="true" Precision="38" Scale="0" />
         <Property Name="GREENFIELD_FLAG" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
-        <Property Name="WACC_COST_EQUITY" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
-        <Property Name="WACC_COST_PFD" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
-        <Property Name="WACC_COST_DEBT" Type="Edm.String" Nullable="true" MaxLength="10" Unicode="false" FixedLength="false" />
+        <Property Name="WACC_COST_EQUITY" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="WACC_COST_PFD" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="WACC_COST_DEBT" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="CHG_PCT_MTD" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="CHG_PCT_QTD" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="CHG_PCT_YTD" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
+        <Property Name="CHG_PCT_1YR" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
         <Property Name="FLOAT_AMOUNT" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />
         <Property Name="CUSIP" Type="Edm.String" Nullable="true" MaxLength="9" Unicode="false" FixedLength="false" />
         <Property Name="STOCK_EXCHANGE_ID" Type="Edm.String" Nullable="true" MaxLength="100" Unicode="false" FixedLength="false" />

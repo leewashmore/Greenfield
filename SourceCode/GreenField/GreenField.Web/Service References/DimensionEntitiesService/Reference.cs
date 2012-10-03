@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 // Original file name:
-// Generation date: 7/31/2012 3:21:00 PM
+// Generation date: 03-Oct-12 3:45:54 PM
 namespace GreenField.Web.DimensionEntitiesService
 {
     
@@ -1982,6 +1982,27 @@ namespace GreenField.Web.DimensionEntitiesService
         private global::System.Nullable<decimal> _EQKEY28_PBETEWLD;
         partial void OnEQKEY28_PBETEWLDChanging(global::System.Nullable<decimal> value);
         partial void OnEQKEY28_PBETEWLDChanged();
+        /// <summary>
+        /// There are no comments for Property EQKEY29_PBETALOC in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public global::System.Nullable<decimal> EQKEY29_PBETALOC
+        {
+            get
+            {
+                return this._EQKEY29_PBETALOC;
+            }
+            set
+            {
+                this.OnEQKEY29_PBETALOCChanging(value);
+                this._EQKEY29_PBETALOC = value;
+                this.OnEQKEY29_PBETALOCChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private global::System.Nullable<decimal> _EQKEY29_PBETALOC;
+        partial void OnEQKEY29_PBETALOCChanging(global::System.Nullable<decimal> value);
+        partial void OnEQKEY29_PBETALOCChanged();
     }
     /// <summary>
     /// There are no comments for Model.GF_EXTRACT_STATS in the schema.
@@ -15341,6 +15362,90 @@ namespace GreenField.Web.DimensionEntitiesService
         private string _WACC_COST_DEBT;
         partial void OnWACC_COST_DEBTChanging(string value);
         partial void OnWACC_COST_DEBTChanged();
+        /// <summary>
+        /// There are no comments for Property CHG_PCT_MTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CHG_PCT_MTD
+        {
+            get
+            {
+                return this._CHG_PCT_MTD;
+            }
+            set
+            {
+                this.OnCHG_PCT_MTDChanging(value);
+                this._CHG_PCT_MTD = value;
+                this.OnCHG_PCT_MTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CHG_PCT_MTD;
+        partial void OnCHG_PCT_MTDChanging(string value);
+        partial void OnCHG_PCT_MTDChanged();
+        /// <summary>
+        /// There are no comments for Property CHG_PCT_QTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CHG_PCT_QTD
+        {
+            get
+            {
+                return this._CHG_PCT_QTD;
+            }
+            set
+            {
+                this.OnCHG_PCT_QTDChanging(value);
+                this._CHG_PCT_QTD = value;
+                this.OnCHG_PCT_QTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CHG_PCT_QTD;
+        partial void OnCHG_PCT_QTDChanging(string value);
+        partial void OnCHG_PCT_QTDChanged();
+        /// <summary>
+        /// There are no comments for Property CHG_PCT_YTD in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CHG_PCT_YTD
+        {
+            get
+            {
+                return this._CHG_PCT_YTD;
+            }
+            set
+            {
+                this.OnCHG_PCT_YTDChanging(value);
+                this._CHG_PCT_YTD = value;
+                this.OnCHG_PCT_YTDChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CHG_PCT_YTD;
+        partial void OnCHG_PCT_YTDChanging(string value);
+        partial void OnCHG_PCT_YTDChanged();
+        /// <summary>
+        /// There are no comments for Property CHG_PCT_1YR in the schema.
+        /// </summary>
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        public string CHG_PCT_1YR
+        {
+            get
+            {
+                return this._CHG_PCT_1YR;
+            }
+            set
+            {
+                this.OnCHG_PCT_1YRChanging(value);
+                this._CHG_PCT_1YR = value;
+                this.OnCHG_PCT_1YRChanged();
+            }
+        }
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Services.Design", "1.0.0")]
+        private string _CHG_PCT_1YR;
+        partial void OnCHG_PCT_1YRChanging(string value);
+        partial void OnCHG_PCT_1YRChanged();
         /// <summary>
         /// There are no comments for Property FLOAT_AMOUNT in the schema.
         /// </summary>
