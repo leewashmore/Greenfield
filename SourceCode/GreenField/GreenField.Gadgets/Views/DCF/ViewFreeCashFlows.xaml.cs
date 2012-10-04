@@ -57,6 +57,7 @@ namespace GreenField.Gadgets.Views
             }
         }
         #endregion
+
         #region CONSTRUCTOR
         /// <summary>
         /// CONSTRUCTOR
@@ -88,6 +89,17 @@ namespace GreenField.Gadgets.Views
                 dgFreeCashFlows.Columns[8].Header = System.DateTime.Now.Year + 7 + "\n" + "Y8";
                 dgFreeCashFlows.Columns[9].Header = System.DateTime.Now.Year + 8 + "\n" + "Y9";
                 dgFreeCashFlows.Columns[10].Header = System.DateTime.Now.Year + 9 + "\n" + "Y10";
+
+                dgFreeCashFlows.Columns[1].UniqueName = System.DateTime.Now.Year + "\n" + "Y1";
+                dgFreeCashFlows.Columns[2].UniqueName = System.DateTime.Now.Year + 1 + "\n" + "Y2";
+                dgFreeCashFlows.Columns[3].UniqueName = System.DateTime.Now.Year + 2 + "\n" + "Y3";
+                dgFreeCashFlows.Columns[4].UniqueName = System.DateTime.Now.Year + 3 + "\n" + "Y4";
+                dgFreeCashFlows.Columns[5].UniqueName = System.DateTime.Now.Year + 4 + "\n" + "Y5";
+                dgFreeCashFlows.Columns[6].UniqueName = System.DateTime.Now.Year + 5 + "\n" + "Y6";
+                dgFreeCashFlows.Columns[7].UniqueName = System.DateTime.Now.Year + 6 + "\n" + "Y7";
+                dgFreeCashFlows.Columns[8].UniqueName = System.DateTime.Now.Year + 7 + "\n" + "Y8";
+                dgFreeCashFlows.Columns[9].UniqueName = System.DateTime.Now.Year + 8 + "\n" + "Y9";
+                dgFreeCashFlows.Columns[10].UniqueName = System.DateTime.Now.Year + 9 + "\n" + "Y10";
 
                 dgFreeCashFlows.Columns[1].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
                 dgFreeCashFlows.Columns[2].HeaderCellStyle = Resources["GridViewHeaderCellStyle"] as Style;
@@ -175,6 +187,7 @@ namespace GreenField.Gadgets.Views
             }
         }
         #endregion
+
         #region ExcelExport
 
         /// <summary>
@@ -280,6 +293,7 @@ namespace GreenField.Gadgets.Views
         }
 
         #endregion
+
         #region EventsUnsubscribe
 
         /// <summary>
