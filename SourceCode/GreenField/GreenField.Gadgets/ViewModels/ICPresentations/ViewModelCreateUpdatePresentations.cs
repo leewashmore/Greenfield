@@ -342,7 +342,7 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
 
-        #region Helper Methods        
+        #region Helper Methods
         public void RetrievePresentationAttachedDetails()
         {
             if (_dbInteractivity != null)

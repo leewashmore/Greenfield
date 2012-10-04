@@ -184,6 +184,11 @@ namespace GreenField.Web.Services
                 String fileName = presentationOverviewData.SecurityName + "_" + (presentationOverviewData.MeetingDateTime.HasValue
                     ? Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") : String.Empty) + ".pptx";
 
+                DimensionEntitiesService.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
+                .Where(record => record.ISSUE_NAME == presentationOverviewData.SecurityName
+                    && record.TICKER == presentationOverviewData.SecurityTicker).FirstOrDefault();
+                String issuerName = securityRecord == null ? null : securityRecord.ISSUER_NAME;
+
                 DocumentWorkspaceOperations documentWorkspaceOperations = new DocumentWorkspaceOperations();
                 String url = documentWorkspaceOperations.UploadDocument(fileName, File.ReadAllBytes(copiedFilePath), String.Empty);
 
@@ -197,6 +202,7 @@ namespace GreenField.Web.Services
                     Category = "Power Point Presentation",
                     Location = url,
                     Name = presentationOverviewData.SecurityName + "_" + Convert.ToDateTime(presentationOverviewData.MeetingDateTime).ToString("ddMMyyyy") + ".pptx",
+                    IssuerName = issuerName,
                     SecurityName = presentationOverviewData.SecurityName,
                     SecurityTicker = presentationOverviewData.SecurityTicker,
                     Type = EnumUtils.ToString(DocumentCategoryType.IC_PRESENTATIONS),

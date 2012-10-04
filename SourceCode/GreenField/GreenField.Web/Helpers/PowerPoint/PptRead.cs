@@ -47,8 +47,7 @@ namespace GreenField.Web.Helpers
                 List<String> investmentThesis = GetInvestmentThesis(slide1);
                 result.InvestmentThesisInstance = new InvestmentThesis { ThesisPoints = investmentThesis };
 
-                String investmentRisk = GetInvestmentRisk(slide1);
-                result.InvestmentThesisInstance.HighlightedRisks = new List<string>() { investmentRisk };
+                result.InvestmentThesisInstance.HighlightedRisks = GetInvestmentRisk(slide1);
 
                 string relId2 = (slideIds[2] as SlideId).RelationshipId;
                 // Get the slide part from the relationship ID.
@@ -760,43 +759,41 @@ namespace GreenField.Web.Helpers
             return items;
         }
 
-        private static String GetInvestmentRisk(SlidePart slidePart)
+        private static List<String> GetInvestmentRisk(SlidePart slidePart)
         {
-            String risk = String.Empty;
+            List<String> risks = new List<string>();
 
             CommonSlideData investmentText = slidePart.Slide.Descendants<CommonSlideData>().FirstOrDefault();
 
             var shapeTree = investmentText.Descendants<ShapeTree>().FirstOrDefault();
-
             var textBody = shapeTree.Descendants<TextBody>().ToList();
-
             if (textBody.Count > 0)
             {
                 var paragraphs = textBody[2].Descendants<Drawing.Paragraph>().ToList();
-
                 if (paragraphs != null && paragraphs.Count > 0)
                 {
-
-                    string thesisText = String.Empty;
-                    var runList = paragraphs[1].Descendants<Drawing.Run>().ToList();
-
-                    if (runList != null && runList.Count > 0)
+                    for (int i = 1; i < paragraphs.Count; i++)
                     {
-                        foreach (Drawing.Run run in runList)
+                        string thesisText = String.Empty;
+                        var runList = paragraphs[i].Descendants<Drawing.Run>().ToList();
+                        if (runList != null && runList.Count > 0)
                         {
-                            thesisText += run.InnerText;
+                            foreach (Drawing.Run run in runList)
+                            {
+                                thesisText += run.InnerText;
+                            }
                         }
-                    }
-
-                    if (!String.IsNullOrEmpty(thesisText))
-                    {
-                        risk = thesisText;
+                        if (!String.IsNullOrEmpty(thesisText))
+                        {
+                            risks.Add(thesisText);
+                        }
                     }
                 }
             }
 
-            return risk;
+            return risks;
         }
+
 
         private static List<String> GetKeyOperatingAssumpations(SlidePart slidePart)
         {
