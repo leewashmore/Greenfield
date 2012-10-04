@@ -1088,6 +1088,10 @@ namespace GreenField.Gadgets.ViewModels
                         // create an xml format security data for selected securities and data list fields to be displayed in results grid
                         CreateXML(SecurityData);
                     }
+                    else
+                    {
+                        BusyIndicatorNotification();
+                    }
                     ResultsListVisibility = Visibility.Visible;
                 }
                 else

@@ -6,12 +6,38 @@
     mc:Ignorable="d"
     xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"                        
     xmlns:helpers="clr-namespace:GreenField.Gadgets.Helpers"
+    xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:telerikDragDrop="clr-namespace:Telerik.Windows.Controls.DragDrop;assembly=Telerik.Windows.Controls"
     d:DesignHeight="350" d:DesignWidth="800">
 
     <helpers:ViewBaseUserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/GreenField.Gadgets;component/Assets/Styles.xaml"/>
+                <ResourceDictionary>
+                    <helpers:DraggedItemTemplateConverter x:Key="DraggedItemTemplateConverter"/>
+                    <DataTemplate x:Key="DraggedItemTemplate">
+                        <StackPanel Orientation="Horizontal" Margin="2" Background="#9F1D21">
+                            <TextBlock Text="{Binding SelectedFieldsDataList.ScreeningId, Converter={StaticResource DraggedItemTemplateConverter}}" 
+                                       FontWeight="Bold" Foreground="White" FontFamily="Arial" FontSize="7"/>
+                        </StackPanel>
+                    </DataTemplate>
+                    
+                    <DataTemplate x:Key="DropItemTemplate">
+                        <StackPanel Orientation="Horizontal" Margin="2">
+                            <TextBlock Text="{Binding SelectedFieldsDataList.ScreeningId, Converter={StaticResource DraggedItemTemplateConverter}}" 
+                                       FontWeight="Bold" FontFamily="Arial" FontSize="7" Foreground="#9F1D21"/>
+                        </StackPanel>
+                    </DataTemplate>
+                    
+                    <Style TargetType="telerik:TreeViewDragCue" x:Key="DragCueStyle">
+                        <Setter Property="Background" Value="#9F1D21"/>
+                        <Setter Property="Opacity" Value="0.9"/>
+                        <Setter Property="BorderBrush" Value="#9F1D21"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Foreground" Value="White"/>
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
@@ -613,7 +639,9 @@
                                  EnableColumnVirtualization="False"                                           
                                  HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                  SelectedItem="{Binding SelectedDataField, Mode=TwoWay}"
-                                 RowStyle="{StaticResource GridViewRowStyle}">
+                                 RowStyle="{StaticResource GridViewRowStyle}"
+                                 telerikDragDrop:RadDragAndDropManager.AllowDrop="True"
+                                 telerikDragDrop:RadDragAndDropManager.AllowDrag="True">
                         
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgSelectedFieldsListDataItem"                                            
@@ -662,7 +690,16 @@
                                                 TextAlignment="Right"
                                                 IsFilterable="True"/>
                         </telerik:RadGridView.Columns>
-                    </telerik:RadGridView>
+
+                            <!--drag and drop functionality-->
+                            <i:Interaction.Behaviors>
+                                <helpers:RowReorderBehavior x:Name="ReorderBehavior"
+                                                    DragCueItemTemplate="{StaticResource DraggedItemTemplate}"
+                                                    DragCueStyle="{StaticResource DragCueStyle}"
+                                                    DragCueTooltipContentTemplate="{StaticResource DropItemTemplate}"/>
+                            </i:Interaction.Behaviors>
+
+                        </telerik:RadGridView>
                 </Grid>
             </Grid>
             
