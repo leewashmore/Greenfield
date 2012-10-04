@@ -204,7 +204,7 @@ namespace GreenField.Gadgets.Helpers
             return document;
         }
 
-        public static Table CreateTable(RadGridView grid, int fontSize)
+        public static Table CreateTable(RadGridView grid, int fontSize, string header = "")
         {
             List<GridViewBoundColumnBase> columns = (from c in grid.Columns.OfType<GridViewBoundColumnBase>()
                                                      orderby c.DisplayIndex
@@ -212,6 +212,18 @@ namespace GreenField.Gadgets.Helpers
 
             Table table = new Table();
             fontSizePDF = fontSize;
+
+            if (!String.IsNullOrEmpty(header))
+            {
+                TableRow headerRow = new TableRow();
+                TableCell cell = new TableCell();
+                cell.Background = Color.FromArgb(255, 228, 229, 229);
+                AddCellValue(cell, header);
+                cell.ColumnSpan = columns.Count;
+                headerRow.Cells.Add(cell);
+                table.Rows.Add(headerRow);
+            }
+
             if (grid.ShowColumnHeaders)
             {
                 TableRow headerRow = new TableRow();
@@ -380,7 +392,7 @@ namespace GreenField.Gadgets.Helpers
         /// </summary>
         /// <param name="element">UI element</param>
         /// <returns>Table</returns>
-        public static Table GenerateTable(UIElement element)
+        public static Table GenerateTable(UIElement element, String header = "")
         {
             Table contentTbl = new Table();
             TableRow contentRow = new TableRow();
@@ -390,12 +402,21 @@ namespace GreenField.Gadgets.Helpers
             Telerik.Windows.Documents.Model.Paragraph p = new Telerik.Windows.Documents.Model.Paragraph();
             p.Inlines.Add(image);
             contentCell.Blocks.Add(p);
+            if (!String.IsNullOrEmpty(header))
+            {
+                TableRow headerRow = new TableRow();
+                TableCell cell = new TableCell();
+                cell.Background = Color.FromArgb(255, 228, 229, 229);
+                AddCellValue(cell, header);
+                cell.PreferredWidth = new TableWidthUnit((float)element.RenderSize.Width);
+                headerRow.Cells.Add(cell);
+                contentTbl.Rows.Add(headerRow);
+            }
+            
             contentRow.Cells.Add(contentCell);
             contentTbl.Rows.Add(contentRow);
             return contentTbl;
-        }
-
-
+        }   
 
         #endregion
 

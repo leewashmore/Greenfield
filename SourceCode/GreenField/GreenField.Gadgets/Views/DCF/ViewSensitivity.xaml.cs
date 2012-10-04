@@ -164,15 +164,8 @@ namespace GreenField.Gadgets.Views
         public override Table CreateDocument()
         {
             try
-            {
-                if (dgDCFSensitivity.Items.Count > 0)
-                {
-                    return PDFExporter.CreateTable(dgDCFSensitivity, 12);
-                }
-                else
-                {
-                    return null;
-                }
+            {               
+                return PDFExporter.GenerateTable(gridSensitivity, "Sensitivity");               
             }
             catch (Exception ex)
             {
@@ -180,7 +173,7 @@ namespace GreenField.Gadgets.Views
                 Logging.LogException(this.DataContextSource.Logger, ex);
                 return null;
             }
-        }
+        }       
 
         #endregion
         #endregion

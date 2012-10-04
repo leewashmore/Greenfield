@@ -301,15 +301,8 @@ namespace GreenField.Gadgets.Views
         public override Table CreateDocument()
         {
             try
-            {
-                if (dgFreeCashFlows.Items.Count > 0)
-                {
-                    return PDFExporter.CreateTable(dgFreeCashFlows, 12);
-                }
-                else
-                {
-                    return null;
-                }
+            {               
+                return PDFExporter.CreateTable(dgFreeCashFlows, 11, "FreeCashFlows");
             }
             catch (Exception ex)
             {

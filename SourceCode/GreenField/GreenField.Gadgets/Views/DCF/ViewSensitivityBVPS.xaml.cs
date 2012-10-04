@@ -159,11 +159,14 @@ namespace GreenField.Gadgets.Views
         {
             try
             {
-                if (dgDCFSensitivity.Items.Count == 0)
-                {
-                    return null;
-                }
-                return PDFExporter.CreateTable(dgDCFSensitivity, 12);
+                Table sensitivityTable = new Table();
+                sensitivityTable = PDFExporter.GenerateTable(gridSensitivityBVPS, "Sensitivity BVPS");
+                return sensitivityTable;
+                //if (dgDCFSensitivity.Items.Count == 0)
+                //{
+                //    return null;
+                //}
+                //return PDFExporter.CreateTable(dgDCFSensitivity, 12);
             }
             catch (Exception ex)
             {

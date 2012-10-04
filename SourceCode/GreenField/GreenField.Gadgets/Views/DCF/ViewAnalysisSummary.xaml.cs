@@ -276,7 +276,7 @@ namespace GreenField.Gadgets.Views
         public override Table CreateDocument()
         {
             try
-            {
+            {                
                 return PDFExporter.CreateTable(dgDCFAnalysisSummary, 12);
             }
             catch (Exception ex)

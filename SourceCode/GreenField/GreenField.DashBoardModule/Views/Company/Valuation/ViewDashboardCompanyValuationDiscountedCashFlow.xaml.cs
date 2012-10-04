@@ -218,8 +218,7 @@ namespace GreenField.DashboardModule.Views
             DCFReport = new List<Table>();
             RadDocument mergedDocument = new RadDocument();
 
-            RadDocument finalReport = new RadDocument();
-            int i = 0;
+            RadDocument finalReport = new RadDocument();           
             foreach (RadTileViewItem item in this.rtvDashboard.Items)
             {
                 ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
@@ -228,11 +227,6 @@ namespace GreenField.DashboardModule.Views
                 {
                     DCFReport.Add(table);
                 }
-
-                //if ((item.Content as Telerik.Windows.Controls.HeaderedContentControl).Content == "FORWARD EPS")
-                //{
-                //    EPS_BVPS = control.EPS_BVPS();
-                //}
             }
             if (DCFReport != null)
             {
@@ -262,34 +256,9 @@ namespace GreenField.DashboardModule.Views
         /// <returns>Merged Documents</returns>
         private RadDocument MergeDocuments(List<Table> tables)
         {
-            RadDocument mergedDocument = new RadDocument();
-            Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
-            Telerik.Windows.Documents.Model.Section newSection = new Telerik.Windows.Documents.Model.Section();
-            Table documentTable = new Table(tables.Count(), 1);
-            mergedDocument.Sections.Add(section);
-            mergedDocument.Sections.Add(newSection);
-            int i = 0;
-            foreach (Table item in tables)
-            {
-                Telerik.Windows.Documents.Model.Paragraph para = new Telerik.Windows.Documents.Model.Paragraph() { SpacingBefore = 10 };
-                if (i < 4)
-                {
-                    Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span(ReturnGadgetName(i));
-                    span.FontSize = 10;
-                    para.Children.Add(span);
-                    section.Blocks.Add(para);
-                    section.Blocks.Add(item);
-                }
-                else
-                {
-                    Telerik.Windows.Documents.Model.Span span = new Telerik.Windows.Documents.Model.Span(ReturnGadgetName(i));
-                    span.FontSize = 10;
-                    para.Children.Add(span);
-                    newSection.Blocks.Add(para);
-                    newSection.Blocks.Add(item);
-                }
-                i++;
-            }
+            RadDocument mergedDocument = new RadDocument();           
+            mergedDocument.Sections.Add(GetSection(tables, 0, 4));
+            mergedDocument.Sections.Add(GetSection(tables, 4, tables.Count));           
             return mergedDocument;
         }
 
@@ -320,6 +289,88 @@ namespace GreenField.DashboardModule.Views
                 default:
                     return string.Empty;
             }
+        }
+
+        private Telerik.Windows.Documents.Model.Section GetSection(List<Table>tables, int startIndex, int endIndex)
+        {
+            Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
+            Table documentTable = new Table();
+            List<Table> tablesToAddToPage = new List<Table>();
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                if (tables.Count >= i)
+                {
+                    tablesToAddToPage.Add(tables[i]);
+                }
+            }
+
+            documentTable = GenerateCombinedTable(tablesToAddToPage);
+            section.Blocks.Add(documentTable);
+
+            return section;
+        }
+
+        private Table GenerateCombinedTable(List<Table> tables)
+        {
+            Table documentTable = new Table(tables.Count(), 3);                        
+
+            for (int i = 0; i < tables.Count; i++)
+            {
+                if (i == 2 || i == 3)
+                {                    
+                    if (i == 2)
+                    {
+                        TableRow row = GetTableRowForSingleTable(tables[i], 1);
+                        TableCell cellEmptyParagraph = new TableCell();
+                        cellEmptyParagraph.PreferredWidth = new TableWidthUnit(TableWidthUnitType.Percent,1);
+                        Telerik.Windows.Documents.Model.Paragraph p1 = new Telerik.Windows.Documents.Model.Paragraph();                        
+                        cellEmptyParagraph.Blocks.Add(p1);
+                        row.Cells.Add(cellEmptyParagraph);
+                        documentTable.Rows.Add(row);                        
+
+                    }
+                    else
+                    {
+                        TableRow row = documentTable.Rows.Last;
+                        GetTableRowForMultipleTables(tables[i], ref row);
+                    }                    
+                }
+                else
+                {                    
+                    TableRow row = GetTableRowForSingleTable(tables[i],3);
+                    documentTable.Rows.Add(row);                    
+                }
+            }
+            return documentTable;
+        }
+
+        private TableRow GetTableRowForSingleTable(Table table, int columnSpan)
+        {
+            TableRow row = new TableRow();
+
+            TableCell cell1 = new TableCell();
+            cell1.ColumnSpan = columnSpan;            
+            cell1.Blocks.Add(table);
+            row.Cells.Add(cell1);            
+            return row;
+        }
+
+        private void GetTableRowForMultipleTables(Table table, ref TableRow row)
+        {
+            TableCell cell1 = new TableCell();
+            cell1.Blocks.Add(table);
+            row.Cells.Add(cell1);             
+        }
+
+        private TableRow GetEmptyRow(int colSpan)
+        {
+            TableRow emptyRow = new TableRow();
+            TableCell cellEmptyParagraph = new TableCell();
+            cellEmptyParagraph.ColumnSpan = colSpan;
+            Telerik.Windows.Documents.Model.Paragraph p1 = new Telerik.Windows.Documents.Model.Paragraph();
+            cellEmptyParagraph.Blocks.Add(p1);
+
+            return emptyRow;
         }
     }
 }
