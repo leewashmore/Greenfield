@@ -267,7 +267,7 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null && result.Count > 0)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    PerformanceInfo = result;                  
+                    PerformanceInfo = result; 
                         if (null != performanceGridDataLoadedEvent)
                             performanceGridDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }

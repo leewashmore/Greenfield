@@ -269,6 +269,7 @@
       <xs:element minOccurs="0" name="Bm1RcAvgWgtYtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="Country" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="CountryName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EffectiveDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FBm1AshAssetAlloc1d" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshAssetAlloc1w" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FBm1AshAssetAlloc1y" nillable="true" type="xs:decimal" />
@@ -293,6 +294,7 @@
       <xs:element minOccurs="0" name="FPorAshRcCtnMtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FPorAshRcCtnQtd" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="FPorAshRcCtnYtd" nillable="true" type="xs:decimal" />
+      <xs:element minOccurs="0" name="PorInceptionDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PorRcAvgWgt1d" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PorRcAvgWgt1w" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PorRcAvgWgt1y" nillable="true" type="xs:decimal" />
@@ -316,6 +318,8 @@
       <xs:element minOccurs="0" name="BenchMarkValue4" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="BenchMarkValue5" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="DataPointName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="EffectiveDate" nillable="true" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="PorInceptionDate" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="PortfolioValue1" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PortfolioValue2" nillable="true" type="xs:decimal" />
       <xs:element minOccurs="0" name="PortfolioValue3" nillable="true" type="xs:decimal" />

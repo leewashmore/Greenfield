@@ -2403,9 +2403,24 @@ namespace GreenField.Web.Services
                 throw new ArgumentNullException(ServiceFaultResourceManager.GetString("ServiceNullArgumentException").ToString());
 
             List<HeatMapData> result = new List<HeatMapData>();
-            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> data = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Country").ToList();
+            List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> data = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Country").ToList();            
+
             if (data == null || data.Count == 0)
                 return result;
+
+            //Implementing portfolio Inception Check       
+
+            System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
+            dateInfo.ShortDatePattern = "dd/MM/yyyy";
+            DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault(), dateInfo);
+            if (period != "1D" && period != "1W")
+            {
+                bool isValid = InceptionDateChecker.ValidateInceptionDate(period, portfolioInceptionDate, effectiveDate);
+                if (!isValid)
+                {
+                    return result;
+                }
+            }
             for (int i = 0; i < data.Count; i++)
             {
                 HeatMapData entry = new HeatMapData();
@@ -2527,7 +2542,7 @@ namespace GreenField.Web.Services
         }
         #endregion
 
-        #region Relative Performance
+        #region Attribution and Risk return
 
 
         /// <summary>
@@ -2617,6 +2632,8 @@ namespace GreenField.Web.Services
                     entry.FBm1AshRcCtn1y = attributionData[i].F_BM1_ASH_RC_CTN_1Y;
                     entry.FBm1AshAssetAlloc1y = attributionData[i].BM1_RC_ASSET_ALLOC_1Y;
                     entry.FBm1AshSecSelec1y = attributionData[i].BM1_RC_SEC_SELEC_1Y;
+                    entry.PorInceptionDate = attributionData[i].POR_INCEPTION_DATE;
+                    entry.EffectiveDate = attributionData[i].TO_DATE;
                     result.Add(entry);
                 }
 
@@ -2677,6 +2694,8 @@ namespace GreenField.Web.Services
                 entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "05 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
                 entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "10 Year").Select(t => t.RC_ALPHA)).FirstOrDefault();
                 entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "Since Incep").Select(t => t.RC_ALPHA)).FirstOrDefault();
+                entry.PorInceptionDate = riskReturnData[0].POR_INCEPTION_DATE;
+                entry.EffectiveDate = effectiveDate;
                 result.Add(entry);
 
                 entry = new PortfolioRiskReturnData();
@@ -2691,6 +2710,8 @@ namespace GreenField.Web.Services
                 entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "05 Year").Select(t => t.RC_BETA)).FirstOrDefault();
                 entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "10 Year").Select(t => t.RC_BETA)).FirstOrDefault();
                 entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "Since Incep").Select(t => t.RC_BETA)).FirstOrDefault();
+                entry.PorInceptionDate = riskReturnData[0].POR_INCEPTION_DATE;
+                entry.EffectiveDate = effectiveDate;
                 result.Add(entry);
 
                 entry = new PortfolioRiskReturnData();
@@ -2705,6 +2726,8 @@ namespace GreenField.Web.Services
                 entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "05 Year").Select(t => t.RC_VOL)).FirstOrDefault();
                 entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "10 Year").Select(t => t.RC_VOL)).FirstOrDefault();
                 entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "Since Incep").Select(t => t.RC_VOL)).FirstOrDefault();
+                entry.PorInceptionDate = riskReturnData[0].POR_INCEPTION_DATE;
+                entry.EffectiveDate = effectiveDate;
                 result.Add(entry);
 
                 entry = new PortfolioRiskReturnData();
@@ -2719,6 +2742,8 @@ namespace GreenField.Web.Services
                 entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "05 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
                 entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "10 Year").Select(t => t.RC_SHARPE)).FirstOrDefault();
                 entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "Since Incep").Select(t => t.RC_SHARPE)).FirstOrDefault();
+                entry.PorInceptionDate = riskReturnData[0].POR_INCEPTION_DATE;
+                entry.EffectiveDate = effectiveDate;
                 result.Add(entry);
 
               
@@ -2734,6 +2759,8 @@ namespace GreenField.Web.Services
                 entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "05 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
                 entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "10 Year").Select(t => t.RC_INFORMATION)).FirstOrDefault();
                 entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "Since Incep").Select(t => t.RC_INFORMATION)).FirstOrDefault();
+                entry.PorInceptionDate = riskReturnData[0].POR_INCEPTION_DATE;
+                entry.EffectiveDate = effectiveDate;
                 result.Add(entry);
                                 
                 entry = new PortfolioRiskReturnData();
@@ -2748,6 +2775,8 @@ namespace GreenField.Web.Services
                 entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "05 Year").Select(t => t.RC_TRACKERROR)).FirstOrDefault();
                 entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "10 Year").Select(t => t.RC_TRACKERROR)).FirstOrDefault();
                 entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "Since Incep").Select(t => t.RC_TRACKERROR)).FirstOrDefault();
+                entry.PorInceptionDate = riskReturnData[0].POR_INCEPTION_DATE;
+                entry.EffectiveDate = effectiveDate;
                 result.Add(entry);
 
                 entry = new PortfolioRiskReturnData();
@@ -2762,6 +2791,8 @@ namespace GreenField.Web.Services
                 entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "05 Year").Select(t => t.RC_CORRELATION)).FirstOrDefault();
                 entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "10 Year").Select(t => t.RC_CORRELATION)).FirstOrDefault();
                 entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "Since Incep").Select(t => t.RC_CORRELATION)).FirstOrDefault();
+                entry.PorInceptionDate = riskReturnData[0].POR_INCEPTION_DATE;
+                entry.EffectiveDate = effectiveDate;
                 result.Add(entry);
 
                 entry = new PortfolioRiskReturnData();
@@ -2776,6 +2807,8 @@ namespace GreenField.Web.Services
                 entry.PortfolioValue3 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "05 Year").Select(t => t.RC_R2)).FirstOrDefault();
                 entry.PortfolioValue4 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "10 Year").Select(t => t.RC_R2)).FirstOrDefault();
                 entry.PortfolioValue5 = (riskReturnData.Where(t => t.CURRENCY == "USD" && t.PORTYPE == "Portfolio" && t.RETURN_TYPE == "Gross" && t.YEAR == "Since Incep").Select(t => t.RC_R2)).FirstOrDefault();
+                entry.PorInceptionDate = riskReturnData[0].POR_INCEPTION_DATE;
+                entry.EffectiveDate = effectiveDate;
                 result.Add(entry);
                 return result;
 

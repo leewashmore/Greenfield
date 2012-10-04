@@ -20,6 +20,7 @@ using System.Collections.ObjectModel;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.DataContracts;
 using GreenField.Gadgets.Models;
+using GreenField.Web.Helpers;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -74,7 +75,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 _eventAggregator.GetEvent<PortfolioReferenceSetEvent>().Subscribe(HandleFundReferenceSet);             
                 _eventAggregator.GetEvent<EffectiveDateReferenceSetEvent>().Subscribe(HandleEffectiveDateSet);
-                _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet, false);
+              //  _eventAggregator.GetEvent<PeriodReferenceSetEvent>().Subscribe(HandlePeriodReferenceSet, false);
             }
 
             if (_effectiveDate != null && _PortfolioSelectionData != null && _selectedPeriod!=null && IsActive)
@@ -393,9 +394,7 @@ namespace GreenField.Gadgets.ViewModels
                             if (null != portfolioRiskReturnDataLoadedEvent)
                                 portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                             break;
-
                     }
-
                 }
 
                 else
@@ -403,7 +402,7 @@ namespace GreenField.Gadgets.ViewModels
                     List<PerformancePeriodData> result6 = new List<PerformancePeriodData>();
                     PortfolioRiskReturnPeriodInfo = result6;
                     if (null != portfolioRiskReturnDataLoadedEvent)
-                        portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });               
+                        portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });              
                 
                 }
             }
@@ -501,53 +500,7 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(_logger, ex);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
-        }
-
-        /// <summary>
-        /// Assigns UI Field Properties based on Period
-        /// </summary>
-        /// <param name="selectedPeriodType">Period selected by the user</param>
-        public void HandlePeriodReferenceSet(String selectedPeriodType)
-        {
-
-            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            Logging.LogBeginMethod(_logger, methodNamespace);
-            try
-            {
-                if (selectedPeriodType != null)
-                {
-                    Logging.LogMethodParameter(_logger, methodNamespace, selectedPeriodType, 1);
-                    _selectedPeriod = selectedPeriodType;
-                    if (_PortfolioSelectionData != null && _effectiveDate != null && _selectedPeriod != null && IsActive)
-                    {
-                        if (PortfolioRiskReturnInfo.Count == 0)
-                        {
-                            BeginWebServiceCall(_PortfolioSelectionData, Convert.ToDateTime(_effectiveDate));
-                        }
-                        else
-                        {
-                            if (null != portfolioRiskReturnDataLoadedEvent)
-                                portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = true });
-                            SelectedPeriod = selectedPeriodType;
-                        
-                        }
-                    }
-
-                }
-                else
-                {
-                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
-                Logging.LogException(_logger, ex);
-            }
-            Logging.LogEndMethod(_logger, methodNamespace);
-
-        }
+        }       
 
         private void BeginWebServiceCall(PortfolioSelectionData PortfolioSelectionData, DateTime effectiveDate)
         {
@@ -574,15 +527,36 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null && result.Count > 0)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    PortfolioRiskReturnInfo = new List<PortfolioRiskReturnData>(result);
-                   SelectedPeriod = _selectedPeriod;
+                    //Implementing portfolio Inception Check  
+                    System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
+                    dateInfo.ShortDatePattern = "dd/MM/yyyy";
+                    DateTime portfolioInceptionDate = Convert.ToDateTime(result[0].PorInceptionDate, dateInfo);
+                    if (_selectedPeriod != "1D" && _selectedPeriod != "1W")
+                    {
+                        bool isValid = InceptionDateChecker.ValidateInceptionDate(_selectedPeriod, portfolioInceptionDate, Convert.ToDateTime(result[0].EffectiveDate));
+                        if (!isValid)
+                        {
+                            PortfolioRiskReturnInfo = new List<PortfolioRiskReturnData>();
+                            SelectedPeriod = _selectedPeriod;
+                        }
+                        else
+                        {
+                            PortfolioRiskReturnInfo = result;
+                            SelectedPeriod = _selectedPeriod;
+                        }
+                    }
+                    else
+                    {
+                        PortfolioRiskReturnInfo = result;
+                        SelectedPeriod = _selectedPeriod;
+                    }
                     if (null != portfolioRiskReturnDataLoadedEvent)
-                    portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
+                        portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });                 
                 }
                 else
                 {
                     PortfolioRiskReturnInfo = result;
-                   SelectedPeriod = _selectedPeriod;
+                    SelectedPeriod = _selectedPeriod;
                     Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
                     portfolioRiskReturnDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }

@@ -18,6 +18,8 @@ using System.Collections.Generic;
 using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
 using GreenField.Gadgets.Models;
 using GreenField.DataContracts;
+using System.Linq;
+using GreenField.Web.Helpers;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -517,8 +519,29 @@ namespace GreenField.Gadgets.ViewModels
                 if (result != null && result.Count > 0)
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
-                    AttributionDataInfo = result;
-                    SelectedPeriod = _selectedPeriod;
+                    //Implementing portfolio Inception Check  
+                    System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
+                    dateInfo.ShortDatePattern = "dd/MM/yyyy";
+                    DateTime portfolioInceptionDate = Convert.ToDateTime(result[0].PorInceptionDate, dateInfo);
+                    if (_selectedPeriod != "1D" && _selectedPeriod != "1W")
+                    {
+                        bool isValid = InceptionDateChecker.ValidateInceptionDate(_selectedPeriod, portfolioInceptionDate, Convert.ToDateTime(result[0].EffectiveDate));
+                        if (!isValid)
+                        {
+                            AttributionDataInfo = new List<AttributionData>();
+                            SelectedPeriod = _selectedPeriod;
+                        }
+                        else
+                        {
+                            AttributionDataInfo = result;
+                            SelectedPeriod = _selectedPeriod;
+                        }
+                    }
+                    else
+                    {
+                        AttributionDataInfo = result;
+                        SelectedPeriod = _selectedPeriod;
+                    }
                     if (null != attributionDataLoadedEvent)
                         attributionDataLoadedEvent(new DataRetrievalProgressIndicatorEventArgs() { ShowBusy = false });
                 }

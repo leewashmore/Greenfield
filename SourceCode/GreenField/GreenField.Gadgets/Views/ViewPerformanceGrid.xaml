@@ -59,7 +59,7 @@
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     CellStyle="{StaticResource GridViewCellStyle}"
                                                     Width="Auto"                                                  
-                                                    DataFormatString="{}{0:n2}%"
+                                                    DataFormatString="{}{0:p2}"
                                                     HeaderTextAlignment="Right"
                                                     TextAlignment="Right">
                     </telerik:GridViewDataColumn>
@@ -69,14 +69,14 @@
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                  Width="Auto"   
                                                  HeaderTextAlignment="Right"                                                   
-                                                 DataFormatString="{}{0:n2}%"
+                                                 DataFormatString="{}{0:p2}"
                                                  TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="MTD"                                                     
                                                  DataMemberBinding="{Binding TopRcTwrMtd}"          
                                                  HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                  Width="Auto"                                                   
-                                                 DataFormatString="{}{0:n2}%"
+                                                 DataFormatString="{}{0:p2}"
                                                  HeaderTextAlignment="Right"                                                    
                                                  TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="QTD" 
@@ -84,7 +84,7 @@
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                 Width="Auto" 
-                                                DataFormatString="{}{0:n2}%"
+                                                DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="YTD" 
@@ -92,7 +92,7 @@
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                  Width="Auto"  
-                                                DataFormatString="{}{0:n2}%"
+                                                DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>
                     <telerik:GridViewDataColumn Header="1Y" 
@@ -100,7 +100,7 @@
                                                 HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                 CellStyle="{StaticResource GridViewCellStyle}"
                                                  Width="Auto" 
-                                                DataFormatString="{}{0:n2}%"
+                                                DataFormatString="{}{0:p2}"
                                                 HeaderTextAlignment="Right"
                                                 TextAlignment="Right"/>                   
                 </telerik:RadGridView.Columns>

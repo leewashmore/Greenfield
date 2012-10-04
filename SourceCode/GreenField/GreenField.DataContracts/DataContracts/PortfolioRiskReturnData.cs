@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
- 
+using System.Linq; 
 using System.Runtime.Serialization;
 
 namespace GreenField.DataContracts
@@ -41,5 +40,13 @@ namespace GreenField.DataContracts
 
         [DataMember]
         public Decimal? PortfolioValue5 { get; set; }
+
+        [DataMember]
+        public String PorInceptionDate { get; set; }
+
+        [DataMember]
+        public DateTime? EffectiveDate { get; set; }
+
+
     }
 }

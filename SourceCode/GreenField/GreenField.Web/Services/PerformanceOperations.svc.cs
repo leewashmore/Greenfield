@@ -2280,6 +2280,38 @@ namespace GreenField.Web.Services
             }
             if (performanceData == null)
                 return result;
+
+            #region  Inception check
+            System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
+            dateInfo.ShortDatePattern = "dd/MM/yyyy";
+            DateTime portfolioInceptionDate = Convert.ToDateTime((performanceData.POR_INCEPTION_DATE), dateInfo);
+            bool isValidMTD = InceptionDateChecker.ValidateInceptionDate("MTD", portfolioInceptionDate, effectiveDate);
+            if (!isValidMTD)
+                {
+                    performanceData.POR_TOP_RC_TWR_MTD = null;
+                    performanceData.BM1_TOP_RC_TWR_MTD = null;
+                }
+
+            bool isValidQTD = InceptionDateChecker.ValidateInceptionDate("QTD", portfolioInceptionDate, effectiveDate);
+            if (!isValidQTD)
+            {
+                performanceData.POR_TOP_RC_TWR_QTD = null;
+                performanceData.BM1_TOP_RC_TWR_QTD = null;
+            }
+            bool isValidYTD = InceptionDateChecker.ValidateInceptionDate("YTD", portfolioInceptionDate, effectiveDate);
+            if (!isValidYTD)
+            {
+                performanceData.POR_TOP_RC_TWR_YTD = null;
+                performanceData.BM1_TOP_RC_TWR_YTD = null;
+            }
+            bool isValid1Y = InceptionDateChecker.ValidateInceptionDate("1Y", portfolioInceptionDate, effectiveDate);
+            if (!isValid1Y)
+            {
+                performanceData.POR_TOP_RC_TWR_1Y = null;
+                performanceData.BM1_TOP_RC_TWR_1Y = null;
+            }
+            #endregion
+
             String benchmarkID;
             String portfolioID = performanceData.PORTFOLIO;
             List<GF_PORTFOLIO_HOLDINGS> holdingsData = DimensionEntity.GF_PORTFOLIO_HOLDINGS.Where(t => t.PORTFOLIO_ID == portfolioID).ToList();
@@ -2297,21 +2329,21 @@ namespace GreenField.Web.Services
                 {
                     PerformanceGridData entry = new PerformanceGridData();
                     entry.Name = portfolioID;
-                    entry.TopRcTwr1D = performanceData.POR_TOP_RC_TWR_1D * 100;
-                    entry.TopRcTwr1W = performanceData.POR_TOP_RC_TWR_1W * 100;
-                    entry.TopRcTwrMtd = performanceData.POR_TOP_RC_TWR_MTD * 100;
-                    entry.TopRcTwrQtd = performanceData.POR_TOP_RC_TWR_QTD * 100;
-                    entry.TopRcTwrYtd = performanceData.POR_TOP_RC_TWR_YTD * 100;
-                    entry.TopRcTwr1Y = performanceData.POR_TOP_RC_TWR_1Y * 100;
+                    entry.TopRcTwr1D = performanceData.POR_TOP_RC_TWR_1D ;
+                    entry.TopRcTwr1W = performanceData.POR_TOP_RC_TWR_1W ;
+                    entry.TopRcTwrMtd = performanceData.POR_TOP_RC_TWR_MTD ;
+                    entry.TopRcTwrQtd = performanceData.POR_TOP_RC_TWR_QTD;
+                    entry.TopRcTwrYtd = performanceData.POR_TOP_RC_TWR_YTD;
+                    entry.TopRcTwr1Y = performanceData.POR_TOP_RC_TWR_1Y;
                     result.Add(entry);
                     entry = new PerformanceGridData();
                     entry.Name = benchmarkID;
-                    entry.TopRcTwr1D = performanceData.BM1_TOP_RC_TWR_1D * 100;
-                    entry.TopRcTwr1W = performanceData.BM1_TOP_RC_TWR_1W * 100;
-                    entry.TopRcTwrMtd = performanceData.BM1_TOP_RC_TWR_MTD * 100;
-                    entry.TopRcTwrQtd = performanceData.BM1_TOP_RC_TWR_QTD * 100;
-                    entry.TopRcTwrYtd = performanceData.BM1_TOP_RC_TWR_YTD * 100;
-                    entry.TopRcTwr1Y = performanceData.BM1_TOP_RC_TWR_1Y * 100;
+                    entry.TopRcTwr1D = performanceData.BM1_TOP_RC_TWR_1D;
+                    entry.TopRcTwr1W = performanceData.BM1_TOP_RC_TWR_1W;
+                    entry.TopRcTwrMtd = performanceData.BM1_TOP_RC_TWR_MTD;
+                    entry.TopRcTwrQtd = performanceData.BM1_TOP_RC_TWR_QTD;
+                    entry.TopRcTwrYtd = performanceData.BM1_TOP_RC_TWR_YTD;
+                    entry.TopRcTwr1Y = performanceData.BM1_TOP_RC_TWR_1Y;
                     result.Add(entry);
                 }
                 return result;

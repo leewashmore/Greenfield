@@ -120,6 +120,13 @@ namespace GreenField.DataContracts
        public Decimal? FBm1AshAssetAlloc1y { get; set; }
 
        [DataMember]
-       public Decimal? FBm1AshSecSelec1y { get; set; }            
+       public Decimal? FBm1AshSecSelec1y { get; set; }
+
+       [DataMember]
+       public String PorInceptionDate { get; set; }
+
+       [DataMember]
+       public DateTime? EffectiveDate { get; set; }
+       
     }
 }
