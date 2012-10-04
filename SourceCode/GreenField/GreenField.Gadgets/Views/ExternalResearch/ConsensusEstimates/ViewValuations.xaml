@@ -153,9 +153,9 @@
                             <!--<telerik:GridViewDataColumn x:Name="dgvcDataType" Header="" HeaderTextAlignment="Left" TextAlignment="Left" DataMemberBinding="{Binding DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" Width="Auto"/>-->
                             <telerik:GridViewDataColumn x:Name="dgvcSubDataType" Header="Consensus Valuations in USD" HeaderTextAlignment="Left" TextAlignment="Left" 
                                                         DataMemberBinding="{Binding SUB_DATA_DESC}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" 
-                                                        IsFilterable="False" Width="Auto"/>
+                                                        IsFilterable="False" Width="Auto" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <telerik:GridViewDataColumn x:Name="dgcLeftClick" HeaderCellStyle="{StaticResource GridViewHeaderCellLeftButtonStyle}" 
-                                                        IsSortable="False" IsFilterable="False"/>
+                                                        IsSortable="False" IsFilterable="False" CellStyle="{StaticResource GridViewCellStyle}"/>
                             <!--<telerik:GridViewDataColumn x:Name="dgvcYearOne" HeaderTextAlignment="Right" TextAlignment="Right" DataMemberBinding="{Binding YEAR_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" IsSortable="False" IsFilterable="False" IsVisible="False"  Width="*"/>-->
                             <telerik:GridViewDataColumn x:Name="dgvcYearTwo" HeaderTextAlignment="Right" TextAlignment="Right" CellStyle="{StaticResource GridViewCellStyle}"
                                                         DataMemberBinding="{Binding YEAR_ONE, StringFormat=\{0:n1\}}" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" 
