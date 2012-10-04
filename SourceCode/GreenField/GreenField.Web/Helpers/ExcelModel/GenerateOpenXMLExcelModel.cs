@@ -73,7 +73,7 @@ namespace GreenField.Web.ExcelModel
             get { return _maxWidth; }
             set { _maxWidth = value; }
         }
-        
+
 
         #endregion
 
@@ -923,6 +923,10 @@ namespace GreenField.Web.ExcelModel
 
         #region ExcelModel- ModelReference
 
+        /// <summary>
+        /// Method to generate content of ModelReference Sheet
+        /// </summary>
+        /// <param name="worksheetPart"></param>
         private static void GenerateModelReferenceData(WorksheetPart worksheetPart)
         {
             var worksheet = worksheetPart.Worksheet;
@@ -933,71 +937,76 @@ namespace GreenField.Web.ExcelModel
             //SheetDimension sheetDimension1 = new SheetDimension() { Reference = "A1" };
 
             SheetData sheetData = new DocumentFormat.OpenXml.Spreadsheet.SheetData();
+            SheetFormatProperties sheetFormatProperties1;
+            Columns sheetColumns = new Columns();
+            Column firstColumn = new Column() { Min = 2U, Max = 2U, Width = MaxWidth };
+            Column secondColumn = new Column() { Min = 2U, Max = 2U, Width = 1.5 * MaxWidth };
+            sheetColumns.Append(firstColumn);
+            sheetColumns.Append(secondColumn);
+            sheetFormatProperties1 = new SheetFormatProperties() { DefaultRowHeight = 15D, OutlineLevelColumn = 1, DyDescent = 0.25D };
 
             var row = new Row { RowIndex = 1 };
-            var cell = CreateTextCell("Issuer ID");
+            var cell = CreateHeaderCell("Issuer ID");
             row.InsertAt(cell, 0);
             cell = CreateTextCell(ModelReferenceData.IssuerId);
             row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             row = new Row { RowIndex = 2 };
-            cell = CreateTextCell("Issuer Name");
+            cell = CreateHeaderCell("Issuer Name");
             row.InsertAt(cell, 0);
             cell = CreateTextCell(ModelReferenceData.IssuerName);
             row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             row = new Row { RowIndex = 3 };
-            cell = CreateTextCell("COA Type");
+            cell = CreateHeaderCell("COA Type");
             row.InsertAt(cell, 0);
             cell = CreateTextCell(ModelReferenceData.COATypes);
             row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             row = new Row { RowIndex = 4 };
-            cell = CreateTextCell("Currency");
+            cell = CreateHeaderCell("Currency");
             row.InsertAt(cell, 0);
             cell = CreateTextCell(ModelReferenceData.Currencies.FirstOrDefault());
             row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             row = new Row { RowIndex = 5 };
-            cell = CreateTextCell("Units");
+            cell = CreateHeaderCell("Units");
             row.InsertAt(cell, 0);
             sheetData.Append(row);
 
             row = new Row { RowIndex = 6 };
-            cell = CreateTextCell("Q1 OverRide %");
+            cell = CreateHeaderCell("Q1 OverRide %");
             row.InsertAt(cell, 0);
             cell = CreateTextCell(string.Empty);
             row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             row = new Row { RowIndex = 7 };
-            cell = CreateTextCell("Q2 OverRide %");
+            cell = CreateHeaderCell("Q2 OverRide %");
             row.InsertAt(cell, 0);
             cell = CreateTextCell(string.Empty);
             row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             row = new Row { RowIndex = 8 };
-            cell = CreateTextCell("Q3 OverRide %");
+            cell = CreateHeaderCell("Q3 OverRide %");
             row.InsertAt(cell, 0);
             cell = CreateTextCell(string.Empty);
             row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             row = new Row { RowIndex = 9 };
-            cell = CreateTextCell("Q4 OverRide %");
+            cell = CreateHeaderCell("Q4 OverRide %");
             row.InsertAt(cell, 0);
             cell = CreateTextCell(string.Empty);
             row.InsertAt(cell, 1);
             sheetData.Append(row);
 
             DataValidations dataValidations1 = new DataValidations() { Count = (UInt32Value)1U };
-
-
             DataValidation dataValidation2 = new DataValidation() { Type = DataValidationValues.List, AllowBlank = true, ShowInputMessage = true, ShowErrorMessage = true, SequenceOfReferences = new ListValue<StringValue>() { InnerText = "B5" } };
             Formula1 formula12 = new Formula1();
             formula12.Text = "\"Units,Thousands,Millions,Billions\"";
@@ -1005,7 +1014,8 @@ namespace GreenField.Web.ExcelModel
             dataValidation2.Append(formula12);
 
             dataValidations1.Append(dataValidation2);
-
+            worksheet.Append(sheetFormatProperties1);
+            worksheet.Append(sheetColumns);
             worksheet.Append(sheetData);
             worksheet.Append(dataValidations1);
 
