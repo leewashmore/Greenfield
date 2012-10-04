@@ -9,6 +9,6 @@ namespace GreenField.Web.Helpers
     {
         public List<String> ThesisPoints { get; set; }
 
-        public String HighlightedRisk { get; set; }
+        public List<String> HighlightedRisks { get; set; }
     }
 }

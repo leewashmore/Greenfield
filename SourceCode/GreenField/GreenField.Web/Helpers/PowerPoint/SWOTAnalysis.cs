@@ -11,7 +11,7 @@ namespace GreenField.Web.Helpers
 
         public List<String> Weakness { get; set; }
 
-        public List<String> Oppurtunity { get; set; }
+        public List<String> Opportunity { get; set; }
 
         public List<String> Threat { get; set; }
     }

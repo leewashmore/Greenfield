@@ -11,6 +11,8 @@ namespace GreenField.Web.Helpers
         public static Font STYLE_0 = FontFactory.GetFont("Verdana", 18F, Font.BOLD, BaseColor.BLACK);
         public static Font STYLE_1 = FontFactory.GetFont("Verdana", 12F, Font.BOLD, BaseColor.BLACK);
         public static Font STYLE_4 = FontFactory.GetFont("Verdana", 10F, Font.BOLD, BaseColor.BLACK);
+        public static Font STYLE_7 = FontFactory.GetFont("Verdana", 10F, Font.BOLD, BaseColor.WHITE);
+        public static Font STYLE_6 = FontFactory.GetFont("Verdana", 10F, Font.NORMAL, BaseColor.BLACK);
         public static Font STYLE_5 = FontFactory.GetFont("Verdana", 8F, Font.BOLD, BaseColor.BLACK);
         public static Font STYLE_2 = FontFactory.GetFont("Verdana", 7F, Font.BOLD, BaseColor.BLACK);
         public static Font STYLE_3 = FontFactory.GetFont("Verdana", 7F, Font.NORMAL, BaseColor.BLACK);

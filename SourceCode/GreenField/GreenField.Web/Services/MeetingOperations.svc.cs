@@ -1140,25 +1140,51 @@ namespace GreenField.Web.Services
 
         private String ConvertPowerpointPresentationTpPdf(FileMaster powerpointStreamedData, PresentationInfo presentationInfo)
         {
-            //if (presentationInfo == null || powerpointStreamedData == null)
-            //    return null;
+            String result = null;
 
-            //Web.Helpers.SecurityInformation securityInformation = new Web.Helpers.SecurityInformation()
-            //{
-            //    ActiveWeight = presentationInfo.SecurityActiveWeight,
-            //    Analyst = presentationInfo.Analyst,
-            //    BenchmarkWeight = presentationInfo.SecurityBMWeight,
-            //    BSR = presentationInfo.SecurityBuySellvsCrnt,
-            //    Country = presentationInfo.SecurityCountry,
-            //    CurrentHoldings = presentationInfo.CurrentHoldings,
-            //    FVCalc = presentationInfo.FVCalc,
-            //    Industry = presentationInfo.SecurityIndustry,
-            //    MktCap = presentationInfo.SecurityMarketCapitalization.ToString,
-            //    NAV = presentationInfo.PercentEMIF,
+            try
+            {
+                if (presentationInfo == null || powerpointStreamedData == null)
+                    return result;
 
-            //};
+                DocumentWorkspaceOperations documentOperations = new DocumentWorkspaceOperations();
+                Byte[] fileData = documentOperations.RetrieveDocument(powerpointStreamedData.Location.Substring(powerpointStreamedData.Location.LastIndexOf(@"/") + 1));
+                if (fileData == null)
+                    return result;
 
-            return null;
+                String localFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pptx";
+                File.WriteAllBytes(localFile, fileData);
+
+                Web.Helpers.SecurityInformation securityInformation = new Web.Helpers.SecurityInformation()
+                {
+                    ActiveWeight = presentationInfo.SecurityActiveWeight,
+                    Analyst = presentationInfo.Analyst,
+                    BenchmarkWeight = presentationInfo.SecurityBMWeight,
+                    BSR = presentationInfo.SecurityBuySellvsCrnt,
+                    Country = presentationInfo.SecurityCountry,
+                    CurrentHoldings = presentationInfo.CurrentHoldings,
+                    FVCalc = presentationInfo.FVCalc,
+                    Industry = presentationInfo.SecurityIndustry,
+                    MktCap = presentationInfo.SecurityMarketCapitalization.ToString(),
+                    NAV = presentationInfo.PercentEMIF,
+                    Price = presentationInfo.Price,
+                    Recommendation = presentationInfo.SecurityRecommendation,
+                    RetAbsolute = presentationInfo.YTDRet_Absolute,
+                    RetEMV = presentationInfo.YTDRet_RELtoEM,
+                    RetLoc = presentationInfo.YTDRet_RELtoLOC,
+                    SecurityName = presentationInfo.SecurityName
+                };
+
+                ICPresentation presentationData = PptRead.Fetch(localFile, securityInformation);
+                result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
+                PptRead.GeneratePresentationPdf(result, presentationData);
+            }
+            catch (Exception)
+            {                
+                throw;
+            }
+
+            return result;
 
         }
 
@@ -1224,7 +1250,6 @@ namespace GreenField.Web.Services
 
             return result;
         }
-
 
         #endregion
 

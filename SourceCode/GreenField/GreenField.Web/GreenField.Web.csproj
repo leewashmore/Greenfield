@@ -111,6 +111,9 @@
     <Content Include="Services\SecurityReferenceOperations.svc" />
     <Content Include="Services\SessionOperations.svc" />
     <Content Include="Silverlight.js" />
+    <Content Include="Templates\AshmoreEMMLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Templates\ICPresentationTemplate.pptx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -150,6 +153,7 @@
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
     <Compile Include="DataContracts\MeetingAttachedFileStreamData.cs" />
     <Compile Include="DataContracts\PopulatedMarketPerformanceSnapshotData.cs" />
+    <Compile Include="Helpers\PowerPoint\PdfFooter.cs" />
     <Compile Include="Helpers\PowerPoint\CompanyOverview.cs" />
     <Compile Include="Helpers\PowerPoint\ICPresentation.cs" />
     <Compile Include="Helpers\PowerPoint\InvestmentThesis.cs" />

@@ -7,6 +7,6 @@ namespace GreenField.Web.Helpers
 {
     public class KeyOperatingAssumpations
     {
-        public List<String> Assumpations { get; set; }
+        public List<String> Assumptions { get; set; }
     }
 }
