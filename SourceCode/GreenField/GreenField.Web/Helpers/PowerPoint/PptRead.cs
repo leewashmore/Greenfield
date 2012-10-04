@@ -112,14 +112,10 @@ namespace GreenField.Web.Helpers
 
         public static void GeneratePresentationPdf(string outFile, ICPresentation presentation)
         {
-            float listItemSpacing = 15f;
-
-            string strLogoPath = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\AshmoreEMMLogo.png";
-            
+            float listItemSpacing = 15F;
+            string strLogoPath = @"C:\Users\rvig\Pictures\AshmoreEMMLogo.png";
             iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(strLogoPath);
 
-            //image.ScaleAbsoluteHeight(50);
-            //image.ScaleAbsoluteWidth(100);
             Document doc = new Document(PageSize.A4, 10F, 10F, 10F, 10F);
             doc.SetPageSize(iTextSharp.text.PageSize.A4.Rotate());
             PdfWriter PDFWriter = PdfWriter.GetInstance(doc, new FileStream(outFile, FileMode.Create));
@@ -141,7 +137,7 @@ namespace GreenField.Web.Helpers
             PdfPCell coiHeaderContentCell = new PdfPCell(new Phrase
                 (String.Format("{0} - {1}", presentation.CompanyOverviewInstance.SecurityInfo.SecurityName
                     , presentation.CompanyOverviewInstance.SecurityInfo.Recommendation)
-                , PDFFontStyle.STYLE_0));
+                , PDFFontStyle.STYLE_11));
             coiHeaderContentCell.PaddingTop = 10;
             coiHeaderContentCell.PaddingBottom = 10;
             AddTextCell(coiHeaderTable, coiHeaderContentCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
@@ -158,85 +154,91 @@ namespace GreenField.Web.Helpers
             coiSecurityInfoTable.SpacingBefore = 10;
             coiSecurityInfoTable.SetWidths(new float[] { 1, 1, 1, 1 });
 
-            PdfPCell coiSecurityInfoAnalystCell = new PdfPCell(new Phrase("Analyst:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoAnalystCell = new PdfPCell(new Phrase("Analyst:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoAnalystCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_TOP);
-            PdfPCell coiSecurityInfoAnalystValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.Analyst, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoAnalystValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.Analyst, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoAnalystValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.TOP);
-            PdfPCell coiSecurityInfoCurrentHoldingCell = new PdfPCell(new Phrase("Current Holdings:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoCurrentHoldingCell = new PdfPCell(new Phrase("Current Holdings:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoCurrentHoldingCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.TOP);
-            PdfPCell coiSecurityInfoCurrentHoldingValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.CurrentHoldings, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoCurrentHoldingValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.CurrentHoldings, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoCurrentHoldingValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT_TOP);
 
-            PdfPCell coiSecurityInfoCountryCell = new PdfPCell(new Phrase("Country:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoCountryCell = new PdfPCell(new Phrase("Country:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoCountryCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT);
-            PdfPCell coiSecurityInfoCountryValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.Country, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoCountryValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.Country, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoCountryValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell coiSecurityInfoNAVCell = new PdfPCell(new Phrase("% of NAV:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoNAVCell = new PdfPCell(new Phrase("% of NAV:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoNAVCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell coiSecurityInfoNAVValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.NAV, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoNAVValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.NAV, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoNAVValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT);
 
-            PdfPCell coiSecurityInfoIndustryCell = new PdfPCell(new Phrase("Industry:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoIndustryCell = new PdfPCell(new Phrase("Industry:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoIndustryCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT);
-            PdfPCell coiSecurityInfoIndustryValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.Industry, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoIndustryValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.Industry, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoIndustryValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell coiSecurityInfoBMCell = new PdfPCell(new Phrase("BM Weight:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoBMCell = new PdfPCell(new Phrase("BM Weight:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoBMCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell coiSecurityInfoBMValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.BenchmarkWeight, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoBMValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.BenchmarkWeight, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoBMValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT);
 
-            PdfPCell coiSecurityInfoMktCapCell = new PdfPCell(new Phrase("Mkt Cap:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoMktCapCell = new PdfPCell(new Phrase("Mkt Cap:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoMktCapCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT);
-            PdfPCell coiSecurityInfoMktCapValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.MktCap, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoMktCapValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.MktCap, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoMktCapValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell coiSecurityInfoActiveWeightCell = new PdfPCell(new Phrase("Active Weight:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoActiveWeightCell = new PdfPCell(new Phrase("Active Weight:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoActiveWeightCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell coiSecurityInfoActiveWeightValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.ActiveWeight, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoActiveWeightValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.ActiveWeight, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoActiveWeightValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT);
 
-            PdfPCell coiSecurityInfoPriceCell = new PdfPCell(new Phrase("Price:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoPriceCell = new PdfPCell(new Phrase("Price:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoPriceCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT);
-            PdfPCell coiSecurityInfoPriceValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.Price, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoPriceValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.Price, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoPriceValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell coiSecurityInfoRetAbsoluteCell = new PdfPCell(new Phrase("12m Ret - Absolute:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoRetAbsoluteCell = new PdfPCell(new Phrase("12m Ret - Absolute:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoRetAbsoluteCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell coiSecurityInfoRetAbsoluteValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.RetAbsolute, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoRetAbsoluteValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.RetAbsolute, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoRetAbsoluteValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT);
 
-            PdfPCell coiSecurityInfoFVCalcCell = new PdfPCell(new Phrase("FV Calc:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoFVCalcCell = new PdfPCell(new Phrase("FV Calc:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoFVCalcCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT);
-            PdfPCell coiSecurityInfoFVCalcValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.FVCalc, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoFVCalcValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.FVCalc, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoFVCalcValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell coiSecurityInfoRetLocCell = new PdfPCell(new Phrase("12m Ret - Rel to loc:", PDFFontStyle.STYLE_4)) { Padding = 5 };
+            PdfPCell coiSecurityInfoRetLocCell = new PdfPCell(new Phrase("12m Ret - Rel to loc:", PDFFontStyle.STYLE_10)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoRetLocCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell coiSecurityInfoRetLocValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.RetLoc, PDFFontStyle.STYLE_6)) { Padding = 5 };
+            PdfPCell coiSecurityInfoRetLocValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.RetLoc, PDFFontStyle.STYLE_8)) { Padding = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoRetLocValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT);
 
-            PdfPCell coiSecurityInfoBSRCell = new PdfPCell(new Phrase("Buy/Sell vs Crnt:", PDFFontStyle.STYLE_4)) { PaddingLeft = 5, PaddingRight = 5, PaddingBottom = 10, PaddingTop = 5 };
+            PdfPCell coiSecurityInfoBSRCell = new PdfPCell(new Phrase("Buy/Sell vs Crnt:", PDFFontStyle.STYLE_10)) { PaddingLeft = 5, PaddingRight = 5, PaddingBottom = 10, PaddingTop = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoBSRCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_BOTTOM);
-            PdfPCell coiSecurityInfoBSRValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.BSR, PDFFontStyle.STYLE_6)) { PaddingLeft = 5, PaddingRight = 5, PaddingBottom = 10, PaddingTop = 5 };
+            PdfPCell coiSecurityInfoBSRValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.BSR, PDFFontStyle.STYLE_8)) { PaddingLeft = 5, PaddingRight = 5, PaddingBottom = 10, PaddingTop = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoBSRValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
-            PdfPCell coiSecurityInfoRetEMVCell = new PdfPCell(new Phrase("12m Ret - Rel to EM:", PDFFontStyle.STYLE_4)) { PaddingLeft = 5, PaddingRight = 5, PaddingBottom = 10, PaddingTop = 5 };
+            PdfPCell coiSecurityInfoRetEMVCell = new PdfPCell(new Phrase("12m Ret - Rel to EM:", PDFFontStyle.STYLE_10)) { PaddingLeft = 5, PaddingRight = 5, PaddingBottom = 10, PaddingTop = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoRetEMVCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
-            PdfPCell coiSecurityInfoRetEMVValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.RetEMV, PDFFontStyle.STYLE_6)) { PaddingLeft = 5, PaddingRight = 5, PaddingBottom = 10, PaddingTop = 5 };
+            PdfPCell coiSecurityInfoRetEMVValueCell = new PdfPCell(new Phrase(presentation.CompanyOverviewInstance.SecurityInfo.RetEMV, PDFFontStyle.STYLE_8)) { PaddingLeft = 5, PaddingRight = 5, PaddingBottom = 10, PaddingTop = 5 };
             AddTextCell(coiSecurityInfoTable, coiSecurityInfoRetEMVValueCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.RIGHT_BOTTOM);
 
             doc.Add(coiSecurityInfoTable);
             #endregion
 
             #region Company Overview
+            PdfPTable coiCompanyOverViewTable = new PdfPTable(1);
+            coiCompanyOverViewTable.WidthPercentage = 100;
+            coiCompanyOverViewTable.SpacingBefore = 10;
+
             Paragraph coiCompanyOverviewHeader = new Paragraph();
             coiCompanyOverviewHeader.SpacingBefore = 10;
-            coiCompanyOverviewHeader.Add(new Phrase("Company Overview", PDFFontStyle.STYLE_4));
+            coiCompanyOverviewHeader.Add(new Phrase("Company Overview", PDFFontStyle.STYLE_10));
 
             ZapfDingbatsList coiCompanyOverviewList = new ZapfDingbatsList(110, 10);
             coiCompanyOverviewList.IndentationLeft = 2;
-            coiCompanyOverviewList.Symbol.Font.Size = 10F;
+            coiCompanyOverviewList.Autoindent = true;
+            coiCompanyOverviewList.Symbol.Font.Size = PDFFontStyle.STYLE_8.Size;
             coiCompanyOverviewList.Symbol.Font.Color = BaseColor.BLUE;
 
             foreach (String overviewDetail in presentation.CompanyOverviewInstance.CompanyOverviewList)
             {
-                ListItem item = new ListItem(new Phrase(overviewDetail, PDFFontStyle.STYLE_6));
+                ListItem item = new ListItem(new Phrase(overviewDetail, PDFFontStyle.STYLE_8));
+
                 if (presentation.CompanyOverviewInstance.CompanyOverviewList.IndexOf(overviewDetail) == 0)
                 {
                     item.SpacingBefore = listItemSpacing;
@@ -251,7 +253,14 @@ namespace GreenField.Web.Helpers
             }
 
             coiCompanyOverviewHeader.Add(coiCompanyOverviewList);
-            doc.Add(coiCompanyOverviewHeader);
+            PdfPCell coiCompanyOverviewCell = new PdfPCell();
+            coiCompanyOverviewCell.BorderWidth = 1;
+            coiCompanyOverviewCell.PaddingBottom = listItemSpacing;
+            coiCompanyOverviewCell.Border = PDFBorderType.LEFT_RIGHT_TOP_BOTTOM;
+            coiCompanyOverviewCell.AddElement(coiCompanyOverviewHeader);
+            coiCompanyOverviewCell.MinimumHeight = doc.PageSize.Height - (2 * doc.TopMargin) - coiSecurityInfoTable.TotalHeight - 110;
+            coiCompanyOverViewTable.AddCell(coiCompanyOverviewCell);
+            doc.Add(coiCompanyOverViewTable);
             #endregion
 
             //doc.Add(new LineSeparator() { Offset = -10 });
@@ -267,7 +276,7 @@ namespace GreenField.Web.Helpers
             itiHeaderTable.SpacingBefore = 10;
 
             coiHeaderTable.SetWidths(new float[] { 5, 1 });
-            PdfPCell itiHeaderContentCell = new PdfPCell(new Phrase("Investment Thesis", PDFFontStyle.STYLE_0));
+            PdfPCell itiHeaderContentCell = new PdfPCell(new Phrase("Investment Thesis", PDFFontStyle.STYLE_11));
             itiHeaderContentCell.PaddingTop = 10;
             itiHeaderContentCell.PaddingBottom = 10;
             AddTextCell(itiHeaderTable, itiHeaderContentCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
@@ -279,14 +288,17 @@ namespace GreenField.Web.Helpers
             #endregion
 
             #region Investment Thesis Content
+            PdfPTable itiInvestmentThesisContentTable = new PdfPTable(1);
+            itiInvestmentThesisContentTable.WidthPercentage = 100;
             ZapfDingbatsList itiInvestmentThesisContentList = new ZapfDingbatsList(110, 10);
             itiInvestmentThesisContentList.IndentationLeft = 2;
-            itiInvestmentThesisContentList.Symbol.Font.Size = 10F;
+            itiInvestmentThesisContentList.Autoindent = true;
+            itiInvestmentThesisContentList.Symbol.Font.Size = PDFFontStyle.STYLE_8.Size;
             itiInvestmentThesisContentList.Symbol.Font.Color = BaseColor.BLUE;
 
             foreach (String thesisPoint in presentation.InvestmentThesisInstance.ThesisPoints)
             {
-                ListItem item = new ListItem(new Phrase(thesisPoint, PDFFontStyle.STYLE_6));
+                ListItem item = new ListItem(new Phrase(thesisPoint, PDFFontStyle.STYLE_8));
                 if (presentation.InvestmentThesisInstance.ThesisPoints.IndexOf(thesisPoint) == 0)
                 {
                     item.SpacingBefore = listItemSpacing;
@@ -299,7 +311,12 @@ namespace GreenField.Web.Helpers
                 }
                 itiInvestmentThesisContentList.Add(item);
             }
-            doc.Add(itiInvestmentThesisContentList);
+            PdfPCell itiInvestmentThesisContentCell = new PdfPCell();
+            itiInvestmentThesisContentCell.AddElement(itiInvestmentThesisContentList);
+            itiInvestmentThesisContentCell.MinimumHeight = (doc.PageSize.Height - itiHeaderTable.TotalHeight - 100) * Convert.ToSingle(0.75);
+            itiInvestmentThesisContentCell.Border = PDFBorderType.NONE;
+            itiInvestmentThesisContentTable.AddCell(itiInvestmentThesisContentCell);
+            doc.Add(itiInvestmentThesisContentTable);
             #endregion
 
             #region Risk
@@ -307,30 +324,26 @@ namespace GreenField.Web.Helpers
             itiRiskTable.WidthPercentage = 100;
             itiRiskTable.SpacingBefore = 10;
 
-            PdfPCell itiRiskHeaderCell = new PdfPCell(new Phrase("Risks to Investment Thesis – What could go wrong?", PDFFontStyle.STYLE_4));
+            PdfPCell itiRiskHeaderCell = new PdfPCell(new Phrase("Risks to Investment Thesis – What could go wrong?", PDFFontStyle.STYLE_10));
             itiRiskHeaderCell.BackgroundColor = BaseColor.LIGHT_GRAY;
             AddTextCell(itiRiskTable, itiRiskHeaderCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_TOP);
 
-            ZapfDingbatsList itiRiskList = new ZapfDingbatsList(110, 10);
+            List itiRiskList = new List(List.UNORDERED, 10);
             itiRiskList.IndentationLeft = 2;
-            itiRiskList.Symbol.Font.Size = 10F;
-            itiRiskList.Symbol.Font.Color = BaseColor.BLUE;
+            itiRiskList.Autoindent = true;
+            itiRiskList.Symbol.Font.Size = PDFFontStyle.STYLE_8.Size;
+            itiRiskList.Symbol.Font.Color = BaseColor.BLACK;
             foreach (String risk in presentation.InvestmentThesisInstance.HighlightedRisks)
             {
-                ListItem item = new ListItem(new Phrase(risk, PDFFontStyle.STYLE_6));
-                if (presentation.InvestmentThesisInstance.HighlightedRisks.IndexOf(risk) == 0)
-                {
-                    item.SpacingBefore = listItemSpacing;
-                }
-
+                ListItem item = new ListItem(new Phrase(risk, PDFFontStyle.STYLE_8));
                 if (presentation.InvestmentThesisInstance.HighlightedRisks.IndexOf(risk) !=
                     presentation.InvestmentThesisInstance.HighlightedRisks.Count - 1)
                 {
-                    item.SpacingAfter = listItemSpacing;
+                    item.SpacingAfter = 5F;
                 }
+
                 itiRiskList.Add(item);
             }
-            //doc.Add(itiRiskList);
 
             PdfPCell itiRiskContentCell = new PdfPCell();
             itiRiskContentCell.AddElement(itiRiskList);
@@ -354,7 +367,7 @@ namespace GreenField.Web.Helpers
             koaiHeaderTable.SpacingBefore = 10;
             koaiHeaderTable.SetWidths(new float[] { 5, 1 });
 
-            PdfPCell koaiHeaderContentCell = new PdfPCell(new Phrase("Key Operating Assumptions", PDFFontStyle.STYLE_0));
+            PdfPCell koaiHeaderContentCell = new PdfPCell(new Phrase("Key Operating Assumptions", PDFFontStyle.STYLE_11));
             koaiHeaderContentCell.PaddingTop = 10;
             koaiHeaderContentCell.PaddingBottom = 10;
             AddTextCell(koaiHeaderTable, koaiHeaderContentCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
@@ -368,12 +381,13 @@ namespace GreenField.Web.Helpers
             #region Key Operating Assumpations Content
             ZapfDingbatsList koaiInvestmentThesisContentList = new ZapfDingbatsList(110, 10);
             koaiInvestmentThesisContentList.IndentationLeft = 2;
-            koaiInvestmentThesisContentList.Symbol.Font.Size = 10F;
+            koaiInvestmentThesisContentList.Autoindent = true;
+            koaiInvestmentThesisContentList.Symbol.Font.Size = PDFFontStyle.STYLE_8.Size;
             koaiInvestmentThesisContentList.Symbol.Font.Color = BaseColor.BLUE;
 
             foreach (String assumption in presentation.KeyOperatingAssumpationsInstance.Assumptions)
             {
-                ListItem item = new ListItem(new Phrase(assumption, PDFFontStyle.STYLE_6));
+                ListItem item = new ListItem(new Phrase(assumption, PDFFontStyle.STYLE_8));
                 if (presentation.KeyOperatingAssumpationsInstance.Assumptions.IndexOf(assumption) == 0)
                 {
                     item.SpacingBefore = listItemSpacing;
@@ -401,7 +415,7 @@ namespace GreenField.Web.Helpers
             vqgiHeaderTable.SpacingBefore = 10;
             vqgiHeaderTable.SetWidths(new float[] { 5, 1 });
 
-            PdfPCell vqgiHeaderContentCell = new PdfPCell(new Phrase("Value, Growth, Quality", PDFFontStyle.STYLE_0));
+            PdfPCell vqgiHeaderContentCell = new PdfPCell(new Phrase("Value, Growth, Quality", PDFFontStyle.STYLE_11));
             vqgiHeaderContentCell.PaddingTop = 10;
             vqgiHeaderContentCell.PaddingBottom = 10;
             AddTextCell(vqgiHeaderTable, vqgiHeaderContentCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
@@ -415,11 +429,13 @@ namespace GreenField.Web.Helpers
             #region VQG Content
             #region Value
             PdfPTable vqgiValueTable = new PdfPTable(2);
+
             vqgiValueTable.WidthPercentage = 100;
             vqgiValueTable.SpacingBefore = 5;
             vqgiValueTable.SetWidths(new float[] { 1, 25 });
 
-            PdfPCell vqgiValueCell = new PdfPCell(new Phrase("Value", PDFFontStyle.STYLE_7));
+            PdfPCell vqgiValueCell = new PdfPCell(new Phrase("Value", PDFFontStyle.STYLE_9));
+            vqgiValueCell.MinimumHeight = (doc.PageSize.Height - (2 * doc.TopMargin) - vqgiHeaderTable.TotalHeight - 60) / 3;
             vqgiValueCell.BackgroundColor = BaseColor.GRAY;
             vqgiValueCell.Rotation = 90;
             AddTextCell(vqgiValueTable, vqgiValueCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
@@ -432,7 +448,7 @@ namespace GreenField.Web.Helpers
 
             foreach (String value in presentation.VQGInstance.Value)
             {
-                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_6));
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_8));
                 if (presentation.VQGInstance.Value.IndexOf(value) == 0)
                 {
                     item.SpacingBefore = listItemSpacing;
@@ -462,7 +478,8 @@ namespace GreenField.Web.Helpers
             vqgiGrowthTable.SpacingBefore = 5;
             vqgiGrowthTable.SetWidths(new float[] { 1, 25 });
 
-            PdfPCell vqgiGrowthCell = new PdfPCell(new Phrase("Growth", PDFFontStyle.STYLE_7));
+            PdfPCell vqgiGrowthCell = new PdfPCell(new Phrase("Growth", PDFFontStyle.STYLE_9));
+            vqgiGrowthCell.MinimumHeight = (doc.PageSize.Height - (2 * doc.TopMargin) - vqgiHeaderTable.TotalHeight - 60) / 3;
             vqgiGrowthCell.BackgroundColor = BaseColor.GRAY;
             vqgiGrowthCell.Rotation = 90;
             AddTextCell(vqgiGrowthTable, vqgiGrowthCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
@@ -475,7 +492,7 @@ namespace GreenField.Web.Helpers
 
             foreach (String value in presentation.VQGInstance.Growth)
             {
-                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_6));
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_8));
                 if (presentation.VQGInstance.Growth.IndexOf(value) == 0)
                 {
                     item.SpacingBefore = listItemSpacing;
@@ -505,7 +522,8 @@ namespace GreenField.Web.Helpers
             vqgiQualityTable.SpacingBefore = 5;
             vqgiQualityTable.SetWidths(new float[] { 1, 25 });
 
-            PdfPCell vqgiQualityCell = new PdfPCell(new Phrase("Quality", PDFFontStyle.STYLE_7));
+            PdfPCell vqgiQualityCell = new PdfPCell(new Phrase("Quality", PDFFontStyle.STYLE_9));
+            vqgiQualityCell.MinimumHeight = (doc.PageSize.Height - (2 * doc.TopMargin) - vqgiHeaderTable.TotalHeight - 60) / 3;
             vqgiQualityCell.BackgroundColor = BaseColor.GRAY;
             vqgiQualityCell.Rotation = 90;
             AddTextCell(vqgiQualityTable, vqgiQualityCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
@@ -518,7 +536,7 @@ namespace GreenField.Web.Helpers
 
             foreach (String value in presentation.VQGInstance.Quality)
             {
-                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_6));
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_8));
                 if (presentation.VQGInstance.Quality.IndexOf(value) == 0)
                 {
                     item.SpacingBefore = listItemSpacing;
@@ -550,7 +568,7 @@ namespace GreenField.Web.Helpers
             saiHeaderTable.SpacingBefore = 10;
             saiHeaderTable.SetWidths(new float[] { 5, 1 });
 
-            PdfPCell saiHeaderContentCell = new PdfPCell(new Phrase("SWOT Analysis", PDFFontStyle.STYLE_0));
+            PdfPCell saiHeaderContentCell = new PdfPCell(new Phrase("SWOT Analysis", PDFFontStyle.STYLE_11));
             saiHeaderContentCell.PaddingTop = 10;
             saiHeaderContentCell.PaddingBottom = 10;
             AddTextCell(saiHeaderTable, saiHeaderContentCell, Element.ALIGN_LEFT, Element.ALIGN_MIDDLE, PDFBorderType.BOTTOM);
@@ -567,16 +585,17 @@ namespace GreenField.Web.Helpers
             saiValueTable.SpacingBefore = 5;
             saiValueTable.SetWidths(new float[] { 25, 1, 25 });
 
-            PdfPCell saiStrengthCell = new PdfPCell(new Phrase("STRENGTH", PDFFontStyle.STYLE_7));
+            PdfPCell saiStrengthCell = new PdfPCell(new Phrase("STRENGTH", PDFFontStyle.STYLE_9));
             saiStrengthCell.BackgroundColor = BaseColor.GRAY;
             AddTextCell(saiValueTable, saiStrengthCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
             AddTextCell(saiValueTable, new PdfPCell(), Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell saiWeaknessCell = new PdfPCell(new Phrase("WEAKNESS", PDFFontStyle.STYLE_7));
+            PdfPCell saiWeaknessCell = new PdfPCell(new Phrase("WEAKNESS", PDFFontStyle.STYLE_9));
             saiWeaknessCell.BackgroundColor = BaseColor.GRAY;
             AddTextCell(saiValueTable, saiWeaknessCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
 
 
             PdfPCell saiStrengthContentCell = new PdfPCell();
+            saiStrengthContentCell.MinimumHeight = (doc.PageSize.Height - saiHeaderTable.TotalHeight - 100) * Convert.ToSingle(0.5);
             ZapfDingbatsList saiStrengthContentList = new ZapfDingbatsList(110, 10);
             saiStrengthContentList.IndentationLeft = 2;
             saiStrengthContentList.Symbol.Font.Size = 10F;
@@ -584,7 +603,7 @@ namespace GreenField.Web.Helpers
 
             foreach (String value in presentation.SWOTAnalysisInstance.Strength)
             {
-                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_6));
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_8));
                 if (presentation.SWOTAnalysisInstance.Strength.IndexOf(value) == 0)
                 {
                     item.SpacingBefore = listItemSpacing;
@@ -611,7 +630,7 @@ namespace GreenField.Web.Helpers
 
             foreach (String value in presentation.SWOTAnalysisInstance.Weakness)
             {
-                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_6));
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_8));
                 if (presentation.SWOTAnalysisInstance.Weakness.IndexOf(value) == 0)
                 {
                     item.SpacingBefore = listItemSpacing;
@@ -628,16 +647,17 @@ namespace GreenField.Web.Helpers
             saiWeaknessContentCell.PaddingBottom = 20;
             AddTextCell(saiValueTable, saiWeaknessContentCell, Element.ALIGN_LEFT, Element.ALIGN_TOP, PDFBorderType.NONE);
 
-            PdfPCell saiOpportunityCell = new PdfPCell(new Phrase("OPPORTUNITY", PDFFontStyle.STYLE_7));
+            PdfPCell saiOpportunityCell = new PdfPCell(new Phrase("OPPORTUNITY", PDFFontStyle.STYLE_9));
             saiOpportunityCell.BackgroundColor = BaseColor.GRAY;
             AddTextCell(saiValueTable, saiOpportunityCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
             AddTextCell(saiValueTable, new PdfPCell(), Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
-            PdfPCell saiThreatCell = new PdfPCell(new Phrase("THREAT", PDFFontStyle.STYLE_7));
+            PdfPCell saiThreatCell = new PdfPCell(new Phrase("THREAT", PDFFontStyle.STYLE_9));
             saiThreatCell.BackgroundColor = BaseColor.GRAY;
             AddTextCell(saiValueTable, saiThreatCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.NONE);
 
 
             PdfPCell saiOpportunityContentCell = new PdfPCell();
+            saiOpportunityContentCell.MinimumHeight = (doc.PageSize.Height - saiHeaderTable.TotalHeight - 100) * Convert.ToSingle(0.5);
             ZapfDingbatsList saiOpportunityContentList = new ZapfDingbatsList(110, 10);
             saiOpportunityContentList.IndentationLeft = 2;
             saiOpportunityContentList.Symbol.Font.Size = 10F;
@@ -645,7 +665,7 @@ namespace GreenField.Web.Helpers
 
             foreach (String value in presentation.SWOTAnalysisInstance.Opportunity)
             {
-                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_6));
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_8));
                 if (presentation.SWOTAnalysisInstance.Opportunity.IndexOf(value) == 0)
                 {
                     item.SpacingBefore = listItemSpacing;
@@ -671,7 +691,7 @@ namespace GreenField.Web.Helpers
 
             foreach (String value in presentation.SWOTAnalysisInstance.Threat)
             {
-                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_6));
+                ListItem item = new ListItem(new Phrase(value, PDFFontStyle.STYLE_8));
                 if (presentation.SWOTAnalysisInstance.Threat.IndexOf(value) == 0)
                 {
                     item.SpacingBefore = listItemSpacing;
@@ -793,7 +813,6 @@ namespace GreenField.Web.Helpers
 
             return risks;
         }
-
 
         private static List<String> GetKeyOperatingAssumpations(SlidePart slidePart)
         {

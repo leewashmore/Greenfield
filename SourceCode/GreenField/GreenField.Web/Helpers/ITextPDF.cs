@@ -9,7 +9,11 @@ namespace GreenField.Web.Helpers
     public static class PDFFontStyle
     {
         public static Font STYLE_0 = FontFactory.GetFont("Verdana", 18F, Font.BOLD, BaseColor.BLACK);
+        public static Font STYLE_11 = FontFactory.GetFont("Verdana", 20F, Font.BOLD, BaseColor.BLACK);
         public static Font STYLE_1 = FontFactory.GetFont("Verdana", 12F, Font.BOLD, BaseColor.BLACK);
+        public static Font STYLE_8 = FontFactory.GetFont("Verdana", 16F, Font.NORMAL, BaseColor.BLACK);
+        public static Font STYLE_9 = FontFactory.GetFont("Verdana", 16F, Font.BOLD, BaseColor.WHITE);
+        public static Font STYLE_10 = FontFactory.GetFont("Verdana", 16F, Font.BOLD, BaseColor.BLACK);
         public static Font STYLE_4 = FontFactory.GetFont("Verdana", 10F, Font.BOLD, BaseColor.BLACK);
         public static Font STYLE_7 = FontFactory.GetFont("Verdana", 10F, Font.BOLD, BaseColor.WHITE);
         public static Font STYLE_6 = FontFactory.GetFont("Verdana", 10F, Font.NORMAL, BaseColor.BLACK);
