@@ -121,7 +121,7 @@ namespace GreenField.Web.Services
             try
             {
                 if (entitySelectionData == null)
-                    return new SecurityOverviewData();
+                { return new SecurityOverviewData(); }
 
                 DimensionEntitiesService.Entities entity = DimensionEntity;
 
@@ -129,7 +129,7 @@ namespace GreenField.Web.Services
                 isServiceUp = CheckServiceAvailability.ServiceAvailability();
 
                 if (!isServiceUp)
-                    throw new Exception("Services are not available");
+                { throw new Exception("Services are not available"); }
 
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = entity.GF_SECURITY_BASEVIEW
                     .Where(record => record.TICKER == entitySelectionData.ShortName
@@ -139,7 +139,7 @@ namespace GreenField.Web.Services
                     .FirstOrDefault();
 
                 if (data == null)
-                    return new SecurityOverviewData();
+                { return new SecurityOverviewData(); }
 
                 SecurityOverviewData result = new SecurityOverviewData()
                 {

@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Net;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Ink;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
@@ -21,7 +11,6 @@ using Microsoft.Practices.Prism.ViewModel;
 using GreenField.Common;
 using GreenField.DataContracts;
 using GreenField.ServiceCaller;
-using GreenField.ServiceCaller.SecurityReferenceDefinitions;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -60,10 +49,7 @@ namespace GreenField.Gadgets.ViewModels
         private bool  isActive;
         public bool IsActive
         {
-            get
-            {
-                return  isActive;
-            }
+            get { return  isActive; }
             set
             {
                 if ( isActive != value)
@@ -71,7 +57,8 @@ namespace GreenField.Gadgets.ViewModels
                      isActive = value;
                     if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) &&  isActive)
                     {
-                        dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity,  lookThruEnabled, RetrieveTopHoldingsDataCallbackMethod);
+                        dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity,  lookThruEnabled,
+                            RetrieveTopHoldingsDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
@@ -91,14 +78,14 @@ namespace GreenField.Gadgets.ViewModels
             dbInteractivity = param.DBInteractivity;
             logger = param.LoggerFacade;
             regionManager = param.RegionManager;
-
             portfolioSelectionDataInfo = param.DashboardGadgetPayload.PortfolioSelectionData;
-             isExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
+            isExCashSecurity = param.DashboardGadgetPayload.IsExCashSecurityData;
             EffectiveDate = param.DashboardGadgetPayload.EffectiveDate;
-             lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
+            lookThruEnabled = param.DashboardGadgetPayload.IsLookThruEnabled;
             if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && IsActive)
             {
-                dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity, lookThruEnabled, RetrieveTopHoldingsDataCallbackMethod);
+                dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity, lookThruEnabled,
+                    RetrieveTopHoldingsDataCallbackMethod);
                 BusyIndicatorStatus = true;
             }
 
@@ -184,7 +171,6 @@ namespace GreenField.Gadgets.ViewModels
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
-
             try
             {
                 if (portfolioSelectionData != null)
@@ -193,7 +179,8 @@ namespace GreenField.Gadgets.ViewModels
                     portfolioSelectionDataInfo = portfolioSelectionData;
                     if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && IsActive)
                     {
-                        dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity,  lookThruEnabled, RetrieveTopHoldingsDataCallbackMethod);
+                        dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity,  lookThruEnabled,
+                            RetrieveTopHoldingsDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
 
@@ -202,7 +189,6 @@ namespace GreenField.Gadgets.ViewModels
                         Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -228,7 +214,8 @@ namespace GreenField.Gadgets.ViewModels
                     EffectiveDate = effectiveDateInfo;
                     if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && IsActive)
                     {
-                        dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity,  lookThruEnabled, RetrieveTopHoldingsDataCallbackMethod);
+                        dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity,  lookThruEnabled,
+                            RetrieveTopHoldingsDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
@@ -236,7 +223,6 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameterNull(logger, methodNamespace, 1);
                 }
-
             }
             catch (Exception ex)
             {
@@ -263,7 +249,8 @@ namespace GreenField.Gadgets.ViewModels
 
                     if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && IsActive)
                     {
-                        dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity,  lookThruEnabled, RetrieveTopHoldingsDataCallbackMethod);
+                        dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity,  lookThruEnabled, 
+                            RetrieveTopHoldingsDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
@@ -274,7 +261,6 @@ namespace GreenField.Gadgets.ViewModels
                 Logging.LogException(logger, ex);
             }
             Logging.LogEndMethod(logger, methodNamespace);
-
         }
 
         /// <summary>
@@ -294,7 +280,8 @@ namespace GreenField.Gadgets.ViewModels
 
                     if ((portfolioSelectionDataInfo != null) && (EffectiveDate != null) && IsActive)
                     {
-                        dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity,  lookThruEnabled, RetrieveTopHoldingsDataCallbackMethod);
+                        dbInteractivity.RetrieveTopHoldingsData(portfolioSelectionDataInfo, Convert.ToDateTime( effectiveDate),  isExCashSecurity,  lookThruEnabled, 
+                            RetrieveTopHoldingsDataCallbackMethod);
                         BusyIndicatorStatus = true;
                     }
                 }
@@ -306,19 +293,19 @@ namespace GreenField.Gadgets.ViewModels
             }
             Logging.LogEndMethod(logger, methodNamespace);
         }
-
         #endregion
 
         #region ICommand Methods
-
+        /// <summary>
+        /// method to navigate user to another gadget on click of a button
+        /// </summary>
+        /// <param name="param"></param>
         private void DetailsCommandMethod(object param)
         {
             Logging.LogBeginMethod(logger,String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try 
 	        {
-                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioHoldings", UriKind.Relative));
-
-		
+                regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewDashboardPortfolioHoldings", UriKind.Relative));		
 	        }
 	         catch (Exception ex)
             {
@@ -376,6 +363,4 @@ namespace GreenField.Gadgets.ViewModels
         }
         #endregion
     }
-
-
 }

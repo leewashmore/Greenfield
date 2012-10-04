@@ -16,7 +16,8 @@
         </ResourceDictionary>
     </helpers:ViewBaseUserControl.Resources>
 
-    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}" Style="{StaticResource BusyIndicatorStyle}">
+    <telerik:RadBusyIndicator x:Name="gridBusyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0" IsBusy="{Binding BusyIndicatorStatus}" 
+                              Style="{StaticResource BusyIndicatorStyle}">
         <!--Layout Grid-->
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
@@ -67,8 +68,7 @@
                                          EnableColumnVirtualization="False"
                                          HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                          RowStyle="{StaticResource GridViewRowStyle}"
-                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
-                                         GroupPanelStyle="{StaticResource GridViewGroupPanelStyles}" >                        
+                                         GroupRowStyle="{StaticResource GridViewGroupRowStyle}">                        
                         <telerik:RadGridView.Columns>
                             <telerik:GridViewDataColumn x:Name="dgcConstituentName" 
                                                         Header="Constituent Name" 
@@ -132,7 +132,6 @@
         </Grid>        
     </Grid>
     </telerik:RadBusyIndicator>
-
 </helpers:ViewBaseUserControl>
 
 

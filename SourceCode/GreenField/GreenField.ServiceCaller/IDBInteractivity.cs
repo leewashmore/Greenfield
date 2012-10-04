@@ -16,7 +16,6 @@ using GreenField.ServiceCaller.DocumentWorkSpaceDefinitions;
 using GreenField.ServiceCaller.DCFDefinitions;
 using GreenField.ServiceCaller.CustomScreeningDefinitions;
 
-
 namespace GreenField.ServiceCaller
 {
     /// <summary>
@@ -28,6 +27,10 @@ namespace GreenField.ServiceCaller
 
         void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback);
 
+        /// <summary>
+        /// service call method for security overview gadget
+        /// </summary>
+        /// <param name="callback"></param>
         void RetrieveSecurityOverviewData(EntitySelectionData entitySelectionData, Action<SecurityOverviewData> callback);
 
         void RetrieveEntitySelectionData(Action<List<EntitySelectionData>> callback);
@@ -54,17 +57,64 @@ namespace GreenField.ServiceCaller
         /// <param name="fundSelectionData">Selected Portfolio</param>
         /// <param name="effectiveDate">selected Date</param>
         /// <param name="callback">List of AssetAllocationData</param>
-        void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, bool lookThru, bool excludeCash, Action<List<AssetAllocationData>> callback);
+        void RetrieveAssetAllocationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, bool lookThru, bool excludeCash, 
+            Action<List<AssetAllocationData>> callback);
 
-        void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<SectorBreakdownData>> callback);
+        /// <summary>
+        /// service call method for sector breakdown gadget
+        /// </summary>
+        /// <param name="portfolioSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="isExCashSecurity"></param>
+        /// <param name="lookThruEnabled"></param>
+        /// <param name="callback"></param>
+        void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled,
+            Action<List<SectorBreakdownData>> callback);
 
-        void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<RegionBreakdownData>> callback);
+        /// <summary>
+        /// service call method for region breakdown gadget
+        /// </summary>
+        /// <param name="portfolioSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="isExCashSecurity"></param>
+        /// <param name="lookThruEnabled"></param>
+        /// <param name="callback"></param>
+        void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled,
+            Action<List<RegionBreakdownData>> callback);
 
-        void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<TopHoldingsData>> callback);
+        /// <summary>
+        /// service call method for top holdings gadget
+        /// </summary>
+        /// <param name="portfolioSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="isExCashSecurity"></param>
+        /// <param name="lookThruEnabled"></param>
+        /// <param name="callback"></param>
+        void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled,
+            Action<List<TopHoldingsData>> callback);
 
-        void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool lookThruEnabled, Action<List<IndexConstituentsData>> callback);
+        /// <summary>
+        /// service call method for index constituent gadget
+        /// </summary>
+        /// <param name="portfolioSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="lookThruEnabled"></param>
+        /// <param name="callback"></param>
+        void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool lookThruEnabled,
+            Action<List<IndexConstituentsData>> callback);
 
-        void RetrieveRiskIndexExposuresData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, string filterType, string filterValue, Action<List<RiskIndexExposuresData>> callback);
+        /// <summary>
+        /// service call method for RiskIndexExposures gadget
+        /// </summary>
+        /// <param name="portfolioSelectionData"></param>
+        /// <param name="effectiveDate"></param>
+        /// <param name="isExCashSecurity"></param>
+        /// <param name="lookThruEnabled"></param>
+        /// <param name="filterType"></param>
+        /// <param name="filterValue"></param>
+        /// <param name="callback"></param>
+        void RetrieveRiskIndexExposuresData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, 
+            string filterType, string filterValue, Action<List<RiskIndexExposuresData>> callback);
 
         void RetrieveHoldingsPercentageData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool lookThruEnabled, Action<List<HoldingsPercentageData>> callback);
 
@@ -81,14 +131,6 @@ namespace GreenField.ServiceCaller
         void RetrieveMarketSnapshotPreference(int snapshotPreferenceId, Action<List<MarketSnapshotPreference>> callback);
 
         void RetrieveMarketSnapshotPerformanceData(List<MarketSnapshotPreference> marketSnapshotPreference, Action<List<MarketSnapshotPerformanceData>> callback);
-
-        //void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback);
-
-        //void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback);
-
-        //void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
-
-        //void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback);
 
         /// <summary>
         /// Save changes in a specific user snapshot

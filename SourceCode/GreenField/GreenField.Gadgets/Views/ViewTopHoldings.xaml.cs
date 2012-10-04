@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using GreenField.Gadgets.ViewModels;
-using GreenField.Gadgets.Helpers;
-using GreenField.Common;
 using Telerik.Windows.Controls;
+using GreenField.Common;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
@@ -22,28 +13,27 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelTopHoldings _dataContextViewModelTopHoldings;
+        private ViewModelTopHoldings dataContextViewModelTopHoldings;
         public ViewModelTopHoldings DataContextViewModelTopHoldings
         {
-            get { return _dataContextViewModelTopHoldings; }
-            set { _dataContextViewModelTopHoldings = value; }
+            get { return dataContextViewModelTopHoldings; }
+            set { dataContextViewModelTopHoldings = value; }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextViewModelTopHoldings != null) //DataContext instance
-                    DataContextViewModelTopHoldings.IsActive = _isActive;
+                    DataContextViewModelTopHoldings.IsActive = isActive;
             }
         }
-
         #endregion
 
         #region Constructor
@@ -60,6 +50,11 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region Export To Excel Methods
+        /// <summary>
+        /// method to export the grid
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             ChildExportOptions childExportOptions = new ChildExportOptions
@@ -75,11 +70,16 @@ namespace GreenField.Gadgets.Views
                 }, "Export Options: " + GadgetNames.HOLDINGS_TOP_TEN_HOLDINGS);
             childExportOptions.Show();
         }
+
+        /// <summary>
+        /// handling element exporting
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgTopHoldings_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
         }
-
         #endregion
 
         #region Dispose Method
@@ -93,11 +93,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
-        private void dgTopHoldings_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
-        {
-            //GroupedGridRowLoadedHandler.Implement(e);
-        }
-
     }
 }

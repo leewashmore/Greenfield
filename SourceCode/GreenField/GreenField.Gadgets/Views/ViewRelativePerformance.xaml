@@ -157,16 +157,29 @@
                                          <ToolTip Content="{Binding AggregateCountryActivePosition}"/>
                                          </ToolTipService.ToolTip>
                                         </TextBlock>
-                                        <!--<TextBlock Text="{Binding AggregateCountryActivePosition, StringFormat=(\{0:n2\}%)}" Foreground="Black" FontWeight="Bold"/>-->
                                     </StackPanel>
                                 </DataTemplate>
                             </telerik:GridViewDataColumn.CellTemplate>
                             <telerik:GridViewDataColumn.AggregateFunctions>
                                 <telerik:SumFunction x:Name="AggregateCountryAlphaSumFunction" SourceField="AggregateCountryAlpha"/>
-                                <!--<telerik:SumFunction x:Name="AggregateCountryBetSumFunction" ResultFormatString="{}({0:n2}%)" SourceField="AggregateCountryActivePosition" />-->
                             </telerik:GridViewDataColumn.AggregateFunctions>
                             <telerik:GridViewDataColumn.Footer>
-                                <TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue, Converter={StaticResource basisPointsConverter}}" TextAlignment="Right"/>
+                                <!--<TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue, Converter={StaticResource basisPointsConverter}}" TextAlignment="Right"/>-->
+                                <telerik:AggregateResultsList ItemsSource="{Binding}" VerticalAlignment="Center">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock VerticalAlignment="Center" Text="{Binding FormattedValue, Converter={StaticResource basisPointsConverter}}" 
+                                                           TextAlignment="Right"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal" />
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                </telerik:AggregateResultsList>
                             </telerik:GridViewDataColumn.Footer>
                         </telerik:GridViewDataColumn>
                     </telerik:RadGridView.Columns>

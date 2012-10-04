@@ -1,22 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
 using Telerik.Windows.Controls;
-using System.IO;
-using Telerik.Windows.Controls.GridView;
-using GreenField.Gadgets.ViewModels;
-using Telerik.Windows.Data;
-using GreenField.Gadgets.Helpers;
 using GreenField.Common;
-using GreenField.ServiceCaller.BenchmarkHoldingsDefinitions;
+using GreenField.Gadgets.Helpers;
+using GreenField.Gadgets.ViewModels;
 
 namespace GreenField.Gadgets.Views
 {
@@ -26,25 +13,25 @@ namespace GreenField.Gadgets.Views
         /// <summary>
         /// property to set data context
         /// </summary>
-        private ViewModelIndexConstituents _dataContextIndexConstituents;
+        private ViewModelIndexConstituents dataContextIndexConstituents;
         public ViewModelIndexConstituents DataContextIndexConstituents
         {
-            get { return _dataContextIndexConstituents; }
-            set { _dataContextIndexConstituents = value; }
+            get { return dataContextIndexConstituents; }
+            set { dataContextIndexConstituents = value; }
         }
 
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
+                isActive = value;
                 if (DataContextIndexConstituents != null) //DataContext instance
-                    DataContextIndexConstituents.IsActive = _isActive;
+                    DataContextIndexConstituents.IsActive = isActive;
             }
         }
         #endregion
@@ -62,20 +49,12 @@ namespace GreenField.Gadgets.Views
         }
         #endregion
 
-        #region Event
-
+        #region Export To Excel Methods
         /// <summary>
-        /// Handling row loaded event of grid
+        /// method to catch export to excel button click
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dgIndexConstituents_RowLoaded(object sender, RowLoadedEventArgs e)
-        {
-            
-        }
-        #endregion
-
-        #region Export To Excel Methods
         private void btnExportExcel_Click(object sender, RoutedEventArgs e)
         {
             ChildExportOptions childExportOptions = new ChildExportOptions
@@ -91,11 +70,16 @@ namespace GreenField.Gadgets.Views
                 }, "Export Options: " + GadgetNames.BENCHMARK_INDEX_CONSTITUENTS);
             childExportOptions.Show();
         }
+
+        /// <summary>
+        /// handles element exporting
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void dgIndexConstituents_ElementExporting(object sender, GridViewElementExportingEventArgs e)
         {
             RadGridView_ElementExport.ElementExporting(e, showGroupFooters: false);
         }
-
         #endregion
 
         #region Dispose Method
@@ -109,6 +93,5 @@ namespace GreenField.Gadgets.Views
             this.DataContext = null;
         }
         #endregion
-
     }
 }

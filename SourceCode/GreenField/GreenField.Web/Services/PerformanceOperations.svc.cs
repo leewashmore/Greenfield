@@ -1236,7 +1236,9 @@ namespace GreenField.Web.Services
                 if (dailyData == null)
                     return result;
 
-                DateTime portfolioInceptionDate = Convert.ToDateTime(dailyData.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault());
+                System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
+                dateInfo.ShortDatePattern = "dd/MM/yyyy";
+                DateTime portfolioInceptionDate = Convert.ToDateTime(dailyData.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault(), dateInfo);
 
                 if (period != "1D" && period != "1W")
                 {
@@ -1394,7 +1396,9 @@ namespace GreenField.Web.Services
                 if (data.Count.Equals(0))
                     return result;
 
-                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault());
+                System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
+                dateInfo.ShortDatePattern = "dd/MM/yyyy";
+                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault(), dateInfo);
 
                 if (period != "1D" && period != "1W")
                 {
@@ -1526,7 +1530,9 @@ namespace GreenField.Web.Services
                 if (data.Count.Equals(0))
                     return result;
 
-                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault());
+                System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
+                dateInfo.ShortDatePattern = "dd/MM/yyyy";
+                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault(), dateInfo);
 
                 if (period != "1D" && period != "1W")
                 {
@@ -1626,7 +1632,9 @@ namespace GreenField.Web.Services
                 if (data.Count.Equals(0))
                     return result;
 
-                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault());
+                System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
+                dateInfo.ShortDatePattern = "dd/MM/yyyy";
+                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault(), dateInfo);
 
                 if (period != "1D" && period != "1W")
                 {
@@ -1699,11 +1707,12 @@ namespace GreenField.Web.Services
                 if (data.Count.Equals(0))
                     return result;
 
-                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault());
+                System.Globalization.DateTimeFormatInfo dateInfo = new System.Globalization.DateTimeFormatInfo();
+                dateInfo.ShortDatePattern = "dd/MM/yyyy";
+                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault(), dateInfo);
 
                 if (period != "1D" && period != "1W")
                 {
-
                     bool isValid = InceptionDateChecker.ValidateInceptionDate(period, portfolioInceptionDate, effectiveDate);
                     if (!isValid)
                     {

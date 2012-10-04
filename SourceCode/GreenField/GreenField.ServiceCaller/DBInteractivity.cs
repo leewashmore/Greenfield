@@ -44,13 +44,8 @@ namespace GreenField.ServiceCaller
         #endregion
 
         #region Build1
-
         /// <summary>
-        /// service call method for security overview gadget
-        /// </summary>
-        /// <param name="callback"></param>
-        /// <summary>
-        /// service call method for security overview gadget
+        /// service call method for security gadget
         /// </summary>
         /// <param name="callback"></param>
         public void RetrieveSecurityReferenceData(Action<List<SecurityOverviewData>> callback)
@@ -94,11 +89,16 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
-
+       
+        /// <summary>
+        /// service call method for security overview gadget
+        /// </summary>
+        /// <param name="callback"></param>
         public void RetrieveSecurityOverviewData(EntitySelectionData entitySelectionData, Action<SecurityOverviewData> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
+                                                                                                                                    : "Unspecified");
 
             SecurityReferenceOperationsClient client = new SecurityReferenceOperationsClient();
             client.RetrieveSecurityOverviewDataAsync(entitySelectionData);
@@ -115,15 +115,20 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? 
+                                                                                                                    SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
@@ -402,43 +407,6 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        ///// <summary>
-        ///// Method that calls the  RetrieveMarketCapitalizationData method of the service and provides interation between the Viewmodel and Service.
-        ///// </summary>
-        ///// <param name="fundSelectionData">Object of type PortfolioSelectionData Class containg the fund selection data</param>
-        ///// <param name="effectiveDate">Effective date as selected by the user</param>
-        ///// <param name="filterType">The filter type selected by the user</param>
-        ///// <param name="filterValue">The filter value selected by the user</param>
-        ///// <param name="callback"></param>  
-        //public void RetrieveMarketCapitalizationData(PortfolioSelectionData fundSelectionData, DateTime effectiveDate, String filterType, String filterValue, bool isExCashSecurity, Action<List<MarketCapitalizationData>> callback)
-        //{
-        //    BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
-        //    client.RetrieveMarketCapitalizationDataAsync(fundSelectionData, effectiveDate, filterType, filterValue, isExCashSecurity);
-        //    client.RetrieveMarketCapitalizationDataCompleted += (se, e) =>
-        //    {
-        //        if (e.Error == null)
-        //        {
-        //            if (callback != null)
-        //            {
-        //                callback(e.Result);
-        //            }
-        //        }
-        //        else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-        //        {
-        //            FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-        //                = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(null);
-        //        }
-        //        else
-        //        {
-        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(null);
-        //        }
-        //    };
-        //}
         /// Service Caller method for AssetAllocation gadget
         /// </summary>
         /// <param name="fundSelectionData">Selected Portfolio</param>
@@ -493,11 +461,12 @@ namespace GreenField.ServiceCaller
         /// <param name="isExCashSecurity"></param>
         /// <param name="lookThruEnabled"></param>
         /// <param name="callback"></param>
-        public void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<SectorBreakdownData>> callback)
+        public void RetrieveSectorBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, 
+            Action<List<SectorBreakdownData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
+                                                                                                                                            : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveSectorBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled);
             client.RetrieveSectorBreakdownDataCompleted += (se, e) =>
@@ -522,31 +491,33 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                                    ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
         /// <summary>
         /// service call method for region breakdown gadget
         /// </summary>
-        /// <param name="portfolioSelectionData"></param>
-        /// <param name="effectiveDate"></param>
-        /// <param name="isExCashSecurity"></param>
-        /// <param name="lookThruEnabled"></param>
+        /// <param name="portfolioSelectionData">PortfolioSelectionData</param>
+        /// <param name="effectiveDate">DateTime</param>
+        /// <param name="isExCashSecurity">bool</param>
+        /// <param name="lookThruEnabled">bool</param>
         /// <param name="callback"></param>
-        public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<RegionBreakdownData>> callback)
+        public void RetrieveRegionBreakdownData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, 
+            Action<List<RegionBreakdownData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+                                                                                                                                                : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveRegionBreakdownDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled);
             client.RetrieveRegionBreakdownDataCompleted += (se, e) =>
@@ -571,15 +542,16 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                                    ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
@@ -591,11 +563,12 @@ namespace GreenField.ServiceCaller
         /// <param name="isExCashSecurity"></param>
         /// <param name="lookThruEnabled"></param>
         /// <param name="callback"></param>
-        public void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, Action<List<TopHoldingsData>> callback)
+        public void RetrieveTopHoldingsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, 
+            Action<List<TopHoldingsData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName
+                                                                                                                                    : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveTopHoldingsDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled);
             client.RetrieveTopHoldingsDataCompleted += (se, e) =>
@@ -620,15 +593,20 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                    ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
@@ -639,11 +617,12 @@ namespace GreenField.ServiceCaller
         /// <param name="effectiveDate"></param>
         /// <param name="lookThruEnabled"></param>
         /// <param name="callback"></param>
-        public void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool lookThruEnabled, Action<List<IndexConstituentsData>> callback)
+        public void RetrieveIndexConstituentsData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool lookThruEnabled,
+            Action<List<IndexConstituentsData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+                                                                                                                                    : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveIndexConstituentsDataAsync(portfolioSelectionData, effectiveDate, lookThruEnabled);
             client.RetrieveIndexConstituentsDataCompleted += (se, e) =>
@@ -668,15 +647,16 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                                    ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
@@ -690,11 +670,12 @@ namespace GreenField.ServiceCaller
         /// <param name="filterType"></param>
         /// <param name="filterValue"></param>
         /// <param name="callback"></param>
-        public void RetrieveRiskIndexExposuresData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity, bool lookThruEnabled, string filterType, string filterValue, Action<List<RiskIndexExposuresData>> callback)
+        public void RetrieveRiskIndexExposuresData(PortfolioSelectionData portfolioSelectionData, DateTime effectiveDate, bool isExCashSecurity,
+            bool lookThruEnabled, string filterType, string filterValue, Action<List<RiskIndexExposuresData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
-
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName 
+                                                                                                                                                    : "Unspecified");
             BenchmarkHoldingsOperationsClient client = new BenchmarkHoldingsOperationsClient();
             client.RetrieveRiskIndexExposuresDataAsync(portfolioSelectionData, effectiveDate, isExCashSecurity, lookThruEnabled, filterType, filterValue);
             client.RetrieveRiskIndexExposuresDataCompleted += (se, e) =>
@@ -719,15 +700,16 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.BenchmarkHoldingsDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
-                        callback(null);
+                    { callback(null); }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null 
+                                                                                                                ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
 
@@ -828,8 +810,6 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
-
-
         #endregion
 
         #region Market Performance Gadget
@@ -873,8 +853,7 @@ namespace GreenField.ServiceCaller
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
         }
-
-
+        
         /// <summary>
         /// service call method for retrieving list of market performance snapshots for a user
         /// </summary>
@@ -1015,147 +994,6 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        ///// <summary>
-        ///// service call method to add user preferred group in “Market Performance Snapshot”
-        ///// </summary>
-        ///// <param name="snapshotPreferenceId"></param>
-        ///// <param name="groupName"></param>
-        ///// <param name="callback"></param>
-        //public void AddMarketSnapshotGroupPreference(int snapshotPreferenceId, string groupName, Action<bool> callback)
-        //{
-        //    PerformanceOperationsClient client = new PerformanceOperationsClient();
-        //    client.AddMarketSnapshotGroupPreferenceAsync(snapshotPreferenceId, groupName);
-        //    client.AddMarketSnapshotGroupPreferenceCompleted += (se, e) =>
-        //    {
-        //        if (e.Error == null)
-        //        {
-        //            if (callback != null)
-        //            {
-        //                callback(e.Result);
-        //            }
-        //        }
-        //        else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-        //        {
-        //            FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-        //                = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(false);
-        //        }
-        //        else
-        //        {
-        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(false);
-        //        }
-        //    };
-        //}
-
-        ///// <summary>
-        /////  service call method to remove user preferred group from “Market Performance Snapshot”
-        ///// </summary>
-        ///// <param name="groupPreferenceId"></param>
-        ///// <param name="callback"></param>
-        //public void RemoveMarketSnapshotGroupPreference(int groupPreferenceId, Action<bool> callback)
-        //{
-        //    PerformanceOperationsClient client = new PerformanceOperationsClient();
-        //    client.RemoveMarketSnapshotGroupPreferenceAsync(groupPreferenceId);
-        //    client.RemoveMarketSnapshotGroupPreferenceCompleted += (se, e) =>
-        //    {
-        //        if (e.Error == null)
-        //        {
-        //            if (callback != null)
-        //            {
-        //                callback(e.Result);
-        //            }
-        //        }
-        //        else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-        //        {
-        //            FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-        //                = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(false);
-        //        }
-        //        else
-        //        {
-        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(false);
-        //        }
-        //    };
-        //}
-
-        ///// <summary>
-        ///// service call method to add user preferred entity in “Market Performance Snapshot”
-        ///// </summary>
-        ///// <param name="marketSnapshotPreference"></param>
-        ///// <param name="callback"></param>
-        //public void AddMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
-        //{
-        //    PerformanceOperationsClient client = new PerformanceOperationsClient();
-        //    client.AddMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
-        //    client.AddMarketSnapshotEntityPreferenceCompleted += (se, e) =>
-        //    {
-        //        if (e.Error == null)
-        //        {
-        //            if (callback != null)
-        //            {
-        //                callback(e.Result);
-        //            }
-        //        }
-        //        else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-        //        {
-        //            FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-        //                = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(false);
-        //        }
-        //        else
-        //        {
-        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(false);
-        //        }
-        //    };
-        //}
-
-        ///// <summary>
-        /////  service call method to remove user preferred entity from “Market Performance Snapshot”
-        ///// </summary>
-        ///// <param name="marketSnapshotPreference"></param>
-        ///// <param name="callback"></param>
-        //public void RemoveMarketSnapshotEntityPreference(MarketSnapshotPreference marketSnapshotPreference, Action<bool> callback)
-        //{
-        //    PerformanceOperationsClient client = new PerformanceOperationsClient();
-        //    client.RemoveMarketSnapshotEntityPreferenceAsync(marketSnapshotPreference);
-        //    client.RemoveMarketSnapshotEntityPreferenceCompleted += (se, e) =>
-        //    {
-        //        if (e.Error == null)
-        //        {
-        //            if (callback != null)
-        //            {
-        //                callback(e.Result);
-        //            }
-        //        }
-        //        else if (e.Error is FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>)
-        //        {
-        //            FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault> fault
-        //                = e.Error as FaultException<GreenField.ServiceCaller.SecurityReferenceDefinitions.ServiceFault>;
-        //            Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(false);
-        //        }
-        //        else
-        //        {
-        //            Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
-        //            if (callback != null)
-        //                callback(false);
-        //        }
-        //    };
-        //}
-
         /// <summary>
         ///  service call method to save changes in user snapshot entity from “Market Performance Snapshot”
         /// </summary>
@@ -1275,7 +1113,6 @@ namespace GreenField.ServiceCaller
             };
         }
         #endregion
-
 
         /// <summary>
         /// Retrieves filter values for a selected filter type by calling the service
