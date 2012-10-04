@@ -1241,7 +1241,7 @@ namespace GreenField.Gadgets.ViewModels
                     Select(a => a.DISCOUNTING_FACTOR).FirstOrDefault());
                 TGR = (Math.Min(sustainableROIC * (Convert.ToDecimal(Convert.ToDecimal(1.0) - sustainableDPR)), longTermNominalGDPGrowth));
 
-                result.Add(new DCFDisplayData() { PropertyName = "Cash Flow in 2020", Value = Math.Round(cashFlow2020, 1).ToString() });
+                result.Add(new DCFDisplayData() { PropertyName = "Cash Flow in 2020", Value = Math.Round(cashFlow2020, 1).ToString("N1") });
                 result.Add(new DCFDisplayData() { PropertyName = "Sustainable ROIC", Value = Math.Round(Convert.ToDecimal(sustainableROIC * Convert.ToDecimal(100)), 1).ToString() + " %" });
                 result.Add(new DCFDisplayData() { PropertyName = "Sustainable Dividend Payout Ratio", Value = Math.Round(Convert.ToDecimal(sustainableDPR * Convert.ToDecimal(100)), 1).ToString() + " %" });
                 result.Add(new DCFDisplayData() { PropertyName = "Long-term Nominal GDP Growth", Value = Math.Round(Convert.ToDecimal(longTermNominalGDPGrowth * Convert.ToDecimal(100)), 1).ToString() + " %" });
@@ -1258,8 +1258,8 @@ namespace GreenField.Gadgets.ViewModels
                     WACCLessTGR = false;
                     terminalValueNominal = Convert.ToDecimal(DCFCalculations.CalculateNominalTerminalValue(WACC, TGR, cashFlow2020));
                     terminalValuePresent = Convert.ToDecimal(DCFCalculations.CalculatePresentTerminalValue(terminalValueNominal, discountingFactorY10));
-                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = Math.Round(terminalValueNominal, 1).ToString() });
-                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (present)", Value = Math.Round(terminalValuePresent, 1).ToString() });
+                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (nominal)", Value = Math.Round(terminalValueNominal, 1).ToString("N1") });
+                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value (present)", Value = Math.Round(terminalValuePresent, 1).ToString("N1") });
                 }
 
                 TerminalValueCalculationsDisplayData.Clear();
@@ -1358,8 +1358,8 @@ namespace GreenField.Gadgets.ViewModels
 
                 costOfDebt = Convert.ToDecimal(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.CostOfDebt).FirstOrDefault() / 100), 4));
                 result.Add(new DCFDisplayData() { PropertyName = "Cost of Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(costOfDebt) * 100, 1)) + "%" });
-                result.Add(new DCFDisplayData() { PropertyName = "Market Cap", Value = (Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()), 0))) });
-                result.Add(new DCFDisplayData() { PropertyName = "Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()), 0)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Market Cap", Value = (Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()), 0)).ToString("N1") });
+                result.Add(new DCFDisplayData() { PropertyName = "Gross Debt", Value = Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault()), 0).ToString("N1") });
                 if ((Convert.ToDecimal(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketCap).FirstOrDefault()) + Convert.ToDecimal(AnalysisSummaryData.Select(a => a.GrossDebt).FirstOrDefault())) == 0))
                 {
                     weightOfEquity = 0;
@@ -1446,10 +1446,10 @@ namespace GreenField.Gadgets.ViewModels
                 }
                 decimal upsideDownside = DCFCalculations.CalculateUpsideValue(DCFValuePerShare, Convert.ToDecimal(CurrentMarketPrice));
 
-                result.Add(new DCFDisplayData() { PropertyName = "Present Value of Explicit Forecast", Value = Convert.ToString(Math.Round(Convert.ToDecimal(PresentValueExplicitForecast), 1)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Present Value of Explicit Forecast", Value = Math.Round(Convert.ToDecimal(PresentValueExplicitForecast), 1).ToString("N1") });
                 if (!WACCLessTGR)
                 {
-                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(TerminalValuePresent), 1)) });
+                    result.Add(new DCFDisplayData() { PropertyName = "Terminal Value", Value = Math.Round(Convert.ToDecimal(TerminalValuePresent), 1).ToString("N1") });
                     result.Add(new DCFDisplayData() { PropertyName = "Total Enterprise Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(totalEnterpriseValue), 1)) });
                 }
                 else
@@ -1457,19 +1457,19 @@ namespace GreenField.Gadgets.ViewModels
                     result.Add(new DCFDisplayData() { PropertyName = "Terminal Value", Value = "WACC<TGR" });
                     result.Add(new DCFDisplayData() { PropertyName = "Total Enterprise Value", Value = "WACC<TGR" });
                 }
-                result.Add(new DCFDisplayData() { PropertyName = "(+) Cash", Value = Convert.ToString(Math.Round(Convert.ToDecimal(cash), 1)) });
-                result.Add(new DCFDisplayData() { PropertyName = "(+) FV of Investments & Associates", Value = Convert.ToString(Math.Round(Convert.ToDecimal(FVInvestments), 1)) });
-                result.Add(new DCFDisplayData() { PropertyName = "(-) Gross Debt", Value = Convert.ToString(Math.Round(Convert.ToDecimal(grossDebt), 1)) });
-                result.Add(new DCFDisplayData() { PropertyName = "(-) FV of Minorities", Value = Convert.ToString(Math.Round(Convert.ToDecimal(FVMinorities), 1)) });
+                result.Add(new DCFDisplayData() { PropertyName = "(+) Cash", Value = Math.Round(Convert.ToDecimal(cash), 1).ToString("N1") });
+                result.Add(new DCFDisplayData() { PropertyName = "(+) FV of Investments & Associates", Value = Math.Round(Convert.ToDecimal(FVInvestments), 1).ToString("N1") });
+                result.Add(new DCFDisplayData() { PropertyName = "(-) Gross Debt", Value = Math.Round(Convert.ToDecimal(grossDebt), 1).ToString("N1") });
+                result.Add(new DCFDisplayData() { PropertyName = "(-) FV of Minorities", Value = Math.Round(Convert.ToDecimal(FVMinorities), 1).ToString("N1") });
                 if (!WACCLessTGR)
                 {
-                    result.Add(new DCFDisplayData() { PropertyName = "Equity Value", Value = Convert.ToString(Math.Round(Convert.ToDecimal(equityValue), 1)) });
+                    result.Add(new DCFDisplayData() { PropertyName = "Equity Value", Value = Math.Round(Convert.ToDecimal(equityValue), 1).ToString("N1") });
                 }
                 else
                 {
                     result.Add(new DCFDisplayData() { PropertyName = "Equity Value", Value = "WACC<TGR" });
                 }
-                result.Add(new DCFDisplayData() { PropertyName = "Number of Shares", Value = Convert.ToString(Math.Round(Convert.ToDecimal(numberOfShares), 2)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Number of Shares", Value = Math.Round(Convert.ToDecimal(numberOfShares), 2).ToString("N1") });
                 if (!WACCLessTGR)
                 {
                     result.Add(new DCFDisplayData() { PropertyName = "DCF Value Per Share", Value = Convert.ToString(Math.Round(Convert.ToDecimal(DCFValuePerShare), 2)) });
