@@ -539,6 +539,9 @@ namespace GreenField.Gadgets.ViewModels
                     SelectedPresentationPowerpointDocument = result
                         .Where(record => record.Category == UploadDocumentType.POWERPOINT_PRESENTATION).FirstOrDefault();
 
+                    SelectedPresentationICPacketDocument = result
+                        .Where(record => record.Category == UploadDocumentType.IC_PACKET).FirstOrDefault();
+
                     if (_dbInteractivity != null)
                     {
                         BusyIndicatorNotification(true, "Retrieving updated blog information related to selected presentation");
