@@ -207,17 +207,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        //private Boolean _notesIsEnabled = false;
-        //public Boolean NotesIsEnabled
-        //{
-        //    get { return _notesIsEnabled; }
-        //    set
-        //    {
-        //        _notesIsEnabled = value;
-        //        RaisePropertyChanged(() => this.NotesIsEnabled);
-        //    }
-        //}
-
         private Boolean _blogIsEnabled = true;
         public Boolean BlogIsEnabled
         {

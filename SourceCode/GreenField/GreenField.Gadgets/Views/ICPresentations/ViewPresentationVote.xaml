@@ -94,7 +94,9 @@
                                  Margin="2,5,0,0" Grid.Column="1" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"/>
                 <!--IC Packet-->
                 <TextBlock Grid.Row="1" Margin="2,5,0,0" Text="IC PACKET:" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
-                <HyperlinkButton Grid.Row="1" Grid.Column="1" Margin="2,5,0,0" Content="" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"/>
+                <HyperlinkButton Grid.Row="1" Grid.Column="1" Margin="2,5,0,0" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource HyperlinkButtonStyle}"
+                                 Content="{Binding SelectedPresentationICPacketDocument.Name}"  
+                                 NavigateUri="{Binding SelectedPresentationICPacketDocument.Location}" TargetName = "_blank"/>
                 <!--Voter-->
                 <TextBlock Grid.Row="2" Margin="2,5,0,0" Text="VOTER:" FontWeight="Bold" VerticalAlignment="Center" Style="{StaticResource TextBlockStyle}"/>
                 <telerik:RadComboBox Grid.Row="2" Margin="2,5,0,0" Grid.Column="1" x:Name="cbVoter" ItemsSource="{Binding PresentationPreMeetingVoterInfo}" 
