@@ -1060,7 +1060,9 @@ namespace GreenField.Web.Services
                             || record.Category == "DCF Model"
                             || record.Category == "Additional Attachment")).ToList();
 
-                List<String> downloadedDocumentLocations = GetICPacketSegmentFiles(presentationAttachedFileData);
+                PresentationInfo presentationInfo = entity.PresentationInfoes.Where(record => record.PresentationID == presentationId).FirstOrDefault();
+
+                List<String> downloadedDocumentLocations = GetICPacketSegmentFiles(presentationAttachedFileData, presentationInfo);
                 Byte[] result = MergePDFFiles(downloadedDocumentLocations);
 
                 return result;
@@ -1073,7 +1075,7 @@ namespace GreenField.Web.Services
             }
         }
 
-        private List<String> GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo)
+        private List<String> GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo, PresentationInfo presentationInfo)
         {
             List<String> result = new List<String>();
 
@@ -1082,7 +1084,7 @@ namespace GreenField.Web.Services
                 String convertedPdf = null;
                 if (file.Category == "Power Point Presentation")
                 {
-                    convertedPdf = ConvertPowerpointPresentationTpPdf(file);
+                    convertedPdf = ConvertPowerpointPresentationTpPdf(file, presentationInfo);
                 }
                 else
                 {
@@ -1136,9 +1138,28 @@ namespace GreenField.Web.Services
             return result;
         }
 
-        private String ConvertPowerpointPresentationTpPdf(FileMaster powerpointStreamedData)
+        private String ConvertPowerpointPresentationTpPdf(FileMaster powerpointStreamedData, PresentationInfo presentationInfo)
         {
+            //if (presentationInfo == null || powerpointStreamedData == null)
+            //    return null;
+
+            //Web.Helpers.SecurityInformation securityInformation = new Web.Helpers.SecurityInformation()
+            //{
+            //    ActiveWeight = presentationInfo.SecurityActiveWeight,
+            //    Analyst = presentationInfo.Analyst,
+            //    BenchmarkWeight = presentationInfo.SecurityBMWeight,
+            //    BSR = presentationInfo.SecurityBuySellvsCrnt,
+            //    Country = presentationInfo.SecurityCountry,
+            //    CurrentHoldings = presentationInfo.CurrentHoldings,
+            //    FVCalc = presentationInfo.FVCalc,
+            //    Industry = presentationInfo.SecurityIndustry,
+            //    MktCap = presentationInfo.SecurityMarketCapitalization.ToString,
+            //    NAV = presentationInfo.PercentEMIF,
+
+            //};
+
             return null;
+
         }
 
         private Byte[] MergePDFFiles(List<String> pdfFileNames)
@@ -1411,7 +1432,7 @@ namespace GreenField.Web.Services
                 Int32? result = entity.SetICPresentationDecisionEntryDetails(userName, xmlScript).FirstOrDefault();
 
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW securityRecord = DimensionEntity.GF_SECURITY_BASEVIEW
-                    .Where(record => record.ISSUER_NAME == presentationOverViewData.SecurityName &&
+                    .Where(record => record.ISSUE_NAME == presentationOverViewData.SecurityName &&
                         record.TICKER == presentationOverViewData.SecurityTicker).FirstOrDefault();
 
                 ExternalResearchEntities externalEntity = new ExternalResearchEntities();

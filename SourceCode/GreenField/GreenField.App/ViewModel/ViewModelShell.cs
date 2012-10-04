@@ -2932,7 +2932,7 @@ namespace GreenField.App.ViewModel
         {
             Logging.LogBeginMethod(_logger, String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name));
             try
-            {
+            {                
                 _regionManager.RequestNavigate(RegionNames.MAIN_REGION, new Uri("ViewManageUsers", UriKind.Relative));
             }
             catch (Exception ex)

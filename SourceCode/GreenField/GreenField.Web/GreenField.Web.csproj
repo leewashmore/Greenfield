@@ -150,10 +150,18 @@
     <Compile Include="DataContracts\MarketPerformanceSnapshotData.cs" />
     <Compile Include="DataContracts\MeetingAttachedFileStreamData.cs" />
     <Compile Include="DataContracts\PopulatedMarketPerformanceSnapshotData.cs" />
+    <Compile Include="Helpers\PowerPoint\CompanyOverview.cs" />
+    <Compile Include="Helpers\PowerPoint\ICPresentation.cs" />
+    <Compile Include="Helpers\PowerPoint\InvestmentThesis.cs" />
+    <Compile Include="Helpers\PowerPoint\KeyOperatingAssumpations.cs" />
+    <Compile Include="Helpers\PowerPoint\PptRead.cs" />
     <Compile Include="Helpers\ExcelModel\GenerateOpenXMLExcelModel.cs" />
     <Compile Include="Helpers\ExcelModel\ReadOpenXMLModel.cs" />
     <Compile Include="Helpers\InceptionDateChecker.cs" />
     <Compile Include="Helpers\ITextPDF.cs" />
+    <Compile Include="Helpers\PowerPoint\SecurityInformation.cs" />
+    <Compile Include="Helpers\PowerPoint\SWOTAnalysis.cs" />
+    <Compile Include="Helpers\PowerPoint\VQG.cs" />
     <Compile Include="Services\CustomScreeningToolOperations.svc.cs">
       <DependentUpon>CustomScreeningToolOperations.svc</DependentUpon>
     </Compile>
