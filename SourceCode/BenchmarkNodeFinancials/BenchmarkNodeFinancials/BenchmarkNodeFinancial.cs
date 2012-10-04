@@ -584,6 +584,5 @@ namespace BenchmarkNodeFinancials
             }
             return xmlDoc;
         }
-
     }
 }

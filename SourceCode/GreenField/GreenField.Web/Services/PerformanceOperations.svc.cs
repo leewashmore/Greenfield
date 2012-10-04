@@ -2307,7 +2307,7 @@ namespace GreenField.Web.Services
                         if (Country == "NoFiltering")
                         {
                             attributionDatafor1D = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == effectiveDate && t.NODE_NAME == "Country").ToList();
-                            attributionDatafor1D = attributionDatafor1D.Distinct(customComparer).ToList();
+                            attributionDatafor1D = attributionDatafor1D.Distinct(customComparer).ToList(); 
                         }
                         else
                         {
@@ -2361,6 +2361,7 @@ namespace GreenField.Web.Services
                         }
                         List<DimensionEntitiesService.GF_PERF_DAILY_ATTRIBUTION> attributionDataforMTD = new List<GF_PERF_DAILY_ATTRIBUTION>();
                         FetchDataPerformanceGraph(Country, attributionDataforMTD, ref result, benchmarkID, fundSelectionData, listOfEffectiveDatesMTD);
+
                         break;
                         #endregion
                     case "QTD":
@@ -2530,13 +2531,15 @@ namespace GreenField.Web.Services
                 if (Country == "NoFiltering")
                 {
                     attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.NODE_NAME == "Country").ToList();
-                    attributionData = attributionData.Distinct(customComparer).ToList();
+                    attributionData = attributionData.Distinct(customComparer).ToList();                   
+                    
                 }
                 else
                 {
                     attributionData = DimensionEntity.GF_PERF_DAILY_ATTRIBUTION.Where(t => t.PORTFOLIO == fundSelectionData.PortfolioId && t.TO_DATE == d && t.AGG_LVL_1 == Country).ToList();
                     attributionData = attributionData.Distinct(customComparer).ToList();
                 }
+
                 if (attributionData.Count == 0 || attributionData == null)
                     continue;
                 PerformanceGraphData entry = new PerformanceGraphData();
