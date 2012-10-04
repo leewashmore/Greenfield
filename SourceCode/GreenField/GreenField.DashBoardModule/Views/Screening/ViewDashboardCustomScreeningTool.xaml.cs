@@ -30,6 +30,7 @@ namespace GreenField.DashBoardModule.Views.Screening
         private ILoggerFacade _logger;
         private IDBInteractivity _dBInteractivity;
         private IRegionManager _regionManager;
+        public DashboardGadgetParam tempParam;
         #endregion
 
         [ImportingConstructor]
@@ -60,7 +61,7 @@ namespace GreenField.DashBoardModule.Views.Screening
                 LoggerFacade = _logger,
                 RegionManager = _regionManager
             };
-
+            //tempParam = param;
             this.cctrDashboardContent.Content = new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(param));
 
         }
@@ -81,6 +82,7 @@ namespace GreenField.DashBoardModule.Views.Screening
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            //this.cctrDashboardContent.Content = new ViewCustomScreeningTool(new ViewModelCustomScreeningTool(tempParam));
             ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
             if (control != null)
             {

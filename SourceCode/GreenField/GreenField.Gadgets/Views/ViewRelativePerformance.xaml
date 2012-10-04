@@ -133,7 +133,7 @@
                         <!--CountryID Column-->
                         <telerik:GridViewDataColumn x:Name="dgcCountryID" Header="Country Id" HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}"
                                                     Width="auto" HeaderTextAlignment="Left" TextAlignment="Left" UniqueName="CountryId"
-                                                        FooterCellStyle="{Binding GridViewCustomFooterCellStyle}" CellStyle="{StaticResource GridViewCellStyle}" >
+                                                    FooterCellStyle="{Binding GridViewCustomFooterCellStyle}">
                             <telerik:GridViewDataColumn.CellTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding CountryId}" Foreground="Black"/>

@@ -1236,6 +1236,17 @@ namespace GreenField.Web.Services
                 if (dailyData == null)
                     return result;
 
+                DateTime portfolioInceptionDate = Convert.ToDateTime(dailyData.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault());
+
+                if (period != "1D" && period != "1W")
+                {
+                    bool isValid = InceptionDateChecker.ValidateInceptionDate(period, portfolioInceptionDate, effectiveDate);
+                    if (!isValid)
+                    {
+                        return result;
+                    }
+                }
+
                 List<string> countryCodes = new List<string>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION record in dailyData)
                 {
@@ -1383,6 +1394,18 @@ namespace GreenField.Web.Services
                 if (data.Count.Equals(0))
                     return result;
 
+                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault());
+
+                if (period != "1D" && period != "1W")
+                {
+
+                    bool isValid = InceptionDateChecker.ValidateInceptionDate(period, portfolioInceptionDate, effectiveDate);
+                    if (!isValid)
+                    {
+                        return result;
+                    }
+                }
+
                 List<string> countryCodes = new List<string>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
@@ -1503,6 +1526,18 @@ namespace GreenField.Web.Services
                 if (data.Count.Equals(0))
                     return result;
 
+                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault());
+
+                if (period != "1D" && period != "1W")
+                {
+
+                    bool isValid = InceptionDateChecker.ValidateInceptionDate(period, portfolioInceptionDate, effectiveDate);
+                    if (!isValid)
+                    {
+                        return result;
+                    }
+                }
+
                 List<RelativePerformanceSectorData> sectorCodes = new List<RelativePerformanceSectorData>();
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
@@ -1591,6 +1626,18 @@ namespace GreenField.Web.Services
                 if (data.Count.Equals(0))
                     return result;
 
+                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault());
+
+                if (period != "1D" && period != "1W")
+                {
+
+                    bool isValid = InceptionDateChecker.ValidateInceptionDate(period, portfolioInceptionDate, effectiveDate);
+                    if (!isValid)
+                    {
+                        return result;
+                    }
+                }
+
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
                     decimal? fundWeight = (RetrieveRelativePerformancePortfolioWeight(row, period));
@@ -1651,6 +1698,18 @@ namespace GreenField.Web.Services
 
                 if (data.Count.Equals(0))
                     return result;
+
+                DateTime portfolioInceptionDate = Convert.ToDateTime(data.Select(a => a.POR_INCEPTION_DATE).FirstOrDefault());
+
+                if (period != "1D" && period != "1W")
+                {
+
+                    bool isValid = InceptionDateChecker.ValidateInceptionDate(period, portfolioInceptionDate, effectiveDate);
+                    if (!isValid)
+                    {
+                        return result;
+                    }
+                }
 
                 foreach (GF_PERF_DAILY_ATTRIBUTION row in data)
                 {
