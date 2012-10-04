@@ -17,6 +17,7 @@ using Greenfield.Gadgets.Helpers;
 using GreenField.ServiceCaller.DCFDefinitions;
 using Greenfield.Gadgets.Models;
 using System.Globalization;
+using Microsoft.Practices.Prism.Commands;
 
 namespace GreenField.Gadgets.ViewModels
 {
@@ -570,7 +571,6 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
         #region Sensitivity
 
         /// <summary>
@@ -884,9 +884,25 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// DCF Value per Share
+        /// </summary>
+        private decimal? _dcfValuePerShare;
+        public decimal? DCFValuePerShare
+        {
+            get
+            {
+                return _dcfValuePerShare;
+            }
+            set
+            {
+                _dcfValuePerShare = value;
+                this.RaisePropertyChanged(() => this.DCFValuePerShare);
+            }
+        }
 
         #endregion
+
         /// <summary>
         /// Number of Shares
         /// </summary>
@@ -903,7 +919,6 @@ namespace GreenField.Gadgets.ViewModels
                 this.RaisePropertyChanged(() => this.NumberOfShares);
             }
         }
-
 
         /// <summary>
         /// TerminalValuePresent
@@ -995,6 +1010,68 @@ namespace GreenField.Gadgets.ViewModels
 
 
         #endregion
+
+
+        #region Fair Value
+
+        /// <summary>
+        /// Fair value Data
+        /// </summary>
+        private List<PERIOD_FINANCIALS> _fairValueData;
+        public List<PERIOD_FINANCIALS> FairValueData
+        {
+            get
+            {
+                if (_fairValueData == null)
+                {
+                    _fairValueData = new List<PERIOD_FINANCIALS>();
+                }
+                return _fairValueData;
+            }
+            set
+            {
+                _fairValueData = value;
+                this.RaisePropertyChanged(() => this.FairValueData);
+            }
+        }
+
+        #endregion
+
+        #region ICommand
+
+        /// <summary>
+        /// Insert Fair Values
+        /// </summary>
+        public ICommand InsertFairValues
+        {
+            get
+            {
+                return new DelegateCommand<object>(InsertFairValuesCommandMethod);
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region ICommandMethods
+
+        /// <summary>
+        /// Insert Fair Values in Table
+        /// </summary>
+        /// <param name="param"></param>
+        private void InsertFairValuesCommandMethod(object param)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+        }
 
         #endregion
 
@@ -1183,6 +1260,7 @@ namespace GreenField.Gadgets.ViewModels
             {
                 BusyIndicatorNotification();
                 SetAnalysisSummaryDisplayData();
+                _dbInteractivity.RetrieveDCFFairValueData(EntitySelectionData, DCFFairValueCallbackMethod);
             }
             Logging.LogEndMethod(_logger, methodNamespace);
         }
@@ -1219,6 +1297,50 @@ namespace GreenField.Gadgets.ViewModels
                 BusyIndicatorNotification(true, "Fetching Data for Analysis Summary");
             }
             Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Fair-Value callback method
+        /// </summary>
+        /// <param name="fairValueData">Collection of Period_Financials</param>
+        public void DCFFairValueCallbackMethod(List<PERIOD_FINANCIALS> fairValueData)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (fairValueData != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, fairValueData, 1);
+                    FairValueData = fairValueData;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Store EPS fair value Callback Method
+        /// </summary>
+        /// <param name="result"></param>
+        public void StoreFairValueCallbackMethod(bool result)
+        {
+            if (result)
+            {
+
+            }
+            else
+            {
+
+            }
         }
 
         #endregion
@@ -1354,7 +1476,7 @@ namespace GreenField.Gadgets.ViewModels
                 decimal costOfDebt;
                 decimal resultWACC;
                 NumberFormatInfo provider = new NumberFormatInfo();
-                
+
                 result.Add(new DCFDisplayData() { PropertyName = "Market Risk Premium", Value = Convert.ToString(Math.Round((Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault() * 100)), 1)) + "%" });
                 result.Add(new DCFDisplayData() { PropertyName = "Beta (*)", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()), 2)) });
                 result.Add(new DCFDisplayData() { PropertyName = "Risk Free Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault() * 100), 1)) + " %" });
@@ -1554,6 +1676,10 @@ namespace GreenField.Gadgets.ViewModels
                         result = DCFCalculations.CalculateDCFValue(CalculationParameters);
                         TGR.Add(result.DCFValuePerShare);
                         VPS.Add(j, result.DCFValuePerShare);
+                        if (i == 2 && j == 2)
+                        {
+                            DCFValuePerShare = result.DCFValuePerShare;
+                        }
                         upSideValues.Add(result.UpsideValue);
                         CalculationParameters.CostOfEquity = CalculationParameters.CostOfEquity + Convert.ToDecimal(25.0 / 10000.0);
                     }
@@ -1814,6 +1940,66 @@ namespace GreenField.Gadgets.ViewModels
             MinEPSUpside = string.Empty;
             AvgEPSUpside = string.Empty;
         }
+
+        #region FairValue
+
+        /// <summary>
+        /// Store EPS Value
+        /// </summary>
+        private void StoreEPSValue()
+        {
+            try
+            {
+                if (FWDBVPS != 0)
+                {
+                    if (FairValueData != null)
+                    {
+                        if (FairValueData.Count != 0)
+                        {
+                            decimal? nCurrentPBV = FairValueData.Where(a => a.DATA_ID == 188).Select(a => a.AMOUNT).FirstOrDefault();
+                            decimal? FV_Sell = DCFValuePerShare / FWDBVPS;
+                            decimal? upside = DCFValuePerShare / FWDBVPS - 1M;
+                            _dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PBV", 188, 0, FV_Sell, nCurrentPBV, upside, DateTime.Now, StoreFairValueCallbackMethod);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+        }
+
+        /// <summary>
+        /// Store EPS Value
+        /// </summary>
+        private void StoreBVPSValue()
+        {
+            try
+            {
+                if (FWDBVPS != 0)
+                {
+                    if (FairValueData != null)
+                    {
+                        if (FairValueData.Count != 0)
+                        {
+                            decimal? nCurrentPE = FairValueData.Where(a => a.DATA_ID == 187).Select(a => a.AMOUNT).FirstOrDefault();
+                            decimal? FV_Sell = DCFValuePerShare / FWDEPS;
+                            decimal? upside = DCFValuePerShare / FWDEPS - 1M;
+                            _dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PE", 187, 0, FV_Sell, nCurrentPE, upside, DateTime.Now, StoreFairValueCallbackMethod);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+        }
+
+        #endregion
 
         #endregion
 

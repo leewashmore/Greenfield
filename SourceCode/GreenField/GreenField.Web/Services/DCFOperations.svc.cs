@@ -253,7 +253,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-                
+
         /// <summary>
         /// Service Method to Retrieve Cash Flow Values
         /// </summary>
@@ -390,8 +390,8 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        } 
-        
+        }
+
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public decimal? RetrieveCurrentPriceData(EntitySelectionData entitySelectionData)
@@ -442,10 +442,18 @@ namespace GreenField.Web.Services
             try
             {
                 List<PERIOD_FINANCIALS> result = new List<PERIOD_FINANCIALS>();
-
+                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
+                if (data == null)
+                {
+                    return new List<PERIOD_FINANCIALS>();
+                }
+                int? securityId = data.SECURITY_ID;
+                if (securityId == null)
+                {
+                    return new List<PERIOD_FINANCIALS>();
+                }
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-                result = entity.GetDCFFairValue(entitySelectionData.InstrumentID).ToList();
-
+                result = entity.GetDCFFairValue(Convert.ToString(securityId)).ToList();
                 if (result == null)
                 {
                     return new List<PERIOD_FINANCIALS>();
@@ -479,7 +487,17 @@ namespace GreenField.Web.Services
             try
             {
                 ExternalResearchEntities entity = new ExternalResearchEntities();
-                entity.InsertDCFFairValue(entitySelectionData.InstrumentID, valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated);
+                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
+                if (data == null)
+                {
+                    return false;
+                }
+                int? securityId = data.SECURITY_ID;
+                if (securityId == null)
+                {
+                    return false;
+                }
+                entity.InsertDCFFairValue(Convert.ToString(securityId), valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated);
                 return true;
             }
             catch (Exception ex)
