@@ -494,6 +494,7 @@ namespace BenchmarkNodeFinancials
             Decimal? multipliedAmount = 0;
             Decimal? totalAmount = 0;
             Decimal? harmonicMean = 0;
+            Decimal? benchWeight = 0;
             try
             {
                 initialSumBenchmarkWeight = filteredList.Sum(t => t.BenWeight);
@@ -505,8 +506,8 @@ namespace BenchmarkNodeFinancials
                 {
                     foreach (BenchmarkNodeFinancialsData row in filteredList)
                     {
-                        row.BenWeight = initialSumBenchmarkWeight != 0 ? (row.BenWeight / initialSumBenchmarkWeight) : 0;
-                        multipliedAmount = row.InvAmount * row.BenWeight;
+                        benchWeight = initialSumBenchmarkWeight != 0 ? (row.BenWeight / initialSumBenchmarkWeight) : 0;
+                        multipliedAmount = row.InvAmount * benchWeight;
                         totalAmount = totalAmount + multipliedAmount;
                     }
                     harmonicMean = totalAmount != 0 ? 1 / totalAmount : 0;
@@ -515,8 +516,8 @@ namespace BenchmarkNodeFinancials
                 {
                     foreach (BenchmarkNodeFinancialsData row in filteredList)
                     {
-                        row.BenWeight = initialSumBenchmarkWeight != 0 ? (row.BenWeight / initialSumBenchmarkWeight) : 0;
-                        multipliedAmount = row.Amount * row.BenWeight;
+                        benchWeight = initialSumBenchmarkWeight != 0 ? (row.BenWeight / initialSumBenchmarkWeight) : 0;
+                        multipliedAmount = row.Amount * benchWeight;
                         totalAmount = totalAmount + multipliedAmount;
                     }
                     harmonicMean = totalAmount;
