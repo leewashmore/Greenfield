@@ -1084,19 +1084,41 @@ namespace GreenField.Web.Services
         private List<String> GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo, PresentationInfo presentationInfo)
         {
             List<String> result = new List<String>();
-
-            foreach (FileMaster file in fileMasterInfo)
+            FileMaster powerPointFile = fileMasterInfo.Where(record => record.Category == "Power Point Presentation").FirstOrDefault();
+            if (powerPointFile != null)
             {
-                String convertedPdf = null;
-                if (file.Category == "Power Point Presentation")
-                {
-                    convertedPdf = ConvertPowerpointPresentationTpPdf(file, presentationInfo);
-                }
-                else
-                {
-                    convertedPdf = ConvertImagePdfFileToLocalPdf(file);
-                }
+                String uploadLocation = ConvertPowerpointPresentationTpPdf(powerPointFile, presentationInfo);
+                if(uploadLocation != null)
+                    result.Add(uploadLocation);
+            }
 
+            FileMaster finstatFile = fileMasterInfo.Where(record => record.Category == "FinStat Report").FirstOrDefault();
+            if (finstatFile != null)
+            {
+                String convertedPdf = ConvertImagePdfFileToLocalPdf(finstatFile);
+                if (convertedPdf != null)
+                    result.Add(convertedPdf);
+            }
+
+            FileMaster investmentContextFile = fileMasterInfo.Where(record => record.Category == "Investment Context Report").FirstOrDefault();
+            if (investmentContextFile != null)
+            {
+                String convertedPdf = ConvertImagePdfFileToLocalPdf(investmentContextFile);
+                if (convertedPdf != null)
+                    result.Add(convertedPdf);
+            }
+
+            FileMaster dcfFile = fileMasterInfo.Where(record => record.Category == "DCF Model").FirstOrDefault();
+            if (dcfFile != null)
+            {
+                String convertedPdf = ConvertImagePdfFileToLocalPdf(dcfFile);
+                if (convertedPdf != null)
+                    result.Add(convertedPdf);
+            }
+
+            foreach (FileMaster file in fileMasterInfo.Where(record => record.Category == "Additional Attachment"))
+            {
+                String convertedPdf = ConvertImagePdfFileToLocalPdf(file);
                 if (convertedPdf != null)
                     result.Add(convertedPdf);
             }

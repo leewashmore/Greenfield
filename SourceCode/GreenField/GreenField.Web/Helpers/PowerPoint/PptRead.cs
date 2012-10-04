@@ -113,7 +113,7 @@ namespace GreenField.Web.Helpers
         public static void GeneratePresentationPdf(string outFile, ICPresentation presentation)
         {
             float listItemSpacing = 15F;
-            string strLogoPath = @"C:\Users\rvig\Pictures\AshmoreEMMLogo.png";
+            string strLogoPath = System.Web.Hosting.HostingEnvironment.ApplicationPhysicalPath + @"\Templates\AshmoreEMMLogo.png";
             iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(strLogoPath);
 
             Document doc = new Document(PageSize.A4, 10F, 10F, 10F, 10F);
@@ -346,11 +346,12 @@ namespace GreenField.Web.Helpers
             }
 
             PdfPCell itiRiskContentCell = new PdfPCell();
+            itiRiskContentCell.MinimumHeight = (doc.PageSize.Height - itiHeaderTable.TotalHeight - 100) * Convert.ToSingle(0.25);
             itiRiskContentCell.AddElement(itiRiskList);
             itiRiskContentCell.BackgroundColor = BaseColor.LIGHT_GRAY;
             itiRiskContentCell.PaddingTop = 5;
             itiRiskContentCell.PaddingBottom = 5;
-            AddTextCell(itiRiskTable, itiRiskContentCell, Element.ALIGN_CENTER, Element.ALIGN_MIDDLE, PDFBorderType.LEFT_RIGHT_BOTTOM);
+            AddTextCell(itiRiskTable, itiRiskContentCell, Element.ALIGN_CENTER, Element.ALIGN_TOP, PDFBorderType.LEFT_RIGHT_BOTTOM);
 
             doc.Add(itiRiskTable);
             #endregion
