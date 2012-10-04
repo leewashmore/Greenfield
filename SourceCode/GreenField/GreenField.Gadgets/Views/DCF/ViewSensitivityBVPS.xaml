@@ -38,7 +38,7 @@
 
                 <TextBlock Text="Enter the Value of FWD BVPS:" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"
                            />
-                
+
                 <Border Grid.Column="1" Background="Yellow">
                     <TextBox x:Name="txtFWDBVPS" Text="{Binding FWDBVPS, Mode=TwoWay}" VerticalAlignment="Center"  HorizontalAlignment="Left" KeyDown="TextBlock_KeyDown"
                            TextInput="txtFWDBVPS_TextInput"/>
@@ -63,9 +63,13 @@
                 </Button>
 
             </Grid>
-
-            <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
-                <telerik:RadGridView x:Name="dgDCFSensitivity" 
+            <Grid Grid.Row="1" x:Name="gridSensitivityBVPS">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+                    <telerik:RadGridView x:Name="dgDCFSensitivity" 
                                          ShowGroupPanel="False" 
                                          AutoGenerateColumns="False" 
                                          ItemsSource="{Binding SensitivityBVPS}"
@@ -93,50 +97,34 @@
                                          EnableRowVirtualization="False"
                                          EnableColumnVirtualization="False"
                                          GridLinesVisibility="None">
-                    <telerik:RadGridView.Columns>
-                        <telerik:GridViewDataColumn Header="Cost Of Equity&#x0a;Step Size: 0.25%" UniqueName="CostOfEquity" DataMemberBinding="{Binding C1,Mode=TwoWay}" 
+                        <telerik:RadGridView.Columns>
+                            <telerik:GridViewDataColumn Header="Cost Of Equity&#x0a;Step Size: 0.25%" UniqueName="CostOfEquity" DataMemberBinding="{Binding C1,Mode=TwoWay}" 
                                                     HeaderTextAlignment="Left" TextAlignment="Left" Width="*"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn Header="" UniqueName=" " DataMemberBinding="{Binding C2,Mode=TwoWay}" HeaderTextAlignment="Right" TextAlignment="Right"
+                            <telerik:GridViewDataColumn Header="" UniqueName=" " DataMemberBinding="{Binding C2,Mode=TwoWay}" HeaderTextAlignment="Right" TextAlignment="Right"
                                                     Width="*"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn Header="1" UniqueName="1" DataMemberBinding="{Binding C3,Mode=TwoWay}" 
+                            <telerik:GridViewDataColumn Header="1" UniqueName="1" DataMemberBinding="{Binding C3,Mode=TwoWay}" 
                                                     HeaderTextAlignment="Left" TextAlignment="Left" Width="*"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn Header="2" UniqueName="2" DataMemberBinding="{Binding C4,Mode=TwoWay}" 
+                            <telerik:GridViewDataColumn Header="2" UniqueName="2" DataMemberBinding="{Binding C4,Mode=TwoWay}" 
                                                     HeaderTextAlignment="Left" TextAlignment="Left" Width="*"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn Header="3" UniqueName="3" DataMemberBinding="{Binding C5,Mode=TwoWay}" 
+                            <telerik:GridViewDataColumn Header="3" UniqueName="3" DataMemberBinding="{Binding C5,Mode=TwoWay}" 
                                                     HeaderTextAlignment="Left" TextAlignment="Left" Width="*"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn Header="4" UniqueName="4" DataMemberBinding="{Binding C6,Mode=TwoWay}" 
+                            <telerik:GridViewDataColumn Header="4" UniqueName="4" DataMemberBinding="{Binding C6,Mode=TwoWay}" 
                                                     HeaderTextAlignment="Left" TextAlignment="Left" Width="*"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                        <telerik:GridViewDataColumn Header="5" UniqueName="5" DataMemberBinding="{Binding C7,Mode=TwoWay}" 
+                            <telerik:GridViewDataColumn Header="5" UniqueName="5" DataMemberBinding="{Binding C7,Mode=TwoWay}" 
                                                     HeaderTextAlignment="Left" TextAlignment="Left" Width="*"
                                                     HeaderCellStyle="{StaticResource GridViewHeaderCellStyle}" CellStyle="{StaticResource GridViewCellStyle}"/>
-                    </telerik:RadGridView.Columns>
-                </telerik:RadGridView>
-            </Grid>
-
-            <Grid Grid.Row="2">
-
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <TextBlock Grid.Row="0" Text="Summary Statistics"/>
-
-                <Grid Grid.Column="0" Grid.Row="1">
+                        </telerik:RadGridView.Columns>
+                    </telerik:RadGridView>
+                </Grid>
+                <Grid Grid.Row="1">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
@@ -146,43 +134,57 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Max Share Value" Grid.Row="0" Grid.Column="0"/>
-                    <TextBlock Text="{Binding MaxBVPSShareVal}" Grid.Row="0" Grid.Column="1"/>
+                    <TextBlock Grid.Row="0" Text="Summary Statistics"/>
 
-                    <TextBlock Text="Avg Share Value" Grid.Row="1" Grid.Column="0"/>
-                    <TextBlock Text="{Binding AvgBVPSShareVal}" Grid.Row="1" Grid.Column="1"/>
+                    <Grid Grid.Column="0" Grid.Row="1">
 
-                    <TextBlock Text="Min Share Value" Grid.Row="2" Grid.Column="0"/>
-                    <TextBlock Text="{Binding MinBVPSShareVal}" Grid.Row="2" Grid.Column="2"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Max Share Value" Grid.Row="0" Grid.Column="0"/>
+                        <TextBlock Text="{Binding MaxBVPSShareVal}" Grid.Row="0" Grid.Column="1"/>
+
+                        <TextBlock Text="Avg Share Value" Grid.Row="1" Grid.Column="0"/>
+                        <TextBlock Text="{Binding AvgBVPSShareVal}" Grid.Row="1" Grid.Column="1"/>
+
+                        <TextBlock Text="Min Share Value" Grid.Row="2" Grid.Column="0"/>
+                        <TextBlock Text="{Binding MinBVPSShareVal}" Grid.Row="2" Grid.Column="2"/>
+
+                    </Grid>
+
+                    <Grid Grid.Column="1" Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="Max Upside" Grid.Row="0" Grid.Column="0"/>
+                        <TextBlock Text="{Binding MaxBVPSUpside}" Grid.Row="0" Grid.Column="1"/>
+
+                        <TextBlock Text="Avg Upside" Grid.Row="1" Grid.Column="0"/>
+                        <TextBlock Text="{Binding AvgBVPSUpside}" Grid.Row="1" Grid.Column="1"/>
+
+                        <TextBlock Text="Min Upside" Grid.Row="2" Grid.Column="0"/>
+                        <TextBlock Text="{Binding MinBVPSUpside}" Grid.Row="2" Grid.Column="2"/>
+                    </Grid>
+
 
                 </Grid>
-
-                <Grid Grid.Column="1" Grid.Row="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Text="Max Upside" Grid.Row="0" Grid.Column="0"/>
-                    <TextBlock Text="{Binding MaxBVPSUpside}" Grid.Row="0" Grid.Column="1"/>
-
-                    <TextBlock Text="Avg Upside" Grid.Row="1" Grid.Column="0"/>
-                    <TextBlock Text="{Binding AvgBVPSUpside}" Grid.Row="1" Grid.Column="1"/>
-
-                    <TextBlock Text="Min Upside" Grid.Row="2" Grid.Column="0"/>
-                    <TextBlock Text="{Binding MinBVPSUpside}" Grid.Row="2" Grid.Column="2"/>
-                </Grid>
-
-
             </Grid>
-            <telerik:RadRichTextBox Grid.Row="3" x:Name="RichTextBox" >
-
-            </telerik:RadRichTextBox>
+            <telerik:RadRichTextBox Grid.Row="3" x:Name="RichTextBox" />
 
         </Grid>
     </telerik:RadBusyIndicator>

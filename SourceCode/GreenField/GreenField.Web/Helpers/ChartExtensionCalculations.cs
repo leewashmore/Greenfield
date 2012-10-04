@@ -140,9 +140,22 @@ namespace GreenField.Web.Helpers
                     sumSellTransactions = (-1) * dimensionTransactionData.Where(a => a.TRADE_DATE == tradeDate && a.TRANSACTION_CODE.ToUpper() == "SELL").Sum(a => Convert.ToDecimal(a.VALUE_PC));
                     sumTotalTransaction = sumBuyTransactions + sumSellTransactions;
 
-                    if (securityExtensionData.Where(a => a.ToDate == tradeDate) != null || securityExtensionData.Where(a => a.ToDate == tradeDate).ToList().Count != 0)
+                    if (securityExtensionData.Where(a => a.ToDate == tradeDate) != null )
                     {
-                        securityExtensionData.Where(a => a.ToDate == tradeDate).First().AmountTraded = sumTotalTransaction;
+                        if ( securityExtensionData.Where(a => a.ToDate == tradeDate).ToList().Count != 0)
+                        {
+                            securityExtensionData.Where(a => a.ToDate == tradeDate).First().AmountTraded = sumTotalTransaction; 
+                        }
+                        else
+                        {
+                            data = new ChartExtensionData();
+                            data.Ticker = securityLongName;
+                            data.ToDate = tradeDate;
+                            data.Type = "Transaction Only";
+                            data.AmountTraded = sumTotalTransaction;
+                            data.SortId = 2;
+                            securityExtensionData.Add(data);
+                        }
                     }
                     else
                     {
