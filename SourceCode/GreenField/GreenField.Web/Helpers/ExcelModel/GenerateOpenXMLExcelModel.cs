@@ -14,9 +14,11 @@ using System.Text;
 
 namespace GreenField.Web.ExcelModel
 {
+    /// <summary>
+    /// Class to generate ExcelModel
+    /// </summary>
     public static class GenerateOpenXMLExcelModel
     {
-
         #region PropertyDeclaration
 
         private static ExcelModelData _modelData;

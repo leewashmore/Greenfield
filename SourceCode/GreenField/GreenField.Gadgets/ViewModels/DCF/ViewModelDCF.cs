@@ -353,6 +353,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region SensitivityBPS
 
+        /// <summary>
+        /// Collection bound to Gadget SensitivityBVPS
+        /// </summary>
         private RangeObservableCollection<SensitivityData> _sensitivityBPS;
         public RangeObservableCollection<SensitivityData> SensitivityBPS
         {
@@ -369,6 +372,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Value of FWD EPS
+        /// </summary>
         private decimal _fwdEPS = 0;
         public decimal FWDEPS
         {
@@ -396,6 +402,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region SensitivityBVPS
 
+        /// <summary>
+        /// Collection Bound to SensitivityBVPS grid
+        /// </summary>
         private RangeObservableCollection<SensitivityData> _sensivityBVPS;
         public RangeObservableCollection<SensitivityData> SensitivityBVPS
         {
@@ -412,6 +421,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Value of FWD BVPS
+        /// </summary>
         private decimal _fwdBVPS = 0;
         public decimal FWDBVPS
         {
@@ -561,6 +573,9 @@ namespace GreenField.Gadgets.ViewModels
 
         #region Sensitivity
 
+        /// <summary>
+        /// Calculation Parameters used for DCF calculations
+        /// </summary>
         private DCFCalculationParameters _calculationParameters;
         public DCFCalculationParameters CalculationParameters
         {
@@ -872,7 +887,9 @@ namespace GreenField.Gadgets.ViewModels
 
 
         #endregion
-
+        /// <summary>
+        /// Number of Shares
+        /// </summary>
         private decimal _numberOfShares;
         public decimal NumberOfShares
         {
@@ -958,6 +975,9 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Present Value Explicit Forecast- DCF Summary
+        /// </summary>
         private decimal _presentValueExplicitForecast;
         public decimal PresentValueExplicitForecast
         {
@@ -1333,10 +1353,8 @@ namespace GreenField.Gadgets.ViewModels
                 decimal weightOfEquity;
                 decimal costOfDebt;
                 decimal resultWACC;
-
                 NumberFormatInfo provider = new NumberFormatInfo();
-
-
+                
                 result.Add(new DCFDisplayData() { PropertyName = "Market Risk Premium", Value = Convert.ToString(Math.Round((Convert.ToDecimal(AnalysisSummaryData.Select(a => a.MarketRiskPremium).FirstOrDefault() * 100)), 1)) + "%" });
                 result.Add(new DCFDisplayData() { PropertyName = "Beta (*)", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.Beta).FirstOrDefault()), 2)) });
                 result.Add(new DCFDisplayData() { PropertyName = "Risk Free Rate", Value = Convert.ToString(Math.Round(Convert.ToDecimal(AnalysisSummaryData.Select(a => a.RiskFreeRate).FirstOrDefault() * 100), 1)) + " %" });
@@ -1373,7 +1391,7 @@ namespace GreenField.Gadgets.ViewModels
                 result.Add(new DCFDisplayData() { PropertyName = "Weight of Equity", Value = Convert.ToString(Math.Round(Convert.ToDecimal(weightOfEquity * 100), 1)) + "%" });
                 result.Add(new DCFDisplayData() { PropertyName = "WACC", Value = Convert.ToString(Math.Round(Convert.ToDecimal(resultWACC * 100), 1)) + "%" });
                 result.Add(new DCFDisplayData() { PropertyName = "Date", Value = (DateTime.Today.ToShortDateString()) });
-                result.Add(new DCFDisplayData() { PropertyName = "Market Price", Value = Convert.ToString(Math.Round(Convert.ToDecimal(CurrentMarketPrice), 2)) });
+                result.Add(new DCFDisplayData() { PropertyName = "Market Price", Value = Math.Round(Convert.ToDecimal(CurrentMarketPrice), 2).ToString("N1") });
                 AnalysisSummaryDisplayData = result;
                 this.RaisePropertyChanged(() => this.AnalysisSummaryDisplayData);
                 this.WACC = resultWACC;
@@ -1587,6 +1605,7 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Generate Data for Display in SensitivityBVPS
         /// </summary>
+        /// <param name="sensitivityData">Collection of Sensitivity Data from Sensitivity Grid</param>
         private void GenerateSensitivityBVPSData(List<SensitivityData> sensitivityData)
         {
             try
@@ -1741,8 +1760,8 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Method to generate Intial Row in DCF Sensitivity
         /// </summary>
-        /// <param name="costOfEquity"></param>
-        /// <returns></returns>
+        /// <param name="costOfEquity">Cost of Equity</param>
+        /// <returns>Instance of SensitivityData</returns>
         private SensitivityData SetFirstRow(decimal costOfEquity)
         {
             try

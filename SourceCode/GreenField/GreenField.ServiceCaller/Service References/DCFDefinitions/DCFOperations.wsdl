@@ -8,6 +8,7 @@
       <xsd:import schemaLocation="http://localhost:59430/Services/DCFOperations.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" />
       <xsd:import schemaLocation="http://localhost:59430/Services/DCFOperations.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL" />
       <xsd:import schemaLocation="http://localhost:59430/Services/DCFOperations.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" />
+      <xsd:import schemaLocation="http://localhost:59430/Services/DCFOperations.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="DCFOperations_RetrieveDCFAnalysisData_InputMessage">
@@ -64,6 +65,24 @@
   <wsdl:message name="DCFOperations_RetrieveCurrentPriceData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="DCFOperations_RetrieveFairValue_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveFairValue" />
+  </wsdl:message>
+  <wsdl:message name="DCFOperations_RetrieveFairValue_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveFairValueResponse" />
+  </wsdl:message>
+  <wsdl:message name="DCFOperations_RetrieveFairValue_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
+  </wsdl:message>
+  <wsdl:message name="DCFOperations_InsertFairValues_InputMessage">
+    <wsdl:part name="parameters" element="tns:InsertFairValues" />
+  </wsdl:message>
+  <wsdl:message name="DCFOperations_InsertFairValues_OutputMessage">
+    <wsdl:part name="parameters" element="tns:InsertFairValuesResponse" />
+  </wsdl:message>
+  <wsdl:message name="DCFOperations_InsertFairValues_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
+  </wsdl:message>
   <wsdl:portType name="DCFOperations">
     <wsdl:operation name="RetrieveDCFAnalysisData">
       <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveDCFAnalysisData" message="tns:DCFOperations_RetrieveDCFAnalysisData_InputMessage" />
@@ -94,6 +113,16 @@
       <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveCurrentPriceData" message="tns:DCFOperations_RetrieveCurrentPriceData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/RetrieveCurrentPriceDataResponse" message="tns:DCFOperations_RetrieveCurrentPriceData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/RetrieveCurrentPriceDataServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_RetrieveCurrentPriceData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveFairValue">
+      <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveFairValue" message="tns:DCFOperations_RetrieveFairValue_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/RetrieveFairValueResponse" message="tns:DCFOperations_RetrieveFairValue_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/RetrieveFairValueServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_RetrieveFairValue_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertFairValues">
+      <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/InsertFairValues" message="tns:DCFOperations_InsertFairValues_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/InsertFairValuesResponse" message="tns:DCFOperations_InsertFairValues_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/InsertFairValuesServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_InsertFairValues_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="DCFOperations" type="tns:DCFOperations">
@@ -160,6 +189,30 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveCurrentPriceData">
       <soap:operation soapAction="http://tempuri.org/DCFOperations/RetrieveCurrentPriceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveFairValue">
+      <soap:operation soapAction="http://tempuri.org/DCFOperations/RetrieveFairValue" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="InsertFairValues">
+      <soap:operation soapAction="http://tempuri.org/DCFOperations/InsertFairValues" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

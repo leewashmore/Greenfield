@@ -4390,6 +4390,11 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        /// <summary>
+        /// Retrieve Data for DCF summary
+        /// </summary>
+        /// <param name="entitySelectionData"></param>
+        /// <param name="callback"></param>
         public void RetrieveDCFSummaryData(EntitySelectionData entitySelectionData, Action<List<DCFSummaryData>> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -4424,6 +4429,11 @@ namespace GreenField.ServiceCaller
             };
         }
 
+        /// <summary>
+        /// Retrieve Current Price of Security
+        /// </summary>
+        /// <param name="entitySelectionData">Selected Security</param>
+        /// <param name="callback"></param>
         public void RetrieveDCFCurrentPrice(EntitySelectionData entitySelectionData, Action<decimal?> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -4504,6 +4514,108 @@ namespace GreenField.ServiceCaller
             };
 
         }
+
+        /// <summary>
+        /// Gets Free Cash Flows Data
+        /// </summary>
+        /// <param name="entitySelectionData"></param>
+        /// <param name="callback"></param>
+        public void RetrieveDCFFairValueData(EntitySelectionData entitySelectionData, Action<List<PERIOD_FINANCIALS>> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            DCFOperationsClient client = new DCFOperationsClient();
+            client.RetrieveFairValueAsync(entitySelectionData);
+            client.RetrieveFairValueCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result.ToList());
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+        }
+
+        /// <summary>
+        /// Insert DCF Fair Values
+        /// </summary>
+        /// <param name="entitySelectionData">Selected Security</param>
+        /// <param name="valueType">Value Type</param>
+        /// <param name="fvMeasure">FV_ Measure</param>
+        /// <param name="fvbuy">FV_Buy</param>
+        /// <param name="fvSell">FV_Sell</param>
+        /// <param name="currentMeasureValue">Current Measure Value</param>
+        /// <param name="upside">Upside</param>
+        /// <param name="updated">Updated</param>
+        /// <param name="callback">Result of the operation: true/False</param>
+        public void InsertDCFFairValueData(EntitySelectionData entitySelectionData, string valueType, int? fvMeasure, decimal? fvbuy, decimal? fvSell, decimal? currentMeasureValue, decimal? upside, DateTime? updated, Action<bool> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            DCFOperationsClient client = new DCFOperationsClient();
+            client.InsertFairValuesAsync(entitySelectionData, valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated);
+            client.InsertFairValuesCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result);
+                        }
+                        else
+                        {
+                            callback(false);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(false);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+
+        }
+
 
         #endregion
 
@@ -4631,7 +4743,7 @@ namespace GreenField.ServiceCaller
             };
         }
 
-        public void SetUploadFileInfo(String userName, String Name, String Location,String CompanyName, String SecurityName
+        public void SetUploadFileInfo(String userName, String Name, String Location, String CompanyName, String SecurityName
             , String SecurityTicker, String Type, String MetaTags, String Comments, Action<Boolean?> callback)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);

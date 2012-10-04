@@ -253,7 +253,7 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
-
+                
         /// <summary>
         /// Service Method to Retrieve Cash Flow Values
         /// </summary>
@@ -390,8 +390,8 @@ namespace GreenField.Web.Services
                 string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
-        }
-
+        } 
+        
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public decimal? RetrieveCurrentPriceData(EntitySelectionData entitySelectionData)
@@ -427,6 +427,71 @@ namespace GreenField.Web.Services
                 throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
             }
         }
+
+        #region FairValue
+
+        /// <summary>
+        /// Gets DCF FairValues
+        /// </summary>
+        /// <param name="securityId">Security ID of selected Security</param>
+        /// <returns>Collection of Type Period_Financials</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public List<PERIOD_FINANCIALS> RetrieveFairValue(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                List<PERIOD_FINANCIALS> result = new List<PERIOD_FINANCIALS>();
+
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                result = entity.GetDCFFairValue(entitySelectionData.InstrumentID).ToList();
+
+                if (result == null)
+                {
+                    return new List<PERIOD_FINANCIALS>();
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+        /// <summary>
+        /// Service Method to Insert value in FAIR_VALUE
+        /// </summary>
+        /// <param name="entitySelectionData">selected Security</param>
+        /// <param name="valueType">ValueType</param>
+        /// <param name="fvMeasure">FV_MEasure</param>
+        /// <param name="fvbuy">FV_BUY</param>
+        /// <param name="fvSell">FV_SELL</param>
+        /// <param name="currentMeasureValue">Current Measure Value</param>
+        /// <param name="upside">Upside</param>
+        /// <param name="updated">Updated</param>
+        /// <returns></returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public bool InsertFairValues(EntitySelectionData entitySelectionData, string valueType, int? fvMeasure, decimal? fvbuy, decimal? fvSell, decimal? currentMeasureValue, decimal? upside, DateTime? updated)
+        {
+            try
+            {
+                ExternalResearchEntities entity = new ExternalResearchEntities();
+                entity.InsertDCFFairValue(entitySelectionData.InstrumentID, valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+
+
+        #endregion
 
         #region HelperMethods
 

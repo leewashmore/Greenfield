@@ -3163,6 +3163,140 @@ namespace GreenField.DAL
     
             return base.ExecuteFunction<Nullable<global::System.Int32>>("SetFairValue", sECURITY_IDParameter, pFV_MEASUREParameter, pFV_MEASURE_VALUEParameter, fV_BUYParameter, fV_SELLParameter);
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="sECURITY_ID">No Metadata Documentation available.</param>
+        public ObjectResult<PERIOD_FINANCIALS> GetDCFFairValue(global::System.String sECURITY_ID)
+        {
+            ObjectParameter sECURITY_IDParameter;
+            if (sECURITY_ID != null)
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", sECURITY_ID);
+            }
+            else
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<PERIOD_FINANCIALS>("GetDCFFairValue", sECURITY_IDParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="sECURITY_ID">No Metadata Documentation available.</param>
+        public ObjectResult<PERIOD_FINANCIALS> GetDCFFairValue(global::System.String sECURITY_ID, MergeOption mergeOption)
+        {
+            ObjectParameter sECURITY_IDParameter;
+            if (sECURITY_ID != null)
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", sECURITY_ID);
+            }
+            else
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<PERIOD_FINANCIALS>("GetDCFFairValue", mergeOption, sECURITY_IDParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="sECURITY_ID">No Metadata Documentation available.</param>
+        /// <param name="vALUE_TYPE">No Metadata Documentation available.</param>
+        /// <param name="fV_MEASURE">No Metadata Documentation available.</param>
+        /// <param name="fV_BUY">No Metadata Documentation available.</param>
+        /// <param name="fV_SELL">No Metadata Documentation available.</param>
+        /// <param name="cURRENT_MEASURE_VALUE">No Metadata Documentation available.</param>
+        /// <param name="uPSIDE">No Metadata Documentation available.</param>
+        /// <param name="uPDATED">No Metadata Documentation available.</param>
+        public int InsertDCFFairValue(global::System.String sECURITY_ID, global::System.String vALUE_TYPE, Nullable<global::System.Int32> fV_MEASURE, Nullable<global::System.Decimal> fV_BUY, Nullable<global::System.Decimal> fV_SELL, Nullable<global::System.Decimal> cURRENT_MEASURE_VALUE, Nullable<global::System.Decimal> uPSIDE, Nullable<global::System.DateTime> uPDATED)
+        {
+            ObjectParameter sECURITY_IDParameter;
+            if (sECURITY_ID != null)
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", sECURITY_ID);
+            }
+            else
+            {
+                sECURITY_IDParameter = new ObjectParameter("SECURITY_ID", typeof(global::System.String));
+            }
+    
+            ObjectParameter vALUE_TYPEParameter;
+            if (vALUE_TYPE != null)
+            {
+                vALUE_TYPEParameter = new ObjectParameter("VALUE_TYPE", vALUE_TYPE);
+            }
+            else
+            {
+                vALUE_TYPEParameter = new ObjectParameter("VALUE_TYPE", typeof(global::System.String));
+            }
+    
+            ObjectParameter fV_MEASUREParameter;
+            if (fV_MEASURE.HasValue)
+            {
+                fV_MEASUREParameter = new ObjectParameter("FV_MEASURE", fV_MEASURE);
+            }
+            else
+            {
+                fV_MEASUREParameter = new ObjectParameter("FV_MEASURE", typeof(global::System.Int32));
+            }
+    
+            ObjectParameter fV_BUYParameter;
+            if (fV_BUY.HasValue)
+            {
+                fV_BUYParameter = new ObjectParameter("FV_BUY", fV_BUY);
+            }
+            else
+            {
+                fV_BUYParameter = new ObjectParameter("FV_BUY", typeof(global::System.Decimal));
+            }
+    
+            ObjectParameter fV_SELLParameter;
+            if (fV_SELL.HasValue)
+            {
+                fV_SELLParameter = new ObjectParameter("FV_SELL", fV_SELL);
+            }
+            else
+            {
+                fV_SELLParameter = new ObjectParameter("FV_SELL", typeof(global::System.Decimal));
+            }
+    
+            ObjectParameter cURRENT_MEASURE_VALUEParameter;
+            if (cURRENT_MEASURE_VALUE.HasValue)
+            {
+                cURRENT_MEASURE_VALUEParameter = new ObjectParameter("CURRENT_MEASURE_VALUE", cURRENT_MEASURE_VALUE);
+            }
+            else
+            {
+                cURRENT_MEASURE_VALUEParameter = new ObjectParameter("CURRENT_MEASURE_VALUE", typeof(global::System.Decimal));
+            }
+    
+            ObjectParameter uPSIDEParameter;
+            if (uPSIDE.HasValue)
+            {
+                uPSIDEParameter = new ObjectParameter("UPSIDE", uPSIDE);
+            }
+            else
+            {
+                uPSIDEParameter = new ObjectParameter("UPSIDE", typeof(global::System.Decimal));
+            }
+    
+            ObjectParameter uPDATEDParameter;
+            if (uPDATED.HasValue)
+            {
+                uPDATEDParameter = new ObjectParameter("UPDATED", uPDATED);
+            }
+            else
+            {
+                uPDATEDParameter = new ObjectParameter("UPDATED", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction("InsertDCFFairValue", sECURITY_IDParameter, vALUE_TYPEParameter, fV_MEASUREParameter, fV_BUYParameter, fV_SELLParameter, cURRENT_MEASURE_VALUEParameter, uPSIDEParameter, uPDATEDParameter);
+        }
 
         #endregion
     }

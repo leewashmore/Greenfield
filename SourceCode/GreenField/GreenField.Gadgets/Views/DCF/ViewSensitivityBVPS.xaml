@@ -36,13 +36,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="Enter the Value of FWD BVPS:" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"
-                           />
-
-                <Border Grid.Column="1" Background="Yellow">
-                    <TextBox x:Name="txtFWDBVPS" Text="{Binding FWDBVPS, Mode=TwoWay}" VerticalAlignment="Center"  HorizontalAlignment="Left" KeyDown="TextBlock_KeyDown"
-                           TextInput="txtFWDBVPS_TextInput"/>
-                </Border>
+                
                 <Button Height="15" Width="15" Grid.Column="2"
                         BorderBrush="White" Background="White" Opacity="100" ToolTipService.ToolTip="Export Results to Excel"
                         HorizontalAlignment="Right" HorizontalContentAlignment="Center"
@@ -66,9 +60,25 @@
             <Grid Grid.Row="1" x:Name="gridSensitivityBVPS">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
+
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Enter the Value of FWD BVPS:" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"/>
+
+                    <Border Grid.Column="1" Background="Yellow">
+                        <TextBox x:Name="txtFWDBVPS" Text="{Binding FWDBVPS, Mode=TwoWay}" VerticalAlignment="Center"  HorizontalAlignment="Left" KeyDown="TextBlock_KeyDown"
+                           TextInput="txtFWDBVPS_TextInput"/>
+                    </Border>
+                </Grid>
+                <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Top">
                     <telerik:RadGridView x:Name="dgDCFSensitivity" 
                                          ShowGroupPanel="False" 
                                          AutoGenerateColumns="False" 
@@ -122,7 +132,7 @@
                         </telerik:RadGridView.Columns>
                     </telerik:RadGridView>
                 </Grid>
-                <Grid Grid.Row="1">
+                <Grid Grid.Row="2">
 
                     <Grid.RowDefinitions>
                         <RowDefinition/>

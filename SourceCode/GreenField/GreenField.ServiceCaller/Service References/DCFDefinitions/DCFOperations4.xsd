@@ -86,4 +86,39 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="RetrieveFairValue">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q12:EntitySelectionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RetrieveFairValueResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/GreenField.DAL" minOccurs="0" name="RetrieveFairValueResult" nillable="true" type="q13:ArrayOfPERIOD_FINANCIALS" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertFairValues">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/GreenField.DataContracts" minOccurs="0" name="entitySelectionData" nillable="true" type="q14:EntitySelectionData" />
+        <xs:element minOccurs="0" name="valueType" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="fvMeasure" nillable="true" type="xs:int" />
+        <xs:element minOccurs="0" name="fvbuy" nillable="true" type="xs:decimal" />
+        <xs:element minOccurs="0" name="fvSell" nillable="true" type="xs:decimal" />
+        <xs:element minOccurs="0" name="currentMeasureValue" nillable="true" type="xs:decimal" />
+        <xs:element minOccurs="0" name="upside" nillable="true" type="xs:decimal" />
+        <xs:element minOccurs="0" name="updated" nillable="true" type="xs:dateTime" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="InsertFairValuesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="InsertFairValuesResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

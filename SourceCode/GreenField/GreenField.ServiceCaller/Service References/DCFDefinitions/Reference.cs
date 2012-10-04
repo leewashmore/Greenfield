@@ -114,6 +114,8 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="StructuralObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.EntityObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ComplexObject))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.DCFCashFlowData))]
     public partial class StructuralObject : object, System.ComponentModel.INotifyPropertyChanged {
@@ -130,9 +132,401 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EntityObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS))]
+    public partial class EntityObject : GreenField.ServiceCaller.DCFDefinitions.StructuralObject {
+        
+        private GreenField.ServiceCaller.DCFDefinitions.EntityKey EntityKeyField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public GreenField.ServiceCaller.DCFDefinitions.EntityKey EntityKey {
+            get {
+                return this.EntityKeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntityKeyField, value) != true)) {
+                    this.EntityKeyField = value;
+                    this.RaisePropertyChanged("EntityKey");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PERIOD_FINANCIALS", Namespace="http://schemas.datacontract.org/2004/07/GreenField.DAL", IsReference=true)]
+    public partial class PERIOD_FINANCIALS : GreenField.ServiceCaller.DCFDefinitions.EntityObject {
+        
+        private decimal AMOUNTField;
+        
+        private string AMOUNT_TYPEField;
+        
+        private string CALCULATION_DIAGRAMField;
+        
+        private string COA_TYPEField;
+        
+        private string CURRENCYField;
+        
+        private int DATA_IDField;
+        
+        private string DATA_SOURCEField;
+        
+        private string FISCAL_TYPEField;
+        
+        private string ISSUER_IDField;
+        
+        private System.DateTime PERIOD_END_DATEField;
+        
+        private string PERIOD_TYPEField;
+        
+        private int PERIOD_YEARField;
+        
+        private string ROOT_SOURCEField;
+        
+        private System.DateTime ROOT_SOURCE_DATEField;
+        
+        private string SECURITY_IDField;
+        
+        private string SOURCE_CURRENCYField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal AMOUNT {
+            get {
+                return this.AMOUNTField;
+            }
+            set {
+                if ((this.AMOUNTField.Equals(value) != true)) {
+                    this.AMOUNTField = value;
+                    this.RaisePropertyChanged("AMOUNT");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AMOUNT_TYPE {
+            get {
+                return this.AMOUNT_TYPEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AMOUNT_TYPEField, value) != true)) {
+                    this.AMOUNT_TYPEField = value;
+                    this.RaisePropertyChanged("AMOUNT_TYPE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CALCULATION_DIAGRAM {
+            get {
+                return this.CALCULATION_DIAGRAMField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CALCULATION_DIAGRAMField, value) != true)) {
+                    this.CALCULATION_DIAGRAMField = value;
+                    this.RaisePropertyChanged("CALCULATION_DIAGRAM");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string COA_TYPE {
+            get {
+                return this.COA_TYPEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.COA_TYPEField, value) != true)) {
+                    this.COA_TYPEField = value;
+                    this.RaisePropertyChanged("COA_TYPE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CURRENCY {
+            get {
+                return this.CURRENCYField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CURRENCYField, value) != true)) {
+                    this.CURRENCYField = value;
+                    this.RaisePropertyChanged("CURRENCY");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int DATA_ID {
+            get {
+                return this.DATA_IDField;
+            }
+            set {
+                if ((this.DATA_IDField.Equals(value) != true)) {
+                    this.DATA_IDField = value;
+                    this.RaisePropertyChanged("DATA_ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DATA_SOURCE {
+            get {
+                return this.DATA_SOURCEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DATA_SOURCEField, value) != true)) {
+                    this.DATA_SOURCEField = value;
+                    this.RaisePropertyChanged("DATA_SOURCE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FISCAL_TYPE {
+            get {
+                return this.FISCAL_TYPEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FISCAL_TYPEField, value) != true)) {
+                    this.FISCAL_TYPEField = value;
+                    this.RaisePropertyChanged("FISCAL_TYPE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ISSUER_ID {
+            get {
+                return this.ISSUER_IDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ISSUER_IDField, value) != true)) {
+                    this.ISSUER_IDField = value;
+                    this.RaisePropertyChanged("ISSUER_ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime PERIOD_END_DATE {
+            get {
+                return this.PERIOD_END_DATEField;
+            }
+            set {
+                if ((this.PERIOD_END_DATEField.Equals(value) != true)) {
+                    this.PERIOD_END_DATEField = value;
+                    this.RaisePropertyChanged("PERIOD_END_DATE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PERIOD_TYPE {
+            get {
+                return this.PERIOD_TYPEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PERIOD_TYPEField, value) != true)) {
+                    this.PERIOD_TYPEField = value;
+                    this.RaisePropertyChanged("PERIOD_TYPE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int PERIOD_YEAR {
+            get {
+                return this.PERIOD_YEARField;
+            }
+            set {
+                if ((this.PERIOD_YEARField.Equals(value) != true)) {
+                    this.PERIOD_YEARField = value;
+                    this.RaisePropertyChanged("PERIOD_YEAR");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ROOT_SOURCE {
+            get {
+                return this.ROOT_SOURCEField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ROOT_SOURCEField, value) != true)) {
+                    this.ROOT_SOURCEField = value;
+                    this.RaisePropertyChanged("ROOT_SOURCE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.DateTime ROOT_SOURCE_DATE {
+            get {
+                return this.ROOT_SOURCE_DATEField;
+            }
+            set {
+                if ((this.ROOT_SOURCE_DATEField.Equals(value) != true)) {
+                    this.ROOT_SOURCE_DATEField = value;
+                    this.RaisePropertyChanged("ROOT_SOURCE_DATE");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SECURITY_ID {
+            get {
+                return this.SECURITY_IDField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SECURITY_IDField, value) != true)) {
+                    this.SECURITY_IDField = value;
+                    this.RaisePropertyChanged("SECURITY_ID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SOURCE_CURRENCY {
+            get {
+                return this.SOURCE_CURRENCYField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SOURCE_CURRENCYField, value) != true)) {
+                    this.SOURCE_CURRENCYField = value;
+                    this.RaisePropertyChanged("SOURCE_CURRENCY");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ComplexObject", Namespace="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses", IsReference=true)]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.DCFCashFlowData))]
     public partial class ComplexObject : GreenField.ServiceCaller.DCFDefinitions.StructuralObject {
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EntityKey", Namespace="http://schemas.datacontract.org/2004/07/System.Data", IsReference=true)]
+    public partial class EntityKey : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string EntityContainerNameField;
+        
+        private System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.EntityKeyMember> EntityKeyValuesField;
+        
+        private string EntitySetNameField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EntityContainerName {
+            get {
+                return this.EntityContainerNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntityContainerNameField, value) != true)) {
+                    this.EntityContainerNameField = value;
+                    this.RaisePropertyChanged("EntityContainerName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.EntityKeyMember> EntityKeyValues {
+            get {
+                return this.EntityKeyValuesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntityKeyValuesField, value) != true)) {
+                    this.EntityKeyValuesField = value;
+                    this.RaisePropertyChanged("EntityKeyValues");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EntitySetName {
+            get {
+                return this.EntitySetNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EntitySetNameField, value) != true)) {
+                    this.EntitySetNameField = value;
+                    this.RaisePropertyChanged("EntitySetName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="EntityKeyMember", Namespace="http://schemas.datacontract.org/2004/07/System.Data")]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.EntityKey))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.EntityKeyMember>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ComplexObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.StructuralObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.EntityObject))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.DCFCashFlowData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.DCFCashFlowData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.EntitySelectionData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.DataContracts.DCFAnalysisSummaryData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DCFAnalysisSummaryData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.DataContracts.DCFTerminalValueCalculationsData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DCFTerminalValueCalculationsData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.DataContracts.FreeCashFlowsData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.FreeCashFlowsData))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(System.Collections.Generic.List<GreenField.DataContracts.DCFSummaryData>))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(GreenField.DataContracts.DCFSummaryData))]
+    public partial class EntityKeyMember : object, System.ComponentModel.INotifyPropertyChanged {
+        
+        private string KeyField;
+        
+        private object ValueField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Key {
+            get {
+                return this.KeyField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.KeyField, value) != true)) {
+                    this.KeyField = value;
+                    this.RaisePropertyChanged("Key");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public object Value {
+            get {
+                return this.ValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ValueField, value) != true)) {
+                    this.ValueField = value;
+                    this.RaisePropertyChanged("Value");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -175,6 +569,18 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         System.IAsyncResult BeginRetrieveCurrentPriceData(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
         
         System.Nullable<decimal> EndRetrieveCurrentPriceData(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DCFOperations/RetrieveFairValue", ReplyAction="http://tempuri.org/DCFOperations/RetrieveFairValueResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault), Action="http://tempuri.org/DCFOperations/RetrieveFairValueServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveFairValue(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
+        
+        System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS> EndRetrieveFairValue(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DCFOperations/InsertFairValues", ReplyAction="http://tempuri.org/DCFOperations/InsertFairValuesResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault), Action="http://tempuri.org/DCFOperations/InsertFairValuesServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginInsertFairValues(GreenField.DataContracts.EntitySelectionData entitySelectionData, string valueType, System.Nullable<int> fvMeasure, System.Nullable<decimal> fvbuy, System.Nullable<decimal> fvSell, System.Nullable<decimal> currentMeasureValue, System.Nullable<decimal> upside, System.Nullable<System.DateTime> updated, System.AsyncCallback callback, object asyncState);
+        
+        bool EndInsertFairValues(System.IAsyncResult result);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -297,6 +703,44 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveFairValueCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveFairValueCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS> Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS>)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class InsertFairValuesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public InsertFairValuesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public bool Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class DCFOperationsClient : System.ServiceModel.ClientBase<GreenField.ServiceCaller.DCFDefinitions.DCFOperations>, GreenField.ServiceCaller.DCFDefinitions.DCFOperations {
         
         private BeginOperationDelegate onBeginRetrieveDCFAnalysisDataDelegate;
@@ -334,6 +778,18 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         private EndOperationDelegate onEndRetrieveCurrentPriceDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveCurrentPriceDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveFairValueDelegate;
+        
+        private EndOperationDelegate onEndRetrieveFairValueDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveFairValueCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginInsertFairValuesDelegate;
+        
+        private EndOperationDelegate onEndInsertFairValuesDelegate;
+        
+        private System.Threading.SendOrPostCallback onInsertFairValuesCompletedDelegate;
         
         private BeginOperationDelegate onBeginOpenDelegate;
         
@@ -399,6 +855,10 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         public event System.EventHandler<RetrieveSummaryDataCompletedEventArgs> RetrieveSummaryDataCompleted;
         
         public event System.EventHandler<RetrieveCurrentPriceDataCompletedEventArgs> RetrieveCurrentPriceDataCompleted;
+        
+        public event System.EventHandler<RetrieveFairValueCompletedEventArgs> RetrieveFairValueCompleted;
+        
+        public event System.EventHandler<InsertFairValuesCompletedEventArgs> InsertFairValuesCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> OpenCompleted;
         
@@ -680,6 +1140,112 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
                         entitySelectionData}, this.onEndRetrieveCurrentPriceDataDelegate, this.onRetrieveCurrentPriceDataCompletedDelegate, userState);
         }
         
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DCFDefinitions.DCFOperations.BeginRetrieveFairValue(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveFairValue(entitySelectionData, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS> GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveFairValue(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveFairValue(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveFairValue(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            return ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).BeginRetrieveFairValue(entitySelectionData, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveFairValue(System.IAsyncResult result) {
+            System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS> retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveFairValue(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveFairValueCompleted(object state) {
+            if ((this.RetrieveFairValueCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveFairValueCompleted(this, new RetrieveFairValueCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveFairValueAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData) {
+            this.RetrieveFairValueAsync(entitySelectionData, null);
+        }
+        
+        public void RetrieveFairValueAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, object userState) {
+            if ((this.onBeginRetrieveFairValueDelegate == null)) {
+                this.onBeginRetrieveFairValueDelegate = new BeginOperationDelegate(this.OnBeginRetrieveFairValue);
+            }
+            if ((this.onEndRetrieveFairValueDelegate == null)) {
+                this.onEndRetrieveFairValueDelegate = new EndOperationDelegate(this.OnEndRetrieveFairValue);
+            }
+            if ((this.onRetrieveFairValueCompletedDelegate == null)) {
+                this.onRetrieveFairValueCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveFairValueCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveFairValueDelegate, new object[] {
+                        entitySelectionData}, this.onEndRetrieveFairValueDelegate, this.onRetrieveFairValueCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DCFDefinitions.DCFOperations.BeginInsertFairValues(GreenField.DataContracts.EntitySelectionData entitySelectionData, string valueType, System.Nullable<int> fvMeasure, System.Nullable<decimal> fvbuy, System.Nullable<decimal> fvSell, System.Nullable<decimal> currentMeasureValue, System.Nullable<decimal> upside, System.Nullable<System.DateTime> updated, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginInsertFairValues(entitySelectionData, valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        bool GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndInsertFairValues(System.IAsyncResult result) {
+            return base.Channel.EndInsertFairValues(result);
+        }
+        
+        private System.IAsyncResult OnBeginInsertFairValues(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            string valueType = ((string)(inValues[1]));
+            System.Nullable<int> fvMeasure = ((System.Nullable<int>)(inValues[2]));
+            System.Nullable<decimal> fvbuy = ((System.Nullable<decimal>)(inValues[3]));
+            System.Nullable<decimal> fvSell = ((System.Nullable<decimal>)(inValues[4]));
+            System.Nullable<decimal> currentMeasureValue = ((System.Nullable<decimal>)(inValues[5]));
+            System.Nullable<decimal> upside = ((System.Nullable<decimal>)(inValues[6]));
+            System.Nullable<System.DateTime> updated = ((System.Nullable<System.DateTime>)(inValues[7]));
+            return ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).BeginInsertFairValues(entitySelectionData, valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated, callback, asyncState);
+        }
+        
+        private object[] OnEndInsertFairValues(System.IAsyncResult result) {
+            bool retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndInsertFairValues(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnInsertFairValuesCompleted(object state) {
+            if ((this.InsertFairValuesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.InsertFairValuesCompleted(this, new InsertFairValuesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void InsertFairValuesAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, string valueType, System.Nullable<int> fvMeasure, System.Nullable<decimal> fvbuy, System.Nullable<decimal> fvSell, System.Nullable<decimal> currentMeasureValue, System.Nullable<decimal> upside, System.Nullable<System.DateTime> updated) {
+            this.InsertFairValuesAsync(entitySelectionData, valueType, fvMeasure, fvbuy, fvSell, currentMeasureValue, upside, updated, null);
+        }
+        
+        public void InsertFairValuesAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, string valueType, System.Nullable<int> fvMeasure, System.Nullable<decimal> fvbuy, System.Nullable<decimal> fvSell, System.Nullable<decimal> currentMeasureValue, System.Nullable<decimal> upside, System.Nullable<System.DateTime> updated, object userState) {
+            if ((this.onBeginInsertFairValuesDelegate == null)) {
+                this.onBeginInsertFairValuesDelegate = new BeginOperationDelegate(this.OnBeginInsertFairValues);
+            }
+            if ((this.onEndInsertFairValuesDelegate == null)) {
+                this.onEndInsertFairValuesDelegate = new EndOperationDelegate(this.OnEndInsertFairValues);
+            }
+            if ((this.onInsertFairValuesCompletedDelegate == null)) {
+                this.onInsertFairValuesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnInsertFairValuesCompleted);
+            }
+            base.InvokeAsync(this.onBeginInsertFairValuesDelegate, new object[] {
+                        entitySelectionData,
+                        valueType,
+                        fvMeasure,
+                        fvbuy,
+                        fvSell,
+                        currentMeasureValue,
+                        upside,
+                        updated}, this.onEndInsertFairValuesDelegate, this.onInsertFairValuesCompletedDelegate, userState);
+        }
+        
         private System.IAsyncResult OnBeginOpen(object[] inValues, System.AsyncCallback callback, object asyncState) {
             return ((System.ServiceModel.ICommunicationObject)(this)).BeginOpen(callback, asyncState);
         }
@@ -831,6 +1397,39 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
             public System.Nullable<decimal> EndRetrieveCurrentPriceData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Nullable<decimal> _result = ((System.Nullable<decimal>)(base.EndInvoke("RetrieveCurrentPriceData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveFairValue(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = entitySelectionData;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveFairValue", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS> EndRetrieveFairValue(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS> _result = ((System.Collections.Generic.List<GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS>)(base.EndInvoke("RetrieveFairValue", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginInsertFairValues(GreenField.DataContracts.EntitySelectionData entitySelectionData, string valueType, System.Nullable<int> fvMeasure, System.Nullable<decimal> fvbuy, System.Nullable<decimal> fvSell, System.Nullable<decimal> currentMeasureValue, System.Nullable<decimal> upside, System.Nullable<System.DateTime> updated, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[8];
+                _args[0] = entitySelectionData;
+                _args[1] = valueType;
+                _args[2] = fvMeasure;
+                _args[3] = fvbuy;
+                _args[4] = fvSell;
+                _args[5] = currentMeasureValue;
+                _args[6] = upside;
+                _args[7] = updated;
+                System.IAsyncResult _result = base.BeginInvoke("InsertFairValues", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public bool EndInsertFairValues(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                bool _result = ((bool)(base.EndInvoke("InsertFairValues", _args, result)));
                 return _result;
             }
         }

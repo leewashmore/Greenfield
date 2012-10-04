@@ -20,4 +20,35 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="DCFCashFlowData" nillable="true" type="tns:DCFCashFlowData" />
+  <xs:complexType name="ArrayOfPERIOD_FINANCIALS">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="PERIOD_FINANCIALS" nillable="true" type="tns:PERIOD_FINANCIALS" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPERIOD_FINANCIALS" nillable="true" type="tns:ArrayOfPERIOD_FINANCIALS" />
+  <xs:complexType name="PERIOD_FINANCIALS">
+    <xs:complexContent mixed="false">
+      <xs:extension xmlns:q2="http://schemas.datacontract.org/2004/07/System.Data.Objects.DataClasses" base="q2:EntityObject">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="AMOUNT" type="xs:decimal" />
+          <xs:element minOccurs="0" name="AMOUNT_TYPE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CALCULATION_DIAGRAM" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="COA_TYPE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="CURRENCY" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="DATA_ID" type="xs:int" />
+          <xs:element minOccurs="0" name="DATA_SOURCE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="FISCAL_TYPE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ISSUER_ID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PERIOD_END_DATE" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="PERIOD_TYPE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="PERIOD_YEAR" type="xs:int" />
+          <xs:element minOccurs="0" name="ROOT_SOURCE" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="ROOT_SOURCE_DATE" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="SECURITY_ID" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="SOURCE_CURRENCY" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="PERIOD_FINANCIALS" nillable="true" type="tns:PERIOD_FINANCIALS" />
 </xs:schema>

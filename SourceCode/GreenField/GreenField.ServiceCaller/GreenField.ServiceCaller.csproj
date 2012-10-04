@@ -302,10 +302,16 @@
     <None Include="Service References\DCFDefinitions\DCFOperations4.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\DCFDefinitions\DCFOperations5.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\DCFDefinitions\DCFOperations51.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\DCFDefinitions\GreenField.ServiceCaller.DCFDefinitions.DCFCashFlowData.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\DCFDefinitions\GreenField.ServiceCaller.DCFDefinitions.PERIOD_FINANCIALS.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\DocumentWorkSpaceDefinitions\DocumentWorkspaceOperations.wsdl" />
