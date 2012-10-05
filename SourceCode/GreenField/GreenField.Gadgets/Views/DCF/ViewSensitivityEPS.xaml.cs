@@ -20,6 +20,9 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewSensitivityEPS : ViewBaseUserControl
     {
+        /// <summary>
+        /// Instance of View-Model
+        /// </summary>
         private ViewModelDCF _dataContextSource;
         public ViewModelDCF DataContextSource
         {
@@ -27,6 +30,10 @@ namespace GreenField.Gadgets.Views
             set { _dataContextSource = value; }
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="dataContextSource"></param>
         public ViewSensitivityEPS(ViewModelDCF dataContextSource)
         {
             InitializeComponent();
@@ -34,6 +41,11 @@ namespace GreenField.Gadgets.Views
             this.DataContextSource = dataContextSource;
         }
 
+        /// <summary>
+        /// Text-Input for FED_EPS
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void txtFWDEPS_TextInput(object sender, TextCompositionEventArgs e)
         {
             string textEntered = e.Text as string;
@@ -44,8 +56,7 @@ namespace GreenField.Gadgets.Views
                 Prompt.ShowDialog("FWD EPS can only be Numeric");
             }
         }
-
-
+        
         #region ExportToExcel/PDF/Print
 
         #region ExcelExport
@@ -151,21 +162,17 @@ namespace GreenField.Gadgets.Views
         }
 
         /// <summary>
-        /// create RadDocument from the DataGrid
+        /// Create RadDocument from the DataGrid
         /// </summary>
         /// <returns>Returns the RadDcoument for the Grid</returns>
-        public override Table CreateDocument()
+        public override DCFPDFExport CreateDocument()
         {
             try
             {
                 Table sensitivityTable = new Table();
-                sensitivityTable = PDFExporter.GenerateTable(gridSensitivityEPS, "Sensitivity EPS");
-                return sensitivityTable;
-                //if (dgDCFSensitivity.Items.Count == 0)
-                //{
-                //    return null;
-                //}
-                //return PDFExporter.CreateTable(dgDCFSensitivity, 12);
+                DCFPDFExport data = new DCFPDFExport();
+                data.DataTable = PDFExporter.GenerateTable(gridSensitivityEPS, "Sensitivity EPS");
+                return data;
             }
             catch (Exception ex)
             {
@@ -204,6 +211,10 @@ namespace GreenField.Gadgets.Views
             e.Handled = !r.IsMatch(s);
         }
 
+        /// <summary>
+        /// Generate PDF-Export
+        /// </summary>
+        /// <returns></returns>
         public override List<string> EPS_BVPS()
         {
             List<string> result = new List<string>();

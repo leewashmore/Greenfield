@@ -50,7 +50,9 @@ namespace GreenField.DashboardModule.Views
             set { _EPS_BVPS = value; }
         }
 
-
+        /// <summary>
+        /// Collection of Tables to create DCF PDF Report
+        /// </summary>
         private List<Table> _dcfReport;
         public List<Table> DCFReport
         {
@@ -67,6 +69,47 @@ namespace GreenField.DashboardModule.Views
                 _dcfReport = value;
             }
         }
+
+        /// <summary>
+        /// Selected Security
+        /// </summary>
+        private string _securityName;
+        public string SecurityName
+        {
+            get { return _securityName; }
+            set { _securityName = value; }
+        }
+
+        /// <summary>
+        /// Country of the Selected Security
+        /// </summary>
+        private string _countryName;
+        public string CountryName
+        {
+            get { return _countryName; }
+            set { _countryName = value; }
+        }
+
+        /// <summary>
+        /// DCF-Report Created BY
+        /// </summary>
+        private string _createdBy;
+        public string CreatedBy
+        {
+            get { return _createdBy; }
+            set { _createdBy = value; }
+        }
+
+        /// <summary>
+        /// Creation Date
+        /// </summary>
+        private string _creationDate;
+        public string CreationDate
+        {
+            get { return _creationDate; }
+            set { _creationDate = value; }
+        }
+
 
         #endregion
 
@@ -218,11 +261,23 @@ namespace GreenField.DashboardModule.Views
             DCFReport = new List<Table>();
             RadDocument mergedDocument = new RadDocument();
 
-            RadDocument finalReport = new RadDocument();           
+            RadDocument finalReport = new RadDocument();
             foreach (RadTileViewItem item in this.rtvDashboard.Items)
             {
                 ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
-                Table table = control.CreateDocument();
+                DCFPDFExport pdfData = control.CreateDocument();
+                Table table = null;
+                if (pdfData != null)
+                {
+                    table = pdfData.DataTable;
+                    if (pdfData.CreatedBy != null && pdfData.SecurityName != null && pdfData.CountryName != null)
+                    {
+                        SecurityName = pdfData.SecurityName;
+                        CountryName = pdfData.CountryName;
+                        CreatedBy = pdfData.CreatedBy;
+                        CreationDate = DateTime.Now.ToShortDateString();
+                    }
+                }
                 if (table != null)
                 {
                     DCFReport.Add(table);
@@ -256,9 +311,9 @@ namespace GreenField.DashboardModule.Views
         /// <returns>Merged Documents</returns>
         private RadDocument MergeDocuments(List<Table> tables)
         {
-            RadDocument mergedDocument = new RadDocument();           
+            RadDocument mergedDocument = new RadDocument();
             mergedDocument.Sections.Add(GetSection(tables, 0, 4));
-            mergedDocument.Sections.Add(GetSection(tables, 4, tables.Count));           
+            mergedDocument.Sections.Add(GetSection(tables, 4, tables.Count));
             return mergedDocument;
         }
 
@@ -291,8 +346,49 @@ namespace GreenField.DashboardModule.Views
             }
         }
 
-        private Telerik.Windows.Documents.Model.Section GetSection(List<Table>tables, int startIndex, int endIndex)
+        /// <summary>
+        /// Create a Section
+        /// </summary>
+        /// <param name="tables"></param>
+        /// <param name="startIndex"></param>
+        /// <param name="endIndex"></param>
+        /// <returns></returns>
+        private Telerik.Windows.Documents.Model.Section GetSection(List<Table> tables, int startIndex, int endIndex)
         {
+            Table headerTable = new Table(1, 4);
+            TableRow headerRow = new TableRow();
+
+            TableCell securityCell = new TableCell();
+            Telerik.Windows.Documents.Model.Paragraph securityParagraph = new Telerik.Windows.Documents.Model.Paragraph();
+            Telerik.Windows.Documents.Model.Span securitySpan = new Telerik.Windows.Documents.Model.Span("Security: " + SecurityName);
+            securityParagraph.Inlines.Add(securitySpan);
+            securityCell.Children.Add(securityParagraph);
+
+            TableCell countryCell = new TableCell();
+            Telerik.Windows.Documents.Model.Paragraph countryParagraph = new Telerik.Windows.Documents.Model.Paragraph();
+            Telerik.Windows.Documents.Model.Span countrySpan = new Telerik.Windows.Documents.Model.Span("Country: " + CountryName);
+            countryParagraph.Inlines.Add(countrySpan);
+            countryCell.Children.Add(countryParagraph);
+
+            TableCell createdByCell = new TableCell();
+            Telerik.Windows.Documents.Model.Paragraph createdByParagraph = new Telerik.Windows.Documents.Model.Paragraph();
+            Telerik.Windows.Documents.Model.Span createdBySpan = new Telerik.Windows.Documents.Model.Span("Created by: " + CreatedBy);
+            createdByParagraph.Inlines.Add(createdBySpan);
+            createdByCell.Children.Add(createdByParagraph);
+
+            TableCell createdOn = new TableCell();
+            Telerik.Windows.Documents.Model.Paragraph createdOnParagraph = new Telerik.Windows.Documents.Model.Paragraph();
+            Telerik.Windows.Documents.Model.Span createdOnSpan = new Telerik.Windows.Documents.Model.Span("Created on: " + CreationDate);
+            createdOnParagraph.Inlines.Add(createdOnSpan);
+            createdOn.Children.Add(createdOnParagraph);
+
+            headerRow.Cells.Add(securityCell);
+            headerRow.Cells.AddAfter(securityCell, countryCell);
+            headerRow.Cells.AddAfter(countryCell, createdByCell);
+            headerRow.Cells.AddAfter(createdByCell, createdOn);
+            headerTable.Rows.Add(headerRow);
+            
+            
             Telerik.Windows.Documents.Model.Section section = new Telerik.Windows.Documents.Model.Section();
             Table documentTable = new Table();
             List<Table> tablesToAddToPage = new List<Table>();
@@ -305,40 +401,46 @@ namespace GreenField.DashboardModule.Views
             }
 
             documentTable = GenerateCombinedTable(tablesToAddToPage);
+            section.Blocks.Add(headerTable);
             section.Blocks.Add(documentTable);
 
             return section;
         }
 
+        /// <summary>
+        /// Generate Combined DCF tables
+        /// </summary>
+        /// <param name="tables">List of Tables</param>
+        /// <returns>Combined Table</returns>
         private Table GenerateCombinedTable(List<Table> tables)
         {
-            Table documentTable = new Table(tables.Count(), 3);                        
+            Table documentTable = new Table(tables.Count(), 3);
 
             for (int i = 0; i < tables.Count; i++)
             {
                 if (i == 2 || i == 3)
-                {                    
+                {
                     if (i == 2)
                     {
                         TableRow row = GetTableRowForSingleTable(tables[i], 1);
                         TableCell cellEmptyParagraph = new TableCell();
-                        cellEmptyParagraph.PreferredWidth = new TableWidthUnit(TableWidthUnitType.Percent,1);
-                        Telerik.Windows.Documents.Model.Paragraph p1 = new Telerik.Windows.Documents.Model.Paragraph();                        
+                        cellEmptyParagraph.PreferredWidth = new TableWidthUnit(TableWidthUnitType.Percent, 1);
+                        Telerik.Windows.Documents.Model.Paragraph p1 = new Telerik.Windows.Documents.Model.Paragraph();
                         cellEmptyParagraph.Blocks.Add(p1);
                         row.Cells.Add(cellEmptyParagraph);
-                        documentTable.Rows.Add(row);                        
+                        documentTable.Rows.Add(row);
 
                     }
                     else
                     {
                         TableRow row = documentTable.Rows.Last;
                         GetTableRowForMultipleTables(tables[i], ref row);
-                    }                    
+                    }
                 }
                 else
-                {                    
-                    TableRow row = GetTableRowForSingleTable(tables[i],3);
-                    documentTable.Rows.Add(row);                    
+                {
+                    TableRow row = GetTableRowForSingleTable(tables[i], 3);
+                    documentTable.Rows.Add(row);
                 }
             }
             return documentTable;
@@ -349,19 +451,29 @@ namespace GreenField.DashboardModule.Views
             TableRow row = new TableRow();
 
             TableCell cell1 = new TableCell();
-            cell1.ColumnSpan = columnSpan;            
+            cell1.ColumnSpan = columnSpan;
             cell1.Blocks.Add(table);
-            row.Cells.Add(cell1);            
+            row.Cells.Add(cell1);
             return row;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="row"></param>
         private void GetTableRowForMultipleTables(Table table, ref TableRow row)
         {
             TableCell cell1 = new TableCell();
             cell1.Blocks.Add(table);
-            row.Cells.Add(cell1);             
+            row.Cells.Add(cell1);
         }
 
+        /// <summary>
+        /// Create Emoty Row
+        /// </summary>
+        /// <param name="colSpan"></param>
+        /// <returns></returns>
         private TableRow GetEmptyRow(int colSpan)
         {
             TableRow emptyRow = new TableRow();

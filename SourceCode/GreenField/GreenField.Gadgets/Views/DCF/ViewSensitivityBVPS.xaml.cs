@@ -102,6 +102,7 @@ namespace GreenField.Gadgets.Views
         #endregion
 
         #region PDFExport
+
         /// <summary>
         /// Event handler when user wants to Export the Grid to PDF
         /// </summary>
@@ -155,18 +156,15 @@ namespace GreenField.Gadgets.Views
         /// create RadDocument from the DataGrid
         /// </summary>
         /// <returns>Returns the RadDcoument for the Grid</returns>
-        public override Table CreateDocument()
+        public override DCFPDFExport CreateDocument()
         {
             try
             {
                 Table sensitivityTable = new Table();
                 sensitivityTable = PDFExporter.GenerateTable(gridSensitivityBVPS, "Sensitivity BVPS");
-                return sensitivityTable;
-                //if (dgDCFSensitivity.Items.Count == 0)
-                //{
-                //    return null;
-                //}
-                //return PDFExporter.CreateTable(dgDCFSensitivity, 12);
+                DCFPDFExport data = new DCFPDFExport();
+                data.DataTable = sensitivityTable;
+                return data;
             }
             catch (Exception ex)
             {
@@ -178,6 +176,11 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        /// <summary>
+        /// Reg-Ex to check Entered Value
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TextBlock_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Tab)
@@ -199,6 +202,7 @@ namespace GreenField.Gadgets.Views
             var r = new Regex(rStr, RegexOptions.IgnoreCase);
             e.Handled = !r.IsMatch(s);
         }
+
         #endregion
     }
 }

@@ -274,15 +274,16 @@ namespace GreenField.Gadgets.Views
         /// create RadDocument from the DataGrid
         /// </summary>
         /// <returns>Returns the RadDcoument for the Grid</returns>
-        public override Table CreateDocument()
+        public override DCFPDFExport CreateDocument()
         {
             try
             {
                 DCFPDFExport data = new DCFPDFExport();
-                return PDFExporter.CreateTable(dgDCFAnalysisSummary, 12);
+                data.DataTable = PDFExporter.CreateTable(dgDCFAnalysisSummary, 12);
                 data.CountryName = this.DataContextSource.CountryName;
                 data.SecurityName = this.DataContextSource.EntitySelectionData.ShortName;
                 data.CreatedBy = SessionManager.SESSION.UserName;
+                return data;
             }
             catch (Exception ex)
             {

@@ -18,7 +18,7 @@ namespace GreenField.Gadgets.Helpers
         public virtual bool IsActive { get; set; }
         public virtual void Dispose(){}
         
-        public virtual Table CreateDocument() 
+        public virtual DCFPDFExport CreateDocument() 
         {
             return null;
         }

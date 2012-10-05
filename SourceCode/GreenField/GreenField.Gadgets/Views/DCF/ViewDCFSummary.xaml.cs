@@ -21,6 +21,8 @@ namespace GreenField.Gadgets.Views
 {
     public partial class ViewDCFSummary : ViewBaseUserControl
     {
+        #region PropertyDeclaration
+
         private ViewModelDCF _dataContextSource;
         public ViewModelDCF DataContextSource
         {
@@ -34,8 +36,6 @@ namespace GreenField.Gadgets.Views
             get { return _minorityInvestment; }
             set { _minorityInvestment = value; }
         }
-
-
 
         /// <summary>
         /// To check whether the Dashboard is Active or not
@@ -52,6 +52,10 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        #endregion
+
+        #region Constructor
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -61,7 +65,9 @@ namespace GreenField.Gadgets.Views
             InitializeComponent();
             this.DataContext = dataContextSource;
             this.DataContextSource = dataContextSource;
-        }
+        } 
+
+        #endregion
 
         #region ExportToExcel/PDF/Print
 
@@ -173,11 +179,13 @@ namespace GreenField.Gadgets.Views
         /// create RadDocument from the DataGrid
         /// </summary>
         /// <returns>Returns the RadDcoument for the Grid</returns>
-        public override Table CreateDocument()
+        public override DCFPDFExport CreateDocument()
         {
             try
             {
-                return PDFExporter.CreateTable(dgDCFSummary, 12);
+                DCFPDFExport data = new DCFPDFExport();
+                data.DataTable=PDFExporter.CreateTable(dgDCFSummary, 12);
+                return data;
             }
             catch (Exception ex)
             {
@@ -190,6 +198,13 @@ namespace GreenField.Gadgets.Views
 
         #endregion
 
+        #region Helper Methods
+
+        /// <summary>
+        /// Row Loaded Event of Data-Grid
+        /// </summary>
+        /// <param name="sender">Sender of the Event</param>
+        /// <param name="e">Event Arguement</param>
         private void dgDCFSummary_RowLoaded(object sender, Telerik.Windows.Controls.GridView.RowLoadedEventArgs e)
         {
             if (e.Row != null)
@@ -207,6 +222,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// DataGrid -Row Edit beginning Event
+        /// </summary>
+        /// <param name="sender">Sender of the event</param>
+        /// <param name="e">Event Arguement</param>
         private void dgDCFSummary_BeginningEdit(object sender, GridViewBeginningEditRoutedEventArgs e)
         {
             int Index = this.dgDCFSummary.Items.IndexOf(e.Cell.ParentRow.Item);
@@ -220,6 +240,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Row-Edit ended event of DataGrid
+        /// </summary>
+        /// <param name="sender">Sender of the Event</param>
+        /// <param name="e">Event Arguement</param>
         private void dgDCFSummary_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
         {
             if (MinorityInvestment != null)
@@ -231,6 +256,11 @@ namespace GreenField.Gadgets.Views
             }
         }
 
+        /// <summary>
+        /// Cell Validated Event
+        /// </summary>
+        /// <param name="sender">Sender of the Event</param>
+        /// <param name="e">Event Arguement</param>
         private void dgDCFSummary_CellValidating(object sender, GridViewCellValidatingEventArgs e)
         {
             if (e.Cell.Column.UniqueName == "Values")
@@ -249,6 +279,7 @@ namespace GreenField.Gadgets.Views
                 }
             }
         }
-
+        
+        #endregion
     }
 }

@@ -182,13 +182,15 @@ namespace GreenField.Gadgets.Views
         /// create RadDocument from the DataGrid
         /// </summary>
         /// <returns>Returns the RadDcoument for the Grid</returns>
-        public override Table CreateDocument()
+        public override DCFPDFExport CreateDocument()
         {
             try
             {
                 if (dgTerminalValueCalculations.Items.Count > 0)
                 {
-                    return PDFExporter.CreateTable(dgTerminalValueCalculations, 12);
+                    DCFPDFExport data = new DCFPDFExport();
+                    data.DataTable = PDFExporter.CreateTable(dgTerminalValueCalculations, 12, "Terminal Value");
+                    return data;
                 }
                 else
                 {
@@ -202,7 +204,7 @@ namespace GreenField.Gadgets.Views
                 return null;
             }
         }
-                
+
         #endregion
 
     }
