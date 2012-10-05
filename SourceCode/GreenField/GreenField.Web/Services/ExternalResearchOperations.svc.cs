@@ -1501,28 +1501,26 @@ namespace GreenField.Web.Services
                         distinctSecuritiesForPortfolio = dataPortfolio.Select(record => record.ISSUE_NAME).Distinct().ToList();
                     }
 
-
                     if (dataBenchmark != null && dataBenchmark.Count() > 0)
                     {
                         distinctSecuritiesForBenchmark = dataBenchmark.Select(record => record.ISSUE_NAME).Distinct().ToList();
                     }
-
+                
                     foreach (String issueName in distinctSecuritiesForPortfolio)
-                    {
+                    {                       
                         GF_SECURITY_BASEVIEW securityDetails = entity.GF_SECURITY_BASEVIEW
                          .Where(record => record.ISSUE_NAME == issueName).FirstOrDefault();
                         if (securityDetails != null)
-                        {
+                        {                            
                             check = 0;
                             issuerIDPortfolio.Append(",'" + securityDetails.ISSUER_ID + "'");
                             securityIDPortfolio.Append(",'" + securityDetails.SECURITY_ID + "'");
                             listForPortfolio.Add(securityDetails.SECURITY_ID.ToString(), securityDetails.ISSUE_NAME);
                         }
                     }
-
+                  
                     issuerIDPortfolio = check == 0 ? issuerIDPortfolio.Remove(0, 1) : null;
                     securityIDPortfolio = check == 0 ? securityIDPortfolio.Remove(0, 1) : null;
-
 
                     foreach (String issueName in distinctSecuritiesForBenchmark)
                     {
@@ -1561,10 +1559,8 @@ namespace GreenField.Web.Services
                     List<String> distinctSecurityNamesForPortfolio = new List<String>();
                     List<String> distinctSecurityNamesForBenchmark = new List<String>();
 
-
                     if (storedProcResult != null && storedProcResult.Count() > 0)
                     {
-
                         foreach (int dataId in storedProcResult.Select(t => t.DataId).Distinct())
                         {
                             dinstinctIssuerIdsForPortfolio = storedProcResult.Where(t => t.DataId == dataId && t.AmountType == "Portfolio").Select(t => t.IssuerId).Distinct().ToList();
@@ -1576,13 +1572,11 @@ namespace GreenField.Web.Services
                                 if (listForPortfolio.ContainsKey(secId))
                                     distinctSecurityNamesForPortfolio.Add(listForPortfolio[secId]);
                             }
-
                             foreach (String secId in dinstinctSecurityIdsForBenchmark)
                             {
                                 if (listForBenchmark.ContainsKey(secId))
                                     distinctSecurityNamesForBenchmark.Add(listForBenchmark[secId]);
                             }
-
                             foreach (String s in dinstinctIssuerIdsForPortfolio)
                             {
                                 foreach (GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUER_ID == s).ToList())
@@ -1596,7 +1590,6 @@ namespace GreenField.Web.Services
                                     valuesPortForAllDataIds.Add(objPort);
                                 }
                             }
-
                             foreach (String s in distinctSecurityNamesForPortfolio)
                             {
                                 foreach (GF_PORTFOLIO_HOLDINGS row in dataPortfolio.Where(t => t.ISSUE_NAME == s).ToList())
@@ -1610,8 +1603,6 @@ namespace GreenField.Web.Services
                                     valuesPortForAllDataIds.Add(objPort);
                                 }
                             }
-
-
                             foreach (String s in dinstinctIssuerIdsForBenchmark)
                             {
                                 foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUER_ID == s).ToList())
@@ -1625,7 +1616,6 @@ namespace GreenField.Web.Services
                                     valuesBenchForAllDataIds.Add(objPort);
                                 }
                             }
-
                             foreach (String s in distinctSecurityNamesForBenchmark)
                             {
                                 foreach (GF_BENCHMARK_HOLDINGS row in dataBenchmark.Where(t => t.ISSUE_NAME == s).ToList())
@@ -1952,6 +1942,9 @@ namespace GreenField.Web.Services
 
         private void CalculateHarmonicMeanPortfolio(List<CalculatedValuesForValuation> filteredByDataIdList, String description, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? initialSumDirtyValuePC = 0, Decimal? harmonicMeanPortfolio = 0)
         {
+            Decimal? portWeight = 0;
+            Decimal? multipliedValue = 0;
+            
             foreach (CalculatedValuesForValuation row in filteredByDataIdList)
             {
                 initialSumDirtyValuePC = initialSumDirtyValuePC + row.PortfolioPercent;
@@ -1959,17 +1952,14 @@ namespace GreenField.Web.Services
             foreach (CalculatedValuesForValuation row in filteredByDataIdList)
             {
                 if (initialSumDirtyValuePC != 0)
-                    row.PortfolioPercent = (row.PortfolioPercent / initialSumDirtyValuePC);
+                    portWeight = (row.PortfolioPercent / initialSumDirtyValuePC);
                 if (row.Amount != 0)
                 {
                     row.InverseAmount = 1 / row.Amount;
                 }
-                row.MultipliedValue = row.PortfolioPercent * row.InverseAmount;
-                harmonicMeanPortfolio = harmonicMeanPortfolio + row.MultipliedValue;
+                multipliedValue = portWeight * row.InverseAmount;
+                harmonicMeanPortfolio = harmonicMeanPortfolio + multipliedValue;
             }
-
-
-
             entry.Description = description;
             if (harmonicMeanPortfolio != 0)
                 entry.Portfolio = 1 / harmonicMeanPortfolio;
@@ -1978,7 +1968,8 @@ namespace GreenField.Web.Services
 
         private void CalculateHarmonicMeanBenchmark(List<CalculatedValuesForValuation> filteredByDataIdList, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? harmonicMeanBenchmark = 0)
         {
-
+            Decimal? benchWeight = 0;
+            Decimal? multipliedValue = 0;
             Decimal? initialSumBenchmarkWeight = 0;
             foreach (CalculatedValuesForValuation row in filteredByDataIdList)
             {
@@ -1987,15 +1978,14 @@ namespace GreenField.Web.Services
             foreach (CalculatedValuesForValuation row in filteredByDataIdList)
             {
                 if (initialSumBenchmarkWeight != 0)
-                    row.PortfolioPercent = (row.PortfolioPercent / initialSumBenchmarkWeight);
+                    benchWeight = (row.PortfolioPercent / initialSumBenchmarkWeight);
                 if (row.Amount != 0)
                 {
                     row.InverseAmount = 1 / row.Amount;
                 }
-                row.MultipliedValue = row.PortfolioPercent * row.InverseAmount;
-                harmonicMeanBenchmark = harmonicMeanBenchmark + row.MultipliedValue;
+                multipliedValue = benchWeight * row.InverseAmount;
+                harmonicMeanBenchmark = harmonicMeanBenchmark + multipliedValue;
             }
-
 
             if (harmonicMeanBenchmark != 0)
                 entry.Benchmark = 1 / harmonicMeanBenchmark;
@@ -2006,6 +1996,8 @@ namespace GreenField.Web.Services
 
         private void CalculateHarmonicMeanPortfolioROE(List<CalculatedValuesForValuation> filteredByDataIdList, String description, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? initialSumDirtyValuePC = 0, Decimal? harmonicMeanPortfolio = 0)
         {
+            Decimal? portWeight = 0;
+            Decimal? multipliedValue = 0;
             foreach (CalculatedValuesForValuation row in filteredByDataIdList)
             {
                 initialSumDirtyValuePC = initialSumDirtyValuePC + row.PortfolioPercent;
@@ -2013,15 +2005,10 @@ namespace GreenField.Web.Services
             foreach (CalculatedValuesForValuation row in filteredByDataIdList)
             {
                 if (initialSumDirtyValuePC != 0)
-                    row.PortfolioPercent = (row.PortfolioPercent / initialSumDirtyValuePC);
-                if (row.Amount != 0)
-                {
-                    row.InverseAmount = 1 / row.Amount;
-                }
-                row.MultipliedValue = row.PortfolioPercent * row.Amount;
-                harmonicMeanPortfolio = harmonicMeanPortfolio + row.MultipliedValue;
+                    portWeight = (row.PortfolioPercent / initialSumDirtyValuePC);
+                multipliedValue = portWeight * row.Amount;
+                harmonicMeanPortfolio = harmonicMeanPortfolio + multipliedValue;
             }
-
             entry.Description = description;
             entry.Portfolio = harmonicMeanPortfolio * 100;
         }
@@ -2029,7 +2016,8 @@ namespace GreenField.Web.Services
 
         private void CalculateHarmonicMeanBenchmarkROE(List<CalculatedValuesForValuation> filteredByDataIdList, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? harmonicMeanBenchmark = 0)
         {
-
+            Decimal? benchWeight = 0;
+            Decimal? multipliedValue = 0;
             Decimal? initialSumBenchmarkWeight = 0;
             foreach (CalculatedValuesForValuation row in filteredByDataIdList)
             {
@@ -2038,16 +2026,10 @@ namespace GreenField.Web.Services
             foreach (CalculatedValuesForValuation row in filteredByDataIdList)
             {
                 if (initialSumBenchmarkWeight != 0)
-                    row.PortfolioPercent = (row.PortfolioPercent / initialSumBenchmarkWeight);
-                if (row.Amount != 0)
-                {
-                    row.InverseAmount = 1 / row.Amount;
-                }
-                row.MultipliedValue = row.PortfolioPercent * row.Amount;
-                harmonicMeanBenchmark = harmonicMeanBenchmark + row.MultipliedValue;
+                    benchWeight = (row.PortfolioPercent / initialSumBenchmarkWeight);
+                multipliedValue = benchWeight * row.Amount;
+                harmonicMeanBenchmark = harmonicMeanBenchmark + multipliedValue;
             }
-
-
             entry.Benchmark = harmonicMeanBenchmark * 100;
             if (entry.Benchmark != 0)
                 entry.Relative = entry.Portfolio / entry.Benchmark;
