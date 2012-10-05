@@ -401,7 +401,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _fwdEPS = value;
-                if (value != null || value != 0)
+                if (value != 0)
                 {
                     if (SensitivityValues.Count != 0)
                     {
@@ -450,7 +450,7 @@ namespace GreenField.Gadgets.ViewModels
             set
             {
                 _fwdBVPS = value;
-                if (value != null || value != 0)
+                if (value != 0)
                 {
                     if (SensitivityValues.Count != 0)
                     {
@@ -1109,6 +1109,8 @@ namespace GreenField.Gadgets.ViewModels
                     EntitySelectionData = entitySelectionData;
                     StockSpecificDiscount = 0;
                     SensitivityDisplayData = new RangeObservableCollection<SensitivityData>();
+                    SensitivityBVPS = new RangeObservableCollection<SensitivityData>();
+                    SensitivityBPS = new RangeObservableCollection<SensitivityData>();
                     FWDEPS = 0;
                     FWDBVPS = 0;
                     if (IsActive)
