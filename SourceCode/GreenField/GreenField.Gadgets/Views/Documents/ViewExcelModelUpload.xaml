@@ -121,11 +121,11 @@
                 </telerik:RadComboBox.ItemTemplate>
             </telerik:RadComboBox>
 
-            <Button x:Name="btnDownload" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"  Content="Download Model" HorizontalContentAlignment="Center"
+            <Button x:Name="btnDownload" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Right"  Content="Download Model" HorizontalContentAlignment="Center" Width="120" 
                 VerticalAlignment="Top" Click="btnDownload_Click" IsEnabled="{Binding EnableDownload}"/>
 
             <Button x:Name="bOpenFileDialog" Content="Upload Model" Grid.Row="1" Grid.Column="2" HorizontalContentAlignment="Center"
-                VerticalAlignment="Top"
+                VerticalAlignment="Top" Width="120"
                  HorizontalAlignment="Left" 
                  Click="bOpenFileDialog_Click" />
 
