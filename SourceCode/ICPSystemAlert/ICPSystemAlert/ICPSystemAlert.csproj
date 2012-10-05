@@ -97,6 +97,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExternalEntityModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="PowerPoint\CompanyOverview.cs" />
+    <Compile Include="PowerPoint\ICPresentation.cs" />
+    <Compile Include="PowerPoint\InvestmentThesis.cs" />
+    <Compile Include="PowerPoint\KeyOperatingAssumpations.cs" />
+    <Compile Include="PowerPoint\PdfFooter.cs" />
+    <Compile Include="PowerPoint\PptRead.cs" />
+    <Compile Include="PowerPoint\SecurityInformation.cs" />
+    <Compile Include="PowerPoint\SWOTAnalysis.cs" />
+    <Compile Include="PowerPoint\VQG.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -142,6 +151,9 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>ExternalEntityModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <Content Include="AshmoreEMMLogo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ICPresentationTemplate.pptx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

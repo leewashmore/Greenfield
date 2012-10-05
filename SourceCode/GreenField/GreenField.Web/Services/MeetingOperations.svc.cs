@@ -681,7 +681,7 @@ namespace GreenField.Web.Services
                 //Update presentation info object
                 XDocument xmlDoc = GetEntityXml<ICPresentationOverviewData>(new List<ICPresentationOverviewData> { presentationOverviewData });
                 string xmlScript = xmlDoc.ToString();
-                Int64? result = entity.UpdatePresentationInfo(userName, xmlScript).FirstOrDefault();
+                Int32? result = entity.UpdatePresentationInfo(userName, xmlScript).FirstOrDefault();
                 if (result == null)
                     throw new Exception("Unable to update presentation info object");
 

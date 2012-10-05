@@ -1016,9 +1016,11 @@ namespace ICPSystemAlert
                             || record.Category == "Investment Context Report"
                             || record.Category == "DCF Model"
                             || record.Category == "Additional Attachment")).ToList();
+                PresentationInfo presentationInfo = _entity.PresentationInfoes.Where(record => record.PresentationID == presentationId).FirstOrDefault();
+
                 _log.Debug(System.Reflection.MethodBase.GetCurrentMethod() + "|PresentationAttachedFileDataIsNullOrEmpty_"
                     + (presentationAttachedFileData == null ? "True" : (presentationAttachedFileData.Count == 0).ToString()));
-                List<String> downloadedDocumentLocations = GetICPacketSegmentFiles(presentationAttachedFileData);
+                List<String> downloadedDocumentLocations = GetICPacketSegmentFiles(presentationAttachedFileData, presentationInfo);
                 _log.Debug(System.Reflection.MethodBase.GetCurrentMethod() + "|DownloadedDocumentLocationsIsNullOrEmpty_"
                      + (downloadedDocumentLocations == null ? "True" : (downloadedDocumentLocations.Count == 0).ToString()));
                 Byte[] result = MergePDFFiles(downloadedDocumentLocations);
@@ -1032,24 +1034,47 @@ namespace ICPSystemAlert
             }
         }
 
-        private static List<String> GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo)
+        private static List<String> GetICPacketSegmentFiles(List<FileMaster> fileMasterInfo, PresentationInfo presentationInfo)
         {
             List<String> result = new List<String>();
 
             try
             {
-                foreach (FileMaster file in fileMasterInfo)
+                FileMaster powerPointFile = fileMasterInfo.Where(record => record.Category == "Power Point Presentation").FirstOrDefault();
+                if (powerPointFile != null)
                 {
-                    String convertedPdf = null;
-                    if (file.Category == "Power Point Presentation")
-                    {
-                        convertedPdf = ConvertPowerpointPresentationTpPdf(file);
-                    }
-                    else
-                    {
-                        convertedPdf = ConvertImagePdfFileToLocalPdf(file);
-                    }
+                    String uploadLocation = ConvertPowerpointPresentationTpPdf(powerPointFile, presentationInfo);
+                    if (uploadLocation != null)
+                        result.Add(uploadLocation);
+                }
 
+                FileMaster finstatFile = fileMasterInfo.Where(record => record.Category == "FinStat Report").FirstOrDefault();
+                if (finstatFile != null)
+                {
+                    String convertedPdf = ConvertImagePdfFileToLocalPdf(finstatFile);
+                    if (convertedPdf != null)
+                        result.Add(convertedPdf);
+                }
+
+                FileMaster investmentContextFile = fileMasterInfo.Where(record => record.Category == "Investment Context Report").FirstOrDefault();
+                if (investmentContextFile != null)
+                {
+                    String convertedPdf = ConvertImagePdfFileToLocalPdf(investmentContextFile);
+                    if (convertedPdf != null)
+                        result.Add(convertedPdf);
+                }
+
+                FileMaster dcfFile = fileMasterInfo.Where(record => record.Category == "DCF Model").FirstOrDefault();
+                if (dcfFile != null)
+                {
+                    String convertedPdf = ConvertImagePdfFileToLocalPdf(dcfFile);
+                    if (convertedPdf != null)
+                        result.Add(convertedPdf);
+                }
+
+                foreach (FileMaster file in fileMasterInfo.Where(record => record.Category == "Additional Attachment"))
+                {
+                    String convertedPdf = ConvertImagePdfFileToLocalPdf(file);
                     if (convertedPdf != null)
                         result.Add(convertedPdf);
                 }
@@ -1100,9 +1125,52 @@ namespace ICPSystemAlert
             return result;
         }
 
-        private static String ConvertPowerpointPresentationTpPdf(FileMaster powerpointStreamedData)
+        private static String ConvertPowerpointPresentationTpPdf(FileMaster powerpointStreamedData, PresentationInfo presentationInfo)
         {
-            return null;
+            String result = null;
+
+            try
+            {
+                if (presentationInfo == null || powerpointStreamedData == null)
+                    return result;
+
+                Byte[] fileData = RetrieveDocument(powerpointStreamedData.Location);
+                if (fileData == null)
+                    return result;
+
+                String localFile = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pptx";
+                File.WriteAllBytes(localFile, fileData);
+
+                SecurityInformation securityInformation = new SecurityInformation()
+                {
+                    ActiveWeight = presentationInfo.SecurityActiveWeight,
+                    Analyst = presentationInfo.Analyst,
+                    BenchmarkWeight = presentationInfo.SecurityBMWeight,
+                    BSR = presentationInfo.SecurityBuySellvsCrnt,
+                    Country = presentationInfo.SecurityCountry,
+                    CurrentHoldings = presentationInfo.CurrentHoldings,
+                    FVCalc = presentationInfo.FVCalc,
+                    Industry = presentationInfo.SecurityIndustry,
+                    MktCap = presentationInfo.SecurityMarketCapitalization.ToString(),
+                    NAV = presentationInfo.PercentEMIF,
+                    Price = presentationInfo.Price,
+                    Recommendation = presentationInfo.SecurityRecommendation,
+                    RetAbsolute = presentationInfo.YTDRet_Absolute,
+                    RetEMV = presentationInfo.YTDRet_RELtoEM,
+                    RetLoc = presentationInfo.YTDRet_RELtoLOC,
+                    SecurityName = presentationInfo.SecurityName
+                };
+
+                ICPresentation presentationData = PptRead.Fetch(localFile, securityInformation);
+                result = System.IO.Path.GetTempPath() + @"\" + Guid.NewGuid() + @"_temp.pdf";
+                PptRead.GeneratePresentationPdf(result, presentationData);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return result;
         }
 
         private static Byte[] MergePDFFiles(List<String> pdfFileNames)
