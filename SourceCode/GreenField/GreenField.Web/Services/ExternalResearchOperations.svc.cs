@@ -1552,17 +1552,16 @@ namespace GreenField.Web.Services
                     //******************Combining Portfolio weight and Benchmark weight for all securities from Portfolio View,Benchmark View and Amount from Data Base****************
 
 
-                    List<String> dinstinctIssuerIdsForPortfolio = new List<String>();
-                    List<String> dinstinctSecurityIdsForPortfolio = new List<String>();
-                    List<String> dinstinctIssuerIdsForBenchmark = new List<String>();
-                    List<String> dinstinctSecurityIdsForBenchmark = new List<String>();
-                    List<String> distinctSecurityNamesForPortfolio = new List<String>();
-                    List<String> distinctSecurityNamesForBenchmark = new List<String>();
-
                     if (storedProcResult != null && storedProcResult.Count() > 0)
                     {
                         foreach (int dataId in storedProcResult.Select(t => t.DataId).Distinct())
                         {
+                            List<String> dinstinctIssuerIdsForPortfolio = new List<String>();
+                            List<String> dinstinctSecurityIdsForPortfolio = new List<String>();
+                            List<String> dinstinctIssuerIdsForBenchmark = new List<String>();
+                            List<String> dinstinctSecurityIdsForBenchmark = new List<String>();
+                            List<String> distinctSecurityNamesForPortfolio = new List<String>();
+                            List<String> distinctSecurityNamesForBenchmark = new List<String>();
                             dinstinctIssuerIdsForPortfolio = storedProcResult.Where(t => t.DataId == dataId && t.AmountType == "Portfolio").Select(t => t.IssuerId).Distinct().ToList();
                             dinstinctSecurityIdsForPortfolio = storedProcResult.Where(t => t.DataId == dataId && t.AmountType == "Portfolio").Select(t => t.SecurityId).Distinct().ToList();
                             dinstinctIssuerIdsForBenchmark = storedProcResult.Where(t => t.DataId == dataId && t.AmountType == "Benchmark").Select(t => t.IssuerId).Distinct().ToList();
@@ -1965,7 +1964,6 @@ namespace GreenField.Web.Services
                 entry.Portfolio = 1 / harmonicMeanPortfolio;
         }
 
-
         private void CalculateHarmonicMeanBenchmark(List<CalculatedValuesForValuation> filteredByDataIdList, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? harmonicMeanBenchmark = 0)
         {
             Decimal? benchWeight = 0;
@@ -1993,7 +1991,6 @@ namespace GreenField.Web.Services
                 entry.Relative = entry.Portfolio / entry.Benchmark;
         }
 
-
         private void CalculateHarmonicMeanPortfolioROE(List<CalculatedValuesForValuation> filteredByDataIdList, String description, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? initialSumDirtyValuePC = 0, Decimal? harmonicMeanPortfolio = 0)
         {
             Decimal? portWeight = 0;
@@ -2012,7 +2009,6 @@ namespace GreenField.Web.Services
             entry.Description = description;
             entry.Portfolio = harmonicMeanPortfolio * 100;
         }
-
 
         private void CalculateHarmonicMeanBenchmarkROE(List<CalculatedValuesForValuation> filteredByDataIdList, ref GreenField.DataContracts.DataContracts.ValuationQualityGrowthData entry, Decimal? harmonicMeanBenchmark = 0)
         {
