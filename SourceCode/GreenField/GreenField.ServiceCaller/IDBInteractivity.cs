@@ -379,6 +379,9 @@ namespace GreenField.ServiceCaller
         void RetrieveDCFFairValueData(EntitySelectionData entitySelectionData, Action<List<PERIOD_FINANCIALS>> callback);
 
         void InsertDCFFairValueData(EntitySelectionData entitySelectionData, string valueType, int? fvMeasure, decimal? fvbuy, decimal? fvSell, decimal? currentMeasureValue, decimal? upside, DateTime? updated, Action<bool> callback);
+
+        void FetchDCFCountryName(EntitySelectionData entitySelectionData, Action<string> callback);
+
         #endregion
 
         void RetrieveCompanyData(Action<List<String>> callback);

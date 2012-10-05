@@ -87,6 +87,21 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Country of Selected Security
+        /// </summary>
+        private string _countryName;
+        public string CountryName
+        {
+            get { return _countryName; }
+            set
+            {
+                _countryName = value;
+                this.RaisePropertyChanged(() => this.CountryName);
+            }
+        }
+
+
         #endregion
 
         #region Dashboard
@@ -1011,7 +1026,6 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-
         #region Fair Value
 
         /// <summary>
@@ -1064,7 +1078,9 @@ namespace GreenField.Gadgets.ViewModels
         {
             try
             {
-
+                DCFValuePerShare = 10;
+                StoreEPSValue();
+                StoreBVPSValue();
             }
             catch (Exception ex)
             {
@@ -1092,17 +1108,13 @@ namespace GreenField.Gadgets.ViewModels
                 {
                     Logging.LogMethodParameter(_logger, methodNamespace, entitySelectionData, 1);
                     EntitySelectionData = entitySelectionData;
+                    StockSpecificDiscount = 0;
                     if (IsActive)
                     {
                         if (IsActive && EntitySelectionData != null)
                         {
-                            //_dbInteractivity.RetrieveDCFTerminalValueCalculationsData(EntitySelectionData, RetrieveDCFTerminalValueCalculationsDataCallbackMethod);
-                            //_dbInteractivity.RetrieveCashFlows(EntitySelectionData, RetrieveDCFCashFlowYearlyDataCallbackMethod);
-                            //_dbInteractivity.RetrieveDCFAnalysisData(EntitySelectionData, RetrieveDCFAnalysisDataCallbackMethod);
-
                             _dbInteractivity.RetrieveDCFCurrentPrice(entitySelectionData, RetrieveCurrentPriceDataCallbackMethod);
-                            //_dbInteractivity.RetrieveDCFSummaryData(entitySelectionData, RetrieveDCFSummaryDataCallbackMethod);
-
+                            _dbInteractivity.FetchDCFCountryName(entitySelectionData, RetrieveCountryNameCallbackMethod);
                             BusyIndicatorNotification(true, "Fetching Data for Selected Security");
                         }
                     }
@@ -1331,16 +1343,82 @@ namespace GreenField.Gadgets.ViewModels
         /// Store EPS fair value Callback Method
         /// </summary>
         /// <param name="result"></param>
-        public void StoreFairValueCallbackMethod(bool result)
+        public void StoreEPSFairValueCallbackMethod(bool result)
         {
-            if (result)
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
             {
-
+                if (result)
+                {
+                    Prompt.ShowDialog("Values of P_E Uploaded Successfully");
+                }
+                else
+                {
+                    Prompt.ShowDialog("There was some problem in storing the Values of P_E");
+                }
             }
-            else
+            catch (Exception ex)
             {
-
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
             }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Store BVPS fair value Callback Method
+        /// </summary>
+        /// <param name="result"></param>
+        public void StoreBVPSFairValueCallbackMethod(bool result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result)
+                {
+                    Prompt.ShowDialog("Values of P_BE Uploaded Successfully");
+                }
+                else
+                {
+                    Prompt.ShowDialog("There was some problem in storing the Values of P_BV");
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
+        }
+
+        /// <summary>
+        /// Fetch Country name callback method
+        /// </summary>
+        /// <param name="result">Country name</param>
+        public void RetrieveCountryNameCallbackMethod(string result)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            Logging.LogBeginMethod(_logger, methodNamespace);
+            try
+            {
+                if (result != null)
+                {
+                    Logging.LogMethodParameter(_logger, methodNamespace, result, 1);
+                    CountryName = result;
+                }
+                else
+                {
+                    Logging.LogMethodParameterNull(_logger, methodNamespace, 1);
+                }
+            }
+            catch (Exception ex)
+            {
+                Prompt.ShowDialog("Message: " + ex.Message + "\nStackTrace: " + Logging.StackTraceToString(ex), "Exception", MessageBoxButton.OK);
+                Logging.LogException(_logger, ex);
+            }
+            Logging.LogEndMethod(_logger, methodNamespace);
         }
 
         #endregion
@@ -1952,14 +2030,17 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (FWDBVPS != 0)
                 {
-                    if (FairValueData != null)
+                    if (DCFValuePerShare != null)
                     {
-                        if (FairValueData.Count != 0)
+                        if (FairValueData != null)
                         {
-                            decimal? nCurrentPBV = FairValueData.Where(a => a.DATA_ID == 188).Select(a => a.AMOUNT).FirstOrDefault();
-                            decimal? FV_Sell = DCFValuePerShare / FWDBVPS;
-                            decimal? upside = DCFValuePerShare / FWDBVPS - 1M;
-                            _dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PBV", 188, 0, FV_Sell, nCurrentPBV, upside, DateTime.Now, StoreFairValueCallbackMethod);
+                            if (FairValueData.Count != 0)
+                            {
+                                decimal? nCurrentPBV = FairValueData.Where(a => a.DATA_ID == 188).Select(a => a.AMOUNT).FirstOrDefault();
+                                decimal? FV_Sell = DCFValuePerShare / FWDBVPS;
+                                decimal? upside = DCFValuePerShare / FWDBVPS - 1M;
+                                _dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PBV", 188, 0, FV_Sell, nCurrentPBV, upside, DateTime.Now, StoreEPSFairValueCallbackMethod);
+                            }
                         }
                     }
                 }
@@ -1980,14 +2061,17 @@ namespace GreenField.Gadgets.ViewModels
             {
                 if (FWDBVPS != 0)
                 {
-                    if (FairValueData != null)
+                    if (DCFValuePerShare != null)
                     {
-                        if (FairValueData.Count != 0)
+                        if (FairValueData != null)
                         {
-                            decimal? nCurrentPE = FairValueData.Where(a => a.DATA_ID == 187).Select(a => a.AMOUNT).FirstOrDefault();
-                            decimal? FV_Sell = DCFValuePerShare / FWDEPS;
-                            decimal? upside = DCFValuePerShare / FWDEPS - 1M;
-                            _dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PE", 187, 0, FV_Sell, nCurrentPE, upside, DateTime.Now, StoreFairValueCallbackMethod);
+                            if (FairValueData.Count != 0)
+                            {
+                                decimal? nCurrentPE = FairValueData.Where(a => a.DATA_ID == 187).Select(a => a.AMOUNT).FirstOrDefault();
+                                decimal? FV_Sell = DCFValuePerShare / FWDEPS;
+                                decimal? upside = DCFValuePerShare / FWDEPS - 1M;
+                                _dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PE", 187, 0, FV_Sell, nCurrentPE, upside, DateTime.Now, StoreBVPSFairValueCallbackMethod);
+                            }
                         }
                     }
                 }

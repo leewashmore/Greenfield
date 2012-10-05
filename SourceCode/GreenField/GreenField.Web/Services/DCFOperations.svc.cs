@@ -392,6 +392,11 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Method to fetch the Current Price
+        /// </summary>
+        /// <param name="entitySelectionData">Selected Security</param>
+        /// <returns></returns>
         [OperationContract]
         [FaultContract(typeof(ServiceFault))]
         public decimal? RetrieveCurrentPriceData(EntitySelectionData entitySelectionData)
@@ -428,6 +433,37 @@ namespace GreenField.Web.Services
             }
         }
 
+        /// <summary>
+        /// Method to Fetch the Country Name of Selected Security
+        /// </summary>
+        /// <param name="entitySelectionData">Selected Security</param>
+        /// <returns>Name of the Country</returns>
+        [OperationContract]
+        [FaultContract(typeof(ServiceFault))]
+        public string RetrieveCountryName(EntitySelectionData entitySelectionData)
+        {
+            try
+            {
+                string countryName = string.Empty;
+                GF_SECURITY_BASEVIEW data = DimensionEntity.GF_SECURITY_BASEVIEW.Where(a => a.ISSUE_NAME == entitySelectionData.LongName).FirstOrDefault();
+                if (data != null)
+                {
+                    countryName = data.ASEC_SEC_COUNTRY_NAME;
+                }
+                if (countryName == null)
+                {
+                    return string.Empty;
+                }
+                return countryName;
+            }
+            catch (Exception ex)
+            {
+                ExceptionTrace.LogException(ex);
+                string networkFaultMessage = ServiceFaultResourceManager.GetString("NetworkFault").ToString();
+                throw new FaultException<ServiceFault>(new ServiceFault(networkFaultMessage), new FaultReason(ex.Message));
+            }
+        }
+        
         #region FairValue
 
         /// <summary>

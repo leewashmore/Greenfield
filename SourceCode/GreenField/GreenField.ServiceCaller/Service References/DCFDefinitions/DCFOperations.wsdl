@@ -65,6 +65,15 @@
   <wsdl:message name="DCFOperations_RetrieveCurrentPriceData_ServiceFaultFault_FaultMessage">
     <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q6:ServiceFault" />
   </wsdl:message>
+  <wsdl:message name="DCFOperations_RetrieveCountryName_InputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCountryName" />
+  </wsdl:message>
+  <wsdl:message name="DCFOperations_RetrieveCountryName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RetrieveCountryNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="DCFOperations_RetrieveCountryName_ServiceFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
+  </wsdl:message>
   <wsdl:message name="DCFOperations_RetrieveFairValue_InputMessage">
     <wsdl:part name="parameters" element="tns:RetrieveFairValue" />
   </wsdl:message>
@@ -72,7 +81,7 @@
     <wsdl:part name="parameters" element="tns:RetrieveFairValueResponse" />
   </wsdl:message>
   <wsdl:message name="DCFOperations_RetrieveFairValue_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q7:ServiceFault" />
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
   </wsdl:message>
   <wsdl:message name="DCFOperations_InsertFairValues_InputMessage">
     <wsdl:part name="parameters" element="tns:InsertFairValues" />
@@ -81,7 +90,7 @@
     <wsdl:part name="parameters" element="tns:InsertFairValuesResponse" />
   </wsdl:message>
   <wsdl:message name="DCFOperations_InsertFairValues_ServiceFaultFault_FaultMessage">
-    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q8:ServiceFault" />
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults" name="detail" element="q9:ServiceFault" />
   </wsdl:message>
   <wsdl:portType name="DCFOperations">
     <wsdl:operation name="RetrieveDCFAnalysisData">
@@ -113,6 +122,11 @@
       <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveCurrentPriceData" message="tns:DCFOperations_RetrieveCurrentPriceData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/RetrieveCurrentPriceDataResponse" message="tns:DCFOperations_RetrieveCurrentPriceData_OutputMessage" />
       <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/RetrieveCurrentPriceDataServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_RetrieveCurrentPriceData_ServiceFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCountryName">
+      <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveCountryName" message="tns:DCFOperations_RetrieveCountryName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/DCFOperations/RetrieveCountryNameResponse" message="tns:DCFOperations_RetrieveCountryName_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/DCFOperations/RetrieveCountryNameServiceFaultFault" name="ServiceFaultFault" message="tns:DCFOperations_RetrieveCountryName_ServiceFaultFault_FaultMessage" />
     </wsdl:operation>
     <wsdl:operation name="RetrieveFairValue">
       <wsdl:input wsaw:Action="http://tempuri.org/DCFOperations/RetrieveFairValue" message="tns:DCFOperations_RetrieveFairValue_InputMessage" />
@@ -189,6 +203,18 @@
     </wsdl:operation>
     <wsdl:operation name="RetrieveCurrentPriceData">
       <soap:operation soapAction="http://tempuri.org/DCFOperations/RetrieveCurrentPriceData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceFaultFault">
+        <soap:fault use="literal" name="ServiceFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="RetrieveCountryName">
+      <soap:operation soapAction="http://tempuri.org/DCFOperations/RetrieveCountryName" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

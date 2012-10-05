@@ -70,8 +70,8 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Enter the Value of FWD EPS:" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"/>
-                    <Border Grid.Column="1" Background="Yellow">
+                    <TextBlock Text="Value of FWD EPS:" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0"/>
+                    <Border Grid.Column="1">
                         <TextBox x:Name="txtFWDEPS" Text="{Binding FWDEPS, Mode=TwoWay}" VerticalAlignment="Center"   HorizontalAlignment="Left" KeyDown="txtFWDEPS_KeyDown"
                                TextInput="txtFWDEPS_TextInput"/>
                     </Border>
@@ -192,7 +192,7 @@
                 </Grid>
             </Grid>
             <Grid Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <Button x:Name="btnSubmit" Command="{Binding InsertFairValues}" Content="Submit" />
+                <Button x:Name="btnSubmit" Command="{Binding InsertFairValues,Mode=OneWay}" Content="Submit"  />
             </Grid>
             <telerik:RadRichTextBox Grid.Row="3" x:Name="RichTextBox" />
         </Grid>

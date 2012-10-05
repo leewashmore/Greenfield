@@ -570,6 +570,12 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         
         System.Nullable<decimal> EndRetrieveCurrentPriceData(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DCFOperations/RetrieveCountryName", ReplyAction="http://tempuri.org/DCFOperations/RetrieveCountryNameResponse")]
+        [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault), Action="http://tempuri.org/DCFOperations/RetrieveCountryNameServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
+        System.IAsyncResult BeginRetrieveCountryName(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
+        
+        string EndRetrieveCountryName(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/DCFOperations/RetrieveFairValue", ReplyAction="http://tempuri.org/DCFOperations/RetrieveFairValueResponse")]
         [System.ServiceModel.FaultContractAttribute(typeof(GreenField.ServiceCaller.DCFDefinitions.ServiceFault), Action="http://tempuri.org/DCFOperations/RetrieveFairValueServiceFaultFault", Name="ServiceFault", Namespace="http://schemas.datacontract.org/2004/07/GreenField.Web.Helpers.Service_Faults")]
         System.IAsyncResult BeginRetrieveFairValue(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState);
@@ -703,6 +709,25 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class RetrieveCountryNameCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public RetrieveCountryNameCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public string Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((string)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class RetrieveFairValueCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -778,6 +803,12 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         private EndOperationDelegate onEndRetrieveCurrentPriceDataDelegate;
         
         private System.Threading.SendOrPostCallback onRetrieveCurrentPriceDataCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRetrieveCountryNameDelegate;
+        
+        private EndOperationDelegate onEndRetrieveCountryNameDelegate;
+        
+        private System.Threading.SendOrPostCallback onRetrieveCountryNameCompletedDelegate;
         
         private BeginOperationDelegate onBeginRetrieveFairValueDelegate;
         
@@ -855,6 +886,8 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         public event System.EventHandler<RetrieveSummaryDataCompletedEventArgs> RetrieveSummaryDataCompleted;
         
         public event System.EventHandler<RetrieveCurrentPriceDataCompletedEventArgs> RetrieveCurrentPriceDataCompleted;
+        
+        public event System.EventHandler<RetrieveCountryNameCompletedEventArgs> RetrieveCountryNameCompleted;
         
         public event System.EventHandler<RetrieveFairValueCompletedEventArgs> RetrieveFairValueCompleted;
         
@@ -1141,6 +1174,52 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.IAsyncResult GreenField.ServiceCaller.DCFDefinitions.DCFOperations.BeginRetrieveCountryName(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRetrieveCountryName(entitySelectionData, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        string GreenField.ServiceCaller.DCFDefinitions.DCFOperations.EndRetrieveCountryName(System.IAsyncResult result) {
+            return base.Channel.EndRetrieveCountryName(result);
+        }
+        
+        private System.IAsyncResult OnBeginRetrieveCountryName(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            GreenField.DataContracts.EntitySelectionData entitySelectionData = ((GreenField.DataContracts.EntitySelectionData)(inValues[0]));
+            return ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).BeginRetrieveCountryName(entitySelectionData, callback, asyncState);
+        }
+        
+        private object[] OnEndRetrieveCountryName(System.IAsyncResult result) {
+            string retVal = ((GreenField.ServiceCaller.DCFDefinitions.DCFOperations)(this)).EndRetrieveCountryName(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnRetrieveCountryNameCompleted(object state) {
+            if ((this.RetrieveCountryNameCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RetrieveCountryNameCompleted(this, new RetrieveCountryNameCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RetrieveCountryNameAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData) {
+            this.RetrieveCountryNameAsync(entitySelectionData, null);
+        }
+        
+        public void RetrieveCountryNameAsync(GreenField.DataContracts.EntitySelectionData entitySelectionData, object userState) {
+            if ((this.onBeginRetrieveCountryNameDelegate == null)) {
+                this.onBeginRetrieveCountryNameDelegate = new BeginOperationDelegate(this.OnBeginRetrieveCountryName);
+            }
+            if ((this.onEndRetrieveCountryNameDelegate == null)) {
+                this.onEndRetrieveCountryNameDelegate = new EndOperationDelegate(this.OnEndRetrieveCountryName);
+            }
+            if ((this.onRetrieveCountryNameCompletedDelegate == null)) {
+                this.onRetrieveCountryNameCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRetrieveCountryNameCompleted);
+            }
+            base.InvokeAsync(this.onBeginRetrieveCountryNameDelegate, new object[] {
+                        entitySelectionData}, this.onEndRetrieveCountryNameDelegate, this.onRetrieveCountryNameCompletedDelegate, userState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         System.IAsyncResult GreenField.ServiceCaller.DCFDefinitions.DCFOperations.BeginRetrieveFairValue(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
             return base.Channel.BeginRetrieveFairValue(entitySelectionData, callback, asyncState);
         }
@@ -1397,6 +1476,19 @@ namespace GreenField.ServiceCaller.DCFDefinitions {
             public System.Nullable<decimal> EndRetrieveCurrentPriceData(System.IAsyncResult result) {
                 object[] _args = new object[0];
                 System.Nullable<decimal> _result = ((System.Nullable<decimal>)(base.EndInvoke("RetrieveCurrentPriceData", _args, result)));
+                return _result;
+            }
+            
+            public System.IAsyncResult BeginRetrieveCountryName(GreenField.DataContracts.EntitySelectionData entitySelectionData, System.AsyncCallback callback, object asyncState) {
+                object[] _args = new object[1];
+                _args[0] = entitySelectionData;
+                System.IAsyncResult _result = base.BeginInvoke("RetrieveCountryName", _args, callback, asyncState);
+                return _result;
+            }
+            
+            public string EndRetrieveCountryName(System.IAsyncResult result) {
+                object[] _args = new object[0];
+                string _result = ((string)(base.EndInvoke("RetrieveCountryName", _args, result)));
                 return _result;
             }
             

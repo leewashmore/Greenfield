@@ -4453,6 +4453,51 @@ namespace GreenField.ServiceCaller
 
         }
 
+        /// <summary>
+        /// Fetch DCF country name Service Caller Method
+        /// </summary>
+        /// <param name="entitySelectionData">Selected Security</param>
+        /// <param name="callback">Returns name of the Country</param>
+        public void FetchDCFCountryName(EntitySelectionData entitySelectionData, Action<string> callback)
+        {
+            string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+
+            DCFOperationsClient client = new DCFOperationsClient();
+            client.RetrieveCountryNameAsync(entitySelectionData);
+            client.RetrieveCountryNameCompleted += (se, e) =>
+            {
+                if (e.Error == null)
+                {
+                    if (callback != null)
+                    {
+                        if (e.Result != null)
+                        {
+                            callback(e.Result);
+                        }
+                        else
+                        {
+                            callback(null);
+                        }
+                    }
+                }
+                else if (e.Error is FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>)
+                {
+                    FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault> fault
+                        = e.Error as FaultException<GreenField.ServiceCaller.DCFDefinitions.ServiceFault>;
+                    Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                else
+                {
+                    Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
+                    if (callback != null)
+                        callback(null);
+                }
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            };
+        }
 
         #endregion
 

@@ -16,6 +16,7 @@ using GreenField.ServiceCaller;
 using Telerik.Windows.Documents.Model;
 using Telerik.Windows.Controls;
 using GreenField.Gadgets.Models;
+using GreenField.UserSession;
 
 namespace GreenField.Gadgets.Views
 {
@@ -276,8 +277,12 @@ namespace GreenField.Gadgets.Views
         public override Table CreateDocument()
         {
             try
-            {                
+            {
+                DCFPDFExport data = new DCFPDFExport();
                 return PDFExporter.CreateTable(dgDCFAnalysisSummary, 12);
+                data.CountryName = this.DataContextSource.CountryName;
+                data.SecurityName = this.DataContextSource.EntitySelectionData.ShortName;
+                data.CreatedBy = SessionManager.SESSION.UserName;
             }
             catch (Exception ex)
             {
