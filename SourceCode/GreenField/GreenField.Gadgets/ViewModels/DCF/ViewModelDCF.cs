@@ -1078,7 +1078,6 @@ namespace GreenField.Gadgets.ViewModels
         {
             try
             {
-                DCFValuePerShare = 10;
                 StoreEPSValue();
                 StoreBVPSValue();
             }
@@ -2028,6 +2027,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             try
             {
+                decimal? nCurrentPBV;
                 if (FWDBVPS != 0)
                 {
                     if (DCFValuePerShare != null)
@@ -2036,12 +2036,20 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             if (FairValueData.Count != 0)
                             {
-                                decimal? nCurrentPBV = FairValueData.Where(a => a.DATA_ID == 188).Select(a => a.AMOUNT).FirstOrDefault();
-                                decimal? FV_Sell = DCFValuePerShare / FWDBVPS;
-                                decimal? upside = DCFValuePerShare / FWDBVPS - 1M;
-                                _dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PBV", 188, 0, FV_Sell, nCurrentPBV, upside, DateTime.Now, StoreEPSFairValueCallbackMethod);
+                                nCurrentPBV = FairValueData.Where(a => a.DATA_ID == 188).Select(a => a.AMOUNT).FirstOrDefault();
+                            }
+                            else
+                            {
+                                nCurrentPBV = 0;
                             }
                         }
+                        else
+                        {
+                            nCurrentPBV = 0;
+                        }
+                        decimal? FV_Sell = DCFValuePerShare / FWDBVPS;
+                        decimal? upside = DCFValuePerShare / FWDBVPS - 1M;
+                        _dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PBV", 188, 0, FV_Sell, nCurrentPBV, upside, DateTime.Now, StoreEPSFairValueCallbackMethod);
                     }
                 }
             }
@@ -2059,6 +2067,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             try
             {
+                decimal? nCurrentPE;
                 if (FWDBVPS != 0)
                 {
                     if (DCFValuePerShare != null)
@@ -2067,12 +2076,20 @@ namespace GreenField.Gadgets.ViewModels
                         {
                             if (FairValueData.Count != 0)
                             {
-                                decimal? nCurrentPE = FairValueData.Where(a => a.DATA_ID == 187).Select(a => a.AMOUNT).FirstOrDefault();
-                                decimal? FV_Sell = DCFValuePerShare / FWDEPS;
-                                decimal? upside = DCFValuePerShare / FWDEPS - 1M;
-                                _dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PE", 187, 0, FV_Sell, nCurrentPE, upside, DateTime.Now, StoreBVPSFairValueCallbackMethod);
+                                nCurrentPE = FairValueData.Where(a => a.DATA_ID == 187).Select(a => a.AMOUNT).FirstOrDefault();
+                            }
+                            else
+                            {
+                                nCurrentPE = 0;
                             }
                         }
+                        else
+                        {
+                            nCurrentPE = null;
+                        }
+                        decimal? FV_Sell = DCFValuePerShare / FWDEPS;
+                        decimal? upside = DCFValuePerShare / FWDEPS - 1M;
+                        _dbInteractivity.InsertDCFFairValueData(EntitySelectionData, "DCF_PE", 187, 0, FV_Sell, nCurrentPE, upside, DateTime.Now, StoreBVPSFairValueCallbackMethod);
                     }
                 }
             }
