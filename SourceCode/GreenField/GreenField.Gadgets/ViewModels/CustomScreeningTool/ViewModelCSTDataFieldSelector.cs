@@ -1407,18 +1407,20 @@ namespace GreenField.Gadgets.ViewModels
         {
             // fetch tabs data
             FetchTabsData();
-            List<CSTUserPreferenceInfo> tempUserPref = new List<CSTUserPreferenceInfo>();
+            List<CSTUserPreferenceInfo> temp = new List<CSTUserPreferenceInfo>();
+            ObservableCollection<CSTUserPreferenceInfo> userPref = new ObservableCollection<CSTUserPreferenceInfo>();
 
             Flag = CSTNavigation.FetchString(CSTNavigationInfo.Flag) as string;
             if (Flag != null)
             {
                 if (Flag == "Edit" || Flag == "View")
                 {
-                    tempUserPref = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
-                    foreach (CSTUserPreferenceInfo item in tempUserPref)
+                    temp = CSTNavigation.Fetch(CSTNavigationInfo.SelectedDataList) as List<CSTUserPreferenceInfo>;
+                    foreach (CSTUserPreferenceInfo item in temp)
                     {
-                            SelectedFieldsDataList.Add(item);
+                        userPref.Add(item);
                     }
+                    SelectedFieldsDataList = userPref;
                 }               
             }          
         }
