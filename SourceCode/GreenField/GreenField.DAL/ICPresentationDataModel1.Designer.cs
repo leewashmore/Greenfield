@@ -1440,44 +1440,6 @@ namespace GreenField.DAL
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        /// <param name="presentationStatus">No Metadata Documentation available.</param>
-        public ObjectResult<MeetingInfo> RetrieveICMeetingInfoByStatusType(global::System.String presentationStatus)
-        {
-            ObjectParameter presentationStatusParameter;
-            if (presentationStatus != null)
-            {
-                presentationStatusParameter = new ObjectParameter("PresentationStatus", presentationStatus);
-            }
-            else
-            {
-                presentationStatusParameter = new ObjectParameter("PresentationStatus", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<MeetingInfo>("RetrieveICMeetingInfoByStatusType", presentationStatusParameter);
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        /// <param name="mergeOption"></param>
-        /// <param name="presentationStatus">No Metadata Documentation available.</param>
-        public ObjectResult<MeetingInfo> RetrieveICMeetingInfoByStatusType(global::System.String presentationStatus, MergeOption mergeOption)
-        {
-            ObjectParameter presentationStatusParameter;
-            if (presentationStatus != null)
-            {
-                presentationStatusParameter = new ObjectParameter("PresentationStatus", presentationStatus);
-            }
-            else
-            {
-                presentationStatusParameter = new ObjectParameter("PresentationStatus", typeof(global::System.String));
-            }
-    
-            return base.ExecuteFunction<MeetingInfo>("RetrieveICMeetingInfoByStatusType", mergeOption, presentationStatusParameter);
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         /// <param name="userName">No Metadata Documentation available.</param>
         /// <param name="xmlScript">No Metadata Documentation available.</param>
         public ObjectResult<Nullable<global::System.Int32>> SetICPresentationDecisionEntryDetails(global::System.String userName, global::System.String xmlScript)
@@ -2720,6 +2682,63 @@ namespace GreenField.DAL
             }
     
             return base.ExecuteFunction<DocumentsData>("GetDocumentsData", searchStringParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="presentationStatus">No Metadata Documentation available.</param>
+        public ObjectResult<ICPresentationOverviewData> RetrieveICMeetingInfoByStatusType(global::System.String presentationStatus)
+        {
+            ObjectParameter presentationStatusParameter;
+            if (presentationStatus != null)
+            {
+                presentationStatusParameter = new ObjectParameter("PresentationStatus", presentationStatus);
+            }
+            else
+            {
+                presentationStatusParameter = new ObjectParameter("PresentationStatus", typeof(global::System.String));
+            }
+    
+            return base.ExecuteFunction<ICPresentationOverviewData>("RetrieveICMeetingInfoByStatusType", presentationStatusParameter);
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="meetingDateTime">No Metadata Documentation available.</param>
+        public ObjectResult<MeetingInfo> RetrieveICMeetingInfoByMeetingDateTime(Nullable<global::System.DateTime> meetingDateTime)
+        {
+            ObjectParameter meetingDateTimeParameter;
+            if (meetingDateTime.HasValue)
+            {
+                meetingDateTimeParameter = new ObjectParameter("MeetingDateTime", meetingDateTime);
+            }
+            else
+            {
+                meetingDateTimeParameter = new ObjectParameter("MeetingDateTime", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction<MeetingInfo>("RetrieveICMeetingInfoByMeetingDateTime", meetingDateTimeParameter);
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        /// <param name="mergeOption"></param>
+        /// <param name="meetingDateTime">No Metadata Documentation available.</param>
+        public ObjectResult<MeetingInfo> RetrieveICMeetingInfoByMeetingDateTime(Nullable<global::System.DateTime> meetingDateTime, MergeOption mergeOption)
+        {
+            ObjectParameter meetingDateTimeParameter;
+            if (meetingDateTime.HasValue)
+            {
+                meetingDateTimeParameter = new ObjectParameter("MeetingDateTime", meetingDateTime);
+            }
+            else
+            {
+                meetingDateTimeParameter = new ObjectParameter("MeetingDateTime", typeof(global::System.DateTime));
+            }
+    
+            return base.ExecuteFunction<MeetingInfo>("RetrieveICMeetingInfoByMeetingDateTime", mergeOption, meetingDateTimeParameter);
         }
 
         #endregion

@@ -381,6 +381,9 @@
         <Function Name="ModelRetrieveFileId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LOCATION" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="RetrieveICMeetingInfoByMeetingDateTime" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="MeetingDateTime" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="RetrieveICMeetingInfoByStatusType" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PresentationStatus" Type="varchar" Mode="In" />
         </Function>
@@ -757,9 +760,6 @@
           <FunctionImport Name="RetrieveICPMeetingMinuteDetails" ReturnType="Collection(ICPresentationModel.MeetingMinuteData)">
           <Parameter Name="MeetingId" Mode="In" Type="Int64" />
           </FunctionImport>
-          <FunctionImport Name="RetrieveICMeetingInfoByStatusType" EntitySet="MeetingInfoes" ReturnType="Collection(ICPresentationModel.MeetingInfo)">
-          <Parameter Name="PresentationStatus" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="SetICPresentationDecisionEntryDetails" ReturnType="Collection(Int32)">
             <Parameter Name="UserName" Mode="In" Type="String" />
             <Parameter Name="xmlScript" Mode="In" Type="String" />
@@ -934,6 +934,12 @@
           </FunctionImport>
           <FunctionImport Name="GetDocumentsData" ReturnType="Collection(ICPresentationModel.DocumentsData)">
           <Parameter Name="searchString" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveICMeetingInfoByStatusType" ReturnType="Collection(ICPresentationModel.ICPresentationOverviewData)">
+          <Parameter Name="PresentationStatus" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="RetrieveICMeetingInfoByMeetingDateTime" EntitySet="MeetingInfoes" ReturnType="Collection(ICPresentationModel.MeetingInfo)">
+            <Parameter Name="MeetingDateTime" Mode="In" Type="DateTime" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="VoterInfoByPresentationIDResult">
@@ -1545,7 +1551,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="RetrieveICMeetingInfoByStatusType" FunctionName="ICPresentationModel.Store.RetrieveICMeetingInfoByStatusType" />
           <FunctionImportMapping FunctionImportName="SetICPresentationDecisionEntryDetails" FunctionName="ICPresentationModel.Store.SetICPresentationDecisionEntryDetails" />
           <FunctionImportMapping FunctionImportName="SetPresentationInfo" FunctionName="ICPresentationModel.Store.SetPresentationInfo" />
           <FunctionImportMapping FunctionImportName="SetMeetingConfigSchedule" FunctionName="ICPresentationModel.Store.SetMeetingConfigSchedule" />
@@ -1876,6 +1881,57 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveICMeetingInfoByStatusType" FunctionName="ICPresentationModel.Store.RetrieveICMeetingInfoByStatusType">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ICPresentationModel.ICPresentationOverviewData">
+                <ScalarProperty Name="PresentationID" ColumnName="PresentationID" />
+                <ScalarProperty Name="Presenter" ColumnName="Presenter" />
+                <ScalarProperty Name="StatusType" ColumnName="StatusType" />
+                <ScalarProperty Name="SecurityTicker" ColumnName="SecurityTicker" />
+                <ScalarProperty Name="SecurityName" ColumnName="SecurityName" />
+                <ScalarProperty Name="SecurityCountry" ColumnName="SecurityCountry" />
+                <ScalarProperty Name="SecurityCountryCode" ColumnName="SecurityCountryCode" />
+                <ScalarProperty Name="SecurityIndustry" ColumnName="SecurityIndustry" />
+                <ScalarProperty Name="SecurityCashPosition" ColumnName="SecurityCashPosition" />
+                <ScalarProperty Name="SecurityPosition" ColumnName="SecurityPosition" />
+                <ScalarProperty Name="SecurityLastClosingPrice" ColumnName="SecurityLastClosingPrice" />
+                <ScalarProperty Name="SecurityMarketCapitalization" ColumnName="SecurityMarketCapitalization" />
+                <ScalarProperty Name="SecurityPFVMeasure" ColumnName="SecurityPFVMeasure" />
+                <ScalarProperty Name="SecurityBuyRange" ColumnName="SecurityBuyRange" />
+                <ScalarProperty Name="SecuritySellRange" ColumnName="SecuritySellRange" />
+                <ScalarProperty Name="SecurityRecommendation" ColumnName="SecurityRecommendation" />
+                <ScalarProperty Name="CommitteePFVMeasure" ColumnName="CommitteePFVMeasure" />
+                <ScalarProperty Name="CommitteeBuyRange" ColumnName="CommitteeBuyRange" />
+                <ScalarProperty Name="CommitteeSellRange" ColumnName="CommitteeSellRange" />
+                <ScalarProperty Name="CommitteeRecommendation" ColumnName="CommitteeRecommendation" />
+                <ScalarProperty Name="CommitteeRangeEffectiveThrough" ColumnName="CommitteeRangeEffectiveThrough" />
+                <ScalarProperty Name="AcceptWithoutDiscussionFlag" ColumnName="AcceptWithoutDiscussionFlag" />
+                <ScalarProperty Name="AdminNotes" ColumnName="AdminNotes" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="Analyst" ColumnName="Analyst" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="FVCalc" ColumnName="FVCalc" />
+                <ScalarProperty Name="SecurityBuySellvsCrnt" ColumnName="SecurityBuySellvsCrnt" />
+                <ScalarProperty Name="CurrentHoldings" ColumnName="CurrentHoldings" />
+                <ScalarProperty Name="PercentEMIF" ColumnName="PercentEMIF" />
+                <ScalarProperty Name="SecurityBMWeight" ColumnName="SecurityBMWeight" />
+                <ScalarProperty Name="SecurityActiveWeight" ColumnName="SecurityActiveWeight" />
+                <ScalarProperty Name="YTDRet_Absolute" ColumnName="YTDRet_Absolute" />
+                <ScalarProperty Name="YTDRet_RELtoLOC" ColumnName="YTDRet_RELtoLOC" />
+                <ScalarProperty Name="YTDRet_RELtoEM" ColumnName="YTDRet_RELtoEM" />
+                <ScalarProperty Name="SecurityPFVMeasureValue" ColumnName="SecurityPFVMeasureValue" />
+                <ScalarProperty Name="CommitteePFVMeasureValue" ColumnName="CommitteePFVMeasureValue" />
+                <ScalarProperty Name="PortfolioId" ColumnName="PortfolioId" />
+                <ScalarProperty Name="MeetingDateTime" ColumnName="MeetingDateTime" />
+                <ScalarProperty Name="MeetingClosedDateTime" ColumnName="MeetingClosedDateTime" />
+                <ScalarProperty Name="MeetingVotingClosedDateTime" ColumnName="MeetingVotingClosedDateTime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="RetrieveICMeetingInfoByMeetingDateTime" FunctionName="ICPresentationModel.Store.RetrieveICMeetingInfoByMeetingDateTime" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

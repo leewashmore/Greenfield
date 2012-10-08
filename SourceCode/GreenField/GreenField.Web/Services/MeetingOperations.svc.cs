@@ -1516,7 +1516,36 @@ namespace GreenField.Web.Services
             try
             {
                 ICPresentationEntities entity = new ICPresentationEntities();
-                return entity.RetrieveICMeetingInfoByStatusType(presentationStatus).ToList();
+                List<MeetingInfo> result = new List<MeetingInfo>();
+                List<ICPresentationOverviewData> data = entity.RetrieveICMeetingInfoByStatusType(presentationStatus).ToList();
+                List<DateTime?> distinctMeetingDateTime = data.Select(record => record.MeetingDateTime).ToList().Distinct().ToList();
+
+                foreach (DateTime? meetingDateTime in distinctMeetingDateTime)
+                {
+                    Boolean icVotingComplete = true;
+                    foreach (ICPresentationOverviewData item in data.Where(record => record.MeetingDateTime == meetingDateTime))
+                    {
+                        if (item.CommitteeBuyRange == null || item.CommitteePFVMeasure == null || item.CommitteePFVMeasureValue == null
+                            || item.CommitteeRecommendation == null || item.CommitteeSellRange == null)
+                        {
+                            icVotingComplete = false;
+                            break;
+                        }
+                    }
+
+                    if (icVotingComplete)
+                    {
+                        MeetingInfo eligibleMeeting = entity.RetrieveICMeetingInfoByMeetingDateTime(meetingDateTime).FirstOrDefault();
+                        if (eligibleMeeting != null)
+                        {
+                            result.Add(eligibleMeeting);
+                        }
+                    }                   
+                }
+
+                return result;
+
+
             }
             catch (Exception ex)
             {

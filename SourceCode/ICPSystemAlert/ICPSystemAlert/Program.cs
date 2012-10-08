@@ -693,13 +693,13 @@ namespace ICPSystemAlert
                         smtpClient.Send(mm);
 
                         Int32? updateResult = entity.UpdateMessageInfo(messageInfo.EmailId, true, "System").FirstOrDefault();
-                        foreach (String tempLocation in tempLocations)
-                        {
-                            if (File.Exists(tempLocation))
-                            {
-                                File.Delete(tempLocation);
-                            }
-                        }
+                        //foreach (String tempLocation in tempLocations)
+                        //{
+                        //    if (File.Exists(tempLocation))
+                        //    {
+                        //        File.Delete(tempLocation);
+                        //    }
+                        //}
                     }
                     catch (Exception ex)
                     {
