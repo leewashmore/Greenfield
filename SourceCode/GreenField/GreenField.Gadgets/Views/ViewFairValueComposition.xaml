@@ -22,7 +22,7 @@
         <Grid x:Name="LayoutRoot" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="0"/>
             </Grid.RowDefinitions>
@@ -63,24 +63,22 @@
                                      ItemsSource="{Binding FairValueCompositionData, Mode=TwoWay}" 
                                      CanUserSelect="False" 
                                      CanUserReorderColumns="False" 
-                                     CanUserInsertRows="False" 
-                                     telerik:StyleManager.Theme="Metro"
+                                     CanUserInsertRows="False"                                     
                                      CanUserDeleteRows="False"                                      
                                      CanUserSortColumns="False" 
                                      ScrollMode="Deferred"
                                      RowIndicatorVisibility="Collapsed"
-                                     IsReadOnly="{Binding IsReadOnly}"
+                                     IsReadOnlyBinding="{Binding IsReadOnly}"
                                      ShowGroupPanel="False" 
                                      UseLayoutRounding="True"                                     
                                      GroupPanelBackground="#e4e5e5"
                                      HeaderRowStyle="{StaticResource GridViewHeaderRowStyle}"
                                      GroupPanelStyle="{StaticResource GridViewGroupPanelStyle}"
-                                     RowStyle="{StaticResource GridViewRowStyle}"                                    
-                                     AlternationCount="2"
-                                     GroupRowStyle="{StaticResource GridViewGroupRowStyle}"
+                                     RowStyle="{StaticResource GridViewRowStyle}"
+                                     GridLinesVisibility="None"
+                                     AlternationCount="2"                                     
                                      AlternateRowStyle ="{StaticResource GridViewAlternateRowStyle}"
-                                    RowLoaded="dgFairValueComposition_RowLoaded"
-                                    RowEditEnded="dgFairValueComposition_RowEditEnded"
+                                    RowLoaded="dgFairValueComposition_RowLoaded"                                    
                                     BeginningEdit="dgFairValueComposition_BeginningEdit"
                                     CellValidating="dgFairValueComposition_CellValidating"
                                     DataLoaded="dgFairValueComposition_DataLoaded"
@@ -102,9 +100,8 @@
                                                         EditorStyle="{StaticResource RadComboBoxStyle}"
                                                         CellStyle="{StaticResource GridViewCellStyle}"                                                        
                                                         HeaderTextAlignment="Left" 
-                                                        IsReadOnly="{Binding IsReadOnly}"
-                                                        TextAlignment="Left"
-                                                        Width="*"/>
+                                                        IsReadOnlyBinding="{Binding IsReadOnly}"
+                                                        TextAlignment="Left"/>                                                        
                             <telerik:GridViewDataColumn Header="Buy" 
                                                         UniqueName="Buy"
                                                         DataMemberBinding="{Binding Buy, StringFormat=\{0:n1\},Mode=TwoWay}"
@@ -112,7 +109,7 @@
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right" 
                                                         TextAlignment="Right"
-                                                        IsReadOnly="{Binding IsReadOnly}"/>                             
+                                                        IsReadOnlyBinding="{Binding IsReadOnly}"/>                             
                             <telerik:GridViewDataColumn Header="Sell" 
                                                         UniqueName="Sell"
                                                         DataMemberBinding="{Binding Sell, StringFormat=\{0:n1\},Mode=TwoWay}"
@@ -120,7 +117,7 @@
                                                         CellStyle="{StaticResource GridViewCellStyle}" 
                                                         HeaderTextAlignment="Right"
                                                         TextAlignment="Right"
-                                                        IsReadOnly="{Binding IsReadOnly}"/>
+                                                        IsReadOnlyBinding="{Binding IsReadOnly}"/>
                             <telerik:GridViewDataColumn Header="Upside" 
                                                         UniqueName="Upside"
                                                         DataMemberBinding="{Binding UpSide,Converter={StaticResource ConverterPercValTwoDecPlace},Mode=TwoWay}"

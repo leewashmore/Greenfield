@@ -139,16 +139,21 @@ namespace GreenField.Web.Services
                 ExternalResearchEntities fairValueCompSummary = new ExternalResearchEntities();
 
                 if (entitySelectionData == null)
+                {
                     return null;
+                }
 
-                //Retrieving data from security view
+                //retrieving data from security view
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
 
                 if (data == null)
+                {
                     return null;
+                }
 
-                ////Retrieving data from Period Financials table
-                resultDB = fairValueCompSummary.ExecuteStoreQuery<GetFairValueComposition_Result>("exec GetFairValueCompositionSummaryData @SECURITY_ID={0}", Convert.ToString(data.SECURITY_ID)).ToList();
+                //retrieving data from period financials table
+                resultDB = fairValueCompSummary.ExecuteStoreQuery<GetFairValueComposition_Result>
+                    ("exec GetFairValueCompositionSummaryData @SECURITY_ID={0}", Convert.ToString(data.SECURITY_ID)).ToList();
 
                 string sourceNames = string.Empty;
                 foreach (GetFairValueComposition_Result record in resultDB)
@@ -175,8 +180,7 @@ namespace GreenField.Web.Services
                         else
                         {
                             item.Source = record.SOURCE;
-                        }
-                       
+                        }                       
                     }
                     sourceNames += item.Source + ",";
                     item.Measure = record.MEASURE;
@@ -232,12 +236,16 @@ namespace GreenField.Web.Services
             try
             {
                 if (entitySelectionData == null || editedFairValueData == null)
+                {
                     return null;
+                }
 
                 if (entitySelectionData == null)
+                {
                     return null;
+                }
 
-                //Retrieving data from security view
+                //retrieving data from security view
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
 
                 if (data == null)
@@ -291,12 +299,16 @@ namespace GreenField.Web.Services
             try
             {
                 if (entitySelectionData == null || editedFairValueData == null)
+                {
                     return null;
+                }
 
                 DimensionEntitiesService.GF_SECURITY_BASEVIEW data = GetSecurityDataForSelectedSecurity(entitySelectionData);
 
                 if (data == null)
+                {
                     return null;
+                }
 
                 string securityId = Convert.ToString(data.SECURITY_ID);
               
@@ -315,16 +327,25 @@ namespace GreenField.Web.Services
                         if (!String.IsNullOrEmpty(record.SOURCE))
                         {
                             if (record.SOURCE.ToUpper() == "PRIMARY")
+                            {
                                 item.Source = "Primary Analyst";
-                            else if (record.SOURCE.ToUpper() == "INDUSTRY")
-                                item.Source = "Industry Analyst";                            
+                            }
+                            else
+                            {
+                                if (record.SOURCE.ToUpper() == "INDUSTRY")
+                                {
+                                    item.Source = "Industry Analyst";
+                                }
+                            }
                         }
                         item.Measure = record.MEASURE;
                         item.Buy = record.BUY;
                         item.Sell = record.SELL;
                         item.Upside = record.UPSIDE;
                         if (record.DATE != null)
+                        {
                             item.Date = record.DATE.Value;
+                        }
                         item.DataId = record.DATA_ID;
                         item.PrimaryAnalyst = data.ASHMOREEMM_PRIMARY_ANALYST;
                         item.IndustryAnalyst = data.ASHMOREEMM_INDUSTRY_ANALYST;

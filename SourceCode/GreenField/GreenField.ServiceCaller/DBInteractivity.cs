@@ -5388,7 +5388,8 @@ namespace GreenField.ServiceCaller
         {
 
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), 
+                SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             FairValueOperationsClient client = new FairValueOperationsClient();
             client.RetrieveFairValueCompostionSummaryAsync(entitySelectionData);
@@ -5414,15 +5415,20 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), 
+                    SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
 
         }
@@ -5437,7 +5443,8 @@ namespace GreenField.ServiceCaller
         {
 
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), 
+                SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             FairValueOperationsClient client = new FairValueOperationsClient();
             client.RetrieveFairValueDataWithNewUpsideAsync(entitySelectionData, editedFairValueData);
@@ -5463,15 +5470,20 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), 
+                    SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
 
         }
@@ -5486,7 +5498,8 @@ namespace GreenField.ServiceCaller
         {
 
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), 
+                SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             FairValueOperationsClient client = new FairValueOperationsClient();
             client.SaveUpdatedFairValueDataAsync(entitySelectionData, editedFairValueDataList);
@@ -5512,15 +5525,20 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
-                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+                ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), 
+                    SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };
 
         }
@@ -5533,7 +5551,8 @@ namespace GreenField.ServiceCaller
         {
 
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
-            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
+            ServiceLog.LogServiceCall(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), 
+                SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
 
             FairValueOperationsClient client = new FairValueOperationsClient();
             client.RetrieveFairValueCompostionSummaryDataAsync(entitySelectionData);
@@ -5559,13 +5578,17 @@ namespace GreenField.ServiceCaller
                         = e.Error as FaultException<GreenField.ServiceCaller.FairValueDefinitions.ServiceFault>;
                     Prompt.ShowDialog(fault.Reason.ToString(), fault.Detail.Description, MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 else
                 {
                     Prompt.ShowDialog(e.Error.Message, e.Error.GetType().ToString(), MessageBoxButton.OK);
                     if (callback != null)
+                    {
                         callback(null);
+                    }
                 }
                 ServiceLog.LogServiceCallback(LoggerFacade, methodNamespace, DateTime.Now.ToUniversalTime(), SessionManager.SESSION != null ? SessionManager.SESSION.UserName : "Unspecified");
             };

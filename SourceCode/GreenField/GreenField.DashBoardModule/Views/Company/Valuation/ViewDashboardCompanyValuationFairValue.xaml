@@ -21,30 +21,11 @@
     </UserControl.Resources>
 
     <Grid x:Name="LayoutRoot" Background="White">
-        <telerik:RadBusyIndicator x:Name="busyIndicator" IsIndeterminate="True" IsEnabled="True" DisplayAfter="0">
-            <Border telerikQuickStart:ThemeAwareBackgroundBehavior.IsEnabled="True" BorderThickness="0.25" BorderBrush="Gray">
-                <telerik:RadTileView x:Name="rtvDashboard"
-                                     Background="White"
-                                     ColumnsCount="2"  
-                                     RowHeight="Auto"
-                                     MinimizedItemsPosition="Right" 
-                                     IsDockingEnabled="False"
-                                     IsVirtualizing="False"
-                                     IsItemDraggingEnabled="True"
-                                     ScrollBarVisibility="Visible" 
-                                     MinimizedRowHeight="200"
-                                     MinimizedColumnWidth="200"
-                                     IsItemsAnimationEnabled="True"
-                                     ReorderingDuration="0:0:0.5"
-                                     PreservePositionWhenMaximized="True"
-                                     IsAutoScrollingEnabled="True" 
-                                     HorizontalAlignment="Left"
-                                     VerticalAlignment="Top"      
-                                     telerik:TileViewPanel.IsRowsShrinkEnabled="True" telerik:TileViewPanel.IsColumnsShrinkEnabled="True"
-                                     HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
-                                     ColumnWidth="*">
-                </telerik:RadTileView>
-            </Border>
-        </telerik:RadBusyIndicator>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="tbHeader" FontSize="10" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0"/>
+        <ContentControl x:Name="cctrDashboardContent" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Grid.Row="1"/>
     </Grid>
 </UserControl>

@@ -154,6 +154,9 @@ namespace GreenField.Gadgets.Helpers
             }
         }
 
+        /// <summary>
+        /// Verifies whether original item has been updated or not
+        /// </summary>
         private bool isUpdated = false;
         public bool IsUpdated
         {
@@ -167,6 +170,26 @@ namespace GreenField.Gadgets.Helpers
                 {
                     isUpdated = value;
                     RaisePropertyChanged(() => this.IsUpdated);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether the row is ReadOnly or not
+        /// </summary>
+        private bool isReadOnly = true;
+        public bool IsReadOnly
+        {
+            get
+            {
+                return isReadOnly;
+            }
+            set
+            {
+                if (isReadOnly != value)
+                {
+                    isReadOnly = value;
+                    RaisePropertyChanged(() => this.IsReadOnly);
                 }
             }
         }

@@ -47,7 +47,7 @@ namespace GreenField.DashboardModule.Views
 
         public void HandleDashboardGadgetLoad(DashboardGadgetPayload payload)
         {
-            if (this.rtvDashboard.Items.Count > 0)
+           if (this.cctrDashboardContent.Content != null)
                 return;
 
             DashboardGadgetParam param = new DashboardGadgetParam()
@@ -58,18 +58,7 @@ namespace GreenField.DashboardModule.Views
                 LoggerFacade = _logger
             };
 
-            this.rtvDashboard.Items.Add(new RadTileViewItem
-            {
-                Header = new Telerik.Windows.Controls.HeaderedContentControl
-                {
-                    Content = GadgetNames.PORTFOLIO_CONSTRUCTION_FAIR_VALUE_COMPOSITION,
-                    Foreground = new SolidColorBrush(Colors.Black),
-                    FontSize =
-                        12,
-                    FontFamily = new FontFamily("Arial")
-                },
-                Content = new ViewFairValueComposition(new ViewModelFairValueComposition(param))
-            });
+            this.cctrDashboardContent.Content = new ViewFairValueComposition(new ViewModelFairValueComposition(param));            
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
@@ -88,11 +77,10 @@ namespace GreenField.DashboardModule.Views
         }
         private void SetIsActiveOnDahsboardItems(bool value)
         {
-            foreach (RadTileViewItem item in this.rtvDashboard.Items)
+            ViewBaseUserControl control = (ViewBaseUserControl)cctrDashboardContent.Content;
+            if (control != null)
             {
-                ViewBaseUserControl control = (ViewBaseUserControl)item.Content;
-                if (control != null)
-                    control.IsActive = value;
+                control.IsActive = true;
             }
         }
     }

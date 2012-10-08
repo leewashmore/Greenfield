@@ -10,23 +10,23 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.ViewModel;
 using Microsoft.Practices.Prism.Events;
 using Microsoft.Practices.Prism.Logging;
 using GreenField.Common;
-using GreenField.ServiceCaller;
-using GreenField.ServiceCaller.ModelFXDefinitions;
-using System.Collections.Generic;
 using GreenField.Common.Helper;
 using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
-using Microsoft.Practices.Prism.Commands;
+using GreenField.ServiceCaller;
+using GreenField.ServiceCaller.ModelFXDefinitions;
+
 
 namespace GreenField.Gadgets.ViewModels
 {
     public class ViewModelFairValueComposition : NotificationObject
     {
-        #region PRIVATE FIELDS
+        #region private fields
         //MEF Singletons
 
         /// <summary>
@@ -57,19 +57,19 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Stores fcf arranged data
         /// </summary>
-        private RangeObservableCollection<FairValueData> _fairValueCompositionData
+        private RangeObservableCollection<FairValueData> fairValueCompositionData
             = new RangeObservableCollection<FairValueData>();
         public RangeObservableCollection<FairValueData> FairValueCompositionData
         {
             get
             {
-                return _fairValueCompositionData;
+                return fairValueCompositionData;
             }
             set
             {
                 if (FairValueCompositionData != value)
                 {
-                    _fairValueCompositionData = value;
+                    fairValueCompositionData = value;
                     RaisePropertyChanged(() => this.FairValueCompositionData);
                 }
             }
@@ -78,20 +78,20 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// List of DataId and Corresponding Measures
         /// </summary>
-        private List<Measure> _measuresData;
+        private List<Measure> measuresData;
         public List<Measure> MeasuresData
         {
             get
             {
-                if (_measuresData == null)
+                if (measuresData == null)
                 {
-                    _measuresData = new List<Measure>();
+                    measuresData = new List<Measure>();
                 }
-                return _measuresData;
+                return measuresData;
             }
             set
             {
-                _measuresData = value;
+                measuresData = value;
                 this.RaisePropertyChanged(() => this.MeasuresData);
             }
         }
@@ -101,15 +101,15 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// IsActive is true when parent control is displayed on UI
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                if (_isActive != value)
+                if (isActive != value)
                 {
-                    _isActive = value;
+                    isActive = value;
                 }
                 if (securitySelectionData != null && IsActive)
                 {
@@ -123,16 +123,16 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Busy Indicator Status
         /// </summary>
-        private bool _busyIndicatorStatus;
+        private bool busyIndicatorStatus;
         public bool BusyIndicatorStatus
         {
             get
             {
-                return _busyIndicatorStatus;
+                return busyIndicatorStatus;
             }
             set
             {
-                _busyIndicatorStatus = value;
+                busyIndicatorStatus = value;
                 this.RaisePropertyChanged(() => this.BusyIndicatorStatus);
             }
         }
@@ -140,47 +140,50 @@ namespace GreenField.Gadgets.ViewModels
         /// <summary>
         /// Instance when a sell property of specific row is edited in the gridView
         /// </summary>
-        private FairValueData _editedSellPropertyFairValueRow;
+        private FairValueData editedSellPropertyFairValueRow;
         public FairValueData EditedSellPropertyFairValueRow
         {
             get
             {
-                return _editedSellPropertyFairValueRow;
+                return editedSellPropertyFairValueRow;
             }
             set
             {
-                _editedSellPropertyFairValueRow = value;
-                RetrieveInstanceWithUpdatedUpsideValue(_editedSellPropertyFairValueRow);
+                editedSellPropertyFairValueRow = value;
+                RetrieveInstanceWithUpdatedUpsideValue(editedSellPropertyFairValueRow);
             }
         }
 
         /// <summary>
         /// Instance when a sell property of specific row is edited in the gridView
         /// </summary>
-        private FairValueData _editedMeasurePropertyFairValueRow;
+        private FairValueData editedMeasurePropertyFairValueRow;
         public FairValueData EditedMeasurePropertyFairValueRow
         {
             get
             {
-                return _editedMeasurePropertyFairValueRow;
+                return editedMeasurePropertyFairValueRow;
             }
             set
             {
-                _editedMeasurePropertyFairValueRow = value;
-                UpdateRowAssociatedWithSource(_editedMeasurePropertyFairValueRow);
+                editedMeasurePropertyFairValueRow = value;
+                UpdateRowAssociatedWithSource(editedMeasurePropertyFairValueRow);
             }
         }
 
-        private bool _isReadOnly = true;
+        /// <summary>
+        /// False if logged in user either primary analyst or secondary analyst
+        /// </summary>
+        private bool isReadOnly = true;
         public bool IsReadOnly
         {
             get
             {
-                return _isReadOnly;
+                return isReadOnly;
             }
             set
             {
-                _isReadOnly = value;
+                isReadOnly = value;
                 base.RaisePropertyChanged("SaveFairValueChangeCommand");
                 this.RaisePropertyChanged(() => this.IsReadOnly);
             }
@@ -188,7 +191,7 @@ namespace GreenField.Gadgets.ViewModels
 
         #endregion
 
-        #region CONSTRUCTOR
+        #region constructor
         public ViewModelFairValueComposition(DashboardGadgetParam param)
         {
             eventAggregator = param.EventAggregator;
@@ -217,19 +220,24 @@ namespace GreenField.Gadgets.ViewModels
 
         public ICommand SaveFairValueChangeCommand
         {
-            get { return new DelegateCommand<object>(SaveFairValueChangeCommandMethod, CanUserSubmit); }
+            get 
+            { 
+                return new DelegateCommand<object>(SaveFairValueChangeCommandMethod, CanUserSubmit); 
+            }
         }
 
         #endregion
 
         #region ICommand Methods
 
+        /// <summary>
+        /// Save the changed FairValue data in database
+        /// </summary>
+        /// <param name="param"></param>
         private void SaveFairValueChangeCommandMethod(object param)
         {
             if (FairValueCompositionData != null && dbInteractivity != null)
-            {
-                BusyIndicatorStatus = true;
-
+            {               
                 List<FairValueCompositionSummaryData> data = new List<FairValueCompositionSummaryData>();
 
                 var updatedItems = FairValueCompositionData.Where(p => p.IsUpdated == true).ToList();
@@ -250,6 +258,7 @@ namespace GreenField.Gadgets.ViewModels
 
                 if (data.Count > 0)
                 {
+                    BusyIndicatorStatus = true;
                     dbInteractivity.SaveUpdatedFairValueData(securitySelectionData, data
                         , RetrieveFairValueCompositionSummaryDataCallbackMethod);
                 }
@@ -257,6 +266,11 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// Check if Save button should be enable or not
+        /// </summary>
+        /// <param name="param"></param>
+        /// <returns> true or false</returns>
         private bool CanUserSubmit(object param)
         {
             return !IsReadOnly;
@@ -299,6 +313,10 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
+        /// <summary>
+        /// method to get the updated upside value for edited Fair Value Row
+        /// </summary>
+        /// <param name="editedFairValueRow"></param>
         private void RetrieveInstanceWithUpdatedUpsideValue(FairValueData editedFairValueRow)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
@@ -337,16 +355,20 @@ namespace GreenField.Gadgets.ViewModels
             }
         }
 
-        private void UpdateRowAssociatedWithSource(FairValueData _editedMeasurePropertyFairValueRow)
+        /// <summary>
+        /// Method to update row with update values
+        /// </summary>
+        /// <param name="editedMeasurePropertyFairValueRow">Update Value</param>
+        private void UpdateRowAssociatedWithSource(FairValueData editedMeasurePropertyFairValueRow)
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
             try
             {
 
-                if (_editedMeasurePropertyFairValueRow != null)
+                if (editedMeasurePropertyFairValueRow != null)
                 {
-                    var item = FairValueCompositionData.FirstOrDefault(i => i.Source == _editedMeasurePropertyFairValueRow.Source);
+                    var item = FairValueCompositionData.FirstOrDefault(i => i.Source == editedMeasurePropertyFairValueRow.Source);
 
                     if (item != null)
                     {
@@ -377,6 +399,7 @@ namespace GreenField.Gadgets.ViewModels
         {
             string methodNamespace = String.Format("{0}.{1}", GetType().FullName, System.Reflection.MethodInfo.GetCurrentMethod().Name);
             Logging.LogBeginMethod(logger, methodNamespace);
+            string user = UserSession.SessionManager.SESSION.UserName;
             try
             {                
                 RangeObservableCollection<FairValueData> temp = new RangeObservableCollection<FairValueData>();               
@@ -397,6 +420,9 @@ namespace GreenField.Gadgets.ViewModels
                     Upside = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.Upside).FirstOrDefault() : null,
                     Date = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.Date).FirstOrDefault() : null,
                     DataId = result.Select(a => a.Source).Contains("Primary Analyst") ? result.Where(a => a.Source == "Primary Analyst").Select(a => a.DataId).FirstOrDefault() : null,
+                    IsReadOnly = (result.Select(a => a.Source).Contains("Primary Analyst") && 
+                    result.Where(a => a.Source == "Primary Analyst").Select(a => a.PrimaryAnalyst).First().
+                    Equals(user, StringComparison.InvariantCultureIgnoreCase)) ? false: true,
                 });
                 temp.Add(new FairValueData()
                 {
@@ -407,6 +433,9 @@ namespace GreenField.Gadgets.ViewModels
                     Upside = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Upside).FirstOrDefault() : null,
                     Date = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.Date).FirstOrDefault() : null,
                     DataId = result.Select(a => a.Source).Contains("Industry Analyst") ? result.Where(a => a.Source == "Industry Analyst").Select(a => a.DataId).FirstOrDefault() : null,
+                    IsReadOnly = (result.Select(a => a.Source).Contains("Industry Analyst") &&
+                    result.Where(a => a.Source == "Industry Analyst").Select(a => a.IndustryAnalyst).First().
+                    Equals(user, StringComparison.InvariantCultureIgnoreCase))? false : true,
                 });
                 if (result != null && result.Count > 0)
                 {
@@ -427,6 +456,7 @@ namespace GreenField.Gadgets.ViewModels
                                 Upside = item.Upside,
                                 Date = item.Date,
                                 DataId = item.DataId,
+                                IsReadOnly = true,
                             });
                         }
                     }
@@ -494,7 +524,9 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region EventUnSubscribe
-
+        /// <summary>
+        /// Unsubscribe the event handlers
+        /// </summary>
         public void Dispose()
         {
             eventAggregator.GetEvent<SecurityReferenceSetEvent>().Unsubscribe(HandleSecurityReferenceSet);
@@ -502,7 +534,10 @@ namespace GreenField.Gadgets.ViewModels
         #endregion
 
         #region Helper Method
-
+        /// <summary>
+        /// Get list of all Measure values
+        /// </summary>
+        /// <returns></returns>
         public List<Measure> GetMeasureList()
         {
             MeasuresData.Add(new Measure() { DataId = 236, Measures = "Forward Dividend Yield" });

@@ -4,57 +4,57 @@ using System.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using Telerik.Windows.Documents.Model;
+using Telerik.Windows.Controls;
+using Telerik.Windows;
+using Telerik.Windows.Controls.GridView;
+using GreenField.DataContracts;
 using GreenField.Gadgets.Helpers;
 using GreenField.Gadgets.ViewModels;
 using GreenField.Common;
 using GreenField.ServiceCaller;
-using Telerik.Windows.Documents.Model;
-using GreenField.DataContracts;
-using Telerik.Windows.Controls;
-using System.Windows.Data;
-using Telerik.Windows;
-using Telerik.Windows.Controls.GridView;
 
 namespace GreenField.Gadgets.Views
 {
     public partial class ViewFairValueComposition : ViewBaseUserControl
     {
-
         #region PropertyDeclaration
-
 
         /// <summary>
         /// Property of ViewModel type
         /// </summary>
-        private ViewModelFairValueComposition _dataContextFairValueComposition;
+        private ViewModelFairValueComposition dataContextFairValueComposition;
         public ViewModelFairValueComposition DataContextFairValueComposition
         {
             get
             {
-                return _dataContextFairValueComposition;
+                return dataContextFairValueComposition;
             }
             set
             {
-                _dataContextFairValueComposition = value;
+                dataContextFairValueComposition = value;
             }
         }
         /// <summary>
         /// property to set IsActive variable of View Model
         /// </summary>
-        private bool _isActive;
+        private bool isActive;
         public override bool IsActive
         {
-            get { return _isActive; }
+            get { return isActive; }
             set
             {
-                _isActive = value;
-                if (DataContextFairValueComposition != null) //DataContext instance
-                    DataContextFairValueComposition.IsActive = _isActive;
+                isActive = value;
+                if (DataContextFairValueComposition != null)
+                {
+                    DataContextFairValueComposition.IsActive = isActive;
+                }
             }
         }
 
@@ -109,16 +109,7 @@ namespace GreenField.Gadgets.Views
                     e.ErrorMessage = "The Entered value should be a valid number";
                 }
             }
-        }
-        /// <summary>
-        /// Event that occurs after the Editing is completed
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dgFairValueComposition_RowEditEnded(object sender, GridViewRowEditEndedEventArgs e)
-        {
-           
-        }
+        }       
 
         /// <summary>
         /// Row Loaded Event, changes the color for StockSpecificDiscount
@@ -133,11 +124,9 @@ namespace GreenField.Gadgets.Views
                 {
                     var data = e.Row.DataContext as FairValueCompositionSummaryData;
                     if (data == null)
+                    {
                         return;
-                    //if ((e.Row.DataContext as FairValueCompositionSummaryData).SELL)
-                    //{
-                    //    e.Row.Background = new SolidColorBrush(Colors.Yellow);
-                    //}
+                    }
                 }
             }
         }
@@ -153,15 +142,18 @@ namespace GreenField.Gadgets.Views
 
             var row = comboBox.ParentOfType<GridViewRow>();
 
-            FairValueData data = row.DataContext as FairValueData;
-
-            if (comboBox.SelectedValue != null)
+            if (row != null)
             {
-                if (data.DataId != Convert.ToInt16(comboBox.SelectedValue))
+                FairValueData data = row.DataContext as FairValueData;
+
+                if (comboBox.SelectedValue != null)
                 {
-                    data.DataId = Convert.ToInt16(comboBox.SelectedValue);
-                    data.Measure = comboBox.Text;
-                    DataContextFairValueComposition.EditedMeasurePropertyFairValueRow = data;
+                    if (data.DataId != Convert.ToInt16(comboBox.SelectedValue))
+                    {
+                        data.DataId = Convert.ToInt16(comboBox.SelectedValue);
+                        data.Measure = comboBox.Text;
+                        DataContextFairValueComposition.EditedMeasurePropertyFairValueRow = data;
+                    }
                 }
             }
             
@@ -176,7 +168,7 @@ namespace GreenField.Gadgets.Views
         /// </summary>
         private static class ExportTypes
         {
-            public const string DCF_FREE_CASH_FLOWS_DATA = "DCF - Free Cash Flows Data";
+            public const string DCF_FREE_CASH_FLOWS_DATA = "Fair Value Composition";
         }
 
         /// <summary>
@@ -192,11 +184,16 @@ namespace GreenField.Gadgets.Views
             {
                 if (this.dgFairValueComposition.Visibility == Visibility.Visible)
                 {
-                    List<RadExportOptions> RadExportOptionsInfo = new List<RadExportOptions>
+                    List<RadExportOptions> radExportOptionsInfo = new List<RadExportOptions>
                         {
-                                new RadExportOptions() { ElementName = ExportTypes.DCF_FREE_CASH_FLOWS_DATA, Element = this.dgFairValueComposition, ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER }
+                                new RadExportOptions() 
+                                { 
+                                    ElementName = ExportTypes.DCF_FREE_CASH_FLOWS_DATA, 
+                                    Element = this.dgFairValueComposition, 
+                                    ExportFilterOption = RadExportFilterOption.RADGRIDVIEW_EXPORT_FILTER 
+                                }
                         };
-                    ChildExportOptions childExportOptions = new ChildExportOptions(RadExportOptionsInfo, "Export Options: " + ExportTypes.DCF_FREE_CASH_FLOWS_DATA);
+                    ChildExportOptions childExportOptions = new ChildExportOptions(radExportOptionsInfo, "Export Options: " + ExportTypes.DCF_FREE_CASH_FLOWS_DATA);
                     childExportOptions.Show();
                 }
             }
@@ -299,6 +296,15 @@ namespace GreenField.Gadgets.Views
         private void dgFairValueComposition_CellEditEnded(object sender, GridViewCellEditEndedEventArgs e)
         {
             if (e.Cell.Column.UniqueName == "Sell")
+            {
+                FairValueData data = e.Cell.DataContext as FairValueData;
+
+                if (data != null && DataContextFairValueComposition != null)
+                {
+                    DataContextFairValueComposition.EditedSellPropertyFairValueRow = data;
+                }
+            }
+            if (e.Cell.Column.UniqueName == "Buy")
             {
                 FairValueData data = e.Cell.DataContext as FairValueData;
 
